@@ -41,8 +41,8 @@ fun CollapsibleRegion(
         title,
         info,
         isExpanded = expandedIds.contains(id),
-        onExpandedChanged = {
-            if (it) expandedIds.remove(id) else expandedIds.add(id)
+        onExpandedChanged = { expanded ->
+            if (expanded) expandedIds.add(id) else expandedIds.remove(id)
         },
         content
     )
