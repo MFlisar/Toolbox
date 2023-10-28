@@ -33,6 +33,25 @@ import androidx.compose.ui.unit.dp
 fun CollapsibleRegion(
     title: String,
     info: String = "",
+    id: Int,
+    expandedIds: SnapshotStateList<Int>,
+    content: @Composable () -> Unit
+) {
+    CollapsibleRegion(
+        title,
+        info,
+        isExpanded = expandedIds.contains(id),
+        onExpandedChanged = {
+            if (it) expandedIds.remove(id) else expandedIds.add(id)
+        },
+        content
+    )
+}
+
+@Composable
+fun CollapsibleRegion(
+    title: String,
+    info: String = "",
     isExpanded: Boolean,
     onExpandedChanged: (expanded: Boolean) -> Unit,
     content: @Composable () -> Unit
@@ -83,7 +102,7 @@ fun CollapsibleRegion(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 if (info.isNotEmpty()) {
-                    Card  {
+                    Card {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()

@@ -67,7 +67,7 @@ abstract class DemoActivity : ComponentActivity() {
     // ----------------
 
     @Composable
-    abstract fun onInit()
+    open fun onInit() {}
 
     @Composable
     abstract fun Content(
