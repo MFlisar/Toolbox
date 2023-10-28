@@ -33,12 +33,11 @@ import androidx.compose.ui.unit.dp
 fun CollapsibleRegion(
     title: String,
     info: String = "",
-    expandedId: Int,
-    expanded: SnapshotStateList<Int>,
+    isExpanded: Boolean,
+    onExpandedChanged: (expanded: Boolean) -> Unit,
     content: @Composable () -> Unit
 ) {
     Column {
-        val isExpanded = expanded.contains(expandedId)
         val transitionState = remember(isExpanded) { MutableTransitionState(isExpanded) }
         transitionState.targetState = isExpanded
         val transition = updateTransition(transitionState, label = "transition")
@@ -56,9 +55,7 @@ fun CollapsibleRegion(
                 .background(MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)
                 .clip(MaterialTheme.shapes.medium)
                 .clickable {
-                    if (isExpanded) {
-                        expanded -= expandedId
-                    } else expanded += expandedId
+                    onExpandedChanged(!isExpanded)
                 }
                 .padding(vertical = 8.dp, horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
