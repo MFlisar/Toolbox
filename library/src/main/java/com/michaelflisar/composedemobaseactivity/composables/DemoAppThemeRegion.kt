@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -12,6 +13,23 @@ import com.michaelflisar.composedemobaseactivity.classes.AppPrefs
 import com.michaelflisar.composedemobaseactivity.classes.DemoTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
+@Composable
+fun DemoAppThemeRegion(
+    theme: DemoTheme,
+    dynamicTheme: Boolean,
+    id: Int,
+    expandedIds: SnapshotStateList<Int>,
+) {
+    DemoAppThemeRegion(
+        theme,
+        dynamicTheme,
+        isExpanded = expandedIds.contains(id),
+        onExpandedChanged = {
+            if (it) expandedIds.remove(id) else expandedIds.add(id)
+        }
+    )
+}
 
 @Composable
 fun DemoAppThemeRegion(
