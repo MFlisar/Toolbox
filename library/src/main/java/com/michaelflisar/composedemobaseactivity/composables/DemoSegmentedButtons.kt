@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -32,38 +31,37 @@ fun <T> DemoSegmentedButtons(
     modifier: Modifier = Modifier,
     items: List<T>,
     itemToText: (T) -> String,
-    selectedIndex: Int = 0,
+    initialSelectedIndex: Int = 0,
     shape: CornerBasedShape = MaterialTheme.shapes.medium,
     color: Color = MaterialTheme.colorScheme.primary,
     colorOnColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onItemSelected: (item: T, index: Int) -> Unit
+    onItemSelected: (index:Int, item: T) -> Unit
 ) {
     DemoSegmentedButtons(
         modifier = modifier,
         items = items.map(itemToText),
-        selectedIndex = selectedIndex,
+        initialSelectedIndex = initialSelectedIndex,
         shape = shape,
         color = color,
         colorOnColor = colorOnColor,
         onItemSelected = {
             val item = items[it]
-            onItemSelected(item, it)
+            onItemSelected(it, item)
         }
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DemoSegmentedButtons(
     modifier: Modifier = Modifier,
     items: List<String>,
-    selectedIndex: Int = 0,
+    initialSelectedIndex: Int = 0,
     shape: CornerBasedShape = MaterialTheme.shapes.medium,
     color: Color = MaterialTheme.colorScheme.primary,
     colorOnColor: Color = MaterialTheme.colorScheme.onPrimary,
     onItemSelected: (index: Int) -> Unit
 ) {
-    var selectedIndex by remember(selectedIndex) { mutableIntStateOf(selectedIndex) }
+    var selectedIndex by remember { mutableIntStateOf(initialSelectedIndex) }
     val cornerSize0 = CornerSize(0)
     Row(
         modifier = modifier

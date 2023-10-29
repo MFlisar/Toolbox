@@ -52,8 +52,8 @@ fun DemoAppThemeRegion(
             DemoSegmentedButtons(
                 items = DemoTheme.values().toList(),
                 itemToText = { it.name },
-                selectedIndex = theme.ordinal
-            ) { item, index ->
+                initialSelectedIndex = theme.ordinal
+            ) { index, item ->
                 scope.launch(Dispatchers.IO) {
                     AppPrefs.theme.update(item)
                 }
@@ -66,7 +66,7 @@ fun DemoAppThemeRegion(
             Text("Dynamic Theme", modifier = Modifier.weight(1f))
             DemoSegmentedButtons(
                 items = listOf("Yes", "No"),
-                selectedIndex = if (dynamicTheme) 0 else 1
+                initialSelectedIndex = if (dynamicTheme) 0 else 1
             ) {
                 scope.launch(Dispatchers.IO) {
                     AppPrefs.dynamicTheme.update(it == 0)
