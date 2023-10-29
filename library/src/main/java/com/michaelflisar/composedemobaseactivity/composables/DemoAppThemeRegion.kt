@@ -50,11 +50,12 @@ fun DemoAppThemeRegion(
         ) {
             Text("Theme", modifier = Modifier.weight(1f))
             DemoSegmentedButtons(
-                items = DemoTheme.values().map { it.name },
+                items = DemoTheme.values().toList(),
+                itemToText = { it.name },
                 selectedIndex = theme.ordinal
-            ) {
+            ) { item, index ->
                 scope.launch(Dispatchers.IO) {
-                    AppPrefs.theme.update(DemoTheme.values()[it])
+                    AppPrefs.theme.update(item)
                 }
             }
         }

@@ -5,6 +5,13 @@
 
 A simple base activity in compose used in all my compose libraries inside the demo modules with some common used UI composables.
 
+Provides following:
+
+* a base activity that supports dark/light/system theme
+* ui elements for
+  * expandable regions
+  * segmented button
+
 ### Dependencies
 
 | Dependency | Version | Infos |

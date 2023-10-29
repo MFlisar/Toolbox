@@ -5,20 +5,18 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -38,7 +36,6 @@ fun <T> DemoSegmentedButtons(
     shape: CornerBasedShape = MaterialTheme.shapes.medium,
     color: Color = MaterialTheme.colorScheme.primary,
     colorOnColor: Color = MaterialTheme.colorScheme.onPrimary,
-    enforceMinimumInteractiveComponent: Boolean = false,
     onItemSelected: (item: T, index: Int) -> Unit
 ) {
     DemoSegmentedButtons(
@@ -48,7 +45,6 @@ fun <T> DemoSegmentedButtons(
         shape = shape,
         color = color,
         colorOnColor = colorOnColor,
-        enforceMinimumInteractiveComponent = enforceMinimumInteractiveComponent,
         onItemSelected = {
             val item = items[it]
             onItemSelected(item, it)
@@ -65,7 +61,6 @@ fun DemoSegmentedButtons(
     shape: CornerBasedShape = MaterialTheme.shapes.medium,
     color: Color = MaterialTheme.colorScheme.primary,
     colorOnColor: Color = MaterialTheme.colorScheme.onPrimary,
-    enforceMinimumInteractiveComponent: Boolean = false,
     onItemSelected: (index: Int) -> Unit
 ) {
     var selectedIndex by remember(selectedIndex) { mutableIntStateOf(selectedIndex) }
@@ -107,33 +102,33 @@ fun DemoSegmentedButtons(
                 if (it == index) colorOnColor else color.copy(alpha = 0.9f)
             }
 
-            CompositionLocalProvider(
-                LocalMinimumInteractiveComponentEnforcement provides enforceMinimumInteractiveComponent
+            // ButtonDefaults.ContentPadding => 24/8 => we want less here!
+            val buttonPadding = PaddingValues(
+                horizontal = 8.dp,
+                vertical = 4.dp
+            )
+
+            OutlinedButton(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .offset((-1 * index).dp, 0.dp)
+                    .zIndex(if (selectedIndex == index) 1f else 0f),
+                onClick = {
+                    selectedIndex = index
+                    onItemSelected(selectedIndex)
+                },
+                shape = shapeOfIndex,
+                border = BorderStroke(1.dp, colorBorder),
+                contentPadding = buttonPadding,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = colorBackground
+                )
             ) {
-                OutlinedButton(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .offset((-1 * index).dp, 0.dp)
-                        .zIndex(if (selectedIndex == index) 1f else 0f),
-                    onClick = {
-                        selectedIndex = index
-                        onItemSelected(selectedIndex)
-                    },
-                    shape = shapeOfIndex,
-                    border = BorderStroke(1.dp, colorBorder),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = colorBackground
-                    )
-                ) {
-                    Text(
-                        text = item,
-                        fontWeight = FontWeight.Normal,
-                        color = colorForeground,
-                        modifier = if (enforceMinimumInteractiveComponent) {
-                            Modifier
-                        } else Modifier.padding(4.dp)
-                    )
-                }
+                Text(
+                    text = item,
+                    fontWeight = FontWeight.Normal,
+                    color = colorForeground,
+                )
             }
         }
     }
