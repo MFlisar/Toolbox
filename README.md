@@ -13,6 +13,7 @@ Provides following:
   * app theme settings
   * expandable regions
   * segmented button
+  * a compose list saver that also saves an empty list
 
 ### Dependencies
 
