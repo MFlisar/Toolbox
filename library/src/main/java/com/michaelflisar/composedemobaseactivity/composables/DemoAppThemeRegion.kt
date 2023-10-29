@@ -9,7 +9,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.composedemobaseactivity.classes.AppPrefs
+import com.michaelflisar.composedemobaseactivity.classes.DemoBasePrefs
 import com.michaelflisar.composedemobaseactivity.classes.DemoTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,7 +55,7 @@ fun DemoAppThemeRegion(
                 initialSelectedIndex = theme.ordinal
             ) { index, item ->
                 scope.launch(Dispatchers.IO) {
-                    AppPrefs.theme.update(item)
+                    DemoBasePrefs.theme.update(item)
                 }
             }
         }
@@ -69,7 +69,7 @@ fun DemoAppThemeRegion(
                 initialSelectedIndex = if (dynamicTheme) 0 else 1
             ) {
                 scope.launch(Dispatchers.IO) {
-                    AppPrefs.dynamicTheme.update(it == 0)
+                    DemoBasePrefs.dynamicTheme.update(it == 0)
                 }
             }
         }
