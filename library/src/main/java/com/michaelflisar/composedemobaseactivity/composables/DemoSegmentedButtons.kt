@@ -26,6 +26,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 
+// ButtonDefaults.ContentPadding => 24/8 => we want less here!
+private val DefaultButtonPadding = PaddingValues(
+    horizontal = 12.dp,
+    vertical = 8.dp
+)
+
 @Composable
 fun <T> DemoSegmentedButtons(
     modifier: Modifier = Modifier,
@@ -35,7 +41,8 @@ fun <T> DemoSegmentedButtons(
     shape: CornerBasedShape = MaterialTheme.shapes.medium,
     color: Color = MaterialTheme.colorScheme.primary,
     colorOnColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onItemSelected: (index:Int, item: T) -> Unit
+    buttonPadding: PaddingValues = DefaultButtonPadding,
+    onItemSelected: (index: Int, item: T) -> Unit
 ) {
     DemoSegmentedButtons(
         modifier = modifier,
@@ -44,6 +51,7 @@ fun <T> DemoSegmentedButtons(
         shape = shape,
         color = color,
         colorOnColor = colorOnColor,
+        buttonPadding = buttonPadding,
         onItemSelected = {
             val item = items[it]
             onItemSelected(it, item)
@@ -59,6 +67,7 @@ fun DemoSegmentedButtons(
     shape: CornerBasedShape = MaterialTheme.shapes.medium,
     color: Color = MaterialTheme.colorScheme.primary,
     colorOnColor: Color = MaterialTheme.colorScheme.onPrimary,
+    buttonPadding: PaddingValues = DefaultButtonPadding,
     onItemSelected: (index: Int) -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(initialSelectedIndex) }
@@ -99,12 +108,6 @@ fun DemoSegmentedButtons(
             ) {
                 if (it == index) colorOnColor else color.copy(alpha = 0.9f)
             }
-
-            // ButtonDefaults.ContentPadding => 24/8 => we want less here!
-            val buttonPadding = PaddingValues(
-                horizontal = 8.dp,
-                vertical = 4.dp
-            )
 
             OutlinedButton(
                 modifier = Modifier
