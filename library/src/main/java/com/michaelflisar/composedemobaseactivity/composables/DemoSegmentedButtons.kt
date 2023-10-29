@@ -114,12 +114,7 @@ fun DemoSegmentedButtons(
                     modifier = Modifier
                         .wrapContentWidth()
                         .offset((-1 * index).dp, 0.dp)
-                        .zIndex(if (selectedIndex == index) 1f else 0f)
-                        .then(
-                            if (enforceMinimumInteractiveComponent) {
-                                Modifier
-                            } else Modifier.padding(4.dp)
-                        ),
+                        .zIndex(if (selectedIndex == index) 1f else 0f),
                     onClick = {
                         selectedIndex = index
                         onItemSelected(selectedIndex)
@@ -133,7 +128,10 @@ fun DemoSegmentedButtons(
                     Text(
                         text = item,
                         fontWeight = FontWeight.Normal,
-                        color = colorForeground
+                        color = colorForeground,
+                        modifier = if (enforceMinimumInteractiveComponent) {
+                            Modifier
+                        } else Modifier.padding(4.dp)
                     )
                 }
             }
