@@ -8,7 +8,9 @@ A simple base activity in compose used in all my compose libraries inside the de
 Provides following:
 
 * a base activity that supports dark/light/system theme
+* a toast helper
 * ui elements for
+  * app theme settings
   * expandable regions
   * segmented button
 
@@ -18,3 +20,7 @@ Provides following:
 |:-|-:|:-:|
 | [Compose BOM](https://developer.android.com/jetpack/compose/bom/bom) | `2023.10.01` | [Mapping](https://developer.android.com/jetpack/compose/bom/bom-mapping) |
 | Material3 | `1.1.2` | |
+
+### Screenshot
+
+![Demo](screenshots/demo.jpg)
