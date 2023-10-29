@@ -7,14 +7,18 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -26,14 +30,43 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 
 @Composable
-fun SegmentedButtons(
+fun <T> DemoSegmentedButtons(
     modifier: Modifier = Modifier,
-    items: List<String>,
-    selectedIndex: Int,
+    items: List<T>,
+    itemToText: (T) -> String,
+    selectedIndex: Int = 0,
     shape: CornerBasedShape = MaterialTheme.shapes.medium,
     color: Color = MaterialTheme.colorScheme.primary,
     colorOnColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onItemSelected: (selectedItemIndex: Int) -> Unit
+    enforceMinimumInteractiveComponent: Boolean = false,
+    onItemSelected: (item: T, index: Int) -> Unit
+) {
+    DemoSegmentedButtons(
+        modifier = modifier,
+        items = items.map(itemToText),
+        selectedIndex = selectedIndex,
+        shape = shape,
+        color = color,
+        colorOnColor = colorOnColor,
+        enforceMinimumInteractiveComponent = enforceMinimumInteractiveComponent,
+        onItemSelected = {
+            val item = items[it]
+            onItemSelected(item, it)
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DemoSegmentedButtons(
+    modifier: Modifier = Modifier,
+    items: List<String>,
+    selectedIndex: Int = 0,
+    shape: CornerBasedShape = MaterialTheme.shapes.medium,
+    color: Color = MaterialTheme.colorScheme.primary,
+    colorOnColor: Color = MaterialTheme.colorScheme.onPrimary,
+    enforceMinimumInteractiveComponent: Boolean = false,
+    onItemSelected: (index: Int) -> Unit
 ) {
     var selectedIndex by remember(selectedIndex) { mutableIntStateOf(selectedIndex) }
     val cornerSize0 = CornerSize(0)
@@ -74,26 +107,35 @@ fun SegmentedButtons(
                 if (it == index) colorOnColor else color.copy(alpha = 0.9f)
             }
 
-            OutlinedButton(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .offset((-1 * index).dp, 0.dp)
-                    .zIndex(if (selectedIndex == index) 1f else 0f),
-                onClick = {
-                    selectedIndex = index
-                    onItemSelected(selectedIndex)
-                },
-                shape = shapeOfIndex,
-                border = BorderStroke(1.dp, colorBorder),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = colorBackground
-                )
+            CompositionLocalProvider(
+                LocalMinimumInteractiveComponentEnforcement provides enforceMinimumInteractiveComponent
             ) {
-                Text(
-                    text = item,
-                    fontWeight = FontWeight.Normal,
-                    color = colorForeground
-                )
+                OutlinedButton(
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .offset((-1 * index).dp, 0.dp)
+                        .zIndex(if (selectedIndex == index) 1f else 0f)
+                        .then(
+                            if (enforceMinimumInteractiveComponent) {
+                                Modifier
+                            } else Modifier.padding(4.dp)
+                        ),
+                    onClick = {
+                        selectedIndex = index
+                        onItemSelected(selectedIndex)
+                    },
+                    shape = shapeOfIndex,
+                    border = BorderStroke(1.dp, colorBorder),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = colorBackground
+                    )
+                ) {
+                    Text(
+                        text = item,
+                        fontWeight = FontWeight.Normal,
+                        color = colorForeground
+                    )
+                }
             }
         }
     }

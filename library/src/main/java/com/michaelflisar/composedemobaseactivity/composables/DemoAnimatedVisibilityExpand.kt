@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun AnimatedVisibilityExpand(
+fun DemoAnimatedVisibilityExpand(
     visible: Boolean,
     modifier: Modifier = Modifier,
     content: @Composable AnimatedVisibilityScope.() -> Unit

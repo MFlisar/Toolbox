@@ -39,13 +39,17 @@ fun DemoAppThemeRegion(
     onExpandedChanged: (expanded: Boolean) -> Unit
 ) {
     val scope = rememberCoroutineScope()
-    CollapsibleRegion("App Theme", isExpanded = isExpanded, onExpandedChanged = onExpandedChanged) {
+    DemoCollapsibleRegion(
+        "App Theme",
+        isExpanded = isExpanded,
+        onExpandedChanged = onExpandedChanged
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text("Theme", modifier = Modifier.weight(1f))
-            SegmentedButtons(
+            DemoSegmentedButtons(
                 items = DemoTheme.values().map { it.name },
                 selectedIndex = theme.ordinal
             ) {
@@ -59,7 +63,7 @@ fun DemoAppThemeRegion(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text("Dynamic Theme", modifier = Modifier.weight(1f))
-            SegmentedButtons(
+            DemoSegmentedButtons(
                 items = listOf("Yes", "No"),
                 selectedIndex = if (dynamicTheme) 0 else 1
             ) {

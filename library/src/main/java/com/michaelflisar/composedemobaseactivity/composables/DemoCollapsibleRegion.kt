@@ -30,14 +30,14 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CollapsibleRegion(
+fun DemoCollapsibleRegion(
     title: String,
     info: String = "",
     id: Int,
     expandedIds: SnapshotStateList<Int>,
     content: @Composable () -> Unit
 ) {
-    CollapsibleRegion(
+    DemoCollapsibleRegion(
         title,
         info,
         isExpanded = expandedIds.contains(id),
@@ -49,7 +49,7 @@ fun CollapsibleRegion(
 }
 
 @Composable
-fun CollapsibleRegion(
+fun DemoCollapsibleRegion(
     title: String,
     info: String = "",
     isExpanded: Boolean,
@@ -57,7 +57,7 @@ fun CollapsibleRegion(
     content: @Composable () -> Unit
 ) {
     Column {
-        val transitionState = remember(isExpanded) { MutableTransitionState(isExpanded) }
+        val transitionState = remember { MutableTransitionState(isExpanded) }
         transitionState.targetState = isExpanded
         val transition = updateTransition(transitionState, label = "transition")
 
@@ -96,7 +96,7 @@ fun CollapsibleRegion(
                 tint = MaterialTheme.colorScheme.onPrimary
             )
         }
-        AnimatedVisibilityExpand(visible = isExpanded) {
+        DemoAnimatedVisibilityExpand(visible = isExpanded) {
             Column(
                 modifier = Modifier.padding(all = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
