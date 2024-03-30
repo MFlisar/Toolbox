@@ -60,10 +60,6 @@ dependencies {
     implementation(deps.kotpreferences.core)
     implementation(deps.kotpreferences.datastore)
     implementation(deps.kotpreferences.compose)
-
-    // Dialogs
-    implementation(deps.composedialogs.core)
-    implementation(deps.composedialogs.dialog.list)
 }
 
 project.afterEvaluate {
