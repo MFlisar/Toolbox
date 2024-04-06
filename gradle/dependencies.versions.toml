@@ -1,7 +1,7 @@
 [versions]
 
 # mflisar
-kotpreferences = 		    "0.4"
+kotpreferences = 		    "0.4" # must not always be the newest version, this library is just used in the demo apps
 
 # ---------
 # libraries
