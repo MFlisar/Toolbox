@@ -97,9 +97,6 @@ abstract class DemoActivity(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            DemoAppThemeRegionDetailed(
-                state = regionsState
-            )
             Content(regionsState)
         }
     }
