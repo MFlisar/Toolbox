@@ -28,7 +28,7 @@ import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 
-abstract class MainActivity(
+abstract class DemoActivity(
     private val scrollableContent: Boolean = true
 ) : ComponentActivity() {
 
