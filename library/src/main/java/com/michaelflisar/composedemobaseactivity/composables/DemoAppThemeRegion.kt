@@ -2,10 +2,14 @@ package com.michaelflisar.composedemobaseactivity.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ColorLens
+import androidx.compose.material.icons.filled.FormatPaint
+import androidx.compose.material.icons.filled.Style
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -14,12 +18,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-inline fun <reified T: Enum<T>> DemoAppThemeRegion(
+inline fun <reified T : Enum<T>> DemoAppThemeRegion(
     regionId: Int,
     theme: DemoTheme<T>,
     crossinline onThemeChanged: suspend (theme: DemoTheme<T>) -> Unit,
-    dynamicTheme: Boolean,
-    expandedRegionsState: ExpandedRegionState,
+    expandedRegionsState: ExpandedRegionState
 ) {
     val scope = rememberCoroutineScope()
     DemoCollapsibleRegion(
@@ -31,14 +34,16 @@ inline fun <reified T: Enum<T>> DemoAppThemeRegion(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text("Theme", modifier = Modifier.weight(1f))
+            Icon(Icons.Default.ColorLens, null)
+            Text("Base Theme", modifier = Modifier.weight(1f))
             DemoSegmentedButtons(
-                items = DemoTheme.Theme.entries,
+                modifier = Modifier.weight(1f),
+                items = enumValues<T>().toList(),
                 itemToText = { it.name },
-                initialSelectedIndex = theme.theme.ordinal
+                initialSelectedIndex = theme.baseTheme.ordinal
             ) { _, item ->
                 scope.launch(Dispatchers.IO) {
-                    onThemeChanged(theme.copy(theme = item))
+                    onThemeChanged(theme.copy(baseTheme = item))
                 }
             }
         }
@@ -46,11 +51,12 @@ inline fun <reified T: Enum<T>> DemoAppThemeRegion(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            Icon(Icons.Default.Style, null)
             Text("Color Scheme", modifier = Modifier.weight(1f))
-            DemoSegmentedButtons(
-                items = enumValues<T>().toList(),
-                itemToText = { it.name },
-                initialSelectedIndex = theme.colorScheme.ordinal
+            DemoDropdown(
+                modifier = Modifier.weight(1f),
+                items = theme.availableColorSchemes,
+                selected = theme.colorScheme
             ) { _, item ->
                 scope.launch(Dispatchers.IO) {
                     onThemeChanged(theme.copy(colorScheme = item))
@@ -61,10 +67,12 @@ inline fun <reified T: Enum<T>> DemoAppThemeRegion(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            Icon(Icons.Default.FormatPaint, null)
             Text("Dynamic Theme", modifier = Modifier.weight(1f))
             DemoSegmentedButtons(
+                modifier = Modifier.weight(1f),
                 items = listOf("Yes", "No"),
-                initialSelectedIndex = if (dynamicTheme) 0 else 1
+                initialSelectedIndex = if (theme.dynamic) 0 else 1
             ) {
                 scope.launch(Dispatchers.IO) {
                     onThemeChanged(theme.copy(dynamic = it == 0))
