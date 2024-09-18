@@ -33,13 +33,16 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun DemoCollapsibleRegion(
     title: String,
-    info: String = "",
     regionId: Int,
     expandedRegionsState: ExpandedRegionState,
+    modifier: Modifier = Modifier,
+    info: String = "",
     content: @Composable ColumnScope.() -> Unit
 ) {
     val isExpanded = expandedRegionsState.isExpanded(regionId)
-    Column {
+    Column(
+        modifier
+    ) {
         val transitionState = remember { MutableTransitionState(isExpanded) }
         transitionState.targetState = isExpanded
         val transition = updateTransition(transitionState, label = "transition")

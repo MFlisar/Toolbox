@@ -22,10 +22,12 @@ inline fun <reified T : Enum<T>> DemoAppThemeRegion(
     regionId: Int,
     theme: DemoTheme<T>,
     crossinline onThemeChanged: suspend (theme: DemoTheme<T>) -> Unit,
-    expandedRegionsState: ExpandedRegionState
+    expandedRegionsState: ExpandedRegionState,
+    modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
     DemoCollapsibleRegion(
+        modifier = modifier,
         title = "App Theme",
         regionId = regionId,
         expandedRegionsState = expandedRegionsState
