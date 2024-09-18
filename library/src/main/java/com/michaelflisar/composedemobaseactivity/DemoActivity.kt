@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composedemobaseactivity.classes.DemoPrefs
 import com.michaelflisar.composedemobaseactivity.composables.DemoAppThemeRegionDetailed
+import com.michaelflisar.composedemobaseactivity.composables.ExpandedRegionState
 import com.michaelflisar.composedemobaseactivity.composables.rememberExpandedRegions
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
@@ -33,7 +34,7 @@ abstract class DemoActivity(
 ) : ComponentActivity() {
 
     @Composable
-    abstract fun ColumnScope.Content()
+    abstract fun ColumnScope.Content(regionsState: ExpandedRegionState)
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +100,7 @@ abstract class DemoActivity(
             DemoAppThemeRegionDetailed(
                 state = regionsState
             )
-            Content()
+            Content(regionsState)
         }
     }
 }
