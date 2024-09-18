@@ -1,9 +1,34 @@
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.gradle.maven.publish.plugin)
     id("maven-publish")
 }
+
+// -------------------
+// Informations
+// -------------------
+
+// Module
+val artifactId = "library"
+
+// Library
+val libraryName = "ComposeDemoBaseActivity"
+val libraryDescription = "ComposeDemoBaseActivity - $artifactId module"
+val groupID = "io.github.mflisar.composedemobaseactivity"
+val release = 2021
+val github = "https://github.com/MFlisar/ComposeDemoBaseActivity"
+val license = "Apache License 2.0"
+val licenseUrl = "$github/blob/main/LICENSE"
+
+// -------------------
+// Setup
+// -------------------
 
 android {
 
@@ -17,6 +42,15 @@ android {
 
     defaultConfig {
         minSdk = app.versions.minSdk.get().toInt()
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            consumerProguardFiles("proguard-rules.pro")
+        }
     }
 
     compileOptions {
@@ -26,10 +60,6 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = compose.versions.compiler.get()
     }
 }
 
@@ -42,32 +72,56 @@ dependencies {
     implementation(libs.kotlin)
 
     // ------------------------
-    // AndroidX
+    // AndroidX / Google / Goolge
     // ------------------------
 
-    // Compose
-    implementation(platform(compose.bom))
-    implementation(compose.material3)
-    implementation(compose.activity)
-    implementation(compose.material.extendedicons)
-    implementation(compose.drawablepainter)
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.activity.compose)
 
-    // ------------------------
-    // Libraries
-    // ------------------------
+    implementation(libs.compose.material3)
 
-    // KotPreferences
-    implementation(deps.kotpreferences.core)
-    implementation(deps.kotpreferences.datastore)
-    implementation(deps.kotpreferences.compose)
 }
 
-project.afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                from(components["release"])
+
+mavenPublishing {
+
+    configure(AndroidSingleVariantLibrary("release", true, true))
+
+    coordinates(
+        groupId = groupID,
+        artifactId = artifactId,
+        version = System.getenv("TAG")
+    )
+
+    pom {
+        name.set(libraryName)
+        description.set(libraryDescription)
+        inceptionYear.set("$release")
+        url.set(github)
+
+        licenses {
+            license {
+                name.set(license)
+                url.set(licenseUrl)
             }
         }
+
+        developers {
+            developer {
+                id.set("mflisar")
+                name.set("Michael Flisar")
+                email.set("mflisar.development@gmail.com")
+            }
+        }
+
+        scm {
+            url.set(github)
+        }
     }
+
+    // Configure publishing to Maven Central
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    // Enable GPG signing for all publications
+    signAllPublications()
 }

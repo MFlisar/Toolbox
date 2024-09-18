@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.Toast
 
 /*
- * don't copy this, it's jsut for demo purposes, this is not the way to do it!
+ * don't copy this, it's just for demo purposes, this is not the way to do it!
  */
 object ToastHelper {
 

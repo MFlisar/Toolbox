@@ -15,6 +15,13 @@ Provides following:
   * segmented button
   * a compose list saver that also saves an empty list
 
+### Dependencies
+
+| Dependency |      Version | Infos |
+|:-|-------------:|:-:|
+| [Compose BOM](https://developer.android.com/jetpack/compose/bom/bom) | `2024.02.01` | [Mapping](https://developer.android.com/jetpack/compose/bom/bom-mapping) |
+| Material3 |      `1.2.0` | |
+
 ### Screenshot
 
 ![Demo](screenshots/demo.jpg)

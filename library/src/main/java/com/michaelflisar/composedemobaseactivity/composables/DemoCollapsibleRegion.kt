@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,29 +34,11 @@ import androidx.compose.ui.unit.dp
 fun DemoCollapsibleRegion(
     title: String,
     info: String = "",
-    id: Int,
-    expandedIds: SnapshotStateList<Int>,
-    content: @Composable () -> Unit
+    regionId: Int,
+    expandedRegionsState: ExpandedRegionState,
+    content: @Composable ColumnScope.() -> Unit
 ) {
-    DemoCollapsibleRegion(
-        title,
-        info,
-        isExpanded = expandedIds.contains(id),
-        onExpandedChanged = { expanded ->
-            if (expanded) expandedIds.add(id) else expandedIds.remove(id)
-        },
-        content
-    )
-}
-
-@Composable
-fun DemoCollapsibleRegion(
-    title: String,
-    info: String = "",
-    isExpanded: Boolean,
-    onExpandedChanged: (expanded: Boolean) -> Unit,
-    content: @Composable () -> Unit
-) {
+    val isExpanded = expandedRegionsState.isExpanded(regionId)
     Column {
         val transitionState = remember { MutableTransitionState(isExpanded) }
         transitionState.targetState = isExpanded
@@ -74,7 +57,7 @@ fun DemoCollapsibleRegion(
                 .background(MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)
                 .clip(MaterialTheme.shapes.medium)
                 .clickable {
-                    onExpandedChanged(!isExpanded)
+                    expandedRegionsState.toggle(regionId)
                 }
                 .padding(vertical = 8.dp, horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
