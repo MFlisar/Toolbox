@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
-    id("maven-publish")
 }
 
 // -------------------
