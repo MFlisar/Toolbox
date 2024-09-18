@@ -1,28 +1,39 @@
 package com.michaelflisar.composedemobaseactivity.composables
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.FormatPaint
 import androidx.compose.material.icons.filled.Style
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.composedemobaseactivity.classes.DemoTheme
+import com.michaelflisar.composedemobaseactivity.classes.DemoPrefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-inline fun <reified T : Enum<T>> DemoAppThemeRegion(
+fun DemoAppThemeRegion(
     regionId: Int,
-    theme: DemoTheme<T>,
-    crossinline onThemeChanged: suspend (theme: DemoTheme<T>) -> Unit,
-    expandedRegionsState: ExpandedRegionState,
+    state: ExpandedRegionState,
     modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
@@ -30,7 +41,7 @@ inline fun <reified T : Enum<T>> DemoAppThemeRegion(
         modifier = modifier,
         title = "App Theme",
         regionId = regionId,
-        expandedRegionsState = expandedRegionsState
+        state = state
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -39,7 +50,7 @@ inline fun <reified T : Enum<T>> DemoAppThemeRegion(
             Icon(Icons.Default.ColorLens, null)
             Text("Base Theme", modifier = Modifier.weight(1f))
             DemoSegmentedButtons(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(2f),
                 items = enumValues<T>().toList(),
                 itemToText = { it.name },
                 initialSelectedIndex = theme.baseTheme.ordinal
@@ -56,7 +67,7 @@ inline fun <reified T : Enum<T>> DemoAppThemeRegion(
             Icon(Icons.Default.Style, null)
             Text("Color Scheme", modifier = Modifier.weight(1f))
             DemoDropdown(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(2f),
                 items = theme.availableColorSchemes,
                 selected = theme.colorScheme
             ) { _, item ->
@@ -72,7 +83,7 @@ inline fun <reified T : Enum<T>> DemoAppThemeRegion(
             Icon(Icons.Default.FormatPaint, null)
             Text("Dynamic Theme", modifier = Modifier.weight(1f))
             DemoSegmentedButtons(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(2f),
                 items = listOf("Yes", "No"),
                 initialSelectedIndex = if (theme.dynamic) 0 else 1
             ) {
@@ -81,5 +92,111 @@ inline fun <reified T : Enum<T>> DemoAppThemeRegion(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun DemoAppThemeRegionDetailed(
+    state: ExpandedRegionState
+) {
+    val showLabels = rememberSaveable { mutableStateOf(true) }
+    DemoCollapsibleRegion(
+        title = "Theme - Color Scheme",
+        regionId = -1,
+        state = state
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Theme (${ComposeTheme.getRegisteredThemes().size} themes available)", style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.weight(1f))
+            Text("Labels", style = MaterialTheme.typography.labelSmall)
+            Checkbox(
+                checked = showLabels.value,
+                onCheckedChange = {
+                    showLabels.value = it
+                }
+            )
+        }
+        val baseTheme = DemoPrefs.baseTheme.collectAsStateNotNull()
+        val dynamic = DemoPrefs.dynamic.collectAsStateNotNull()
+        val themeKey = DemoPrefs.themeKey.collectAsStateNotNull()
+
+        if (dynamic) {
+            Text(
+                "If dynamic theme is enabled the selected theme won't have any impact as colors are derived dynamically from the current wallpaper!",
+                style = MaterialTheme.typography.bodySmall
+            )
+        } else {
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                ComposeTheme.getRegisteredThemes()
+                    .forEach {
+                        FilterChip(
+                            selected = themeKey.value == it.key,
+                            onClick = {
+                                scope.launch {
+                                    DemoPrefs.themeKey.update(it.key)
+                                }
+                            },
+                            label = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    if (showLabels.value) {
+                                        Text(it.key)
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .size(16.dp)
+                                            .clip(CircleShape)
+                                            .background(if (baseTheme.isDark()) it.colorSchemeDark.primary else it.colorSchemeLight.primary)
+                                    )
+                                }
+
+                            },
+                            leadingIcon = if (selected.value == it.key) {
+                                {
+                                    Icon(Icons.Default.Check, contentDescription = null)
+                                }
+                            } else null
+                        )
+                    }
+            }
+            Text(
+                "Selected Theme: ${themeKey.value}",
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+    }
+    DemoCollapsibleRegion(
+        title = "Theme - Style",
+        regionId = -2,
+        state = state
+    ) {
+        Text("Base Theme ", style = MaterialTheme.typography.titleMedium)
+        DemoSegmentedButtons(
+            items = ComposeTheme.BaseTheme.entries,
+            itemToText = { it.name },
+            initialSelectedIndex = ComposeTheme.BaseTheme.entries.indexOf(baseTheme),
+            onItemSelected = { index, item ->
+                scope.launch {
+                    DemoPrefs.baseTheme.update(item)
+                }
+            }
+        )
+        Text("Enable dynamic theme?", style = MaterialTheme.typography.titleMedium)
+        DemoSegmentedButtons(
+            items = listOf("Yes", "No"),
+            initialSelectedIndex = if (dynamic) 0 else 1,
+            onItemSelected = { index ->
+                scope.launch {
+                    DemoPrefs.dynamic.update(index == 0)
+                }
+            }
+        )
     }
 }

@@ -81,8 +81,11 @@ dependencies {
     implementation(libs.compose.material.icons.core)
     implementation(libs.compose.material.icons.extended)
 
-}
+    // mflisar
+    implementation(mflisar.kotpreferences)
+    implementation(mflisar.composethemer)
 
+}
 
 mavenPublishing {
 

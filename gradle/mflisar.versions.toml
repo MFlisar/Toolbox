@@ -1,0 +1,11 @@
+[versions]
+
+kotpreferences =                "0.6.0"
+composethemer =                 "0.3.0"
+
+[plugins]
+
+[libraries]
+
+kotpreferences =                    { module = "io.github.mflisar.kotpreferences:library", 			version.ref = "kotpreferences" }
+composethemer =                     { module = "io.github.mflisar.composethemer:library", 			version.ref = "composethemer" }

@@ -23,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,12 +33,12 @@ import androidx.compose.ui.unit.dp
 fun DemoCollapsibleRegion(
     title: String,
     regionId: Int,
-    expandedRegionsState: ExpandedRegionState,
+    state: ExpandedRegionState,
     modifier: Modifier = Modifier,
     info: String = "",
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val isExpanded = expandedRegionsState.isExpanded(regionId)
+    val isExpanded = state.isExpanded(regionId)
     Column(
         modifier
     ) {
@@ -60,7 +59,7 @@ fun DemoCollapsibleRegion(
                 .background(MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)
                 .clip(MaterialTheme.shapes.medium)
                 .clickable {
-                    expandedRegionsState.toggle(regionId)
+                    state.toggle(regionId)
                 }
                 .padding(vertical = 8.dp, horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically,

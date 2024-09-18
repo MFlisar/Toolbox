@@ -18,6 +18,9 @@ dependencyResolutionManagement {
         create("app") {
             from(files("gradle/app.versions.toml"))
         }
+        create("mflisar") {
+            from(files("gradle/mflisar.versions.toml"))
+        }
     }
 }
 
