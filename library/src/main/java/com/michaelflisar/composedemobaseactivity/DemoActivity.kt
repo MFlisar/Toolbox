@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composedemobaseactivity.classes.DemoPrefs
-import com.michaelflisar.composedemobaseactivity.composables.DemoAppThemeRegionDetailed
 import com.michaelflisar.composedemobaseactivity.composables.ExpandedRegionState
 import com.michaelflisar.composedemobaseactivity.composables.rememberExpandedRegions
 import com.michaelflisar.composethemer.ComposeTheme
@@ -34,7 +33,7 @@ abstract class DemoActivity(
 ) : ComponentActivity() {
 
     @Composable
-    abstract fun ColumnScope.Content(regionsState: ExpandedRegionState)
+    abstract fun ColumnScope.Content(regionsState: ExpandedRegionState, themeState: ComposeTheme.State)
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +75,8 @@ abstract class DemoActivity(
                                     ) else Modifier
                                 )
                                 .padding(padding)
-                                .padding(16.dp)
+                                .padding(16.dp),
+                            state
                         )
                     }
                 )
@@ -90,14 +90,15 @@ abstract class DemoActivity(
 
     @Composable
     private fun Content(
-        modifier: Modifier
+        modifier: Modifier,
+        state: ComposeTheme.State
     ) {
         val regionsState = rememberExpandedRegions(listOf(1))
         Column(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Content(regionsState)
+            Content(regionsState, state)
         }
     }
 }

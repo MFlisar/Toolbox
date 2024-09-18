@@ -82,10 +82,10 @@ dependencies {
     implementation(libs.compose.material.icons.extended)
 
     // mflisar
-    implementation(mflisar.kotpreferences.core)
+    api(mflisar.kotpreferences.core)
     implementation(mflisar.kotpreferences.datastore)
-    implementation(mflisar.kotpreferences.compose)
-    implementation(mflisar.composethemer.core)
+    api(mflisar.kotpreferences.compose)
+    api(mflisar.composethemer.core)
     implementation(mflisar.composethemer.themes)
 
 }
