@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowRight
 import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -359,7 +360,7 @@ private fun Item(item: DemoPopupMenuItem, index: Int, autoDismiss: Boolean, stat
                 },
                 trailingIcon = {
                     Icon(
-                        imageVector = Icons.Default.ArrowRight,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowRight,
                         contentDescription = null,
                         modifier = Modifier.size(24.dp)
                     )
@@ -369,7 +370,7 @@ private fun Item(item: DemoPopupMenuItem, index: Int, autoDismiss: Boolean, stat
 
         is DemoPopupMenuItem.Separator -> {
             if (item.text.isEmpty()) {
-                Divider()
+                HorizontalDivider()
             } else {
                 Text(
                     modifier = Modifier.padding(all = 8.dp),
@@ -415,6 +416,7 @@ data class MenuState(
         show()
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> requireData() = data.value as T
 
     fun hide() {

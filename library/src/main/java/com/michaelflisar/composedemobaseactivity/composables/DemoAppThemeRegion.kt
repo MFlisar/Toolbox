@@ -1,5 +1,6 @@
 package com.michaelflisar.composedemobaseactivity.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -27,6 +29,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composedemobaseactivity.classes.DemoPrefs
+import com.michaelflisar.composedemobaseactivity.classes.DemoTheme
+import com.michaelflisar.composethemer.ComposeTheme
+import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -37,6 +42,11 @@ fun DemoAppThemeRegion(
     modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
+
+    val baseTheme by DemoPrefs.baseTheme.collectAsStateNotNull()
+    val dynamic by DemoPrefs.dynamic.collectAsStateNotNull()
+    val themeKey by DemoPrefs.themeKey.collectAsStateNotNull()
+
     DemoCollapsibleRegion(
         modifier = modifier,
         title = "App Theme",
@@ -51,12 +61,12 @@ fun DemoAppThemeRegion(
             Text("Base Theme", modifier = Modifier.weight(1f))
             DemoSegmentedButtons(
                 modifier = Modifier.weight(2f),
-                items = enumValues<T>().toList(),
+                items = ComposeTheme.BaseTheme.entries,
                 itemToText = { it.name },
-                initialSelectedIndex = theme.baseTheme.ordinal
+                initialSelectedIndex = ComposeTheme.BaseTheme.entries.indexOf(baseTheme)
             ) { _, item ->
                 scope.launch(Dispatchers.IO) {
-                    onThemeChanged(theme.copy(baseTheme = item))
+                    DemoPrefs.baseTheme.update(item)
                 }
             }
         }
@@ -68,11 +78,11 @@ fun DemoAppThemeRegion(
             Text("Color Scheme", modifier = Modifier.weight(1f))
             DemoDropdown(
                 modifier = Modifier.weight(2f),
-                items = theme.availableColorSchemes,
-                selected = theme.colorScheme
+                items = ComposeTheme.getRegisteredThemes().map { it.key },
+                selected = themeKey
             ) { _, item ->
                 scope.launch(Dispatchers.IO) {
-                    onThemeChanged(theme.copy(colorScheme = item))
+                    DemoPrefs.themeKey.update(item)
                 }
             }
         }
@@ -85,10 +95,10 @@ fun DemoAppThemeRegion(
             DemoSegmentedButtons(
                 modifier = Modifier.weight(2f),
                 items = listOf("Yes", "No"),
-                initialSelectedIndex = if (theme.dynamic) 0 else 1
+                initialSelectedIndex = if (dynamic) 0 else 1
             ) {
                 scope.launch(Dispatchers.IO) {
-                    onThemeChanged(theme.copy(dynamic = it == 0))
+                    DemoPrefs.dynamic.update(it == 0)
                 }
             }
         }
@@ -99,7 +109,13 @@ fun DemoAppThemeRegion(
 fun DemoAppThemeRegionDetailed(
     state: ExpandedRegionState
 ) {
+    val scope = rememberCoroutineScope()
     val showLabels = rememberSaveable { mutableStateOf(true) }
+
+    val baseTheme by DemoPrefs.baseTheme.collectAsStateNotNull()
+    val dynamic by DemoPrefs.dynamic.collectAsStateNotNull()
+    val themeKey by DemoPrefs.themeKey.collectAsStateNotNull()
+
     DemoCollapsibleRegion(
         title = "Theme - Color Scheme",
         regionId = -1,
@@ -108,7 +124,7 @@ fun DemoAppThemeRegionDetailed(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Theme (${ComposeTheme.getRegisteredThemes().size} themes available)", style = MaterialTheme.typography.titleMedium)
+            Text("${ComposeTheme.getRegisteredThemes().size} themes available", style = MaterialTheme.typography.labelSmall)
             Spacer(modifier = Modifier.weight(1f))
             Text("Labels", style = MaterialTheme.typography.labelSmall)
             Checkbox(
@@ -118,9 +134,7 @@ fun DemoAppThemeRegionDetailed(
                 }
             )
         }
-        val baseTheme = DemoPrefs.baseTheme.collectAsStateNotNull()
-        val dynamic = DemoPrefs.dynamic.collectAsStateNotNull()
-        val themeKey = DemoPrefs.themeKey.collectAsStateNotNull()
+
 
         if (dynamic) {
             Text(
@@ -135,7 +149,7 @@ fun DemoAppThemeRegionDetailed(
                 ComposeTheme.getRegisteredThemes()
                     .forEach {
                         FilterChip(
-                            selected = themeKey.value == it.key,
+                            selected = themeKey == it.key,
                             onClick = {
                                 scope.launch {
                                     DemoPrefs.themeKey.update(it.key)
@@ -158,7 +172,7 @@ fun DemoAppThemeRegionDetailed(
                                 }
 
                             },
-                            leadingIcon = if (selected.value == it.key) {
+                            leadingIcon = if (themeKey == it.key) {
                                 {
                                     Icon(Icons.Default.Check, contentDescription = null)
                                 }
@@ -167,7 +181,7 @@ fun DemoAppThemeRegionDetailed(
                     }
             }
             Text(
-                "Selected Theme: ${themeKey.value}",
+                "Selected Theme: $themeKey",
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -177,26 +191,40 @@ fun DemoAppThemeRegionDetailed(
         regionId = -2,
         state = state
     ) {
-        Text("Base Theme ", style = MaterialTheme.typography.titleMedium)
-        DemoSegmentedButtons(
-            items = ComposeTheme.BaseTheme.entries,
-            itemToText = { it.name },
-            initialSelectedIndex = ComposeTheme.BaseTheme.entries.indexOf(baseTheme),
-            onItemSelected = { index, item ->
-                scope.launch {
-                    DemoPrefs.baseTheme.update(item)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(Icons.Default.ColorLens, null)
+            Text("Base Theme", modifier = Modifier.weight(1f))
+            DemoSegmentedButtons(
+                modifier = Modifier.weight(2f),
+                items = ComposeTheme.BaseTheme.entries,
+                itemToText = { it.name },
+                initialSelectedIndex = ComposeTheme.BaseTheme.entries.indexOf(baseTheme),
+                onItemSelected = { index, item ->
+                    scope.launch {
+                        DemoPrefs.baseTheme.update(item)
+                    }
                 }
-            }
-        )
-        Text("Enable dynamic theme?", style = MaterialTheme.typography.titleMedium)
-        DemoSegmentedButtons(
-            items = listOf("Yes", "No"),
-            initialSelectedIndex = if (dynamic) 0 else 1,
-            onItemSelected = { index ->
-                scope.launch {
-                    DemoPrefs.dynamic.update(index == 0)
+            )
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(Icons.Default.FormatPaint, null)
+            Text("Dynamic Theme", modifier = Modifier.weight(1f))
+            DemoSegmentedButtons(
+                modifier = Modifier.weight(2f),
+                items = listOf("Yes", "No"),
+                initialSelectedIndex = if (dynamic) 0 else 1,
+                onItemSelected = { index ->
+                    scope.launch {
+                        DemoPrefs.dynamic.update(index == 0)
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }

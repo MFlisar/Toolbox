@@ -1,6 +1,6 @@
 <h1 align="center">Compose Demo Base Activity</h1>
 
-A simple base activity in compose used in all my compose libraries inside the demo modules with some common used UI composables.
+A simple base **android activity** in compose used in all my compose libraries inside the demo modules with some common used UI composables.
 
 ## :elephant: Gradle
 

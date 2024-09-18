@@ -25,6 +25,7 @@ import com.michaelflisar.composedemobaseactivity.classes.DemoPrefs
 import com.michaelflisar.composedemobaseactivity.composables.DemoAppThemeRegionDetailed
 import com.michaelflisar.composedemobaseactivity.composables.rememberExpandedRegions
 import com.michaelflisar.composethemer.ComposeTheme
+import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 
 abstract class MainActivity(
@@ -47,7 +48,7 @@ abstract class MainActivity(
 
             ComposeTheme(state = state) {
 
-                ComposeTheme.UpdateEdgeToEdgeDefault(state)
+                UpdateEdgeToEdgeDefault(this, state)
 
                 Scaffold(
                     topBar = {
@@ -74,8 +75,7 @@ abstract class MainActivity(
                                     ) else Modifier
                                 )
                                 .padding(padding)
-                                .padding(16.dp),
-                            content = content
+                                .padding(16.dp)
                         )
                     }
                 )
@@ -89,8 +89,7 @@ abstract class MainActivity(
 
     @Composable
     private fun Content(
-        modifier: Modifier,
-        content: @Composable ColumnScope.() -> Unit
+        modifier: Modifier
     ) {
         val regionsState = rememberExpandedRegions(listOf(1))
         Column(
@@ -100,8 +99,7 @@ abstract class MainActivity(
             DemoAppThemeRegionDetailed(
                 state = regionsState
             )
-
-            content()
+            Content()
         }
     }
 }
