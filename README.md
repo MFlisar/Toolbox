@@ -9,7 +9,8 @@ This library is distributed via [maven central](https://central.sonatype.com/).
 *build.gradle.kts*
 
 ```kts
-val composedemobaseactivity = "<LATEST-VERSION>"
+val demoutilities = "<LATEST-VERSION>"
 
-implementation("io.github.mflisar.composedemobaseactivity:library:$composedemobaseactivity")
+implementation("io.github.mflisar.demoutilities:core:$demoutilities")
+implementation("io.github.mflisar.demoutilities:app:$demoutilities")
 ```

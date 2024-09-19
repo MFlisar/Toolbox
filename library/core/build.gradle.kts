@@ -14,14 +14,14 @@ plugins {
 // -------------------
 
 // Module
-val artifactId = "library"
+val artifactId = "core"
 
 // Library
-val libraryName = "ComposeDemoBaseActivity"
-val libraryDescription = "ComposeDemoBaseActivity - $artifactId module"
-val groupID = "io.github.mflisar.composedemobaseactivity"
+val libraryName = "DemoUtilities"
+val libraryDescription = "DemoUtilities - $artifactId module"
+val groupID = "io.github.mflisar.demoutilities"
 val release = 2021
-val github = "https://github.com/MFlisar/ComposeDemoBaseActivity"
+val github = "https://github.com/MFlisar/DemoUtilities"
 val license = "Apache License 2.0"
 val licenseUrl = "$github/blob/main/LICENSE"
 
@@ -31,7 +31,7 @@ val licenseUrl = "$github/blob/main/LICENSE"
 
 android {
 
-    namespace = "com.michaelflisar.composedemobaseactivity"
+    namespace = "com.michaelflisar.demoutilities"
 
     compileSdk = app.versions.compileSdk.get().toInt()
 
@@ -80,13 +80,6 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.material.icons.core)
     implementation(libs.compose.material.icons.extended)
-
-    // mflisar
-    api(mflisar.kotpreferences.core)
-    implementation(mflisar.kotpreferences.datastore)
-    api(mflisar.kotpreferences.compose)
-    api(mflisar.composethemer.core)
-    implementation(mflisar.composethemer.themes)
 
 }
 

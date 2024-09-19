@@ -28,4 +28,8 @@ dependencyResolutionManagement {
 // Library
 // --------------
 
-include(":library")
+include(":DemoUtilities:Core")
+project(":DemoUtilities:Core").projectDir = file("library/core")
+
+include(":DemoUtilities:Modules:App")
+project(":DemoUtilities:Modules:App").projectDir = file("library/modules/app")
