@@ -1,4 +1,4 @@
-package com.michaelflisar.composedemobaseactivity.classes
+package com.michaelflisar.demoutilities.classes
 
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope

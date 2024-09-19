@@ -1,4 +1,4 @@
-package com.michaelflisar.composedemobaseactivity.classes
+package com.michaelflisar.demoutilities.classes
 
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.themes.themes.ThemeGreenForest
