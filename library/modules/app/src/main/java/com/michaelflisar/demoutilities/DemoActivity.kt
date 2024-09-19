@@ -33,6 +33,8 @@ abstract class DemoActivity(
     private val scrollableContent: Boolean = true
 ) : ComponentActivity() {
 
+    open val initialExpandedRegions: List<Int> = emptyList()
+
     @Composable
     abstract fun ColumnScope.Content(regionsState: ExpandedRegionState, themeState: ComposeTheme.State)
 
@@ -94,7 +96,7 @@ abstract class DemoActivity(
         modifier: Modifier,
         state: ComposeTheme.State
     ) {
-        val regionsState = rememberExpandedRegions(listOf(1))
+        val regionsState = rememberExpandedRegions(initialExpandedRegions)
         Column(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(8.dp)
