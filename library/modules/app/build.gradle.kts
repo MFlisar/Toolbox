@@ -71,7 +71,7 @@ dependencies {
     implementation(libs.kotlin)
 
     // ------------------------
-    // AndroidX / Google / Goolge
+    // KotlinX / AndroidX / Google
     // ------------------------
 
     implementation(libs.androidx.core)
@@ -81,15 +81,21 @@ dependencies {
     implementation(libs.compose.material.icons.core)
     implementation(libs.compose.material.icons.extended)
 
-    // Library
+    // ------------------------
+    // Modules
+    // ------------------------
+
     implementation(project(":DemoUtilities:Core"))
 
-    // mflisar
-    api(mflisar.kotpreferences.core)
-    implementation(mflisar.kotpreferences.datastore)
-    api(mflisar.kotpreferences.compose)
-    api(mflisar.composethemer.core)
-    implementation(mflisar.composethemer.themes)
+    // ------------------------
+    // Dependencies
+    // ------------------------
+
+    api(libs.kotpreferences.core)
+    implementation(libs.kotpreferences.datastore)
+    api(libs.kotpreferences.compose)
+    api(libs.composethemer.core)
+    implementation(libs.composethemer.themes)
 
 }
 
