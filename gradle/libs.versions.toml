@@ -17,13 +17,13 @@ android-library = 			        { id = "com.android.library", 	                    
 kotlin-android = 				    { id = "org.jetbrains.kotlin.android", 			    version.ref = "kotlin" }
 kotlin-parcelize =                  { id = "org.jetbrains.kotlin.plugin.parcelize",     version.ref = "kotlin"  }
 kotlin-compose = 				    { id = "org.jetbrains.kotlin.plugin.compose", 	    version.ref = "kotlin" }
-dokka =                             { id = "org.jetbrains.dokka",                       version.ref = "dokka" }
 
+dokka =                             { id = "org.jetbrains.dokka",                       version.ref = "dokka" }
 gradle-maven-publish-plugin =       { id = "com.vanniktech.maven.publish.base",         version.ref = "gradle-maven-publish-plugin" }
 
 [libraries]
 
-gradle =						    { module = "com.android.tools.build:gradle", 					version.ref = "gradle" }
+#gradle =						    { module = "com.android.tools.build:gradle", 					version.ref = "gradle" }
 
 kotlin =						    { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", 			version.ref = "kotlin" }
 compose-material-icons-core = 	    { module = "org.jetbrains.compose.material:material-icons-core",        version.ref = "compose" }

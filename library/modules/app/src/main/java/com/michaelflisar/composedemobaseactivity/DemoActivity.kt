@@ -26,6 +26,7 @@ import com.michaelflisar.composedemobaseactivity.composables.ExpandedRegionState
 import com.michaelflisar.composedemobaseactivity.composables.rememberExpandedRegions
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
+import com.michaelflisar.demoutilities.app.R
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 
 abstract class DemoActivity(

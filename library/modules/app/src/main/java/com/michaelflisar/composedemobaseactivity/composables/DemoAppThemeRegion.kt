@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composedemobaseactivity.classes.DemoPrefs
-import com.michaelflisar.composedemobaseactivity.classes.DemoTheme
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import kotlinx.coroutines.Dispatchers

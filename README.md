@@ -1,6 +1,9 @@
-<h1 align="center">Compose Demo Base Activity</h1>
+<h1 align="center">Demo Utilities</h1>
 
-A simple base **android activity** in compose used in all my compose libraries inside the demo modules with some common used UI composables.
+* common composables
+* a demo app and activity
+
+I use this library to create a demo activity in many of my open source libraries.
 
 ## :elephant: Gradle
 
