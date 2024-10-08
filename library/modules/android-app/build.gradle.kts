@@ -17,7 +17,7 @@ plugins {
 // -------------------
 
 // Module
-val artifactId = "core"
+val artifactId = "androidapp"
 
 // Library
 val libraryName = "PublicUtilities"
@@ -60,22 +60,35 @@ kotlin {
             // Kotlin
             implementation(libs.kotlin)
 
-            // Compose + AndroidX
+            // KotlinX / AndroidX / Google
+            implementation(libs.androidx.core)
+            implementation(libs.androidx.activity.compose)
             implementation(libs.compose.material3)
             implementation(libs.compose.material.icons.core)
             implementation(libs.compose.material.icons.extended)
 
-        }
+            // Dependencies
+            api(libs.lumberjack.core)
+            implementation(libs.lumberjack.implementation.lumberjack)
+            implementation(libs.lumberjack.logger.console)
+            implementation(libs.lumberjack.logger.file)
+            implementation(libs.lumberjack.composeviewer)
+            api(libs.kotpreferences.core)
+            implementation(libs.kotpreferences.datastore)
+            api(libs.kotpreferences.compose)
+            api(libs.composethemer.core)
+            implementation(libs.composethemer.themes)
 
-        androidMain.dependencies {
-            implementation(libs.androidx.core)
+            // Library
+            api(project(":PublicUtilities:Core"))
+
         }
     }
 }
 
 android {
 
-    namespace = "com.michaelflisar.demoutilities"
+    namespace = "com.michaelflisar.publicutilities.androidapp"
 
     compileSdk = app.versions.compileSdk.get().toInt()
 
@@ -85,6 +98,14 @@ android {
 
     defaultConfig {
         minSdk = app.versions.minSdk.get().toInt()
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            consumerProguardFiles("proguard-rules.pro")
+        }
     }
 
     compileOptions {

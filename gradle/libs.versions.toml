@@ -9,10 +9,13 @@ gradle-maven-publish-plugin =   "0.29.0"
 # KotlinX / AndroidX / Google
 androidx-core = 		        "1.13.1"
 androidx-activity = 		    "1.9.2"
+material =					    "1.12.0"
 
 # Dependencies
+lumberjack =                    "7.0.1"
 kotpreferences =                "0.6.1"
 composethemer =                 "0.3.1"
+aurora =                        "2.0-SNAPSHOT"
 
 [plugins]
 
@@ -20,8 +23,10 @@ android-application = 			    { id = "com.android.application",                  
 android-library = 			        { id = "com.android.library", 	                    version.ref = "gradle" }
 
 kotlin-android = 				    { id = "org.jetbrains.kotlin.android", 			    version.ref = "kotlin" }
+kotlin-multiplatform = 			    { id = "org.jetbrains.kotlin.multiplatform", 	    version.ref = "kotlin" }
 kotlin-parcelize =                  { id = "org.jetbrains.kotlin.plugin.parcelize",     version.ref = "kotlin"  }
 kotlin-compose = 				    { id = "org.jetbrains.kotlin.plugin.compose", 	    version.ref = "kotlin" }
+kotlin-serialization = 			    { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 compose =                           { id = "org.jetbrains.compose",                     version.ref = "compose" }
 dokka =                             { id = "org.jetbrains.dokka",                       version.ref = "dokka" }
@@ -30,17 +35,29 @@ gradle-maven-publish-plugin =       { id = "com.vanniktech.maven.publish.base", 
 
 [libraries]
 
-kotlin =						    { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", 			version.ref = "kotlin" }
+kotlin =						        { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", 			        version.ref = "kotlin" }
 
-compose-material-icons-core = 	    { module = "org.jetbrains.compose.material:material-icons-core",        version.ref = "compose" }
-compose-material-icons-extended = 	{ module = "org.jetbrains.compose.material:material-icons-extended",    version.ref = "compose" }
-compose-material3 =                 { module = "org.jetbrains.compose.material3:material3",                 version.ref = "compose" }
+compose-material-icons-core = 	        { module = "org.jetbrains.compose.material:material-icons-core",        version.ref = "compose" }
+compose-material-icons-extended = 	    { module = "org.jetbrains.compose.material:material-icons-extended",    version.ref = "compose" }
+compose-material3 =                     { module = "org.jetbrains.compose.material3:material3",                 version.ref = "compose" }
 
-androidx-core = 				    { module = "androidx.core:core-ktx", 						version.ref = "androidx-core" }
-androidx-activity-compose =         { module = "androidx.activity:activity-compose", 			version.ref = "androidx-activity" }
+androidx-core = 				        { module = "androidx.core:core-ktx", 						            version.ref = "androidx-core" }
+androidx-activity-compose =             { module = "androidx.activity:activity-compose", 			            version.ref = "androidx-activity" }
 
-kotpreferences-core =               { module = "io.github.mflisar.kotpreferences:core", 		        version.ref = "kotpreferences" }
-kotpreferences-datastore =          { module = "io.github.mflisar.kotpreferences:storage-datastore", 	version.ref = "kotpreferences" }
-kotpreferences-compose =            { module = "io.github.mflisar.kotpreferences:extension-compose", 	version.ref = "kotpreferences" }
-composethemer-core =                { module = "io.github.mflisar.composethemer:core", 			        version.ref = "composethemer" }
-composethemer-themes =              { module = "io.github.mflisar.composethemer:themes", 	            version.ref = "composethemer" }
+material = 				        	    { module = "com.google.android.material:material", 		                version.ref = "material" }
+
+lumberjack-core =                       { module = "io.github.mflisar.lumberjack:core", 		                version.ref = "lumberjack" }
+lumberjack-implementation-lumberjack =  { module = "io.github.mflisar.lumberjack:implementation-lumberjack",    version.ref = "lumberjack" }
+lumberjack-logger-console =             { module = "io.github.mflisar.lumberjack:logger-console",               version.ref = "lumberjack" }
+lumberjack-logger-file =                { module = "io.github.mflisar.lumberjack:logger-file",                  version.ref = "lumberjack" }
+lumberjack-composeviewer =              { module = "io.github.mflisar.lumberjack:extension-composeviewer",      version.ref = "lumberjack" }
+kotpreferences-core =                   { module = "io.github.mflisar.kotpreferences:core", 		            version.ref = "kotpreferences" }
+kotpreferences-datastore =              { module = "io.github.mflisar.kotpreferences:storage-datastore", 	    version.ref = "kotpreferences" }
+kotpreferences-compose =                { module = "io.github.mflisar.kotpreferences:extension-compose", 	    version.ref = "kotpreferences" }
+composethemer-core =                    { module = "io.github.mflisar.composethemer:core", 			            version.ref = "composethemer" }
+composethemer-themes =                  { module = "io.github.mflisar.composethemer:themes", 	                version.ref = "composethemer" }
+
+aurora-theming =                        { module = "org.pushing-pixels:aurora-theming", 	                    version.ref = "aurora" }
+aurora-component =                      { module = "org.pushing-pixels:aurora-component", 	                    version.ref = "aurora" }
+aurora-window =                         { module = "org.pushing-pixels:aurora-window", 	                        version.ref = "aurora" }
+

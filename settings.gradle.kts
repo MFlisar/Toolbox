@@ -5,6 +5,7 @@ dependencyResolutionManagement {
         google()
         gradlePluginPortal()
         maven("https://jitpack.io")
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
     }
 
     versionCatalogs {
@@ -28,8 +29,18 @@ pluginManagement {
 // Library
 // --------------
 
-include(":DemoUtilities:Core")
-project(":DemoUtilities:Core").projectDir = file("library/core")
+include(":PublicUtilities:Core")
+project(":PublicUtilities:Core").projectDir = file("library/core")
 
-include(":DemoUtilities:Modules:App")
-project(":DemoUtilities:Modules:App").projectDir = file("library/modules/app")
+include(":PublicUtilities:Modules:AndroidApp")
+project(":PublicUtilities:Modules:AndroidApp").projectDir = file("library/modules/android-app")
+
+include(":PublicUtilities:Modules:WindowsApp")
+project(":PublicUtilities:Modules:WindowsApp").projectDir = file("library/modules/windows-app")
+
+// --------------
+// App
+// --------------
+
+include(":demo:android")
+include(":demo:windows")

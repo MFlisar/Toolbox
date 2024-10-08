@@ -6,8 +6,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
 }
@@ -17,7 +17,7 @@ plugins {
 // -------------------
 
 // Module
-val artifactId = "core"
+val artifactId = "windowsapp"
 
 // Library
 val libraryName = "PublicUtilities"
@@ -33,63 +33,41 @@ val licenseUrl = "$github/blob/main/LICENSE"
 // -------------------
 
 kotlin {
-
-    // Java
-    jvm()
-
-    // Android
-    androidTarget {
-        publishLibraryVariants("release")
+    jvm {
+        withJava()
     }
-
-    // iOS
-    //macosX64()
-    //macosArm64()
-    //iosArm64()
-    //iosX64()
-    //iosSimulatorArm64()
-
-    // -------
-    // Sources
-    // -------
-
     sourceSets {
+        val jvmMain by getting {
+            dependencies {
 
-        commonMain.dependencies {
+                api(libs.compose.material3)
 
-            // Kotlin
-            implementation(libs.kotlin)
+                // Aurora - Windows Only Theming and Components
+                api(libs.aurora.theming)
+                api(libs.aurora.component)
+                api(libs.aurora.window)
 
-            // Compose + AndroidX
-            implementation(libs.compose.material3)
-            implementation(libs.compose.material.icons.core)
-            implementation(libs.compose.material.icons.extended)
+                // Icons
+                api(libs.compose.material.icons.core)
+                api(libs.compose.material.icons.extended)
 
+                // Dependencies
+                api(libs.lumberjack.core)
+                implementation(libs.lumberjack.implementation.lumberjack)
+                implementation(libs.lumberjack.logger.console)
+                implementation(libs.lumberjack.logger.file)
+                api(libs.lumberjack.composeviewer)
+                api(libs.kotpreferences.core)
+                implementation(libs.kotpreferences.datastore)
+                api(libs.kotpreferences.compose)
+                api(libs.composethemer.core)
+                implementation(libs.composethemer.themes)
+
+                // Library
+                api(project(":PublicUtilities:Core"))
+
+            }
         }
-
-        androidMain.dependencies {
-            implementation(libs.androidx.core)
-        }
-    }
-}
-
-android {
-
-    namespace = "com.michaelflisar.demoutilities"
-
-    compileSdk = app.versions.compileSdk.get().toInt()
-
-    buildFeatures {
-        compose = true
-    }
-
-    defaultConfig {
-        minSdk = app.versions.minSdk.get().toInt()
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
