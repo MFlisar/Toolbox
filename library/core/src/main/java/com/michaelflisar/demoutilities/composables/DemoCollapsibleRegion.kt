@@ -1,4 +1,4 @@
-package com.michaelflisar.composedemobaseactivity.composables
+package com.michaelflisar.demoutilities.composables
 
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateFloat

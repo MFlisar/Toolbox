@@ -1,4 +1,4 @@
-package com.michaelflisar.composedemobaseactivity
+package com.michaelflisar.demoutilities
 
 import android.app.Application
 import com.michaelflisar.composethemer.ComposeTheme

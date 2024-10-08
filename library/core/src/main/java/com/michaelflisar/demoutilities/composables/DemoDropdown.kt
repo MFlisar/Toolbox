@@ -1,4 +1,4 @@
-package com.michaelflisar.composedemobaseactivity.composables
+package com.michaelflisar.demoutilities.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

@@ -1,4 +1,4 @@
-package com.michaelflisar.composedemobaseactivity.classes
+package com.michaelflisar.demoutilities.classes
 
 import android.content.Context
 import android.widget.Toast

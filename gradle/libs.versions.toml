@@ -11,8 +11,8 @@ androidx-core = 		        "1.13.1"
 androidx-activity = 		    "1.9.2"
 
 # Dependencies
-kotpreferences =                "0.6.0"
-composethemer =                 "0.3.0"
+kotpreferences =                "0.6.1"
+composethemer =                 "0.3.1"
 
 [plugins]
 

@@ -1,4 +1,4 @@
-package com.michaelflisar.composedemobaseactivity.composables
+package com.michaelflisar.demoutilities.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -28,7 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.composedemobaseactivity.classes.DemoPrefs
+import com.michaelflisar.demoutilities.classes.DemoPrefs
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import kotlinx.coroutines.Dispatchers

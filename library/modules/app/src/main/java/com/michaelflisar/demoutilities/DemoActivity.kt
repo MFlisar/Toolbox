@@ -1,4 +1,4 @@
-package com.michaelflisar.composedemobaseactivity
+package com.michaelflisar.demoutilities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,9 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.composedemobaseactivity.classes.DemoPrefs
-import com.michaelflisar.composedemobaseactivity.composables.ExpandedRegionState
-import com.michaelflisar.composedemobaseactivity.composables.rememberExpandedRegions
+import com.michaelflisar.demoutilities.classes.DemoPrefs
+import com.michaelflisar.demoutilities.composables.ExpandedRegionState
+import com.michaelflisar.demoutilities.composables.rememberExpandedRegions
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
 import com.michaelflisar.demoutilities.app.R
@@ -32,6 +32,8 @@ import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 abstract class DemoActivity(
     private val scrollableContent: Boolean = true
 ) : ComponentActivity() {
+
+    open val initialExpandedRegions: List<Int> = emptyList()
 
     @Composable
     abstract fun ColumnScope.Content(regionsState: ExpandedRegionState, themeState: ComposeTheme.State)
@@ -94,7 +96,7 @@ abstract class DemoActivity(
         modifier: Modifier,
         state: ComposeTheme.State
     ) {
-        val regionsState = rememberExpandedRegions(listOf(1))
+        val regionsState = rememberExpandedRegions(initialExpandedRegions)
         Column(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(8.dp)
