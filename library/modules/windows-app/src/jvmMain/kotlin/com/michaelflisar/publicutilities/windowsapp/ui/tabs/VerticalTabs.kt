@@ -83,14 +83,13 @@ fun VerticalTabs(
 
 @Composable
 fun VerticalTabItem(
-    label: String,
-    tabIndex: Int,
-    selectedTab: MutableState<Int>
+    item: TabItem.Item,
+    selectedTab: MutableState<TabItem.Item>
 ) {
     val style = LocalVerticalTabStyle.current
-    val selected = remember(tabIndex, selectedTab.value) {
+    val selected = remember(item, selectedTab.value) {
         derivedStateOf {
-            selectedTab.value == tabIndex
+            selectedTab.value == item
         }
     }
     Row(
@@ -101,7 +100,7 @@ fun VerticalTabItem(
             VerticalTabStyle.Side.Left,
             selected
         )
-        TabButton(modifier = Modifier.weight(1f), style, selected, label, tabIndex, selectedTab)
+        TabButton(modifier = Modifier.weight(1f), style, selected, item, selectedTab)
         Marker(
             style,
             VerticalTabStyle.Side.Right,
@@ -112,16 +111,15 @@ fun VerticalTabItem(
 
 @Composable
 fun VerticalTabIconItem(
-    label: String?,
+    item: TabItem.Item,
     icon: Painter,
     painterIsIcon: Boolean,
-    tabIndex: Int,
-    selectedTab: MutableState<Int>
+    selectedTab: MutableState<TabItem.Item>
 ) {
     val style = LocalVerticalTabStyle.current
-    val selected = remember(tabIndex, selectedTab.value) {
+    val selected = remember(item, selectedTab.value) {
         derivedStateOf {
-            selectedTab.value == tabIndex
+            selectedTab.value == item
         }
     }
     Row(
@@ -138,8 +136,7 @@ fun VerticalTabIconItem(
             selected,
             icon,
             painterIsIcon,
-            label,
-            tabIndex,
+            item,
             selectedTab
         )
 
@@ -173,9 +170,8 @@ private fun TabButton(
     modifier: Modifier,
     style: VerticalTabStyle,
     selected: State<Boolean>,
-    label: String,
-    tabIndex: Int,
-    selectedTab: MutableState<Int>
+    item: TabItem.Item,
+    selectedTab: MutableState<TabItem.Item>
 ) {
     when (style) {
         VerticalTabStyle.None,
@@ -183,12 +179,12 @@ private fun TabButton(
             OutlinedButton(
                 modifier = modifier.fillMaxHeight(),
                 onClick = {
-                    selectedTab.value = tabIndex
+                    selectedTab.value = item
                 },
                 shape = RectangleShape
             ) {
                 Text(
-                    text = label,
+                    text = item.label,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Start
                 )
@@ -223,7 +219,7 @@ private fun TabButton(
                 OutlinedButton(
                     modifier = Modifier.fillMaxHeight(),
                     onClick = {
-                        selectedTab.value = tabIndex
+                        selectedTab.value = item
                     },
                     shape = RectangleShape,
                     colors = ButtonDefaults.outlinedButtonColors(
@@ -232,7 +228,7 @@ private fun TabButton(
                     )
                 ) {
                     Text(
-                        text = label,
+                        text = item.label,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Start
                     )
@@ -249,9 +245,8 @@ private fun TabIconButton(
     selected: State<Boolean>,
     icon: Painter,
     painterIsIcon: Boolean,
-    label: String?,
-    tabIndex: Int,
-    selectedTab: MutableState<Int>
+    item: TabItem.Item,
+    selectedTab: MutableState<TabItem.Item>
 ) {
     when (style) {
         VerticalTabStyle.None,
@@ -259,10 +254,10 @@ private fun TabIconButton(
             IconButton(
                 modifier = modifier.fillMaxHeight(),
                 onClick = {
-                    selectedTab.value = tabIndex
+                    selectedTab.value = item
                 }
             ) {
-                TabIconButtonContent(icon, painterIsIcon, label)
+                TabIconButtonContent(icon, painterIsIcon, item.label)
             }
         }
 
@@ -299,7 +294,7 @@ private fun TabIconButton(
                 OutlinedButton(
                     modifier = Modifier.fillMaxHeight(),
                     onClick = {
-                        selectedTab.value = tabIndex
+                        selectedTab.value = item
                     },
                     shape = RectangleShape,
                     colors = ButtonDefaults.outlinedButtonColors(
@@ -307,7 +302,7 @@ private fun TabIconButton(
                         contentColor = contentColor
                     )
                 ) {
-                    TabIconButtonContent(icon, painterIsIcon, label)
+                    TabIconButtonContent(icon, painterIsIcon, item.label)
                 }
             }
         }

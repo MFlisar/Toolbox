@@ -1,9 +1,7 @@
 package com.michaelflisar.publicutilities.demo
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -21,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialog
@@ -31,8 +30,11 @@ import com.michaelflisar.publicutilities.windowsapp.classes.AppTheme
 import com.michaelflisar.publicutilities.windowsapp.classes.LocalAppState
 import com.michaelflisar.publicutilities.windowsapp.classes.Status
 import com.michaelflisar.publicutilities.windowsapp.classes.rememberAppState
+import com.michaelflisar.publicutilities.windowsapp.ui.StatusBar
+import com.michaelflisar.publicutilities.windowsapp.ui.StatusBarText
 import com.michaelflisar.publicutilities.windowsapp.ui.pane.PaneContainer
 import com.michaelflisar.publicutilities.windowsapp.ui.pane.rememberPane
+import com.michaelflisar.publicutilities.windowsapp.ui.tabs.TabContent
 import com.michaelflisar.publicutilities.windowsapp.ui.tabs.TabItem
 import com.michaelflisar.publicutilities.windowsapp.ui.todo.MyDropdown
 import kotlinx.coroutines.Dispatchers
@@ -60,23 +62,33 @@ fun main() {
         ) {
             val tabs = listOf(
                 TabItem.Group("Region 1"),
-                TabItem.Item("Tab 1.1"),
-                TabItem.Item("Tab 1.2"),
-                TabItem.Item("Tab 1.3"),
+                TabItem.Item(1, "Tab 1.1"),
+                TabItem.Item(2, "Tab 1.2"),
+                TabItem.Item(3, "Tab 1.3"),
                 TabItem.Group("Region 2"),
-                TabItem.Item("Tab 2.1", icon = TabItem.Icon(rememberVectorPainter(Icons.Default.Settings)))
+                TabItem.Item(
+                    4,
+                    "Tab 2.1",
+                    icon = TabItem.Icon(rememberVectorPainter(Icons.Default.Settings))
+                )
             )
-            val selectedTab = remember { mutableStateOf(1) }
+            val selectedTab = remember { mutableStateOf(tabs[1] as TabItem.Item) }
             DesktopMainScreen(
                 tabItems = tabs,
-                tabWidth = 128.dp,
                 selectedTab = selectedTab,
+                tabWidth = 128.dp,
                 tabFooter = {
                     Icon(
-                        modifier = Modifier.size(64.dp).padding(8.dp).align(Alignment.CenterHorizontally),
+                        modifier = Modifier.size(64.dp).padding(8.dp)
+                            .align(Alignment.CenterHorizontally),
                         imageVector = Icons.Default.Apps,
                         contentDescription = null
                     )
+                },
+                statusbar = {
+                    StatusBar {
+                        StatusBarText("App Version: 1.0")
+                    }
                 },
                 content = { Content(it, selectedTab) }
             )
@@ -92,42 +104,13 @@ fun main() {
     }
 }
 
-/*
 @Composable
-private fun ContentLeft(modifier: Modifier) {
-    DesktopPaneSide(
-        modifier,
-        PaneSide.Left,
-        "Settings",
-        Settings.EXPANDED_LEFT_PANE,
-        //showLabelWhenCollapsed = false
-        //collapsible = false
-    ) {
-        DesktopSettings(
-            settings = Settings.ALL
-        )
-    }
-}
-
-@Composable
-private fun ContentRight(modifier: Modifier) {
-    DesktopPaneSide(
-        modifier,
-        PaneSide.Right,
-        "Logs",
-        Settings.EXPANDED_RIGHT_PANE
-    ) {
-        DesktopLogs(autoScroll = Settings.AUTO_SCROLL_LOGS)
-    }
-}
-*/
-@Composable
-private fun Content(modifier: Modifier, selectedTab: MutableState<Int>) {
-    Column(modifier = modifier) {
-        when (selectedTab.value) {
+private fun Content(modifier: Modifier, selectedTab: MutableState<TabItem.Item>) {
+    TabContent(modifier = modifier, selectedTab = selectedTab) { tab ->
+        when (tab.id) {
             1 -> ContentPage1()
             2 -> ContentPage2()
-            else -> ContentPageX(selectedTab.value)
+            else -> ContentPageX(tab.id)
         }
     }
 }

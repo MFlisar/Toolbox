@@ -1,10 +1,11 @@
-package com.michaelflisar.publicutilities.windowsapp.ui.internal
+package com.michaelflisar.publicutilities.windowsapp.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -48,8 +49,6 @@ fun StatusBar(
         is Status.Running -> state
     }
 
-    val mod = Modifier.padding(horizontal = AppTheme.CONTENT_PADDING_SMALL, vertical = 2.dp)
-    val style = MaterialTheme.typography.bodyMedium
 
     //AuroraDecorationArea(decorationAreaType = DecorationAreaType.Footer) {
     CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.background) {
@@ -74,8 +73,8 @@ fun StatusBar(
                 }
 
                 data.forEach {
-                    MyVerticalDivider(color = LocalContentColor.current)
-                    Text(modifier = mod, text = it, style = style, fontWeight = FontWeight.Bold)
+                    StatusBarDivider()
+                    StatusBarText(text = it)
                 }
             }
             AnimatedVisibility(running != null) {
@@ -92,14 +91,34 @@ fun StatusBar(
                                 .padding(horizontal = AppTheme.ITEM_SPACING)
                         )
                     }
-                    Text(
-                        modifier = mod.weight(1f),
+                    StatusBarText(
                         text = running?.label ?: "",
-                        style = style,
+                        modifier = Modifier.weight(1f),
                         maxLines = if (running?.singleLine == true) 1 else Int.MAX_VALUE
                     )
                 }
             }
         }
     }
+}
+
+@Composable
+fun RowScope.StatusBarDivider() = MyVerticalDivider(color = LocalContentColor.current)
+
+@Composable
+fun StatusBarText(
+    text: String,
+    modifier: Modifier = Modifier,
+    maxLines: Int = 1
+) {
+    Text(
+        modifier = modifier.padding(
+            horizontal = AppTheme.CONTENT_PADDING_SMALL,
+            vertical = 2.dp
+        ),
+        style = MaterialTheme.typography.bodyMedium,
+        text = text,
+        fontWeight = FontWeight.Bold,
+        maxLines = maxLines
+    )
 }
