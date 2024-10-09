@@ -20,11 +20,11 @@ plugins {
 val artifactId = "core"
 
 // Library
-val libraryName = "PublicUtilities"
-val libraryDescription = "PublicUtilities - $artifactId module"
-val groupID = "io.github.mflisar.publicutilities"
+val libraryName = "Toolbox"
+val libraryDescription = "Toolbox - $artifactId module"
+val groupID = "io.github.mflisar.toolbox"
 val release = 2021
-val github = "https://github.com/MFlisar/PublicUtilities"
+val github = "https://github.com/MFlisar/Toolbox"
 val license = "Apache License 2.0"
 val licenseUrl = "$github/blob/main/LICENSE"
 
@@ -75,7 +75,7 @@ kotlin {
 
 android {
 
-    namespace = "com.michaelflisar.demoutilities"
+    namespace = "com.michaelflisar.toolbox"
 
     compileSdk = app.versions.compileSdk.get().toInt()
 

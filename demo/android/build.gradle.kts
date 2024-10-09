@@ -6,7 +6,7 @@ plugins {
 
 android {
 
-    namespace = "com.michaelflisar.publicutilities.demo"
+    namespace = "com.michaelflisar.toolbox.demo"
 
     compileSdk = app.versions.compileSdk.get().toInt()
 
@@ -70,6 +70,6 @@ dependencies {
     // Library
     // ------------------------
 
-    implementation(project(":PublicUtilities:Modules:AndroidApp"))
+    implementation(project(":Toolbox:Modules:AndroidDemoApp"))
 
 }

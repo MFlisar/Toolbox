@@ -17,14 +17,14 @@ plugins {
 // -------------------
 
 // Module
-val artifactId = "windowsapp"
+val artifactId = "windows-app"
 
 // Library
-val libraryName = "PublicUtilities"
-val libraryDescription = "PublicUtilities - $artifactId module"
-val groupID = "io.github.mflisar.publicutilities"
+val libraryName = "Toolbox"
+val libraryDescription = "Toolbox - $artifactId module"
+val groupID = "io.github.mflisar.toolbox"
 val release = 2021
-val github = "https://github.com/MFlisar/PublicUtilities"
+val github = "https://github.com/MFlisar/Toolbox"
 val license = "Apache License 2.0"
 val licenseUrl = "$github/blob/main/LICENSE"
 
@@ -64,7 +64,8 @@ kotlin {
                 implementation(libs.composethemer.themes)
 
                 // Library
-                api(project(":PublicUtilities:Core"))
+                api(project(":Toolbox:Core"))
+                api(project(":Toolbox:Modules:Table"))
 
             }
         }

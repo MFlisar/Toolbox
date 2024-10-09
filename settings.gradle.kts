@@ -29,14 +29,17 @@ pluginManagement {
 // Library
 // --------------
 
-include(":PublicUtilities:Core")
-project(":PublicUtilities:Core").projectDir = file("library/core")
+include(":Toolbox:Core")
+project(":Toolbox:Core").projectDir = file("library/core")
 
-include(":PublicUtilities:Modules:AndroidApp")
-project(":PublicUtilities:Modules:AndroidApp").projectDir = file("library/modules/android-app")
+include(":Toolbox:Modules:Table")
+project(":Toolbox:Modules:Table").projectDir = file("library/modules/table")
 
-include(":PublicUtilities:Modules:WindowsApp")
-project(":PublicUtilities:Modules:WindowsApp").projectDir = file("library/modules/windows-app")
+include(":Toolbox:Modules:AndroidDemoApp")
+project(":Toolbox:Modules:AndroidDemoApp").projectDir = file("library/modules/android-demo-app")
+
+include(":Toolbox:Modules:WindowsApp")
+project(":Toolbox:Modules:WindowsApp").projectDir = file("library/modules/windows-app")
 
 // --------------
 // App

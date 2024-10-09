@@ -2,7 +2,7 @@
   <artifact type="jar" name="Core-jvm">
     <output-path>$PROJECT_DIR$/library/core/build/libs</output-path>
     <root id="archive" name="Core-jvm.jar">
-      <element id="module-output" name="PublicUtilities.PublicUtilities.Core.jvmMain" />
+      <element id="module-output" name="Toolbox.Toolbox.Core.jvmMain" />
     </root>
   </artifact>
 </component>

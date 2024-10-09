@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Table-jvm">
+    <output-path>$PROJECT_DIR$/library/modules/table/build/libs</output-path>
+    <root id="archive" name="Table-jvm.jar">
+      <element id="module-output" name="Toolbox.Toolbox.Modules.Table.jvmMain" />
+    </root>
+  </artifact>
+</component>

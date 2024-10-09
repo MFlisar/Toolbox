@@ -18,7 +18,7 @@ kotlin {
 
                 implementation(compose.desktop.currentOs)
 
-                implementation(project(":PublicUtilities:Modules:WindowsApp"))
+                implementation(project(":Toolbox:Modules:WindowsApp"))
 
             }
         }
@@ -27,11 +27,11 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.michaelflisar.publicutilities.demo.MainKt"
+        mainClass = "com.michaelflisar.toolbox.demo.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Exe)
-            packageName = "PublicUtilities JVM Demo"
+            packageName = "Toolbox JVM Demo"
             packageVersion = "1.0.0"
         }
     }
