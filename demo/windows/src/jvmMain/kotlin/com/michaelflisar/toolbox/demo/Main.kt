@@ -38,6 +38,8 @@ import com.michaelflisar.toolbox.windowsapp.classes.LocalAppState
 import com.michaelflisar.toolbox.windowsapp.classes.Status
 import com.michaelflisar.toolbox.windowsapp.classes.rememberAppState
 import com.michaelflisar.toolbox.windowsapp.initLogging
+import com.michaelflisar.toolbox.windowsapp.prefs.DefaultDesktopAppPrefs
+import com.michaelflisar.toolbox.windowsapp.prefs.DesktopAppPrefs
 import com.michaelflisar.toolbox.windowsapp.ui.DesktopRoot
 import com.michaelflisar.toolbox.windowsapp.ui.StatusBar
 import com.michaelflisar.toolbox.windowsapp.ui.StatusBarText
@@ -56,17 +58,20 @@ import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.model.CommandGroup
 import org.pushingpixels.aurora.component.model.CommandMenuContentModel
 import org.pushingpixels.aurora.window.auroraApplication
+import java.awt.Desktop
 
 fun main() {
     auroraApplication {
         val appState = rememberAppState()
         val logSetup = Toolbox.initLogging()
         val showLogs = remember { mutableStateOf(false) }
+        val prefs = DefaultDesktopAppPrefs
 
         DesktopApplication(
             title = "Demo App",
             state = appState,
-            menuCommands = { buildMenu(showLogs) }
+            menuCommands = { buildMenu(showLogs) },
+            prefs = prefs
             //icon = painterResource("logo.png"),
             //alwaysOnTop = alwaysOnTop.value,
             //onClosed = {

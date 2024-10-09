@@ -36,11 +36,11 @@ object DesktopDialog {
 
             fun OneButton(
                 label: String,
-                onClicked: suspend () -> Unit,
                 isEnabled: Boolean = true,
-                dismissOnClick: Boolean = true
+                dismissOnClick: Boolean = true,
+                onClicked: suspend () -> Unit,
             ): Buttons = Show(
-                listOf(Button(label, isEnabled, onClicked, dismissOnClick),)
+                listOf(Button(label, isEnabled, onClicked, dismissOnClick))
             )
 
             fun TwoButtons(
@@ -72,19 +72,6 @@ object DesktopDialog {
 @Composable
 fun DesktopDialog(
     title: String,
-    size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
-    padding: PaddingValues = PaddingValues(ToolboxDefaults.CONTENT_PADDING),
-    onDismiss: () -> Unit = {},
-    dismissable: Boolean = true,
-    buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    DesktopDialog(title, true, onDismiss, size, padding, dismissable, buttons, content)
-}
-
-@Composable
-fun DesktopDialog(
-    title: String,
     visible: MutableState<Boolean>,
     size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
     padding: PaddingValues = PaddingValues(16.dp),
@@ -107,10 +94,11 @@ fun DesktopDialog(
 @Composable
 fun DesktopDialog(
     title: String,
-    visible: Boolean,
-    onDismiss: () -> Unit,
+    visible: Boolean = true,
+    onDismiss: () -> Unit = {},
     size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
-    padding: PaddingValues = PaddingValues(16.dp),
+    padding: PaddingValues = PaddingValues(ToolboxDefaults.CONTENT_PADDING),
+
     dismissable: Boolean = true,
     buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
     content: @Composable ColumnScope.() -> Unit

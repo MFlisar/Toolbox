@@ -16,16 +16,18 @@ import com.michaelflisar.toolbox.windowsapp.classes.rememberAppState
 import com.michaelflisar.toolbox.windowsapp.internal.rememberWindowState
 import com.michaelflisar.toolbox.windowsapp.locals.LocalAuroraApplicationScope
 import com.michaelflisar.toolbox.windowsapp.locals.LocalAuroraWindowState
+import com.michaelflisar.toolbox.windowsapp.prefs.DefaultDesktopAppPrefs
+import com.michaelflisar.toolbox.windowsapp.prefs.DesktopAppPrefs
 import kotlinx.coroutines.launch
 import org.pushingpixels.aurora.component.model.CommandGroup
 import org.pushingpixels.aurora.theming.IconFilterStrategy
 import org.pushingpixels.aurora.theming.businessBlackSteelSkin
 import org.pushingpixels.aurora.window.*
-import java.io.File
 
 @Composable
 fun AuroraApplicationScope.DesktopApplication(
     title: String,
+    prefs: DesktopAppPrefs = DefaultDesktopAppPrefs,
     state: AppState = rememberAppState(),
     visible: Boolean = true,
     icon: Painter? = null,
@@ -50,7 +52,7 @@ fun AuroraApplicationScope.DesktopApplication(
         ) {
             val appState = LocalAppState.current
             val scope = rememberCoroutineScope()
-            val windowState = rememberWindowState()
+            val windowState = rememberWindowState(prefs)
             val enabled = remember { mutableStateOf(enabled) }
             AuroraWindow(
                 skin = businessBlackSteelSkin(),
