@@ -14,7 +14,7 @@
 * **windows-app**: a aurora styled windows app and some composables and base settings and ui
 
 > [!NOTE]  
-> I use this library to create a demo activity in many of my open source libraries as well as for all my desktop apps.
+> I use this library to create a demo android activities in many of my open source libraries as well as for all my desktop apps.
 
 ## :elephant: Gradle
 
