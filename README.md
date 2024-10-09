@@ -6,14 +6,15 @@
 
 <h1 align="center">Demo Utilities</h1>
 
-Offers following:
+## :heavy_check_mark: Features
 
 * **core**: common composables for desktop and android apps with automatic handling of scrollbars and more
 * **table**: a table composable
-* **android-demo-app*: a demo activity and application and some demo specific composables
+* **android-demo-app**: a demo activity and application and some demo specific composables
 * **windows-app**: a aurora styled windows app and some composables and base settings and ui
 
-I use this library to create a demo activity in many of my open source libraries as well as for all my desktop apps.
+> [!NOTE]  
+> I use this library to create a demo activity in many of my open source libraries as well as for all my desktop apps.
 
 ## :elephant: Gradle
 
