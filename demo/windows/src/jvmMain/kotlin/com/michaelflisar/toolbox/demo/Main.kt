@@ -78,15 +78,15 @@ fun main() {
                 TabItem.Item(3, "Table"),
                 TabItem.Group("Region 2"),
                 TabItem.Item(
-                    4,
+                    40,
                     "Tab 2.1",
                     icon = TabItem.Icon(rememberVectorPainter(Icons.Default.Settings))
                 )
             )
-            val selectedTab = remember { mutableStateOf(1) }
+            val selectedTabId = remember { mutableStateOf(1) }
             DesktopRoot(
                 tabItems = tabs,
-                selectedTab = selectedTab,
+                selectedTabId = selectedTabId,
                 tabWidth = 128.dp,
                 tabFooter = {
                     Icon(
@@ -101,7 +101,7 @@ fun main() {
                         StatusBarText("App Version: 1.0")
                     }
                 },
-                content = { Content(it, selectedTab) }
+                content = { Content(it, selectedTabId) }
             )
 
             if (showLogs.value) {
@@ -121,14 +121,14 @@ fun main() {
 @Composable
 private fun Content(
     modifier: Modifier,
-    selectedTab: MutableState<Int>
+    selectedTabId: MutableState<Int>
 ) {
-    TabContent(modifier = modifier, selectedTab = selectedTab) { tab ->
-        when (tab) {
+    TabContent(modifier = modifier, selectedTabId = selectedTabId) { tabId ->
+        when (tabId) {
             1 -> ContentPage1()
             2 -> ContentPage2()
             3 -> ContentPage3()
-            else -> ContentPageX(tab)
+            else -> ContentPageX(tabId)
         }
     }
 }
@@ -333,11 +333,11 @@ private fun ContentPage3() {
 }
 
 @Composable
-private fun ContentPageX(tab: Int) {
+private fun ContentPageX(tabId: Int) {
     Column(
         modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL)
     ) {
-        Text("Tab Index: $tab")
+        Text("Tab ID: $tabId")
     }
 }
 

@@ -11,12 +11,12 @@ import androidx.compose.ui.Modifier
 @Composable
 fun TabContent(
     modifier: Modifier,
-    selectedTab: MutableState<Int>,
-    page: @Composable (tab: Int) -> Unit
+    selectedTabId: MutableState<Int>,
+    page: @Composable (tabId: Int) -> Unit
 ) {
     AnimatedContent(
         modifier = modifier,
-        targetState = selectedTab.value,
+        targetState = selectedTabId.value,
         transitionSpec = { fadeIn().togetherWith(fadeOut()) },
     ) { targetState ->
         page(targetState)

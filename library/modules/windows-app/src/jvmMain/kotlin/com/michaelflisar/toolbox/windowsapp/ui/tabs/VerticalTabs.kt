@@ -84,12 +84,13 @@ fun VerticalTabs(
 @Composable
 fun VerticalTabItem(
     item: TabItem.Item,
-    selectedTab: MutableState<Int>
+    selectedTabId: Int,
+    onSelectedTabChanged: (id: Int) -> Unit
 ) {
     val style = LocalVerticalTabStyle.current
-    val selected = remember(item, selectedTab.value) {
+    val selected = remember(item, selectedTabId) {
         derivedStateOf {
-            selectedTab.value == item.id
+            selectedTabId == item.id
         }
     }
     Row(
@@ -100,7 +101,7 @@ fun VerticalTabItem(
             VerticalTabStyle.Side.Left,
             selected
         )
-        TabButton(modifier = Modifier.weight(1f), style, selected, item, selectedTab)
+        TabButton(modifier = Modifier.weight(1f), style, selected, item, onSelectedTabChanged)
         Marker(
             style,
             VerticalTabStyle.Side.Right,
@@ -114,12 +115,13 @@ fun VerticalTabIconItem(
     item: TabItem.Item,
     icon: Painter,
     painterIsIcon: Boolean,
-    selectedTab: MutableState<Int>
+    selectedTabId: Int,
+    onSelectedTabChanged: (id: Int) -> Unit
 ) {
     val style = LocalVerticalTabStyle.current
-    val selected = remember(item, selectedTab.value) {
+    val selected = remember(item, selectedTabId) {
         derivedStateOf {
-            selectedTab.value == item.id
+            selectedTabId == item.id
         }
     }
     Row(
@@ -137,7 +139,8 @@ fun VerticalTabIconItem(
             icon,
             painterIsIcon,
             item,
-            selectedTab
+            selectedTabId,
+            onSelectedTabChanged
         )
 
         Marker(
@@ -171,7 +174,7 @@ private fun TabButton(
     style: VerticalTabStyle,
     selected: State<Boolean>,
     item: TabItem.Item,
-    selectedTab: MutableState<Int>
+    onSelectedTabChanged: (id: Int) -> Unit
 ) {
     when (style) {
         VerticalTabStyle.None,
@@ -179,7 +182,7 @@ private fun TabButton(
             OutlinedButton(
                 modifier = modifier.fillMaxHeight(),
                 onClick = {
-                    selectedTab.value = item.id
+                    onSelectedTabChanged(item.id)
                 },
                 shape = RectangleShape
             ) {
@@ -219,7 +222,7 @@ private fun TabButton(
                 OutlinedButton(
                     modifier = Modifier.fillMaxHeight(),
                     onClick = {
-                        selectedTab.value = item.id
+                        onSelectedTabChanged(item.id)
                     },
                     shape = RectangleShape,
                     colors = ButtonDefaults.outlinedButtonColors(
@@ -246,7 +249,8 @@ private fun TabIconButton(
     icon: Painter,
     painterIsIcon: Boolean,
     item: TabItem.Item,
-    selectedTab: MutableState<Int>
+    selectedTabId: Int,
+    onSelectedTabChanged: (id: Int) -> Unit
 ) {
     when (style) {
         VerticalTabStyle.None,
@@ -254,7 +258,7 @@ private fun TabIconButton(
             IconButton(
                 modifier = modifier.fillMaxHeight(),
                 onClick = {
-                    selectedTab.value = item.id
+                    onSelectedTabChanged?.invoke(item.id)
                 }
             ) {
                 TabIconButtonContent(icon, painterIsIcon, item.label)
@@ -294,7 +298,7 @@ private fun TabIconButton(
                 OutlinedButton(
                     modifier = Modifier.fillMaxHeight(),
                     onClick = {
-                        selectedTab.value = item.id
+                        onSelectedTabChanged(item.id)
                     },
                     shape = RectangleShape,
                     colors = ButtonDefaults.outlinedButtonColors(
