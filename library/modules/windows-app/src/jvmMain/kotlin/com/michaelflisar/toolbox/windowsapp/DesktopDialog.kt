@@ -12,12 +12,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogWindow
 import androidx.compose.ui.window.rememberDialogState
 import com.michaelflisar.toolbox.ToolboxDefaults
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 object DesktopDialog {
 
@@ -33,7 +36,7 @@ object DesktopDialog {
 
             fun OneButton(
                 label: String,
-                onClicked: () -> Unit,
+                onClicked: suspend () -> Unit,
                 isEnabled: Boolean = true,
                 dismissOnClick: Boolean = true
             ): Buttons = Show(
@@ -43,8 +46,8 @@ object DesktopDialog {
             fun TwoButtons(
                 label1: String,
                 label2: String,
-                on1Clicked: () -> Unit,
-                on2Clicked: () -> Unit,
+                on1Clicked: suspend () -> Unit,
+                on2Clicked: suspend () -> Unit,
                 is1Enabled: Boolean = true,
                 is2Enabled: Boolean = true,
                 dismissOn1Click: Boolean = true,
@@ -61,7 +64,7 @@ object DesktopDialog {
     class Button(
         val label: String,
         val enabled: Boolean,
-        val onClick: () -> Unit,
+        val onClick: suspend () -> Unit,
         val dismissOnClick: Boolean
     )
 }
@@ -113,6 +116,7 @@ fun DesktopDialog(
     content: @Composable ColumnScope.() -> Unit
 ) {
     if (visible) {
+        val scope = rememberCoroutineScope()
         DialogWindow(
             visible = visible,
             title = title,
@@ -147,7 +151,7 @@ fun DesktopDialog(
                     }
 
                     is DesktopDialog.Buttons.Show -> {
-                        Buttons(buttons, onDismiss)
+                        Buttons(scope, buttons, onDismiss)
                     }
                 }
 
@@ -196,6 +200,7 @@ fun DesktopDialog(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Buttons(
+    scope: CoroutineScope,
     buttons: DesktopDialog.Buttons.Show,
     onDismiss: () -> Unit
 ) {
@@ -207,9 +212,11 @@ private fun Buttons(
             TextButton(
                 enabled = it.enabled,
                 onClick = {
-                    it.onClick()
-                    if (it.dismissOnClick) {
-                        onDismiss()
+                    scope.launch {
+                        it.onClick()
+                        if (it.dismissOnClick) {
+                            onDismiss()
+                        }
                     }
                 }
             ) {

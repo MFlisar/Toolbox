@@ -2,7 +2,6 @@ package com.michaelflisar.toolbox.windowsapp.ui.dialogs
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -36,50 +35,78 @@ fun <T> DesktopListDialog(
     onItemSelected: ((item: T) -> Unit)? = null,
     itemRenderer: @Composable (item: T) -> Unit
 ) {
-    val filter = remember { mutableStateOf("") }
-    val filteredItems by remember(items, filter.value) {
-        derivedStateOf {
-            items.filter { onFilter(it, filter.value) }
+    DesktopListDialog(
+        title,
+        visible.value,
+        { visible.value = false },
+        items,
+        onFilter,
+        size,
+        buttons,
+        onItemSelected,
+        itemRenderer
+    )
+}
+
+@Composable
+fun <T> DesktopListDialog(
+    title: String,
+    visible: Boolean = true,
+    onDismiss: () -> Unit,
+    items: List<T>,
+    onFilter: (item: T, filter: String) -> Boolean,
+    size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
+    buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
+    onItemSelected: ((item: T) -> Unit)? = null,
+    itemRenderer: @Composable (item: T) -> Unit
+) {
+    if (visible) {
+        val filter = remember { mutableStateOf("") }
+        val filteredItems by remember(items, filter.value) {
+            derivedStateOf {
+                items.filter { onFilter(it, filter.value) }
+            }
         }
-    }
-    DesktopDialog(
-        title = title,
-        visible = visible,
-        size = size,
-        buttons = buttons
-    ) {
-        Row(
-            modifier = Modifier,
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        DesktopDialog(
+            title = title,
+            visible = visible,
+            onDismiss = onDismiss,
+            size = size,
+            buttons = buttons
         ) {
-            Icon(Icons.Default.FilterAlt, null)
-            MyInput(
-                modifier = Modifier.weight(1f),
-                title = "Filter",
-                value = filter
+            Row(
+                modifier = Modifier,
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Icon(Icons.Default.FilterAlt, null)
+                MyInput(
+                    modifier = Modifier.weight(1f),
+                    title = "Filter",
+                    value = filter
+                )
+            }
+            Text(
+                modifier = Modifier.align(Alignment.End),
+                text = if (filteredItems.size == items.size) items.size.toString() else "${filteredItems.size}/${items.size}"
             )
-        }
-        Text(
-            modifier = Modifier.align(Alignment.End),
-            text = if (filteredItems.size == items.size) items.size.toString() else "${filteredItems.size}/${items.size}"
-        )
-        MyScrollableLazyColumn(
-            modifier = Modifier.weight(1f, false),
-            itemSpacing = 0.dp
-        ) {
-            filteredItems.forEach { item ->
-                item {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .then(onItemSelected?.let {
-                                Modifier.clickable { it.invoke(item) }
-                            } ?: Modifier)
-                            .minimumInteractiveComponentSize(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        itemRenderer(item)
+            MyScrollableLazyColumn(
+                modifier = Modifier.weight(1f, false),
+                itemSpacing = 0.dp
+            ) {
+                filteredItems.forEach { item ->
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .then(onItemSelected?.let {
+                                    Modifier.clickable { it.invoke(item) }
+                                } ?: Modifier)
+                                .minimumInteractiveComponentSize(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            itemRenderer(item)
+                        }
                     }
                 }
             }
