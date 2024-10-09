@@ -44,6 +44,7 @@ import com.michaelflisar.toolbox.windowsapp.ui.StatusBarText
 import com.michaelflisar.toolbox.windowsapp.ui.dialogs.DesktopInfoDialog
 import com.michaelflisar.toolbox.windowsapp.ui.dialogs.DesktopListDialog
 import com.michaelflisar.toolbox.windowsapp.ui.dialogs.rememberDesktopInfoDialogData
+import com.michaelflisar.toolbox.windowsapp.ui.dialogs.rememberDesktopInfoDialogSimpleData
 import com.michaelflisar.toolbox.windowsapp.ui.pane.PaneContainer
 import com.michaelflisar.toolbox.windowsapp.ui.pane.rememberPane
 import com.michaelflisar.toolbox.windowsapp.ui.tabs.TabContent
@@ -74,8 +75,10 @@ fun main() {
             val tabs = listOf(
                 TabItem.Group("Region 1"),
                 TabItem.Item(1, "UI Examples"),
-                TabItem.Item(2, "Dialog + SegmentedControl/Dropdowns"),
-                TabItem.Item(3, "Table"),
+                TabItem.Item(2, "Dialog"),
+                TabItem.Item(3, "Pane"),
+                TabItem.Item(4, "SegmentedControl/Dropdowns"),
+                TabItem.Item(5, "Table"),
                 TabItem.Group("Region 2"),
                 TabItem.Item(
                     40,
@@ -126,8 +129,10 @@ private fun Content(
     TabContent(modifier = modifier, selectedTabId = selectedTabId) { tabId ->
         when (tabId) {
             1 -> ContentPage1()
-            2 -> ContentPage2()
-            3 -> ContentPage3()
+            2 -> ContentPageDialogs()
+            3 -> ContentPagePane()
+            4 -> ContentPageSegmentsAndDropdowns()
+            5 -> ContentPageTable()
             else -> ContentPageX(tabId)
         }
     }
@@ -194,10 +199,7 @@ private fun ContentPage1() {
 }
 
 @Composable
-private fun ContentPage2() {
-    val showDialog = remember { mutableStateOf(false) }
-    val showDialog2 = remember { mutableStateOf(false) }
-    val showDialog3 = rememberDesktopInfoDialogData()
+private fun ContentPagePane() {
     PaneContainer(
         modifier = Modifier.fillMaxSize(),
         left = rememberPane("Left") {
@@ -212,36 +214,66 @@ private fun ContentPage2() {
             verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
         ) {
             Text("Content")
-            Button(
-                onClick = {
-                    showDialog.value = true
-                }
-            ) {
-                Text("Show Dialog")
-            }
-            Button(
-                onClick = {
-                    showDialog2.value = true
-                }
-            ) {
-                Text("Show ListDialog")
-            }
-            Button(
-                onClick = {
-                    showDialog3.value = DesktopInfoDialog.Data("Title", "Some info...")
-                }
-            ) {
-                Text("Show InfoDialog")
-            }
+        }
+    }
+}
 
-            val items = listOf("1", "2", "3")
-            val selected = remember { mutableStateOf(0) }
-            val selectedMulti = remember { mutableStateOf(emptyList<String>()) }
+@Composable
+private fun ContentPageSegmentsAndDropdowns() {
+    Column(
+        modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL),
+        verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+    ) {
+        val items = listOf("1", "2", "3")
+        val selected = remember { mutableStateOf(0) }
+        val selectedMulti = remember { mutableStateOf(emptyList<String>()) }
 
-            MySegmentedControl(items = items, selected = selected)
-            MyDropdown(title = "Select", items = items, selected = selected)
-            MyMultiSegmentedControl(items = items, selected = selectedMulti)
-            MyMultiDropdown(title = "Select", items = items, selected = selectedMulti)
+        MySegmentedControl(items = items, selected = selected)
+        MyDropdown(title = "Select", items = items, selected = selected)
+        MyMultiSegmentedControl(items = items, selected = selectedMulti)
+        MyMultiDropdown(title = "Select", items = items, selected = selectedMulti)
+    }
+}
+
+@Composable
+private fun ContentPageDialogs() {
+    val showDialog = remember { mutableStateOf(false) }
+    val showDialog2 = remember { mutableStateOf(false) }
+    val showDialog3 = rememberDesktopInfoDialogData()
+    val showDialog4 = rememberDesktopInfoDialogSimpleData()
+
+    Column(
+        modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL),
+        verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+    ) {
+        Text("Content")
+        Button(
+            onClick = {
+                showDialog.value = true
+            }
+        ) {
+            Text("Show Dialog")
+        }
+        Button(
+            onClick = {
+                showDialog2.value = true
+            }
+        ) {
+            Text("Show ListDialog")
+        }
+        Button(
+            onClick = {
+                showDialog3.value = DesktopInfoDialog.Data("Title", "Some info...")
+            }
+        ) {
+            Text("Show InfoDialog")
+        }
+        Button(
+            onClick = {
+                showDialog4.value = "Info..."
+            }
+        ) {
+            Text("Show Dialog with Buttons")
         }
     }
 
@@ -262,10 +294,21 @@ private fun ContentPage2() {
     DesktopInfoDialog(
         data = showDialog3
     )
+
+    DesktopInfoDialog(
+        title = "Dialog",
+        info = showDialog4,
+        buttons = DesktopDialog.Buttons.TwoButtons(
+            label1 = "Yes",
+            label2 = "No",
+            on1Clicked = {},
+            on2Clicked = {}
+        )
+    )
 }
 
 @Composable
-private fun ContentPage3() {
+private fun ContentPageTable() {
 
     val appState = LocalAppState.current
     val scope = rememberCoroutineScope()

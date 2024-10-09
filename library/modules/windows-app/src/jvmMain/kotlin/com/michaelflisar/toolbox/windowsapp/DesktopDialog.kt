@@ -18,8 +18,53 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogWindow
 import androidx.compose.ui.window.rememberDialogState
 import com.michaelflisar.toolbox.ToolboxDefaults
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+
+object DesktopDialog {
+
+    sealed class Buttons {
+
+        data object None : Buttons()
+
+        internal class Show(
+            val buttons: List<Button>
+        ) : Buttons()
+
+        companion object {
+
+            fun OneButton(
+                label: String,
+                onClicked: () -> Unit,
+                isEnabled: Boolean = true,
+                dismissOnClick: Boolean = true
+            ): Buttons = Show(
+                listOf(Button(label, isEnabled, onClicked, dismissOnClick),)
+            )
+
+            fun TwoButtons(
+                label1: String,
+                label2: String,
+                on1Clicked: () -> Unit,
+                on2Clicked: () -> Unit,
+                is1Enabled: Boolean = true,
+                is2Enabled: Boolean = true,
+                dismissOn1Click: Boolean = true,
+                dismissOn2Click: Boolean = true
+            ): Buttons = Show(
+                listOf(
+                    Button(label1, is1Enabled, on1Clicked, dismissOn1Click),
+                    Button(label2, is2Enabled, on2Clicked, dismissOn2Click),
+                )
+            )
+        }
+    }
+
+    class Button(
+        val label: String,
+        val enabled: Boolean,
+        val onClick: () -> Unit,
+        val dismissOnClick: Boolean
+    )
+}
 
 @Composable
 fun DesktopDialog(
@@ -28,9 +73,10 @@ fun DesktopDialog(
     padding: PaddingValues = PaddingValues(ToolboxDefaults.CONTENT_PADDING),
     onDismiss: () -> Unit = {},
     dismissable: Boolean = true,
+    buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    DesktopDialog(title, true, onDismiss, size, padding, dismissable, content)
+    DesktopDialog(title, true, onDismiss, size, padding, dismissable, buttons, content)
 }
 
 @Composable
@@ -40,6 +86,7 @@ fun DesktopDialog(
     size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
     padding: PaddingValues = PaddingValues(16.dp),
     dismissable: Boolean = true,
+    buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
     content: @Composable ColumnScope.() -> Unit
 ) {
     DesktopDialog(
@@ -49,6 +96,7 @@ fun DesktopDialog(
         size,
         padding,
         dismissable,
+        buttons,
         content
     )
 }
@@ -61,6 +109,7 @@ fun DesktopDialog(
     size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
     padding: PaddingValues = PaddingValues(16.dp),
     dismissable: Boolean = true,
+    buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
     content: @Composable ColumnScope.() -> Unit
 ) {
     if (visible) {
@@ -88,11 +137,20 @@ fun DesktopDialog(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Column(
-                    modifier = Modifier.weight(1f, false)
+                    modifier = Modifier.weight(1f, buttons !is DesktopDialog.Buttons.None)
                 ) {
                     content()
                 }
-                //Buttons(scope, positive, negative, enablePositive, onPositive, onDismiss)
+                when (buttons) {
+                    DesktopDialog.Buttons.None -> {
+                        //
+                    }
+
+                    is DesktopDialog.Buttons.Show -> {
+                        Buttons(buttons, onDismiss)
+                    }
+                }
+
             }
             //}
         }
@@ -138,34 +196,25 @@ fun DesktopDialog(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Buttons(
-    scope: CoroutineScope,
-    positive: String,
-    negative: String?,
-    enablePositive: Boolean,
-    onPositive: suspend () -> Unit,
-    onDismiss: suspend () -> Unit
+    buttons: DesktopDialog.Buttons.Show,
+    onDismiss: () -> Unit
 ) {
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End
     ) {
-        negative?.let {
+        buttons.buttons.forEach {
             TextButton(
-                onClick = { scope.launch { onDismiss() } }
-            ) {
-                Text(negative)
-            }
-        }
-        TextButton(
-            enabled = enablePositive,
-            onClick = {
-                scope.launch {
-                    onPositive()
-                    onDismiss()
+                enabled = it.enabled,
+                onClick = {
+                    it.onClick()
+                    if (it.dismissOnClick) {
+                        onDismiss()
+                    }
                 }
+            ) {
+                Text(it.label)
             }
-        ) {
-            Text(positive)
         }
     }
 }

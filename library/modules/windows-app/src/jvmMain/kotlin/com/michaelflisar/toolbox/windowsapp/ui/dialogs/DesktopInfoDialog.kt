@@ -20,15 +20,42 @@ object DesktopInfoDialog {
 fun rememberDesktopInfoDialogData() = remember { mutableStateOf<DesktopInfoDialog.Data?>(null) }
 
 @Composable
+fun rememberDesktopInfoDialogSimpleData() = remember { mutableStateOf<String?>(null) }
+
+@Composable
+fun DesktopInfoDialog(
+    title: String,
+    info: MutableState<String?>,
+    buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
+    size: DpSize = if (buttons is DesktopDialog.Buttons.None) ToolboxDefaults.DEFAULT_SMALL_DIALOG_SIZE else ToolboxDefaults.DEFAULT_COMPACT_DIALOG_SIZE
+) {
+    val d = info.value
+    if (d != null) {
+        DesktopDialog(
+            title = title,
+            size = size,
+            buttons = buttons,
+            onDismiss = {
+                info.value = null
+            }
+        ) {
+            Text(d)
+        }
+    }
+}
+
+@Composable
 fun DesktopInfoDialog(
     data: MutableState<DesktopInfoDialog.Data?>,
-    size: DpSize = ToolboxDefaults.DEFAULT_SMALL_DIALOG_SIZE,
+    buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
+    size: DpSize = if (buttons is DesktopDialog.Buttons.None) ToolboxDefaults.DEFAULT_SMALL_DIALOG_SIZE else ToolboxDefaults.DEFAULT_COMPACT_DIALOG_SIZE
 ) {
     val d = data.value
     if (d != null) {
         DesktopDialog(
             title = d.title,
             size = size,
+            buttons = buttons,
             onDismiss = {
                 data.value = null
             }

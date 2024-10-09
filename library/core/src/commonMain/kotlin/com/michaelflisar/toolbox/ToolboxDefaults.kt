@@ -14,6 +14,7 @@ object ToolboxDefaults {
 
     val DEFAULT_DIALOG_SIZE = DpSize(800.dp, 600.dp)
     val DEFAULT_SMALL_DIALOG_SIZE = DpSize(400.dp, 100.dp)
+    val DEFAULT_COMPACT_DIALOG_SIZE = DpSize(400.dp, 200.dp)
 
     val COLOR_SCHEME = lightColorScheme(
         primary = Color(0xff1976d2), // blue

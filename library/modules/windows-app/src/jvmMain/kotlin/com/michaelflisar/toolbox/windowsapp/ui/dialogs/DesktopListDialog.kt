@@ -32,6 +32,7 @@ fun <T> DesktopListDialog(
     items: List<T>,
     onFilter: (item: T, filter: String) -> Boolean,
     size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
+    buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
     onItemSelected: ((item: T) -> Unit)? = null,
     itemRenderer: @Composable (item: T) -> Unit
 ) {
@@ -44,7 +45,8 @@ fun <T> DesktopListDialog(
     DesktopDialog(
         title = title,
         visible = visible,
-        size = size
+        size = size,
+        buttons = buttons
     ) {
         Row(
             modifier = Modifier,
