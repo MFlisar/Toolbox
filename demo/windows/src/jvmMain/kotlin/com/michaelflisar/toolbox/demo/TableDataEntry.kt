@@ -1,6 +1,10 @@
 package com.michaelflisar.toolbox.demo
 
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.table.MyTable
@@ -12,9 +16,13 @@ class TableDataEntry(
 ) {
     companion object {
         val HEADERS = listOf(
-            MyTable.Header("ID", { Modifier.width(96.dp) }),
-            MyTable.Header("Name", { Modifier.width(128.dp) }),
-            MyTable.Header("Description", { Modifier.weight(1f) }),
+            MyTable.Header.Text("ID", { Modifier.width(96.dp) }),
+            MyTable.Header.Text("Name", { Modifier.width(128.dp) }),
+            MyTable.Header.Text("Description", { Modifier.weight(1f) }),
+            MyTable.Header.Icon(
+                { Icon(Icons.Default.Settings, null, tint = MaterialTheme.colorScheme.secondary) },
+                { Modifier.width(128.dp) },
+            )
         )
     }
 
@@ -24,6 +32,7 @@ class TableDataEntry(
             MyTable.Cell.Number(id),
             MyTable.Cell.Text(name),
             MyTable.Cell.Text(description),
+            MyTable.Cell.Text("...")
         )
     )
 }

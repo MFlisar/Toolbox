@@ -1,5 +1,6 @@
 package com.michaelflisar.toolbox.table
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,14 +20,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Sort
+import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.FilterAlt
-import androidx.compose.material.icons.filled.Remove
-import androidx.compose.material.icons.filled.TrendingDown
-import androidx.compose.material.icons.filled.TrendingUp
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -35,6 +39,8 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -47,7 +53,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -58,7 +63,10 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.composables.MyIconButton
 import com.michaelflisar.toolbox.composables.MyInput
+import com.michaelflisar.toolbox.disabled
 import com.michaelflisar.toolbox.ui.MyScrollableLazyColumn
 
 object MyTable {
@@ -81,13 +89,27 @@ object MyTable {
         }
     }
 
+    sealed class Header {
 
-    data class Header(
-        val label: String,
-        val modifier: RowScope.() -> Modifier,
-        val cellPadding: Dp = 4.dp,
-        val textAlign: TextAlign = TextAlign.Unspecified
-    )
+        abstract val modifier: RowScope.() -> Modifier
+        abstract val cellPadding: Dp
+
+        data class Text(
+            val label: String,
+            override val modifier: RowScope.() -> Modifier,
+            val icon: @Composable (() -> Unit)? = null,
+            override val cellPadding: Dp = 4.dp,
+            val textAlign: TextAlign = TextAlign.Unspecified
+        ) : Header()
+
+        data class Icon(
+            val icon: @Composable (() -> Unit),
+            override val modifier: RowScope.() -> Modifier,
+            override val cellPadding: Dp = 4.dp,
+            val align: Alignment.Horizontal = Alignment.Start
+        ) : Header()
+    }
+
 
     class Row<T>(
         val item: T,
@@ -301,6 +323,7 @@ private fun Header(
                     .height(IntrinsicSize.Min)
                     .background(color = Color.DarkGray)
                     .padding(end = 8.dp)
+                    .padding(end = 16.dp) // für Scrollbar
             ) {
                 headers.forEachIndexed { index, header ->
                     HeaderCell(index, header, filters, sorts)
@@ -320,8 +343,6 @@ private fun RowScope.HeaderCell(
     filters: SnapshotStateList<MyTable.Filter>,
     sorts: SnapshotStateList<MyTable.Sort>
 ) {
-    val focusRequester = remember { FocusRequester() }
-
     val sort = remember(sorts.toList()) {
         derivedStateOf {
             sorts.find { it.columnIndex == index }
@@ -332,123 +353,226 @@ private fun RowScope.HeaderCell(
             filters.find { it.columnIndex == index }
         }
     }
-    val popup = remember { mutableStateOf(false) }
 
     Row(
         modifier = header.modifier(this).padding(header.cellPadding).height(64.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box {
-            HeaderIcon(
-                imageVector = Icons.Default.FilterAlt,
-                tint = if (filter.value == null) null else MaterialTheme.colorScheme.primary
-            ) {
-                popup.value = !popup.value
-            }
-            if (popup.value) {
-                Popup(
-                    onDismissRequest = {
-                        popup.value = false
-                    },
-                    properties = PopupProperties(focusable = true),
-                    offset = IntOffset(0, with(LocalDensity.current) { 16.dp.roundToPx() })
+        val itemModifier = Modifier.padding(horizontal = 4.dp).weight(1f)
+        when (header) {
+            is MyTable.Header.Icon -> {
+                Row(
+                    modifier = itemModifier,
+                    horizontalArrangement = Arrangement.aligned(header.align)
                 ) {
-                    Surface(
-                        shape = MaterialTheme.shapes.medium,
-                        tonalElevation = 8.dp,
-                        shadowElevation = 8.dp
+                    header.icon.invoke()
+                }
+            }
+
+            is MyTable.Header.Text -> {
+                if (header.icon != null) {
+                    Row(
+                        modifier = itemModifier,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            4.dp,
+                            Alignment.CenterHorizontally
+                        )
                     ) {
-                        Column(
-                            modifier = Modifier.padding(8.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            //Text("Filter", fontWeight = FontWeight.Bold)
-                            MyInput(
-                                title = "Filter",
-                                modifier = Modifier.focusRequester(focusRequester).width(200.dp),
-                                value = filter.value?.filter ?: "",
-                                onValueChange = {
-                                    if (it.isEmpty()) {
-                                        filters.remove(filter.value)
-                                    } else {
-                                        val f = MyTable.Filter(index, it)
-                                        val f2 = filter.value
-                                        if (f2 != null) {
-                                            filters.remove(f2)
-                                        }
-                                        filters.add(f)
-                                    }
-                                }
-                            )
-                            LaunchedEffect(Unit) {
-                                focusRequester.requestFocus()
-                            }
+                        header.icon.invoke()
+                        if (header.label.isNotEmpty()) {
+                            HeaderItemText(Modifier.weight(1f), header)
                         }
                     }
-
+                } else {
+                    HeaderItemText(itemModifier, header)
                 }
             }
         }
-        Text(
-            modifier = Modifier.padding(horizontal = 4.dp).weight(1f),
-            text = header.label,
-            textAlign = header.textAlign,
-            style = MaterialTheme.typography.titleSmall,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis
-        )
-        HeaderIcon(
-            imageVector = when (sort.value?.type) {
-                MyTable.Sort.Type.Asc -> Icons.Default.TrendingUp
-                MyTable.Sort.Type.Desc -> Icons.Default.TrendingDown
-                null -> Icons.Default.Remove
-            },
-            tint = when (sort.value?.type) {
-                MyTable.Sort.Type.Asc,
-                MyTable.Sort.Type.Desc -> MaterialTheme.colorScheme.primary
-
-                null -> null
-            }
-        ) {
-            val s = sort.value
-            when (s?.type) {
-                MyTable.Sort.Type.Asc -> {
-                    sorts.remove(s)
-                    sorts.add(MyTable.Sort(index, MyTable.Sort.Type.Desc))
-                }
-
-                MyTable.Sort.Type.Desc -> {
-                    sorts.remove(s)
-                    //sorts.remove(s)
-                    //sorts.add(Sort(index, Sort.Type.Desc))
-                }
-
-                null -> {
-                    sorts.add(MyTable.Sort(index, MyTable.Sort.Type.Asc))
-                }
-            }
-        }
+        HeaderMenuIcon(index, filters, sorts, filter, sort)
     }
 }
 
 @Composable
-private fun HeaderIcon(
-    imageVector: ImageVector,
-    tint: Color? = null,
-    onClick: () -> Unit
+private fun RowScope.HeaderItemText(
+    modifier: Modifier,
+    header: MyTable.Header.Text
 ) {
-    Icon(
+    Text(
+        modifier = modifier,
+        text = header.label,
+        textAlign = header.textAlign,
+        style = MaterialTheme.typography.titleSmall,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+private fun HeaderMenuIcon(
+    index: Int,
+    filters: SnapshotStateList<MyTable.Filter>,
+    sorts: SnapshotStateList<MyTable.Sort>,
+    filter: State<MyTable.Filter?>,
+    sort: State<MyTable.Sort?>
+) {
+    val popup = remember { mutableStateOf(false) }
+    Box(
         modifier = Modifier
-            .size(24.dp)
             .clip(CircleShape)
             .clickable {
-                onClick()
+                popup.value = true
             }
-            .padding(2.dp),
-        tint = tint ?: LocalContentColor.current,//.copy(alpha = LocalContentAlpha.current),
-        imageVector = imageVector,
-        contentDescription = null
-    )
+            .padding(4.dp)
+    ) {
+        val s = sort.value
+        // big filter icon
+        Icon(
+            modifier = Modifier
+                .padding(start = if (s != null) 8.dp else 0.dp)
+                .size(24.dp),
+            tint = if (filter.value == null && sort.value == null) LocalContentColor.current.disabled() else MaterialTheme.colorScheme.primary,
+            imageVector = Icons.Default.FilterAlt,
+            contentDescription = null
+        )
+        // small sort "overlay"
+        if (s != null) {
+            Icon(
+                modifier = Modifier
+                    .size(16.dp)
+                    .align(Alignment.BottomStart),
+                tint = MaterialTheme.colorScheme.primary,
+                imageVector = when (s.type) {
+                    MyTable.Sort.Type.Asc -> Icons.Default.ArrowUpward
+                    MyTable.Sort.Type.Desc -> Icons.Default.ArrowDownward
+                },
+                contentDescription = null
+            )
+        }
+        if (popup.value) {
+            HeaderMenuIconPopup(popup, index, filters, sorts, filter, sort)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun HeaderMenuIconPopup(
+    show: MutableState<Boolean>,
+    index: Int,
+    filters: SnapshotStateList<MyTable.Filter>,
+    sorts: SnapshotStateList<MyTable.Sort>,
+    filter: State<MyTable.Filter?>,
+    sort: State<MyTable.Sort?>
+) {
+    val focusRequester = remember { FocusRequester() }
+    if (show.value) {
+        val popupWidth = 200.dp
+        Popup(
+            alignment = Alignment.TopEnd,
+            onDismissRequest = {
+                show.value = false
+            },
+            properties = PopupProperties(focusable = true),
+            offset = IntOffset(
+                with(LocalDensity.current) { (popupWidth / 2 - 12.dp).roundToPx() },
+                with(LocalDensity.current) { 32.dp.roundToPx() }
+            )
+        ) {
+            Surface(
+                shape = MaterialTheme.shapes.medium,
+                tonalElevation = 8.dp,
+                shadowElevation = 8.dp
+            ) {
+                Column(
+                    modifier = Modifier.padding(8.dp).width(popupWidth),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    CompositionLocalProvider(
+                        LocalMinimumInteractiveComponentEnforcement provides false
+                    ) {
+
+                        val iconModifier = Modifier.size(24.dp)
+                        val contentInsetStart = 32.dp
+
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.AutoMirrored.Filled.Sort, null)
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = "Sortierung",
+                                fontWeight = FontWeight.Bold
+                            )
+                            AnimatedVisibility(sort.value != null) {
+                                MyIconButton(
+                                    modifier = iconModifier,
+                                    icon = Icons.Default.Clear
+                                ) {
+                                    sort.value?.let { sorts.remove(it) }
+                                }
+                            }
+                        }
+
+                        Row(
+                            modifier = Modifier.padding(start = contentInsetStart),
+                            horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+                        ) {
+                            MyIconButton(
+                                modifier = iconModifier,
+                                icon = Icons.Default.ArrowUpward,
+                                tint = if (sort.value?.type == MyTable.Sort.Type.Asc) MaterialTheme.colorScheme.primary else Color.Unspecified
+                            ) {
+                                sort.value?.let { sorts.remove(it) }
+                                sorts.add(MyTable.Sort(index, MyTable.Sort.Type.Asc))
+                            }
+                            MyIconButton(
+                                modifier = iconModifier,
+                                icon = Icons.Default.ArrowDownward,
+                                tint = if (sort.value?.type == MyTable.Sort.Type.Desc) MaterialTheme.colorScheme.primary else Color.Unspecified
+                            ) {
+                                sort.value?.let { sorts.remove(it) }
+                                sorts.add(MyTable.Sort(index, MyTable.Sort.Type.Desc))
+                            }
+                        }
+                    }
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(Icons.Default.FilterAlt, null)
+                        Text("Filter", fontWeight = FontWeight.Bold)
+                    }
+
+                    MyInput(
+                        title = "Filter",
+                        modifier = Modifier
+                            .padding(start = 32.dp)
+                            .fillMaxWidth()
+                            .focusRequester(focusRequester),
+                        value = filter.value?.filter ?: "",
+                        onValueChange = {
+                            if (it.isEmpty()) {
+                                filters.remove(filter.value)
+                            } else {
+                                val f = MyTable.Filter(index, it)
+                                val f2 = filter.value
+                                if (f2 != null) {
+                                    filters.remove(f2)
+                                }
+                                filters.add(f)
+                            }
+                        }
+                    )
+                    LaunchedEffect(Unit) {
+                        focusRequester.requestFocus()
+                    }
+                }
+            }
+
+        }
+    }
 }
 
 @Composable
