@@ -434,7 +434,7 @@ private fun HeaderMenuIcon(
             modifier = Modifier
                 .padding(start = if (s != null) 8.dp else 0.dp)
                 .size(24.dp),
-            tint = if (filter.value == null && sort.value == null) LocalContentColor.current.disabled() else MaterialTheme.colorScheme.primary,
+            tint = if (filter.value == null) LocalContentColor.current.disabled() else MaterialTheme.colorScheme.primary,
             imageVector = Icons.Default.FilterAlt,
             contentDescription = null
         )
