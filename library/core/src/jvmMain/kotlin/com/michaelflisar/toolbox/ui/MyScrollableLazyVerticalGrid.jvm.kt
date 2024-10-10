@@ -6,12 +6,10 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ToolboxDefaults
 
 @Composable
@@ -27,7 +25,7 @@ actual fun MyScrollableLazyVerticalGrid(
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = 16.dp),
+                .padding(end = ToolboxDefaults.SCROLLBAR_SPACE),
             columns = gridCells,
             contentPadding = PaddingValues(ToolboxDefaults.ITEM_SPACING),
             verticalArrangement = verticalArrangement,

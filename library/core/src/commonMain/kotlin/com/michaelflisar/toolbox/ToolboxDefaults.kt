@@ -9,6 +9,8 @@ import androidx.compose.ui.unit.dp
 
 object ToolboxDefaults {
 
+    val SCROLLBAR_SPACE = 4.dp
+
     val ITEM_SPACING = 8.dp
     val ITEM_SPACING_MINI = 2.dp
     val CONTENT_PADDING = 16.dp

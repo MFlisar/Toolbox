@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.ToolboxDefaults
 
 @Composable
 actual fun MyScrollableColumn(
@@ -30,7 +30,7 @@ actual fun MyScrollableColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
-                .padding(end = 16.dp),
+                .padding(end = ToolboxDefaults.SCROLLBAR_SPACE),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
             horizontalAlignment = horizontalAlignment
         ) {

@@ -1,8 +1,5 @@
 package com.michaelflisar.toolbox.table
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -289,32 +286,40 @@ fun <T> MyTable(
         onSortingChanged(state.sorts.toList())
     }
 
-    MyScrollableLazyColumn(
-        modifier = modifier.border(width = 1.dp, color = MaterialTheme.colorScheme.onBackground),
-        itemSpacing = 0.dp,
-        overlapScrollbar = true
+    Column(
+        modifier = modifier.border(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.onBackground
+        )
     ) {
-        stickyHeader {
-            Header(headers, state.filters, state.sorts)
-            TableColumnDivider()
-        }
-        if (sortedList.isEmpty()) {
-            item(key = "EMPTY-KEY") {
-                Text(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    text = "Hier herrscht gähnende Leere...",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold
-                )
+
+        // Header
+        Header(headers, state.filters, state.sorts)
+        TableColumnDivider()
+
+        // Scrollable Content
+        MyScrollableLazyColumn(
+            itemSpacing = 0.dp,
+            overlapScrollbar = true
+        ) {
+            if (sortedList.isEmpty()) {
+                item(key = "EMPTY-KEY") {
+                    Text(
+                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        text = "Hier herrscht gähnende Leere...",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
-        }
-        sortedList.forEachIndexed { index, item ->
-            item(key = keyProvider(item.item)) {
-                Row(item, index, headers, state.selectedRows, setup)
-            }
-            if (index <= sortedList.lastIndex) {
-                item(key = "DIVIDER-$index") {
-                    TableColumnDivider()
+            sortedList.forEachIndexed { index, item ->
+                item(key = keyProvider(item.item)) {
+                    Row(item, index, headers, state.selectedRows, setup)
+                }
+                if (index <= sortedList.lastIndex) {
+                    item(key = "DIVIDER-$index") {
+                        TableColumnDivider()
+                    }
                 }
             }
         }
@@ -336,8 +341,7 @@ private fun Header(
                     .fillMaxWidth()
                     .height(IntrinsicSize.Min)
                     .background(color = Color.DarkGray)
-                    .padding(end = 8.dp)
-                    .padding(end = 16.dp) // für Scrollbar
+                    .padding(end = ToolboxDefaults.SCROLLBAR_SPACE) // für Scrollbar
             ) {
                 headers.forEachIndexed { index, header ->
                     HeaderCell(index, header, filters, sorts)
@@ -369,11 +373,16 @@ private fun RowScope.HeaderCell(
     }
 
     Row(
-        modifier = header.modifier(this).padding(header.cellPadding).height(64.dp),
+        modifier = header
+            .modifier(this)
+            .padding(header.cellPadding)
+            .height(64.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val itemModifier = Modifier.padding(horizontal = 4.dp).weight(1f)
-        HeaderTooltipContainer(header) {
+        val containerModifier = Modifier.padding(horizontal = 4.dp).weight(1f)
+        val itemModifier = Modifier//.weight(1f)
+
+        HeaderTooltipContainer(header, containerModifier) {
             when (header) {
                 is MyTable.Header.Icon -> {
                     Row(
@@ -404,6 +413,7 @@ private fun RowScope.HeaderCell(
                 }
             }
         }
+        Spacer(modifier = Modifier.weight(1f))
         HeaderMenuIcon(index, filters, sorts, filter, sort)
     }
 }
@@ -412,9 +422,11 @@ private fun RowScope.HeaderCell(
 @Composable
 private fun RowScope.HeaderTooltipContainer(
     header: MyTable.Header,
+    modifier: Modifier,
     content: @Composable (() -> Unit)
 ) {
     TooltipBox(
+        modifier = modifier,
         positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
         tooltip = {
             PlainTooltip {
@@ -434,26 +446,19 @@ private fun RowScope.HeaderTooltipContainer(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowScope.HeaderItemText(
     modifier: Modifier,
     header: MyTable.Header.Text
 ) {
-    TooltipBox(
-        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
-        tooltip = { PlainTooltip { Text(header.label) } },
-        state = rememberTooltipState()
-    ) {
-        Text(
-            modifier = modifier,
-            text = header.label,
-            textAlign = header.textAlign,
-            style = MaterialTheme.typography.titleSmall,
-            maxLines = header.maxLines,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
+    Text(
+        modifier = modifier,
+        text = header.label,
+        textAlign = header.textAlign,
+        style = MaterialTheme.typography.titleSmall,
+        maxLines = header.maxLines,
+        overflow = TextOverflow.Ellipsis
+    )
 }
 
 @Composable
@@ -517,7 +522,7 @@ private fun HeaderMenuIconPopup(
 ) {
     val focusRequester = remember { FocusRequester() }
     if (show.value) {
-        val popupWidth = 200.dp
+        val popupWidth = 256.dp
         Popup(
             alignment = Alignment.TopEnd,
             onDismissRequest = {
@@ -559,25 +564,6 @@ private fun HeaderMenuIconPopup(
                                 text = "Sortierung",
                                 fontWeight = FontWeight.Bold
                             )
-                            AnimatedVisibility(
-                                sort.value != null,
-                                enter = fadeIn(),
-                                exit = fadeOut()
-                            ) {
-                                MyIconButton(
-                                    modifier = iconModifier,
-                                    iconPaddingValues = PaddingValues(iconPadding),
-                                    icon = Icons.Default.Clear
-                                ) {
-                                    sort.value?.let { sorts.remove(it) }
-                                }
-                            }
-                        }
-
-                        Row(
-                            modifier = Modifier.padding(start = contentInsetStart),
-                            horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
-                        ) {
                             MyIconButton(
                                 modifier = iconModifier,
                                 iconPaddingValues = PaddingValues(iconPadding),
@@ -595,6 +581,15 @@ private fun HeaderMenuIconPopup(
                             ) {
                                 sort.value?.let { sorts.remove(it) }
                                 sorts.add(MyTable.Sort(index, MyTable.Sort.Type.Desc))
+                            }
+                            MyIconButton(
+                                enabled = sort.value != null,
+                                modifier = iconModifier,
+                                iconPaddingValues = PaddingValues(iconPadding),
+                                icon = Icons.Default.Clear,
+                                tint = if (sort.value != null) Color.Unspecified else LocalContentColor.current.disabled()
+                            ) {
+                                sort.value?.let { sorts.remove(it) }
                             }
                         }
                     }
@@ -674,8 +669,7 @@ private fun <T> Row(
                     Modifier.background(MaterialTheme.colorScheme.secondary)
                 } else Modifier
             )
-            .padding(end = 8.dp)
-            .padding(end = 16.dp) // für Scrollbar
+            .padding(end = ToolboxDefaults.SCROLLBAR_SPACE) // für Scrollbar
     ) {
         headers.forEachIndexed { column, header ->
             val modifier = when (val clickType = setup.clickType) {
