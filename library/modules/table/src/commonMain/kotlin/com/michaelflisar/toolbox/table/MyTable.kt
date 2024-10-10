@@ -1,6 +1,8 @@
 package com.michaelflisar.toolbox.table
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,12 +11,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -491,10 +495,13 @@ private fun HeaderMenuIconPopup(
                         LocalMinimumInteractiveComponentEnforcement provides false
                     ) {
 
-                        val iconModifier = Modifier.size(24.dp)
-                        val contentInsetStart = 32.dp
+                        val iconPadding = 4.dp
+                        val iconSize = 24.dp
+                        val iconModifier = Modifier.size(iconSize + iconPadding)
+                        val contentInsetStart = iconSize + iconPadding + ToolboxDefaults.ITEM_SPACING
 
                         Row(
+                            modifier = Modifier.heightIn(min = iconSize + iconPadding),
                             horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -504,9 +511,14 @@ private fun HeaderMenuIconPopup(
                                 text = "Sortierung",
                                 fontWeight = FontWeight.Bold
                             )
-                            AnimatedVisibility(sort.value != null) {
+                            AnimatedVisibility(
+                                sort.value != null,
+                                enter = fadeIn(),
+                                exit = fadeOut()
+                            ) {
                                 MyIconButton(
                                     modifier = iconModifier,
+                                    iconPaddingValues = PaddingValues(iconPadding),
                                     icon = Icons.Default.Clear
                                 ) {
                                     sort.value?.let { sorts.remove(it) }
@@ -520,6 +532,7 @@ private fun HeaderMenuIconPopup(
                         ) {
                             MyIconButton(
                                 modifier = iconModifier,
+                                iconPaddingValues = PaddingValues(iconPadding),
                                 icon = Icons.Default.ArrowUpward,
                                 tint = if (sort.value?.type == MyTable.Sort.Type.Asc) MaterialTheme.colorScheme.primary else Color.Unspecified
                             ) {
@@ -528,6 +541,7 @@ private fun HeaderMenuIconPopup(
                             }
                             MyIconButton(
                                 modifier = iconModifier,
+                                iconPaddingValues = PaddingValues(iconPadding),
                                 icon = Icons.Default.ArrowDownward,
                                 tint = if (sort.value?.type == MyTable.Sort.Type.Desc) MaterialTheme.colorScheme.primary else Color.Unspecified
                             ) {

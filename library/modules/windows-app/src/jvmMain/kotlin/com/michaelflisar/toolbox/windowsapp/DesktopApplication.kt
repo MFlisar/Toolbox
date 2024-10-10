@@ -1,13 +1,16 @@
 package com.michaelflisar.toolbox.windowsapp
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ToolboxColors
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.windowsapp.classes.AppState
@@ -42,10 +45,12 @@ fun AuroraApplicationScope.DesktopApplication(
     menuCommands: @Composable (() -> CommandGroup)? = null,
     onClosed: (suspend () -> Unit)? = null,
     colors: ColorScheme = ToolboxDefaults.COLOR_SCHEME,
+    shapes: Shapes = ToolboxDefaults.SHAPES,
     content: @Composable AuroraWindowScope.() -> Unit
 ) {
     MaterialTheme(
-        colorScheme = colors
+        colorScheme = colors,
+        shapes = shapes
     ) {
         CompositionLocalProvider(
             LocalAppState provides state

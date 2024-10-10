@@ -1,5 +1,7 @@
 package com.michaelflisar.toolbox.composables
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
@@ -14,6 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 fun MyIconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
+    iconPaddingValues: PaddingValues = PaddingValues(),
     tint: Color = Color.Unspecified,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     enabled: Boolean = true,
@@ -25,7 +28,12 @@ fun MyIconButton(
         colors = colors,
         enabled = enabled
     ) {
-        Icon(icon, null, tint = tint)
+        Icon(
+            modifier = Modifier.padding(iconPaddingValues),
+            imageVector = icon,
+            contentDescription = null,
+            tint = tint
+        )
     }
 }
 
@@ -33,6 +41,7 @@ fun MyIconButton(
 fun MyOutlinedIconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
+    iconPaddingValues: PaddingValues = PaddingValues(),
     tint: Color = Color.Unspecified,
     colors: IconButtonColors = IconButtonDefaults.outlinedIconButtonColors(),
     enabled: Boolean = true,
@@ -44,6 +53,11 @@ fun MyOutlinedIconButton(
         colors = colors,
         enabled = enabled
     ) {
-        Icon(icon, null, tint = tint)
+        Icon(
+            modifier = Modifier.padding(iconPaddingValues),
+            imageVector = icon,
+            contentDescription = null,
+            tint = tint
+        )
     }
 }

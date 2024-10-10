@@ -1,5 +1,7 @@
 package com.michaelflisar.toolbox
 
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
@@ -21,5 +23,14 @@ object ToolboxDefaults {
         primaryContainer = Color(0xffc1dcf7),
         secondary = Color(0xff00c853), // green
         secondaryContainer = Color(0xff91f5ba)
+    )
+
+    private val SHAPE_SMALL = RoundedCornerShape(4.dp)
+    val SHAPES = Shapes(
+        extraSmall = SHAPE_SMALL,
+        small = SHAPE_SMALL,
+        medium = SHAPE_SMALL,
+        large = SHAPE_SMALL,
+        extraLarge = SHAPE_SMALL
     )
 }
