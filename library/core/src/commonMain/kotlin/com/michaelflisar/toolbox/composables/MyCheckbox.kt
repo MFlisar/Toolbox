@@ -2,8 +2,10 @@ package com.michaelflisar.toolbox.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
@@ -18,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.disabled
 
 @Composable
 fun MyCheckbox(
@@ -51,13 +54,14 @@ fun MyCheckbox(
             .then(if (onCheckedChange != null) {
                 Modifier.clickable { onCheckedChange.invoke(!checked) }
             } else Modifier)
-            .padding(ToolboxDefaults.ITEM_SPACING_MINI),
+            .padding(ToolboxDefaults.ITEM_SPACING)
+            .width(IntrinsicSize.Min),
         horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (title.isNotEmpty()) {
             Text(
-                modifier = Modifier.weight(1f, false),
+                modifier = Modifier.weight(1f),
                 text = title,
                 fontWeight = fontWeight
             )
@@ -66,10 +70,10 @@ fun MyCheckbox(
             imageVector = if (checked) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
             contentDescription = null,
             tint = if (checked) {
-                (color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.secondary)
+                (color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.primary)
             } else {
                 colorUnselected.takeIf { it != Color.Unspecified }
-                    ?: MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    ?: MaterialTheme.colorScheme.onSurface.disabled()
             }
         )
     }
