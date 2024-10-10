@@ -9,6 +9,8 @@ import androidx.compose.ui.unit.dp
 
 object ToolboxDefaults {
 
+    val TEXT_EMPTY = "Hier herrscht gähnende Leere..."
+
     val SCROLLBAR_SPACE = 4.dp
 
     val ITEM_SPACING = 8.dp
@@ -17,8 +19,9 @@ object ToolboxDefaults {
     val CONTENT_PADDING_SMALL = 8.dp
 
     val DEFAULT_DIALOG_SIZE = DpSize(800.dp, 600.dp)
-    val DEFAULT_SMALL_DIALOG_SIZE = DpSize(400.dp, 100.dp)
-    val DEFAULT_COMPACT_DIALOG_SIZE = DpSize(400.dp, 200.dp)
+    val DEFAULT_DIALOG_SIZE_SMALL = DpSize(400.dp, 100.dp)
+    val DEFAULT_DIALOG_SIZE_COMPACT = DpSize(400.dp, 200.dp)
+    val DEFAULT_DIALOG_SIZE_MEDIUM = DpSize(400.dp, 400.dp)
 
     val COLOR_SCHEME = lightColorScheme(
         primary = Color(0xff1976d2), // blue

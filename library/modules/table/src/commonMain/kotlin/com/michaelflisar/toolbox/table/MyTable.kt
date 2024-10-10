@@ -306,7 +306,7 @@ fun <T> MyTable(
                 item(key = "EMPTY-KEY") {
                     Text(
                         modifier = Modifier.fillMaxWidth().padding(16.dp),
-                        text = "Hier herrscht gähnende Leere...",
+                        text = ToolboxDefaults.TEXT_EMPTY,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold
                     )

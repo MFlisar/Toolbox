@@ -4,9 +4,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
@@ -17,10 +19,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.composables.MyInput
+import com.michaelflisar.toolbox.composables.MyLoading
 import com.michaelflisar.toolbox.ui.MyScrollableLazyColumn
 import com.michaelflisar.toolbox.windowsapp.DesktopDialog
 
@@ -28,12 +32,14 @@ import com.michaelflisar.toolbox.windowsapp.DesktopDialog
 fun <T> DesktopListDialog(
     title: String,
     visible: MutableState<Boolean>,
-    items: List<T>,
+    items: List<T>?,
     onFilter: (item: T, filter: String) -> Boolean,
     size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
     buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
     onItemSelected: ((item: T) -> Unit)? = null,
-    itemRenderer: @Composable (item: T) -> Unit
+    placeholderLoading: @Composable () -> Unit = { MyLoading("Liste wird geladen...") },
+    placeholderEmpty: @Composable () -> Unit = { Text(ToolboxDefaults.TEXT_EMPTY) },
+    itemRenderer: @Composable (item: T) -> Unit,
 ) {
     DesktopListDialog(
         title,
@@ -44,6 +50,8 @@ fun <T> DesktopListDialog(
         size,
         buttons,
         onItemSelected,
+        placeholderLoading,
+        placeholderEmpty,
         itemRenderer
     )
 }
@@ -53,18 +61,20 @@ fun <T> DesktopListDialog(
     title: String,
     visible: Boolean = true,
     onDismiss: () -> Unit,
-    items: List<T>,
+    items: List<T>?,
     onFilter: (item: T, filter: String) -> Boolean,
     size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
     buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
     onItemSelected: ((item: T) -> Unit)? = null,
+    placeholderLoading: @Composable () -> Unit = { MyLoading("Liste wird geladen...") },
+    placeholderEmpty: @Composable () -> Unit = { Text(ToolboxDefaults.TEXT_EMPTY) },
     itemRenderer: @Composable (item: T) -> Unit
 ) {
     if (visible) {
         val filter = remember { mutableStateOf("") }
         val filteredItems by remember(items, filter.value) {
             derivedStateOf {
-                items.filter { onFilter(it, filter.value) }
+                items?.filter { onFilter(it, filter.value) }
             }
         }
         DesktopDialog(
@@ -77,7 +87,7 @@ fun <T> DesktopListDialog(
             Row(
                 modifier = Modifier,
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
             ) {
                 Icon(Icons.Default.FilterAlt, null)
                 MyInput(
@@ -86,26 +96,43 @@ fun <T> DesktopListDialog(
                     value = filter
                 )
             }
-            Text(
-                modifier = Modifier.align(Alignment.End),
-                text = if (filteredItems.size == items.size) items.size.toString() else "${filteredItems.size}/${items.size}"
-            )
+            if (filteredItems != null && items != null) {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(end = 4.dp),
+                    text = if (filteredItems!!.size == items.size) items.size.toString() else "${filteredItems!!.size}/${items.size}"
+                )
+            }
             MyScrollableLazyColumn(
                 modifier = Modifier.weight(1f, false),
                 itemSpacing = 0.dp
             ) {
-                filteredItems.forEach { item ->
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .then(onItemSelected?.let {
-                                    Modifier.clickable { it.invoke(item) }
-                                } ?: Modifier)
-                                .minimumInteractiveComponentSize(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            itemRenderer(item)
+                if (filteredItems == null) {
+                    item("KEY-LOADING") {
+                        placeholderLoading()
+                    }
+                } else if (items?.size == 0) {
+                    item("KEY-EMPTY") {
+                        placeholderEmpty()
+                    }
+                } else {
+                    filteredItems?.forEach { item ->
+                        item {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .then(onItemSelected?.let {
+                                        Modifier
+                                            .clip(MaterialTheme.shapes.small)
+                                            .clickable { it.invoke(item) }
+                                    } ?: Modifier)
+                                    .padding(horizontal = ToolboxDefaults.CONTENT_PADDING_SMALL)
+                                    .minimumInteractiveComponentSize(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                itemRenderer(item)
+                            }
                         }
                     }
                 }

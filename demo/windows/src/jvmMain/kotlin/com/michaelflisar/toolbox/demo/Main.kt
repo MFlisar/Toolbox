@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -286,7 +288,11 @@ private fun ContentPageDialogs() {
         }
         Button(
             onClick = {
-                showDialog3.value = DesktopInfoDialog.Data("Title", "Some info...")
+                showDialog3.value = DesktopInfoDialog.Data(
+                    "Title",
+                    "Some info...",
+                    icon = { Icon(Icons.Default.Error, null, tint = MaterialTheme.colorScheme.error) }
+                )
             }
         ) {
             Text("Show InfoDialog")
@@ -309,7 +315,10 @@ private fun ContentPageDialogs() {
         title = "Liste",
         visible = showDialog2,
         items = listOf("1", "2", "3", "4"),
-        onFilter = { item, filter -> item.contains(filter, true) }
+        onFilter = { item, filter -> item.contains(filter, true) },
+        onItemSelected = {
+            // ...
+        }
     ) {
         Text(it)
     }
