@@ -1,11 +1,14 @@
 package com.michaelflisar.toolbox.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
@@ -21,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.disabled
+import kotlin.math.max
 
 @Composable
 fun MyCheckbox(
@@ -55,17 +59,20 @@ fun MyCheckbox(
                 Modifier.clickable { onCheckedChange.invoke(!checked) }
             } else Modifier)
             .padding(ToolboxDefaults.ITEM_SPACING)
-            .width(IntrinsicSize.Min),
+            .width(IntrinsicSize.Max)
+        ,
         horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (title.isNotEmpty()) {
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.wrapContentWidth(),
                 text = title,
-                fontWeight = fontWeight
+                fontWeight = fontWeight,
+                maxLines = 1
             )
         }
+        Spacer(Modifier.weight(1f))
         Icon(
             imageVector = if (checked) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
             contentDescription = null,

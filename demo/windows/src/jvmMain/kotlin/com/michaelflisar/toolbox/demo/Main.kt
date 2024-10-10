@@ -3,7 +3,9 @@ package com.michaelflisar.toolbox.demo
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -27,6 +29,7 @@ import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogCon
 import com.michaelflisar.toolbox.MaterialColors
 import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.composables.MyCheckbox
 import com.michaelflisar.toolbox.composables.MyDropdown
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyMultiSegmentedControl
@@ -195,6 +198,21 @@ private fun ContentPage1() {
                 filter.isEmpty() || item.contains(filter, true)
             }
         )
+
+        MyCheckbox(title = "Checkbox1", checked = true, onCheckedChange = {})
+        MyCheckbox(title = "Checkbox1 with longer title", checked = true, onCheckedChange = {})
+
+        MyCheckbox(modifier = Modifier.fillMaxWidth(), title = "Checkbox2", checked = true, onCheckedChange = {})
+        MyCheckbox(modifier = Modifier.fillMaxWidth(), title = "Checkbox2 with longer title", checked = true, onCheckedChange = {})
+
+        Row {
+            Text(modifier = Modifier.weight(1f), text = "Text")
+            MyCheckbox(title = "Checkbox3", checked = true, onCheckedChange = {})
+        }
+        Row {
+            Text(modifier = Modifier.weight(1f), text = "Text")
+            MyCheckbox(title = "Checkbox3 with longer title", checked = true, onCheckedChange = {})
+        }
 
         LaunchedEffect(Unit) {
             if (items.value.size > 50)
