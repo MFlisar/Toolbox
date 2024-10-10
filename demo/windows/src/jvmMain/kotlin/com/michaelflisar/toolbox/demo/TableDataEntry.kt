@@ -20,8 +20,10 @@ class TableDataEntry(
             MyTable.Header.Text("Name", { Modifier.width(128.dp) }),
             MyTable.Header.Text("Description", { Modifier.weight(1f) }),
             MyTable.Header.Icon(
+                "Setting",
                 { Icon(Icons.Default.Settings, null, tint = MaterialTheme.colorScheme.secondary) },
                 { Modifier.width(128.dp) },
+                "Some additional information..."
             )
         )
     }

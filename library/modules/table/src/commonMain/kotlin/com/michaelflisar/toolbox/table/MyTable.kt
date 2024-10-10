@@ -37,9 +37,13 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -95,20 +99,26 @@ object MyTable {
 
     sealed class Header {
 
+        abstract val label: String
+        abstract val description: String
         abstract val modifier: RowScope.() -> Modifier
         abstract val cellPadding: Dp
 
         data class Text(
-            val label: String,
+            override val label: String,
             override val modifier: RowScope.() -> Modifier,
+            override val description: String = "",
             val icon: @Composable (() -> Unit)? = null,
             override val cellPadding: Dp = 4.dp,
-            val textAlign: TextAlign = TextAlign.Unspecified
+            val textAlign: TextAlign = TextAlign.Unspecified,
+            val maxLines: Int = 1
         ) : Header()
 
         data class Icon(
+            override val label: String,
             val icon: @Composable (() -> Unit),
             override val modifier: RowScope.() -> Modifier,
+            override val description: String = "",
             override val cellPadding: Dp = 4.dp,
             val align: Alignment.Horizontal = Alignment.Start
         ) : Header()
@@ -363,32 +373,34 @@ private fun RowScope.HeaderCell(
         verticalAlignment = Alignment.CenterVertically
     ) {
         val itemModifier = Modifier.padding(horizontal = 4.dp).weight(1f)
-        when (header) {
-            is MyTable.Header.Icon -> {
-                Row(
-                    modifier = itemModifier,
-                    horizontalArrangement = Arrangement.aligned(header.align)
-                ) {
-                    header.icon.invoke()
-                }
-            }
-
-            is MyTable.Header.Text -> {
-                if (header.icon != null) {
+        HeaderTooltipContainer(header) {
+            when (header) {
+                is MyTable.Header.Icon -> {
                     Row(
                         modifier = itemModifier,
-                        horizontalArrangement = Arrangement.spacedBy(
-                            4.dp,
-                            Alignment.CenterHorizontally
-                        )
+                        horizontalArrangement = Arrangement.aligned(header.align)
                     ) {
                         header.icon.invoke()
-                        if (header.label.isNotEmpty()) {
-                            HeaderItemText(Modifier.weight(1f), header)
-                        }
                     }
-                } else {
-                    HeaderItemText(itemModifier, header)
+                }
+
+                is MyTable.Header.Text -> {
+                    if (header.icon != null) {
+                        Row(
+                            modifier = itemModifier,
+                            horizontalArrangement = Arrangement.spacedBy(
+                                4.dp,
+                                Alignment.CenterHorizontally
+                            )
+                        ) {
+                            header.icon.invoke()
+                            if (header.label.isNotEmpty()) {
+                                HeaderItemText(Modifier.weight(1f), header)
+                            }
+                        }
+                    } else {
+                        HeaderItemText(itemModifier, header)
+                    }
                 }
             }
         }
@@ -396,19 +408,52 @@ private fun RowScope.HeaderCell(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun RowScope.HeaderTooltipContainer(
+    header: MyTable.Header,
+    content: @Composable (() -> Unit)
+) {
+    TooltipBox(
+        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+        tooltip = {
+            PlainTooltip {
+                if (header.description.isNotEmpty()) {
+                    Column {
+                        Text(header.label, fontWeight = FontWeight.Bold)
+                        Text(header.description)
+                    }
+                } else {
+                    Text(header.label)
+                }
+            }
+        },
+        state = rememberTooltipState()
+    ) {
+        content()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowScope.HeaderItemText(
     modifier: Modifier,
     header: MyTable.Header.Text
 ) {
-    Text(
-        modifier = modifier,
-        text = header.label,
-        textAlign = header.textAlign,
-        style = MaterialTheme.typography.titleSmall,
-        maxLines = 2,
-        overflow = TextOverflow.Ellipsis
-    )
+    TooltipBox(
+        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+        tooltip = { PlainTooltip { Text(header.label) } },
+        state = rememberTooltipState()
+    ) {
+        Text(
+            modifier = modifier,
+            text = header.label,
+            textAlign = header.textAlign,
+            style = MaterialTheme.typography.titleSmall,
+            maxLines = header.maxLines,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
 }
 
 @Composable
@@ -427,13 +472,15 @@ private fun HeaderMenuIcon(
                 popup.value = true
             }
             .padding(4.dp)
+            .width(32.dp)
     ) {
         val s = sort.value
         // big filter icon
         Icon(
             modifier = Modifier
-                .padding(start = if (s != null) 8.dp else 0.dp)
-                .size(24.dp),
+                //.padding(start = 8.dp)
+                .size(24.dp)
+                .align(if (s != null) Alignment.CenterEnd else Alignment.Center),
             tint = if (filter.value == null) LocalContentColor.current.disabled() else MaterialTheme.colorScheme.primary,
             imageVector = Icons.Default.FilterAlt,
             contentDescription = null
@@ -498,7 +545,8 @@ private fun HeaderMenuIconPopup(
                         val iconPadding = 4.dp
                         val iconSize = 24.dp
                         val iconModifier = Modifier.size(iconSize + iconPadding)
-                        val contentInsetStart = iconSize + iconPadding + ToolboxDefaults.ITEM_SPACING
+                        val contentInsetStart =
+                            iconSize + iconPadding + ToolboxDefaults.ITEM_SPACING
 
                         Row(
                             modifier = Modifier.heightIn(min = iconSize + iconPadding),
