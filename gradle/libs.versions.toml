@@ -60,4 +60,3 @@ composethemer-themes =                  { module = "io.github.mflisar.composethe
 aurora-theming =                        { module = "org.pushing-pixels:aurora-theming", 	                    version.ref = "aurora" }
 aurora-component =                      { module = "org.pushing-pixels:aurora-component", 	                    version.ref = "aurora" }
 aurora-window =                         { module = "org.pushing-pixels:aurora-window", 	                        version.ref = "aurora" }
-

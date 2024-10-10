@@ -10,8 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.ToolboxColors
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.windowsapp.classes.AppState
 import com.michaelflisar.toolbox.windowsapp.classes.LocalAppState

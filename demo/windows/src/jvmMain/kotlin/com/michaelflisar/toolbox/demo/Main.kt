@@ -24,12 +24,14 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogContent
+import com.michaelflisar.toolbox.MaterialColors
 import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.composables.MyDropdown
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyMultiSegmentedControl
 import com.michaelflisar.toolbox.composables.MySegmentedControl
+import com.michaelflisar.toolbox.get
 import com.michaelflisar.toolbox.table.MyTable
 import com.michaelflisar.toolbox.table.rememberMyTableState
 import com.michaelflisar.toolbox.windowsapp.DesktopApplication
@@ -39,7 +41,6 @@ import com.michaelflisar.toolbox.windowsapp.classes.Status
 import com.michaelflisar.toolbox.windowsapp.classes.rememberAppState
 import com.michaelflisar.toolbox.windowsapp.initLogging
 import com.michaelflisar.toolbox.windowsapp.prefs.DefaultDesktopAppPrefs
-import com.michaelflisar.toolbox.windowsapp.prefs.DesktopAppPrefs
 import com.michaelflisar.toolbox.windowsapp.ui.DesktopRoot
 import com.michaelflisar.toolbox.windowsapp.ui.StatusBar
 import com.michaelflisar.toolbox.windowsapp.ui.StatusBarText
@@ -58,7 +59,6 @@ import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.model.CommandGroup
 import org.pushingpixels.aurora.component.model.CommandMenuContentModel
 import org.pushingpixels.aurora.window.auroraApplication
-import java.awt.Desktop
 
 fun main() {
     auroraApplication {
@@ -164,7 +164,7 @@ private fun ContentPage1() {
                 L.e { "Test Error" }
             }
         ) {
-            Text("Test Error")
+            Text("Test Error", color = MaterialColors.Red[200])
         }
         Button(
             enabled = appState.state.value == Status.None,
