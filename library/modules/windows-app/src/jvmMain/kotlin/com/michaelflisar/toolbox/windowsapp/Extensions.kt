@@ -19,18 +19,18 @@ fun Toolbox.setClipboard(s: String) {
     clipboard.setContents(selection, selection)
 }
 
-fun Toolbox.initLoggingConsoleOnly() {
-    L.init(LumberjackLogger)
-    L.plant(ConsoleLogger())
+fun Toolbox.initDesktopApp(): IFileLoggingSetup {
+   return initDesktopApp(true)!!
 }
 
-fun Toolbox.initLogging(): IFileLoggingSetup {
+fun Toolbox.initDesktopApp(fileLogger: Boolean): IFileLoggingSetup? {
     L.init(LumberjackLogger)
     L.plant(ConsoleLogger())
-    val setup = FileLoggerSetup.FileSize.create(
-        folder = File(System.getProperty("user.dir")),
-        maxFileSizeInBytes = Int.MAX_VALUE
-    )
-    L.plant(FileLogger(setup))
-    return setup
+    return if (fileLogger) {
+        val setup = FileLoggerSetup.SingleFile.create(
+            folder = File(System.getProperty("user.dir"))
+        )
+        L.plant(FileLogger(setup))
+        setup
+    } else null
 }

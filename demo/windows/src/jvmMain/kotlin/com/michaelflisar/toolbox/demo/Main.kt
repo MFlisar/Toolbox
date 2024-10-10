@@ -44,7 +44,7 @@ import com.michaelflisar.toolbox.windowsapp.DesktopDialog
 import com.michaelflisar.toolbox.windowsapp.classes.LocalAppState
 import com.michaelflisar.toolbox.windowsapp.classes.Status
 import com.michaelflisar.toolbox.windowsapp.classes.rememberAppState
-import com.michaelflisar.toolbox.windowsapp.initLogging
+import com.michaelflisar.toolbox.windowsapp.initDesktopApp
 import com.michaelflisar.toolbox.windowsapp.prefs.DefaultDesktopAppPrefs
 import com.michaelflisar.toolbox.windowsapp.ui.DesktopRoot
 import com.michaelflisar.toolbox.windowsapp.ui.StatusBar
@@ -67,8 +67,9 @@ import org.pushingpixels.aurora.window.auroraApplication
 
 fun main() {
     auroraApplication {
+
         val appState = rememberAppState()
-        val logSetup = Toolbox.initLogging()
+        val fileLoggerSetup = Toolbox.initDesktopApp()
         val showLogs = remember { mutableStateOf(false) }
         val prefs = DefaultDesktopAppPrefs
 
@@ -119,7 +120,7 @@ fun main() {
 
             if (showLogs.value) {
                 DesktopDialog("Logs", showLogs, padding = PaddingValues()) {
-                    LumberjackDialogContent("Logs", logSetup)
+                    LumberjackDialogContent("Logs", fileLoggerSetup)
                 }
                 /*LumberjackDialog(
                     visible = showLogs,
@@ -204,8 +205,16 @@ private fun ContentPage1() {
         MyCheckbox(title = "Checkbox1", checked = true, onCheckedChange = {})
         MyCheckbox(title = "Checkbox1 with longer title", checked = true, onCheckedChange = {})
 
-        MyCheckbox(modifier = Modifier.fillMaxWidth(), title = "Checkbox2", checked = true, onCheckedChange = {})
-        MyCheckbox(modifier = Modifier.fillMaxWidth(), title = "Checkbox2 with longer title", checked = true, onCheckedChange = {})
+        MyCheckbox(
+            modifier = Modifier.fillMaxWidth(),
+            title = "Checkbox2",
+            checked = true,
+            onCheckedChange = {})
+        MyCheckbox(
+            modifier = Modifier.fillMaxWidth(),
+            title = "Checkbox2 with longer title",
+            checked = true,
+            onCheckedChange = {})
 
         Row {
             Text(modifier = Modifier.weight(1f), text = "Text")
@@ -291,7 +300,13 @@ private fun ContentPageDialogs() {
                 showDialog3.value = DesktopInfoDialog.Data(
                     "Title",
                     "Some info...",
-                    icon = { Icon(Icons.Default.Error, null, tint = MaterialTheme.colorScheme.error) }
+                    icon = {
+                        Icon(
+                            Icons.Default.Error,
+                            null,
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                    }
                 )
             }
         ) {
