@@ -35,3 +35,29 @@ fun MyIconTextButton(
         }
     }
 }
+
+@Composable
+fun MyIconTextOutlinedButton(
+    text: String,
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    iconTint: Color? = null,
+    colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    OutlinedButton(
+        modifier = modifier,
+        colors = colors,
+        enabled = enabled,
+        onClick = onClick
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Icon(icon, null, tint = iconTint ?: LocalContentColor.current)//.copy(alpha = LocalContentAlpha.current))
+            Text(text)
+        }
+    }
+}
