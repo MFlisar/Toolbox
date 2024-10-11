@@ -4,6 +4,7 @@ import androidx.compose.ui.window.WindowPlacement
 import com.michaelflisar.kotpreferences.core.SettingsModel
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
+import com.michaelflisar.toolbox.classes.Theme
 import java.io.File
 import java.nio.file.Paths
 import kotlin.io.path.absolutePathString
@@ -20,5 +21,8 @@ object DefaultDesktopAppPrefs : SettingsModel(
     override val windowX by intPref(0)
     override val windowY by intPref(0)
     override val windowPlacement by enumPref(WindowPlacement.Floating, WindowPlacement.entries)
+
+    // DesktopApp
+    override val theme by enumPref(Theme.System, Theme.entries)
 
 }

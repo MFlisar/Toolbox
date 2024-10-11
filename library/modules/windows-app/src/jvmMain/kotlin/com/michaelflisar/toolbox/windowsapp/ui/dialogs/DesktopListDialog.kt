@@ -39,6 +39,8 @@ fun <T> DesktopListDialog(
     onItemSelected: ((item: T) -> Unit)? = null,
     placeholderLoading: @Composable () -> Unit = { MyLoading("Liste wird geladen...") },
     placeholderEmpty: @Composable () -> Unit = { Text(ToolboxDefaults.TEXT_EMPTY) },
+    header: @Composable (() -> Unit)? = null,
+    footer: @Composable (() -> Unit)? = null,
     itemRenderer: @Composable (item: T) -> Unit,
 ) {
     DesktopListDialog(
@@ -52,6 +54,8 @@ fun <T> DesktopListDialog(
         onItemSelected,
         placeholderLoading,
         placeholderEmpty,
+        header,
+        footer,
         itemRenderer
     )
 }
@@ -68,6 +72,8 @@ fun <T> DesktopListDialog(
     onItemSelected: ((item: T) -> Unit)? = null,
     placeholderLoading: @Composable () -> Unit = { MyLoading("Liste wird geladen...") },
     placeholderEmpty: @Composable () -> Unit = { Text(ToolboxDefaults.TEXT_EMPTY) },
+    header: @Composable (() -> Unit)? = null,
+    footer: @Composable (() -> Unit)? = null,
     itemRenderer: @Composable (item: T) -> Unit
 ) {
     if (visible) {
@@ -84,6 +90,7 @@ fun <T> DesktopListDialog(
             size = size,
             buttons = buttons
         ) {
+            header?.invoke()
             Row(
                 modifier = Modifier,
                 verticalAlignment = Alignment.CenterVertically,
@@ -137,6 +144,7 @@ fun <T> DesktopListDialog(
                     }
                 }
             }
+            footer?.invoke()
         }
     }
 }

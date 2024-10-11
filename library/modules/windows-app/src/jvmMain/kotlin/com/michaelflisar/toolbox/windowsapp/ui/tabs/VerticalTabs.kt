@@ -4,6 +4,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,6 +28,7 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -69,12 +72,14 @@ fun VerticalTabs(
     verticalTabStyle: VerticalTabStyle = VerticalTabStyle.Stripe(),
     content: @Composable ColumnScope.() -> Unit
 ) {
+    val bg = TabStyle.getBackgroundColor()
+    val fg = TabStyle.getForegroundColor()
     CompositionLocalProvider(
-        LocalContentColor provides MaterialTheme.colorScheme.background,
+        LocalContentColor provides fg,
         LocalVerticalTabStyle provides verticalTabStyle
     ) {
         Column(
-            modifier = modifier.background(MaterialTheme.colorScheme.onBackground)
+            modifier = modifier.background(bg)
         ) {
             content()
         }
@@ -125,7 +130,9 @@ fun VerticalTabIconItem(
         }
     }
     Row(
-        modifier = Modifier.height(IntrinsicSize.Min).fillMaxWidth()
+        modifier = Modifier
+            .height(IntrinsicSize.Min)
+            .fillMaxWidth()
     ) {
         Marker(
             style,
@@ -179,7 +186,7 @@ private fun TabButton(
     when (style) {
         VerticalTabStyle.None,
         is VerticalTabStyle.Stripe -> {
-            OutlinedButton(
+            Button(
                 modifier = modifier.fillMaxHeight(),
                 onClick = {
                     onSelectedTabChanged(item.id)
@@ -217,7 +224,9 @@ private fun TabButton(
                 val contentColor by animateColorAsState(
                     if (selected.value) {
                         style.contentColor
-                    } else MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onBackground
+                    }
                 )
                 OutlinedButton(
                     modifier = Modifier.fillMaxHeight(),
@@ -225,6 +234,7 @@ private fun TabButton(
                         onSelectedTabChanged(item.id)
                     },
                     shape = RectangleShape,
+                    border = BorderStroke(0.dp, Color.Transparent),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.Transparent,
                         contentColor = contentColor
@@ -255,10 +265,14 @@ private fun TabIconButton(
     when (style) {
         VerticalTabStyle.None,
         is VerticalTabStyle.Stripe -> {
-            IconButton(
+            OutlinedButton(
                 modifier = modifier.fillMaxHeight(),
+                border = BorderStroke(0.dp, Color.Transparent),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Transparent
+                ),
                 onClick = {
-                    onSelectedTabChanged?.invoke(item.id)
+                    onSelectedTabChanged.invoke(item.id)
                 }
             ) {
                 TabIconButtonContent(icon, painterIsIcon, item.label)
@@ -291,9 +305,10 @@ private fun TabIconButton(
                 }
                 val contentColor by animateColorAsState(
                     if (selected.value) {
-                        style.takeIf { selected.value }?.let { it.contentColor }
-                            ?: MaterialTheme.colorScheme.primary
-                    } else MaterialTheme.colorScheme.primary
+                        style.contentColor
+                    } else {
+                        MaterialTheme.colorScheme.onBackground
+                    }
                 )
                 OutlinedButton(
                     modifier = Modifier.fillMaxHeight(),
@@ -301,6 +316,7 @@ private fun TabIconButton(
                         onSelectedTabChanged(item.id)
                     },
                     shape = RectangleShape,
+                    border = BorderStroke(0.dp, Color.Transparent),
                     colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = Color.Transparent,
                         contentColor = contentColor

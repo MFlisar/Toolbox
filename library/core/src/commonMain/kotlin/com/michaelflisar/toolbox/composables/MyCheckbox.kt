@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -24,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.disabled
-import kotlin.math.max
 
 @Composable
 fun MyCheckbox(
@@ -59,8 +57,7 @@ fun MyCheckbox(
                 Modifier.clickable { onCheckedChange.invoke(!checked) }
             } else Modifier)
             .padding(ToolboxDefaults.ITEM_SPACING)
-            .width(IntrinsicSize.Max)
-        ,
+            .width(IntrinsicSize.Max),
         horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
         verticalAlignment = Alignment.CenterVertically
     ) {

@@ -1,13 +1,16 @@
 package com.michaelflisar.toolbox.windowsapp
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -38,7 +41,7 @@ object DesktopDialog {
                 label: String,
                 isEnabled: Boolean = true,
                 dismissOnClick: Boolean = true,
-                onClicked: suspend () -> Unit,
+                onClicked: suspend () -> Unit = {}
             ): Buttons = Show(
                 listOf(Button(label, isEnabled, onClicked, dismissOnClick))
             )
@@ -46,8 +49,8 @@ object DesktopDialog {
             fun TwoButtons(
                 label1: String,
                 label2: String,
-                on1Clicked: suspend () -> Unit,
-                on2Clicked: suspend () -> Unit,
+                on1Clicked: suspend () -> Unit = {},
+                on2Clicked: suspend () -> Unit = {},
                 is1Enabled: Boolean = true,
                 is2Enabled: Boolean = true,
                 dismissOn1Click: Boolean = true,
@@ -61,7 +64,7 @@ object DesktopDialog {
         }
     }
 
-    class Button(
+    class Button internal constructor(
         val label: String,
         val enabled: Boolean,
         val onClick: suspend () -> Unit,
@@ -98,7 +101,6 @@ fun DesktopDialog(
     onDismiss: () -> Unit = {},
     size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE,
     padding: PaddingValues = PaddingValues(ToolboxDefaults.CONTENT_PADDING),
-
     dismissable: Boolean = true,
     buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
     content: @Composable ColumnScope.() -> Unit
@@ -125,7 +127,11 @@ fun DesktopDialog(
             //    contentColor = MaterialTheme.colorScheme.onSurface
             //) {
             Column(
-                modifier = Modifier.padding(padding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(padding)
+                    ,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Column(

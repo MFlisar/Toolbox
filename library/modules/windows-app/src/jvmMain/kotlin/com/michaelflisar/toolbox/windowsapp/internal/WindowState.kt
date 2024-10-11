@@ -13,9 +13,30 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
+import java.nio.file.AccessDeniedException
+
+fun WindowState.reset(
+    prefs: DesktopAppPrefs,
+    position: Boolean = true,
+    size: Boolean = true
+) {
+    this.placement = prefs.windowPlacement.value
+    if (position) {
+        this.position = WindowPosition(
+            prefs.windowX.value.dp,
+            prefs.windowY.value.dp
+        )
+    }
+    if (size) {
+        this.size = DpSize(
+            prefs.windowWidth.value.dp,
+            prefs.windowHeight.value.dp,
+        )
+    }
+}
 
 @Composable
-internal fun rememberWindowState(
+fun rememberWindowState(
     prefs: DesktopAppPrefs
 ): WindowState {
 
@@ -36,26 +57,19 @@ internal fun rememberWindowState(
         size = size
     )
 
-    snapshotFlow { state.size }
-        .onEach {
+    snapshotFlow {
+        Triple(state.size, state.position, state.placement)
+    }.onEach {
             withContext(Dispatchers.IO) {
-                prefs.windowWidth.update(it.width.value.toInt())
-                prefs.windowHeight.update(it.height.value.toInt())
-            }
-        }
-        .launchIn(scope)
-    snapshotFlow { state.position }
-        .onEach {
-            withContext(Dispatchers.IO) {
-                prefs.windowX.update(it.x.value.toInt())
-                prefs.windowY.update(it.y.value.toInt())
-            }
-        }
-        .launchIn(scope)
-    snapshotFlow { state.placement }
-        .onEach {
-            withContext(Dispatchers.IO) {
-                prefs.windowPlacement.update(it)
+                try {
+                    prefs.windowWidth.update(it.first.width.value.toInt())
+                    prefs.windowHeight.update(it.first.height.value.toInt())
+                    prefs.windowX.update(it.second.x.value.toInt())
+                    prefs.windowY.update(it.second.y.value.toInt())
+                    prefs.windowPlacement.update(it.third)
+                } catch(e: AccessDeniedException) {
+                    // ignore - comes from androidx datastore...
+                }
             }
         }
         .launchIn(scope)

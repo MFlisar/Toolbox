@@ -1,9 +1,20 @@
 package com.michaelflisar.toolbox.windowsapp.ui.dialogs
 
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.LocalTextStyle
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -12,22 +23,47 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.MaterialColors
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.composables.MyHorizontalSpacer
-import com.michaelflisar.toolbox.composables.MyVerticalSpacer
+import com.michaelflisar.toolbox.get
+import com.michaelflisar.toolbox.ui.MyScrollableColumn
 import com.michaelflisar.toolbox.windowsapp.DesktopDialog
 
 object DesktopInfoDialog {
+
     class Data(
+        val dialogTitle: String,
         val title: String,
-        val text: String,
-        val textStyle: TextStyle? = null,
-        val textColor: Color = Color.Unspecified,
-        val icon: @Composable (() -> Unit)? = null
+        val info: String,
+        val type: Type = Type.Info
+    ) {
+        enum class Type(
+            val icon: ImageVector
+        ) {
+            Info(Icons.Default.Info),
+            Warning(Icons.Default.Warning),
+            Error(Icons.Default.Error),
+            Success(Icons.Default.Check)
+        }
+    }
+
+    class StyleData(
+        val colorSuccess: Color,
+        val colorWarning: Color,
+        val colorError: Color
     )
 }
+
+@Composable
+fun rememberDesktopInfoStyle(
+    colorSuccess: Color = if (isSystemInDarkTheme()) MaterialColors.Green[700] else MaterialColors.Green[300],
+    colorWarning: Color = if (isSystemInDarkTheme()) MaterialColors.Orange[700] else MaterialColors.Orange[300],
+    colorError: Color = MaterialTheme.colorScheme.error
+) = DesktopInfoDialog.StyleData(colorSuccess, colorWarning, colorError)
 
 @Composable
 fun rememberDesktopInfoDialogData() = remember { mutableStateOf<DesktopInfoDialog.Data?>(null) }
@@ -40,7 +76,7 @@ fun DesktopInfoDialog(
     title: String,
     info: MutableState<String?>,
     buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
-    size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE_COMPACT
+    size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE_SMALL
 ) {
     val d = info.value
     if (d != null) {
@@ -60,31 +96,50 @@ fun DesktopInfoDialog(
 @Composable
 fun DesktopInfoDialog(
     data: MutableState<DesktopInfoDialog.Data?>,
+    styleData: DesktopInfoDialog.StyleData = rememberDesktopInfoStyle(),
+    showIcon: Boolean = true,
     buttons: DesktopDialog.Buttons = DesktopDialog.Buttons.None,
-    size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE_COMPACT
+    size: DpSize = ToolboxDefaults.DEFAULT_DIALOG_SIZE_SMALL
 ) {
     val d = data.value
     if (d != null) {
         DesktopDialog(
-            title = d.title,
+            title = d.dialogTitle,
             size = size,
             buttons = buttons,
             onDismiss = {
                 data.value = null
             }
         ) {
-            Column(
+            val typeColor = when (d.type) {
+                DesktopInfoDialog.Data.Type.Info -> LocalContentColor.current
+                DesktopInfoDialog.Data.Type.Warning -> styleData.colorWarning
+                DesktopInfoDialog.Data.Type.Error -> styleData.colorError
+                DesktopInfoDialog.Data.Type.Success -> styleData.colorSuccess
+            }
+
+            MyScrollableColumn(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                if (d.icon != null) {
-                    Box(
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    ) {
-                        d.icon.invoke()
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+                ) {
+                    if (showIcon) {
+                        Icon(
+                            modifier = Modifier.size(48.dp),
+                            imageVector = d.type.icon,
+                            contentDescription = null,
+                            tint = typeColor
+                        )
                     }
-                    MyHorizontalSpacer()
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+                    ) {
+                        Text(d.title, style = MaterialTheme.typography.titleMedium, color = typeColor)
+                        Text(d.info, style = MaterialTheme.typography.bodyMedium)
+                    }
                 }
-                Text(d.text, color = d.textColor, style = d.textStyle ?: LocalTextStyle.current)
             }
         }
 

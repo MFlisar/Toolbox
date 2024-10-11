@@ -6,6 +6,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,7 +18,7 @@ fun MyIconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     iconPaddingValues: PaddingValues = PaddingValues(),
-    tint: Color = Color.Unspecified,
+    tint: Color = LocalContentColor.current,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -42,7 +43,7 @@ fun MyOutlinedIconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     iconPaddingValues: PaddingValues = PaddingValues(),
-    tint: Color = Color.Unspecified,
+    tint: Color = LocalContentColor.current,
     colors: IconButtonColors = IconButtonDefaults.outlinedIconButtonColors(),
     enabled: Boolean = true,
     onClick: () -> Unit

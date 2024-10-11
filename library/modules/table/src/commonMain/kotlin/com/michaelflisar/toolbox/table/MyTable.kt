@@ -158,7 +158,7 @@ object MyTable {
             val value: String,
             val color: Color = Color.Unspecified,
             val textStyle: TextStyle? = null,
-            val fontWeight: FontWeight? = null
+            val fontWeight: FontWeight? = null,
         ) : Cell() {
 
             override fun filter(text: String) =
@@ -558,7 +558,10 @@ private fun HeaderMenuIconPopup(
                             horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.AutoMirrored.Filled.Sort, null)
+                            Icon(
+                                Icons.AutoMirrored.Filled.Sort,
+                                null
+                            )
                             Text(
                                 modifier = Modifier.weight(1f),
                                 text = "Sortierung",
@@ -568,7 +571,7 @@ private fun HeaderMenuIconPopup(
                                 modifier = iconModifier,
                                 iconPaddingValues = PaddingValues(iconPadding),
                                 icon = Icons.Default.ArrowUpward,
-                                tint = if (sort.value?.type == MyTable.Sort.Type.Asc) MaterialTheme.colorScheme.primary else Color.Unspecified
+                                tint = if (sort.value?.type == MyTable.Sort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
                             ) {
                                 sort.value?.let { sorts.remove(it) }
                                 sorts.add(MyTable.Sort(index, MyTable.Sort.Type.Asc))
@@ -577,7 +580,7 @@ private fun HeaderMenuIconPopup(
                                 modifier = iconModifier,
                                 iconPaddingValues = PaddingValues(iconPadding),
                                 icon = Icons.Default.ArrowDownward,
-                                tint = if (sort.value?.type == MyTable.Sort.Type.Desc) MaterialTheme.colorScheme.primary else Color.Unspecified
+                                tint = if (sort.value?.type == MyTable.Sort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
                             ) {
                                 sort.value?.let { sorts.remove(it) }
                                 sorts.add(MyTable.Sort(index, MyTable.Sort.Type.Desc))
@@ -587,7 +590,7 @@ private fun HeaderMenuIconPopup(
                                 modifier = iconModifier,
                                 iconPaddingValues = PaddingValues(iconPadding),
                                 icon = Icons.Default.Clear,
-                                tint = if (sort.value != null) Color.Unspecified else LocalContentColor.current.disabled()
+                                tint = if (sort.value != null) LocalContentColor.current else LocalContentColor.current.disabled()
                             ) {
                                 sort.value?.let { sorts.remove(it) }
                             }

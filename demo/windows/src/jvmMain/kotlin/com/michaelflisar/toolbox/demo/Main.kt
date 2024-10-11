@@ -25,14 +25,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.WindowState
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogContent
 import com.michaelflisar.toolbox.MaterialColors
 import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.classes.Theme
 import com.michaelflisar.toolbox.composables.MyCheckbox
 import com.michaelflisar.toolbox.composables.MyDropdown
+import com.michaelflisar.toolbox.composables.MyExpandableTitle
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyMultiSegmentedControl
 import com.michaelflisar.toolbox.composables.MySegmentedControl
@@ -45,6 +49,8 @@ import com.michaelflisar.toolbox.windowsapp.classes.LocalAppState
 import com.michaelflisar.toolbox.windowsapp.classes.Status
 import com.michaelflisar.toolbox.windowsapp.classes.rememberAppState
 import com.michaelflisar.toolbox.windowsapp.initDesktopApp
+import com.michaelflisar.toolbox.windowsapp.internal.rememberWindowState
+import com.michaelflisar.toolbox.windowsapp.internal.reset
 import com.michaelflisar.toolbox.windowsapp.prefs.DefaultDesktopAppPrefs
 import com.michaelflisar.toolbox.windowsapp.ui.DesktopRoot
 import com.michaelflisar.toolbox.windowsapp.ui.StatusBar
@@ -72,12 +78,14 @@ fun main() {
         val fileLoggerSetup = Toolbox.initDesktopApp()
         val showLogs = remember { mutableStateOf(false) }
         val prefs = DefaultDesktopAppPrefs
+        val windowState = rememberWindowState(prefs)
 
         DesktopApplication(
             title = "Demo App",
             state = appState,
-            menuCommands = { buildMenu(showLogs) },
-            prefs = prefs
+            menuCommands = { buildMenu(showLogs, prefs, windowState) },
+            prefs = prefs,
+            windowState = windowState,
             //icon = painterResource("logo.png"),
             //alwaysOnTop = alwaysOnTop.value,
             //onClosed = {
@@ -229,6 +237,13 @@ private fun ContentPage1() {
             if (items.value.size > 50)
                 items.value = items.value.subList(0, 50)
         }
+
+        MyExpandableTitle("Expandable") {
+            Text("Content...")
+        }
+        MyExpandableTitle("Expandable2", info = "State") {
+            Text("Content...")
+        }
     }
 }
 
@@ -299,14 +314,9 @@ private fun ContentPageDialogs() {
             onClick = {
                 showDialog3.value = DesktopInfoDialog.Data(
                     "Title",
+                    "Important",
                     "Some info...",
-                    icon = {
-                        Icon(
-                            Icons.Default.Error,
-                            null,
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                    }
+                    type = DesktopInfoDialog.Data.Type.Error
                 )
             }
         ) {
@@ -329,10 +339,13 @@ private fun ContentPageDialogs() {
     DesktopListDialog(
         title = "Liste",
         visible = showDialog2,
-        items = listOf("1", "2", "3", "4"),
+        items = List(20) { it.toString() },
         onFilter = { item, filter -> item.contains(filter, true) },
         onItemSelected = {
             // ...
+        },
+        footer = {
+            Text(modifier = Modifier.fillMaxWidth(), text = "FOOTER", textAlign = TextAlign.Center)
         }
     ) {
         Text(it)
@@ -433,8 +446,11 @@ private fun ContentPageX(tabId: Int) {
 
 @Composable
 private fun buildMenu(
-    showLogs: MutableState<Boolean>
+    showLogs: MutableState<Boolean>,
+    prefs: DefaultDesktopAppPrefs,
+    windowState: WindowState
 ): CommandGroup {
+    val scope = rememberCoroutineScope()
     val commandGroup = CommandGroup(
         commands = listOf(
             Command(
@@ -456,8 +472,37 @@ private fun buildMenu(
                                 text = "Save",
                                 action = {
                                     L.d { "Menu => Save" }
+                                }),
+                            Command(
+                                text = "Reset Window",
+                                action = {
+                                    scope.launch(Dispatchers.IO) {
+                                        //prefs.windowX.reset()
+                                        //prefs.windowY.reset()
+                                        prefs.windowWidth.reset()
+                                        prefs.windowHeight.reset()
+                                        prefs.windowPlacement.reset()
+                                        windowState.reset(prefs, position = false)
+                                    }
                                 })
                         )
+                    )
+                )
+            ),
+            Command(
+                text = "Theme",
+                secondaryContentModel = CommandMenuContentModel(
+                    CommandGroup(
+                        commands = Theme.entries.map {
+                            Command(
+                                text = it.name,
+                                action = {
+                                    scope.launch(Dispatchers.IO) {
+                                        prefs.theme.update(it)
+                                    }
+                                }
+                            )
+                        }
                     )
                 )
             ),

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -133,7 +134,7 @@ private fun DesktopRootImpl(
                             .width(tabWidth)
                             .background(MaterialTheme.colorScheme.onBackground)
                     ) {
-                        for (item in tabItems) {
+                        for ((index, item) in tabItems.withIndex()) {
                             when (item) {
                                 is TabItem.Group -> VerticalTabsRegion(item.label)
                                 is TabItem.Item -> {
@@ -147,6 +148,11 @@ private fun DesktopRootImpl(
                                             selectedTabId,
                                             onSelectedTabChanged
                                         )
+                                }
+                            }
+                            if (index < tabItems.size - 2) {
+                                if (item is TabItem.Item && tabItems[index + 1] is TabItem.Item) {
+                                    HorizontalDivider()
                                 }
                             }
                         }
