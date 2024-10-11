@@ -19,11 +19,12 @@ fun Toolbox.setClipboard(s: String) {
     clipboard.setContents(selection, selection)
 }
 
-fun Toolbox.initDesktopApp(): IFileLoggingSetup {
-   return initDesktopApp(File(System.getProperty("user.dir"), "log.txt"))!!
-}
+fun Toolbox.initDesktopApp() = initDesktopAppImpl(File(System.getProperty("user.dir"), "log.txt"))!!
+fun Toolbox.initDesktopApp(file: File) = initDesktopAppImpl(file)!!
+fun Toolbox.initDesktopAppNoLogFile() = initDesktopAppImpl(null)
 
-fun Toolbox.initDesktopApp(file: File?): IFileLoggingSetup? {
+
+private fun Toolbox.initDesktopAppImpl(file: File?): IFileLoggingSetup? {
     L.init(LumberjackLogger)
     L.plant(ConsoleLogger())
     return if (file != null) {
