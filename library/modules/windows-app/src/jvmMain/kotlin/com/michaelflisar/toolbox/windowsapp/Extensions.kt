@@ -20,15 +20,15 @@ fun Toolbox.setClipboard(s: String) {
 }
 
 fun Toolbox.initDesktopApp(): IFileLoggingSetup {
-   return initDesktopApp(true)!!
+   return initDesktopApp(File(System.getProperty("user.dir"), "log.txt"))!!
 }
 
-fun Toolbox.initDesktopApp(fileLogger: Boolean): IFileLoggingSetup? {
+fun Toolbox.initDesktopApp(file: File?): IFileLoggingSetup? {
     L.init(LumberjackLogger)
     L.plant(ConsoleLogger())
-    return if (fileLogger) {
+    return if (file != null) {
         val setup = FileLoggerSetup.SingleFile.create(
-            folder = File(System.getProperty("user.dir"))
+            file = file
         )
         L.plant(FileLogger(setup))
         setup
