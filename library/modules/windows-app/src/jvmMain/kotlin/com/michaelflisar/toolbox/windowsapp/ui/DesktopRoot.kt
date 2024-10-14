@@ -161,7 +161,7 @@ private fun DesktopRootImpl(
                             tabFooter()
                         }
                     }
-                    VerticalDivider(color = MaterialTheme.colorScheme.onBackground)
+                    VerticalDivider()
                 }
                 content(Modifier.fillMaxHeight().weight(1f))
             }

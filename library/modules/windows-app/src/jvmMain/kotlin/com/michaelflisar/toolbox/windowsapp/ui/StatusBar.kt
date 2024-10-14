@@ -60,7 +60,7 @@ fun StatusBar(
                 .fillMaxWidth()
                 .background(MaterialColor.Gray900),
         ) {
-            HorizontalDivider(color = LocalContentColor.current)
+            HorizontalDivider()
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -84,7 +84,7 @@ fun StatusBar(
                 }
             }
             AnimatedVisibility(running != null) {
-                HorizontalDivider(color = LocalContentColor.current)
+                HorizontalDivider()
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -109,7 +109,7 @@ fun StatusBar(
 }
 
 @Composable
-fun RowScope.StatusBarDivider() = VerticalDivider(color = LocalContentColor.current)
+fun RowScope.StatusBarDivider() = VerticalDivider()
 
 @Composable
 fun StatusBarText(

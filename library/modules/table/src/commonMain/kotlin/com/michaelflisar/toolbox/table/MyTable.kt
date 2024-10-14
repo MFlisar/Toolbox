@@ -376,44 +376,48 @@ private fun RowScope.HeaderCell(
         modifier = header
             .modifier(this)
             .padding(header.cellPadding)
-            .height(64.dp),
+        ,
         verticalAlignment = Alignment.CenterVertically
     ) {
         val containerModifier = Modifier.padding(horizontal = 4.dp).weight(1f)
-        val itemModifier = Modifier//.weight(1f)
+        val itemModifier = Modifier.fillMaxWidth()
 
-        HeaderTooltipContainer(header, containerModifier) {
-            when (header) {
-                is MyTable.Header.Icon -> {
-                    Row(
-                        modifier = itemModifier,
-                        horizontalArrangement = Arrangement.aligned(header.align)
-                    ) {
-                        header.icon.invoke()
-                    }
-                }
-
-                is MyTable.Header.Text -> {
-                    if (header.icon != null) {
+        Row(
+            modifier = Modifier.weight(1f),
+        ) {
+            HeaderTooltipContainer(header, containerModifier) {
+                when (header) {
+                    is MyTable.Header.Icon -> {
                         Row(
                             modifier = itemModifier,
-                            horizontalArrangement = Arrangement.spacedBy(
-                                4.dp,
-                                Alignment.CenterHorizontally
-                            )
+                            horizontalArrangement = Arrangement.aligned(header.align)
                         ) {
                             header.icon.invoke()
-                            if (header.label.isNotEmpty()) {
-                                HeaderItemText(Modifier.weight(1f), header)
-                            }
                         }
-                    } else {
-                        HeaderItemText(itemModifier, header)
+                    }
+
+                    is MyTable.Header.Text -> {
+                        if (header.icon != null) {
+                            Row(
+                                modifier = itemModifier,
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    4.dp,
+                                    Alignment.CenterHorizontally
+                                )
+                            ) {
+                                header.icon.invoke()
+                                if (header.label.isNotEmpty()) {
+                                    HeaderItemText(Modifier.weight(1f), header)
+                                }
+                            }
+                        } else {
+                            HeaderItemText(itemModifier, header)
+                        }
                     }
                 }
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
+        //Spacer(modifier = Modifier.weight(1f))
         HeaderMenuIcon(index, filters, sorts, filter, sort)
     }
 }
@@ -700,7 +704,7 @@ private fun <T> Row(
 
 @Composable
 fun RowScope.TableRowSpacer() {
-    VerticalDivider(color = MaterialTheme.colorScheme.onBackground)
+    VerticalDivider()
 }
 
 @Composable
@@ -710,6 +714,6 @@ fun RowScope.TableRowSpacerInvisible() {
 
 @Composable
 fun TableColumnDivider() {
-    HorizontalDivider(color = MaterialTheme.colorScheme.onBackground)
+    HorizontalDivider()
 }
 

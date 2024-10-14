@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.table.MyTable
@@ -16,14 +17,15 @@ class TableDataEntry(
 ) {
     companion object {
         val HEADERS = listOf(
-            MyTable.Header.Text("ID", { Modifier.width(96.dp) }),
+            MyTable.Header.Text("ID sdf aad fasdf sdf a", { Modifier.width(96.dp) }),
             MyTable.Header.Text("Name", { Modifier.width(128.dp) }),
             MyTable.Header.Text("Description", { Modifier.weight(1f) }),
             MyTable.Header.Icon(
                 "Setting",
                 { Icon(Icons.Default.Settings, null, tint = MaterialTheme.colorScheme.secondary) },
                 { Modifier.width(128.dp) },
-                "Some additional information..."
+                "Some additional information...",
+                //align = Alignment.CenterHorizontally
             )
         )
     }
