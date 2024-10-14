@@ -8,7 +8,8 @@
 
 ## :heavy_check_mark: Features
 
-* **core**: common composables for desktop and android apps with automatic handling of scrollbars and more
+* **core**: just a few classes and functions
+* **ui**: common composables for desktop and android apps with automatic handling of scrollbars and more
 * **table**: a table composable
 * **android-demo-app**: a demo activity and application and some demo specific composables
 * **windows-app**: a aurora styled windows app and some composables and base settings and ui
@@ -26,6 +27,7 @@ This library is distributed via [maven central](https://central.sonatype.com/).
 val toolbox = "<LATEST-VERSION>"
 
 implementation("io.github.mflisar.toolbox:core:$toolbox")
+implementation("io.github.mflisar.toolbox:ui:$toolbox")
 implementation("io.github.mflisar.toolbox:table:$toolbox")
 
 implementation("io.github.mflisar.toolbox:android-demo-app:$toolbox")

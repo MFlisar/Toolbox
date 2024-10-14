@@ -15,6 +15,7 @@ material =					    "1.12.0"
 lumberjack =                    "7.0.5"
 kotpreferences =                "0.6.2"
 composethemer =                 "0.3.1"
+composecolors =                 "1.0.0-alpha03"
 aurora =                        "2.0-SNAPSHOT"
 
 [plugins]
@@ -56,6 +57,10 @@ kotpreferences-datastore =              { module = "io.github.mflisar.kotprefere
 kotpreferences-compose =                { module = "io.github.mflisar.kotpreferences:extension-compose", 	    version.ref = "kotpreferences" }
 composethemer-core =                    { module = "io.github.mflisar.composethemer:core", 			            version.ref = "composethemer" }
 composethemer-themes =                  { module = "io.github.mflisar.composethemer:themes", 	                version.ref = "composethemer" }
+composecolors-material =                { module = "io.github.mflisar.composecolors:material", 	                version.ref = "composecolors" }
+composecolors-x11 =                     { module = "io.github.mflisar.composecolors:x11", 	                    version.ref = "composecolors" }
+composecolors-material-palette =        { module = "io.github.mflisar.composecolors:material-palette", 	        version.ref = "composecolors" }
+composecolors-x11-palette =             { module = "io.github.mflisar.composecolors:x11-palette", 	            version.ref = "composecolors" }
 
 aurora-theming =                        { module = "org.pushing-pixels:aurora-theming", 	                    version.ref = "aurora" }
 aurora-component =                      { module = "org.pushing-pixels:aurora-component", 	                    version.ref = "aurora" }

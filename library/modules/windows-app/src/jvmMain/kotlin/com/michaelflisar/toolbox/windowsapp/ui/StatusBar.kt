@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composecolors.material.MaterialColor
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.windowsapp.classes.LocalAppState
 import com.michaelflisar.toolbox.windowsapp.classes.Status
@@ -53,11 +54,11 @@ fun StatusBar(
 
 
     //AuroraDecorationArea(decorationAreaType = DecorationAreaType.Footer) {
-    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.background) {
+    CompositionLocalProvider(LocalContentColor provides Color.White) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.onBackground),
+                .background(MaterialColor.Gray900),
         ) {
             HorizontalDivider(color = LocalContentColor.current)
             Row(

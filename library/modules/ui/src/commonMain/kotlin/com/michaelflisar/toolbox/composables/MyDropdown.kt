@@ -275,7 +275,7 @@ private fun <T> MyDropdownImpl(
                 modifier = Modifier.rotate(rotation),
                 imageVector = Icons.Default.ArrowDropDown,
                 contentDescription = null,
-                tint = color
+                tint = labelColor
             )
         }
         DropdownMenu(

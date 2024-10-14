@@ -28,9 +28,9 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
+import com.michaelflisar.composecolors.material.MaterialColor
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogContent
-import com.michaelflisar.toolbox.MaterialColors
 import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.classes.Theme
@@ -40,7 +40,6 @@ import com.michaelflisar.toolbox.composables.MyExpandableTitle
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyMultiSegmentedControl
 import com.michaelflisar.toolbox.composables.MySegmentedControl
-import com.michaelflisar.toolbox.get
 import com.michaelflisar.toolbox.table.MyTable
 import com.michaelflisar.toolbox.table.rememberMyTableState
 import com.michaelflisar.toolbox.windowsapp.DesktopApplication
@@ -178,7 +177,7 @@ private fun ContentPage1() {
                 L.e { "Test Error" }
             }
         ) {
-            Text("Test Error", color = MaterialColors.Red[200])
+            Text("Test Error", color = MaterialColor.Red200)
         }
         Button(
             enabled = appState.state.value == Status.None,

@@ -32,6 +32,9 @@ pluginManagement {
 include(":Toolbox:Core")
 project(":Toolbox:Core").projectDir = file("library/core")
 
+include(":Toolbox:Modules:UI")
+project(":Toolbox:Modules:UI").projectDir = file("library/modules/ui")
+
 include(":Toolbox:Modules:Table")
 project(":Toolbox:Modules:Table").projectDir = file("library/modules/table")
 

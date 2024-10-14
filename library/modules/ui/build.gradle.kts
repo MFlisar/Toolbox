@@ -17,7 +17,7 @@ plugins {
 // -------------------
 
 // Module
-val artifactId = "table"
+val artifactId = "ui"
 
 // Library
 val libraryName = "Toolbox"
@@ -67,15 +67,18 @@ kotlin {
 
             // Library
             api(project(":Toolbox:Core"))
-            api(project(":Toolbox:Modules:UI"))
 
+        }
+
+        androidMain.dependencies {
+            implementation(libs.androidx.core)
         }
     }
 }
 
 android {
 
-    namespace = "com.michaelflisar.toolbox.table"
+    namespace = "com.michaelflisar.ui"
 
     compileSdk = app.versions.compileSdk.get().toInt()
 

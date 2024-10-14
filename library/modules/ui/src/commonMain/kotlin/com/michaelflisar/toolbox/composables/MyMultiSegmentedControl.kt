@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -150,16 +152,17 @@ private fun MyMultiSegmentedControlImpl(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically)
         ) {
-            val iconSize = 30.dp
+            val iconSize = 24.dp
             OutlinedButton(
-                modifier = Modifier.size(iconSize),
+                modifier = Modifier.size(iconSize).align(Alignment.CenterVertically),
                 onClick = {
                     onSelectionChange(emptyList(), emptyList())
                 },
                 colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = if (empty.value) Color.Transparent else MaterialTheme.colorScheme.background
+                    containerColor = Color.Transparent,
+                    contentColor = if (empty.value) MaterialTheme.colorScheme.primary.disabled() else MaterialTheme.colorScheme.primary
                 ),
                 contentPadding = PaddingValues(all = 0.dp),
                 enabled = !empty.value

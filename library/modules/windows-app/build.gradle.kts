@@ -63,8 +63,11 @@ kotlin {
                 api(libs.composethemer.core)
                 implementation(libs.composethemer.themes)
 
+                implementation(libs.composecolors.material)
+
                 // Library
                 api(project(":Toolbox:Core"))
+                api(project(":Toolbox:Modules:UI"))
                 api(project(":Toolbox:Modules:Table"))
 
             }

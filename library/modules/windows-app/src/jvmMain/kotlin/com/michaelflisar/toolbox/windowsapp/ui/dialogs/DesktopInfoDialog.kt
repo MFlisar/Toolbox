@@ -20,16 +20,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.MaterialColors
+import com.michaelflisar.composecolors.material.MaterialColor
 import com.michaelflisar.toolbox.ToolboxDefaults
-import com.michaelflisar.toolbox.composables.MyHorizontalSpacer
-import com.michaelflisar.toolbox.get
 import com.michaelflisar.toolbox.ui.MyScrollableColumn
 import com.michaelflisar.toolbox.windowsapp.DesktopDialog
 
@@ -60,8 +57,8 @@ object DesktopInfoDialog {
 
 @Composable
 fun rememberDesktopInfoStyle(
-    colorSuccess: Color = if (isSystemInDarkTheme()) MaterialColors.Green[700] else MaterialColors.Green[300],
-    colorWarning: Color = if (isSystemInDarkTheme()) MaterialColors.Orange[700] else MaterialColors.Orange[300],
+    colorSuccess: Color = if (isSystemInDarkTheme()) MaterialColor.Green700 else MaterialColor.Green300,
+    colorWarning: Color = if (isSystemInDarkTheme()) MaterialColor.Orange700 else MaterialColor.Orange300,
     colorError: Color = MaterialTheme.colorScheme.error
 ) = DesktopInfoDialog.StyleData(colorSuccess, colorWarning, colorError)
 
