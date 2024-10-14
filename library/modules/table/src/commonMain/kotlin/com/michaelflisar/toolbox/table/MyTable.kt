@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox.table
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -148,7 +147,7 @@ object MyTable {
 
     sealed class Cell {
 
-        abstract val cellAlignment: Alignment.Vertical
+        abstract val verticalCellAlignment: Alignment.Vertical
 
         abstract fun filter(text: String): Boolean
         abstract fun sort(): Comparable<*>
@@ -162,7 +161,7 @@ object MyTable {
             val textStyle: TextStyle? = null,
             val fontWeight: FontWeight? = null,
             val textAlign: TextAlign = TextAlign.Start,
-            override val cellAlignment: Alignment.Vertical = Alignment.Top
+            override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
         ) : Cell() {
 
             override fun filter(text: String) =
@@ -189,7 +188,7 @@ object MyTable {
             val textStyle: TextStyle? = null,
             val textAlign: TextAlign = TextAlign.Start,
             val fontWeight: FontWeight? = null,
-            override val cellAlignment: Alignment.Vertical = Alignment.Top
+            override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
         ) : Cell() where T : kotlin.Number, T : Comparable<T> {
 
             override fun filter(text: String) =
@@ -213,7 +212,8 @@ object MyTable {
         class Checkmark(
             val checked: Boolean,
             val color: Color? = null,
-            override val cellAlignment: Alignment.Vertical = Alignment.Top
+            val horizontalAligmnet: Alignment.Horizontal = Alignment.Start,
+            override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
         ) : Cell() {
 
             override fun filter(text: String) = text.isEmpty() ||
@@ -229,7 +229,13 @@ object MyTable {
                         modifier = modifier
                     ) {
                         Icon(
-                            modifier = Modifier,
+                            modifier = Modifier.align(
+                                when (horizontalAligmnet) {
+                                    Alignment.End -> Alignment.CenterEnd
+                                    Alignment.CenterHorizontally -> Alignment.Center
+                                    else -> Alignment.CenterStart
+                                }
+                            ),
                             imageVector = Icons.Default.Check,
                             contentDescription = null,
                             tint = color
@@ -702,7 +708,7 @@ private fun <T> Row(
             }
             val cell = row.cells[column]
             cell.render(
-                header.modifier(this).align(cell.cellAlignment).then(modifier).padding(header.cellPadding)
+                header.modifier(this).align(cell.verticalCellAlignment).then(modifier).padding(header.cellPadding)
             )
             if (column < headers.lastIndex) {
                 TableRowSpacer()
