@@ -148,6 +148,8 @@ object MyTable {
 
     sealed class Cell {
 
+        abstract val cellAlignment: Alignment.Vertical
+
         abstract fun filter(text: String): Boolean
         abstract fun sort(): Comparable<*>
 
@@ -159,6 +161,8 @@ object MyTable {
             val color: Color = Color.Unspecified,
             val textStyle: TextStyle? = null,
             val fontWeight: FontWeight? = null,
+            val textAlign: TextAlign = TextAlign.Start,
+            override val cellAlignment: Alignment.Vertical = Alignment.Top
         ) : Cell() {
 
             override fun filter(text: String) =
@@ -173,7 +177,8 @@ object MyTable {
                     text = value,
                     style = textStyle ?: LocalTextStyle.current,
                     fontWeight = fontWeight,
-                    color = color
+                    color = color,
+                    textAlign = textAlign
                 )
             }
         }
@@ -182,7 +187,8 @@ object MyTable {
             val value: T?,
             val color: Color = Color.Unspecified,
             val textStyle: TextStyle? = null,
-            val fontWeight: FontWeight? = null
+            val fontWeight: FontWeight? = null,
+            override val cellAlignment: Alignment.Vertical = Alignment.Top
         ) : Cell() where T : kotlin.Number, T : Comparable<T> {
 
             override fun filter(text: String) =
@@ -204,7 +210,8 @@ object MyTable {
 
         class Checkmark(
             val checked: Boolean,
-            val color: Color? = null
+            val color: Color? = null,
+            override val cellAlignment: Alignment.Vertical = Alignment.Top
         ) : Cell() {
 
             override fun filter(text: String) = text.isEmpty() ||
@@ -240,7 +247,6 @@ fun rememberMyTableState(
     selectedRows: SnapshotStateList<Int> = remember { mutableStateListOf() },
 ) = MyTable.State(filters, sorts, selectedRows)
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <T> MyTable(
     modifier: Modifier,
@@ -692,8 +698,9 @@ private fun <T> Row(
                 is MyTable.Setup.ClickType.RowClick,
                 is MyTable.Setup.ClickType.Select -> Modifier
             }
-            row.cells[column].render(
-                header.modifier(this).fillMaxHeight().then(modifier).padding(header.cellPadding)
+            val cell = row.cells[column]
+            cell.render(
+                header.modifier(this).align(cell.cellAlignment).then(modifier).padding(header.cellPadding)
             )
             if (column < headers.lastIndex) {
                 TableRowSpacer()
