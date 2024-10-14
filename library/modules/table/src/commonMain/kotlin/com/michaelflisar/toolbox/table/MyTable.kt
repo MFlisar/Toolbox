@@ -212,7 +212,7 @@ object MyTable {
         class Checkmark(
             val checked: Boolean,
             val color: Color? = null,
-            val horizontalAligmnet: Alignment.Horizontal = Alignment.Start,
+            val horizontalAlignment: Alignment.Horizontal = Alignment.Start,
             override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
         ) : Cell() {
 
@@ -230,7 +230,7 @@ object MyTable {
                     ) {
                         Icon(
                             modifier = Modifier.align(
-                                when (horizontalAligmnet) {
+                                when (horizontalAlignment) {
                                     Alignment.End -> Alignment.CenterEnd
                                     Alignment.CenterHorizontally -> Alignment.Center
                                     else -> Alignment.CenterStart

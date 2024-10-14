@@ -37,7 +37,7 @@ class TableDataEntry(
     fun createRow() = MyTable.Row(
         this,
         listOf(
-            MyTable.Cell.Checkmark(true, horizontalAligmnet = Alignment.CenterHorizontally, verticalCellAlignment = Alignment.CenterVertically),
+            MyTable.Cell.Checkmark(true, horizontalAlignment = Alignment.CenterHorizontally, verticalCellAlignment = Alignment.CenterVertically),
             MyTable.Cell.Number(id, textStyle = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center, verticalCellAlignment = Alignment.CenterVertically),
             MyTable.Cell.Text(name, textStyle = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center, verticalCellAlignment = Alignment.CenterVertically),
             MyTable.Cell.Text(description),
