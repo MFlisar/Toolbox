@@ -78,7 +78,7 @@ kotlin {
 
 android {
 
-    namespace = "com.michaelflisar.ui"
+    namespace = "com.michaelflisar.toolbox.ui"
 
     compileSdk = app.versions.compileSdk.get().toInt()
 

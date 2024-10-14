@@ -88,8 +88,8 @@ fun MyMultiSegmentedControl(
         selectedIndizes,
         color,
         showSelectionInfo
-    ) { selectedIndizes, selectedItems ->
-        selected.value = selectedIndizes.map { items[it] }
+    ) { _, selectedItems ->
+        selected.value = selectedItems
         onSelectionChange?.invoke(selected.value)
     }
 }
@@ -111,8 +111,8 @@ fun MyMultiSegmentedControl(
         selectedIndizes,
         color,
         showSelectionInfo
-    ) { selectedIndizes, selectedItems ->
-        onSelectionChange(selectedIndizes.map { items[it] })
+    ) { _, selectedItems ->
+        onSelectionChange(selectedItems)
     }
 }
 
@@ -136,7 +136,7 @@ private fun MyMultiSegmentedControlImpl(
     val colorNotSelected = Color.Unspecified
     val colorNotSelectedText = Color.Unspecified
 
-    var selectedItems = selected.map { items[it] }
+    val selectedItems = selected.map { items[it] }
     val empty = remember(selectedItems) { derivedStateOf { selectedItems.isEmpty() } }
 
     Column(

@@ -36,7 +36,7 @@ object ToolboxDefaults {
         onPrimary: Color = Color.White,
         onSecondary: Color = Color.White
     ) =
-        if (theme == Theme.Dark || (theme == Theme.System && isSystemInDarkTheme())) {
+        if (theme.isDark()) {
             darkColorScheme(
                 primary = primary,
                 primaryContainer = primaryContainer,
