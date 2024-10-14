@@ -19,7 +19,7 @@ class TableDataEntry(
 ) {
     companion object {
         val HEADERS = listOf(
-            MyTable.Header.Text("ID sdf aad fasdf sdf a", { Modifier.width(96.dp) }),
+            MyTable.Header.Text("ID", { Modifier.width(96.dp) }),
             MyTable.Header.Text("Name", { Modifier.width(128.dp) }),
             MyTable.Header.Text("Description", { Modifier.weight(1f) }),
             MyTable.Header.Icon(
@@ -36,7 +36,7 @@ class TableDataEntry(
     fun createRow() = MyTable.Row(
         this,
         listOf(
-            MyTable.Cell.Number(id),
+            MyTable.Cell.Number(id, textStyle = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center, cellAlignment = Alignment.CenterVertically),
             MyTable.Cell.Text(name, textStyle = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center, cellAlignment = Alignment.CenterVertically),
             MyTable.Cell.Text(description),
             MyTable.Cell.Text("...")

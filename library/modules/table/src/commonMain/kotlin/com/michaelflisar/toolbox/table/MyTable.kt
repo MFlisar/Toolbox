@@ -187,6 +187,7 @@ object MyTable {
             val value: T?,
             val color: Color = Color.Unspecified,
             val textStyle: TextStyle? = null,
+            val textAlign: TextAlign = TextAlign.Start,
             val fontWeight: FontWeight? = null,
             override val cellAlignment: Alignment.Vertical = Alignment.Top
         ) : Cell() where T : kotlin.Number, T : Comparable<T> {
@@ -203,7 +204,8 @@ object MyTable {
                     text = value?.toString() ?: "-",
                     style = textStyle ?: LocalTextStyle.current,
                     fontWeight = fontWeight,
-                    color = color
+                    color = color,
+                    textAlign = textAlign
                 )
             }
         }
