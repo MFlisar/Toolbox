@@ -309,7 +309,7 @@ fun <T> MyTable(
 
         // Header
         Header(headers, state.filters, state.sorts)
-        TableColumnDivider()
+        TableColumnDivider(true)
 
         // Scrollable Content
         MyScrollableLazyColumn(
@@ -332,7 +332,7 @@ fun <T> MyTable(
                 }
                 if (index <= sortedList.lastIndex) {
                     item(key = "DIVIDER-$index") {
-                        TableColumnDivider()
+                        TableColumnDivider(false)
                     }
                 }
             }
@@ -360,7 +360,7 @@ private fun Header(
                 headers.forEachIndexed { index, header ->
                     HeaderCell(index, header, filters, sorts)
                     if (index != headers.size - 1) {
-                        TableRowSpacer()
+                        TableRowSpacer(true)
                     }
                 }
             }
@@ -711,15 +711,15 @@ private fun <T> Row(
                 header.modifier(this).align(cell.verticalCellAlignment).then(modifier).padding(header.cellPadding)
             )
             if (column < headers.lastIndex) {
-                TableRowSpacer()
+                TableRowSpacer(false)
             }
         }
     }
 }
 
 @Composable
-fun RowScope.TableRowSpacer() {
-    VerticalDivider()
+fun RowScope.TableRowSpacer(header: Boolean) {
+    VerticalDivider(color = MaterialTheme.colorScheme.onBackground)
 }
 
 @Composable
@@ -728,7 +728,7 @@ fun RowScope.TableRowSpacerInvisible() {
 }
 
 @Composable
-fun TableColumnDivider() {
-    HorizontalDivider()
+fun TableColumnDivider(header: Boolean) {
+    HorizontalDivider(color = MaterialTheme.colorScheme.onBackground)
 }
 
