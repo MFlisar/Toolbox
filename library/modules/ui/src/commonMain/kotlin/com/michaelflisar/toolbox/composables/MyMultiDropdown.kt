@@ -161,7 +161,7 @@ private fun MyMultiDropdownImpl(
 ) {
     var expanded by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (expanded) -180f else 0f)
-    var selectedItems = selected.map { items[it] }
+    val selectedItems = selected.map { items[it] }
     val empty = remember(selectedItems) { derivedStateOf { selectedItems.isEmpty() } }
     Box(
         modifier = modifier//.padding(horizontal = 16.dp)
@@ -211,7 +211,7 @@ private fun MyMultiDropdownImpl(
                     modifier = Modifier.rotate(rotation),
                     imageVector = Icons.Default.ArrowDropDown,
                     contentDescription = null,
-                    tint = color
+                    tint = labelColor
                 )
             }
         }
