@@ -31,21 +31,32 @@ import com.michaelflisar.toolbox.windowsapp.classes.LocalAppState
 import com.michaelflisar.toolbox.windowsapp.classes.Status
 import java.net.InetAddress
 
+object StatusBar {
+
+    fun data(
+        javaVersion: Boolean = true,
+        userName: Boolean = true,
+        computerName: Boolean = true,
+    ): List<String> {
+        return listOfNotNull(
+            dataJavaVersion().takeIf { javaVersion },
+            dataUserName().takeIf { userName },
+            dataHostName().takeIf { computerName }
+        )
+    }
+
+    fun dataJavaVersion() = "Java ${System.getProperty("java.version")}"
+    fun dataUserName() = System.getenv("username")
+    fun dataHostName() = InetAddress.getLocalHost().hostName
+}
+
 @Composable
 fun StatusBar(
-    javaVersion: Boolean = true,
-    userName: Boolean = true,
-    computerName: Boolean = true,
-    content: @Composable (() -> Unit)? = null
+    data: List<String>,
+    content: @Composable (RowScope.() -> Unit)? = null
 ) {
     val appState = LocalAppState.current
     val state = appState.state.value
-
-    val data = listOfNotNull(
-        "Java ${System.getProperty("java.version")}".takeIf { javaVersion },
-        System.getenv("username").takeIf { userName },
-        InetAddress.getLocalHost().hostName.takeIf { computerName }
-    )
 
     val running = when (state) {
         Status.None -> null
@@ -109,7 +120,7 @@ fun StatusBar(
 }
 
 @Composable
-fun RowScope.StatusBarDivider() = VerticalDivider()
+fun StatusBarDivider() = VerticalDivider()
 
 @Composable
 fun StatusBarText(
