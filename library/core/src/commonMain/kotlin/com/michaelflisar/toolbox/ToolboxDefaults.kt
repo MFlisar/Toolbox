@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme

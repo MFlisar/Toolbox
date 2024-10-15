@@ -36,12 +36,12 @@ object StatusBar {
     fun data(
         javaVersion: Boolean = true,
         userName: Boolean = true,
-        computerName: Boolean = true,
+        hostName: Boolean = true,
     ): List<String> {
         return listOfNotNull(
             dataJavaVersion().takeIf { javaVersion },
             dataUserName().takeIf { userName },
-            dataHostName().takeIf { computerName }
+            dataHostName().takeIf { hostName }
         )
     }
 
@@ -52,7 +52,7 @@ object StatusBar {
 
 @Composable
 fun StatusBar(
-    data: List<String>,
+    data: List<String> = StatusBar.data(),
     content: @Composable (RowScope.() -> Unit)? = null
 ) {
     val appState = LocalAppState.current
