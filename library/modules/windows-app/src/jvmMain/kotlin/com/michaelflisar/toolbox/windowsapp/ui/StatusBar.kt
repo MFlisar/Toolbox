@@ -33,26 +33,29 @@ import java.net.InetAddress
 
 object StatusBar {
 
-    fun data(
+    object Data {
+        fun javaVersion() = "Java ${System.getProperty("java.version")}"
+        fun userName() = System.getenv("username")
+        fun hostName() = InetAddress.getLocalHost().hostName
+
+
+    }
+    fun defaultData(
         javaVersion: Boolean = true,
         userName: Boolean = true,
         hostName: Boolean = true,
     ): List<String> {
         return listOfNotNull(
-            dataJavaVersion().takeIf { javaVersion },
-            dataUserName().takeIf { userName },
-            dataHostName().takeIf { hostName }
+            Data.javaVersion().takeIf { javaVersion },
+            Data.userName().takeIf { userName },
+            Data.hostName().takeIf { hostName }
         )
     }
-
-    fun dataJavaVersion() = "Java ${System.getProperty("java.version")}"
-    fun dataUserName() = System.getenv("username")
-    fun dataHostName() = InetAddress.getLocalHost().hostName
 }
 
 @Composable
 fun StatusBar(
-    data: List<String> = StatusBar.data(),
+    data: List<String> = StatusBar.defaultData(),
     content: @Composable (RowScope.() -> Unit)? = null
 ) {
     val appState = LocalAppState.current
