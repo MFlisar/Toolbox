@@ -28,6 +28,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -338,7 +339,7 @@ fun DemoDropdownButton(
             .clip(MaterialTheme.shapes.extraSmall)
             .clickable(
                 interactionSource = interactionSource,
-                indication = rememberRipple(
+                indication = ripple(
                     color = onColor
                 ),
                 enabled = enabled
