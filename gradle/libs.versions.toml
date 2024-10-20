@@ -1,21 +1,21 @@
 [versions]
 
-gradle = 				        "8.5.2"
+gradle = 				        "8.7.1"
 kotlin = 				        "2.0.21"
-compose =                       "1.6.11"
+compose =                       "1.7.0"
 dokka =                         "1.9.20"
 gradle-maven-publish-plugin =   "0.29.0"
 
 # KotlinX / AndroidX / Google
 androidx-core = 		        "1.13.1"
-androidx-activity = 		    "1.9.2"
+androidx-activity = 		    "1.9.3"
 material =					    "1.12.0"
 
 # Dependencies
-lumberjack =                    "7.0.7"
-kotpreferences =                "0.6.2"
-composethemer =                 "0.3.1"
-composecolors =                 "1.0.0"
+lumberjack =                    "7.1.0"
+kotpreferences =                "0.7.0"
+composethemer =                 "0.4.0"
+composecolors =                 "1.0.1"
 aurora =                        "2.0-SNAPSHOT"
 
 [plugins]
