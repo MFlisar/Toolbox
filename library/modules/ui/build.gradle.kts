@@ -2,6 +2,7 @@ import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -18,6 +19,7 @@ plugins {
 
 // Module
 val artifactId = "ui"
+val androidNamespace = "com.michaelflisar.toolbox.ui"
 
 // Library
 val libraryName = "Toolbox"
@@ -46,6 +48,16 @@ kotlin {
         }
     }
 
+    // web
+    js(IR) {
+        nodejs {}
+        browser {}
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        nodejs()
+    }
+
     // iOS
     //macosX64()
     //macosArm64()
@@ -58,6 +70,10 @@ kotlin {
     // -------
 
     sourceSets {
+
+        val notJvmMain by creating {
+            dependsOn(commonMain.get())
+        }
 
         commonMain.dependencies {
 
@@ -77,12 +93,16 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.androidx.core)
         }
+
+        androidMain.get().dependsOn(notJvmMain)
+        jsMain.get().dependsOn(notJvmMain)
+        wasmJsMain.get().dependsOn(notJvmMain)
     }
 }
 
 android {
 
-    namespace = "com.michaelflisar.toolbox.ui"
+    namespace = androidNamespace
 
     compileSdk = app.versions.compileSdk.get().toInt()
 

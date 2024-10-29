@@ -60,9 +60,6 @@ kotlin {
                 api(libs.kotpreferences.core)
                 implementation(libs.kotpreferences.datastore)
                 api(libs.kotpreferences.compose)
-                api(libs.composethemer.core)
-                implementation(libs.composethemer.themes)
-
                 implementation(libs.composecolors.material)
 
                 // Library

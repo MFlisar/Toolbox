@@ -18,6 +18,7 @@ plugins {
 
 // Module
 val artifactId = "table"
+val androidNamespace = "com.michaelflisar.toolbox.table"
 
 // Library
 val libraryName = "Toolbox"
@@ -79,7 +80,7 @@ kotlin {
 
 android {
 
-    namespace = "com.michaelflisar.toolbox.table"
+    namespace = androidNamespace
 
     compileSdk = app.versions.compileSdk.get().toInt()
 

@@ -18,6 +18,7 @@ plugins {
 
 // Module
 val artifactId = "android-demo-app"
+val androidNamespace = "com.michaelflisar.toolbox.androiddemoapp"
 
 // Library
 val libraryName = "Toolbox"
@@ -94,7 +95,7 @@ kotlin {
 
 android {
 
-    namespace = "com.michaelflisar.toolbox.androiddemoapp"
+    namespace = androidNamespace
 
     compileSdk = app.versions.compileSdk.get().toInt()
 

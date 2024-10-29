@@ -50,3 +50,4 @@ project(":Toolbox:Modules:WindowsApp").projectDir = file("library/modules/window
 
 include(":demo:android")
 include(":demo:windows")
+include(":demo:web")

@@ -2,6 +2,7 @@ import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -18,6 +19,7 @@ plugins {
 
 // Module
 val artifactId = "core"
+val androidNamespace = "com.michaelflisar.toolbox"
 
 // Library
 val libraryName = "Toolbox"
@@ -44,6 +46,16 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
+    }
+
+    // web
+    js(IR) {
+        nodejs {}
+        browser {}
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        nodejs()
     }
 
     // iOS
@@ -79,7 +91,7 @@ kotlin {
 
 android {
 
-    namespace = "com.michaelflisar.toolbox"
+    namespace = androidNamespace
 
     compileSdk = app.versions.compileSdk.get().toInt()
 
