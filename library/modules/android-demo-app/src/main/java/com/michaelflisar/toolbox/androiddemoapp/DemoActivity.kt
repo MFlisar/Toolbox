@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
@@ -27,7 +29,9 @@ import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.androiddemoapp.classes.DemoPrefs
 
 abstract class DemoActivity(
-    private val scrollableContent: Boolean = true
+    private val scrollableContent: Boolean = true,
+    private val contentPadding: Dp = 16.dp,
+    private val contentVerticalSpacing: Dp = 8.dp
 ) : ComponentActivity() {
 
     @Composable
@@ -75,7 +79,7 @@ abstract class DemoActivity(
                                     ) else Modifier
                                 )
                                 .padding(padding)
-                                .padding(16.dp),
+                                .padding(contentPadding),
                             state
                         )
                     }
@@ -95,7 +99,7 @@ abstract class DemoActivity(
     ) {
         Column(
             modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(contentVerticalSpacing)
         ) {
             Content(state)
         }
