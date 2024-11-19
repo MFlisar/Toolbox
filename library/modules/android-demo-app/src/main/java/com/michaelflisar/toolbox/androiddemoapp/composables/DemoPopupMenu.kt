@@ -19,6 +19,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.removeFirstSave
 
 // TODO: Marker nutzen, aktuelle Lösung ging mit compiler 1.5.3 / Kotlin 1.9.10 nicht mehr...
 
@@ -425,7 +426,7 @@ data class MenuState(
         var currentItems = items
         val levels = openedLevels.value.toMutableList()
         while (levels.size > 0) {
-            currentItems = (currentItems[levels.removeFirst()] as DemoPopupMenuItem.SubMenu).subItems
+            currentItems = (currentItems[levels.removeFirstSave()] as DemoPopupMenuItem.SubMenu).subItems
         }
         return currentItems
     }
