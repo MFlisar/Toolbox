@@ -77,9 +77,6 @@ kotlin {
 
         commonMain.dependencies {
 
-            // Kotlin
-            implementation(libs.kotlin)
-
             // Compose + AndroidX
             implementation(libs.compose.material3)
             implementation(libs.compose.material.icons.core)
@@ -91,7 +88,7 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(libs.androidx.core)
+            implementation(androidx.core)
         }
 
         androidMain.get().dependsOn(notJvmMain)

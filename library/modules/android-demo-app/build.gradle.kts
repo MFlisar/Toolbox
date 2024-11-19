@@ -62,27 +62,24 @@ kotlin {
 
         commonMain.dependencies {
 
-            // Kotlin
-            implementation(libs.kotlin)
-
             // KotlinX / AndroidX / Google
-            implementation(libs.androidx.core)
-            implementation(libs.androidx.activity.compose)
+            implementation(androidx.core)
+            implementation(androidx.activity.compose)
             implementation(libs.compose.material3)
             implementation(libs.compose.material.icons.core)
             implementation(libs.compose.material.icons.extended)
 
             // Dependencies
-            api(libs.lumberjack.core)
-            implementation(libs.lumberjack.implementation.lumberjack)
-            implementation(libs.lumberjack.logger.console)
-            implementation(libs.lumberjack.logger.file)
-            implementation(libs.lumberjack.composeviewer)
-            api(libs.kotpreferences.core)
-            implementation(libs.kotpreferences.datastore)
-            api(libs.kotpreferences.compose)
-            api(libs.composethemer.core)
-            implementation(libs.composethemer.themes)
+            api(deps.lumberjack.core)
+            implementation(deps.lumberjack.implementation.lumberjack)
+            implementation(deps.lumberjack.logger.console)
+            implementation(deps.lumberjack.logger.file)
+            implementation(deps.lumberjack.composeviewer)
+            api(deps.kotpreferences.core)
+            implementation(deps.kotpreferences.datastore)
+            api(deps.kotpreferences.compose)
+            api(deps.composethemer.core)
+            implementation(deps.composethemer.themes)
 
             // Library
             api(project(":Toolbox:Core"))

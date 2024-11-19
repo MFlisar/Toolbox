@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.androiddemoapp.composables
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.BorderStroke
@@ -92,7 +93,7 @@ fun DemoSegmentedButtons(
                     targetState = selectedIndex
                 }
             }
-            val transition = updateTransition(transitionState, label = "transition")
+            val transition = rememberTransition(transitionState, label = "transition")
             val colorBackground by transition.animateColor(
                 transitionSpec = { tween() },
                 label = "background"

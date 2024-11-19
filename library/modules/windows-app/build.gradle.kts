@@ -43,24 +43,24 @@ kotlin {
                 api(libs.compose.material3)
 
                 // Aurora - Windows Only Theming and Components
-                api(libs.aurora.theming)
-                api(libs.aurora.component)
-                api(libs.aurora.window)
+                api(deps.aurora.theming)
+                api(deps.aurora.component)
+                api(deps.aurora.window)
 
                 // Icons
                 api(libs.compose.material.icons.core)
                 api(libs.compose.material.icons.extended)
 
                 // Dependencies
-                api(libs.lumberjack.core)
-                implementation(libs.lumberjack.implementation.lumberjack)
-                implementation(libs.lumberjack.logger.console)
-                implementation(libs.lumberjack.logger.file)
-                api(libs.lumberjack.composeviewer)
-                api(libs.kotpreferences.core)
-                implementation(libs.kotpreferences.datastore)
-                api(libs.kotpreferences.compose)
-                implementation(libs.composecolors.material)
+                api(deps.lumberjack.core)
+                implementation(deps.lumberjack.implementation.lumberjack)
+                implementation(deps.lumberjack.logger.console)
+                implementation(deps.lumberjack.logger.file)
+                api(deps.lumberjack.composeviewer)
+                api(deps.kotpreferences.core)
+                implementation(deps.kotpreferences.datastore)
+                api(deps.kotpreferences.compose)
+                implementation(deps.composecolors.material)
 
                 // Library
                 api(project(":Toolbox:Core"))

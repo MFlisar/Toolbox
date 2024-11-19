@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
@@ -146,7 +147,7 @@ fun <T> DemoDropdown(
             modifier = Modifier
                 .fillMaxWidth()
                 .focusable(false)
-                .menuAnchor(),
+                .menuAnchor(MenuAnchorType.PrimaryNotEditable),
             readOnly = true,
             enabled = enabled,
             value = itemToString(selected, false),

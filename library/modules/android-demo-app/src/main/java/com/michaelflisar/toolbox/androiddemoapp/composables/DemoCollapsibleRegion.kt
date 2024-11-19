@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.androiddemoapp.composables
 
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
@@ -60,7 +61,7 @@ fun DemoCollapsibleRegion(
     ) {
         val transitionState = remember { MutableTransitionState(isExpanded) }
         transitionState.targetState = isExpanded
-        val transition = updateTransition(transitionState, label = "transition")
+        val transition = rememberTransition(transitionState, label = "transition")
 
         val arrowRotationDegree by transition.animateFloat(
             transitionSpec = { tween() },

@@ -48,12 +48,6 @@ android {
 dependencies {
 
     // ------------------------
-    // Kotlin
-    // ------------------------
-
-    implementation(libs.kotlin)
-
-    // ------------------------
     // AndroidX
     // ------------------------
 
@@ -62,9 +56,7 @@ dependencies {
     implementation(libs.compose.material.icons.core)
     implementation(libs.compose.material.icons.extended)
 
-    implementation(libs.material)
-
-    implementation(libs.androidx.activity.compose)
+    implementation(androidx.activity.compose)
 
     // ------------------------
     // Library

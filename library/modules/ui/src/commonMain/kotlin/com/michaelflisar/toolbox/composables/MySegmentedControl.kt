@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.disabled
 
+@Suppress("UNCHECKED_CAST")
 @Composable
 fun <T> MySegmentedControl(
     modifier: Modifier = Modifier,

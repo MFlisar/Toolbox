@@ -18,7 +18,7 @@ kotlin {
 
                 implementation(compose.desktop.currentOs)
 
-                implementation(libs.composecolors.material)
+                implementation(deps.composecolors.material)
 
                 implementation(project(":Toolbox:Modules:WindowsApp"))
 
