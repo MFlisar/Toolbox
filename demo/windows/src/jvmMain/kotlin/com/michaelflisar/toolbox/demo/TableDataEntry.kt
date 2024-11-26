@@ -77,6 +77,9 @@ class TableDataEntry(
                 Column(
                     header = Header.Text("Color"),
                     modifier = { Modifier.width(128.dp) },
+                    /*filter = Filter.TextData(
+                        cellValueToString = { it.name }
+                    ),*/
                     filter = Filter.List(
                         items = ColorEnum.entries.toList(),
                         mapper = { it.name },

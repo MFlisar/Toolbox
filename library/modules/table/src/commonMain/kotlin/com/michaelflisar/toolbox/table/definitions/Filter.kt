@@ -25,6 +25,37 @@ sealed class Filter<Item, CellValue> {
 
     @Composable abstract fun render()
 
+    class TextData<Item, CellValue>(
+        val cellValueToString: (value: CellValue) -> String,
+        val filter: (value: String, filter: String) -> Boolean = { value, filter ->
+            filter.isEmpty() || value.contains(filter, true)
+        }
+    ) : Filter<Item, CellValue>() {
+
+        override val state = mutableStateOf("")
+        override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) = filter(cellValueToString(itemToValue(item)), state.value)
+        override fun isActive() = state.value.isNotEmpty()
+
+        @Composable
+        override fun render() {
+            val focusRequester = remember { FocusRequester() }
+            MyInput(
+                //title = "Filter",
+                modifier = Modifier
+                    .padding(start = 32.dp)
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                value = state.value,
+                onValueChange = {
+                    state.value = it
+                }
+            )
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
+            }
+        }
+    }
+
     class Text<Item>(
         val filter: (value: String, filter: String) -> Boolean = { value, filter ->
             filter.isEmpty() || value.contains(filter, true)
@@ -54,13 +85,13 @@ sealed class Filter<Item, CellValue> {
         }
     }
 
-    class Number<Item, T>(
-        val filter: (value: T, filter: T?) -> Boolean = { value, filter ->
+    class Number<Item, CellValue>(
+        val filter: (value: CellValue, filter: CellValue?) -> Boolean = { value, filter ->
             filter == null || value == filter
         }
-    ) : Filter<Item, T>() where T: kotlin.Number {
-        override val state = mutableStateOf<T?>(null)
-        override fun isValid(item: Item, itemToValue: (item: Item) -> T) = filter(itemToValue(item), state.value)
+    ) : Filter<Item, CellValue>() where CellValue: kotlin.Number {
+        override val state = mutableStateOf<CellValue?>(null)
+        override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) = filter(itemToValue(item), state.value)
         override fun isActive() = state.value != null
 
         @Composable
@@ -83,17 +114,17 @@ sealed class Filter<Item, CellValue> {
         }
     }
 
-    class List<Item, T>(
-        val items: kotlin.collections.List<T>,
-        val mapper: (T) -> String,
-        val filter: (value: T, filter: kotlin.collections.List<T>) -> Boolean = { value, filter ->
+    class List<Item, CellValue>(
+        val items: kotlin.collections.List<CellValue>,
+        val mapper: (CellValue) -> String,
+        val filter: (value: CellValue, filter: kotlin.collections.List<CellValue>) -> Boolean = { value, filter ->
             filter.isEmpty() || filter.contains(value)
         },
         val multiSelect: Boolean = false,
         val labelAll: String = "ALL"
-    ) : Filter<Item, T>() {
-        override val state = mutableStateOf(emptyList<T>())
-        override fun isValid(item: Item, itemToValue: (item: Item) -> T) = filter(itemToValue(item), state.value)
+    ) : Filter<Item, CellValue>() {
+        override val state = mutableStateOf(emptyList<CellValue>())
+        override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) = filter(itemToValue(item), state.value)
         override fun isActive() = state.value.isNotEmpty()
 
         @Composable

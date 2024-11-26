@@ -28,6 +28,7 @@ fun <T : Number> MyNumericInput(
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 @Composable
 fun <T : Number> MyNumericInput(
     modifier: Modifier = Modifier,
@@ -47,6 +48,9 @@ fun <T : Number> MyNumericInput(
                 is Double? -> onValueChange(it.toDoubleOrNull() as T?)
                 is Float? -> onValueChange(it.toFloatOrNull() as T?)
                 is Long? -> onValueChange(it.toLongOrNull() as T?)
+                is Short? -> onValueChange(it.toShortOrNull() as T?)
+                is Byte? -> onValueChange(it.toByteOrNull() as T?)
+                else -> throw RuntimeException("Type not handled!")
             }
         },
         label = { Text(title) },
