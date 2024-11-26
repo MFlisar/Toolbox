@@ -21,7 +21,6 @@ sealed class Cell<CellValue> {
     abstract val value: CellValue
     abstract val verticalCellAlignment: Alignment.Vertical
 
-    //abstract fun filter(text: String): Boolean
     abstract fun sort(): Comparable<*>
 
     @Composable
@@ -35,9 +34,6 @@ sealed class Cell<CellValue> {
         val textAlign: TextAlign = TextAlign.Start,
         override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
     ) : Cell<String>() {
-
-        //override fun filter(text: String) =
-        //    text.isEmpty() || value.lowercase().contains(text, true)
 
         override fun sort() = value
 
@@ -64,9 +60,6 @@ sealed class Cell<CellValue> {
         override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
     ) : Cell<T>() {
 
-        //override fun filter(text: String) =
-        //    text.isEmpty() || (value != null && value.toString().contains(text, true))
-
         override fun sort() = valueToText(value)
 
         @Composable
@@ -91,9 +84,6 @@ sealed class Cell<CellValue> {
         override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
     ) : Cell<T>() where T : kotlin.Number, T : Comparable<T> {
 
-        //override fun filter(text: String) =
-        //    text.isEmpty() || (value != null && value.toString().contains(text, true))
-
         override fun sort() = value
 
         @Composable
@@ -115,10 +105,6 @@ sealed class Cell<CellValue> {
         val horizontalAlignment: Alignment.Horizontal = Alignment.Start,
         override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
     ) : Cell<Boolean>() {
-
-        //override fun filter(text: String) = text.isEmpty() ||
-        //        (checked && (text.lowercase() == "j" || text.lowercase() == "y") || text.lowercase() == "1") ||
-        //        (!checked && (text.lowercase() == "n" || text.lowercase() == "0"))
 
         override fun sort() = if (value) 1 else 0
 

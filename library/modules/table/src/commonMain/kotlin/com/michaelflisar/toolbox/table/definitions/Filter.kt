@@ -22,6 +22,7 @@ sealed class Filter<Item, CellValue> {
     abstract val state: MutableState<*>
     abstract fun isValid(item: Item, itemToValue: (item: Item) -> CellValue): Boolean
     abstract fun isActive(): Boolean
+    abstract fun clear()
 
     @Composable abstract fun render()
 
@@ -35,6 +36,9 @@ sealed class Filter<Item, CellValue> {
         override val state = mutableStateOf("")
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) = filter(cellValueToString(itemToValue(item)), state.value)
         override fun isActive() = state.value.isNotEmpty()
+        override fun clear() {
+            state.value = ""
+        }
 
         @Composable
         override fun render() {
@@ -64,6 +68,9 @@ sealed class Filter<Item, CellValue> {
         override val state = mutableStateOf("")
         override fun isValid(item: Item, itemToValue: (item: Item) -> String) = filter(itemToValue(item), state.value)
         override fun isActive() = state.value.isNotEmpty()
+        override fun clear() {
+            state.value = ""
+        }
 
         @Composable
         override fun render() {
@@ -93,6 +100,9 @@ sealed class Filter<Item, CellValue> {
         override val state = mutableStateOf<CellValue?>(null)
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) = filter(itemToValue(item), state.value)
         override fun isActive() = state.value != null
+        override fun clear() {
+            state.value = null
+        }
 
         @Composable
         override fun render() {
@@ -126,6 +136,9 @@ sealed class Filter<Item, CellValue> {
         override val state = mutableStateOf(emptyList<CellValue>())
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) = filter(itemToValue(item), state.value)
         override fun isActive() = state.value.isNotEmpty()
+        override fun clear() {
+            state.value = emptyList()
+        }
 
         @Composable
         override fun render() {
@@ -162,6 +175,9 @@ sealed class Filter<Item, CellValue> {
         override val state = mutableStateOf<Boolean?>(null)
         override fun isValid(item: Item, itemToValue: (item: Item) -> Boolean) = state.value == null || state.value == itemToValue(item)
         override fun isActive() = state.value != null
+        override fun clear() {
+            state.value = null
+        }
 
         @Composable
         override fun render() {
