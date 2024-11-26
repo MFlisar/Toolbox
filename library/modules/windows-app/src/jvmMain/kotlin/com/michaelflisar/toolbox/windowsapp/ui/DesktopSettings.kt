@@ -11,7 +11,7 @@ import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.windowsapp.tmp.UISetting
 import com.michaelflisar.toolbox.composables.MyCheckbox
 import com.michaelflisar.toolbox.composables.MyInput
-import com.michaelflisar.toolbox.composables.MyInputInt
+import com.michaelflisar.toolbox.composables.MyNumericInput
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -72,13 +72,15 @@ fun DesktopSettings(
                 }
 
                 is UISetting.Integer -> {
-                    MyInputInt(
+                    MyNumericInput(
                         modifier = itemModifier,
                         title = setting.label,
                         value = setting.setting.value,
                         onValueChange = {
-                            scope.launch(Dispatchers.IO) {
-                                setting.setting.update(it)
+                            if (it != null) {
+                                scope.launch(Dispatchers.IO) {
+                                    setting.setting.update(it)
+                                }
                             }
                         }
                     )

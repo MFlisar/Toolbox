@@ -1,7 +1,6 @@
 package com.michaelflisar.toolbox.composables
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -10,45 +9,50 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
 import com.michaelflisar.toolbox.cursor
 
 @Composable
-fun MyInput(
+fun <T : Number> MyNumericInput(
     modifier: Modifier = Modifier,
-    title: String = "",
-    value: MutableState<String>,
-    lines: Int = 1,
+    title: String,
+    value: MutableState<T?>,
     readOnly: Boolean = false
 ) {
-    MyInput(modifier, title, value.value, lines, readOnly) {
+    MyNumericInput(modifier, title, value.value, readOnly) {
         value.value = it
     }
 }
 
 @Composable
-fun MyInput(
+fun <T : Number> MyNumericInput(
     modifier: Modifier = Modifier,
-    title: String = "",
-    value: String,
-    lines: Int = 1,
+    title: String,
+    value: T?,
     readOnly: Boolean = false,
-    onValueChange: (String) -> Unit = {}
+    onValueChange: (T?) -> Unit = {}
 ) {
+    val text = remember { mutableStateOf(value?.toString() ?: "") }
     OutlinedTextField(
-        modifier = modifier.fillMaxWidth(),
-        value = value,
-        onValueChange = onValueChange,
-        singleLine = lines == 1,
-        minLines = lines,
-        maxLines = lines,
-        label = if (title.isNotEmpty()) {
-            { Text(title) }
-        } else null,
+        modifier = modifier,
+        value = text.value,
+        onValueChange = {
+            text.value = it
+            when (value) {
+                is Int? -> onValueChange(it.toIntOrNull() as T?)
+                is Double? -> onValueChange(it.toDoubleOrNull() as T?)
+                is Float? -> onValueChange(it.toFloatOrNull() as T?)
+                is Long? -> onValueChange(it.toLongOrNull() as T?)
+            }
+        },
+        label = { Text(title) },
         readOnly = readOnly,
-        trailingIcon = if (value.isNotEmpty()) {
+        //isError = text.value.toIntOrNull() == null
+        trailingIcon = if (text.value.isNotEmpty()) {
             {
                 Icon(
                     Icons.Default.Clear,
@@ -58,7 +62,8 @@ fun MyInput(
                         .cursor()
                         .focusProperties { canFocus = false }
                         .clickable {
-                            onValueChange("")
+                            text.value = ""
+                            onValueChange(null)
                         }
                 )
             }

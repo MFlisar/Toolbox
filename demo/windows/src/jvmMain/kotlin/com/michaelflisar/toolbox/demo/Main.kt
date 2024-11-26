@@ -10,11 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,8 +38,8 @@ import com.michaelflisar.toolbox.composables.MyExpandableTitle
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyMultiSegmentedControl
 import com.michaelflisar.toolbox.composables.MySegmentedControl
-import com.michaelflisar.toolbox.table.MyTable
-import com.michaelflisar.toolbox.table.rememberMyTableState
+import com.michaelflisar.toolbox.table.Setup
+import com.michaelflisar.toolbox.table.Table
 import com.michaelflisar.toolbox.windowsapp.DesktopApplication
 import com.michaelflisar.toolbox.windowsapp.DesktopDialog
 import com.michaelflisar.toolbox.windowsapp.classes.LocalAppState
@@ -372,51 +370,41 @@ private fun ContentPageTable() {
     val appState = LocalAppState.current
     val scope = rememberCoroutineScope()
 
-    val tableState = rememberMyTableState()
+    val tableDefinition = TableDataEntry.createTableDefinitions()
     val filtered = remember { mutableStateOf(-1) }
     val fullTableData = remember {
         listOf(
-            TableDataEntry(1, "Michael", "Description of Michael..."),
-            TableDataEntry(2, "Christine", "Description of Christine..."),
-            TableDataEntry(3, "Benjamin", "Description of Benjamin..."),
-            TableDataEntry(4, "Michael", "Description of Michael..."),
-            TableDataEntry(5, "Christine", "Description of Christine..."),
-            TableDataEntry(6, "Benjamin", "Description of Benjamin..."),
-            TableDataEntry(7, "Michael", "Description of Michael..."),
-            TableDataEntry(8, "Christine", "Description of Christine..."),
-            TableDataEntry(9, "Benjamin", "Description of Benjamin..."),
-            TableDataEntry(10, "Michael", "Description of Michael..."),
-            TableDataEntry(11, "Christine", "Description of Christine..."),
-            TableDataEntry(12, "Benjamin", "Description of Benjamin...")
+            TableDataEntry(1, true,"Michael",  TableDataEntry.ColorEnum.Red,"Description of Michael..."),
+            TableDataEntry(2, false,"Christine", TableDataEntry.ColorEnum.Blue,"Description of Christine..."),
+            TableDataEntry(3, true,"Benjamin", TableDataEntry.ColorEnum.Green,"Description of Benjamin..."),
+            TableDataEntry(4, false,"Michael", TableDataEntry.ColorEnum.Red,"Description of Michael..."),
+            TableDataEntry(5, true,"Christine", TableDataEntry.ColorEnum.Blue,"Description of Christine..."),
+            TableDataEntry(6, false,"Benjamin", TableDataEntry.ColorEnum.Green,"Description of Benjamin..."),
+            TableDataEntry(7, true,"Michael", TableDataEntry.ColorEnum.Red,"Description of Michael..."),
+            TableDataEntry(8, false,"Christine",TableDataEntry.ColorEnum.Blue, "Description of Christine..."),
+            TableDataEntry(9, true,"Benjamin", TableDataEntry.ColorEnum.Green,"Description of Benjamin..."),
+            TableDataEntry(10,false, "Michael", TableDataEntry.ColorEnum.Red,"Description of Michael..."),
+            TableDataEntry(11,true, "Christine",TableDataEntry.ColorEnum.Blue, "Description of Christine..."),
+            TableDataEntry(12, false,"Benjamin", TableDataEntry.ColorEnum.Green,"Description of Benjamin...")
         )
     }
     val entities = remember { mutableStateOf(fullTableData) }
 
     // Data...
-    val headers = TableDataEntry.HEADERS
-    val rows = entities.value.map { it.createRow() }
+    val rows = entities.value.map {
+        tableDefinition.createRow(it)
+    }
 
     // Table
-    MyTable(
+    Table(
         modifier = Modifier
             .fillMaxSize()
             .padding(ToolboxDefaults.CONTENT_PADDING_SMALL),
-        headers = headers,
+        definition = tableDefinition,
         rows = rows,
-        state = tableState,
         keyProvider = { it.id },
-        filterProvider = { row, filters ->
-            var valid = true
-            for (filter in filters) {
-                valid = row.cells[filter.columnIndex].filter(filter.filter)
-                if (!valid) {
-                    break
-                }
-            }
-            valid
-        },
-        setup = MyTable.Setup(
-            clickType = MyTable.Setup.ClickType.RowClick(
+        setup = Setup(
+            clickType = Setup.ClickType.RowClick(
                 onRowClicked = { index, item ->
                     appState.showSnackbar(
                         scope,
@@ -424,7 +412,8 @@ private fun ContentPageTable() {
                         cancelAllPending = true
                     )
                 }
-            )
+            ),
+            emptyText = "Table is empty or filter is filtering all rows..."
         ),
         onFilterChanged = {
             if (entities.value.isNotEmpty()) {

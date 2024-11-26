@@ -10,38 +10,118 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.table.MyTable
+import com.michaelflisar.toolbox.table.definitions.Cell
+import com.michaelflisar.toolbox.table.definitions.Column
+import com.michaelflisar.toolbox.table.definitions.Filter
+import com.michaelflisar.toolbox.table.definitions.Header
+import com.michaelflisar.toolbox.table.definitions.TableDefinition
+import com.michaelflisar.toolbox.table.definitions.rememberTableDefinition
 
 class TableDataEntry(
     val id: Int,
+    val checked: Boolean,
     val name: String,
+    val color: ColorEnum,
     val description: String
 ) {
-    companion object {
-        val HEADERS = listOf(
-            MyTable.Header.Text("Checked", { Modifier.width(96.dp) }),
-            MyTable.Header.Text("ID", { Modifier.width(96.dp) }),
-            MyTable.Header.Text("Name", { Modifier.width(128.dp) }),
-            MyTable.Header.Text("Description", { Modifier.weight(1f) }),
-            MyTable.Header.Icon(
-                "Setting",
-                { Icon(Icons.Default.Settings, null, tint = MaterialTheme.colorScheme.secondary) },
-                { Modifier.width(128.dp) },
-                "Some additional information...",
-                //align = Alignment.CenterHorizontally
-            )
-        )
+    enum class ColorEnum {
+        Red, Green, Blue
     }
 
-    @Composable
-    fun createRow() = MyTable.Row(
-        this,
-        listOf(
-            MyTable.Cell.Checkmark(true, horizontalAlignment = Alignment.CenterHorizontally, verticalCellAlignment = Alignment.CenterVertically),
-            MyTable.Cell.Number(id, textStyle = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center, verticalCellAlignment = Alignment.CenterVertically),
-            MyTable.Cell.Text(name, textStyle = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center, verticalCellAlignment = Alignment.CenterVertically),
-            MyTable.Cell.Text(description),
-            MyTable.Cell.Text("...")
-        )
-    )
+    companion object {
+
+        @Composable
+        fun createTableDefinitions(): TableDefinition<TableDataEntry> {
+            val columns = listOf<Column<*, TableDataEntry>>(
+                Column(
+                    header = Header.Text("Checked"),
+                    modifier = { Modifier.width(96.dp) },
+                    filter = Filter.Checkmark(),
+                    cellValue = { it.checked },
+                    createCell = {
+                        Cell.Checkmark(
+                            it,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalCellAlignment = Alignment.CenterVertically
+                        )
+                    }
+                ),
+                Column(
+                    header = Header.Text("ID"),
+                    modifier = { Modifier.width(96.dp) },
+                    cellValue = { it.id },
+                    filter = Filter.Number(),
+                    createCell = {
+                        Cell.Number(
+                            it,
+                            textStyle = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center,
+                            verticalCellAlignment = Alignment.CenterVertically
+                        )
+                    }
+                ),
+                Column(
+                    header = Header.Text("Name"),
+                    modifier = { Modifier.width(128.dp) },
+                    filter = Filter.Text(),
+                    cellValue = { it.name },
+                    createCell = {
+                        Cell.Text(
+                            it,
+                            textStyle = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center,
+                            verticalCellAlignment = Alignment.CenterVertically
+                        )
+                    }
+                ),
+                Column(
+                    header = Header.Text("Color"),
+                    modifier = { Modifier.width(128.dp) },
+                    filter = Filter.List(
+                        items = ColorEnum.entries.toList(),
+                        mapper = { it.name },
+                        multiSelect = true
+                    ),
+                    cellValue = { it.color },
+                    createCell = {
+                        Cell.Data(
+                            value = it,
+                            valueToText = { it.name },
+                            textStyle = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center,
+                            verticalCellAlignment = Alignment.CenterVertically
+                        )
+                    }
+                ),
+                Column(
+                    header = Header.Text("Description"),
+                    modifier = { Modifier.weight(1f) },
+                    filter = Filter.Text(),
+                    cellValue = { it.description },
+                    createCell = {
+                        Cell.Text(it)
+                    }
+                ),
+                Column(
+                    header = Header.Icon(
+                        "Setting",
+                        {
+                            Icon(
+                                Icons.Default.Settings,
+                                null,
+                                tint = MaterialTheme.colorScheme.secondary
+                            )
+                        },
+                        "Some additional information..."
+                    ),
+                    modifier = { Modifier.width(128.dp) },
+                    cellValue = { "..." },
+                    createCell = {
+                        Cell.Text("...")
+                    }
+                )
+            )
+            return rememberTableDefinition(columns)
+        }
+    }
 }
