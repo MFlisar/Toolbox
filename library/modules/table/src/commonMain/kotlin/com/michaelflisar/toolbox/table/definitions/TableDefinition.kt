@@ -16,6 +16,12 @@ class TableDefinition<Item> internal constructor(
         item = item,
         cells = columns.map { it.createCellForRow(item) }
     )
+
+    fun clearFilter() {
+        columns.forEach {
+            it.filter?.clear()
+        }
+    }
 }
 
 @Composable
