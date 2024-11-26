@@ -73,7 +73,7 @@ class TableDataEntry(
                             verticalCellAlignment = Alignment.CenterVertically
                         )
                     }
-                ),
+                ),/*
                 Column(
                     header = Header.Text("Color"),
                     modifier = { Modifier.width(128.dp) },
@@ -90,6 +90,23 @@ class TableDataEntry(
                         Cell.Data(
                             value = it,
                             valueToText = { it.name },
+                            textStyle = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center,
+                            verticalCellAlignment = Alignment.CenterVertically
+                        )
+                    }
+                ),*/
+                Column(
+                    header = Header.Text("Color"),
+                    modifier = { Modifier.width(128.dp) },
+                    filter = Filter.Enum(
+                        items = ColorEnum.entries,
+                        multiSelect = true
+                    ),
+                    cellValue = { it.color },
+                    createCell = {
+                        Cell.Enum(
+                            value = it,
                             textStyle = MaterialTheme.typography.bodySmall,
                             textAlign = TextAlign.Center,
                             verticalCellAlignment = Alignment.CenterVertically

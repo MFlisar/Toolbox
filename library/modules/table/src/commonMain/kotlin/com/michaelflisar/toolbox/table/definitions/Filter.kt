@@ -16,6 +16,7 @@ import com.michaelflisar.toolbox.composables.MyInput
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyNumericInput
 import com.michaelflisar.toolbox.composables.MySegmentedControl
+import kotlin.enums.EnumEntries
 
 sealed class Filter<Item, CellValue> {
 
@@ -133,6 +134,7 @@ sealed class Filter<Item, CellValue> {
         val multiSelect: Boolean = false,
         val labelAll: String = "ALL"
     ) : Filter<Item, CellValue>() {
+
         override val state = mutableStateOf(emptyList<CellValue>())
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) = filter(itemToValue(item), state.value)
         override fun isActive() = state.value.isNotEmpty()
@@ -154,6 +156,49 @@ sealed class Filter<Item, CellValue> {
                 )
             } else {
                 val texts = items.map { mapper(it) }
+                MyDropdown(
+                    title = "",
+                    items = listOf(labelAll) + texts,
+                    selected = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0,
+                    onSelectionChanged = {
+                        state.value = it.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()
+                    }
+                )
+            }
+
+        }
+    }
+
+    class Enum<Item, CellValue: kotlin.Enum<CellValue>>(
+        val items: EnumEntries<CellValue>,
+        val filter: (value: CellValue, filter: kotlin.collections.List<CellValue>) -> Boolean = { value, filter ->
+            filter.isEmpty() || filter.contains(value)
+        },
+        val multiSelect: Boolean = false,
+        val labelAll: String = "ALL"
+    ) : Filter<Item, CellValue>() {
+
+        override val state = mutableStateOf(emptyList<CellValue>())
+        override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) = filter(itemToValue(item), state.value)
+        override fun isActive() = state.value.isNotEmpty()
+        override fun clear() {
+            state.value = emptyList()
+        }
+
+        @Composable
+        override fun render() {
+            if (multiSelect) {
+                MyMultiDropdown(
+                    title = "",
+                    items = items,
+                    selected = state.value,
+                    mapper = { it.name },
+                    onSelectionChange = {
+                        state.value = it
+                    }
+                )
+            } else {
+                val texts = items.map { it.name }
                 MyDropdown(
                     title = "",
                     items = listOf(labelAll) + texts,

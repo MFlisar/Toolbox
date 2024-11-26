@@ -75,6 +75,30 @@ sealed class Cell<CellValue> {
         }
     }
 
+    class Enum<T: kotlin.Enum<T>>(
+        override val value: T,
+        val color: Color = Color.Unspecified,
+        val textStyle: TextStyle? = null,
+        val textAlign: TextAlign = TextAlign.Start,
+        val fontWeight: FontWeight? = null,
+        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
+    ) : Cell<T>() {
+
+        override fun sort() = value.name
+
+        @Composable
+        override fun render(modifier: Modifier) {
+            Text(
+                modifier = modifier,
+                text = value.name,
+                style = textStyle ?: LocalTextStyle.current,
+                fontWeight = fontWeight,
+                color = color,
+                textAlign = textAlign
+            )
+        }
+    }
+
     class Number<T>(
         override val value: T,
         val color: Color = Color.Unspecified,
