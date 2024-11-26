@@ -9,11 +9,11 @@ class Column<CellValue, Item>(
     val modifier: RowScope.() -> Modifier,
     val filter: Filter<Item, CellValue>? = null,
     val cellValue: (Item) -> CellValue,
-    val createCell: @Composable (value: CellValue) -> Cell<CellValue>
+    val createCell: @Composable (item: Item, value: CellValue) -> Cell<CellValue>
 ) {
     @Composable
     internal fun createCellForRow(item: Item): Cell<CellValue> {
-        return createCell(cellValue(item))
+        return createCell(item, cellValue(item))
     }
 
     fun isFilterValid(item: Item) : Boolean {

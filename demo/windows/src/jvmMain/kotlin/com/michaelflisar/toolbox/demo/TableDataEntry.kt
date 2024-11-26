@@ -38,9 +38,9 @@ class TableDataEntry(
                     modifier = { Modifier.width(96.dp) },
                     filter = Filter.Checkmark(),
                     cellValue = { it.checked },
-                    createCell = {
+                    createCell = { item, value ->
                         Cell.Checkmark(
-                            it,
+                            value,
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalCellAlignment = Alignment.CenterVertically
                         )
@@ -51,9 +51,9 @@ class TableDataEntry(
                     modifier = { Modifier.width(96.dp) },
                     cellValue = { it.id },
                     filter = Filter.Number(),
-                    createCell = {
+                    createCell = { item, value ->
                         Cell.Number(
-                            it,
+                            value,
                             textStyle = MaterialTheme.typography.bodySmall,
                             textAlign = TextAlign.Center,
                             verticalCellAlignment = Alignment.CenterVertically
@@ -65,9 +65,9 @@ class TableDataEntry(
                     modifier = { Modifier.width(128.dp) },
                     filter = Filter.Text(),
                     cellValue = { it.name },
-                    createCell = {
+                    createCell = { item, value ->
                         Cell.Text(
-                            it,
+                            value,
                             textStyle = MaterialTheme.typography.bodySmall,
                             textAlign = TextAlign.Center,
                             verticalCellAlignment = Alignment.CenterVertically
@@ -104,9 +104,9 @@ class TableDataEntry(
                         multiSelect = true
                     ),
                     cellValue = { it.color },
-                    createCell = {
+                    createCell = { item, value ->
                         Cell.Enum(
-                            value = it,
+                            value = value,
                             textStyle = MaterialTheme.typography.bodySmall,
                             textAlign = TextAlign.Center,
                             verticalCellAlignment = Alignment.CenterVertically
@@ -118,8 +118,8 @@ class TableDataEntry(
                     modifier = { Modifier.weight(1f) },
                     filter = Filter.Text(),
                     cellValue = { it.description },
-                    createCell = {
-                        Cell.Text(it)
+                    createCell = { item, value ->
+                        Cell.Text(value)
                     }
                 ),
                 Column(
@@ -136,7 +136,7 @@ class TableDataEntry(
                     ),
                     modifier = { Modifier.width(128.dp) },
                     cellValue = { "..." },
-                    createCell = {
+                    createCell = { item, value ->
                         Cell.Text("...")
                     }
                 )

@@ -11,12 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun RowScope.TableRowSpacer() {
+fun RowScope.TableRowSpacer() {
     VerticalDivider(color = MaterialTheme.colorScheme.onBackground)
 }
 
 @Composable
-internal fun RowScope.TableRowSpacerInvisible() {
+fun RowScope.TableRowSpacerInvisible() {
     Spacer(modifier = Modifier.fillMaxHeight().width(1.dp))
 }
 

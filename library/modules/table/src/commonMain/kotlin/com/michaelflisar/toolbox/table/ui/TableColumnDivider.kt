@@ -5,6 +5,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 
 @Composable
-internal fun TableColumnDivider() {
+fun TableColumnDivider() {
     HorizontalDivider(color = MaterialTheme.colorScheme.onBackground)
 }
