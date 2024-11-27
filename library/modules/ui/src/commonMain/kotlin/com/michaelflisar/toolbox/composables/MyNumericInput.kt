@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
@@ -14,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.text.input.KeyboardType
 import com.michaelflisar.toolbox.cursor
 
 @Composable
@@ -53,6 +55,17 @@ fun <T : Number> MyNumericInput(
                 else -> throw RuntimeException("Type not handled!")
             }
         },
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = when (value) {
+                is Double?,
+                is Float? -> KeyboardType.Number
+                is Int?,
+                is Long?,
+                is Short?,
+                is Byte? -> KeyboardType.Decimal
+                else -> throw RuntimeException("Type not handled!")
+            }
+        ),
         label = { Text(title) },
         readOnly = readOnly,
         //isError = text.value.toIntOrNull() == null

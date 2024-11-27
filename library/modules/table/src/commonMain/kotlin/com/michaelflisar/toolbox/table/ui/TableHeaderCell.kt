@@ -290,16 +290,7 @@ private fun HeaderMenuIconPopup(
                         }
                     }
 
-                    if (filter != null) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(Icons.Default.FilterAlt, null)
-                            Text("Filter", fontWeight = FontWeight.Bold)
-                        }
-                        filter.render()
-                    }
+                    filter?.render()
                 }
             }
 

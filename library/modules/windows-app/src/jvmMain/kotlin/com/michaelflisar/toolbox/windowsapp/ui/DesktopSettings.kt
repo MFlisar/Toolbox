@@ -48,7 +48,7 @@ fun DesktopSettings(
                         modifier = itemModifier,
                         title = setting.label,
                         items = setting.items,
-                        mapper = { it },
+                        mapper = { item, dropdown -> item },
                         selected = setting.setting.value,
                         onSelectionChanged = {
                             scope.launch(Dispatchers.IO) {

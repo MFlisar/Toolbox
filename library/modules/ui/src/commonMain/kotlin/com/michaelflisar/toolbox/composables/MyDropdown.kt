@@ -37,7 +37,8 @@ object MyDropdown {
     internal class Item<T>(
         val item: T & Any,
         val index: Int,
-        val text: String
+        val text: String,
+        val textDropdown: String
     )
 }
 
@@ -47,7 +48,7 @@ fun <T> MyDropdown(
     title: String,
     items: List<T & Any>,
     selected: MutableState<T>,
-    mapper: (item: T & Any) -> String,
+    mapper: (item: T & Any, dropdown: Boolean) -> String,
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
@@ -57,7 +58,7 @@ fun <T> MyDropdown(
     val selectedIndex = items.indexOf(selected.value)
     val dropdownItems by remember(items) {
         derivedStateOf {
-            items.mapIndexed { index, item -> MyDropdown.Item(mapper(item), index, mapper(item)) }
+            items.mapIndexed { index, item -> MyDropdown.Item(mapper(item, false), index, mapper(item, false), mapper(item, true)) }
         }
     }
     val dropdownFilter by remember(items, filter) {
@@ -91,7 +92,7 @@ fun <T> MyDropdown(
     title: String,
     items: List<T & Any>,
     selected: T,
-    mapper: (item: T & Any) -> String,
+    mapper: (item: T & Any, dropdown: Boolean) -> String,
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
@@ -101,7 +102,7 @@ fun <T> MyDropdown(
     val selectedIndex = items.indexOf(selected)
     val dropdownItems by remember(items) {
         derivedStateOf {
-            items.mapIndexed { index, item -> MyDropdown.Item(mapper(item), index, mapper(item)) }
+            items.mapIndexed { index, item -> MyDropdown.Item(mapper(item, false), index, mapper(item, false), mapper(item, true)) }
         }
     }
     val dropdownFilter by remember(items, filter) {
@@ -143,7 +144,7 @@ fun MyDropdown(
     val selectedIndex = selected.value
     val dropdownItems by remember(items) {
         derivedStateOf {
-            items.mapIndexed { index, item -> MyDropdown.Item(item, index, item) }
+            items.mapIndexed { index, item -> MyDropdown.Item(item, index, item, item) }
         }
     }
     val dropdownFilter by remember(items, filter) {
@@ -184,7 +185,7 @@ fun MyDropdown(
 ) {
     val dropdownItems by remember(items) {
         derivedStateOf {
-            items.mapIndexed { index, item -> MyDropdown.Item(item, index, item) }
+            items.mapIndexed { index, item -> MyDropdown.Item(item, index, item, item) }
         }
     }
     val dropdownFilter by remember(items, filter) {
@@ -299,7 +300,7 @@ private fun <T> MyDropdownImpl(
                         .fillMaxWidth(),
                     text = {
                         Text(
-                            text = it.text,
+                            text = it.textDropdown,
                             color = if (it.index == selected) MaterialTheme.colorScheme.primary else Color.Unspecified,
                             modifier = Modifier.fillMaxWidth()
                         )

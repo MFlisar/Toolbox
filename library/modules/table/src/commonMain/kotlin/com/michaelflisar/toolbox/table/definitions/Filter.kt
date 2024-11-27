@@ -1,10 +1,28 @@
 package com.michaelflisar.toolbox.table.definitions
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.FilterAlt
+import androidx.compose.material.icons.filled.Highlight
+import androidx.compose.material.icons.filled.TextFields
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltip
+import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -12,14 +30,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.composables.MyCheckbox
 import com.michaelflisar.toolbox.composables.MyDropdown
+import com.michaelflisar.toolbox.composables.MyIconButton
 import com.michaelflisar.toolbox.composables.MyInput
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyNumericInput
 import com.michaelflisar.toolbox.composables.MySegmentedControl
+import com.michaelflisar.toolbox.disabled
+import com.michaelflisar.toolbox.table.definitions.Filter.Number.State
 import kotlin.enums.EnumEntries
 
 abstract class Filter<Item, CellValue> {
@@ -30,70 +57,129 @@ abstract class Filter<Item, CellValue> {
     abstract fun clear()
 
     @Composable
-    abstract fun render()
-
-    class TextData<Item, CellValue>(
-        val cellValueToString: (value: CellValue) -> String,
-        val filter: (value: String, filter: String) -> Boolean = { value, filter ->
-            filter.isEmpty() || value.contains(filter, true)
+    fun render() {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(Icons.Default.FilterAlt, null)
+            Text(modifier = Modifier.weight(1f), text = "Filter", fontWeight = FontWeight.Bold)
+            header()
         }
-    ) : Filter<Item, CellValue>() {
-
-        override val state = mutableStateOf("")
-        override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) =
-            filter(cellValueToString(itemToValue(item)), state.value)
-
-        override fun isActive() = state.value.isNotEmpty()
-        override fun clear() {
-            state.value = ""
-        }
-
-        @Composable
-        override fun render() {
-            val focusRequester = remember { FocusRequester() }
-            MyInput(
-                //title = "Filter",
-                modifier = Modifier
-                    .padding(start = 32.dp)
-                    .fillMaxWidth()
-                    .focusRequester(focusRequester),
-                value = state.value,
-                onValueChange = {
-                    state.value = it
-                }
-            )
-            LaunchedEffect(Unit) {
-                focusRequester.requestFocus()
-            }
+        Column(
+            modifier = Modifier
+                .padding(start = 32.dp)
+                .fillMaxWidth()
+        ) {
+            content()
         }
     }
 
-    class Text<Item>(
-        val filter: (value: String, filter: String) -> Boolean = { value, filter ->
-            filter.isEmpty() || value.contains(filter, true)
-        }
-    ) : Filter<Item, String>() {
-        override val state = mutableStateOf("")
-        override fun isValid(item: Item, itemToValue: (item: Item) -> String) =
-            filter(itemToValue(item), state.value)
+    @Composable
+    open fun RowScope.header() {
 
-        override fun isActive() = state.value.isNotEmpty()
+    }
+
+    @Composable
+    abstract fun ColumnScope.content()
+
+    class Text<Item, CellValue>(
+        val cellValueToString: (value: CellValue) -> String = { it.toString() },
+        val filter: (value: String, filter: State) -> Boolean = { value, filter ->
+            if (filter.value.isEmpty())
+                true
+            else {
+                when (filter.type) {
+                    State.Type.Same -> value.equals(filter.value, filter.ignoreCase)
+                    State.Type.NotSame -> !value.equals(filter.value, filter.ignoreCase)
+                    State.Type.Starts -> value.startsWith(filter.value, filter.ignoreCase)
+                    State.Type.Ends -> value.endsWith(filter.value, filter.ignoreCase)
+                    State.Type.Contains -> value.contains(filter.value, filter.ignoreCase)
+                    State.Type.ContainsNot -> !value.contains(filter.value, filter.ignoreCase)
+                }
+            }
+        }
+    ) : Filter<Item, CellValue>() {
+
+        data class State(
+            val value: String = "",
+            val ignoreCase: Boolean = true,
+            val type: Type = Type.Contains
+        ) {
+            enum class Type(val label: String, info: String) {
+                Same("==", "Equals"),
+                NotSame("!=", "Not equals"),
+                Starts("Starts", "with"),
+                Ends("Ends", "with"),
+                Contains("⊂", "Contains"),
+                ContainsNot("⊄", "Not contains")
+                ;
+
+                val longLabel = "$label $info"
+            }
+        }
+
+        override val state = mutableStateOf(State())
+        override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) =
+            filter(cellValueToString(itemToValue(item)), state.value)
+
+        override fun isActive() = state.value.value.isNotEmpty()
         override fun clear() {
-            state.value = ""
+            state.value = state.value.copy(value = "")
+        }
+
+        @OptIn(ExperimentalMaterial3Api::class)
+        @Composable
+        override fun RowScope.header() {
+            MyDropdown(
+                modifier = Modifier.width(96.dp),
+                title = "",
+                items = State.Type.entries,
+                selected = state.value.type,
+                mapper = { item, dropwdown -> if (dropwdown) item.longLabel else item.label },
+                onSelectionChanged = {
+                    state.value = state.value.copy(type = it)
+                }
+            )
+
+            TooltipBox(
+                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                tooltip = {
+                    PlainTooltip {
+                        Text("Case Sensitive")
+                    }
+                },
+                state = rememberTooltipState()
+            ) {
+                MyIconButton(
+                    icon = Icons.Default.TextFields,
+                    tint = if (!state.value.ignoreCase) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground.disabled()
+                ) {
+                    state.value = state.value.copy(ignoreCase = !state.value.ignoreCase)
+                }
+            }
         }
 
         @Composable
-        override fun render() {
+        override fun ColumnScope.content() {
             val focusRequester = remember { FocusRequester() }
+            //MyCheckbox(
+            //    modifier = Modifier
+            //        .fillMaxWidth(),
+            //    title = "Case Sensitive",
+            //    checked = !state.value.ignoreCase,
+            //    onCheckedChange = {
+            //        state.value = state.value.copy(ignoreCase = !it)
+            //    }
+            //)
             MyInput(
                 //title = "Filter",
                 modifier = Modifier
-                    .padding(start = 32.dp)
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
-                value = state.value,
+                value = state.value.value,
                 onValueChange = {
-                    state.value = it
+                    state.value = state.value.copy(value = it)
                 }
             )
             LaunchedEffect(Unit) {
@@ -156,6 +242,10 @@ abstract class Filter<Item, CellValue> {
                             else -> throw RuntimeException("Type not handled!")
                         }
                     }
+
+                    State.Type.Contains -> {
+                        value.toString().contains(filter.value.toString())
+                    }
                 }
 
                 valid
@@ -165,14 +255,18 @@ abstract class Filter<Item, CellValue> {
 
         data class State<CellValue>(
             val value: CellValue? = null,
-            val type: Type = Type.Equal
+            val type: Type = Type.Contains
         ) {
-            enum class Type(val label: String) {
-                Equal("=="),
-                LargerOrEqual(">="),
-                Larger(">"),
-                SmallerOrEqual("<="),
-                Smaller("<")
+            enum class Type(val label: String, info: String) {
+                Equal("==", "Equals"),
+                LargerOrEqual(">=", "Greater or equals"),
+                Larger(">", "Greater"),
+                SmallerOrEqual("<=", "Smaller or equals"),
+                Smaller("<", "Smaller"),
+                Contains("⊂", "Contains")
+                ;
+
+                val longLabel = "$label $info"
             }
         }
 
@@ -186,35 +280,30 @@ abstract class Filter<Item, CellValue> {
         }
 
         @Composable
-        override fun render() {
+        override fun RowScope.header() {
+            MyDropdown(
+                modifier = Modifier.width(64.dp),
+                title = "",
+                items = State.Type.entries,
+                selected = state.value.type,
+                mapper = { item, dropwdown -> if (dropwdown) item.longLabel else item.label },
+                onSelectionChanged = {
+                    state.value = state.value.copy(type = it)
+                }
+            )
+        }
+
+        @Composable
+        override fun ColumnScope.content() {
             val focusRequester = remember { FocusRequester() }
-            Row(
-                modifier = Modifier
-                    .padding(start = 32.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                MyDropdown(
-                    modifier = Modifier.width(64.dp),
-                    title = "",
-                    items = State.Type.entries,
-                    selected = state.value.type,
-                    mapper = { it.label },
-                    onSelectionChanged = {
-                        state.value = state.value.copy(type = it)
-                    }
-                )
-                MyNumericInput(
-                    title = "",
-                    modifier = Modifier.weight(1f)
-                        .focusRequester(focusRequester),
-                    value = state.value.value,
-                    onValueChange = {
-                        state.value = state.value.copy(value = it)
-                    }
-                )
-            }
+            MyNumericInput(
+                title = "",
+                modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                value = state.value.value,
+                onValueChange = {
+                    state.value = state.value.copy(value = it)
+                }
+            )
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()
             }
@@ -223,7 +312,7 @@ abstract class Filter<Item, CellValue> {
 
     class List<Item, CellValue>(
         val items: kotlin.collections.List<CellValue>,
-        val mapper: (CellValue) -> String,
+        val mapper: (CellValue) -> String = { it.toString() },
         val filter: (value: CellValue, filter: kotlin.collections.List<CellValue>) -> Boolean = { value, filter ->
             filter.isEmpty() || filter.contains(value)
         },
@@ -241,7 +330,7 @@ abstract class Filter<Item, CellValue> {
         }
 
         @Composable
-        override fun render() {
+        override fun ColumnScope.content() {
             if (multiSelect) {
                 MyMultiDropdown(
                     title = "",
@@ -264,12 +353,12 @@ abstract class Filter<Item, CellValue> {
                     }
                 )
             }
-
         }
     }
 
     class Enum<Item, CellValue : kotlin.Enum<CellValue>>(
         val items: EnumEntries<CellValue>,
+        val mapper: (CellValue) -> String = { it.name },
         val filter: (value: CellValue, filter: kotlin.collections.List<CellValue>) -> Boolean = { value, filter ->
             filter.isEmpty() || filter.contains(value)
         },
@@ -287,19 +376,19 @@ abstract class Filter<Item, CellValue> {
         }
 
         @Composable
-        override fun render() {
+        override fun ColumnScope.content() {
             if (multiSelect) {
                 MyMultiDropdown(
                     title = "",
                     items = items,
                     selected = state.value,
-                    mapper = { it.name },
+                    mapper = mapper,
                     onSelectionChange = {
                         state.value = it
                     }
                 )
             } else {
-                val texts = items.map { it.name }
+                val texts = items.map { mapper(it) }
                 MyDropdown(
                     title = "",
                     items = listOf(labelAll) + texts,
@@ -310,7 +399,6 @@ abstract class Filter<Item, CellValue> {
                     }
                 )
             }
-
         }
     }
 
@@ -329,7 +417,7 @@ abstract class Filter<Item, CellValue> {
         }
 
         @Composable
-        override fun render() {
+        override fun ColumnScope.content() {
             MySegmentedControl(
                 items = listOf(labelAll, labelChecked, labelUnchecked),
                 selected = when (state.value) {
