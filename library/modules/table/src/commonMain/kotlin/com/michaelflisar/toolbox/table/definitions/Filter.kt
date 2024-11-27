@@ -1,7 +1,6 @@
 package com.michaelflisar.toolbox.table.definitions
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -10,13 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.FilterAlt
-import androidx.compose.material.icons.filled.Highlight
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
@@ -30,15 +26,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ToolboxDefaults
-import com.michaelflisar.toolbox.composables.MyCheckbox
 import com.michaelflisar.toolbox.composables.MyDropdown
 import com.michaelflisar.toolbox.composables.MyIconButton
 import com.michaelflisar.toolbox.composables.MyInput
@@ -46,7 +38,6 @@ import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyNumericInput
 import com.michaelflisar.toolbox.composables.MySegmentedControl
 import com.michaelflisar.toolbox.disabled
-import com.michaelflisar.toolbox.table.definitions.Filter.Number.State
 import kotlin.enums.EnumEntries
 
 abstract class Filter<Item, CellValue> {
@@ -55,6 +46,30 @@ abstract class Filter<Item, CellValue> {
     abstract fun isValid(item: Item, itemToValue: (item: Item) -> CellValue): Boolean
     abstract fun isActive(): Boolean
     abstract fun clear()
+
+    enum class FilterType(
+        val label: String,
+        val info: String,
+        val numeric: Boolean = false
+    ) {
+        Equal("==", "Equal"),
+        NotEqual("!=", "Not Equal"),
+
+        // NUMERIC ONLY
+        LargerOrEqual(">=", "Greater Or Equal", true),
+        Larger(">", "Greater", true),
+        SmallerOrEqual("<=", "Smaller Or Equal", true),
+        Smaller("<", "Smaller", true),
+
+        Starts("|>", "Starts With"),
+        Ends("<|", "Ends With"),
+        Contains("⊂", "Contains"),
+        ContainsNot("⊄", "Not Contains")
+        ;
+
+        val longLabel: String
+            get() = "${label.padEnd(2, ' ')} $info"
+    }
 
     @Composable
     fun render() {
@@ -77,7 +92,6 @@ abstract class Filter<Item, CellValue> {
 
     @Composable
     open fun RowScope.header() {
-
     }
 
     @Composable
@@ -90,12 +104,17 @@ abstract class Filter<Item, CellValue> {
                 true
             else {
                 when (filter.type) {
-                    State.Type.Same -> value.equals(filter.value, filter.ignoreCase)
-                    State.Type.NotSame -> !value.equals(filter.value, filter.ignoreCase)
-                    State.Type.Starts -> value.startsWith(filter.value, filter.ignoreCase)
-                    State.Type.Ends -> value.endsWith(filter.value, filter.ignoreCase)
-                    State.Type.Contains -> value.contains(filter.value, filter.ignoreCase)
-                    State.Type.ContainsNot -> !value.contains(filter.value, filter.ignoreCase)
+                    FilterType.Equal -> value.equals(filter.value, filter.ignoreCase)
+                    FilterType.NotEqual -> !value.equals(filter.value, filter.ignoreCase)
+                    FilterType.Starts -> value.startsWith(filter.value, filter.ignoreCase)
+                    FilterType.Ends -> value.endsWith(filter.value, filter.ignoreCase)
+                    FilterType.Contains -> value.contains(filter.value, filter.ignoreCase)
+                    FilterType.ContainsNot -> !value.contains(filter.value, filter.ignoreCase)
+                    // numeric => not possible!
+                    FilterType.LargerOrEqual,
+                    FilterType.Larger,
+                    FilterType.SmallerOrEqual,
+                    FilterType.Smaller -> throw RuntimeException("Type not valid!")
                 }
             }
         }
@@ -104,20 +123,8 @@ abstract class Filter<Item, CellValue> {
         data class State(
             val value: String = "",
             val ignoreCase: Boolean = true,
-            val type: Type = Type.Contains
-        ) {
-            enum class Type(val label: String, info: String) {
-                Same("==", "Equals"),
-                NotSame("!=", "Not equals"),
-                Starts("Starts", "with"),
-                Ends("Ends", "with"),
-                Contains("⊂", "Contains"),
-                ContainsNot("⊄", "Not contains")
-                ;
-
-                val longLabel = "$label $info"
-            }
-        }
+            val type: FilterType = FilterType.Contains
+        )
 
         override val state = mutableStateOf(State())
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) =
@@ -132,9 +139,9 @@ abstract class Filter<Item, CellValue> {
         @Composable
         override fun RowScope.header() {
             MyDropdown(
-                modifier = Modifier.width(96.dp),
+                modifier = Modifier.width(64.dp),
                 title = "",
-                items = State.Type.entries,
+                items = FilterType.entries.filter { !it.numeric },
                 selected = state.value.type,
                 mapper = { item, dropwdown -> if (dropwdown) item.longLabel else item.label },
                 onSelectionChanged = {
@@ -194,8 +201,9 @@ abstract class Filter<Item, CellValue> {
                 true
             else {
                 val valid: Boolean = when (filter.type) {
-                    State.Type.Equal -> value == filter.value
-                    State.Type.LargerOrEqual -> {
+                    FilterType.Equal -> value == filter.value
+                    FilterType.NotEqual -> value != filter.value
+                    FilterType.LargerOrEqual -> {
                         when (value) {
                             is Double -> (value as Double) >= (filter.value as Double)
                             is Float -> (value as Float) >= (filter.value as Float)
@@ -207,7 +215,7 @@ abstract class Filter<Item, CellValue> {
                         }
                     }
 
-                    State.Type.Larger -> {
+                    FilterType.Larger -> {
                         when (value) {
                             is Double -> (value as Double) > (filter.value as Double)
                             is Float -> (value as Float) > (filter.value as Float)
@@ -219,7 +227,7 @@ abstract class Filter<Item, CellValue> {
                         }
                     }
 
-                    State.Type.SmallerOrEqual -> {
+                    FilterType.SmallerOrEqual -> {
                         when (value) {
                             is Double -> (value as Double) <= (filter.value as Double)
                             is Float -> (value as Float) <= (filter.value as Float)
@@ -231,7 +239,7 @@ abstract class Filter<Item, CellValue> {
                         }
                     }
 
-                    State.Type.Smaller -> {
+                    FilterType.Smaller -> {
                         when (value) {
                             is Double -> (value as Double) < (filter.value as Double)
                             is Float -> (value as Float) < (filter.value as Float)
@@ -243,8 +251,20 @@ abstract class Filter<Item, CellValue> {
                         }
                     }
 
-                    State.Type.Contains -> {
+                    FilterType.Contains -> {
                         value.toString().contains(filter.value.toString())
+                    }
+
+                    FilterType.ContainsNot -> {
+                        !value.toString().contains(filter.value.toString())
+                    }
+
+                    FilterType.Starts -> {
+                        value.toString().startsWith(filter.value.toString())
+                    }
+
+                    FilterType.Ends -> {
+                        !value.toString().startsWith(filter.value.toString())
                     }
                 }
 
@@ -255,20 +275,8 @@ abstract class Filter<Item, CellValue> {
 
         data class State<CellValue>(
             val value: CellValue? = null,
-            val type: Type = Type.Contains
-        ) {
-            enum class Type(val label: String, info: String) {
-                Equal("==", "Equals"),
-                LargerOrEqual(">=", "Greater or equals"),
-                Larger(">", "Greater"),
-                SmallerOrEqual("<=", "Smaller or equals"),
-                Smaller("<", "Smaller"),
-                Contains("⊂", "Contains")
-                ;
-
-                val longLabel = "$label $info"
-            }
-        }
+            val type: FilterType = FilterType.Contains
+        )
 
         override val state = mutableStateOf(State<CellValue>())
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) =
@@ -284,7 +292,7 @@ abstract class Filter<Item, CellValue> {
             MyDropdown(
                 modifier = Modifier.width(64.dp),
                 title = "",
-                items = State.Type.entries,
+                items = FilterType.entries,
                 selected = state.value.type,
                 mapper = { item, dropwdown -> if (dropwdown) item.longLabel else item.label },
                 onSelectionChanged = {
