@@ -61,8 +61,8 @@ abstract class Filter<Item, CellValue> {
         SmallerOrEqual("<=", "Smaller Or Equal", true),
         Smaller("<", "Smaller", true),
 
-        Starts("|>", "Starts With"),
-        Ends("<|", "Ends With"),
+        Starts("|_", "Starts With"),
+        Ends("_|", "Ends With"),
         Contains("⊂", "Contains"),
         ContainsNot("⊄", "Not Contains")
         ;
@@ -251,21 +251,11 @@ abstract class Filter<Item, CellValue> {
                         }
                     }
 
-                    FilterType.Contains -> {
-                        value.toString().contains(filter.value.toString())
-                    }
+                    FilterType.Contains -> value.toString().contains(filter.value.toString())
+                    FilterType.ContainsNot -> !value.toString().contains(filter.value.toString())
+                    FilterType.Starts -> value.toString().startsWith(filter.value.toString())
+                    FilterType.Ends ->  !value.toString().endsWith(filter.value.toString())
 
-                    FilterType.ContainsNot -> {
-                        !value.toString().contains(filter.value.toString())
-                    }
-
-                    FilterType.Starts -> {
-                        value.toString().startsWith(filter.value.toString())
-                    }
-
-                    FilterType.Ends -> {
-                        !value.toString().startsWith(filter.value.toString())
-                    }
                 }
 
                 valid
