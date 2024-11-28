@@ -24,12 +24,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -50,6 +46,7 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.composables.MyIconButton
+import com.michaelflisar.toolbox.composables.MyTooltipBox
 import com.michaelflisar.toolbox.disabled
 import com.michaelflisar.toolbox.table.data.Sort
 import com.michaelflisar.toolbox.table.definitions.Column
@@ -114,29 +111,24 @@ internal fun RowScope.TableHeaderCell(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RowScope.HeaderTooltipContainer(
     header: Header,
     modifier: Modifier,
     content: @Composable (() -> Unit)
 ) {
-    TooltipBox(
+    MyTooltipBox(
         modifier = modifier,
-        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
         tooltip = {
-            PlainTooltip {
-                if (header.description.isNotEmpty()) {
-                    Column {
-                        Text(header.label, fontWeight = FontWeight.Bold)
-                        Text(header.description)
-                    }
-                } else {
-                    Text(header.label)
+            if (header.description.isNotEmpty()) {
+                Column {
+                    Text(header.label, fontWeight = FontWeight.Bold)
+                    Text(header.description)
                 }
+            } else {
+                Text(header.label)
             }
-        },
-        state = rememberTooltipState()
+        }
     ) {
         content()
     }

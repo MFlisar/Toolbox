@@ -37,6 +37,7 @@ import com.michaelflisar.toolbox.composables.MyInput
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyNumericInput
 import com.michaelflisar.toolbox.composables.MySegmentedControl
+import com.michaelflisar.toolbox.composables.MyTooltipBox
 import com.michaelflisar.toolbox.disabled
 import kotlin.enums.EnumEntries
 
@@ -149,15 +150,7 @@ abstract class Filter<Item, CellValue> {
                 }
             )
 
-            TooltipBox(
-                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
-                tooltip = {
-                    PlainTooltip {
-                        Text("Case Sensitive")
-                    }
-                },
-                state = rememberTooltipState()
-            ) {
+            MyTooltipBox("Case Sensitive") {
                 MyIconButton(
                     icon = Icons.Default.TextFields,
                     tint = if (!state.value.ignoreCase) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground.disabled()
