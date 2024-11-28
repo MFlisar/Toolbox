@@ -18,7 +18,7 @@ fun MyIconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     iconPaddingValues: PaddingValues = PaddingValues(),
-    tint: Color = LocalContentColor.current,
+    tint: Color? = null,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -33,7 +33,7 @@ fun MyIconButton(
             modifier = Modifier.padding(iconPaddingValues),
             imageVector = icon,
             contentDescription = null,
-            tint = tint
+            tint = tint ?: LocalContentColor.current
         )
     }
 }
@@ -43,7 +43,7 @@ fun MyOutlinedIconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     iconPaddingValues: PaddingValues = PaddingValues(),
-    tint: Color = LocalContentColor.current,
+    tint: Color? = null,
     colors: IconButtonColors = IconButtonDefaults.outlinedIconButtonColors(),
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -58,7 +58,7 @@ fun MyOutlinedIconButton(
             modifier = Modifier.padding(iconPaddingValues),
             imageVector = icon,
             contentDescription = null,
-            tint = tint
+            tint = tint ?: LocalContentColor.current
         )
     }
 }
