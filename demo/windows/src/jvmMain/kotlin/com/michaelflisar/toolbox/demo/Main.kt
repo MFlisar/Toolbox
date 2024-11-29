@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.demo
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -33,13 +35,17 @@ import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.classes.Theme
 import com.michaelflisar.toolbox.composables.MyCheckbox
+import com.michaelflisar.toolbox.composables.MyChip
 import com.michaelflisar.toolbox.composables.MyDropdown
+import com.michaelflisar.toolbox.composables.MyExpandableOutlinedTitle
 import com.michaelflisar.toolbox.composables.MyExpandableTitle
+import com.michaelflisar.toolbox.composables.MyFlowRow
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
 import com.michaelflisar.toolbox.composables.MyMultiSegmentedControl
 import com.michaelflisar.toolbox.composables.MySegmentedControl
 import com.michaelflisar.toolbox.table.Setup
 import com.michaelflisar.toolbox.table.Table
+import com.michaelflisar.toolbox.ui.MyScrollableColumn
 import com.michaelflisar.toolbox.windowsapp.DesktopApplication
 import com.michaelflisar.toolbox.windowsapp.DesktopDialog
 import com.michaelflisar.toolbox.windowsapp.classes.LocalAppState
@@ -154,13 +160,13 @@ private fun Content(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ContentPage1() {
     val scope = rememberCoroutineScope()
     val appState = LocalAppState.current
-    Column(
-        modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL),
-        verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+    MyScrollableColumn(
+        modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL)
     ) {
         Text(text = "Center")
         Button(
@@ -238,8 +244,18 @@ private fun ContentPage1() {
         MyExpandableTitle("Expandable") {
             Text("Content...")
         }
-        MyExpandableTitle("Expandable2", info = "State") {
+        MyExpandableTitle("Expandable2", info = { Text("State") }) {
             Text("Content...")
+        }
+
+        MyExpandableOutlinedTitle("Expandable3 - Outlined") {
+            Text("Content...")
+        }
+
+        MyFlowRow {
+            (1..20).forEach {
+                MyChip(title = "Chip $it", icon = if (it <= 10) null else {{ Icon(Icons.Default.Info, null)}})
+            }
         }
     }
 }
@@ -374,18 +390,90 @@ private fun ContentPageTable() {
     val filtered = remember { mutableStateOf(-1) }
     val fullTableData = remember {
         listOf(
-            TableDataEntry(1, true,"Michael",  TableDataEntry.ColorEnum.Red,"Description of Michael..."),
-            TableDataEntry(2, false,"Christine", TableDataEntry.ColorEnum.Blue,"Description of Christine..."),
-            TableDataEntry(3, true,"Benjamin", TableDataEntry.ColorEnum.Green,"Description of Benjamin..."),
-            TableDataEntry(4, false,"Michael", TableDataEntry.ColorEnum.Red,"Description of Michael..."),
-            TableDataEntry(5, true,"Christine", TableDataEntry.ColorEnum.Blue,"Description of Christine..."),
-            TableDataEntry(6, false,"Benjamin", TableDataEntry.ColorEnum.Green,"Description of Benjamin..."),
-            TableDataEntry(7, true,"Michael", TableDataEntry.ColorEnum.Red,"Description of Michael..."),
-            TableDataEntry(8, false,"Christine",TableDataEntry.ColorEnum.Blue, "Description of Christine..."),
-            TableDataEntry(9, true,"Benjamin", TableDataEntry.ColorEnum.Green,"Description of Benjamin..."),
-            TableDataEntry(10,false, "Michael", TableDataEntry.ColorEnum.Red,"Description of Michael..."),
-            TableDataEntry(11,true, "Christine",TableDataEntry.ColorEnum.Blue, "Description of Christine..."),
-            TableDataEntry(12, false,"Benjamin", TableDataEntry.ColorEnum.Green,"Description of Benjamin...")
+            TableDataEntry(
+                1,
+                true,
+                "Michael",
+                TableDataEntry.ColorEnum.Red,
+                "Description of Michael..."
+            ),
+            TableDataEntry(
+                2,
+                false,
+                "Christine",
+                TableDataEntry.ColorEnum.Blue,
+                "Description of Christine..."
+            ),
+            TableDataEntry(
+                3,
+                true,
+                "Benjamin",
+                TableDataEntry.ColorEnum.Green,
+                "Description of Benjamin..."
+            ),
+            TableDataEntry(
+                4,
+                false,
+                "Michael",
+                TableDataEntry.ColorEnum.Red,
+                "Description of Michael..."
+            ),
+            TableDataEntry(
+                5,
+                true,
+                "Christine",
+                TableDataEntry.ColorEnum.Blue,
+                "Description of Christine..."
+            ),
+            TableDataEntry(
+                6,
+                false,
+                "Benjamin",
+                TableDataEntry.ColorEnum.Green,
+                "Description of Benjamin..."
+            ),
+            TableDataEntry(
+                7,
+                true,
+                "Michael",
+                TableDataEntry.ColorEnum.Red,
+                "Description of Michael..."
+            ),
+            TableDataEntry(
+                8,
+                false,
+                "Christine",
+                TableDataEntry.ColorEnum.Blue,
+                "Description of Christine..."
+            ),
+            TableDataEntry(
+                9,
+                true,
+                "Benjamin",
+                TableDataEntry.ColorEnum.Green,
+                "Description of Benjamin..."
+            ),
+            TableDataEntry(
+                10,
+                false,
+                "Michael",
+                TableDataEntry.ColorEnum.Red,
+                "Description of Michael..."
+            ),
+            TableDataEntry(
+                11,
+                true,
+                "Christine",
+                TableDataEntry.ColorEnum.Blue,
+                "Description of Christine..."
+            ),
+            TableDataEntry(
+                12,
+                false,
+                "Benjamin",
+                TableDataEntry.ColorEnum.Green,
+                "Description of Benjamin..."
+            )
         )
     }
     val entities = remember { mutableStateOf(fullTableData) }

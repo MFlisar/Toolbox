@@ -2,20 +2,24 @@ package com.michaelflisar.toolbox.composables
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,7 +39,7 @@ import com.michaelflisar.toolbox.ToolboxDefaults
 fun MyExpandableTitle(
     title: String,
     expanded: MutableState<Boolean> = remember { mutableStateOf(true) },
-    info: String = "",
+    info: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     showIcon: Boolean = true,
@@ -57,7 +61,7 @@ fun MyExpandableTitle(
 fun MyExpandableTitle(
     text: String,
     expanded: Boolean,
-    info: String = "",
+    info: (@Composable () -> Unit)? = null,
     onToggle: () -> Unit,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
@@ -69,50 +73,166 @@ fun MyExpandableTitle(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(MaterialTheme.shapes.small)
-                .clickable {
-                    onToggle()
-                }
-                .padding(
-                    start = if (showIcon) 0.dp else 8.dp,
-                    bottom = 8.dp,
-                    top = 8.dp,
-                    end = 8.dp
-                ),
-            verticalAlignment = Alignment.CenterVertically
+        CompositionLocalProvider(
+            LocalTextStyle provides MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
         ) {
-            if (showIcon) {
-                Icon(
-                    modifier = Modifier.rotate(rotation),
-                    imageVector = Icons.Default.ArrowDropDown,
-                    tint = color.takeIf { it != Color.Unspecified }
-                        ?: LocalContentColor.current,//.copy(alpha = LocalContentAlpha.current),
-                    contentDescription = null
-                )
-            }
-            Text(
-                text = text,
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold,
-                color = color
-            )
-            if (info.isNotEmpty()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.small)
+                    .clickable {
+                        onToggle()
+                    }
+                    .padding(
+                        start = if (showIcon) 0.dp else 8.dp,
+                        bottom = 8.dp,
+                        top = 8.dp,
+                        end = 8.dp
+                    ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (showIcon) {
+                    Icon(
+                        modifier = Modifier.rotate(rotation),
+                        imageVector = Icons.Default.ArrowDropDown,
+                        tint = color.takeIf { it != Color.Unspecified }
+                            ?: LocalContentColor.current,//.copy(alpha = LocalContentAlpha.current),
+                        contentDescription = null
+                    )
+                }
+
                 Text(
                     modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.End,
-                    text = info,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold,
-                    fontStyle = FontStyle.Italic,
+                    text = text,
+                    //style = MaterialTheme.typography.titleSmall,
+                    //fontWeight = FontWeight.Bold,
                     color = color
                 )
+                if (info != null) {
+                    info()
+                }
+                /*
+                if (info.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.End,
+                        text = info,
+                        //style = MaterialTheme.typography.titleSmall,
+                        //fontWeight = FontWeight.Bold,
+                        //fontStyle = FontStyle.Italic,
+                        color = color
+                    )
+                }*/
             }
         }
         AnimatedVisibility(visible = expanded) {
             Column {
+                content()
+            }
+        }
+    }
+}
+
+@Composable
+fun MyExpandableOutlinedTitle(
+    title: String,
+    expanded: MutableState<Boolean> = remember { mutableStateOf(true) },
+    info: (@Composable () -> Unit)? = null,
+    modifier: Modifier = Modifier,
+    color: Color = Color.Unspecified,
+    showIcon: Boolean = true,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    MyExpandableOutlinedTitle(
+        title,
+        expanded.value,
+        info,
+        { expanded.value = !expanded.value },
+        modifier,
+        color,
+        showIcon,
+        content
+    )
+}
+
+@Composable
+fun MyExpandableOutlinedTitle(
+    text: String,
+    expanded: Boolean,
+    info: (@Composable () -> Unit)? = null,
+    onToggle: () -> Unit,
+    modifier: Modifier = Modifier,
+    color: Color = Color.Unspecified,
+    showIcon: Boolean = true,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    val rotation by animateFloatAsState(if (expanded) -180f else 0f)
+    Column(
+        modifier = modifier
+            .border(1.dp, MaterialTheme.colorScheme.onBackground, MaterialTheme.shapes.small),
+        verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+    ) {
+        CompositionLocalProvider(
+            LocalTextStyle provides MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.small)
+                    .clickable {
+                        onToggle()
+                    }
+                    .padding(
+                        start = if (showIcon) 0.dp else 8.dp,
+                        bottom = 8.dp,
+                        top = 8.dp,
+                        end = 8.dp
+                    ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (showIcon) {
+                    Icon(
+                        modifier = Modifier.rotate(rotation),
+                        imageVector = Icons.Default.ArrowDropDown,
+                        tint = color.takeIf { it != Color.Unspecified }
+                            ?: LocalContentColor.current,//.copy(alpha = LocalContentAlpha.current),
+                        contentDescription = null
+                    )
+                }
+
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = text,
+                    //style = MaterialTheme.typography.titleSmall,
+                    //fontWeight = FontWeight.Bold,
+                    color = color
+                )
+                if (info != null) {
+                    info()
+                }
+                /*
+                if (info.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.End,
+                        text = info,
+                        //style = MaterialTheme.typography.titleSmall,
+                        //fontWeight = FontWeight.Bold,
+                        //fontStyle = FontStyle.Italic,
+                        color = color
+                    )
+                }*/
+            }
+        }
+        AnimatedVisibility(visible = expanded) {
+            Column(
+                modifier = Modifier.padding(
+                    start = 8.dp,
+                    bottom = 8.dp,
+                    top = 0.dp,
+                    end = 8.dp
+                )
+            ) {
                 content()
             }
         }

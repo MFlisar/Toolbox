@@ -1,5 +1,6 @@
 package com.michaelflisar.toolbox.composables
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
@@ -16,18 +17,25 @@ fun MyTooltipBox(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    TooltipBox(
-        modifier = modifier,
-        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
-        tooltip = {
-            PlainTooltip {
-                Text(tooltip)
-            }
-        },
-        state = rememberTooltipState()
-    ) {
-        content()
+    if (tooltip.isNotEmpty()) {
+        TooltipBox(
+            modifier = modifier,
+            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+            tooltip = {
+                PlainTooltip {
+                    Text(tooltip)
+                }
+            },
+            state = rememberTooltipState()
+        ) {
+            content()
+        }
+    } else {
+        Box(modifier = modifier) {
+            content()
+        }
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
