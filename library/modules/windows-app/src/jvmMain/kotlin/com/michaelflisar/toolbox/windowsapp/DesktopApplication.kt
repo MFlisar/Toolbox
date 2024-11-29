@@ -3,6 +3,7 @@ package com.michaelflisar.toolbox.windowsapp
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -51,12 +52,14 @@ fun AuroraApplicationScope.DesktopApplication(
     onClosed: (suspend () -> Unit)? = null,
     colors: @Composable (theme: Theme) -> ColorScheme = { ToolboxDefaults.colorScheme(it) },
     shapes: Shapes = ToolboxDefaults.SHAPES,
+    typography: Typography = MaterialTheme.typography,
     content: @Composable AuroraWindowScope.() -> Unit
 ) {
     val theme by prefs.theme.collectAsStateNotNull()
     MaterialTheme(
         colorScheme = colors(theme),
-        shapes = shapes
+        shapes = shapes,
+        typography = typography
     ) {
         CompositionLocalProvider(
             LocalAppState provides state
