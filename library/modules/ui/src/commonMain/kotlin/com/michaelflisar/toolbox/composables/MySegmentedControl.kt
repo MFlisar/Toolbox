@@ -18,6 +18,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.disabled
 
@@ -27,13 +29,14 @@ fun <T> MySegmentedControl(
     modifier: Modifier = Modifier,
     items: List<T & Any>,
     selected: MutableState<T>,
-    mapper: (item: T & Any) -> String,
+    mapper: (item: T & Any) -> String = { it.toString() },
+    minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
     onSelectionChanged: ((T) -> Unit)? = null
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected.value)
-    MySegmentedControlImpl(modifier, texts, selectedIndex, color) { index, item ->
+    MySegmentedControlImpl(modifier, texts, selectedIndex, minSegmentWidth, color) { index, item ->
         val s = (if (index >= 0) items[index] else null) as T
         selected.value = s
         onSelectionChanged?.invoke(s)
@@ -45,13 +48,14 @@ fun <T> MySegmentedControl(
     modifier: Modifier = Modifier,
     items: List<T & Any>,
     selected: T,
-    mapper: (item: T & Any) -> String,
+    mapper: (item: T & Any) -> String = { it.toString() },
+    minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
     onSelectionChanged: ((T) -> Unit)? = null
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected)
-    MySegmentedControlImpl(modifier, texts, selectedIndex, color) { index, item ->
+    MySegmentedControlImpl(modifier, texts, selectedIndex, minSegmentWidth, color) { index, item ->
         onSelectionChanged?.invoke(items[index])
     }
 }
@@ -62,11 +66,12 @@ fun MySegmentedControl(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: MutableState<Int>,
+    minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
     onSelectionChanged: ((Int) -> Unit)? = null
 ) {
     val selectedIndex = selected.value
-    MySegmentedControlImpl(modifier, items, selectedIndex, color) { index, item ->
+    MySegmentedControlImpl(modifier, items, selectedIndex, minSegmentWidth, color) { index, item ->
         selected.value = index
         onSelectionChanged?.invoke(index)
     }
@@ -77,10 +82,11 @@ fun MySegmentedControl(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: Int,
+    minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
     onSelectionChanged: ((Int) -> Unit)? = null
 ) {
-    MySegmentedControlImpl(modifier, items, selected, color) { index, item ->
+    MySegmentedControlImpl(modifier, items, selected, minSegmentWidth, color) { index, item ->
         onSelectionChanged?.invoke(index)
     }
 }
@@ -91,12 +97,12 @@ private fun MySegmentedControlImpl(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: Int,
+    minSegmentWidth: Dp,
     color: Color,
     onSelectionChange: (index: Int, item: String?) -> Unit
 ) {
     val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()
         ?: MaterialTheme.colorScheme.onSurface.disabled()
-
     val colorSelected =
         color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.primary
     val colorSelectedText = MaterialTheme.colorScheme.contentColorFor(colorSelected)
@@ -104,13 +110,15 @@ private fun MySegmentedControlImpl(
     val colorNotSelected = Color.Unspecified
     val colorNotSelectedText = Color.Unspecified
 
+    val spacing = 4.dp
+
     Column(
         modifier = modifier
     ) {
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(spacing),
+            verticalArrangement = Arrangement.spacedBy(spacing)
         ) {
             items.forEachIndexed { index, item ->
                 Text(
@@ -124,11 +132,12 @@ private fun MySegmentedControlImpl(
                             else
                                 onSelectionChange(index, item)
                         }
-                        .widthIn(min = 40.dp)
+                        .widthIn(min = minSegmentWidth)
                         .padding(4.dp),
                     text = item,
                     maxLines = 1,
-                    color = if (selected == index) colorSelectedText else colorNotSelectedText
+                    color = if (selected == index) colorSelectedText else colorNotSelectedText,
+                    textAlign = TextAlign.Center
                 )
             }
         }

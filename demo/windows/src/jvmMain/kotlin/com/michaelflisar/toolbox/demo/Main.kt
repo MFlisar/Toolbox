@@ -15,6 +15,10 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,7 +45,9 @@ import com.michaelflisar.toolbox.composables.MyExpandableOutlinedTitle
 import com.michaelflisar.toolbox.composables.MyExpandableTitle
 import com.michaelflisar.toolbox.composables.MyFlowRow
 import com.michaelflisar.toolbox.composables.MyMultiDropdown
+import com.michaelflisar.toolbox.composables.MyMultiSegmentedButtonRow
 import com.michaelflisar.toolbox.composables.MyMultiSegmentedControl
+import com.michaelflisar.toolbox.composables.MySegmentedButtonRow
 import com.michaelflisar.toolbox.composables.MySegmentedControl
 import com.michaelflisar.toolbox.table.Setup
 import com.michaelflisar.toolbox.table.Table
@@ -224,6 +230,7 @@ private fun ContentPage1() {
         MyCheckbox(
             modifier = Modifier.fillMaxWidth(),
             title = "Checkbox2 with longer title",
+            info = "Some info",
             checked = true,
             onCheckedChange = {})
 
@@ -292,8 +299,14 @@ private fun ContentPageSegmentsAndDropdowns() {
 
         MySegmentedControl(items = items, selected = selected)
         MyDropdown(title = "Select", items = items, selected = selected)
+        MySegmentedButtonRow(items = items, selected = selected)
+
         MyMultiSegmentedControl(items = items, selected = selectedMulti)
         MyMultiDropdown(title = "Select", items = items, selected = selectedMulti)
+        MyMultiSegmentedButtonRow(items = items, selected = selectedMulti)
+
+
+
     }
 }
 
