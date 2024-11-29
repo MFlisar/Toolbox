@@ -14,6 +14,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.disabled
 
@@ -35,6 +36,7 @@ fun MyCheckChip(
     title: String,
     checked: Boolean,
     color: Color = Color.Unspecified,
+    style: TextStyle = MaterialTheme.typography.bodySmall,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
     val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()
@@ -55,10 +57,11 @@ fun MyCheckChip(
             .clickable {
                 onCheckedChange(!checked)
             }
-            .widthIn(min = 40.dp)
+            //.widthIn(min = 40.dp)
             .padding(4.dp),
         text = title,
         maxLines = 1,
-        color = if (checked) colorSelectedText else colorNotSelectedText
+        color = if (checked) colorSelectedText else colorNotSelectedText,
+        style = style
     )
 }

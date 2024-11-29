@@ -36,7 +36,7 @@ actual fun MyScrollableLazyRow(
             content()
         }
         HorizontalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+            modifier = Modifier.align(Alignment.BottomCenter).fillMaxHeight(),
             adapter = rememberScrollbarAdapter(state)
         )
     }

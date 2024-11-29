@@ -12,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.michaelflisar.toolbox.ToolboxDefaults
@@ -22,12 +24,13 @@ fun MyTitle(
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     textAlign: TextAlign? = null,
-    fontWeight: FontWeight = FontWeight.Bold
+    fontWeight: FontWeight = FontWeight.Bold,
+    style: TextStyle = MaterialTheme.typography.titleSmall
 ) {
     Text(
         modifier = modifier,
         text = text,
-        style = MaterialTheme.typography.titleSmall,
+        style = style,
         fontWeight = fontWeight,
         color = color,
         textAlign = textAlign
@@ -39,6 +42,9 @@ fun MyTitle(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
+    textAlign: TextAlign? = null,
+    fontWeight: FontWeight = FontWeight.Bold,
+    style: TextStyle = MaterialTheme.typography.titleSmall,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
@@ -53,9 +59,10 @@ fun MyTitle(
         ) {
             Text(
                 text = text,
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold,
-                color = color
+                style = style,
+                fontWeight = fontWeight,
+                color = color,
+                textAlign = textAlign
             )
         }
         Column(verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)) {
