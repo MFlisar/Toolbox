@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -29,11 +28,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ToolboxDefaults
+
+object MyExpandableTitle {
+    enum class IconPlacement {
+        Left, Right, Hide
+    }
+}
 
 @Composable
 fun MyExpandableTitle(
@@ -42,7 +45,7 @@ fun MyExpandableTitle(
     info: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
-    showIcon: Boolean = true,
+    iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
     content: @Composable ColumnScope.() -> Unit
 ) {
     MyExpandableTitle(
@@ -52,7 +55,7 @@ fun MyExpandableTitle(
         { expanded.value = !expanded.value },
         modifier,
         color,
-        showIcon,
+        iconPlacement,
         content
     )
 }
@@ -65,10 +68,10 @@ fun MyExpandableTitle(
     onToggle: () -> Unit,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
-    showIcon: Boolean = true,
+    iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val rotation by animateFloatAsState(if (expanded) -180f else 0f)
+    val rotation by animateFloatAsState(if (expanded) (if (iconPlacement == MyExpandableTitle.IconPlacement.Left) -180f else 180f) else 0f)
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
@@ -84,21 +87,23 @@ fun MyExpandableTitle(
                         onToggle()
                     }
                     .padding(
-                        start = if (showIcon) 0.dp else 8.dp,
+                        start = when (iconPlacement) {
+                            MyExpandableTitle.IconPlacement.Left -> 0.dp
+                            MyExpandableTitle.IconPlacement.Right,
+                            MyExpandableTitle.IconPlacement.Hide -> 8.dp
+                        },
                         bottom = 8.dp,
                         top = 8.dp,
-                        end = 8.dp
+                        end = when (iconPlacement) {
+                            MyExpandableTitle.IconPlacement.Right -> 0.dp
+                            MyExpandableTitle.IconPlacement.Left,
+                            MyExpandableTitle.IconPlacement.Hide -> 8.dp
+                        },
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (showIcon) {
-                    Icon(
-                        modifier = Modifier.rotate(rotation),
-                        imageVector = Icons.Default.ArrowDropDown,
-                        tint = color.takeIf { it != Color.Unspecified }
-                            ?: LocalContentColor.current,//.copy(alpha = LocalContentAlpha.current),
-                        contentDescription = null
-                    )
+                if (iconPlacement == MyExpandableTitle.IconPlacement.Left) {
+                    Icon(rotation, color)
                 }
 
                 Text(
@@ -111,18 +116,9 @@ fun MyExpandableTitle(
                 if (info != null) {
                     info()
                 }
-                /*
-                if (info.isNotEmpty()) {
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        textAlign = TextAlign.End,
-                        text = info,
-                        //style = MaterialTheme.typography.titleSmall,
-                        //fontWeight = FontWeight.Bold,
-                        //fontStyle = FontStyle.Italic,
-                        color = color
-                    )
-                }*/
+                if (iconPlacement == MyExpandableTitle.IconPlacement.Right) {
+                    Icon(rotation, color)
+                }
             }
         }
         AnimatedVisibility(visible = expanded) {
@@ -140,7 +136,7 @@ fun MyExpandableOutlinedTitle(
     info: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
-    showIcon: Boolean = true,
+    iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
     content: @Composable ColumnScope.() -> Unit
 ) {
     MyExpandableOutlinedTitle(
@@ -150,7 +146,7 @@ fun MyExpandableOutlinedTitle(
         { expanded.value = !expanded.value },
         modifier,
         color,
-        showIcon,
+        iconPlacement,
         content
     )
 }
@@ -163,10 +159,10 @@ fun MyExpandableOutlinedTitle(
     onToggle: () -> Unit,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
-    showIcon: Boolean = true,
+    iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val rotation by animateFloatAsState(if (expanded) -180f else 0f)
+    val rotation by animateFloatAsState(if (expanded) (if (iconPlacement == MyExpandableTitle.IconPlacement.Left) -180f else 180f) else 0f)
     Column(
         modifier = modifier
             .border(1.dp, MaterialTheme.colorScheme.onBackground, MaterialTheme.shapes.small),
@@ -183,23 +179,24 @@ fun MyExpandableOutlinedTitle(
                         onToggle()
                     }
                     .padding(
-                        start = if (showIcon) 0.dp else 8.dp,
+                        start = when (iconPlacement) {
+                            MyExpandableTitle.IconPlacement.Left -> 0.dp
+                            MyExpandableTitle.IconPlacement.Right,
+                            MyExpandableTitle.IconPlacement.Hide -> 8.dp
+                        },
                         bottom = 8.dp,
                         top = 8.dp,
-                        end = 8.dp
+                        end = when (iconPlacement) {
+                            MyExpandableTitle.IconPlacement.Right -> 0.dp
+                            MyExpandableTitle.IconPlacement.Left,
+                            MyExpandableTitle.IconPlacement.Hide -> 8.dp
+                        },
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (showIcon) {
-                    Icon(
-                        modifier = Modifier.rotate(rotation),
-                        imageVector = Icons.Default.ArrowDropDown,
-                        tint = color.takeIf { it != Color.Unspecified }
-                            ?: LocalContentColor.current,//.copy(alpha = LocalContentAlpha.current),
-                        contentDescription = null
-                    )
+                if (iconPlacement == MyExpandableTitle.IconPlacement.Left) {
+                    Icon(rotation, color)
                 }
-
                 Text(
                     modifier = Modifier.weight(1f),
                     text = text,
@@ -210,18 +207,9 @@ fun MyExpandableOutlinedTitle(
                 if (info != null) {
                     info()
                 }
-                /*
-                if (info.isNotEmpty()) {
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        textAlign = TextAlign.End,
-                        text = info,
-                        //style = MaterialTheme.typography.titleSmall,
-                        //fontWeight = FontWeight.Bold,
-                        //fontStyle = FontStyle.Italic,
-                        color = color
-                    )
-                }*/
+                if (iconPlacement == MyExpandableTitle.IconPlacement.Right) {
+                    Icon(rotation, color)
+                }
             }
         }
         AnimatedVisibility(visible = expanded) {
@@ -237,4 +225,15 @@ fun MyExpandableOutlinedTitle(
             }
         }
     }
+}
+
+@Composable
+private fun Icon(rotation: Float, color: Color) {
+    Icon(
+        modifier = Modifier.rotate(rotation),
+        imageVector = Icons.Default.ArrowDropDown,
+        tint = color.takeIf { it != Color.Unspecified }
+            ?: LocalContentColor.current,//.copy(alpha = LocalContentAlpha.current),
+        contentDescription = null
+    )
 }
