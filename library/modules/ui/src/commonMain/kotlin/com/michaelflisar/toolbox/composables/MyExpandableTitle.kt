@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -162,68 +163,8 @@ fun MyExpandableOutlinedTitle(
     iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val rotation by animateFloatAsState(if (expanded) (if (iconPlacement == MyExpandableTitle.IconPlacement.Left) -180f else 180f) else 0f)
-    Column(
-        modifier = modifier
-            .border(1.dp, MaterialTheme.colorScheme.onBackground, MaterialTheme.shapes.small),
-        verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
-    ) {
-        CompositionLocalProvider(
-            LocalTextStyle provides MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.small)
-                    .clickable {
-                        onToggle()
-                    }
-                    .padding(
-                        start = when (iconPlacement) {
-                            MyExpandableTitle.IconPlacement.Left -> 0.dp
-                            MyExpandableTitle.IconPlacement.Right,
-                            MyExpandableTitle.IconPlacement.Hide -> 8.dp
-                        },
-                        bottom = 8.dp,
-                        top = 8.dp,
-                        end = when (iconPlacement) {
-                            MyExpandableTitle.IconPlacement.Right -> 0.dp
-                            MyExpandableTitle.IconPlacement.Left,
-                            MyExpandableTitle.IconPlacement.Hide -> 8.dp
-                        },
-                    ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (iconPlacement == MyExpandableTitle.IconPlacement.Left) {
-                    Icon(rotation, color)
-                }
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = text,
-                    //style = MaterialTheme.typography.titleSmall,
-                    //fontWeight = FontWeight.Bold,
-                    color = color
-                )
-                if (info != null) {
-                    info()
-                }
-                if (iconPlacement == MyExpandableTitle.IconPlacement.Right) {
-                    Icon(rotation, color)
-                }
-            }
-        }
-        AnimatedVisibility(visible = expanded) {
-            Column(
-                modifier = Modifier.padding(
-                    start = 8.dp,
-                    bottom = 8.dp,
-                    top = 0.dp,
-                    end = 8.dp
-                )
-            ) {
-                content()
-            }
-        }
+    OutlinedCard {
+        MyExpandableTitle(text, expanded, info, onToggle, modifier, color, iconPlacement, content)
     }
 }
 
