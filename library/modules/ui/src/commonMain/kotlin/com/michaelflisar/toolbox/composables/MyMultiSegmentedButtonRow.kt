@@ -129,18 +129,10 @@ private fun MyMultiSegmentedButtonRowImpl(
     showSelectionInfo: Boolean,
     onSelectionChange: (indices: List<Int>, items: List<String>) -> Unit
 ) {
-    val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()
-        ?: MaterialTheme.colorScheme.onSurface.disabled()
-
     val colorSelected =
         color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.primary
-    val colorSelectedText = MaterialTheme.colorScheme.contentColorFor(colorSelected)
-
-    val colorNotSelected = Color.Unspecified
-    val colorNotSelectedText = Color.Unspecified
 
     val selectedItems = selected.map { items[it] }
-    val empty = remember(selectedItems) { derivedStateOf { selectedItems.isEmpty() } }
 
     Column(
         modifier = modifier

@@ -229,8 +229,10 @@ private fun ContentPage1() {
             onCheckedChange = {})
         MyCheckbox(
             modifier = Modifier.fillMaxWidth(),
-            title = "Checkbox2 with longer title",
-            info = "Some info",
+            title = {
+                Text("Checkbox2 with longer title")
+                Text("Some info", style = MaterialTheme.typography.bodySmall)
+            },
             checked = true,
             onCheckedChange = {})
 

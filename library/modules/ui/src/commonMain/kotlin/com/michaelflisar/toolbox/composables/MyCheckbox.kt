@@ -13,16 +13,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.disabled
 
@@ -31,16 +32,43 @@ fun MyCheckbox(
     modifier: Modifier = Modifier,
     title: String,
     checked: MutableState<Boolean>,
-    info: String = "",
     maxLines: Int = 1,
-    maxLinesInfo: Int = Int.MAX_VALUE,
     color: Color = Color.Unspecified,
     colorUnselected: Color = Color.Unspecified,
     style: TextStyle = MaterialTheme.typography.titleSmall,
-    infoStyle: TextStyle = MaterialTheme.typography.bodySmall,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
-    MyCheckbox(modifier, title, checked.value, info, maxLines, maxLinesInfo, color, colorUnselected, style, infoStyle) {
+    MyCheckbox(
+        modifier,
+        { Text(title, maxLines = maxLines) },
+        checked.value,
+        color,
+        colorUnselected,
+        style
+    ) {
+        checked.value = it
+        onCheckedChange(it)
+    }
+}
+
+@Composable
+fun MyCheckbox(
+    modifier: Modifier = Modifier,
+    title: @Composable () -> Unit,
+    checked: MutableState<Boolean>,
+    color: Color = Color.Unspecified,
+    colorUnselected: Color = Color.Unspecified,
+    style: TextStyle = MaterialTheme.typography.titleSmall,
+    onCheckedChange: (Boolean) -> Unit = {}
+) {
+    MyCheckbox(
+        modifier,
+        title,
+        checked.value,
+        color,
+        colorUnselected,
+        style
+    ) {
         checked.value = it
         onCheckedChange(it)
     }
@@ -51,13 +79,31 @@ fun MyCheckbox(
     modifier: Modifier = Modifier,
     title: String,
     checked: Boolean,
-    info: String = "",
     maxLines: Int = 1,
-    maxLinesInfo: Int = Int.MAX_VALUE,
     color: Color = Color.Unspecified,
     colorUnselected: Color = Color.Unspecified,
     style: TextStyle = MaterialTheme.typography.titleSmall,
-    infoStyle: TextStyle = MaterialTheme.typography.bodySmall,
+    onCheckedChange: ((Boolean) -> Unit)? = null
+) {
+    MyCheckbox(
+        modifier,
+        { Text(title, maxLines = maxLines) },
+        checked,
+        color,
+        colorUnselected,
+        style,
+        onCheckedChange
+    )
+}
+
+@Composable
+fun MyCheckbox(
+    modifier: Modifier = Modifier,
+    title: @Composable () -> Unit,
+    checked: Boolean,
+    color: Color = Color.Unspecified,
+    colorUnselected: Color = Color.Unspecified,
+    style: TextStyle = MaterialTheme.typography.titleSmall,
     onCheckedChange: ((Boolean) -> Unit)? = null
 ) {
     Row(
@@ -74,19 +120,8 @@ fun MyCheckbox(
         Column(
             modifier = Modifier.wrapContentWidth()
         ) {
-            if (title.isNotEmpty()) {
-                Text(
-                    text = title,
-                    style = style,
-                    maxLines = maxLines
-                )
-            }
-            if (info.isNotEmpty()) {
-                Text(
-                    text = info,
-                    style = infoStyle,
-                    maxLines = maxLinesInfo
-                )
+            CompositionLocalProvider(LocalTextStyle provides style) {
+                title()
             }
         }
         Spacer(Modifier.weight(1f))
