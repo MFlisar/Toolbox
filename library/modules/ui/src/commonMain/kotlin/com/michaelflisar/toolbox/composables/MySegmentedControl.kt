@@ -29,6 +29,7 @@ fun <T> MySegmentedControl(
     modifier: Modifier = Modifier,
     items: List<T & Any>,
     selected: MutableState<T>,
+    forceSelection: Boolean = true,
     mapper: (item: T & Any) -> String = { it.toString() },
     minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
@@ -36,7 +37,7 @@ fun <T> MySegmentedControl(
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected.value)
-    MySegmentedControlImpl(modifier, texts, selectedIndex, minSegmentWidth, color) { index, item ->
+    MySegmentedControlImpl(modifier, texts, selectedIndex, forceSelection, minSegmentWidth, color) { index, item ->
         val s = (if (index >= 0) items[index] else null) as T
         selected.value = s
         onSelectionChanged?.invoke(s)
@@ -48,6 +49,7 @@ fun <T> MySegmentedControl(
     modifier: Modifier = Modifier,
     items: List<T & Any>,
     selected: T,
+    forceSelection: Boolean = true,
     mapper: (item: T & Any) -> String = { it.toString() },
     minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
@@ -55,7 +57,7 @@ fun <T> MySegmentedControl(
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected)
-    MySegmentedControlImpl(modifier, texts, selectedIndex, minSegmentWidth, color) { index, item ->
+    MySegmentedControlImpl(modifier, texts, selectedIndex, forceSelection, minSegmentWidth, color) { index, item ->
         onSelectionChanged?.invoke(items[index])
     }
 }
@@ -66,12 +68,13 @@ fun MySegmentedControl(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: MutableState<Int>,
+    forceSelection: Boolean = true,
     minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
     onSelectionChanged: ((Int) -> Unit)? = null
 ) {
     val selectedIndex = selected.value
-    MySegmentedControlImpl(modifier, items, selectedIndex, minSegmentWidth, color) { index, item ->
+    MySegmentedControlImpl(modifier, items, selectedIndex, forceSelection, minSegmentWidth, color) { index, item ->
         selected.value = index
         onSelectionChanged?.invoke(index)
     }
@@ -82,11 +85,12 @@ fun MySegmentedControl(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: Int,
+    forceSelection: Boolean = true,
     minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
     onSelectionChanged: ((Int) -> Unit)? = null
 ) {
-    MySegmentedControlImpl(modifier, items, selected, minSegmentWidth, color) { index, item ->
+    MySegmentedControlImpl(modifier, items, selected, forceSelection, minSegmentWidth, color) { index, item ->
         onSelectionChanged?.invoke(index)
     }
 }
@@ -97,6 +101,7 @@ private fun MySegmentedControlImpl(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: Int,
+    forceSelection: Boolean,
     minSegmentWidth: Dp,
     color: Color,
     onSelectionChange: (index: Int, item: String?) -> Unit
@@ -127,9 +132,11 @@ private fun MySegmentedControlImpl(
                         .border(1.dp, borderColor, MaterialTheme.shapes.small)
                         .background(if (selected == index) colorSelected else colorNotSelected)
                         .clickable {
-                            if (selected == index)
-                                onSelectionChange(-1, null)
-                            else
+                            if (selected == index) {
+                                if (!forceSelection) {
+                                    onSelectionChange(-1, null)
+                                }
+                            } else
                                 onSelectionChange(index, item)
                         }
                         .widthIn(min = minSegmentWidth)
