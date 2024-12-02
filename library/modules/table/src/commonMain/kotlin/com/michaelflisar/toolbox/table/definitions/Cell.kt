@@ -50,6 +50,21 @@ sealed class Cell<CellValue> {
         }
     }
 
+    class Custom<T>(
+        override val value: T,
+        val valueToText: (T) -> String,
+        val cell: @Composable (modifier: Modifier) -> Unit,
+        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
+    ) : Cell<T>() {
+
+        override fun sort() = valueToText(value)
+
+        @Composable
+        override fun render(modifier: Modifier) {
+            cell(modifier)
+        }
+    }
+
     class Data<T>(
         override val value: T,
         val valueToText: (T) -> String,
