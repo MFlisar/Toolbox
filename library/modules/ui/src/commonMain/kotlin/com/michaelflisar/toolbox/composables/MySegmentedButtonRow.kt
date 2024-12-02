@@ -16,6 +16,7 @@ fun <T> MySegmentedButtonRow(
     modifier: Modifier = Modifier,
     items: List<T & Any>,
     selected: MutableState<T>,
+    forceSelection: Boolean = true,
     mapper: (item: T & Any) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
@@ -23,7 +24,14 @@ fun <T> MySegmentedButtonRow(
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected.value)
-    MySegmentedButtonRowImpl(modifier, texts, selectedIndex, color, onColor) { index, item ->
+    MySegmentedButtonRowImpl(
+        modifier,
+        texts,
+        selectedIndex,
+        forceSelection,
+        color,
+        onColor
+    ) { index, item ->
         val s = (if (index >= 0) items[index] else null) as T
         selected.value = s
         onSelectionChanged?.invoke(s)
@@ -35,6 +43,7 @@ fun <T> MySegmentedButtonRow(
     modifier: Modifier = Modifier,
     items: List<T & Any>,
     selected: T,
+    forceSelection: Boolean = true,
     mapper: (item: T & Any) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
@@ -42,7 +51,14 @@ fun <T> MySegmentedButtonRow(
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected)
-    MySegmentedButtonRowImpl(modifier, texts, selectedIndex, color, onColor) { index, item ->
+    MySegmentedButtonRowImpl(
+        modifier,
+        texts,
+        selectedIndex,
+        forceSelection,
+        color,
+        onColor
+    ) { index, item ->
         onSelectionChanged?.invoke(items[index])
     }
 }
@@ -53,12 +69,20 @@ fun MySegmentedButtonRow(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: MutableState<Int>,
+    forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     onSelectionChanged: ((Int) -> Unit)? = null
 ) {
     val selectedIndex = selected.value
-    MySegmentedButtonRowImpl(modifier, items, selectedIndex, color, onColor) { index, item ->
+    MySegmentedButtonRowImpl(
+        modifier,
+        items,
+        selectedIndex,
+        forceSelection,
+        color,
+        onColor
+    ) { index, item ->
         selected.value = index
         onSelectionChanged?.invoke(index)
     }
@@ -69,11 +93,19 @@ fun MySegmentedButtonRow(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: Int,
+    forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     onSelectionChanged: ((Int) -> Unit)? = null
 ) {
-    MySegmentedButtonRowImpl(modifier, items, selected, color, onColor) { index, item ->
+    MySegmentedButtonRowImpl(
+        modifier,
+        items,
+        selected,
+        forceSelection,
+        color,
+        onColor
+    ) { index, item ->
         onSelectionChanged?.invoke(index)
     }
 }
@@ -83,6 +115,7 @@ private fun MySegmentedButtonRowImpl(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: Int,
+    forceSelection: Boolean,
     color: Color,
     onColor: Color,
     onSelectionChange: (index: Int, item: String?) -> Unit
@@ -108,9 +141,11 @@ private fun MySegmentedButtonRowImpl(
                 ),
                 shape = SegmentedButtonDefaults.itemShape(index = index, count = items.size),
                 onClick = {
-                    if (selected == index)
-                        onSelectionChange(-1, null)
-                    else
+                    if (selected == index) {
+                        if (!forceSelection) {
+                            onSelectionChange(-1, null)
+                        }
+                    } else
                         onSelectionChange(index, item)
                 },
                 selected = index == selected
