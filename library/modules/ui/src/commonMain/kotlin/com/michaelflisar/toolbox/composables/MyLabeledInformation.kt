@@ -37,6 +37,22 @@ fun MyLabeledInformation(
 }
 
 @Composable
+fun MyLabeledInformation(
+    label: String,
+    backgroundColor: Color = Color.Unspecified,
+    backgroundShape: Shape? = null,
+    modifier: Modifier = Modifier,
+    info: @Composable (modifier: Modifier) -> Unit
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+    ) {
+        Content(label, null, null, backgroundColor, backgroundShape, info)
+    }
+}
+
+@Composable
 fun MyLabeledInformationHorizontal(
     label: String,
     info: String,
@@ -57,6 +73,25 @@ fun MyLabeledInformationHorizontal(
 }
 
 @Composable
+fun MyLabeledInformationHorizontal(
+    label: String,
+    labelWidth: Dp? = null,
+    infoWidth: Dp? = null,
+    backgroundColor: Color = Color.Unspecified,
+    backgroundShape: Shape? = null,
+    modifier: Modifier = Modifier,
+    info: @Composable (modifier: Modifier) -> Unit
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Content(label, labelWidth, infoWidth, backgroundColor, backgroundShape, info)
+    }
+}
+
+@Composable
 private fun Content(
     label: String,
     info: String,
@@ -65,6 +100,26 @@ private fun Content(
     color: Color,
     backgroundColor: Color,
     backgroundShape: Shape?,
+) {
+    Content(label, labelWidth, infoWidth, backgroundColor, backgroundShape) {
+        Text(
+            modifier = it,
+            text = info,
+            style = MaterialTheme.typography.bodyMedium,
+            color = color,
+            //textAlign = TextAlign.End
+        )
+    }
+}
+
+@Composable
+private fun Content(
+    label: String,
+    labelWidth: Dp?,
+    infoWidth: Dp?,
+    backgroundColor: Color,
+    backgroundShape: Shape?,
+    info: @Composable (modifier: Modifier) -> Unit
 ) {
     val mod = Modifier.then(
         if (labelWidth != null) {
@@ -87,11 +142,5 @@ private fun Content(
             Modifier.width(infoWidth)
         } else Modifier
     )
-    Text(
-        modifier = mod2,
-        text = info,
-        style = MaterialTheme.typography.bodyMedium,
-        color = color,
-        //textAlign = TextAlign.End
-    )
+    info(mod2)
 }
