@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -221,6 +222,33 @@ private fun MyMultiDropdownImpl(
                 expanded = false
             }
         ) {
+            MyRow(
+                modifier = Modifier.align(Alignment.End)
+            ) {
+                MyTooltipBox(
+                    tooltip = "Select All",
+                    enabled = selectedItems.size != items.size
+                ) {
+                    MyIconButton(
+                        icon = Icons.Default.SelectAll,
+                        enabled = selectedItems.size != items.size
+                    ) {
+                        onSelectionChange(List(items.size) { index -> index }, items)
+                    }
+                }
+                MyTooltipBox(
+                    tooltip = "Clear Selection",
+                    enabled = selectedItems.isNotEmpty()
+                ) {
+                    MyIconButton(
+                        icon = Icons.Default.Clear,
+                        enabled = selectedItems.isNotEmpty()
+                    ) {
+                        onSelectionChange(emptyList(), emptyList())
+                    }
+                }
+            }
+            /*
             Button(
                 modifier = Modifier
                     .padding(ToolboxDefaults.ITEM_SPACING)
@@ -240,7 +268,7 @@ private fun MyMultiDropdownImpl(
                     text = "Clear Selection",
                     modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
                 )
-            }
+            }*/
             items.forEachIndexed { index, item ->
                 DropdownMenuItem(
                     modifier = Modifier

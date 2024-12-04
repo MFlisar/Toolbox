@@ -15,9 +15,10 @@ import androidx.compose.ui.Modifier
 fun MyTooltipBox(
     tooltip: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    if (tooltip.isNotEmpty()) {
+    if (enabled && tooltip.isNotEmpty()) {
         TooltipBox(
             modifier = modifier,
             positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
@@ -43,18 +44,25 @@ fun MyTooltipBox(
 fun MyTooltipBox(
     tooltip: @Composable () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    TooltipBox(
-        modifier = modifier,
-        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
-        tooltip = {
-            PlainTooltip {
-                tooltip()
-            }
-        },
-        state = rememberTooltipState()
-    ) {
-        content()
+    if (enabled) {
+        TooltipBox(
+            modifier = modifier,
+            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+            tooltip = {
+                PlainTooltip {
+                    tooltip()
+                }
+            },
+            state = rememberTooltipState()
+        ) {
+            content()
+        }
+    } else {
+        Box(modifier = modifier) {
+            content()
+        }
     }
 }
