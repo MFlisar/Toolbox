@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 fun MyTextButton(
     text: String,
     modifier: Modifier = Modifier,
-    iconTint: Color? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     enabled: Boolean = true,
     onClick: () -> Unit
