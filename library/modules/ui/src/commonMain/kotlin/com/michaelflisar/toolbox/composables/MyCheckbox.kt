@@ -35,7 +35,7 @@ fun MyCheckbox(
     maxLines: Int = 1,
     color: Color = Color.Unspecified,
     colorUnselected: Color = Color.Unspecified,
-    style: TextStyle = MaterialTheme.typography.titleSmall,
+    style: TextStyle = LocalTextStyle.current,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
     MyCheckbox(
@@ -58,7 +58,7 @@ fun MyCheckbox(
     checked: MutableState<Boolean>,
     color: Color = Color.Unspecified,
     colorUnselected: Color = Color.Unspecified,
-    style: TextStyle = MaterialTheme.typography.titleSmall,
+    style: TextStyle = LocalTextStyle.current,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
     MyCheckbox(
@@ -82,7 +82,7 @@ fun MyCheckbox(
     maxLines: Int = 1,
     color: Color = Color.Unspecified,
     colorUnselected: Color = Color.Unspecified,
-    style: TextStyle = MaterialTheme.typography.titleSmall,
+    style: TextStyle = LocalTextStyle.current,
     onCheckedChange: ((Boolean) -> Unit)? = null
 ) {
     MyCheckbox(
@@ -103,7 +103,7 @@ fun MyCheckbox(
     checked: Boolean,
     color: Color = Color.Unspecified,
     colorUnselected: Color = Color.Unspecified,
-    style: TextStyle = MaterialTheme.typography.titleSmall,
+    style: TextStyle = LocalTextStyle.current,
     onCheckedChange: ((Boolean) -> Unit)? = null
 ) {
     Row(
