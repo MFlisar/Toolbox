@@ -4,8 +4,8 @@ material =                      "1.12.0"
 
 # mflisar
 lumberjack =                    "7.1.1"
-kotpreferences =                "0.7.0"
-composethemer =                 "0.4.0"
+kotpreferences =                "0.7.1"
+composethemer =                 "0.4.1"
 composecolors =                 "1.0.1"
 
 # aurora

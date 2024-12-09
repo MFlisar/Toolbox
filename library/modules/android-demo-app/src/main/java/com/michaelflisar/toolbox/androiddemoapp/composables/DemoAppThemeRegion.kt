@@ -1,11 +1,13 @@
 package com.michaelflisar.toolbox.androiddemoapp.composables
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -13,15 +15,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.FormatPaint
-import androidx.compose.material.icons.filled.Style
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -31,6 +34,10 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.androiddemoapp.classes.DemoPrefs
+import com.michaelflisar.toolbox.composables.MyCheckbox
+import com.michaelflisar.toolbox.composables.MyColumn
+import com.michaelflisar.toolbox.composables.MySwitch
+import com.michaelflisar.toolbox.composables.MyThemeSwitcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -52,54 +59,59 @@ fun DemoAppThemeRegion(
         regionId = regionId,
         state = state
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Icon(Icons.Default.ColorLens, null)
-            Text("Base Theme", modifier = Modifier.weight(1f))
-            DemoSegmentedButtons(
-                modifier = Modifier.weight(2f),
-                items = ComposeTheme.BaseTheme.entries,
-                itemToText = { it.name },
-                initialSelectedIndex = ComposeTheme.BaseTheme.entries.indexOf(baseTheme)
-            ) { _, item ->
+        MyColumn {
+            MyThemeSwitcher(
+                modifier = Modifier.fillMaxWidth(),
+                dark = ComposeTheme.BaseTheme.Dark,
+                light = ComposeTheme.BaseTheme.Light,
+                system = ComposeTheme.BaseTheme.System,
+                mapper = { it.name },
+                selected = baseTheme
+            ) { item ->
                 scope.launch(Dispatchers.IO) {
                     DemoPrefs.baseTheme.update(item)
                 }
             }
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Icon(Icons.Default.Style, null)
-            Text("Color Scheme", modifier = Modifier.weight(1f))
-            DemoDropdown(
-                modifier = Modifier.weight(2f),
-                items = ComposeTheme.getRegisteredThemes().map { it.key },
-                selected = themeKey
-            ) { _, item ->
-                scope.launch(Dispatchers.IO) {
-                    DemoPrefs.themeKey.update(item)
+            val themes by remember {
+                derivedStateOf {
+                    ComposeTheme.getRegisteredThemes().sortedBy { it.key.lowercase() }
                 }
             }
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Icon(Icons.Default.FormatPaint, null)
-            Text("Dynamic Theme", modifier = Modifier.weight(1f))
-            DemoSegmentedButtons(
-                modifier = Modifier.weight(2f),
-                items = listOf("Yes", "No"),
-                initialSelectedIndex = if (dynamic) 0 else 1
-            ) {
-                scope.launch(Dispatchers.IO) {
-                    DemoPrefs.dynamic.update(it == 0)
-                }
+            AnimatedVisibility(visible = dynamic) {
+                Text("The color scheme is derived from the wallpaper if dynamic theme is enabled!")
             }
+            AnimatedVisibility(visible = !dynamic) {
+                DemoDropdown(
+                    label = "Color Scheme",
+                    modifier = Modifier.fillMaxWidth(),
+                    items = themes,
+                    selected = themes.find { it.key == themeKey }!!,
+                    itemToString = { item, dropdown -> item.key },
+                    leadingIcon = { item, dropdown ->
+                        Box(
+                            modifier = Modifier
+                                .size(16.dp)
+                                .clip(CircleShape)
+                                .background(if (baseTheme.isDark()) item.colorSchemeDark.primary else item.colorSchemeLight.primary)
+                        )
+                    },
+                    onItemSelected = { index, item ->
+                        scope.launch(Dispatchers.IO) {
+                            DemoPrefs.themeKey.update(item.key)
+                        }
+                    }
+                )
+            }
+            MySwitch(
+                modifier = Modifier.fillMaxWidth(),
+                title = "Dynamic Theme",
+                checked = dynamic,
+                onCheckedChange = {
+                    scope.launch(Dispatchers.IO) {
+                        DemoPrefs.dynamic.update(it)
+                    }
+                }
+            )
         }
     }
 }

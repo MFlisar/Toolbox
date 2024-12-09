@@ -70,11 +70,6 @@ kotlin {
             implementation(libs.compose.material.icons.extended)
 
             // Dependencies
-            api(deps.lumberjack.core)
-            implementation(deps.lumberjack.implementation.lumberjack)
-            implementation(deps.lumberjack.logger.console)
-            implementation(deps.lumberjack.logger.file)
-            implementation(deps.lumberjack.composeviewer)
             api(deps.kotpreferences.core)
             implementation(deps.kotpreferences.datastore)
             api(deps.kotpreferences.compose)

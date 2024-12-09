@@ -5,6 +5,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +21,7 @@ actual fun MyScrollableColumn(
 ) {
     Column(
         modifier = modifier
-            .horizontalScroll(scrollState),
+            .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(itemSpacing),
         horizontalAlignment = horizontalAlignment
     ) {

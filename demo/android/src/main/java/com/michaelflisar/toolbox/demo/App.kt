@@ -1,5 +1,5 @@
 package com.michaelflisar.toolbox.demo
 
-import android.app.Application
+import com.michaelflisar.toolbox.androiddemoapp.DemoApp
 
-class App : Application()
+class App : DemoApp()

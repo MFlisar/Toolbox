@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 fun <T> MySegmentedButtonRow(
     modifier: Modifier = Modifier,
     items: List<T & Any>,
+    icons: List<@Composable () -> Unit>? = null,
     selected: MutableState<T>,
     forceSelection: Boolean = true,
     mapper: (item: T & Any) -> String = { it.toString() },
@@ -27,6 +28,7 @@ fun <T> MySegmentedButtonRow(
     MySegmentedButtonRowImpl(
         modifier,
         texts,
+        icons,
         selectedIndex,
         forceSelection,
         color,
@@ -42,6 +44,7 @@ fun <T> MySegmentedButtonRow(
 fun <T> MySegmentedButtonRow(
     modifier: Modifier = Modifier,
     items: List<T & Any>,
+    icons: List<@Composable () -> Unit>? = null,
     selected: T,
     forceSelection: Boolean = true,
     mapper: (item: T & Any) -> String = { it.toString() },
@@ -54,6 +57,7 @@ fun <T> MySegmentedButtonRow(
     MySegmentedButtonRowImpl(
         modifier,
         texts,
+        icons,
         selectedIndex,
         forceSelection,
         color,
@@ -68,6 +72,7 @@ fun <T> MySegmentedButtonRow(
 fun MySegmentedButtonRow(
     modifier: Modifier = Modifier,
     items: List<String>,
+    icons: List<@Composable () -> Unit>? = null,
     selected: MutableState<Int>,
     forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
@@ -78,6 +83,7 @@ fun MySegmentedButtonRow(
     MySegmentedButtonRowImpl(
         modifier,
         items,
+        icons,
         selectedIndex,
         forceSelection,
         color,
@@ -92,6 +98,7 @@ fun MySegmentedButtonRow(
 fun MySegmentedButtonRow(
     modifier: Modifier = Modifier,
     items: List<String>,
+    icons: List<@Composable () -> Unit>?,
     selected: Int,
     forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
@@ -101,6 +108,7 @@ fun MySegmentedButtonRow(
     MySegmentedButtonRowImpl(
         modifier,
         items,
+        icons,
         selected,
         forceSelection,
         color,
@@ -114,6 +122,7 @@ fun MySegmentedButtonRow(
 private fun MySegmentedButtonRowImpl(
     modifier: Modifier = Modifier,
     items: List<String>,
+    icons: List<@Composable () -> Unit>?,
     selected: Int,
     forceSelection: Boolean,
     color: Color,
@@ -148,7 +157,15 @@ private fun MySegmentedButtonRowImpl(
                     } else
                         onSelectionChange(index, item)
                 },
-                selected = index == selected
+                selected = index == selected,
+                icon = {
+                        SegmentedButtonDefaults.Icon(
+                            active = index == selected,
+                            inactiveContent = icons?.get(index)?.let {
+                                { it() }
+                            }
+                        )
+                   },
             ) {
                 Text(item)
             }

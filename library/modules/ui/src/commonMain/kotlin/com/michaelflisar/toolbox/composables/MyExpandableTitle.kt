@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.composables
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,8 +47,9 @@ fun MyExpandableTitle(
     info: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
+    background: Color = Color.Unspecified,
     iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable () -> Unit
 ) {
     MyExpandableTitle(
         title,
@@ -56,6 +58,7 @@ fun MyExpandableTitle(
         { expanded.value = !expanded.value },
         modifier,
         color,
+        background,
         iconPlacement,
         content
     )
@@ -63,14 +66,15 @@ fun MyExpandableTitle(
 
 @Composable
 fun MyExpandableTitle(
-    text: String,
+    title: String,
     expanded: Boolean,
     info: (@Composable () -> Unit)? = null,
     onToggle: () -> Unit,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
+    background: Color = Color.Unspecified,
     iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable () -> Unit
 ) {
     val rotation by animateFloatAsState(if (expanded) (if (iconPlacement == MyExpandableTitle.IconPlacement.Left) -180f else 180f) else 0f)
     Column(
@@ -84,6 +88,7 @@ fun MyExpandableTitle(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(MaterialTheme.shapes.small)
+                    .then(if (background != Color.Unspecified) Modifier.background(background) else Modifier)
                     .clickable {
                         onToggle()
                     }
@@ -95,11 +100,7 @@ fun MyExpandableTitle(
                         },
                         bottom = 8.dp,
                         top = 8.dp,
-                        end = when (iconPlacement) {
-                            MyExpandableTitle.IconPlacement.Right -> 0.dp
-                            MyExpandableTitle.IconPlacement.Left,
-                            MyExpandableTitle.IconPlacement.Hide -> 8.dp
-                        },
+                        end = 8.dp
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -109,7 +110,7 @@ fun MyExpandableTitle(
 
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = text,
+                    text = title,
                     //style = MaterialTheme.typography.titleSmall,
                     //fontWeight = FontWeight.Bold,
                     color = color
@@ -123,9 +124,7 @@ fun MyExpandableTitle(
             }
         }
         AnimatedVisibility(visible = expanded) {
-            Column {
-                content()
-            }
+            content()
         }
     }
 }
@@ -137,8 +136,9 @@ fun MyExpandableOutlinedTitle(
     info: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
+    background: Color = Color.Unspecified,
     iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable () -> Unit
 ) {
     MyExpandableOutlinedTitle(
         title,
@@ -147,6 +147,7 @@ fun MyExpandableOutlinedTitle(
         { expanded.value = !expanded.value },
         modifier,
         color,
+        background,
         iconPlacement,
         content
     )
@@ -160,11 +161,12 @@ fun MyExpandableOutlinedTitle(
     onToggle: () -> Unit,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
+    background: Color = Color.Unspecified,
     iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable () -> Unit
 ) {
     OutlinedCard {
-        MyExpandableTitle(text, expanded, info, onToggle, modifier, color, iconPlacement, content)
+        MyExpandableTitle(text, expanded, info, onToggle, modifier, color, background, iconPlacement, content)
     }
 }
 
