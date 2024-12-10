@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.androiddemoapp.composables
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -66,8 +67,10 @@ fun DemoCollapsibleRegion(
             state.toggle(regionId)
         }
     ) {
-        Info(info)
-        content()
+        Column {
+            Info(info)
+            content()
+        }
     }
 }
 
