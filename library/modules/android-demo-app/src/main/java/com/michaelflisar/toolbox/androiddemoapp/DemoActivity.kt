@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -27,6 +28,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -41,9 +43,15 @@ data class DemoData(val snackbarHostState: SnackbarHostState) {
         actionLabel: String? = null,
         withDismissAction: Boolean = false,
         duration: SnackbarDuration =
-            if (actionLabel == null) SnackbarDuration.Short else SnackbarDuration.Indefinite
-    ): SnackbarResult =
-        snackbarHostState.showSnackbar(message, actionLabel, withDismissAction, duration)
+            if (actionLabel == null) SnackbarDuration.Short else SnackbarDuration.Indefinite,
+        dismissPrevious: Boolean = false
+    ): SnackbarResult {
+        if (dismissPrevious) {
+            snackbarHostState.currentSnackbarData?.dismiss()
+        }
+        return snackbarHostState.showSnackbar(message, actionLabel, withDismissAction, duration)
+    }
+
 }
 
 val LocalDemo = staticCompositionLocalOf { DemoData(SnackbarHostState()) }
@@ -87,7 +95,6 @@ abstract class DemoActivity(
 
                 CompositionLocalProvider(LocalDemo provides demoData) {
                     Scaffold(
-                        modifier = if (bottomBar == null) Modifier.navigationBarsPadding() else Modifier,
                         snackbarHost = { SnackbarHost(snackbarHostState) },
                         topBar = {
                             TopAppBar(
@@ -107,15 +114,16 @@ abstract class DemoActivity(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     // consume insets as scaffold doesn't do it by default
+                                    .padding(padding)
                                     .consumeWindowInsets(padding)
+                                    .then(if (bottomBar == null) Modifier.navigationBarsPadding() else Modifier)
                                     .then(
                                         if (scrollableContent) Modifier.verticalScroll(
                                             rememberScrollState()
                                         ) else Modifier
                                     )
-                                    .padding(padding)
                                     .padding(contentPadding),
-                                state
+                                state = state
                             )
                         }
                     )
