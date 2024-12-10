@@ -8,16 +8,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
@@ -26,6 +34,19 @@ import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.androiddemoapp.classes.DemoPrefs
+
+data class DemoData(val snackbarHostState: SnackbarHostState) {
+    suspend fun showSnackbar(
+        message: String,
+        actionLabel: String? = null,
+        withDismissAction: Boolean = false,
+        duration: SnackbarDuration =
+            if (actionLabel == null) SnackbarDuration.Short else SnackbarDuration.Indefinite
+    ): SnackbarResult =
+        snackbarHostState.showSnackbar(message, actionLabel, withDismissAction, duration)
+}
+
+val LocalDemo = staticCompositionLocalOf { DemoData(SnackbarHostState()) }
 
 abstract class DemoActivity(
     private val scrollableContent: Boolean = true,
@@ -38,6 +59,11 @@ abstract class DemoActivity(
         themeState: ComposeTheme.State
     )
 
+    @Composable
+    open fun createBottomBar(): (@Composable () -> Unit)? {
+        return null
+    }
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,40 +75,51 @@ abstract class DemoActivity(
             val theme = DemoPrefs.themeKey.collectAsStateNotNull()
             val state = ComposeTheme.State(baseTheme, dynamic, theme)
 
+
+
             ComposeTheme(state = state) {
 
                 UpdateEdgeToEdgeDefault(this, state)
 
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            title = {
-                                Text(text = stringResource(R.string.app_name))
-                            },
-                            colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = MaterialTheme.colorScheme.primary,
-                                titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                                actionIconContentColor = MaterialTheme.colorScheme.onPrimary
-                            )
-                        )
-                    },
-                    content = { padding ->
-                        Content(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                // consume insets as scaffold doesn't do it by default
-                                .consumeWindowInsets(padding)
-                                .then(
-                                    if (scrollableContent) Modifier.verticalScroll(
-                                        rememberScrollState()
-                                    ) else Modifier
+                val bottomBar = createBottomBar()
+                val demoData = DemoData(SnackbarHostState())
+                val snackbarHostState = remember { demoData.snackbarHostState }
+
+                CompositionLocalProvider(LocalDemo provides demoData) {
+                    Scaffold(
+                        modifier = if (bottomBar == null) Modifier.navigationBarsPadding() else Modifier,
+                        snackbarHost = { SnackbarHost(snackbarHostState) },
+                        topBar = {
+                            TopAppBar(
+                                title = {
+                                    Text(text = stringResource(R.string.app_name))
+                                },
+                                colors = TopAppBarDefaults.topAppBarColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary
                                 )
-                                .padding(padding)
-                                .padding(contentPadding),
-                            state
-                        )
-                    }
-                )
+                            )
+                        },
+                        bottomBar = { bottomBar?.invoke() },
+                        content = { padding ->
+                            Content(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    // consume insets as scaffold doesn't do it by default
+                                    .consumeWindowInsets(padding)
+                                    .then(
+                                        if (scrollableContent) Modifier.verticalScroll(
+                                            rememberScrollState()
+                                        ) else Modifier
+                                    )
+                                    .padding(padding)
+                                    .padding(contentPadding),
+                                state
+                            )
+                        }
+                    )
+                }
             }
         }
     }
