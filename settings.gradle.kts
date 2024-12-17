@@ -6,6 +6,9 @@ dependencyResolutionManagement {
         gradlePluginPortal()
         maven("https://jitpack.io")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
+        // jewel
+        maven("https://packages.jetbrains.team/maven/p/kpm/public/")
+        maven("https://www.jetbrains.com/intellij-repository/releases")
     }
 
     versionCatalogs {
@@ -35,23 +38,23 @@ pluginManagement {
 }
 
 // --------------
-// Library
+// Functions
 // --------------
 
-include(":Toolbox:Core")
-project(":Toolbox:Core").projectDir = file("library/core")
+fun includeModule(path: String, name: String) {
+    include(name)
+    project(name).projectDir = file(path)
+}
 
-include(":Toolbox:Modules:UI")
-project(":Toolbox:Modules:UI").projectDir = file("library/modules/ui")
+// --------------
+// Modules
+// --------------
 
-include(":Toolbox:Modules:Table")
-project(":Toolbox:Modules:Table").projectDir = file("library/modules/table")
-
-include(":Toolbox:Modules:AndroidDemoApp")
-project(":Toolbox:Modules:AndroidDemoApp").projectDir = file("library/modules/android-demo-app")
-
-include(":Toolbox:Modules:WindowsApp")
-project(":Toolbox:Modules:WindowsApp").projectDir = file("library/modules/windows-app")
+includeModule("library\\core",                      ":Toolbox:Core")
+includeModule("library\\modules\\table",            ":Toolbox:Modules:Table")
+includeModule("library\\modules\\ui",               ":Toolbox:Modules:Ui")
+includeModule("library\\modules\\windows",          ":Toolbox:Modules:Windows")
+includeModule("library\\modules\\android-demo-app", ":Toolbox:Modules:AndroidDemoApp")
 
 // --------------
 // App

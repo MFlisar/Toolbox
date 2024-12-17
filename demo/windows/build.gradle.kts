@@ -13,18 +13,25 @@ kotlin {
     }
 
     sourceSets {
-        val jvmMain by getting {
-            dependencies {
 
-                implementation(compose.desktop.currentOs)
+        commonMain.dependencies {
+            implementation(compose.components.resources)
+        }
 
-                implementation(deps.composecolors.material)
+        jvmMain.dependencies {
 
-                implementation(project(":Toolbox:Modules:WindowsApp"))
+            implementation(compose.desktop.currentOs)
 
-            }
+            implementation(deps.composecolors.material)
+
+            implementation(project(":Toolbox:Modules:Windows"))
+
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "com.michaelflisar.toolbox.demo.resources"
 }
 
 compose.desktop {

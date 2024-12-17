@@ -26,14 +26,14 @@ import com.michaelflisar.toolbox.ui.MyScrollableLazyColumn
 
 @Composable
 fun <Item> Table(
-    modifier: Modifier,
     definition: TableDefinition<Item>,
-    rows: List<Row<Item>>,
-    keyProvider: (item: Item) -> Any,
+    items: List<Item>,
     setup: Setup<Item>,
+    modifier: Modifier = Modifier,
     onFilterChanged: (filtered: List<Row<Item>>) -> Unit = {},
     onSortingChanged: (sorts: List<Sort>) -> Unit = {}
 ) {
+    val rows = items.map { definition.createRow(it) }
     val filteredList by remember(
         rows,
         definition.columns.mapNotNull { it.filter }.map { it.state.value }.toList()
@@ -110,7 +110,7 @@ fun <Item> Table(
                 }
             }
             sortedList.forEachIndexed { index, item ->
-                item(key = keyProvider(item.item)) {
+                item(key = definition.keyProvider(item.item)) {
                     Row(item, index, definition.columns, definition.selectedRows, setup)
                 }
                 if (index <= sortedList.lastIndex) {

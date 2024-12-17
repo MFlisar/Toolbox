@@ -1,4 +1,3 @@
 package com.michaelflisar.toolbox
 
-object Toolbox {
-}
+object Toolbox

@@ -8,6 +8,7 @@ import com.michaelflisar.toolbox.table.data.Sort
 
 class TableDefinition<Item> internal constructor(
     val columns: List<Column<*, Item>>,
+    val keyProvider: (item: Item) -> Any,
     val sorts: SnapshotStateList<Sort>,
     val selectedRows: SnapshotStateList<Int>
 ) {
@@ -27,6 +28,7 @@ class TableDefinition<Item> internal constructor(
 @Composable
 fun <Item> rememberTableDefinition(
     columns: List<Column<*, Item>>,
+    keyProvider: (item: Item) -> Any,
     sorts: SnapshotStateList<Sort> = remember { mutableStateListOf() },
     selectedRows: SnapshotStateList<Int> = remember { mutableStateListOf() },
-): TableDefinition<Item> = TableDefinition<Item>(columns, sorts, selectedRows)
+): TableDefinition<Item> = TableDefinition(columns, keyProvider, sorts, selectedRows)

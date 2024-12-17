@@ -8,11 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.classes.LocalStyle
 
 @Composable
 expect fun MyScrollableRow(
     modifier: Modifier = Modifier,
-    itemSpacing: Dp = ToolboxDefaults.ITEM_SPACING,
+    itemSpacing: Dp = LocalStyle.current.spacingDefault,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     scrollState: ScrollState = rememberScrollState(),
     content: @Composable RowScope.() -> Unit

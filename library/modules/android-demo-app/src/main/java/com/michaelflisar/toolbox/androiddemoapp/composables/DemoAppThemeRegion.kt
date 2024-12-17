@@ -34,10 +34,10 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.androiddemoapp.classes.DemoPrefs
-import com.michaelflisar.toolbox.composables.MyCheckbox
-import com.michaelflisar.toolbox.composables.MyColumn
-import com.michaelflisar.toolbox.composables.MySwitch
-import com.michaelflisar.toolbox.composables.MyThemeSwitcher
+import com.michaelflisar.toolbox.components.MyCheckbox
+import com.michaelflisar.toolbox.components.MyColumn
+import com.michaelflisar.toolbox.components.MySwitch
+import com.michaelflisar.toolbox.components.MyThemeSwitcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

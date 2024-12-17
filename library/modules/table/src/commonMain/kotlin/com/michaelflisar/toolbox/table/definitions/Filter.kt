@@ -1,9 +1,7 @@
 package com.michaelflisar.toolbox.table.definitions
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,30 +12,25 @@ import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.ToolboxDefaults
-import com.michaelflisar.toolbox.composables.MyDropdown
-import com.michaelflisar.toolbox.composables.MyIconButton
-import com.michaelflisar.toolbox.composables.MyInput
-import com.michaelflisar.toolbox.composables.MyMultiDropdown
-import com.michaelflisar.toolbox.composables.MyNumericInput
-import com.michaelflisar.toolbox.composables.MySegmentedControl
-import com.michaelflisar.toolbox.composables.MyTooltipBox
+import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyIconButton
+import com.michaelflisar.toolbox.components.MyInput
+import com.michaelflisar.toolbox.components.MyMultiDropdown
+import com.michaelflisar.toolbox.components.MyNumericInput
+import com.michaelflisar.toolbox.components.MyRow
+import com.michaelflisar.toolbox.components.MySegmentedControl
+import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.disabled
 import kotlin.enums.EnumEntries
 
@@ -74,10 +67,7 @@ abstract class Filter<Item, CellValue> {
 
     @Composable
     fun render() {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        MyRow {
             Icon(Icons.Default.FilterAlt, null)
             Text(modifier = Modifier.weight(1f), text = "Filter", fontWeight = FontWeight.Bold)
             header()
@@ -118,7 +108,8 @@ abstract class Filter<Item, CellValue> {
                     FilterType.Smaller -> throw RuntimeException("Type not valid!")
                 }
             }
-        }
+        },
+        initial: String = ""
     ) : Filter<Item, CellValue>() {
 
         data class State(
@@ -127,7 +118,7 @@ abstract class Filter<Item, CellValue> {
             val type: FilterType = FilterType.Contains
         )
 
-        override val state = mutableStateOf(State())
+        override val state = mutableStateOf(State(initial))
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) =
             filter(cellValueToString(itemToValue(item)), state.value)
 
@@ -136,7 +127,6 @@ abstract class Filter<Item, CellValue> {
             state.value = state.value.copy(value = "")
         }
 
-        @OptIn(ExperimentalMaterial3Api::class)
         @Composable
         override fun RowScope.header() {
             MyDropdown(
@@ -247,13 +237,14 @@ abstract class Filter<Item, CellValue> {
                     FilterType.Contains -> value.toString().contains(filter.value.toString())
                     FilterType.ContainsNot -> !value.toString().contains(filter.value.toString())
                     FilterType.StartsWith -> value.toString().startsWith(filter.value.toString())
-                    FilterType.EndsWith ->  value.toString().endsWith(filter.value.toString())
+                    FilterType.EndsWith -> value.toString().endsWith(filter.value.toString())
 
                 }
 
                 valid
             }
-        }
+        },
+        initial: CellValue? = null
     ) : Filter<Item, CellValue>() where CellValue : kotlin.Number {
 
         data class State<CellValue>(
@@ -261,7 +252,7 @@ abstract class Filter<Item, CellValue> {
             val type: FilterType = FilterType.Contains
         )
 
-        override val state = mutableStateOf(State<CellValue>())
+        override val state = mutableStateOf(State<CellValue>(initial))
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) =
             filter(itemToValue(item), state.value)
 
@@ -308,10 +299,11 @@ abstract class Filter<Item, CellValue> {
             filter.isEmpty() || filter.contains(value)
         },
         val multiSelect: Boolean = false,
-        val labelAll: String = "ALL"
+        val labelAll: String = "ALL",
+        initial: kotlin.collections.List<CellValue> = emptyList()
     ) : Filter<Item, CellValue>() {
 
-        override val state = mutableStateOf(emptyList<CellValue>())
+        override val state = mutableStateOf(initial)
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) =
             filter(itemToValue(item), state.value)
 
@@ -354,10 +346,11 @@ abstract class Filter<Item, CellValue> {
             filter.isEmpty() || filter.contains(value)
         },
         val multiSelect: Boolean = false,
-        val labelAll: String = "ALL"
+        val labelAll: String = "ALL",
+        initial: kotlin.collections.List<CellValue> = emptyList()
     ) : Filter<Item, CellValue>() {
 
-        override val state = mutableStateOf(emptyList<CellValue>())
+        override val state = mutableStateOf(initial)
         override fun isValid(item: Item, itemToValue: (item: Item) -> CellValue) =
             filter(itemToValue(item), state.value)
 
@@ -396,9 +389,10 @@ abstract class Filter<Item, CellValue> {
     class Checkmark<Item>(
         val labelAll: String = "ALL",
         val labelChecked: String = "Checked",
-        val labelUnchecked: String = "Unchecked"
+        val labelUnchecked: String = "Unchecked",
+        initial: Boolean? = null
     ) : Filter<Item, Boolean>() {
-        override val state = mutableStateOf<Boolean?>(null)
+        override val state = mutableStateOf<Boolean?>(initial)
         override fun isValid(item: Item, itemToValue: (item: Item) -> Boolean) =
             state.value == null || state.value == itemToValue(item)
 

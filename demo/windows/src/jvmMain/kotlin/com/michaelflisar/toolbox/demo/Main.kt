@@ -1,167 +1,177 @@
 package com.michaelflisar.toolbox.demo
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.SwipeLeft
+import androidx.compose.material.icons.filled.TableView
+import androidx.compose.material.icons.filled.Window
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.WindowState
 import com.michaelflisar.composecolors.material.MaterialColor
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogContent
 import com.michaelflisar.toolbox.Toolbox
-import com.michaelflisar.toolbox.ToolboxDefaults
-import com.michaelflisar.toolbox.classes.Theme
-import com.michaelflisar.toolbox.composables.MyCheckbox
-import com.michaelflisar.toolbox.composables.MyChip
-import com.michaelflisar.toolbox.composables.MyDropdown
-import com.michaelflisar.toolbox.composables.MyExpandableOutlinedTitle
-import com.michaelflisar.toolbox.composables.MyExpandableTitle
-import com.michaelflisar.toolbox.composables.MyFlowRow
-import com.michaelflisar.toolbox.composables.MyMultiDropdown
-import com.michaelflisar.toolbox.composables.MyMultiSegmentedButtonRow
-import com.michaelflisar.toolbox.composables.MyMultiSegmentedControl
-import com.michaelflisar.toolbox.composables.MySegmentedButtonRow
-import com.michaelflisar.toolbox.composables.MySegmentedControl
+import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.components.MyCheckbox
+import com.michaelflisar.toolbox.components.MyChip
+import com.michaelflisar.toolbox.components.MyColumn
+import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyExpandableOutlinedTitle
+import com.michaelflisar.toolbox.components.MyExpandableTitle
+import com.michaelflisar.toolbox.components.MyFlowRow
+import com.michaelflisar.toolbox.components.MyMultiDropdown
+import com.michaelflisar.toolbox.components.MyMultiSegmentedButtonRow
+import com.michaelflisar.toolbox.components.MyMultiSegmentedControl
+import com.michaelflisar.toolbox.components.MySegmentedButtonRow
+import com.michaelflisar.toolbox.components.MySegmentedControl
+import com.michaelflisar.toolbox.demo.resources.Res
+import com.michaelflisar.toolbox.demo.resources.mflisar
 import com.michaelflisar.toolbox.table.Setup
 import com.michaelflisar.toolbox.table.Table
+import com.michaelflisar.toolbox.table.TableTitle
+import com.michaelflisar.toolbox.table.definitions.rememberTableDefinition
 import com.michaelflisar.toolbox.ui.MyScrollableColumn
-import com.michaelflisar.toolbox.windowsapp.DesktopApplication
-import com.michaelflisar.toolbox.windowsapp.DesktopDialog
-import com.michaelflisar.toolbox.windowsapp.classes.LocalAppState
-import com.michaelflisar.toolbox.windowsapp.classes.Status
-import com.michaelflisar.toolbox.windowsapp.classes.rememberAppState
-import com.michaelflisar.toolbox.windowsapp.initDesktopApp
-import com.michaelflisar.toolbox.windowsapp.internal.rememberWindowState
-import com.michaelflisar.toolbox.windowsapp.internal.reset
-import com.michaelflisar.toolbox.windowsapp.prefs.DefaultDesktopAppPrefs
-import com.michaelflisar.toolbox.windowsapp.ui.DesktopRoot
-import com.michaelflisar.toolbox.windowsapp.ui.StatusBar
-import com.michaelflisar.toolbox.windowsapp.ui.StatusBarText
-import com.michaelflisar.toolbox.windowsapp.ui.dialogs.DesktopInfoDialog
-import com.michaelflisar.toolbox.windowsapp.ui.dialogs.DesktopListDialog
-import com.michaelflisar.toolbox.windowsapp.ui.dialogs.rememberDesktopInfoDialogData
-import com.michaelflisar.toolbox.windowsapp.ui.dialogs.rememberDesktopInfoDialogSimpleData
-import com.michaelflisar.toolbox.windowsapp.ui.pane.PaneContainer
-import com.michaelflisar.toolbox.windowsapp.ui.pane.rememberPane
-import com.michaelflisar.toolbox.windowsapp.ui.tabs.TabContent
-import com.michaelflisar.toolbox.windowsapp.ui.tabs.TabItem
+import com.michaelflisar.toolbox.windows.DesktopDialog
+import com.michaelflisar.toolbox.windows.classes.LocalAppState
+import com.michaelflisar.toolbox.windows.hostName
+import com.michaelflisar.toolbox.windows.initLumberjack
+import com.michaelflisar.toolbox.windows.javaVersion
+import com.michaelflisar.toolbox.windows.jewel.JewelContent
+import com.michaelflisar.toolbox.windows.jewel.JewelMenuBarItem
+import com.michaelflisar.toolbox.windows.jewel.JewelNavigation
+import com.michaelflisar.toolbox.windows.jewel.JewelNavigationItem
+import com.michaelflisar.toolbox.windows.jewel.JewelNavigationItemSpacer
+import com.michaelflisar.toolbox.windows.jewel.JewelStatusBar
+import com.michaelflisar.toolbox.windows.jewel.JewelStatusBarItem
+import com.michaelflisar.toolbox.windows.jewel.JewelTitleBar
+import com.michaelflisar.toolbox.windows.jewel.jewelApplication
+import com.michaelflisar.toolbox.windows.prefs.DefaultDesktopAppPrefs
+import com.michaelflisar.toolbox.windows.reset
+import com.michaelflisar.toolbox.windows.ui.dialogs.DesktopInfoDialog
+import com.michaelflisar.toolbox.windows.ui.dialogs.DesktopListDialog
+import com.michaelflisar.toolbox.windows.ui.dialogs.rememberDesktopInfoDialogData
+import com.michaelflisar.toolbox.windows.ui.dialogs.rememberDesktopInfoDialogSimpleData
+import com.michaelflisar.toolbox.windows.ui.pane.DesktopPaneContainer
+import com.michaelflisar.toolbox.windows.ui.pane.rememberDesktopPane
+import com.michaelflisar.toolbox.windows.userName
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.pushingpixels.aurora.component.model.Command
-import org.pushingpixels.aurora.component.model.CommandGroup
-import org.pushingpixels.aurora.component.model.CommandMenuContentModel
-import org.pushingpixels.aurora.window.auroraApplication
+import org.jetbrains.compose.resources.painterResource
 
 fun main() {
-    auroraApplication {
 
-        val appState = rememberAppState()
-        val fileLoggerSetup = Toolbox.initDesktopApp()
+    val fileLoggerSetup = Toolbox.initLumberjack()
+
+    jewelApplication(
+        title = "Demo App",
+        prefs = DefaultDesktopAppPrefs,
+        icon = { painterResource(Res.drawable.mflisar) }
+    ) { windowState ->
+
+        val appState = LocalAppState.current
+        val scope = rememberCoroutineScope()
         val showLogs = remember { mutableStateOf(false) }
-        val prefs = DefaultDesktopAppPrefs
-        val windowState = rememberWindowState(prefs)
 
-        DesktopApplication(
-            title = "Demo App",
-            state = appState,
-            menuCommands = { buildMenu(showLogs, prefs, windowState) },
-            prefs = prefs,
-            windowState = windowState,
-            //icon = painterResource("logo.png"),
-            //alwaysOnTop = alwaysOnTop.value,
-            //onClosed = {
-            //}
-        ) {
-            val tabs = listOf(
-                TabItem.Group("Region 1"),
-                TabItem.Item(1, "UI Examples"),
-                TabItem.Item(2, "Dialog"),
-                TabItem.Item(3, "Pane"),
-                TabItem.Item(4, "SegmentedControl/Dropdowns"),
-                TabItem.Item(5, "Table"),
-                TabItem.Group("Region 2"),
-                TabItem.Item(
-                    40,
-                    "Tab 2.1",
-                    icon = TabItem.Icon(rememberVectorPainter(Icons.Default.Settings))
-                )
-            )
-            val selectedTabId = remember { mutableStateOf(1) }
-            DesktopRoot(
-                tabItems = tabs,
-                selectedTabId = selectedTabId,
-                tabWidth = 128.dp,
-                tabFooter = {
-                    Icon(
-                        modifier = Modifier.size(64.dp).padding(8.dp)
-                            .align(Alignment.CenterHorizontally),
-                        imageVector = Icons.Default.Apps,
-                        contentDescription = null
-                    )
-                },
-                statusbar = {
-                    StatusBar {
-                        StatusBarText("App Version: 1.0")
-                    }
-                },
-                content = { Content(it, selectedTabId) }
-            )
-
-            if (showLogs.value) {
-                DesktopDialog("Logs", showLogs, padding = PaddingValues()) {
-                    LumberjackDialogContent("Logs", fileLoggerSetup)
+        // Navigation
+        val navItems = listOf(
+            JewelNavigationItem("UI Examples", Icons.Default.Info) {
+                ContentPage1()
+            },
+            JewelNavigationItem("Dialog", Icons.Default.Window) {
+                ContentPageDialogs()
+            },
+            JewelNavigationItem("Pane", Icons.Default.SwipeLeft) {
+                ContentPagePane()
+            },
+            JewelNavigationItem("SegmentedControl/Dropdowns", Icons.Default.ArrowDropDown) {
+                ContentPageSegmentsAndDropdowns()
+            },
+            JewelNavigationItem("Table", Icons.Default.TableView) {
+                ContentPageTable()
+            },
+            JewelNavigationItemSpacer(),
+            //JewelNavigationItemDivider,
+            JewelNavigationItem("Settings", Icons.Default.Settings) {
+                MyColumn(
+                    Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
+                ) {
+                    Text("Settings Page")
                 }
-                /*LumberjackDialog(
-                    visible = showLogs,
-                    title = "Logs",
-                    setup = logSetup
-                )*/
             }
-        }
-    }
-}
+        )
 
-@Composable
-private fun Content(
-    modifier: Modifier,
-    selectedTabId: MutableState<Int>
-) {
-    TabContent(modifier = modifier, selectedTabId = selectedTabId) { tabId ->
-        when (tabId) {
-            1 -> ContentPage1()
-            2 -> ContentPageDialogs()
-            3 -> ContentPagePane()
-            4 -> ContentPageSegmentsAndDropdowns()
-            5 -> ContentPageTable()
-            else -> ContentPageX(tabId)
+        // MenuBar
+        val menuBarItem = listOf(
+            JewelMenuBarItem.Group(
+                "App",
+                items = listOf(
+                    JewelMenuBarItem.Item("Reset Window Size", Icons.Default.Clear) {
+                        scope.launch(Dispatchers.IO) {
+                            windowState.reset(DefaultDesktopAppPrefs, position = false)
+                        }
+                    }
+                )),
+            JewelMenuBarItem.Item("Log") {
+                showLogs.value = true
+            }
+        )
+
+        // Statusbar
+        val statusBarLeft = listOf(
+            JewelStatusBarItem("App Version: 1.0") {
+                appState.showSnackbar("App clicked!")
+            }
+        )
+        val statusBarRight = listOf(
+            JewelStatusBarItem(Toolbox.javaVersion()),
+            JewelStatusBarItem(Toolbox.userName()),
+            JewelStatusBarItem(Toolbox.hostName())
+        )
+
+        // Content
+        JewelContent(
+            icon = painterResource(Res.drawable.mflisar),
+            menuBarItems = menuBarItem,
+            menuBarSetup = JewelTitleBar.Setup(),
+            selectedNavigationItem = 0,
+            navigationItems = navItems,
+            navigationSetup = JewelNavigation.Setup(),
+            statusbar = {
+                JewelStatusBar(
+                    left = statusBarLeft,
+                    right = statusBarRight
+                )
+            }
+        )
+
+        // Dialoge
+        if (showLogs.value) {
+            DesktopDialog("Logs", showLogs, padding = PaddingValues()) {
+                LumberjackDialogContent("Logs", fileLoggerSetup)
+            }
+            /*LumberjackDialog(
+                visible = showLogs,
+                title = "Logs",
+                setup = logSetup
+            )*/
         }
     }
 }
@@ -172,7 +182,7 @@ private fun ContentPage1() {
     val scope = rememberCoroutineScope()
     val appState = LocalAppState.current
     MyScrollableColumn(
-        modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL)
+        modifier = Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
     ) {
         Text(text = "Center")
         Button(
@@ -188,24 +198,6 @@ private fun ContentPage1() {
             }
         ) {
             Text("Test Error", color = MaterialColor.Red200)
-        }
-        Button(
-            enabled = appState.state.value == Status.None,
-            onClick = {
-                if (appState.state.value == Status.None) {
-                    scope.launch(Dispatchers.IO) {
-                        L.d { "Work wird gestartet..." }
-                        appState.state.value = Status.Running("Doing some work...")
-                        delay(5000)
-                        appState.state.value = Status.None
-                        L.d { "Work erfolgreich erledigt!" }
-                    }
-                } else {
-                    L.e { "Work läuft bereits!!" }
-                }
-            }
-        ) {
-            Text("Test Work for 5 seconds...")
         }
 
         val selectedIndex = remember { mutableStateOf(0) }
@@ -263,7 +255,9 @@ private fun ContentPage1() {
 
         MyFlowRow {
             (1..20).forEach {
-                MyChip(title = "Chip $it", icon = if (it <= 10) null else {{ Icon(Icons.Default.Info, null)}})
+                MyChip(title = "Chip $it", icon = if (it <= 10) null else {
+                    { Icon(Icons.Default.Info, null) }
+                })
             }
         }
     }
@@ -271,18 +265,17 @@ private fun ContentPage1() {
 
 @Composable
 private fun ContentPagePane() {
-    PaneContainer(
+    DesktopPaneContainer(
         modifier = Modifier.fillMaxSize(),
-        left = rememberPane("Left") {
+        left = rememberDesktopPane("Left") {
             Text("Left")
         },
-        right = rememberPane("Right") {
+        right = rememberDesktopPane("Right") {
             Text("Right")
         },
     ) {
-        Column(
-            modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL),
-            verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+        MyColumn(
+            modifier = Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
         ) {
             Text("Content")
         }
@@ -291,9 +284,8 @@ private fun ContentPagePane() {
 
 @Composable
 private fun ContentPageSegmentsAndDropdowns() {
-    Column(
-        modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL),
-        verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+    MyColumn(
+        modifier = Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
     ) {
         val items = listOf("1", "2", "3")
         val selected = remember { mutableStateOf(0) }
@@ -308,7 +300,6 @@ private fun ContentPageSegmentsAndDropdowns() {
         MyMultiSegmentedButtonRow(items = items, selected = selectedMulti)
 
 
-
     }
 }
 
@@ -319,9 +310,8 @@ private fun ContentPageDialogs() {
     val showDialog3 = rememberDesktopInfoDialogData()
     val showDialog4 = rememberDesktopInfoDialogSimpleData()
 
-    Column(
-        modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL),
-        verticalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING)
+    MyColumn(
+        modifier = Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
     ) {
         Text("Content")
         Button(
@@ -401,7 +391,10 @@ private fun ContentPageTable() {
     val appState = LocalAppState.current
     val scope = rememberCoroutineScope()
 
-    val tableDefinition = TableDataEntry.createTableDefinitions()
+    val tableDefinition = rememberTableDefinition(
+        columns = TableDataEntry.columns(),
+        keyProvider = { it.id }
+    )
     val filtered = remember { mutableStateOf(-1) }
     val fullTableData = remember {
         listOf(
@@ -493,117 +486,33 @@ private fun ContentPageTable() {
     }
     val entities = remember { mutableStateOf(fullTableData) }
 
-    // Data...
-    val rows = entities.value.map {
-        tableDefinition.createRow(it)
-    }
-
     // Table
-    Table(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(ToolboxDefaults.CONTENT_PADDING_SMALL),
-        definition = tableDefinition,
-        rows = rows,
-        keyProvider = { it.id },
-        setup = Setup(
-            clickType = Setup.ClickType.RowClick(
-                onRowClicked = { index, item ->
-                    appState.showSnackbar(
-                        scope,
-                        "Item ${item.id} clicked!",
-                        cancelAllPending = true
-                    )
-                }
-            ),
-            emptyText = "Table is empty or filter is filtering all rows..."
-        ),
-        onFilterChanged = {
-            if (entities.value.isNotEmpty()) {
-                filtered.value = it.size
-            }
-        }
-    )
-}
-
-@Composable
-private fun ContentPageX(tabId: Int) {
-    Column(
-        modifier = Modifier.padding(ToolboxDefaults.CONTENT_PADDING_SMALL)
+    MyColumn(
+        Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
     ) {
-        Text("Tab ID: $tabId")
-    }
-}
-
-@Composable
-private fun buildMenu(
-    showLogs: MutableState<Boolean>,
-    prefs: DefaultDesktopAppPrefs,
-    windowState: WindowState
-): CommandGroup {
-    val scope = rememberCoroutineScope()
-    val commandGroup = CommandGroup(
-        commands = listOf(
-            Command(
-                text = "App",
-                secondaryContentModel = CommandMenuContentModel(
-                    CommandGroup(
-                        commands = listOf(
-                            Command(
-                                text = "New",
-                                action = {
-                                    L.d { "Menu => New" }
-                                }),
-                            Command(
-                                text = "Open",
-                                action = {
-                                    L.d { "Menu => Open" }
-                                }),
-                            Command(
-                                text = "Save",
-                                action = {
-                                    L.d { "Menu => Save" }
-                                }),
-                            Command(
-                                text = "Reset Window",
-                                action = {
-                                    scope.launch(Dispatchers.IO) {
-                                        //prefs.windowX.reset()
-                                        //prefs.windowY.reset()
-                                        prefs.windowWidth.reset()
-                                        prefs.windowHeight.reset()
-                                        prefs.windowPlacement.reset()
-                                        windowState.reset(prefs, position = false)
-                                    }
-                                })
-                        )
-                    )
-                )
-            ),
-            Command(
-                text = "Theme",
-                secondaryContentModel = CommandMenuContentModel(
-                    CommandGroup(
-                        commands = Theme.entries.map {
-                            Command(
-                                text = it.name,
-                                action = {
-                                    scope.launch(Dispatchers.IO) {
-                                        prefs.theme.update(it)
-                                    }
-                                }
-                            )
-                        }
-                    )
-                )
-            ),
-            Command(
-                text = "Logs",
-                action = {
-                    showLogs.value = true
-                }
-            ),
+        TableTitle(
+            definition = tableDefinition,
+            items = entities.value,
+            modifier = Modifier.fillMaxWidth(),
+            filtered = filtered
         )
-    )
-    return commandGroup
+        Table(
+            modifier = Modifier.weight(1f),
+            definition = tableDefinition,
+            items = entities.value,
+            setup = Setup(
+                clickType = Setup.ClickType.RowClick(
+                    onRowClicked = { index, item ->
+                        appState.showSnackbar("Item ${item.id} clicked!")
+                    }
+                ),
+                emptyText = "Table is empty or filter is filtering all rows..."
+            ),
+            onFilterChanged = {
+                if (entities.value.isNotEmpty()) {
+                    filtered.value = it.size
+                }
+            }
+        )
+    }
 }

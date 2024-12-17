@@ -20,7 +20,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.composables.MyExpandableTitle
+import com.michaelflisar.toolbox.components.MyExpandableTitle
 
 object DemoCollapsibleRegion {
     class State(

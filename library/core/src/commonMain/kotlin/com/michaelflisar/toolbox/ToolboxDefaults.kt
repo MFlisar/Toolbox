@@ -12,14 +12,7 @@ import com.michaelflisar.toolbox.classes.Theme
 
 object ToolboxDefaults {
 
-    val TEXT_EMPTY = "Hier herrscht gähnende Leere..."
-
-    val SCROLLBAR_SPACE = 4.dp
-
-    val ITEM_SPACING = 8.dp
-    val ITEM_SPACING_MINI = 2.dp
-    val CONTENT_PADDING = 16.dp
-    val CONTENT_PADDING_SMALL = 8.dp
+    const val TEXT_EMPTY = "Leer"
 
     val DEFAULT_DIALOG_SIZE = DpSize(800.dp, 600.dp)
     val DEFAULT_DIALOG_SIZE_MEDIUM = DpSize(600.dp, 400.dp)

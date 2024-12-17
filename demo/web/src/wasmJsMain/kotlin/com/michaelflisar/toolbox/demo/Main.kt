@@ -12,7 +12,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.CanvasBasedWindow
-import com.michaelflisar.toolbox.composables.MyCheckbox
+import com.michaelflisar.toolbox.components.MyCheckbox
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {

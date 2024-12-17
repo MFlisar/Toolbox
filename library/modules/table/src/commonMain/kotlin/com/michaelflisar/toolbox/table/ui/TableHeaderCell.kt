@@ -19,10 +19,9 @@ import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.FilterAlt
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,9 +43,9 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.michaelflisar.toolbox.ToolboxDefaults
-import com.michaelflisar.toolbox.composables.MyIconButton
-import com.michaelflisar.toolbox.composables.MyTooltipBox
+import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.components.MyIconButton
+import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.disabled
 import com.michaelflisar.toolbox.table.data.Sort
 import com.michaelflisar.toolbox.table.definitions.Column
@@ -197,7 +196,6 @@ private fun HeaderMenuIcon(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HeaderMenuIconPopup(
     show: MutableState<Boolean>,
@@ -225,22 +223,23 @@ private fun HeaderMenuIconPopup(
                 shadowElevation = 8.dp
             ) {
                 Column(
-                    modifier = Modifier.padding(8.dp).width(popupWidth),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    modifier = Modifier.padding(LocalStyle.current.paddingDefault)
+                        .width(popupWidth),
+                    verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
                 ) {
                     CompositionLocalProvider(
-                        LocalMinimumInteractiveComponentEnforcement provides false
+                        LocalMinimumInteractiveComponentSize provides 0.dp
                     ) {
 
-                        val iconPadding = 4.dp
+                        val iconPadding = LocalStyle.current.paddingSmall
                         val iconSize = 24.dp
                         val iconModifier = Modifier.size(iconSize + iconPadding)
                         val contentInsetStart =
-                            iconSize + iconPadding + ToolboxDefaults.ITEM_SPACING
+                            iconSize + iconPadding + LocalStyle.current.spacingDefault
 
                         Row(
                             modifier = Modifier.heightIn(min = iconSize + iconPadding),
-                            horizontalArrangement = Arrangement.spacedBy(ToolboxDefaults.ITEM_SPACING),
+                            horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(

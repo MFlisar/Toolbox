@@ -52,9 +52,9 @@ sealed class Cell<CellValue> {
 
     class Custom<T>(
         override val value: T,
-        val valueToText: (T) -> String,
+        val valueToText: (T) -> String = { it.toString() },
+        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top,
         val cell: @Composable (modifier: Modifier) -> Unit,
-        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
     ) : Cell<T>() {
 
         override fun sort() = valueToText(value)

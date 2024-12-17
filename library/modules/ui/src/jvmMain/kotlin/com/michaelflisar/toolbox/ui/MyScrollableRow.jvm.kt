@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.classes.LocalStyle
 
 @Composable
 actual fun MyScrollableRow(
@@ -32,7 +33,7 @@ actual fun MyScrollableRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalScroll(scrollState)
-                .padding(bottom = ToolboxDefaults.SCROLLBAR_SPACE),
+                .padding(bottom = LocalStyle.current.scrollbar),
             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
             verticalAlignment = verticalAlignment
         ) {
@@ -40,7 +41,7 @@ actual fun MyScrollableRow(
         }
         Spacer(modifier = Modifier.height(4.dp))
         HorizontalScrollbar(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().height(LocalStyle.current.scrollbar),
             adapter = rememberScrollbarAdapter(scrollState)
         )
     }

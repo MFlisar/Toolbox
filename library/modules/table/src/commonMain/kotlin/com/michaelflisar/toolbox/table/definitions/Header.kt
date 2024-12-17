@@ -23,9 +23,9 @@ sealed class Header {
 
     data class Icon(
         override val label: String,
-        val icon: @Composable (() -> Unit),
         override val description: String = "",
         override val cellPadding: Dp = 4.dp,
-        val align: Alignment.Horizontal = Alignment.Start
+        val align: Alignment.Horizontal = Alignment.Start,
+        val icon: @Composable (() -> Unit)
     ) : Header()
 }

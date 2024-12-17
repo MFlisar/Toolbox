@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.table.Setup
 import com.michaelflisar.toolbox.table.definitions.Column
 import com.michaelflisar.toolbox.table.definitions.Row
@@ -53,7 +54,7 @@ internal fun <Item> Row(
                     Modifier.background(MaterialTheme.colorScheme.secondary)
                 } else Modifier
             )
-            .padding(end = ToolboxDefaults.SCROLLBAR_SPACE) // für Scrollbar
+            .padding(end = LocalStyle.current.scrollbar) // für Scrollbar
     ) {
         columns.forEachIndexed { index, column ->
             val modifier = when (val clickType = setup.clickType) {

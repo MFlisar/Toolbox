@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.classes.LocalStyle
 
 @Composable
 actual fun MyScrollableLazyHorizontalGrid(
@@ -22,7 +23,7 @@ actual fun MyScrollableLazyHorizontalGrid(
     LazyHorizontalGrid(
         modifier = modifier,
         rows = gridRows,
-        contentPadding = PaddingValues(ToolboxDefaults.ITEM_SPACING),
+        contentPadding = PaddingValues(LocalStyle.current.paddingDefault),
         verticalArrangement = verticalArrangement,
         horizontalArrangement = horizontalArrangement,
         state = gridState

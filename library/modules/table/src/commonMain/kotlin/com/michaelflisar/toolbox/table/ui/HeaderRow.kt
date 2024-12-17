@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.michaelflisar.toolbox.ToolboxDefaults
+import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.table.data.Sort
 import com.michaelflisar.toolbox.table.definitions.Column
 
@@ -29,13 +31,17 @@ internal fun Header(
                 Modifier
                     .fillMaxWidth()
                     .height(IntrinsicSize.Min)
-                    .background(color = Color.DarkGray)
-                    .padding(end = ToolboxDefaults.SCROLLBAR_SPACE) // für Scrollbar
+                    .background(color = MaterialTheme.colorScheme.surfaceContainerHigh)
+                    .padding(end = LocalStyle.current.scrollbar) // für Scrollbar
             ) {
-                columns.forEachIndexed { index, column ->
-                    TableHeaderCell(index, column, sorts)
-                    if (index != columns.size - 1) {
-                        TableRowSpacer()
+                CompositionLocalProvider(
+                    LocalContentColor provides MaterialTheme.colorScheme.onSurface
+                ) {
+                    columns.forEachIndexed { index, column ->
+                        TableHeaderCell(index, column, sorts)
+                        if (index != columns.size - 1) {
+                            TableRowSpacer()
+                        }
                     }
                 }
             }

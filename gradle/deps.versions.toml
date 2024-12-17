@@ -8,8 +8,9 @@ kotpreferences =                "0.7.1"
 composethemer =                 "0.4.1"
 composecolors =                 "1.0.1"
 
-# aurora
-aurora =                        "2.0-SNAPSHOT"
+# Windows UI
+jewel =                         "0.27.0"
+intellij-platform =             "243.21565.208"
 
 [libraries]
 
@@ -31,7 +32,7 @@ composecolors-x11 =                     { module = "io.github.mflisar.composecol
 composecolors-material-palette =        { module = "io.github.mflisar.composecolors:material-palette", 	        version.ref = "composecolors" }
 composecolors-x11-palette =             { module = "io.github.mflisar.composecolors:x11-palette", 	            version.ref = "composecolors" }
 
-# aurora
-aurora-theming =                        { module = "org.pushing-pixels:aurora-theming", 	                    version.ref = "aurora" }
-aurora-component =                      { module = "org.pushing-pixels:aurora-component", 	                    version.ref = "aurora" }
-aurora-window =                         { module = "org.pushing-pixels:aurora-window", 	                        version.ref = "aurora" }
+# Windows UI
+jewel-int-ui-standalone =               { module = "org.jetbrains.jewel:jewel-int-ui-standalone-243",           version.ref = "jewel" }
+jewel-int-ui-decorated-window =         { module = "org.jetbrains.jewel:jewel-int-ui-decorated-window-243",     version.ref = "jewel" }
+intellij-platform-icons =               { module = "com.jetbrains.intellij.platform:icons",                     version.ref = "intellij-platform" }
