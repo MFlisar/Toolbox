@@ -121,14 +121,15 @@ fun main() {
         // MenuBar
         val menuBarItem = listOf(
             JewelMenuBarItem.Group(
-                "App",
+                title = "App",
                 items = listOf(
                     JewelMenuBarItem.Item("Reset Window Size", Icons.Default.Clear) {
                         scope.launch(Dispatchers.IO) {
                             windowState.reset(DefaultDesktopAppPrefs, position = false)
                         }
                     }
-                )),
+                )
+            ),
             JewelMenuBarItem.Item("Log") {
                 showLogs.value = true
             }

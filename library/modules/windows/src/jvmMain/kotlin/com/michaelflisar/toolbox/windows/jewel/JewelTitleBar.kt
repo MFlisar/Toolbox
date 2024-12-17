@@ -84,7 +84,7 @@ fun DecoratedWindowScope.JewelTitleBar(
             TitleAppIcon(icon)
 
             if (menuExpanded.value) {
-                TitleMenu(menuBarItems, menuExpanded)
+                TitleMenu(menuBarItems)
             } else {
                 if (menuBarItems.isNotEmpty()) {
                     TitleIconButton(Icons.Default.Menu, "Main Menu") {
@@ -129,7 +129,7 @@ fun DecoratedWindowScope.JewelTitleBar(
 }
 
 @Composable
-fun TitleMenu(items: List<JewelMenuBarItem>, menuExpanded: MutableState<Boolean>) {
+fun TitleMenu(items: List<JewelMenuBarItem>) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -140,7 +140,9 @@ fun TitleMenu(items: List<JewelMenuBarItem>, menuExpanded: MutableState<Boolean>
                     Dropdown(
                         modifier = Modifier.height(30.dp),
                         menuContent = {
-                            titleMenuContent(it)
+                            it.items.forEach {
+                                titleMenuContent(it)
+                            }
                         }
                     ) {
                         TitleMenuItem(it.title, it.imageVector, false)
