@@ -64,6 +64,6 @@ dependencies {
     // Library
     // ------------------------
 
-    implementation(project(":Toolbox:Modules:AndroidDemoApp"))
+    implementation(project(":toolbox:modules:androiddemoapp"))
 
 }

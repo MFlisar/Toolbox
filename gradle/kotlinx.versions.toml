@@ -3,7 +3,7 @@
 coroutines = 	    "1.9.0"
 json = 			    "1.7.3"
 datetime =          "0.6.1"
-io-core =           "0.5.3"
+io-core =           "0.6.0"
 
 [libraries]
 

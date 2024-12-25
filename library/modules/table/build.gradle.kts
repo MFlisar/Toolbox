@@ -68,8 +68,8 @@ kotlin {
             implementation(libs.compose.material.icons.extended)
 
             // Library
-            api(project(":Toolbox:Core"))
-            api(project(":Toolbox:Modules:Ui"))
+            api(project(":toolbox:core"))
+            api(project(":toolbox:modules:ui"))
 
         }
     }

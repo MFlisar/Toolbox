@@ -71,14 +71,14 @@ kotlin {
 
             // Dependencies
             api(deps.kotpreferences.core)
-            implementation(deps.kotpreferences.datastore)
-            api(deps.kotpreferences.compose)
+            implementation(deps.kotpreferences.storage.datastore)
+            api(deps.kotpreferences.extension.compose)
             api(deps.composethemer.core)
             implementation(deps.composethemer.themes)
 
             // Library
-            api(project(":Toolbox:Core"))
-            api(project(":Toolbox:Modules:Ui"))
+            api(project(":toolbox:core"))
+            api(project(":toolbox:modules:ui"))
             //api(project(":Toolbox:Modules:Table"))
 
         }

@@ -32,8 +32,8 @@ kotlin {
 
                 api(libs.compose.material3)
 
-                api(project(":Toolbox:Core"))
-                api(project(":Toolbox:Modules:Ui"))
+                api(project(":toolbox:core"))
+                api(project(":toolbox:modules:ui"))
 
             }
         }

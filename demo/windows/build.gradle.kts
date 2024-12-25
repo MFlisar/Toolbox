@@ -24,7 +24,7 @@ kotlin {
 
             implementation(deps.composecolors.material)
 
-            implementation(project(":Toolbox:Modules:Windows"))
+            implementation(project(":toolbox:modules:windows"))
 
         }
     }

@@ -20,10 +20,11 @@ fun MyInput(
     modifier: Modifier = Modifier,
     title: String = "",
     value: MutableState<String>,
-    lines: Int = 1,
+    minLines: Int = 1,
+    maxLines: Int = 1,
     readOnly: Boolean = false
 ) {
-    MyInput(modifier, title, value.value, lines, readOnly) {
+    MyInput(modifier, title, value.value, minLines, maxLines, readOnly) {
         value.value = it
     }
 }
@@ -33,7 +34,8 @@ fun MyInput(
     modifier: Modifier = Modifier,
     title: String = "",
     value: String,
-    lines: Int = 1,
+    minLines: Int = 1,
+    maxLines: Int = 1,
     readOnly: Boolean = false,
     onValueChange: (String) -> Unit = {}
 ) {
@@ -41,9 +43,9 @@ fun MyInput(
         modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = onValueChange,
-        singleLine = lines == 1,
-        minLines = lines,
-        maxLines = lines,
+        singleLine = minLines == 1 && maxLines == 1,
+        minLines = minLines,
+        maxLines = maxLines,
         label = if (title.isNotEmpty()) {
             { Text(title) }
         } else null,

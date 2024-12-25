@@ -68,12 +68,20 @@ kotlin {
                 implementation(deps.lumberjack.implementation.lumberjack)
                 implementation(deps.lumberjack.logger.console)
                 implementation(deps.lumberjack.logger.file)
-                api(deps.lumberjack.composeviewer)
+                api(deps.lumberjack.extension.composeviewer)
 
                 // KotPreferences
                 api(deps.kotpreferences.core)
-                implementation(deps.kotpreferences.datastore)
-                api(deps.kotpreferences.compose)
+                implementation(deps.kotpreferences.storage.datastore)
+                api(deps.kotpreferences.extension.compose)
+
+                // ComposePreferences
+                implementation(deps.composepreferences.core)
+                implementation(deps.composepreferences.kotpreferences)
+                implementation(deps.composepreferences.screen.bool)
+                implementation(deps.composepreferences.screen.input)
+                implementation(deps.composepreferences.screen.list)
+
 
                 // ComposeColors
                 implementation(deps.composecolors.material)
@@ -81,27 +89,34 @@ kotlin {
             } else {
 
                 // Lumberjack
-                api(project(":Lumberjack:Core"))
-                implementation(project(":Lumberjack:Implementations:Lumberjack"))
-                implementation(project(":Lumberjack:Loggers:Lumberjack:Console"))
-                implementation(project(":Lumberjack:Loggers:Lumberjack:File"))
-                api(project(":Lumberjack:Extensions:Composeviewer"))
+                api(project(":lumberjack:core"))
+                implementation(project(":lumberjack:implementations:lumberjack"))
+                implementation(project(":lumberjack:loggers:lumberjack:console"))
+                implementation(project(":lumberjack:loggers:lumberjack:file"))
+                api(project(":lumberjack:extensions:composeviewer"))
 
                 // KotPreferences
-                api(project(":KotPreferences:Core"))
-                implementation(project(":KotPreferences:Modules:Storage:Datastore"))
-                api(project(":KotPreferences:Modules:Compose"))
+                api(project(":kotpreferences:core"))
+                implementation(project(":kotpreferences:modules:storage:datastore"))
+                api(project(":kotpreferences:modules:compose"))
+
+                // ComposePreferences
+                implementation(project(":composepreferences:core"))
+                implementation(project(":composepreferences:modules:kotpreferences"))
+                implementation(project(":composepreferences:modules:screen:bool"))
+                implementation(project(":composepreferences:modules:screen:input"))
+                implementation(project(":composepreferences:modules:screen:list"))
 
                 // ComposeColors
-                implementation(project(":ComposeColors:Material"))
+                implementation(project(":composecolors:material"))
 
             }
 
 
             // Library
-            api(project(":Toolbox:Core"))
-            api(project(":Toolbox:Modules:Ui"))
-            api(project(":Toolbox:Modules:Table"))
+            api(project(":toolbox:core"))
+            api(project(":toolbox:modules:ui"))
+            api(project(":toolbox:modules:table"))
         }
     }
 }

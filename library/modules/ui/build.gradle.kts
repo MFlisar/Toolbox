@@ -83,12 +83,14 @@ kotlin {
             implementation(libs.compose.material.icons.extended)
 
             // Library
-            api(project(":Toolbox:Core"))
+            api(project(":toolbox:core"))
 
         }
 
         androidMain.dependencies {
+
             implementation(androidx.core)
+
         }
 
         androidMain.get().dependsOn(notJvmMain)

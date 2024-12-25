@@ -50,11 +50,11 @@ fun includeModule(path: String, name: String) {
 // Modules
 // --------------
 
-includeModule("library\\core",                      ":Toolbox:Core")
-includeModule("library\\modules\\table",            ":Toolbox:Modules:Table")
-includeModule("library\\modules\\ui",               ":Toolbox:Modules:Ui")
-includeModule("library\\modules\\windows",          ":Toolbox:Modules:Windows")
-includeModule("library\\modules\\android-demo-app", ":Toolbox:Modules:AndroidDemoApp")
+includeModule("library\\core",                      ":toolbox:core")
+includeModule("library\\modules\\table",            ":toolbox:modules:table")
+includeModule("library\\modules\\ui",               ":toolbox:modules:ui")
+includeModule("library\\modules\\windows",          ":toolbox:modules:windows")
+includeModule("library\\modules\\android-demo-app", ":toolbox:modules:androiddemoapp")
 
 // --------------
 // App

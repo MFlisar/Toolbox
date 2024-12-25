@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,7 @@ fun MyIconTextButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     iconTint: Color? = null,
+    iconRotation: Float = 0f,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -39,6 +41,7 @@ fun MyIconTextButton(
             horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
         ) {
             Icon(
+                modifier = Modifier.rotate(iconRotation),
                 imageVector = icon,
                 contentDescription = null,
                 tint = iconTint ?: LocalContentColor.current
@@ -54,6 +57,7 @@ fun MyIconTextOutlinedButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     iconTint: Color? = null,
+    iconRotation: Float = 0f,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -69,8 +73,9 @@ fun MyIconTextOutlinedButton(
             horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
         ) {
             Icon(
-                icon,
-                null,
+                modifier = Modifier.rotate(iconRotation),
+                imageVector = icon,
+                contentDescription = null,
                 tint = iconTint ?: LocalContentColor.current
             )//.copy(alpha = LocalContentAlpha.current))
             Text(text)

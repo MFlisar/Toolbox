@@ -46,7 +46,7 @@ object MyDropdown {
 @Composable
 fun <T> MyDropdown(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String = "",
     items: List<T & Any>,
     selected: MutableState<T>,
     mapper: (item: T & Any, dropdown: Boolean) -> String,
@@ -90,7 +90,7 @@ fun <T> MyDropdown(
 @Composable
 fun <T> MyDropdown(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String = "",
     items: List<T & Any>,
     selected: T,
     mapper: (item: T & Any, dropdown: Boolean) -> String,
@@ -133,7 +133,7 @@ fun <T> MyDropdown(
 @Composable
 fun MyDropdown(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String = "",
     items: List<String>,
     selected: MutableState<Int>,
     enabled: Boolean = true,
@@ -175,7 +175,7 @@ fun MyDropdown(
 @Composable
 fun MyDropdown(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String = "",
     items: List<String>,
     selected: Int,
     enabled: Boolean = true,
