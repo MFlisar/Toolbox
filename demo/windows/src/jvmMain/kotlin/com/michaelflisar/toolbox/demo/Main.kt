@@ -15,9 +15,11 @@ import androidx.compose.material.icons.filled.SwipeLeft
 import androidx.compose.material.icons.filled.TableView
 import androidx.compose.material.icons.filled.Window
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -25,11 +27,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.michaelflisar.composecolors.material.MaterialColor
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogContent
 import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.components.MyButton
+import com.michaelflisar.toolbox.components.MyCheckChip
 import com.michaelflisar.toolbox.components.MyCheckbox
 import com.michaelflisar.toolbox.components.MyChip
 import com.michaelflisar.toolbox.components.MyColumn
@@ -40,8 +45,11 @@ import com.michaelflisar.toolbox.components.MyFlowRow
 import com.michaelflisar.toolbox.components.MyMultiDropdown
 import com.michaelflisar.toolbox.components.MyMultiSegmentedButtonRow
 import com.michaelflisar.toolbox.components.MyMultiSegmentedControl
+import com.michaelflisar.toolbox.components.MyOutlinedButton
+import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.components.MySegmentedButtonRow
 import com.michaelflisar.toolbox.components.MySegmentedControl
+import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.demo.resources.Res
 import com.michaelflisar.toolbox.demo.resources.mflisar
 import com.michaelflisar.toolbox.table.Setup
@@ -180,64 +188,105 @@ fun main() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ContentPage1() {
-    val scope = rememberCoroutineScope()
-    val appState = LocalAppState.current
+
+    val selectedIndex = remember { mutableStateOf(0) }
+    val items = remember { mutableStateOf((1..100).map { "Item $it" }) }
+
     MyScrollableColumn(
         modifier = Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
     ) {
-        Text(text = "Center")
-        Button(
-            onClick = {
-                L.d { "Test Log" }
+        // 1) Buttons
+        MyTitle("Buttons") {
+            MyRow {
+                MyButton(
+                    text = "Test Log",
+                    onClick = {
+                        L.d { "Test Log" }
+                    }
+                )
+                MyButton(
+                    text = "Test Error",
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialColor.Red200,
+                        contentColor = MaterialColor.White
+                    ),
+                    onClick = {
+                        L.e { "Test Error" }
+                    }
+                )
             }
-        ) {
-            Text("Test Log")
         }
-        Button(
-            onClick = {
-                L.e { "Test Error" }
+
+        // 2) Dropdowns
+        MyTitle("Dropdowns") {
+            MyDropdown(
+                title = "List",
+                items = items.value,
+                selected = selectedIndex,
+                filter = MyDropdown.Filter("Search") { filter, item ->
+                    filter.isEmpty() || item.contains(filter, true)
+                }
+            )
+        }
+
+        // 3) Checkboxes and layout tests for checkboxes
+        MyTitle("Checkboxes") {
+            MyColumn {
+                MyCheckbox(title = "Checkbox1", checked = true, onCheckedChange = {})
+                MyCheckbox(
+                    title = "Checkbox1 with longer title",
+                    checked = true,
+                    onCheckedChange = {})
+                MyCheckbox(
+                    modifier = Modifier.fillMaxWidth(),
+                    title = "Checkbox2",
+                    checked = true,
+                    onCheckedChange = {})
+                MyCheckbox(
+                    modifier = Modifier.fillMaxWidth(),
+                    title = {
+                        Text("Checkbox2 with longer title")
+                        Text("Some info", style = MaterialTheme.typography.bodySmall)
+                    },
+                    checked = true,
+                    onCheckedChange = {}
+                )
+                Row {
+                    Text(modifier = Modifier.weight(1f), text = "Text")
+                    MyCheckbox(title = "Checkbox3", checked = true, onCheckedChange = {})
+                }
+                Row {
+                    Text(modifier = Modifier.weight(1f), text = "Text")
+                    MyCheckbox(
+                        title = "Checkbox3 with longer title",
+                        checked = true,
+                        onCheckedChange = {})
+                }
             }
-        ) {
-            Text("Test Error", color = MaterialColor.Red200)
         }
 
-        val selectedIndex = remember { mutableStateOf(0) }
-        val items = remember { mutableStateOf((1..100).map { "Item $it" }) }
-        MyDropdown(
-            title = "List",
-            items = items.value,
-            selected = selectedIndex,
-            filter = MyDropdown.Filter("Search") { filter, item ->
-                filter.isEmpty() || item.contains(filter, true)
+        // 4) Chips
+        MyTitle("Chips") {
+            MyColumn {
+                MyFlowRow {
+                    repeat(20) {
+                        MyChip(title = "Chip $it", icon = if (it <= 10) null else {
+                            { Icon(Icons.Default.Info, null) }
+                        })
+                    }
+                }
+                MyRow {
+                    val checked = remember { mutableStateOf(0) }
+                    repeat(5) { value ->
+                        MyCheckChip(title = "Checked Chip ${value + 1}", checked = checked.value == value) {
+                            checked.value = value
+                        }
+                    }
+                }
             }
-        )
-
-        MyCheckbox(title = "Checkbox1", checked = true, onCheckedChange = {})
-        MyCheckbox(title = "Checkbox1 with longer title", checked = true, onCheckedChange = {})
-
-        MyCheckbox(
-            modifier = Modifier.fillMaxWidth(),
-            title = "Checkbox2",
-            checked = true,
-            onCheckedChange = {})
-        MyCheckbox(
-            modifier = Modifier.fillMaxWidth(),
-            title = {
-                Text("Checkbox2 with longer title")
-                Text("Some info", style = MaterialTheme.typography.bodySmall)
-            },
-            checked = true,
-            onCheckedChange = {})
-
-        Row {
-            Text(modifier = Modifier.weight(1f), text = "Text")
-            MyCheckbox(title = "Checkbox3", checked = true, onCheckedChange = {})
-        }
-        Row {
-            Text(modifier = Modifier.weight(1f), text = "Text")
-            MyCheckbox(title = "Checkbox3 with longer title", checked = true, onCheckedChange = {})
         }
 
+        // testing list item updates
         LaunchedEffect(Unit) {
             if (items.value.size > 50)
                 items.value = items.value.subList(0, 50)
@@ -252,14 +301,6 @@ private fun ContentPage1() {
 
         MyExpandableOutlinedTitle("Expandable3 - Outlined") {
             Text("Content...")
-        }
-
-        MyFlowRow {
-            (1..20).forEach {
-                MyChip(title = "Chip $it", icon = if (it <= 10) null else {
-                    { Icon(Icons.Default.Info, null) }
-                })
-            }
         }
     }
 }
@@ -299,8 +340,6 @@ private fun ContentPageSegmentsAndDropdowns() {
         MyMultiSegmentedControl(items = items, selected = selectedMulti)
         MyMultiDropdown(title = "Select", items = items, selected = selectedMulti)
         MyMultiSegmentedButtonRow(items = items, selected = selectedMulti)
-
-
     }
 }
 
@@ -390,7 +429,6 @@ private fun ContentPageDialogs() {
 private fun ContentPageTable() {
 
     val appState = LocalAppState.current
-    val scope = rememberCoroutineScope()
 
     val tableDefinition = rememberTableDefinition(
         columns = TableDataEntry.columns(),

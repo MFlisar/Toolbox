@@ -28,13 +28,13 @@ class Style(
             // Minimum Component Size
             minimumInteractiveComponentSize = 24.dp,
             // Paddings
-            paddingSmall = 2.dp,
-            paddingDefault = 4.dp,
+            paddingSmall = 4.dp,
+            paddingDefault = 8.dp,
             paddingContent = 8.dp,
             // Spacing
-            spacingMini = 2.dp,
-            spacingSmall = 2.dp,
-            spacingDefault = 4.dp,
+            spacingMini = 4.dp,
+            spacingSmall = 4.dp,
+            spacingDefault = 8.dp,
             // Scrollbar
             scrollbar = 8.dp
         )

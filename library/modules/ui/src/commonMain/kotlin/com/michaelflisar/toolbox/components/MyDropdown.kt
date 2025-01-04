@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
@@ -12,15 +13,22 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.disabled
 
@@ -280,11 +288,11 @@ private fun <T> MyDropdownImpl(
                 tint = labelColor
             )
         }
+        val scrollState = rememberScrollState()
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-            }
+            onDismissRequest = { expanded = false },
+            scrollState = scrollState
         ) {
             if (filter != null) {
                 OutlinedTextField(
@@ -292,13 +300,18 @@ private fun <T> MyDropdownImpl(
                     label = { Text(filter.label) },
                     singleLine = true,
                     onValueChange = { filterText.value = it },
-                    modifier = Modifier.fillMaxWidth().padding(all = LocalStyle.current.paddingDefault)
+                    modifier = Modifier
+                        .offset(y = with(LocalDensity.current) { scrollState.value.toDp() })
+                        .background(MaterialTheme.colorScheme.surfaceContainer)
+                        .padding(all = LocalStyle.current.paddingDefault)
+                        .zIndex(2f)
                 )
             }
             filteredItems.value.forEach {
                 DropdownMenuItem(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .zIndex(1f),
                     text = {
                         Text(
                             text = it.textDropdown,
@@ -312,6 +325,7 @@ private fun <T> MyDropdownImpl(
                     }
                 )
             }
+
         }
     }
 }

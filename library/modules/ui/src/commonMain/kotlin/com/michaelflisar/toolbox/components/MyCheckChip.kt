@@ -4,13 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -21,36 +23,35 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.classes.LocalStyle
-import com.michaelflisar.toolbox.disabled
 
 @Composable
 fun MyCheckChip(
-    modifier: Modifier = Modifier,
     title: String,
-    icon: (@Composable () -> Unit)? = null,
     state: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
+    icon: (@Composable () -> Unit)? = null,
     color: Color = Color.Unspecified,
+    borderColor: Color = MaterialTheme.colorScheme.outlineVariant,
     style: TextStyle = MaterialTheme.typography.bodySmall,
     maxLines: Int = 1
 ) {
-    MyCheckChip(modifier, title, icon, state.value, color, style, maxLines) {
+    MyCheckChip(title, state.value, modifier, icon, color, borderColor, style, maxLines) {
         state.value = it
     }
 }
 
 @Composable
 fun MyCheckChip(
-    modifier: Modifier = Modifier,
     title: String,
-    icon: (@Composable () -> Unit)? = null,
     checked: Boolean,
+    modifier: Modifier = Modifier,
+    icon: (@Composable () -> Unit)? = null,
     color: Color = Color.Unspecified,
+    borderColor: Color = MaterialTheme.colorScheme.outlineVariant,
     style: TextStyle = MaterialTheme.typography.bodySmall,
     maxLines: Int = 1,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
-    val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()
-        ?: MaterialTheme.colorScheme.onSurface.disabled()
 
     val colorSelected =
         color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.primary
@@ -75,8 +76,12 @@ fun MyCheckChip(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
         ) {
-            CompositionLocalProvider(LocalContentColor provides if (checked) colorSelectedText else colorNotSelectedText) {
-                icon()
+            CompositionLocalProvider(
+                LocalContentColor provides if (checked) colorSelectedText else colorNotSelectedText
+            ) {
+                Box(modifier = Modifier.size(18.dp)) {
+                    icon()
+                }
             }
             Text(
                 text = title,
