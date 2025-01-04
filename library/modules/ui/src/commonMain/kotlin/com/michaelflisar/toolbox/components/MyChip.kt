@@ -1,14 +1,13 @@
 package com.michaelflisar.toolbox.components
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.AssistChip
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,11 +28,16 @@ fun MyChip(
     color: Color = Color.Unspecified,
     borderColor: Color = MaterialTheme.colorScheme.outlineVariant,
     style: TextStyle = MaterialTheme.typography.bodySmall,
-    maxLines: Int = 1
+    maxLines: Int = 1,
+    onClick: (() -> Unit)? = null
 ) {
     val m = modifier
         .clip(MaterialTheme.shapes.small)
         .border(1.dp, borderColor, MaterialTheme.shapes.small)
+        .then(
+            if (onClick != null) Modifier.clickable { onClick() }
+            else Modifier
+        )
         .padding(LocalStyle.current.paddingSmall)
 
     if (icon != null) {
