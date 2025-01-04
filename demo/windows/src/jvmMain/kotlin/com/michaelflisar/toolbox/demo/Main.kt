@@ -19,7 +19,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.michaelflisar.composecolors.material.MaterialColor
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogContent
@@ -45,7 +43,6 @@ import com.michaelflisar.toolbox.components.MyFlowRow
 import com.michaelflisar.toolbox.components.MyMultiDropdown
 import com.michaelflisar.toolbox.components.MyMultiSegmentedButtonRow
 import com.michaelflisar.toolbox.components.MyMultiSegmentedControl
-import com.michaelflisar.toolbox.components.MyOutlinedButton
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.components.MySegmentedButtonRow
 import com.michaelflisar.toolbox.components.MySegmentedControl
@@ -270,15 +267,24 @@ private fun ContentPage1() {
             MyColumn {
                 MyFlowRow {
                     repeat(20) {
-                        MyChip(title = "Chip $it", icon = if (it <= 10) null else {
-                            { Icon(Icons.Default.Info, null) }
-                        })
+                        MyChip(
+                            title = "Chip $it",
+                            icon = if (it <= 10) null else {
+                                { Icon(Icons.Default.Info, null) }
+                            },
+                            onClick = if (it <= 15) null else {
+                                { /* clicked */ }
+                            }
+                        )
                     }
                 }
                 MyRow {
                     val checked = remember { mutableStateOf(0) }
                     repeat(5) { value ->
-                        MyCheckChip(title = "Checked Chip ${value + 1}", checked = checked.value == value) {
+                        MyCheckChip(
+                            title = "Checked Chip ${value + 1}",
+                            checked = checked.value == value
+                        ) {
                             checked.value = value
                         }
                     }
