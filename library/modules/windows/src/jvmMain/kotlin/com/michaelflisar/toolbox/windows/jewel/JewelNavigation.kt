@@ -1,8 +1,15 @@
 package com.michaelflisar.toolbox.windows.jewel
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,12 +33,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -213,9 +223,13 @@ private fun NavRegionItem(
     ) {
         SelectionIndicator(false)
         if (item.icon != null) {
-            NavIcon(item.icon)
+            CompositionLocalProvider(
+                LocalContentColor provides MaterialTheme.colorScheme.primary
+            ) {
+                NavIcon(item.icon)
+            }
         } else {
-            NavIconRegionPlaceholder()
+            NavIconRegionPlaceholder(expanded.value, setup)
         }
         NavText(expanded.value, item.title, setup, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
     }
@@ -251,9 +265,17 @@ private fun NavIcon(icon: @Composable () -> Unit) {
 }
 
 @Composable
-private fun NavIconRegionPlaceholder() {
-    Box(modifier = Modifier.size(28.dp).padding(4.dp), contentAlignment = Alignment.Center) {
-        Box(modifier = Modifier.height(1.dp).fillMaxWidth().background(MaterialTheme.colorScheme.primary))
+private fun NavIconRegionPlaceholder(
+    expanded: Boolean,
+    setup: JewelNavigation.Setup
+) {
+    val height = animateDpAsState(if (setup.showExpand && !expanded) 9.dp else 28.dp)
+    val paddingVertical = animateDpAsState(if (setup.showExpand && !expanded) 0.dp else 4.dp)
+    Box(
+        modifier = Modifier.width(28.dp).height(height.value).padding(horizontal = 4.dp, vertical = paddingVertical.value),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(modifier = Modifier.height(1.dp).fillMaxWidth().background(MaterialTheme.colorScheme.outlineVariant))
     }
 }
 

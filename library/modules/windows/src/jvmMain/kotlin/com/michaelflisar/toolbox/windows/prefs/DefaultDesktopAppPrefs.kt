@@ -25,8 +25,6 @@ object DefaultDesktopAppPrefs : SettingsModel(
     override val alwaysOnTop by boolPref(false)
 
     // DesktopApp
-    override val theme by enumPref(Theme.System, Theme.entries)
-
     override val jewelTheme by enumPref(JewelTheme.System, JewelTheme.entries)
 
 }

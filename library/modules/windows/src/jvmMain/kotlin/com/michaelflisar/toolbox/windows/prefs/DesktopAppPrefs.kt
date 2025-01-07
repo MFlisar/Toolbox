@@ -14,8 +14,6 @@ interface DesktopAppPrefs {
     val windowPlacement: StorageSetting<WindowPlacement>
     val alwaysOnTop: StorageSetting<Boolean>
 
-    val theme: StorageSetting<Theme>
-
     val jewelTheme: StorageSetting<JewelTheme>
 }
 
