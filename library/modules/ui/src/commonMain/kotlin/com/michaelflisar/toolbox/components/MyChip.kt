@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.classes.LocalStyle
 
@@ -44,7 +45,7 @@ fun MyChip(
         Row(
             modifier = m,
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall, Alignment.CenterHorizontally)
         ) {
             CompositionLocalProvider(
                 LocalContentColor provides (color.takeIf { it != Color.Unspecified } ?: LocalContentColor.current)
@@ -66,7 +67,8 @@ fun MyChip(
             text = title,
             maxLines = maxLines,
             color = color,
-            style = style
+            style = style,
+            textAlign = TextAlign.Center
         )
     }
 }

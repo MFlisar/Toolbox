@@ -251,6 +251,11 @@ private fun <T> MyDropdownImpl(
                 }
             }
         }
+
+        val style1 =
+            MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize * .8f)
+        val style2 = MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize)
+
         Row(
             modifier = Modifier.fillMaxWidth()
                 .clip(MaterialTheme.shapes.small)
@@ -266,9 +271,7 @@ private fun <T> MyDropdownImpl(
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val style1 =
-                MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize * .8f)
-            val style2 = MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize)
+
             Column(modifier = Modifier.weight(1f)) {
                 if (title.isNotEmpty()) {
                     Text(text = title, style = style1, fontWeight = FontWeight.Bold, color = labelColor)
@@ -295,17 +298,23 @@ private fun <T> MyDropdownImpl(
             scrollState = scrollState
         ) {
             if (filter != null) {
-                OutlinedTextField(
-                    value = filterText.value,
-                    label = { Text(filter.label) },
-                    singleLine = true,
-                    onValueChange = { filterText.value = it },
+                Column(
                     modifier = Modifier
                         .offset(y = with(LocalDensity.current) { scrollState.value.toDp() })
                         .background(MaterialTheme.colorScheme.surfaceContainer)
                         .padding(all = LocalStyle.current.paddingDefault)
-                        .zIndex(2f)
-                )
+                        .zIndex(2f),
+                    verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
+                ) {
+                    Text(text = title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                    OutlinedTextField(
+                        value = filterText.value,
+                        label = { Text(filter.label) },
+                        singleLine = true,
+                        onValueChange = { filterText.value = it },
+                    )
+                }
+
             }
             filteredItems.value.forEach {
                 DropdownMenuItem(

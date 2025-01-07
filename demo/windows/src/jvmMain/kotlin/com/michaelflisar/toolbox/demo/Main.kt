@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Clear
@@ -26,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.michaelflisar.composecolors.material.MaterialColor
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogContent
@@ -39,13 +41,19 @@ import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyDropdown
 import com.michaelflisar.toolbox.components.MyExpandableOutlinedTitle
 import com.michaelflisar.toolbox.components.MyExpandableTitle
+import com.michaelflisar.toolbox.components.MyFilledTonalButton
 import com.michaelflisar.toolbox.components.MyFlowRow
+import com.michaelflisar.toolbox.components.MyIconButton
+import com.michaelflisar.toolbox.components.MyIconFilledButton
+import com.michaelflisar.toolbox.components.MyIconOutlinedButton
 import com.michaelflisar.toolbox.components.MyMultiDropdown
 import com.michaelflisar.toolbox.components.MyMultiSegmentedButtonRow
 import com.michaelflisar.toolbox.components.MyMultiSegmentedControl
+import com.michaelflisar.toolbox.components.MyOutlinedButton
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.components.MySegmentedButtonRow
 import com.michaelflisar.toolbox.components.MySegmentedControl
+import com.michaelflisar.toolbox.components.MyTextButton
 import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.demo.resources.Res
 import com.michaelflisar.toolbox.demo.resources.mflisar
@@ -292,6 +300,29 @@ private fun ContentPage1() {
             }
         }
 
+        // 5) Buttons
+        MyTitle("Buttons") {
+            MyFlowRow {
+                MyButton("Button") {}
+                MyOutlinedButton("Outlined Button") {}
+                MyTextButton("Text Button") {}
+                MyFilledTonalButton("Filled Tonal Button") {}
+                MyButton("Button + Icon", icon = Icons.Default.Info) {}
+                MyOutlinedButton("Outlined Button + Icon", icon = Icons.Default.Info) {}
+                MyTextButton("Text Button + Icon", icon = Icons.Default.Info) {}
+                MyFilledTonalButton("Filled Tonal Button", icon = Icons.Default.Info) {}
+            }
+        }
+
+        // 6) Icon Buttons
+        MyTitle("Icon Buttons") {
+            MyFlowRow {
+                MyIconButton(Icons.Default.Info) {}
+                MyIconOutlinedButton(Icons.Default.Info) {}
+                MyIconFilledButton(Icons.Default.Info) {}
+            }
+        }
+
         // testing list item updates
         LaunchedEffect(Unit) {
             if (items.value.size > 50)
@@ -339,13 +370,20 @@ private fun ContentPageSegmentsAndDropdowns() {
         val selected = remember { mutableStateOf(0) }
         val selectedMulti = remember { mutableStateOf(emptyList<String>()) }
 
-        MySegmentedControl(items = items, selected = selected)
+        MySegmentedControl(items = items, selectedIndex = selected)
         MyDropdown(title = "Select", items = items, selected = selected)
         MySegmentedButtonRow(items = items, selected = selected)
 
         MyMultiSegmentedControl(items = items, selected = selectedMulti)
         MyMultiDropdown(title = "Select", items = items, selected = selectedMulti)
         MyMultiSegmentedButtonRow(items = items, selected = selectedMulti)
+
+        MyTitle("Chip Row")
+        MyRow(itemSpacing = 4.dp) {
+            items.forEach {
+                MyChip(title = it, modifier = Modifier.widthIn(min = 48.dp), onClick = {})
+            }
+        }
     }
 }
 

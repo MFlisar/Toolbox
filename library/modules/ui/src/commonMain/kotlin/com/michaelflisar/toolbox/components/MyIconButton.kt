@@ -2,6 +2,8 @@ package com.michaelflisar.toolbox.components
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
@@ -39,7 +41,7 @@ fun MyIconButton(
 }
 
 @Composable
-fun MyOutlinedIconButton(
+fun MyIconOutlinedButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     iconPaddingValues: PaddingValues = PaddingValues(),
@@ -49,6 +51,56 @@ fun MyOutlinedIconButton(
     onClick: () -> Unit
 ) {
     OutlinedIconButton(
+        modifier = modifier,
+        onClick = onClick,
+        colors = colors,
+        enabled = enabled
+    ) {
+        Icon(
+            modifier = Modifier.padding(iconPaddingValues),
+            imageVector = icon,
+            contentDescription = null,
+            tint = tint ?: LocalContentColor.current
+        )
+    }
+}
+
+@Composable
+fun MyIconFilledButton(
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    iconPaddingValues: PaddingValues = PaddingValues(),
+    tint: Color? = null,
+    colors: IconButtonColors = IconButtonDefaults.filledIconButtonColors(),
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    FilledIconButton(
+        modifier = modifier,
+        onClick = onClick,
+        colors = colors,
+        enabled = enabled
+    ) {
+        Icon(
+            modifier = Modifier.padding(iconPaddingValues),
+            imageVector = icon,
+            contentDescription = null,
+            tint = tint ?: LocalContentColor.current
+        )
+    }
+}
+
+@Composable
+fun MyIconFilledTonalButton(
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    iconPaddingValues: PaddingValues = PaddingValues(),
+    tint: Color? = null,
+    colors: IconButtonColors = IconButtonDefaults.filledTonalIconButtonColors(),
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    FilledTonalIconButton(
         modifier = modifier,
         onClick = onClick,
         colors = colors,

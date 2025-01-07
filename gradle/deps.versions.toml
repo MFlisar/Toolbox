@@ -5,7 +5,7 @@ material =                      "1.12.0"
 # mflisar
 lumberjack =                    "7.1.2"
 kotpreferences =                "0.7.2"
-composepreferences =   		    "1.0.0-test08"
+composepreferences =   		    "1.0.0-test09"
 composethemer =                 "0.4.1"
 composecolors =                 "1.0.1"
 
@@ -15,7 +15,7 @@ intellij-platform =             "243.21565.208"
 
 [libraries]
 
-material =                              { module = "com.google.android.material:material", 	                        version.ref = "material" }
+material =                              { module = "com.google.android.material:material", 	                    version.ref = "material" }
 
 # mflisar
 lumberjack-core =                       { module = "io.github.mflisar.lumberjack:core", 		                version.ref = "lumberjack" }
@@ -26,16 +26,16 @@ lumberjack-extension-composeviewer =    { module = "io.github.mflisar.lumberjack
 kotpreferences-core =                   { module = "io.github.mflisar.kotpreferences:core", 		            version.ref = "kotpreferences" }
 kotpreferences-storage-datastore =      { module = "io.github.mflisar.kotpreferences:storage-datastore", 	    version.ref = "kotpreferences" }
 kotpreferences-extension-compose =      { module = "io.github.mflisar.kotpreferences:extension-compose", 	    version.ref = "kotpreferences" }
-composepreferences-core =				{ module = "io.github.mflisar.composepreferences:core",      						version.ref = "composepreferences" }
-composepreferences-screen-bool =		{ module = "io.github.mflisar.composepreferences:screen-bool",      				version.ref = "composepreferences" }
-composepreferences-screen-button =		{ module = "io.github.mflisar.composepreferences:screen-button",      				version.ref = "composepreferences" }
-composepreferences-screen-input =		{ module = "io.github.mflisar.composepreferences:screen-input",      				version.ref = "composepreferences" }
-composepreferences-screen-color =		{ module = "io.github.mflisar.composepreferences:screen-color",      				version.ref = "composepreferences" }
-composepreferences-screen-date =		{ module = "io.github.mflisar.composepreferences:screen-date",      				version.ref = "composepreferences" }
-composepreferences-screen-time =		{ module = "io.github.mflisar.composepreferences:screen-time",      				version.ref = "composepreferences" }
-composepreferences-screen-list =		{ module = "io.github.mflisar.composepreferences:screen-list",      				version.ref = "composepreferences" }
-composepreferences-screen-number =		{ module = "io.github.mflisar.composepreferences:screen-number",      				version.ref = "composepreferences" }
-composepreferences-kotpreferences =		{ module = "io.github.mflisar.composepreferences:kotpreferences",      				version.ref = "composepreferences" }
+composepreferences-core =				{ module = "io.github.mflisar.composepreferences:core",      			version.ref = "composepreferences" }
+composepreferences-screen-bool =		{ module = "io.github.mflisar.composepreferences:screen-bool",      	version.ref = "composepreferences" }
+composepreferences-screen-button =		{ module = "io.github.mflisar.composepreferences:screen-button",      	version.ref = "composepreferences" }
+composepreferences-screen-input =		{ module = "io.github.mflisar.composepreferences:screen-input",      	version.ref = "composepreferences" }
+composepreferences-screen-color =		{ module = "io.github.mflisar.composepreferences:screen-color",      	version.ref = "composepreferences" }
+composepreferences-screen-date =		{ module = "io.github.mflisar.composepreferences:screen-date",      	version.ref = "composepreferences" }
+composepreferences-screen-time =		{ module = "io.github.mflisar.composepreferences:screen-time",      	version.ref = "composepreferences" }
+composepreferences-screen-list =		{ module = "io.github.mflisar.composepreferences:screen-list",      	version.ref = "composepreferences" }
+composepreferences-screen-number =		{ module = "io.github.mflisar.composepreferences:screen-number",      	version.ref = "composepreferences" }
+composepreferences-kotpreferences =		{ module = "io.github.mflisar.composepreferences:kotpreferences",      	version.ref = "composepreferences" }
 composethemer-core =                    { module = "io.github.mflisar.composethemer:core", 			            version.ref = "composethemer" }
 composethemer-themes =                  { module = "io.github.mflisar.composethemer:themes", 	                version.ref = "composethemer" }
 composecolors-material =                { module = "io.github.mflisar.composecolors:material", 	                version.ref = "composecolors" }

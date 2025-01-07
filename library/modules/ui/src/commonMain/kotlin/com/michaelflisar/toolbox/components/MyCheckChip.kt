@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.classes.LocalStyle
 
@@ -74,7 +75,7 @@ fun MyCheckChip(
         Row(
             modifier = m,
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
+            horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall, Alignment.CenterHorizontally)
         ) {
             CompositionLocalProvider(
                 LocalContentColor provides if (checked) colorSelectedText else colorNotSelectedText
@@ -96,7 +97,8 @@ fun MyCheckChip(
             text = title,
             maxLines = maxLines,
             color = if (checked) colorSelectedText else colorNotSelectedText,
-            style = style
+            style = style,
+            textAlign = TextAlign.Center
         )
     }
 }
