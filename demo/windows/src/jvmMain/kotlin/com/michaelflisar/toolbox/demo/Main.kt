@@ -173,7 +173,7 @@ fun main() {
             icon = painterResource(Res.drawable.mflisar),
             menuBarItems = menuBarItem,
             menuBarSetup = JewelTitleBar.Setup(),
-            selectedNavigationItem = 0,
+            selectedNavigationItem = remember { mutableStateOf(0) },
             navigationItems = navItems,
             navigationSetup = JewelNavigation.Setup(),
             statusbar = {

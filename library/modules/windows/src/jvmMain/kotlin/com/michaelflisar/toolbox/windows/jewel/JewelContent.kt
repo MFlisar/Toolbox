@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -21,12 +22,11 @@ fun DecoratedWindowScope.JewelContent(
     icon: Painter? = null,
     menuBarItems: List<JewelMenuBarItem> = emptyList(),
     menuBarSetup: JewelTitleBar.Setup = JewelTitleBar.Setup(),
-    selectedNavigationItem: Int,
+    selectedNavigationItem: MutableState<Int>,
     navigationItems: List<IJewelNavigationItem>,
     navigationSetup: JewelNavigation.Setup = JewelNavigation.Setup(),
     statusbar: @Composable () -> Unit = {}
 ) {
-    val selectedNavigationItem = remember { mutableStateOf(selectedNavigationItem) }
     JewelContent(
         titleBar = {
             JewelTitleBar(
