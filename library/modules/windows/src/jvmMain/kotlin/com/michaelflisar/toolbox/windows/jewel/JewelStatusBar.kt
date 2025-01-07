@@ -25,10 +25,18 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.window.defaultTitleBarStyle
 
-class JewelStatusBarItem(
-    val title: String,
-    val onClick: (() -> Unit)? = null
-)
+sealed class JewelStatusBarItem {
+
+    class Text(
+        val text: String,
+        val color: Color = Color.Unspecified,
+        val onClick: (() -> Unit)? = null
+    ) : JewelStatusBarItem()
+
+    class Custom(
+        val content: @Composable () -> Unit
+    ): JewelStatusBarItem()
+}
 
 @Composable
 fun JewelStatusBar(
@@ -54,7 +62,11 @@ fun JewelStatusBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 left.forEach { item ->
-                    StatusBarText(text = item.title, onClick = item.onClick)
+                    when (item) {
+                        is JewelStatusBarItem.Custom -> StatusBarCustom(item.content)
+                        is JewelStatusBarItem.Text -> StatusBarText(text = item.text, onClick = item.onClick, color = item.color)
+                    }
+
                     VerticalDivider()
                 }
                 if (content == null) {
@@ -70,7 +82,10 @@ fun JewelStatusBar(
 
                 right.forEach { item ->
                     VerticalDivider()
-                    StatusBarText(text = item.title, onClick = item.onClick)
+                    when (item) {
+                        is JewelStatusBarItem.Custom -> StatusBarCustom(item.content)
+                        is JewelStatusBarItem.Text -> StatusBarText(text = item.text, onClick = item.onClick, color = item.color)
+                    }
                 }
             }
         }
@@ -99,4 +114,11 @@ private fun StatusBarText(
         maxLines = maxLines,
         color = color
     )
+}
+
+@Composable
+private fun StatusBarCustom(
+    content: @Composable () -> Unit
+) {
+    content()
 }

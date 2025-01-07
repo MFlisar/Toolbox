@@ -40,10 +40,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.components.MyRow
+import kotlin.math.exp
 
 sealed interface IJewelNavigationItem
 
@@ -57,6 +63,16 @@ class JewelNavigationItem(
         imageVector: ImageVector,
         content: @Composable () -> Unit
     ) : this(title, { Icon(imageVector, null) }, content)
+}
+
+class JewelNavigationRegion(
+    val title: String,
+    val icon: @Composable (() -> Unit)? = null
+) : IJewelNavigationItem {
+    constructor(
+        title: String,
+        imageVector: ImageVector
+    ) : this(title, { Icon(imageVector, null) })
 }
 
 class JewelNavigationItemSpacer(val weight: Float = 1f) : IJewelNavigationItem
@@ -114,6 +130,10 @@ private fun Rail(
 
                     is JewelNavigationItemSpacer -> {
                         Spacer(modifier = Modifier.weight(it.weight))
+                    }
+
+                    is JewelNavigationRegion -> {
+                        NavRegionItem(it, expanded, setup)
                     }
                 }
             }
@@ -176,6 +196,31 @@ private fun NavItem(
     }
 }
 
+
+@Composable
+private fun NavRegionItem(
+    item: JewelNavigationRegion,
+    expanded: MutableState<Boolean>,
+    setup: JewelNavigation.Setup
+) {
+    Row(
+        modifier = Modifier
+            .clip(MaterialTheme.shapes.small)
+            .padding(all = 4.dp)
+            .height(IntrinsicSize.Min)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        SelectionIndicator(false)
+        if (item.icon != null) {
+            NavIcon(item.icon)
+        } else {
+            NavIconRegionPlaceholder()
+        }
+        NavText(expanded.value, item.title, setup, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+    }
+}
+
 @Composable
 private fun NavRow(
     onClick: () -> Unit,
@@ -206,10 +251,19 @@ private fun NavIcon(icon: @Composable () -> Unit) {
 }
 
 @Composable
+private fun NavIconRegionPlaceholder() {
+    Box(modifier = Modifier.size(28.dp).padding(4.dp), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.height(1.dp).fillMaxWidth().background(MaterialTheme.colorScheme.primary))
+    }
+}
+
+@Composable
 private fun NavText(
     expanded: Boolean,
     title: String,
-    setup: JewelNavigation.Setup
+    setup: JewelNavigation.Setup,
+    style: TextStyle =  MaterialTheme.typography.titleSmall,
+    color: Color = Color.Unspecified
 ) {
     if (setup.showExpand) {
         if (expanded) {
@@ -218,7 +272,8 @@ private fun NavText(
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .widthIn(min = setup.minWidth),
-                style = MaterialTheme.typography.titleSmall
+                style = style,
+                color = color
             )
         }
     } else {
@@ -227,7 +282,8 @@ private fun NavText(
             modifier = Modifier
                 .padding(horizontal = 8.dp)
                 .widthIn(min = setup.minWidth),
-            style = MaterialTheme.typography.titleSmall
+            style = style,
+            color = color
         )
     }
 }

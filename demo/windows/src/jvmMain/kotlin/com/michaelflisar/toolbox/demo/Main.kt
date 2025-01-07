@@ -1,11 +1,13 @@
 package com.michaelflisar.toolbox.demo
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -72,6 +74,7 @@ import com.michaelflisar.toolbox.windows.jewel.JewelMenuBarItem
 import com.michaelflisar.toolbox.windows.jewel.JewelNavigation
 import com.michaelflisar.toolbox.windows.jewel.JewelNavigationItem
 import com.michaelflisar.toolbox.windows.jewel.JewelNavigationItemSpacer
+import com.michaelflisar.toolbox.windows.jewel.JewelNavigationRegion
 import com.michaelflisar.toolbox.windows.jewel.JewelStatusBar
 import com.michaelflisar.toolbox.windows.jewel.JewelStatusBarItem
 import com.michaelflisar.toolbox.windows.jewel.JewelTitleBar
@@ -105,12 +108,14 @@ fun main() {
 
         // Navigation
         val navItems = listOf(
+            JewelNavigationRegion("Region 1"),
             JewelNavigationItem("UI Examples", Icons.Default.Info) {
                 ContentPage1()
             },
             JewelNavigationItem("Dialog", Icons.Default.Window) {
                 ContentPageDialogs()
             },
+            JewelNavigationRegion("Region 2"),
             JewelNavigationItem("Pane", Icons.Default.SwipeLeft) {
                 ContentPagePane()
             },
@@ -150,14 +155,17 @@ fun main() {
 
         // Statusbar
         val statusBarLeft = listOf(
-            JewelStatusBarItem("App Version: 1.0") {
+            JewelStatusBarItem.Custom {
+              Image(painter = painterResource(Res.drawable.mflisar), contentDescription = null, modifier = Modifier.size(24.dp).padding(4.dp))
+            },
+            JewelStatusBarItem.Text("App Version: 1.0") {
                 appState.showSnackbar("App clicked!")
             }
         )
         val statusBarRight = listOf(
-            JewelStatusBarItem(Toolbox.javaVersion()),
-            JewelStatusBarItem(Toolbox.userName()),
-            JewelStatusBarItem(Toolbox.hostName())
+            JewelStatusBarItem.Text(Toolbox.javaVersion()),
+            JewelStatusBarItem.Text(Toolbox.userName()),
+            JewelStatusBarItem.Text(Toolbox.hostName())
         )
 
         // Content
