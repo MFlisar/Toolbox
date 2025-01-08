@@ -9,15 +9,11 @@ import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.FilterAltOff
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
@@ -25,11 +21,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.classes.LocalStyle
-import com.michaelflisar.toolbox.components.MyIconTextButton
+import com.michaelflisar.toolbox.components.MyTextButton
 import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.table.definitions.TableDefinition
 
@@ -49,7 +44,7 @@ fun TableTitle(
         }
     },
 
-) {
+    ) {
     val filterIsActive by remember(definition.columns) {
         derivedStateOf {
             definition.columns.map { it.filter?.isActive() ?: false }.contains(true)
@@ -79,7 +74,7 @@ fun TableTitle(
             enter = fadeIn() + expandHorizontally(expandFrom = Alignment.CenterHorizontally),
             exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.CenterHorizontally),
         ) {
-            MyIconTextButton(
+            MyTextButton(
                 text = "Filter zurücksetzen",
                 icon = Icons.Default.FilterAltOff
             ) {
@@ -87,7 +82,7 @@ fun TableTitle(
             }
         }
         AnimatedVisibility(visible = definition.sorts.size > 0) {
-            MyIconTextButton(
+            MyTextButton(
                 text = "Sortierungen zurücksetzen",
                 icon = Icons.Default.Clear
             ) {

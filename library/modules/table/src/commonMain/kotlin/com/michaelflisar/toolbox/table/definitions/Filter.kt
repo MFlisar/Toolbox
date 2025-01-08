@@ -405,7 +405,7 @@ abstract class Filter<Item, CellValue> {
         override fun ColumnScope.content() {
             MySegmentedControl(
                 items = listOf(labelAll, labelChecked, labelUnchecked),
-                selected = when (state.value) {
+                selectedIndex = when (state.value) {
                     true -> 1
                     false -> 2
                     null -> 0

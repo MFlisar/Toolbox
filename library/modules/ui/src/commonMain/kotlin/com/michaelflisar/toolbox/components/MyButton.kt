@@ -8,20 +8,24 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.classes.LocalStyle
 
 @Composable
 fun MyButton(
     text: String,
     icon: ImageVector? = null,
+    iconRotation: Float = 0f,
+    iconTint: Color? = null,
     modifier: Modifier = Modifier,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     enabled: Boolean = true,
@@ -33,7 +37,7 @@ fun MyButton(
         colors = colors,
         enabled = enabled
     ) {
-        ButtonContent(icon, text)
+        ButtonContent(text, icon, iconRotation, iconTint)
     }
 }
 
@@ -41,6 +45,8 @@ fun MyButton(
 fun MyOutlinedButton(
     text: String,
     icon: ImageVector? = null,
+    iconRotation: Float = 0f,
+    iconTint: Color? = null,
     modifier: Modifier = Modifier,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     enabled: Boolean = true,
@@ -52,7 +58,7 @@ fun MyOutlinedButton(
         colors = colors,
         enabled = enabled
     ) {
-        ButtonContent(icon, text)
+        ButtonContent(text, icon, iconRotation, iconTint)
     }
 }
 
@@ -60,6 +66,8 @@ fun MyOutlinedButton(
 fun MyTextButton(
     text: String,
     icon: ImageVector? = null,
+    iconRotation: Float = 0f,
+    iconTint: Color? = null,
     modifier: Modifier = Modifier,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
     enabled: Boolean = true,
@@ -71,7 +79,7 @@ fun MyTextButton(
         colors = colors,
         enabled = enabled
     ) {
-        ButtonContent(icon, text)
+        ButtonContent(text, icon, iconRotation, iconTint)
     }
 }
 
@@ -79,6 +87,8 @@ fun MyTextButton(
 fun MyFilledTonalButton(
     text: String,
     icon: ImageVector? = null,
+    iconRotation: Float = 0f,
+    iconTint: Color? = null,
     modifier: Modifier = Modifier,
     colors: ButtonColors = ButtonDefaults.filledTonalButtonColors(),
     enabled: Boolean = true,
@@ -90,14 +100,16 @@ fun MyFilledTonalButton(
         colors = colors,
         enabled = enabled
     ) {
-        ButtonContent(icon, text)
+        ButtonContent(text, icon, iconRotation, iconTint)
     }
 }
 
 @Composable
 private fun ButtonContent(
+    text: String,
     icon: ImageVector?,
-    text: String
+    iconRotation: Float = 0f,
+    iconTint: Color? = null
 ) {
     if (icon == null) {
         Text(text)
@@ -106,7 +118,12 @@ private fun ButtonContent(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(icon, null, modifier = Modifier.size(24.dp))
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp).rotate(iconRotation),
+                tint = iconTint ?: LocalContentColor.current
+            )
             Text(text)
         }
     }
