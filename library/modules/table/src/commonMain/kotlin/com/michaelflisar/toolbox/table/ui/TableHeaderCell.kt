@@ -3,11 +3,15 @@ package com.michaelflisar.toolbox.table.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -36,6 +40,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -56,57 +61,72 @@ import com.michaelflisar.toolbox.table.definitions.Header
 internal fun RowScope.TableHeaderCell(
     index: Int,
     column: Column<*, *>,
-    sorts: SnapshotStateList<Sort>
+    sorts: SnapshotStateList<Sort>,
 ) {
     val sort = remember(sorts.toList()) {
         derivedStateOf {
             sorts.find { it.columnIndex == index }
         }
     }
-    Row(
+    val popup = remember { mutableStateOf(false) }
+    Box(
         modifier = column
             .modifier(this)
-            .padding(column.header.cellPadding),
-        verticalAlignment = Alignment.CenterVertically
+            .width(IntrinsicSize.Min)
+            .height(IntrinsicSize.Min)
     ) {
-        val containerModifier = Modifier.padding(horizontal = 4.dp).weight(1f)
-        val itemModifier = Modifier.fillMaxWidth()
         Row(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.fillMaxSize()
+                .clickable(
+                    enabled = column.filter != null || column.sortable
+                ) {
+                    popup.value = true
+                }
+                .padding(column.header.cellPadding),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            HeaderTooltipContainer(column.header, containerModifier) {
-                when (val header = column.header) {
-                    is Header.Icon -> {
-                        Row(
-                            modifier = itemModifier,
-                            horizontalArrangement = Arrangement.aligned(header.align)
-                        ) {
-                            header.icon.invoke()
-                        }
-                    }
-
-                    is Header.Text -> {
-                        if (header.icon != null) {
+            val containerModifier = Modifier.padding(horizontal = 4.dp).weight(1f)
+            val itemModifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier.weight(1f),
+            ) {
+                HeaderTooltipContainer(column.header, containerModifier) {
+                    when (val header = column.header) {
+                        is Header.Icon -> {
                             Row(
                                 modifier = itemModifier,
-                                horizontalArrangement = Arrangement.spacedBy(
-                                    4.dp,
-                                    Alignment.CenterHorizontally
-                                )
+                                horizontalArrangement = Arrangement.aligned(header.align)
                             ) {
                                 header.icon.invoke()
-                                if (header.label.isNotEmpty()) {
-                                    HeaderItemText(Modifier.weight(1f), header)
-                                }
                             }
-                        } else {
-                            HeaderItemText(itemModifier, header)
+                        }
+
+                        is Header.Text -> {
+                            if (header.icon != null) {
+                                Row(
+                                    modifier = itemModifier,
+                                    horizontalArrangement = Arrangement.spacedBy(
+                                        4.dp,
+                                        Alignment.CenterHorizontally
+                                    )
+                                ) {
+                                    header.icon.invoke()
+                                    if (header.label.isNotEmpty()) {
+                                        HeaderItemText(Modifier.weight(1f), header)
+                                    }
+                                }
+                            } else {
+                                HeaderItemText(itemModifier, header)
+                            }
                         }
                     }
                 }
             }
+            HeaderMenuIcon(index, column.sortable, column.filter, sorts, sort)
         }
-        HeaderMenuIcon(index, column.filter, sorts, sort)
+        if (popup.value) {
+            HeaderPopup(popup, index, column.sortable, sorts, column.filter, sort)
+        }
     }
 }
 
@@ -114,7 +134,7 @@ internal fun RowScope.TableHeaderCell(
 private fun RowScope.HeaderTooltipContainer(
     header: Header,
     modifier: Modifier,
-    content: @Composable (() -> Unit)
+    content: @Composable (() -> Unit),
 ) {
     MyTooltipBox(
         modifier = modifier,
@@ -136,7 +156,7 @@ private fun RowScope.HeaderTooltipContainer(
 @Composable
 private fun RowScope.HeaderItemText(
     modifier: Modifier,
-    header: Header.Text
+    header: Header.Text,
 ) {
     Text(
         modifier = modifier,
@@ -151,58 +171,108 @@ private fun RowScope.HeaderItemText(
 @Composable
 private fun HeaderMenuIcon(
     index: Int,
+    sortable: Boolean,
     filter: Filter<*, *>?,
     sorts: SnapshotStateList<Sort>,
-    sort: State<Sort?>
+    sort: State<Sort?>,
 ) {
-    val popup = remember { mutableStateOf(false) }
-    Box(
-        modifier = Modifier
-            .clip(CircleShape)
-            .clickable {
-                popup.value = true
+    val s = sort.value
+
+    var largeIcon: ImageVector? = null
+    var smallIcon: ImageVector? = null
+
+    if (sortable && filter != null) {
+        // Spalte ist sortierbar und filterbar
+        if (s != null && filter.isActive()) {
+            largeIcon = Icons.Default.FilterAlt
+            smallIcon = when (s.type) {
+                Sort.Type.Asc -> Icons.Default.ArrowUpward
+                Sort.Type.Desc -> Icons.Default.ArrowDownward
             }
-            .padding(4.dp)
-            .width(32.dp)
-    ) {
-        val s = sort.value
-        // big filter icon
-        Icon(
-            modifier = Modifier
-                //.padding(start = 8.dp)
-                .size(24.dp)
-                .align(if (s != null) Alignment.CenterEnd else Alignment.Center),
-            tint = if (filter?.isActive() != true) LocalContentColor.current.disabled() else MaterialTheme.colorScheme.primary,
-            imageVector = Icons.Default.FilterAlt,
-            contentDescription = null
-        )
-        // small sort "overlay"
+        } else if (s != null) {
+            largeIcon = when (s.type) {
+                Sort.Type.Asc -> Icons.Default.ArrowUpward
+                Sort.Type.Desc -> Icons.Default.ArrowDownward
+            }
+        } else if (filter.isActive()) {
+            largeIcon = Icons.Default.FilterAlt
+        }
+    } else if (sortable) {
         if (s != null) {
-            Icon(
-                modifier = Modifier
-                    .size(16.dp)
-                    .align(Alignment.BottomStart),
-                tint = MaterialTheme.colorScheme.primary,
-                imageVector = when (s.type) {
-                    Sort.Type.Asc -> Icons.Default.ArrowUpward
-                    Sort.Type.Desc -> Icons.Default.ArrowDownward
-                },
-                contentDescription = null
+            largeIcon = when (s.type) {
+                Sort.Type.Asc -> Icons.Default.ArrowUpward
+                Sort.Type.Desc -> Icons.Default.ArrowDownward
+            }
+        }
+    } else if (filter != null) {
+        if (filter.isActive()) {
+            largeIcon = Icons.Default.FilterAlt
+        }
+    }
+
+    if (largeIcon != null && smallIcon != null) {
+        Box(
+            modifier = Modifier
+                .padding(4.dp)
+                .width(32.dp)
+        ) {
+            BigIcon(
+                imageVector = largeIcon,
+                withSmallIcon = true
             )
+            SmallIcon(smallIcon)
         }
-        if (popup.value) {
-            HeaderMenuIconPopup(popup, index, sorts, filter, sort)
+    } else if (largeIcon != null) {
+        Box(
+            modifier = Modifier
+                .padding(4.dp)
+                .width(32.dp)
+        ) {
+            BigIcon(largeIcon, false)
         }
+    } else {
+        Box(modifier = Modifier.height(32.dp))
     }
 }
 
 @Composable
-private fun HeaderMenuIconPopup(
+private fun BoxScope.BigIcon(
+    imageVector: ImageVector,
+    withSmallIcon: Boolean,
+) {
+    Icon(
+        modifier = Modifier
+            //.padding(start = 8.dp)
+            .size(24.dp)
+            .align(if (withSmallIcon) Alignment.CenterEnd else Alignment.Center),
+        tint = MaterialTheme.colorScheme.primary,
+        imageVector = imageVector,
+        contentDescription = null
+    )
+}
+
+@Composable
+private fun BoxScope.SmallIcon(
+    imageVector: ImageVector,
+) {
+    Icon(
+        modifier = Modifier
+            .size(16.dp)
+            .align(Alignment.BottomStart),
+        tint = MaterialTheme.colorScheme.primary,
+        imageVector = imageVector,
+        contentDescription = null
+    )
+}
+
+@Composable
+private fun HeaderPopup(
     show: MutableState<Boolean>,
     index: Int,
+    sortable: Boolean,
     sorts: SnapshotStateList<Sort>,
     filter: Filter<*, *>?,
-    sort: State<Sort?>
+    sort: State<Sort?>,
 ) {
     if (show.value) {
         val popupWidth = 256.dp
@@ -237,46 +307,48 @@ private fun HeaderMenuIconPopup(
                         val contentInsetStart =
                             iconSize + iconPadding + LocalStyle.current.spacingDefault
 
-                        Row(
-                            modifier = Modifier.heightIn(min = iconSize + iconPadding),
-                            horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.Sort,
-                                null
-                            )
-                            Text(
-                                modifier = Modifier.weight(1f),
-                                text = "Sortierung",
-                                fontWeight = FontWeight.Bold
-                            )
-                            MyIconButton(
-                                modifier = iconModifier,
-                                iconPaddingValues = PaddingValues(iconPadding),
-                                icon = Icons.Default.ArrowUpward,
-                                tint = if (sort.value?.type == Sort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                        if (sortable) {
+                            Row(
+                                modifier = Modifier.heightIn(min = iconSize + iconPadding),
+                                horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                sort.value?.let { sorts.remove(it) }
-                                sorts.add(Sort(index, Sort.Type.Asc))
-                            }
-                            MyIconButton(
-                                modifier = iconModifier,
-                                iconPaddingValues = PaddingValues(iconPadding),
-                                icon = Icons.Default.ArrowDownward,
-                                tint = if (sort.value?.type == Sort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
-                            ) {
-                                sort.value?.let { sorts.remove(it) }
-                                sorts.add(Sort(index, Sort.Type.Desc))
-                            }
-                            MyIconButton(
-                                enabled = sort.value != null,
-                                modifier = iconModifier,
-                                iconPaddingValues = PaddingValues(iconPadding),
-                                icon = Icons.Default.Clear,
-                                tint = if (sort.value != null) LocalContentColor.current else LocalContentColor.current.disabled()
-                            ) {
-                                sort.value?.let { sorts.remove(it) }
+                                Icon(
+                                    Icons.AutoMirrored.Filled.Sort,
+                                    null
+                                )
+                                Text(
+                                    modifier = Modifier.weight(1f),
+                                    text = "Sortierung",
+                                    fontWeight = FontWeight.Bold
+                                )
+                                MyIconButton(
+                                    modifier = iconModifier,
+                                    iconPaddingValues = PaddingValues(iconPadding),
+                                    icon = Icons.Default.ArrowUpward,
+                                    tint = if (sort.value?.type == Sort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                ) {
+                                    sort.value?.let { sorts.remove(it) }
+                                    sorts.add(Sort(index, Sort.Type.Asc))
+                                }
+                                MyIconButton(
+                                    modifier = iconModifier,
+                                    iconPaddingValues = PaddingValues(iconPadding),
+                                    icon = Icons.Default.ArrowDownward,
+                                    tint = if (sort.value?.type == Sort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                ) {
+                                    sort.value?.let { sorts.remove(it) }
+                                    sorts.add(Sort(index, Sort.Type.Desc))
+                                }
+                                MyIconButton(
+                                    enabled = sort.value != null,
+                                    modifier = iconModifier,
+                                    iconPaddingValues = PaddingValues(iconPadding),
+                                    icon = Icons.Default.Clear,
+                                    tint = if (sort.value != null) LocalContentColor.current else LocalContentColor.current.disabled()
+                                ) {
+                                    sort.value?.let { sorts.remove(it) }
+                                }
                             }
                         }
                     }

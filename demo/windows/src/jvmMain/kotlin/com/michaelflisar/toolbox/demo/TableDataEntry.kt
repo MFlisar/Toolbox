@@ -32,7 +32,8 @@ class TableDataEntry(
             Column(
                 header = Header.Text("Checked"),
                 modifier = { Modifier.width(96.dp) },
-                filter = Filter.Checkmark(),
+                filter = null,
+                sortable = false,
                 cellValue = { it.checked },
                 createCell = { item, value ->
                     Cell.Checkmark(
@@ -47,6 +48,7 @@ class TableDataEntry(
                 modifier = { Modifier.width(96.dp) },
                 cellValue = { it.id },
                 filter = Filter.Number(),
+                sortable = false,
                 createCell = { item, value ->
                     Cell.Number(
                         value,

@@ -39,6 +39,8 @@ import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyCheckChip
 import com.michaelflisar.toolbox.components.MyCheckbox
 import com.michaelflisar.toolbox.components.MyChip
+import com.michaelflisar.toolbox.components.MyChipsMultiRow
+import com.michaelflisar.toolbox.components.MyChipsSingleRow
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyDropdown
 import com.michaelflisar.toolbox.components.MyExpandableOutlinedTitle
@@ -50,7 +52,6 @@ import com.michaelflisar.toolbox.components.MyIconFilledButton
 import com.michaelflisar.toolbox.components.MyIconOutlinedButton
 import com.michaelflisar.toolbox.components.MyMultiDropdown
 import com.michaelflisar.toolbox.components.MyMultiSegmentedButtonRow
-import com.michaelflisar.toolbox.components.MyMultiSegmentedControl
 import com.michaelflisar.toolbox.components.MyOutlinedButton
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.components.MySegmentedButtonRow
@@ -156,7 +157,11 @@ fun main() {
         // Statusbar
         val statusBarLeft = listOf(
             JewelStatusBarItem.Custom {
-              Image(painter = painterResource(Res.drawable.mflisar), contentDescription = null, modifier = Modifier.size(24.dp).padding(4.dp))
+                Image(
+                    painter = painterResource(Res.drawable.mflisar),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp).padding(4.dp)
+                )
             },
             JewelStatusBarItem.Text("App Version: 1.0") {
                 appState.showSnackbar("App clicked!")
@@ -379,10 +384,11 @@ private fun ContentPageSegmentsAndDropdowns() {
         val selectedMulti = remember { mutableStateOf(emptyList<String>()) }
 
         MySegmentedControl(items = items, selectedIndex = selected)
+        MyChipsSingleRow(items = items, selectedIndex = selected)
         MyDropdown(title = "Select", items = items, selected = selected)
         MySegmentedButtonRow(items = items, selected = selected)
 
-        MyMultiSegmentedControl(items = items, selected = selectedMulti)
+        MyChipsMultiRow(items = items, selected = selectedMulti)
         MyMultiDropdown(title = "Select", items = items, selected = selectedMulti)
         MyMultiSegmentedButtonRow(items = items, selected = selectedMulti)
 

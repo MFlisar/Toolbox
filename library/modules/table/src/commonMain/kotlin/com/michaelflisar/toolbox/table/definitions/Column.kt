@@ -9,6 +9,7 @@ class Column<CellValue, Item>(
     val header: Header,
     val modifier: RowScope.() -> Modifier,
     val filter: Filter<Item, CellValue>? = null,
+    val sortable: Boolean = true,
     val cellValue: (Item) -> CellValue,
     val createCell: @Composable (item: Item, value: CellValue) -> Cell<CellValue>
 ) {
