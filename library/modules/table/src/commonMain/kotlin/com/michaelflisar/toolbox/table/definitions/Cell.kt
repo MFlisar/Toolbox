@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import kotlin.math.min
 
 sealed class Cell<CellValue> {
 
@@ -32,6 +33,8 @@ sealed class Cell<CellValue> {
         val textStyle: TextStyle? = null,
         val fontWeight: FontWeight? = null,
         val textAlign: TextAlign = TextAlign.Start,
+        val maxLines: Int = Int.MAX_VALUE,
+        val minLines: Int = 1,
         override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
     ) : Cell<String>() {
 
@@ -45,7 +48,9 @@ sealed class Cell<CellValue> {
                 style = textStyle ?: LocalTextStyle.current,
                 fontWeight = fontWeight,
                 color = color,
-                textAlign = textAlign
+                textAlign = textAlign,
+                maxLines = maxLines,
+                minLines = minLines
             )
         }
     }
@@ -72,6 +77,8 @@ sealed class Cell<CellValue> {
         val textStyle: TextStyle? = null,
         val textAlign: TextAlign = TextAlign.Start,
         val fontWeight: FontWeight? = null,
+        val maxLines: Int = Int.MAX_VALUE,
+        val minLines: Int = 1,
         override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
     ) : Cell<T>() {
 
@@ -85,7 +92,9 @@ sealed class Cell<CellValue> {
                 style = textStyle ?: LocalTextStyle.current,
                 fontWeight = fontWeight,
                 color = color,
-                textAlign = textAlign
+                textAlign = textAlign,
+                minLines = minLines,
+                maxLines = maxLines
             )
         }
     }
@@ -96,6 +105,8 @@ sealed class Cell<CellValue> {
         val textStyle: TextStyle? = null,
         val textAlign: TextAlign = TextAlign.Start,
         val fontWeight: FontWeight? = null,
+        val maxLines: Int = Int.MAX_VALUE,
+        val minLines: Int = 1,
         override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
     ) : Cell<T>() {
 
@@ -109,7 +120,9 @@ sealed class Cell<CellValue> {
                 style = textStyle ?: LocalTextStyle.current,
                 fontWeight = fontWeight,
                 color = color,
-                textAlign = textAlign
+                textAlign = textAlign,
+                minLines = minLines,
+                maxLines = maxLines
             )
         }
     }
@@ -120,6 +133,8 @@ sealed class Cell<CellValue> {
         val textStyle: TextStyle? = null,
         val textAlign: TextAlign = TextAlign.Start,
         val fontWeight: FontWeight? = null,
+        val maxLines: Int = Int.MAX_VALUE,
+        val minLines: Int = 1,
         override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
     ) : Cell<T>() where T : kotlin.Number, T : Comparable<T> {
 
@@ -133,7 +148,9 @@ sealed class Cell<CellValue> {
                 style = textStyle ?: LocalTextStyle.current,
                 fontWeight = fontWeight,
                 color = color,
-                textAlign = textAlign
+                textAlign = textAlign,
+                minLines = minLines,
+                maxLines = maxLines
             )
         }
     }

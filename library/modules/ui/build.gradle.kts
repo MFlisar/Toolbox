@@ -86,7 +86,7 @@ kotlin {
             api(project(":toolbox:core"))
 
             // Components
-            implementation(deps.composedialogs.core)
+            api(deps.composedialogs.core)
 
         }
 

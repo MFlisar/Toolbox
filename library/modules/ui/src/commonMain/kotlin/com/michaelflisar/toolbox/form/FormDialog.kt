@@ -10,16 +10,15 @@ import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogButton
 import com.michaelflisar.composedialogs.core.DialogButtonType
 import com.michaelflisar.composedialogs.core.DialogContentScrollableColumn
-import com.michaelflisar.composedialogs.core.DialogContentScrollableLazyColumn
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogEvent
-import com.michaelflisar.composedialogs.core.DialogStateWithData
+import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.Options
 import com.michaelflisar.composedialogs.core.defaultDialogStyle
 
 @Composable
-fun <T> FormDialog(
-    state: DialogStateWithData<T>,
+fun FormDialog(
+    state: DialogState,
     name: String,
     fields: FormFields,
     labelWidth: Dp? = null,
