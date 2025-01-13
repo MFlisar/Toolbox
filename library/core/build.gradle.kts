@@ -49,14 +49,14 @@ kotlin {
     }
 
     // web
-    js(IR) {
-        nodejs {}
-        browser {}
-    }
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        nodejs()
-    }
+    // js(IR) {
+    //     nodejs {}
+    //     browser {}
+    // }
+    // @OptIn(ExperimentalWasmDsl::class)
+    // wasmJs {
+    //     nodejs()
+    // }
 
     // iOS
     //macosX64()

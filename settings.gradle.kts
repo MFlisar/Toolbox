@@ -62,4 +62,4 @@ includeModule("library\\modules\\android-demo-app", ":toolbox:modules:androiddem
 
 include(":demo:android")
 include(":demo:windows")
-include(":demo:web")
+//include(":demo:web")
