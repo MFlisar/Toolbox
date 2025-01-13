@@ -32,7 +32,7 @@ actual fun MyScrollableLazyColumn(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = if (overlapScrollbar) 0.dp else LocalStyle.current.scrollbar),
+                .padding(end = if (overlapScrollbar) 0.dp else LocalStyle.current.paddingForScrollbar),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
             horizontalAlignment = horizontalAlignment,
             state = state

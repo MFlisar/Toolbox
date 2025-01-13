@@ -26,9 +26,9 @@ actual fun MyScrollableLazyHorizontalGrid(
         LazyHorizontalGrid(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = LocalStyle.current.scrollbar),
+                .padding(bottom = LocalStyle.current.paddingForScrollbar),
             rows = gridRows,
-            contentPadding = PaddingValues(LocalStyle.current.scrollbar),
+            contentPadding = PaddingValues(LocalStyle.current.paddingForScrollbar),
             verticalArrangement = verticalArrangement,
             horizontalArrangement = horizontalArrangement,
             state = gridState

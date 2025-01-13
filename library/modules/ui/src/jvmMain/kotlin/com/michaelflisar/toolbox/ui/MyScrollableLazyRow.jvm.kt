@@ -31,7 +31,7 @@ actual fun MyScrollableLazyRow(
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = LocalStyle.current.scrollbar),
+                .padding(bottom = LocalStyle.current.paddingForScrollbar),
             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
             verticalAlignment = verticalAlignment,
             state = state

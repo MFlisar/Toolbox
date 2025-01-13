@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.disabled
 
@@ -39,13 +38,15 @@ fun MyCheckbox(
     style: TextStyle = LocalTextStyle.current,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
-    MyCheckbox(
-        modifier,
-        { Text(title, maxLines = maxLines) },
-        checked.value,
-        color,
-        colorUnselected,
-        style
+    MyCheckboxImpl(
+        modifier = modifier,
+        title = if (title.isNotEmpty()) {
+            { Text(title, maxLines = maxLines) }
+        } else null,
+        checked = checked.value,
+        color = color,
+        colorUnselected = colorUnselected,
+        style = style
     ) {
         checked.value = it
         onCheckedChange(it)
@@ -63,12 +64,12 @@ fun MyCheckbox(
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
     MyCheckbox(
-        modifier,
-        title,
-        checked.value,
-        color,
-        colorUnselected,
-        style
+        modifier = modifier,
+        title = title,
+        checked = checked.value,
+        color = color,
+        colorUnselected = colorUnselected,
+        style = style
     ) {
         checked.value = it
         onCheckedChange(it)
@@ -86,14 +87,16 @@ fun MyCheckbox(
     style: TextStyle = LocalTextStyle.current,
     onCheckedChange: ((Boolean) -> Unit)? = null
 ) {
-    MyCheckbox(
-        modifier,
-        { Text(title, maxLines = maxLines) },
-        checked,
-        color,
-        colorUnselected,
-        style,
-        onCheckedChange
+    MyCheckboxImpl(
+        modifier = modifier,
+        title = if (title.isNotEmpty()) {
+            { Text(title, maxLines = maxLines) }
+        } else null,
+        checked = checked,
+        color = color,
+        colorUnselected = colorUnselected,
+        style = style,
+        onCheckedChange = onCheckedChange
     )
 }
 
@@ -101,6 +104,27 @@ fun MyCheckbox(
 fun MyCheckbox(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit,
+    checked: Boolean,
+    color: Color = Color.Unspecified,
+    colorUnselected: Color = Color.Unspecified,
+    style: TextStyle = LocalTextStyle.current,
+    onCheckedChange: ((Boolean) -> Unit)? = null
+) {
+    MyCheckboxImpl(
+        modifier = modifier,
+        title = title,
+        checked = checked,
+        color = color,
+        colorUnselected = colorUnselected,
+        style = style,
+        onCheckedChange = onCheckedChange
+    )
+}
+
+@Composable
+private fun MyCheckboxImpl(
+    modifier: Modifier = Modifier,
+    title: @Composable (() -> Unit)?,
     checked: Boolean,
     color: Color = Color.Unspecified,
     colorUnselected: Color = Color.Unspecified,
@@ -118,14 +142,16 @@ fun MyCheckbox(
         horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(
-            modifier = Modifier.wrapContentWidth()
-        ) {
-            CompositionLocalProvider(LocalTextStyle provides style) {
-                title()
+        if (title != null) {
+            Column(
+                modifier = Modifier.wrapContentWidth()
+            ) {
+                CompositionLocalProvider(LocalTextStyle provides style) {
+                    title()
+                }
             }
+            Spacer(Modifier.weight(1f))
         }
-        Spacer(Modifier.weight(1f))
         Icon(
             imageVector = if (checked) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
             contentDescription = null,

@@ -1,15 +1,20 @@
 package com.michaelflisar.toolbox.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
@@ -22,9 +27,12 @@ fun MyInput(
     value: MutableState<String>,
     minLines: Int = 1,
     maxLines: Int = 1,
-    readOnly: Boolean = false
+    readOnly: Boolean = false,
+    enabled: Boolean = true,
+    focusable: Boolean = true,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
-    MyInput(modifier, title, value.value, minLines, maxLines, readOnly) {
+    MyInput(modifier, title, value.value, minLines, maxLines, readOnly, enabled, focusable, colors) {
         value.value = it
     }
 }
@@ -37,10 +45,13 @@ fun MyInput(
     minLines: Int = 1,
     maxLines: Int = 1,
     readOnly: Boolean = false,
+    enabled: Boolean = true,
+    focusable: Boolean = true,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     onValueChange: (String) -> Unit = {}
 ) {
     OutlinedTextField(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().focusProperties { canFocus = focusable },
         value = value,
         onValueChange = onValueChange,
         singleLine = minLines == 1 && maxLines == 1,
@@ -50,7 +61,8 @@ fun MyInput(
             { Text(title) }
         } else null,
         readOnly = readOnly,
-        trailingIcon = if (value.isNotEmpty()) {
+        enabled = enabled,
+        trailingIcon = if (!readOnly && enabled && value.isNotEmpty()) {
             {
                 Icon(
                     Icons.Default.Clear,
@@ -64,6 +76,7 @@ fun MyInput(
                         }
                 )
             }
-        } else null
+        } else null,
+        colors = colors
     )
 }

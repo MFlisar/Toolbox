@@ -21,7 +21,8 @@ class Style(
     val spacingSmall: Dp = 4.dp,
     val spacingDefault: Dp = 8.dp,
     // Scrollbar
-    val scrollbar: Dp = 8.dp
+    val scrollbar: Dp = 8.dp,
+    val scrollbarSpacing: Dp = 4.dp
 ) {
     companion object {
         fun windowsDefault() = Style(
@@ -36,7 +37,8 @@ class Style(
             spacingSmall = 4.dp,
             spacingDefault = 8.dp,
             // Scrollbar
-            scrollbar = 8.dp
+            scrollbar = 8.dp,
+            scrollbarSpacing = 4.dp
         )
 
         @Composable
@@ -44,6 +46,8 @@ class Style(
             return MaterialTheme.typography
         }
     }
+
+    val paddingForScrollbar = scrollbar + scrollbarSpacing
 }
 
 val LocalStyle = staticCompositionLocalOf { Style() }

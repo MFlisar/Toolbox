@@ -8,6 +8,7 @@ kotpreferences =                "0.7.2"
 composepreferences =   		    "1.0.0-test09"
 composethemer =                 "0.4.1"
 composecolors =                 "1.0.1"
+composedialogs =   		        "2.0.0-test20"
 
 # Windows UI
 jewel =                         "0.27.0"
@@ -42,6 +43,16 @@ composecolors-material =                { module = "io.github.mflisar.composecol
 composecolors-x11 =                     { module = "io.github.mflisar.composecolors:x11", 	                    version.ref = "composecolors" }
 composecolors-material-palette =        { module = "io.github.mflisar.composecolors:material-palette", 	        version.ref = "composecolors" }
 composecolors-x11-palette =             { module = "io.github.mflisar.composecolors:x11-palette", 	            version.ref = "composecolors" }
+composedialogs-core =                   { module = "io.github.mflisar.composedialogs:core",      			    version.ref = "composedialogs" }
+composedialogs-dialog-info =            { module = "io.github.mflisar.composedialogs:dialog-info",      		version.ref = "composedialogs" }
+composedialogs-dialog-input =           { module = "io.github.mflisar.composedialogs:dialog-input",      		version.ref = "composedialogs" }
+composedialogs-dialog-number =          { module = "io.github.mflisar.composedialogs:dialog-number",      		version.ref = "composedialogs" }
+composedialogs-dialog-list =            { module = "io.github.mflisar.composedialogs:dialog-list",      		version.ref = "composedialogs" }
+composedialogs-dialog-progress =        { module = "io.github.mflisar.composedialogs:dialog-progress",      	version.ref = "composedialogs" }
+composedialogs-dialog-time =            { module = "io.github.mflisar.composedialogs:dialog-time",      		version.ref = "composedialogs" }
+composedialogs-dialog-date =            { module = "io.github.mflisar.composedialogs:dialog-date",      		version.ref = "composedialogs" }
+composedialogs-dialog-color =           { module = "io.github.mflisar.composedialogs:dialog-color",      		version.ref = "composedialogs" }
+composedialogs-dialog-billing =         { module = "io.github.mflisar.composedialogs:dialog-billing",      		version.ref = "composedialogs" }
 
 # Windows UI
 jewel-int-ui-standalone =               { module = "org.jetbrains.jewel:jewel-int-ui-standalone-243",           version.ref = "jewel" }

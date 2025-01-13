@@ -26,9 +26,9 @@ actual fun MyScrollableLazyVerticalGrid(
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = LocalStyle.current.scrollbar),
+                .padding(end = LocalStyle.current.paddingForScrollbar),
             columns = gridCells,
-            contentPadding = PaddingValues(LocalStyle.current.scrollbar),
+            contentPadding = PaddingValues(LocalStyle.current.paddingForScrollbar),
             verticalArrangement = verticalArrangement,
             horizontalArrangement = horizontalArrangement,
             state = gridState

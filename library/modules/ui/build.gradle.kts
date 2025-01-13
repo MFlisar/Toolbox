@@ -85,6 +85,9 @@ kotlin {
             // Library
             api(project(":toolbox:core"))
 
+            // Components
+            implementation(deps.composedialogs.core)
+
         }
 
         androidMain.dependencies {

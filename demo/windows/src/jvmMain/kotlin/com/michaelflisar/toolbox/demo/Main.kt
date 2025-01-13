@@ -1,11 +1,14 @@
 package com.michaelflisar.toolbox.demo
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -20,17 +23,25 @@ import androidx.compose.material.icons.filled.Window
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composecolors.material.MaterialColor
+import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogContent
 import com.michaelflisar.toolbox.Toolbox
@@ -60,6 +71,10 @@ import com.michaelflisar.toolbox.components.MyTextButton
 import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.demo.resources.Res
 import com.michaelflisar.toolbox.demo.resources.mflisar
+import com.michaelflisar.toolbox.form.FormDialog
+import com.michaelflisar.toolbox.form.rememberFormFieldCustom
+import com.michaelflisar.toolbox.form.rememberFormFields
+import com.michaelflisar.toolbox.isDark
 import com.michaelflisar.toolbox.table.Setup
 import com.michaelflisar.toolbox.table.Table
 import com.michaelflisar.toolbox.table.TableTitle
@@ -178,7 +193,7 @@ fun main() {
             icon = painterResource(Res.drawable.mflisar),
             menuBarItems = menuBarItem,
             menuBarSetup = JewelTitleBar.Setup(),
-            selectedNavigationItem = remember { mutableStateOf(0) },
+            selectedNavigationItem = remember { mutableStateOf(1) },
             navigationItems = navItems,
             navigationSetup = JewelNavigation.Setup(),
             statusbar = {
@@ -488,111 +503,33 @@ private fun ContentPageTable() {
 
     val appState = LocalAppState.current
 
+    val showEditDialog = rememberDialogState<Int>(null)
     val tableDefinition = rememberTableDefinition(
         columns = TableDataEntry.columns(),
         keyProvider = { it.id }
     )
     val filtered = remember { mutableStateOf(-1) }
-    val fullTableData = remember {
-        listOf(
-            TableDataEntry(
-                1,
-                true,
-                "Michael",
-                TableDataEntry.ColorEnum.Red,
-                "Description of Michael..."
-            ),
-            TableDataEntry(
-                2,
-                false,
-                "Christine",
-                TableDataEntry.ColorEnum.Blue,
-                "Description of Christine..."
-            ),
-            TableDataEntry(
-                3,
-                true,
-                "Benjamin",
-                TableDataEntry.ColorEnum.Green,
-                "Description of Benjamin..."
-            ),
-            TableDataEntry(
-                4,
-                false,
-                "Michael",
-                TableDataEntry.ColorEnum.Red,
-                "Description of Michael..."
-            ),
-            TableDataEntry(
-                5,
-                true,
-                "Christine",
-                TableDataEntry.ColorEnum.Blue,
-                "Description of Christine..."
-            ),
-            TableDataEntry(
-                6,
-                false,
-                "Benjamin",
-                TableDataEntry.ColorEnum.Green,
-                "Description of Benjamin..."
-            ),
-            TableDataEntry(
-                7,
-                true,
-                "Michael",
-                TableDataEntry.ColorEnum.Red,
-                "Description of Michael..."
-            ),
-            TableDataEntry(
-                8,
-                false,
-                "Christine",
-                TableDataEntry.ColorEnum.Blue,
-                "Description of Christine..."
-            ),
-            TableDataEntry(
-                9,
-                true,
-                "Benjamin",
-                TableDataEntry.ColorEnum.Green,
-                "Description of Benjamin..."
-            ),
-            TableDataEntry(
-                10,
-                false,
-                "Michael",
-                TableDataEntry.ColorEnum.Red,
-                "Description of Michael..."
-            ),
-            TableDataEntry(
-                11,
-                true,
-                "Christine",
-                TableDataEntry.ColorEnum.Blue,
-                "Description of Christine..."
-            ),
-            TableDataEntry(
-                12,
-                false,
-                "Benjamin",
-                TableDataEntry.ColorEnum.Green,
-                "Description of Benjamin..."
-            )
-        )
-    }
+    val fullTableData = remember { TableDataEntry.defaultData().toMutableList() }
     val entities = remember { mutableStateOf(fullTableData) }
 
     // Table
     MyColumn(
         Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
     ) {
-        TableTitle(
-            definition = tableDefinition,
-            items = entities.value,
-            modifier = Modifier.fillMaxWidth(),
-            filtered = filtered
-        )
+        CompositionLocalProvider(
+            LocalContentColor provides MaterialTheme.colorScheme.onPrimary
+        ) {
+            TableTitle(
+                definition = tableDefinition,
+                items = entities.value,
+                modifier = Modifier.fillMaxWidth()
+                    .clip(MaterialTheme.shapes.large)
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(8.dp)
+                ,
+                filtered = filtered
+            )
+        }
         Table(
             modifier = Modifier.weight(1f),
             definition = tableDefinition,
@@ -600,6 +537,7 @@ private fun ContentPageTable() {
             setup = Setup(
                 clickType = Setup.ClickType.RowClick(
                     onRowClicked = { index, item ->
+                        showEditDialog.show(item.id)
                         appState.showSnackbar("Item ${item.id} clicked!")
                     }
                 ),
@@ -609,6 +547,70 @@ private fun ContentPageTable() {
                 if (entities.value.isNotEmpty()) {
                     filtered.value = it.size
                 }
+            }
+        )
+    }
+
+    // Edit Dialog
+    if (showEditDialog.visible) {
+
+        val itemId = showEditDialog.requireData()
+        val item = entities.value.find { it.id == itemId }!!
+        val itemIndex = entities.value.indexOfFirst { it.id == itemId }
+
+        // Felder
+        val fieldID = TableDataEntry.fieldID(item)
+        val fieldChecked = TableDataEntry.fieldChecked(item)
+        val fieldName = TableDataEntry.fieldName(item)
+        val fieldAge = TableDataEntry.fieldAge(item)
+        val fieldColor = TableDataEntry.fieldColor(item)
+        val fieldDescription = TableDataEntry.fieldDescription(item)
+
+        val selectedColor = remember { derivedStateOf { fieldColor.value.value.let { TableDataEntry.ColorEnum.entries[it] } } }
+        val fieldCustom = rememberFormFieldCustom("Custom Field", selectedColor.value) {
+            Box(
+                modifier = Modifier
+                    .height(36.dp)
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.small)
+                    .background(it.color),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Color: ${it.name}", color = if (it.color.isDark()) Color.White else Color.Black)
+            }
+        }
+        val fields = rememberFormFields(
+            listOf(
+                fieldID,
+                fieldChecked,
+                fieldName,
+                fieldAge,
+                fieldColor,
+                fieldDescription,
+                fieldCustom
+            )
+        )
+
+        FormDialog(
+            state = showEditDialog,
+            name = "TableDataEntry",
+            fields = fields,
+            labelWidth = 120.dp,
+            onSave = {
+                // save
+                val newItem = TableDataEntry(
+                    item.id,
+                    fieldChecked.value.value,
+                    fieldName.value.value,
+                    fieldAge.value.value,
+                    fieldColor.value.value.let { TableDataEntry.ColorEnum.entries[it] },
+                    fieldDescription.value.value
+                )
+                println("Save: $newItem")
+                entities.value.set(itemIndex, newItem)
+            }, onDelete = {
+                // delete
+                entities.value.removeAt(itemIndex)
             }
         )
     }

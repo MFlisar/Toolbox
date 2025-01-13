@@ -33,7 +33,7 @@ actual fun MyScrollableRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalScroll(scrollState)
-                .padding(bottom = LocalStyle.current.scrollbar),
+                .padding(bottom = LocalStyle.current.paddingForScrollbar),
             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
             verticalAlignment = verticalAlignment
         ) {

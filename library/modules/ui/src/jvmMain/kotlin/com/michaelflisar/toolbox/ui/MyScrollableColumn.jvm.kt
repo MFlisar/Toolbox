@@ -32,7 +32,7 @@ actual fun MyScrollableColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
-                .padding(end = LocalStyle.current.scrollbar),
+                .padding(end = LocalStyle.current.paddingForScrollbar),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
             horizontalAlignment = horizontalAlignment
         ) {

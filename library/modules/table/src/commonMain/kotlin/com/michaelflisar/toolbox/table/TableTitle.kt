@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.classes.LocalStyle
-import com.michaelflisar.toolbox.components.MyTextButton
+import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.table.definitions.TableDefinition
 
@@ -43,8 +43,15 @@ fun TableTitle(
             "${filtered}/$total"
         }
     },
-
-    ) {
+    info: @Composable (info: String) -> Unit = {
+        MyTitle(
+            modifier = Modifier.padding(vertical = LocalStyle.current.paddingDefault),
+            text = it,
+            fontWeight = FontWeight.Normal,
+            style = MaterialTheme.typography.titleMedium
+        )
+    }
+) {
     val filterIsActive by remember(definition.columns) {
         derivedStateOf {
             definition.columns.map { it.filter?.isActive() ?: false }.contains(true)
@@ -62,19 +69,14 @@ fun TableTitle(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        MyTitle(
-            modifier = Modifier.padding(vertical = LocalStyle.current.paddingDefault),
-            text = titleInfo,
-            fontWeight = FontWeight.Normal,
-            style = MaterialTheme.typography.titleMedium
-        )
+        info(titleInfo)
         Spacer(modifier = Modifier.weight(1f))
         AnimatedVisibility(
             visible = filterIsActive,
             enter = fadeIn() + expandHorizontally(expandFrom = Alignment.CenterHorizontally),
             exit = fadeOut() + shrinkHorizontally(shrinkTowards = Alignment.CenterHorizontally),
         ) {
-            MyTextButton(
+            MyButton(
                 text = "Filter zurücksetzen",
                 icon = Icons.Default.FilterAltOff
             ) {
@@ -82,7 +84,7 @@ fun TableTitle(
             }
         }
         AnimatedVisibility(visible = definition.sorts.size > 0) {
-            MyTextButton(
+            MyButton(
                 text = "Sortierungen zurücksetzen",
                 icon = Icons.Default.Clear
             ) {
