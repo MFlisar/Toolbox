@@ -87,6 +87,7 @@ kotlin {
 
             // Components
             api(deps.composedialogs.core)
+            api(deps.composedialogs.dialog.info)
 
         }
 

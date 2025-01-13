@@ -15,6 +15,20 @@ import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogEvent
 import com.michaelflisar.composedialogs.core.Options
 import com.michaelflisar.composedialogs.core.defaultDialogStyle
+import com.michaelflisar.composedialogs.core.rememberDialogState
+import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
+
+object FormDialog {
+    class Text(
+        val title: (name: String) -> String = { "Edit $it" },
+        val save: String = "Save",
+        val delete: String = "Delete",
+        val confirmDeleteTitle: (name: String) -> String = { "Delete $it" },
+        val confirmDeleteText: (name: String) -> String = { "Do you really want to delete this $it?" },
+        val confirmDeleteYes: String = "Yes",
+        val confirmDeleteNo: String = "Cancel"
+    )
+}
 
 @Composable
 fun FormDialog(
@@ -24,6 +38,8 @@ fun FormDialog(
     labelWidth: Dp? = null,
     onSave: () -> Unit,
     onDelete: () -> Unit,
+    confirmDelete: Boolean = true,
+    texts: FormDialog.Text = FormDialog.Text(),
     // dialog
     icon: (@Composable () -> Unit)? = null,
     style: ComposeDialogStyle = DialogDefaults.defaultDialogStyle(),
@@ -35,15 +51,16 @@ fun FormDialog(
                 state.enableButton(DialogButtonType.Positive, it)
             }
         }
+        val showConfirmDelete = rememberDialogState()
         Dialog(
             state = state,
-            title = { Text("Edit $name") },
+            title = { Text(texts.title(name)) },
             icon = icon,
             style = style,
-            options = options,
+            options = options.copy(dismissOnButtonClick = false),
             buttons = DialogDefaults.buttons(
-                positive = DialogButton("Save"),
-                negative = DialogButton("Delete")
+                positive = DialogButton(texts.save),
+                negative = DialogButton(texts.delete)
             ),
             onEvent = {
                 when (it) {
@@ -53,7 +70,14 @@ fun FormDialog(
                             onSave()
                         } else if (it.button == DialogButtonType.Negative) {
                             // delete
-                            onDelete()
+                            if (confirmDelete) {
+                                showConfirmDelete.show()
+                            } else {
+                                onDelete()
+                            }
+                        }
+                        if (options.dismissOnButtonClick && !showConfirmDelete.visible) {
+                            state.dismiss()
                         }
                     }
 
@@ -64,6 +88,28 @@ fun FormDialog(
             DialogContentScrollableColumn {
                 Form(fields, labelWidth = labelWidth)
             }
+        }
+
+        if (showConfirmDelete.visible) {
+            DialogInfo(
+                state = showConfirmDelete,
+                title = { Text(texts.confirmDeleteTitle(name)) },
+                info = texts.confirmDeleteText(name),
+                style = style,
+                options = options.copy(dismissOnButtonClick = true),
+                buttons = DialogDefaults.buttons(
+                    positive = DialogButton(texts.confirmDeleteYes),
+                    negative = DialogButton(texts.confirmDeleteNo)
+                ),
+                onEvent = {
+                    if (it.isPositiveButton) {
+                        onDelete()
+                        if (options.dismissOnButtonClick) {
+                            state.dismiss()
+                        }
+                    }
+                }
+            )
         }
     }
 }

@@ -538,7 +538,6 @@ private fun ContentPageTable() {
                 clickType = Setup.ClickType.RowClick(
                     onRowClicked = { index, item ->
                         showEditDialog.show(item.id)
-                        appState.showSnackbar("Item ${item.id} clicked!")
                     }
                 ),
                 emptyText = "Table is empty or filter is filtering all rows..."
