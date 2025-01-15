@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.unit.Dp
-import com.michaelflisar.composedialogs.core.BaseDialogState
+import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.ComposeDialogStyle
 import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogButton
@@ -32,7 +32,7 @@ object FormDialog {
 
 @Composable
 fun FormDialog(
-    state: BaseDialogState,
+    state: DialogState,
     name: String,
     fields: FormFields,
     labelWidth: Dp? = null,

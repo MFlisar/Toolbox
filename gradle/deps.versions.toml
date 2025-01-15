@@ -8,7 +8,7 @@ kotpreferences =                "0.7.2"
 composepreferences =   		    "1.0.0-test09"
 composethemer =                 "0.4.1"
 composecolors =                 "1.0.1"
-composedialogs =   		        "2.0.0-test20"
+composedialogs =   		        "2.0.0"
 
 # Windows UI
 jewel =                         "0.27.0"
