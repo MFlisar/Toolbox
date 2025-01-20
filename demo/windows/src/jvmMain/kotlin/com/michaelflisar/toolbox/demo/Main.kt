@@ -501,8 +501,6 @@ private fun ContentPageDialogs() {
 @Composable
 private fun ContentPageTable() {
 
-    val appState = LocalAppState.current
-
     val showEditDialog = rememberDialogState<Int>(null)
     val tableDefinition = rememberTableDefinition(
         columns = TableDataEntry.columns(),

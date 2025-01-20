@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
@@ -12,10 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import kotlin.math.min
 
 sealed class Cell<CellValue> {
 
@@ -35,7 +38,7 @@ sealed class Cell<CellValue> {
         val textAlign: TextAlign = TextAlign.Start,
         val maxLines: Int = Int.MAX_VALUE,
         val minLines: Int = 1,
-        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
+        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top,
     ) : Cell<String>() {
 
         override fun sort() = value
@@ -79,7 +82,7 @@ sealed class Cell<CellValue> {
         val fontWeight: FontWeight? = null,
         val maxLines: Int = Int.MAX_VALUE,
         val minLines: Int = 1,
-        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
+        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top,
     ) : Cell<T>() {
 
         override fun sort() = valueToText(value)
@@ -99,7 +102,7 @@ sealed class Cell<CellValue> {
         }
     }
 
-    class Enum<T: kotlin.Enum<T>>(
+    class Enum<T : kotlin.Enum<T>>(
         override val value: T,
         val color: Color = Color.Unspecified,
         val textStyle: TextStyle? = null,
@@ -107,7 +110,7 @@ sealed class Cell<CellValue> {
         val fontWeight: FontWeight? = null,
         val maxLines: Int = Int.MAX_VALUE,
         val minLines: Int = 1,
-        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
+        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top,
     ) : Cell<T>() {
 
         override fun sort() = value.name
@@ -135,7 +138,7 @@ sealed class Cell<CellValue> {
         val fontWeight: FontWeight? = null,
         val maxLines: Int = Int.MAX_VALUE,
         val minLines: Int = 1,
-        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
+        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top,
     ) : Cell<T>() where T : kotlin.Number, T : Comparable<T> {
 
         override fun sort() = value
@@ -159,7 +162,7 @@ sealed class Cell<CellValue> {
         override val value: Boolean,
         val color: Color? = null,
         val horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top
+        override val verticalCellAlignment: Alignment.Vertical = Alignment.Top,
     ) : Cell<Boolean>() {
 
         override fun sort() = if (value) 1 else 0

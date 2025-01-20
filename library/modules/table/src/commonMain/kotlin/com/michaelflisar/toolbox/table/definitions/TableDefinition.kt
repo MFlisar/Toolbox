@@ -31,4 +31,9 @@ fun <Item> rememberTableDefinition(
     keyProvider: (item: Item) -> Any,
     sorts: SnapshotStateList<Sort> = remember { mutableStateListOf() },
     selectedRows: SnapshotStateList<Int> = remember { mutableStateListOf() },
-): TableDefinition<Item> = TableDefinition(columns, keyProvider, sorts, selectedRows)
+): TableDefinition<Item> {
+    return remember(columns, keyProvider)  {
+        TableDefinition(columns, keyProvider, sorts, selectedRows)
+    }
+
+}

@@ -5,7 +5,7 @@ material =                      "1.12.0"
 # mflisar
 lumberjack =                    "7.1.2"
 kotpreferences =                "0.7.2"
-composepreferences =   		    "1.0.0-test09" 
+composepreferences =   		    "1.0.0-test10"
 composethemer =                 "0.4.1"
 composecolors =                 "1.0.1"
 composedialogs =   		        "2.0.0"
