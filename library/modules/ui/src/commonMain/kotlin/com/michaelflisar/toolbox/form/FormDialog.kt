@@ -43,7 +43,7 @@ fun FormDialog(
     // dialog
     icon: (@Composable () -> Unit)? = null,
     style: ComposeDialogStyle = DialogDefaults.defaultDialogStyle(),
-    options: Options = Options()
+    options: Options = DialogDefaults.options()
 ) {
     if (state.visible) {
         LaunchedEffect(fields) {
