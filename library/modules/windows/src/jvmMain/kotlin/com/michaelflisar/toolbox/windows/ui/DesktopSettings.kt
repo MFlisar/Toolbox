@@ -27,10 +27,8 @@ fun DesktopSettings(
         modifier = modifier,
         settings = PreferenceSettingsDefaults.settings(
             style = ModernStyle.create(
-                sectionColors = PreferenceItemDefaults.colors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                    contentColor = MaterialTheme.colorScheme.onSurface
-                )
+                backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                foregroundColor = MaterialTheme.colorScheme.onSurface
             ),
             toggleBooleanOnItemClick = true
         )
