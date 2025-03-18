@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.disabled
 
@@ -144,13 +145,12 @@ private fun MyCheckboxImpl(
     ) {
         if (title != null) {
             Column(
-                modifier = Modifier.wrapContentWidth()
+                modifier = Modifier.weight(1f).padding(end = 8.dp)
             ) {
                 CompositionLocalProvider(LocalTextStyle provides style) {
                     title()
                 }
             }
-            Spacer(Modifier.weight(1f))
         }
         Icon(
             imageVector = if (checked) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
