@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.classes.LocalStyle
+import kotlin.math.exp
 
 object MyExpandableTitle {
     enum class IconPlacement {
@@ -43,6 +44,8 @@ object MyExpandableTitle {
 fun MyExpandableTitle(
     title: String,
     expanded: MutableState<Boolean> = remember { mutableStateOf(true) },
+    expandable: Boolean = true,
+    hideIconIfNotExpandable: Boolean = true,
     info: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
@@ -53,6 +56,8 @@ fun MyExpandableTitle(
     MyExpandableTitle(
         title,
         expanded.value,
+        expandable,
+        hideIconIfNotExpandable,
         info,
         { expanded.value = !expanded.value },
         modifier,
@@ -67,6 +72,8 @@ fun MyExpandableTitle(
 fun MyExpandableTitle(
     title: String,
     expanded: Boolean,
+    expandable: Boolean = true,
+    hideIconIfNotExpandable: Boolean = true,
     info: (@Composable () -> Unit)? = null,
     onToggle: () -> Unit,
     modifier: Modifier = Modifier,
@@ -103,7 +110,7 @@ fun MyExpandableTitle(
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (iconPlacement == MyExpandableTitle.IconPlacement.Left) {
+                if (iconPlacement == MyExpandableTitle.IconPlacement.Left && (expandable || !hideIconIfNotExpandable)) {
                     Icon(rotation, color)
                 }
 
@@ -117,12 +124,12 @@ fun MyExpandableTitle(
                 if (info != null) {
                     info()
                 }
-                if (iconPlacement == MyExpandableTitle.IconPlacement.Right) {
+                if (iconPlacement == MyExpandableTitle.IconPlacement.Right && (expandable || !hideIconIfNotExpandable)) {
                     Icon(rotation, color)
                 }
             }
         }
-        AnimatedVisibility(visible = expanded) {
+        AnimatedVisibility(visible = expandable && expanded) {
             content()
         }
     }
@@ -132,6 +139,8 @@ fun MyExpandableTitle(
 fun MyExpandableOutlinedTitle(
     title: String,
     expanded: MutableState<Boolean> = remember { mutableStateOf(true) },
+    expandable: Boolean = true,
+    hideIconIfNotExpandable: Boolean = true,
     info: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
@@ -142,6 +151,8 @@ fun MyExpandableOutlinedTitle(
     MyExpandableOutlinedTitle(
         title,
         expanded.value,
+        expandable,
+        hideIconIfNotExpandable,
         info,
         { expanded.value = !expanded.value },
         modifier,
@@ -156,6 +167,8 @@ fun MyExpandableOutlinedTitle(
 fun MyExpandableOutlinedTitle(
     text: String,
     expanded: Boolean,
+    expandable: Boolean = true,
+    hideIconIfNotExpandable: Boolean = true,
     info: (@Composable () -> Unit)? = null,
     onToggle: () -> Unit,
     modifier: Modifier = Modifier,
@@ -165,7 +178,7 @@ fun MyExpandableOutlinedTitle(
     content: @Composable () -> Unit
 ) {
     OutlinedCard {
-        MyExpandableTitle(text, expanded, info, onToggle, modifier, color, background, iconPlacement, content)
+        MyExpandableTitle(text, expanded, expandable, hideIconIfNotExpandable, info, onToggle, modifier, color, background, iconPlacement, content)
     }
 }
 
