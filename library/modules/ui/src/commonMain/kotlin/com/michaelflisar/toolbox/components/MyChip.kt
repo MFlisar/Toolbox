@@ -1,5 +1,6 @@
 package com.michaelflisar.toolbox.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,17 +25,19 @@ import com.michaelflisar.toolbox.classes.LocalStyle
 
 @Composable
 fun MyChip(
-    modifier: Modifier = Modifier,
     title: String,
+    modifier: Modifier = Modifier,
     icon: (@Composable () -> Unit)? = null,
-    color: Color = Color.Unspecified,
-    borderColor: Color = MaterialTheme.colorScheme.outlineVariant,
+    containerColor: Color = Color.Unspecified,
+    labelColor: Color = Color.Unspecified,
+    borderColor: Color = MaterialTheme.colorScheme.outline,
     style: TextStyle = MaterialTheme.typography.bodySmall,
     maxLines: Int = 1,
     onClick: (() -> Unit)? = null
 ) {
     val m = modifier
         .clip(MaterialTheme.shapes.small)
+        .background(color = containerColor.takeIf { it != Color.Unspecified } ?: Color.Transparent)
         .border(1.dp, borderColor, MaterialTheme.shapes.small)
         .then(
             if (onClick != null) Modifier.clickable { onClick() }
@@ -48,7 +52,7 @@ fun MyChip(
             horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall, Alignment.CenterHorizontally)
         ) {
             CompositionLocalProvider(
-                LocalContentColor provides (color.takeIf { it != Color.Unspecified } ?: LocalContentColor.current)
+                LocalContentColor provides (labelColor.takeIf { it != Color.Unspecified } ?: LocalContentColor.current)
             ) {
                 Box(modifier = Modifier.size(18.dp)) {
                     icon()
@@ -57,7 +61,7 @@ fun MyChip(
             Text(
                 text = title,
                 maxLines = maxLines,
-                color = color,
+                color = labelColor,
                 style = style
             )
         }
@@ -66,7 +70,7 @@ fun MyChip(
             modifier = m,
             text = title,
             maxLines = maxLines,
-            color = color,
+            color = labelColor,
             style = style,
             textAlign = TextAlign.Center
         )

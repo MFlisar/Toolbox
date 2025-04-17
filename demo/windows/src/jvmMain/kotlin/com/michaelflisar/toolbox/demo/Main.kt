@@ -313,6 +313,10 @@ private fun ContentPage1() {
                             }
                         )
                     }
+                    MyChip(title = "Blue", containerColor = Color.Blue, labelColor = Color.White)
+                    MyChip(title = "Red", containerColor = Color.Red, labelColor = Color.White) {
+
+                    }
                 }
                 MyRow {
                     val checked = remember { mutableStateOf(0) }
