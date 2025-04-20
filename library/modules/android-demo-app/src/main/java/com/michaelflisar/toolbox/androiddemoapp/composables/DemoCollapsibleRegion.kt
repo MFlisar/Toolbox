@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.components.MyExpandableTitle
+import com.michaelflisar.toolbox.components.rememberMyExpandableTitleStyle
 
 object DemoCollapsibleRegion {
     class State(
@@ -59,10 +60,14 @@ fun DemoCollapsibleRegion(
 ) {
     MyExpandableTitle(
         modifier = modifier,
-        title = title,
-        color = MaterialTheme.colorScheme.onPrimary,
-        background = MaterialTheme.colorScheme.primary,
-        iconPlacement = MyExpandableTitle.IconPlacement.Right,
+        title = { Text(title) },
+        style = rememberMyExpandableTitleStyle(
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.primary,
+            iconPlacement = MyExpandableTitle.IconPlacement.Right,
+            applyColorsToTitle = true,
+            applyColorsToContent = true
+        ),
         expanded = state.isExpanded(regionId),
         onToggle = {
             state.toggle(regionId)

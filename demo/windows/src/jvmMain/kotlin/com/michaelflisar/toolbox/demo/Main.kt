@@ -29,7 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,7 +53,6 @@ import com.michaelflisar.toolbox.components.MyChipsMultiRow
 import com.michaelflisar.toolbox.components.MyChipsSingleRow
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyDropdown
-import com.michaelflisar.toolbox.components.MyExpandableOutlinedTitle
 import com.michaelflisar.toolbox.components.MyExpandableTitle
 import com.michaelflisar.toolbox.components.MyFilledTonalButton
 import com.michaelflisar.toolbox.components.MyFlowRow
@@ -69,6 +67,7 @@ import com.michaelflisar.toolbox.components.MySegmentedButtonRow
 import com.michaelflisar.toolbox.components.MySegmentedControl
 import com.michaelflisar.toolbox.components.MyTextButton
 import com.michaelflisar.toolbox.components.MyTitle
+import com.michaelflisar.toolbox.components.rememberMyExpandableTitleStyle
 import com.michaelflisar.toolbox.demo.resources.Res
 import com.michaelflisar.toolbox.demo.resources.mflisar
 import com.michaelflisar.toolbox.form.FormDialog
@@ -127,6 +126,9 @@ fun main() {
             JewelNavigationRegion("Region 1"),
             JewelNavigationItem("UI Examples", Icons.Default.Info) {
                 ContentPage1()
+            },
+            JewelNavigationItem("UI Examples 2", Icons.Default.Info) {
+                ContentPage2()
             },
             JewelNavigationItem("Dialog", Icons.Default.Window) {
                 ContentPageDialogs()
@@ -360,15 +362,80 @@ private fun ContentPage1() {
             if (items.value.size > 50)
                 items.value = items.value.subList(0, 50)
         }
+    }
+}
 
-        MyExpandableTitle("Expandable") {
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ContentPage2() {
+
+    val selectedIndex = remember { mutableStateOf(0) }
+    val items = remember { mutableStateOf((1..100).map { "Item $it" }) }
+
+    MyScrollableColumn(
+        modifier = Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
+    ) {
+        MyExpandableTitle(title = { Text("Expandable") }) {
             Text("Content...")
         }
-        MyExpandableTitle("Expandable2", info = { Text("State") }) {
+        MyExpandableTitle({ Text("Expandable2") }, info = { Text("State") }) {
             Text("Content...")
         }
 
-        MyExpandableOutlinedTitle("Expandable3 - Outlined") {
+        MyExpandableTitle(
+            { Text("Expandable3 - Primary") },
+            style = rememberMyExpandableTitleStyle(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                applyColorsToContent = true,
+                applyColorsToTitle = true
+            )
+        ) {
+            Text("Content...")
+        }
+        MyExpandableTitle(
+            { Text("Expandable4 - Primary Header") },
+            style = rememberMyExpandableTitleStyle(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                applyColorsToContent = false,
+                applyColorsToTitle = true
+            )
+        ) {
+            Text("Content...")
+        }
+        MyExpandableTitle(
+            { Text("Expandable5 - Outlined") },
+            style = rememberMyExpandableTitleStyle(
+                borderColor = MaterialTheme.colorScheme.outline
+            )
+        ) {
+            Text("Content...")
+        }
+
+        MyExpandableTitle(
+            { Text("Expandable5 - Outlined with primary header") },
+            style = rememberMyExpandableTitleStyle(
+                borderColor = MaterialTheme.colorScheme.outline,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                applyColorsToContent = false,
+                applyColorsToTitle = true
+            )
+        ) {
+            Text("Content...")
+        }
+
+        MyExpandableTitle(
+            { Text("Expandable6 - Outlined with primary") },
+            style = rememberMyExpandableTitleStyle(
+                borderColor = MaterialTheme.colorScheme.outline,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                applyColorsToContent = true,
+                applyColorsToTitle = true
+            )
+        ) {
             Text("Content...")
         }
     }
@@ -527,8 +594,7 @@ private fun ContentPageTable() {
                 modifier = Modifier.fillMaxWidth()
                     .clip(MaterialTheme.shapes.large)
                     .background(MaterialTheme.colorScheme.primary)
-                    .padding(8.dp)
-                ,
+                    .padding(8.dp),
                 filtered = filtered
             )
         }
@@ -567,7 +633,8 @@ private fun ContentPageTable() {
         val fieldColor = TableDataEntry.fieldColor(item)
         val fieldDescription = TableDataEntry.fieldDescription(item)
 
-        val selectedColor = remember { derivedStateOf { fieldColor.value.value.let { TableDataEntry.ColorEnum.entries[it] } } }
+        val selectedColor =
+            remember { derivedStateOf { fieldColor.value.value.let { TableDataEntry.ColorEnum.entries[it] } } }
         val fieldCustom = rememberFormFieldCustom("Custom Field", selectedColor.value) {
             Box(
                 modifier = Modifier
@@ -577,7 +644,10 @@ private fun ContentPageTable() {
                     .background(it.color),
                 contentAlignment = Alignment.Center
             ) {
-                Text("Color: ${it.name}", color = if (it.color.isDark()) Color.White else Color.Black)
+                Text(
+                    "Color: ${it.name}",
+                    color = if (it.color.isDark()) Color.White else Color.Black
+                )
             }
         }
         val fields = rememberFormFields(
