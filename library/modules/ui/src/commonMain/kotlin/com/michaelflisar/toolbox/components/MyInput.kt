@@ -5,6 +5,8 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
@@ -31,8 +33,10 @@ fun MyInput(
     enabled: Boolean = true,
     focusable: Boolean = true,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
-    MyInput(modifier, title, value.value, minLines, maxLines, readOnly, enabled, focusable, colors) {
+    MyInput(modifier, title, value.value, minLines, maxLines, readOnly, enabled, focusable, colors, keyboardOptions, keyboardActions) {
         value.value = it
     }
 }
@@ -48,6 +52,8 @@ fun MyInput(
     enabled: Boolean = true,
     focusable: Boolean = true,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChange: (String) -> Unit = {}
 ) {
     OutlinedTextField(
@@ -77,6 +83,8 @@ fun MyInput(
                 )
             }
         } else null,
-        colors = colors
+        colors = colors,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
     )
 }
