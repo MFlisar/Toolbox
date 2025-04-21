@@ -107,20 +107,7 @@ object MyExpandableTitle {
 fun rememberMyExpandableTitleStyle(
     iconPlacement: IconPlacement = IconPlacement.Left,
     hideIconIfNotExpandable: Boolean = true,
-    contentPadding: PaddingValues = PaddingValues(
-        start = when (iconPlacement) {
-            IconPlacement.Left -> 24.dp
-            IconPlacement.Right -> 8.dp
-            IconPlacement.Hide -> 8.dp
-        },
-        end = when (iconPlacement) {
-            IconPlacement.Left -> 8.dp
-            IconPlacement.Right -> 24.dp
-            IconPlacement.Hide -> 8.dp
-        },
-        top = 0.dp,
-        bottom = 4.dp
-    ),
+    contentPadding: PaddingValues = PaddingValues(all = 8.dp),
     shape: Shape = MaterialTheme.shapes.small,
     containerColor: Color = Color.Unspecified,
     contentColor: Color = Color.Unspecified,
@@ -209,7 +196,7 @@ fun MyExpandableTitle(
                             Modifier.background(it)
                         } ?: Modifier
                     )
-                    .clickable {
+                    .clickable(expandable) {
                         onToggle()
                     }
                     .padding(

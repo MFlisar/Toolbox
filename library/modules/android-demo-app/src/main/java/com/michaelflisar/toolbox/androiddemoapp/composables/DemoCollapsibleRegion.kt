@@ -20,6 +20,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.components.MyExpandableTitle
 import com.michaelflisar.toolbox.components.rememberMyExpandableTitleStyle
 
@@ -66,7 +67,7 @@ fun DemoCollapsibleRegion(
             containerColor = MaterialTheme.colorScheme.primary,
             iconPlacement = MyExpandableTitle.IconPlacement.Right,
             applyColorsToTitle = true,
-            applyColorsToContent = true
+            applyColorsToContent = false
         ),
         expanded = state.isExpanded(regionId),
         onToggle = {
