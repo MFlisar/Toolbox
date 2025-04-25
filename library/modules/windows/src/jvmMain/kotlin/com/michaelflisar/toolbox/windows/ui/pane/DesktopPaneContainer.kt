@@ -28,8 +28,8 @@ fun rememberDesktopPane(
 @Composable
 fun DesktopPaneContainer(
     modifier: Modifier = Modifier,
-    left: DesktopPane?,
-    right: DesktopPane?,
+    left: DesktopPane? = null,
+    right: DesktopPane? = null,
     maxWidthLeftInPercentages: Float = 1f / 5f,
     maxWidthRightInPercentages: Float = 1f / 5f,
     content: @Composable () -> Unit,

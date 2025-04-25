@@ -20,11 +20,11 @@ import org.jetbrains.jewel.window.DecoratedWindowScope
 @Composable
 fun DecoratedWindowScope.JewelContent(
     icon: Painter? = null,
-    menuBarItems: List<JewelMenuBarItem> = emptyList(),
-    menuBarSetup: JewelTitleBar.Setup = JewelTitleBar.Setup(),
-    selectedNavigationItem: MutableState<Int>,
     navigationItems: List<IJewelNavigationItem>,
     navigationSetup: JewelNavigation.Setup = JewelNavigation.Setup(),
+    menuBarItems: List<JewelMenuBarItem> = emptyList(),
+    menuBarSetup: JewelTitleBar.Setup = JewelTitleBar.Setup(),
+    selectedNavigationItem: MutableState<Int> = remember { mutableStateOf(0) },
     statusbar: @Composable () -> Unit = {}
 ) {
     JewelContent(
