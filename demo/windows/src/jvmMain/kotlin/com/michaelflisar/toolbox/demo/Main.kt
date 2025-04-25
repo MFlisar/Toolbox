@@ -112,7 +112,7 @@ fun main() {
     val fileLoggerSetup = Toolbox.initLumberjack()
 
     jewelApplication(
-        title = "Demo App",
+        title = { "Demo App" },
         prefs = DefaultDesktopAppPrefs,
         icon = { painterResource(Res.drawable.mflisar) }
     ) { windowState ->

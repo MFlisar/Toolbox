@@ -45,7 +45,7 @@ fun jewelApplication(
     windowState: @Composable () -> WindowState = { rememberJewelWindowState(prefs) },
     state: @Composable () -> AppState = { rememberAppState(prefs) },
     visible: Boolean = true,
-    title: String = "",
+    title: @Composable () -> String = { "" },
     icon: @Composable (() -> Painter)? = null,
     resizable: Boolean = true,
     enabled: Boolean = true,
@@ -65,6 +65,7 @@ fun jewelApplication(
         val textStyle = org.jetbrains.jewel.foundation.theme.JewelTheme.createDefaultTextStyle()
         val editorStyle = org.jetbrains.jewel.foundation.theme.JewelTheme.createEditorTextStyle()
 
+        val title = title()
         val state = state()
         val style = style()
         val windowState = windowState()
