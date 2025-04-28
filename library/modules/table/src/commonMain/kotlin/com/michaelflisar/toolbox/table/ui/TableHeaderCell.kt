@@ -322,23 +322,31 @@ private fun HeaderPopup(
                                     text = "Sortierung",
                                     fontWeight = FontWeight.Bold
                                 )
-                                MyIconButton(
-                                    modifier = iconModifier,
-                                    iconPaddingValues = PaddingValues(iconPadding),
-                                    icon = Icons.Default.ArrowUpward,
-                                    tint = if (sort.value?.type == Sort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                MyTooltipBox(
+                                    tooltip = "Sort Descending",
                                 ) {
-                                    sort.value?.let { sorts.remove(it) }
-                                    sorts.add(Sort(index, Sort.Type.Asc))
+                                    MyIconButton(
+                                        modifier = iconModifier,
+                                        iconPaddingValues = PaddingValues(iconPadding),
+                                        icon = Icons.Default.ArrowDownward,
+                                        tint = if (sort.value?.type == Sort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                    ) {
+                                        sort.value?.let { sorts.remove(it) }
+                                        sorts.add(Sort(index, Sort.Type.Desc))
+                                    }
                                 }
-                                MyIconButton(
-                                    modifier = iconModifier,
-                                    iconPaddingValues = PaddingValues(iconPadding),
-                                    icon = Icons.Default.ArrowDownward,
-                                    tint = if (sort.value?.type == Sort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                MyTooltipBox(
+                                    tooltip = "Sort Ascending",
                                 ) {
-                                    sort.value?.let { sorts.remove(it) }
-                                    sorts.add(Sort(index, Sort.Type.Desc))
+                                    MyIconButton(
+                                        modifier = iconModifier,
+                                        iconPaddingValues = PaddingValues(iconPadding),
+                                        icon = Icons.Default.ArrowUpward,
+                                        tint = if (sort.value?.type == Sort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                    ) {
+                                        sort.value?.let { sorts.remove(it) }
+                                        sorts.add(Sort(index, Sort.Type.Asc))
+                                    }
                                 }
                                 MyIconButton(
                                     enabled = sort.value != null,
