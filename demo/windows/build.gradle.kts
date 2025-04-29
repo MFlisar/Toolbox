@@ -20,7 +20,9 @@ kotlin {
 
         jvmMain.dependencies {
 
-            implementation(compose.desktop.currentOs)
+            implementation(compose.desktop.currentOs) {
+                exclude(group = "org.jetbrains.compose.material", module = "material")
+            }
 
             implementation(deps.composecolors.material)
 

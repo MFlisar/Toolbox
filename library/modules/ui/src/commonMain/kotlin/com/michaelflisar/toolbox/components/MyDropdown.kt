@@ -225,12 +225,22 @@ private fun <T> MyDropdownImpl(
 ) {
     var expanded by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (expanded) -180f else 0f)
+    val borderColor = color.takeIf { it != Color.Unspecified }
+        ?: MaterialTheme.colorScheme.outline
     Box(
-        modifier = modifier,
+        modifier = modifier .clip(MaterialTheme.shapes.small)
+            .border(1.dp, borderColor, MaterialTheme.shapes.small)
+            .background(backgroundColor)
+            .then(
+                if (enabled) {
+                    Modifier.clickable {
+                        expanded = !expanded
+                    }
+                } else Modifier
+            ),
         contentAlignment = Alignment.Center
     ) {
-        val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()
-            ?: MaterialTheme.colorScheme.onSurface.disabled()
+
         val labelColor =
             color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.onSurfaceVariant
 
@@ -258,16 +268,6 @@ private fun <T> MyDropdownImpl(
 
         Row(
             modifier = Modifier.fillMaxWidth()
-                .clip(MaterialTheme.shapes.small)
-                .border(1.dp, borderColor, MaterialTheme.shapes.small)
-                .background(backgroundColor)
-                .then(
-                    if (enabled) {
-                        Modifier.clickable {
-                            expanded = !expanded
-                        }
-                    } else Modifier
-                )
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
