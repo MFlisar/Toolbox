@@ -1,15 +1,9 @@
 package com.michaelflisar.toolbox.windows.jewel
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.expandIn
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,7 +35,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,12 +47,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.components.MyRow
-import kotlin.math.exp
 
 sealed interface IJewelNavigationItem
 
@@ -231,7 +220,13 @@ private fun NavRegionItem(
         } else {
             NavIconRegionPlaceholder(expanded.value, setup)
         }
-        NavText(expanded.value, item.title, setup, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+        NavText(
+            expanded.value,
+            item.title,
+            setup,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
@@ -272,10 +267,14 @@ private fun NavIconRegionPlaceholder(
     val height = animateDpAsState(if (setup.showExpand && !expanded) 9.dp else 28.dp)
     val paddingVertical = animateDpAsState(if (setup.showExpand && !expanded) 0.dp else 4.dp)
     Box(
-        modifier = Modifier.width(28.dp).height(height.value).padding(horizontal = 4.dp, vertical = paddingVertical.value),
+        modifier = Modifier.width(28.dp).height(height.value)
+            .padding(horizontal = 4.dp, vertical = paddingVertical.value),
         contentAlignment = Alignment.Center
     ) {
-        Box(modifier = Modifier.height(1.dp).fillMaxWidth().background(MaterialTheme.colorScheme.outlineVariant))
+        Box(
+            modifier = Modifier.height(1.dp).fillMaxWidth()
+                .background(MaterialTheme.colorScheme.outlineVariant)
+        )
     }
 }
 
@@ -284,7 +283,7 @@ private fun NavText(
     expanded: Boolean,
     title: String,
     setup: JewelNavigation.Setup,
-    style: TextStyle =  MaterialTheme.typography.titleSmall,
+    style: TextStyle = MaterialTheme.typography.titleSmall,
     color: Color = Color.Unspecified
 ) {
     if (setup.showExpand) {

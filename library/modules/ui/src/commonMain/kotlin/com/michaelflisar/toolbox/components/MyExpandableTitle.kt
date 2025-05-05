@@ -119,10 +119,10 @@ fun rememberMyExpandableTitleStyle(
         iconPlacement = iconPlacement,
         hideIconIfNotExpandable = hideIconIfNotExpandable,
         contentPadding = contentPadding,
-        shape = remember { mutableStateOf(shape) },
-        borderColor = remember { mutableStateOf(borderColor) },
-        containerColor = remember { mutableStateOf(containerColor) },
-        contentColor = remember { mutableStateOf(contentColor) },
+        shape = remember(shape) { mutableStateOf(shape) },
+        borderColor = remember(borderColor) { mutableStateOf(borderColor) },
+        containerColor = remember(containerColor) { mutableStateOf(containerColor) },
+        contentColor = remember(contentColor) { mutableStateOf(contentColor) },
         applyColorsToTitle = applyColorsToTitle,
         applyColorsToContent = applyColorsToContent
     )
