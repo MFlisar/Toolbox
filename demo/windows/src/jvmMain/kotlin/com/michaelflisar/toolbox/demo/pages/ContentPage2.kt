@@ -16,9 +16,6 @@ import com.michaelflisar.toolbox.ui.MyScrollableColumn
 @Composable
 fun ContentPage2() {
 
-    val selectedIndex = remember { mutableStateOf(0) }
-    val items = remember { mutableStateOf((1..100).map { "Item $it" }) }
-
     MyScrollableColumn(
         modifier = Modifier.fillMaxSize().padding(LocalStyle.current.paddingContent)
     ) {

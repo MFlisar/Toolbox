@@ -79,11 +79,10 @@ abstract class DemoActivity(
         setContent {
 
             val baseTheme = DemoPrefs.baseTheme.collectAsStateNotNull()
+            val contrast = DemoPrefs.contrast.collectAsStateNotNull()
             val dynamic = DemoPrefs.dynamic.collectAsStateNotNull()
-            val theme = DemoPrefs.themeKey.collectAsStateNotNull()
-            val state = ComposeTheme.State(baseTheme, dynamic, theme)
-
-
+            val theme = DemoPrefs.theme.collectAsStateNotNull()
+            val state = ComposeTheme.State(baseTheme, contrast, dynamic, theme)
 
             ComposeTheme(state = state) {
 

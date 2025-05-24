@@ -6,9 +6,9 @@ dependencyResolutionManagement {
         gradlePluginPortal()
         maven("https://jitpack.io")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
-        // jewel
-        maven("https://packages.jetbrains.team/maven/p/kpm/public/")
+        // jewel + skiko
         maven("https://www.jetbrains.com/intellij-repository/releases")
+        maven("https://packages.jetbrains.team/maven/p/ij/intellij-dependencies/")
     }
 
     versionCatalogs {

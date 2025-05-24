@@ -8,10 +8,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composepreferences.core.PreferenceScreen
 import com.michaelflisar.composepreferences.core.classes.PreferenceSettingsDefaults
-import com.michaelflisar.composepreferences.core.composables.PreferenceItemDefaults
 import com.michaelflisar.composepreferences.core.composables.PreferenceItemSetup
 import com.michaelflisar.composepreferences.core.composables.PreferenceItemSetupDefaults
-import com.michaelflisar.composepreferences.core.scopes.PreferenceRootScope
+import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.core.scopes.PreferenceScope
 import com.michaelflisar.composepreferences.core.styles.ModernStyle
 import com.michaelflisar.composepreferences.screen.input.PreferenceInputText
@@ -21,7 +20,7 @@ import com.michaelflisar.kotpreferences.core.interfaces.StorageSetting
 @Composable
 fun DesktopSettings(
     modifier: Modifier = Modifier,
-    content: @Composable PreferenceRootScope.() -> Unit,
+    content: @Composable PreferenceGroupScope.() -> Unit,
 ) {
     PreferenceScreen(
         modifier = modifier,

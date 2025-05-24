@@ -36,12 +36,11 @@ val licenseUrl = "$github/blob/main/LICENSE"
 kotlin {
 
     // Java
-    jvm()
+    //jvm()
 
     // Android
     androidTarget {
         publishLibraryVariants("release")
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -74,7 +73,9 @@ kotlin {
             implementation(deps.kotpreferences.storage.datastore)
             api(deps.kotpreferences.extension.compose)
             api(deps.composethemer.core)
-            implementation(deps.composethemer.themes)
+            api(deps.composethemer.modules.picker)
+            api(deps.composethemer.modules.defaultpicker)
+            implementation(deps.composethemer.themes.metro)
 
             // Library
             api(project(":toolbox:core"))

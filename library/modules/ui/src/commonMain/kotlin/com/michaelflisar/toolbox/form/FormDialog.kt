@@ -13,7 +13,7 @@ import com.michaelflisar.composedialogs.core.DialogButtonType
 import com.michaelflisar.composedialogs.core.DialogContentScrollableColumn
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogEvent
-import com.michaelflisar.composedialogs.core.Options
+import com.michaelflisar.composedialogs.core.DialogOptions
 import com.michaelflisar.composedialogs.core.defaultDialogStyle
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
@@ -42,8 +42,7 @@ fun FormDialog(
     texts: FormDialog.Text = FormDialog.Text(),
     // dialog
     icon: (@Composable () -> Unit)? = null,
-    style: ComposeDialogStyle = DialogDefaults.defaultDialogStyle(),
-    options: Options = DialogDefaults.options()
+    style: ComposeDialogStyle = DialogDefaults.defaultDialogStyle()
 ) {
     if (state.visible) {
         LaunchedEffect(fields) {
@@ -52,12 +51,13 @@ fun FormDialog(
             }
         }
         val showConfirmDelete = rememberDialogState()
+        val dismissOnButtonClick = false
         Dialog(
             state = state,
             title = { Text(texts.title(name)) },
             icon = icon,
             style = style,
-            options = options.copy(dismissOnButtonClick = false),
+            dialogOptions = DialogOptions.create(style, dismissOnButtonClick = dismissOnButtonClick),
             buttons = DialogDefaults.buttons(
                 positive = DialogButton(texts.save),
                 negative = DialogButton(texts.delete)
@@ -76,7 +76,7 @@ fun FormDialog(
                                 onDelete()
                             }
                         }
-                        if (options.dismissOnButtonClick && !showConfirmDelete.visible) {
+                        if (dismissOnButtonClick && !showConfirmDelete.visible) {
                             state.dismiss()
                         }
                     }
@@ -91,12 +91,14 @@ fun FormDialog(
         }
 
         if (showConfirmDelete.visible) {
+            val dismissOnButtonClick = true
             DialogInfo(
                 state = showConfirmDelete,
                 title = { Text(texts.confirmDeleteTitle(name)) },
                 info = texts.confirmDeleteText(name),
                 style = style,
-                options = options.copy(dismissOnButtonClick = true),
+                // TODO!!!!!!
+                // dialogOptions = DialogOptions.create(style, dismissOnButtonClick = dismissOnButtonClick),
                 buttons = DialogDefaults.buttons(
                     positive = DialogButton(texts.confirmDeleteYes),
                     negative = DialogButton(texts.confirmDeleteNo)
@@ -104,7 +106,7 @@ fun FormDialog(
                 onEvent = {
                     if (it.isPositiveButton) {
                         onDelete()
-                        if (options.dismissOnButtonClick) {
+                        if (dismissOnButtonClick) {
                             state.dismiss()
                         }
                     }

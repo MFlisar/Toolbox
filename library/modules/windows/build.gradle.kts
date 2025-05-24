@@ -36,9 +36,9 @@ compose.resources {
 }
 
 kotlin {
-    jvm {
-        withJava()
-    }
+
+    jvm()
+
     sourceSets {
 
         commonMain.dependencies {
@@ -53,9 +53,12 @@ kotlin {
 
             // Jewel
             implementation(deps.jewel.int.ui.standalone)
-            api(deps.jewel.int.ui.decorated.window)
+            implementation(deps.jewel.int.ui.decorated.window)
+            implementation(deps.jewel.foundation)
+            implementation(deps.jewel.ui)
+            api(deps.jewel.decorated.window)
             implementation(deps.intellij.platform.icons)
-            //implementation("com.jetbrains.intellij.platform:icons:243.21565.208")
+            implementation(deps.skiko)
 
             // Icons
             api(libs.compose.material.icons.core)
