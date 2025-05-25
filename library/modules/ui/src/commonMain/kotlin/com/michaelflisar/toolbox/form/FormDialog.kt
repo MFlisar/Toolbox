@@ -41,8 +41,7 @@ fun FormDialog(
     confirmDelete: Boolean = true,
     texts: FormDialog.Text = FormDialog.Text(),
     // dialog
-    icon: (@Composable () -> Unit)? = null,
-    style: ComposeDialogStyle = DialogDefaults.defaultDialogStyle()
+    icon: (@Composable () -> Unit)? = null
 ) {
     if (state.visible) {
         LaunchedEffect(fields) {
@@ -52,12 +51,12 @@ fun FormDialog(
         }
         val showConfirmDelete = rememberDialogState()
         val dismissOnButtonClick = false
+        val style = DialogDefaults.styleDialog(dismissOnBackPress = dismissOnButtonClick)
         Dialog(
             state = state,
             title = { Text(texts.title(name)) },
             icon = icon,
             style = style,
-            dialogOptions = DialogOptions.create(style, dismissOnButtonClick = dismissOnButtonClick),
             buttons = DialogDefaults.buttons(
                 positive = DialogButton(texts.save),
                 negative = DialogButton(texts.delete)
