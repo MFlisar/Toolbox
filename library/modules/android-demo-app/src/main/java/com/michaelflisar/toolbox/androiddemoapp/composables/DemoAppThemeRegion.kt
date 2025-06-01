@@ -17,6 +17,7 @@ import com.michaelflisar.composethemer.picker.DefaultThemePicker
 import com.michaelflisar.composethemer.picker.DefaultThemePickerIconTextContent
 import com.michaelflisar.composethemer.picker.rememberThemePicker
 import com.michaelflisar.kotpreferences.compose.asMutableState
+import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.toolbox.androiddemoapp.classes.DemoPrefs
 import com.michaelflisar.toolbox.components.MyColumn
 
@@ -43,10 +44,10 @@ fun DemoAppThemeRegion(
 private fun ThemePicker(singleLevelThemePicker: Boolean) {
 
     val pickerState = rememberThemePicker(
-        baseTheme = DemoPrefs.baseTheme.asMutableState(),
-        contrast = DemoPrefs.contrast.asMutableState(),
-        dynamic = DemoPrefs.dynamic.asMutableState(),
-        themeId = DemoPrefs.theme.asMutableState()
+        baseTheme = DemoPrefs.baseTheme.asMutableStateNotNull(),
+        contrast = DemoPrefs.contrast.asMutableStateNotNull(),
+        dynamic = DemoPrefs.dynamic.asMutableStateNotNull(),
+        themeId = DemoPrefs.theme.asMutableStateNotNull()
     )
 
     DefaultThemePicker(
