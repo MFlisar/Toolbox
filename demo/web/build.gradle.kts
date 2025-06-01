@@ -9,16 +9,19 @@ plugins {
 
 kotlin {
 
+    // bei Änderungen folgendes prüfen:
+    // - .\src\wasmJsMain\resources\index.html
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "webApp"
+        outputModuleName = "demo"
+        val rootDirPath = project.rootDir.path
         browser {
             commonWebpackConfig {
-                outputFileName = "webApp.js"
+                outputFileName = "demo.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
                         // Serve sources to debug inside browser
-                        add(project.projectDir.path)
+                        add(rootDirPath)
                     }
                 }
             }
@@ -27,13 +30,14 @@ kotlin {
     }
 
     sourceSets {
+
         val wasmJsMain by getting {
             dependencies {
-
                 api(libs.compose.material3)
 
-                api(project(":toolbox:core"))
-                api(project(":toolbox:modules:ui"))
+                implementation(project(":toolbox:core"))
+                implementation(project(":toolbox:modules:ui"))
+                implementation(project(":toolbox:modules:table"))
 
             }
         }

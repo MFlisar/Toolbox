@@ -51,7 +51,7 @@ fun PreferenceScope.DesktopPrefText(
 ) {
     val state = setting.asMutableState()
     PreferenceInputText(
-        value = state.value,
+        value = state.value ?: "",
         onValueChange = {
             state.value = it
         },

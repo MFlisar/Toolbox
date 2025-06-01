@@ -85,9 +85,11 @@ kotlin {
                 implementation(deps.composepreferences.screen.input)
                 implementation(deps.composepreferences.screen.list)
 
-
                 // ComposeColors
                 implementation(deps.composecolors.material)
+
+                // ComposeThemer
+                api(deps.composethemer.core)
 
             } else {
 
@@ -112,6 +114,9 @@ kotlin {
 
                 // ComposeColors
                 implementation(project(":composecolors:material"))
+
+                // ComposeThemer
+                api(project(":composethemer:core"))
 
             }
 

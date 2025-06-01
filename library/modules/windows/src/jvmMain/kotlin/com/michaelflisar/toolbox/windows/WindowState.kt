@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.windows
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,18 +51,23 @@ fun rememberJewelWindowState(
 
     val scope = rememberCoroutineScope()
 
+    val windowWidth by prefs.windowWidth.collectAsStateNotNull()
+    val windowHeight by prefs.windowHeight.collectAsStateNotNull()
+    val windowX by prefs.windowX.collectAsStateNotNull()
+    val windowY by prefs.windowY.collectAsStateNotNull()
+    val windowPlacement by prefs.windowPlacement.collectAsStateNotNull()
+
     val size = DpSize(
-        prefs.windowWidth.value.dp,
-        prefs.windowHeight.value.dp,
+        windowWidth.dp,
+        windowHeight.dp,
     )
     val pos = WindowPosition(
-        prefs.windowX.value.dp,
-        prefs.windowY.value.dp
+        windowX.dp,
+        windowY.dp
     )
-    val placement = prefs.windowPlacement.value
 
     val state = rememberWindowState(
-        placement = placement,
+        placement = windowPlacement,
         position = pos,
         size = size
     )

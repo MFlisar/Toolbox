@@ -1,18 +1,22 @@
 package com.michaelflisar.toolbox.windows.jewel
 
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import com.michaelflisar.composethemer.ComposeTheme
+import com.michaelflisar.composethemer.themes.DefaultThemes
+import com.michaelflisar.composethemer.themes.ThemeDefault
+import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.classes.LocalStyle
@@ -21,6 +25,7 @@ import com.michaelflisar.toolbox.windows.classes.AppState
 import com.michaelflisar.toolbox.windows.classes.LocalAppState
 import com.michaelflisar.toolbox.windows.classes.rememberAppState
 import com.michaelflisar.toolbox.windows.prefs.DesktopAppPrefs
+import com.michaelflisar.toolbox.windows.prefs.rememberComposeThemeState
 import com.michaelflisar.toolbox.windows.rememberJewelWindowState
 import kotlinx.coroutines.launch
 import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
@@ -54,12 +59,19 @@ fun jewelApplication(
     onKeyEvent: (KeyEvent) -> Boolean = { false },
     windowStyle: @Composable () -> DecoratedWindowStyle = { org.jetbrains.jewel.foundation.theme.JewelTheme.defaultDecoratedWindowStyle },
     onClosed: (suspend () -> Unit)? = null,
-    colors: @Composable (theme: JewelTheme) -> ColorScheme = { ToolboxDefaults.colorScheme(it.theme) },
+    themeState: @Composable (prefs: DesktopAppPrefs, theme: JewelTheme) -> ComposeTheme.State = { prefs, theme ->
+        rememberComposeThemeState(prefs)
+    },
+    registerThemes: () -> Unit = {
+        val themes = DefaultThemes.getAllThemes()
+        ComposeTheme.register(*themes.toTypedArray())
+    },
     shapes: Shapes = ToolboxDefaults.SHAPES,
     typography: @Composable () -> Typography = { Style.windowsTypography() },
     style: @Composable () -> Style = { Style.windowsDefault() },
-    content: @Composable DecoratedWindowScope.(windowState: WindowState) -> Unit
+    content: @Composable DecoratedWindowScope.(windowState: WindowState) -> Unit,
 ) {
+    registerThemes()
     application {
 
         val textStyle = org.jetbrains.jewel.foundation.theme.JewelTheme.createDefaultTextStyle()
@@ -103,8 +115,9 @@ fun jewelApplication(
                 ),
             swingCompatMode = false
         ) {
-            MaterialTheme(
-                colorScheme = colors(theme),
+            val composeThemeState = themeState(prefs, theme)
+            ComposeTheme(
+                state = composeThemeState,
                 shapes = shapes,
                 typography = typography()
             ) {

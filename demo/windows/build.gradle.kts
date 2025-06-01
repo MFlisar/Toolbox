@@ -26,6 +26,8 @@ kotlin {
 
             implementation(project(":toolbox:modules:windows"))
 
+            implementation(deps.composethemer.core)
+
             implementation(deps.composedialogs.core)
             implementation(deps.composedialogs.dialog.list)
 

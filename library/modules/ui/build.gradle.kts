@@ -36,8 +36,9 @@ val licenseUrl = "$github/blob/main/LICENSE"
 
 kotlin {
 
-    // Java
-    jvm()
+    //-------------
+    // Mobile
+    //-------------
 
     // Android
     androidTarget {
@@ -47,22 +48,42 @@ kotlin {
         }
     }
 
-    // web
-    //js(IR) {
-    //    nodejs {}
-    //    browser {}
-    //}
-    //@OptIn(ExperimentalWasmDsl::class)
-    //wasmJs {
-    //    nodejs()
-    //}
-
     // iOS
-    //macosX64()
-    //macosArm64()
-    //iosArm64()
-    //iosX64()
-    //iosSimulatorArm64()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    //-------------
+    // Desktop
+    //-------------
+
+    // Windows
+    jvm()
+
+    // macOS
+    macosX64()
+    macosArm64()
+
+    // Linux
+    // linuxX64()
+    // linuxArm64()
+
+    //-------------
+    // Web
+    //-------------
+
+    // WASM
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        nodejs()
+    }
+
+    //-------------
+    // JavaScript
+    //-------------
+
+    // js()
+    // js(IR)
 
     // -------
     // Sources
@@ -70,9 +91,46 @@ kotlin {
 
     sourceSets {
 
+        // ---------------------
+        // custom shared sources
+        // ---------------------
+
+        // all targets but windows
         val notJvmMain by creating {
             dependsOn(commonMain.get())
         }
+
+        // ---------------------
+        // target sources
+        // ---------------------
+
+        val groupedTargets = mapOf(
+            "android" to listOf("android"),
+            "ios" to listOf("iosX64", "iosArm64", "iosSimulatorArm64"),
+            "jvm" to listOf("jvm"),
+            "macos" to listOf("macosX64", "macosArm64"),
+            "wasmJs" to listOf("wasmJs")
+        )
+
+        groupedTargets.forEach { group, targets ->
+            val groupMain = sourceSets.maybeCreate("${group}Main")
+            when (group) {
+                "android", "ios", "macos", "wasmJs" -> {
+                    groupMain.dependsOn(notJvmMain)
+                }
+                "jvm" -> {
+
+                }
+            }
+
+            targets.forEach { target ->
+                sourceSets.getByName("${target}Main").dependsOn(groupMain)
+            }
+        }
+
+        // ---------------------
+        // dependencies
+        // ---------------------
 
         commonMain.dependencies {
 
@@ -85,8 +143,8 @@ kotlin {
             api(project(":toolbox:core"))
 
             // Components
-            api(deps.composedialogs.core)
-            api(deps.composedialogs.dialog.info)
+            //api(deps.composedialogs.core)
+            //api(deps.composedialogs.dialog.info)
 
         }
 
@@ -95,10 +153,6 @@ kotlin {
             implementation(androidx.core)
 
         }
-
-        androidMain.get().dependsOn(notJvmMain)
-        jsMain.get().dependsOn(notJvmMain)
-        wasmJsMain.get().dependsOn(notJvmMain)
     }
 }
 

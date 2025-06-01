@@ -19,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composethemer.ComposeTheme
+import com.michaelflisar.composethemer.themes.DefaultThemes
 import com.michaelflisar.lumberjack.extensions.composeviewer.LumberjackDialogContent
 import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.classes.LocalStyle

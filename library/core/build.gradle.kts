@@ -36,8 +36,9 @@ val licenseUrl = "$github/blob/main/LICENSE"
 
 kotlin {
 
-    // Java
-    jvm()
+    //-------------
+    // Mobile
+    //-------------
 
     // Android
     androidTarget {
@@ -47,22 +48,42 @@ kotlin {
         }
     }
 
-    // web
-    // js(IR) {
-    //     nodejs {}
-    //     browser {}
-    // }
-    // @OptIn(ExperimentalWasmDsl::class)
-    // wasmJs {
-    //     nodejs()
-    // }
-
     // iOS
-    //macosX64()
-    //macosArm64()
-    //iosArm64()
-    //iosX64()
-    //iosSimulatorArm64()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    //-------------
+    // Desktop
+    //-------------
+
+    // Windows
+    jvm()
+
+    // macOS
+    macosX64()
+    macosArm64()
+
+    // Linux
+    // linuxX64()
+    // linuxArm64()
+
+    //-------------
+    // Web
+    //-------------
+
+    // WASM
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        nodejs()
+    }
+
+    //-------------
+    // JavaScript
+    //-------------
+
+    // js()
+    // js(IR)
 
     // -------
     // Sources
