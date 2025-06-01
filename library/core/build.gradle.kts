@@ -91,6 +91,47 @@ kotlin {
 
     sourceSets {
 
+        // ---------------------
+        // custom shared sources
+        // ---------------------
+
+        // all targets but windows
+        val notJvmMain by creating {
+            dependsOn(commonMain.get())
+        }
+
+        // ---------------------
+        // target sources
+        // ---------------------
+
+        val groupedTargets = mapOf(
+            "android" to listOf("android"),
+            "ios" to listOf("iosX64", "iosArm64", "iosSimulatorArm64"),
+            "jvm" to listOf("jvm"),
+            "macos" to listOf("macosX64", "macosArm64"),
+            "wasmJs" to listOf("wasmJs")
+        )
+
+        groupedTargets.forEach { group, targets ->
+            val groupMain = sourceSets.maybeCreate("${group}Main")
+            when (group) {
+                "android", "ios", "macos", "wasmJs" -> {
+                    groupMain.dependsOn(notJvmMain)
+                }
+                "jvm" -> {
+
+                }
+            }
+
+            targets.forEach { target ->
+                sourceSets.getByName("${target}Main").dependsOn(groupMain)
+            }
+        }
+
+        // ---------------------
+        // dependencies
+        // ---------------------
+
         commonMain.dependencies {
 
             // Compose + AndroidX
