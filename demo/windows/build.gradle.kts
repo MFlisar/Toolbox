@@ -25,6 +25,7 @@ kotlin {
             implementation(deps.composecolors.material)
 
             implementation(project(":toolbox:modules:windows"))
+            implementation(project(":toolbox:modules:form"))
 
             implementation(deps.composethemer.core)
 

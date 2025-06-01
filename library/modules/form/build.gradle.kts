@@ -18,8 +18,8 @@ plugins {
 // -------------------
 
 // Module
-val artifactId = "ui"
-val androidNamespace = "com.michaelflisar.toolbox.ui"
+val artifactId = "table"
+val androidNamespace = "com.michaelflisar.toolbox.table"
 
 // Library
 val libraryName = "Toolbox"
@@ -61,8 +61,8 @@ kotlin {
     jvm()
 
     // macOS
-    macosX64()
-    macosArm64()
+    //macosX64()
+    //macosArm64()
 
     // Linux
     // linuxX64()
@@ -73,10 +73,10 @@ kotlin {
     //-------------
 
     // WASM
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        nodejs()
-    }
+    //@OptIn(ExperimentalWasmDsl::class)
+    //wasmJs {
+    //    nodejs()
+    //}
 
     //-------------
     // JavaScript
@@ -91,47 +91,6 @@ kotlin {
 
     sourceSets {
 
-        // ---------------------
-        // custom shared sources
-        // ---------------------
-
-        // all targets but windows
-        val notJvmMain by creating {
-            dependsOn(commonMain.get())
-        }
-
-        // ---------------------
-        // target sources
-        // ---------------------
-
-        val groupedTargets = mapOf(
-            "android" to listOf("android"),
-            "ios" to listOf("iosX64", "iosArm64", "iosSimulatorArm64"),
-            "jvm" to listOf("jvm"),
-            "macos" to listOf("macosX64", "macosArm64"),
-            "wasmJs" to listOf("wasmJs")
-        )
-
-        groupedTargets.forEach { group, targets ->
-            val groupMain = sourceSets.maybeCreate("${group}Main")
-            when (group) {
-                "android", "ios", "macos", "wasmJs" -> {
-                    groupMain.dependsOn(notJvmMain)
-                }
-                "jvm" -> {
-
-                }
-            }
-
-            targets.forEach { target ->
-                sourceSets.getByName("${target}Main").dependsOn(groupMain)
-            }
-        }
-
-        // ---------------------
-        // dependencies
-        // ---------------------
-
         commonMain.dependencies {
 
             // Compose + AndroidX
@@ -141,12 +100,12 @@ kotlin {
 
             // Library
             api(project(":toolbox:core"))
+            api(project(":toolbox:modules:ui"))
 
-        }
-
-        androidMain.dependencies {
-
-            implementation(androidx.core)
+            // TODO: dialogs for mac, web...
+            // Components
+            api(deps.composedialogs.core)
+            api(deps.composedialogs.dialog.info)
 
         }
     }

@@ -52,6 +52,7 @@ fun includeModule(path: String, name: String) {
 
 includeModule("library\\core",                      ":toolbox:core")
 includeModule("library\\modules\\table",            ":toolbox:modules:table")
+includeModule("library\\modules\\form",             ":toolbox:modules:form")
 includeModule("library\\modules\\ui",               ":toolbox:modules:ui")
 includeModule("library\\modules\\windows",          ":toolbox:modules:windows")
 includeModule("library\\modules\\android-demo-app", ":toolbox:modules:androiddemoapp")
