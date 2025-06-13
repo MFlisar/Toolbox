@@ -1,11 +1,7 @@
 package com.michaelflisar.toolbox.windows
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.unit.DpSize
@@ -25,7 +21,7 @@ fun WindowState.reset(
     prefs: DesktopAppPrefs,
     placement: Boolean = true,
     position: Boolean = true,
-    size: Boolean = true
+    size: Boolean = true,
 ) {
     if (placement) {
         this.placement = prefs.windowPlacement.defaultValue
@@ -46,7 +42,7 @@ fun WindowState.reset(
 
 @Composable
 fun rememberJewelWindowState(
-    prefs: DesktopAppPrefs
+    prefs: DesktopAppPrefs,
 ): WindowState {
 
     val scope = rememberCoroutineScope()
@@ -75,18 +71,18 @@ fun rememberJewelWindowState(
     snapshotFlow {
         Triple(state.size, state.position, state.placement)
     }.onEach {
-            withContext(Dispatchers.IO) {
-                try {
-                    prefs.windowWidth.update(it.first.width.value.toInt())
-                    prefs.windowHeight.update(it.first.height.value.toInt())
-                    prefs.windowX.update(it.second.x.value.toInt())
-                    prefs.windowY.update(it.second.y.value.toInt())
-                    prefs.windowPlacement.update(it.third)
-                } catch(e: AccessDeniedException) {
-                    // ignore - comes from androidx datastore...
-                }
+        withContext(Dispatchers.IO) {
+            try {
+                prefs.windowWidth.update(it.first.width.value.toInt())
+                prefs.windowHeight.update(it.first.height.value.toInt())
+                prefs.windowX.update(it.second.x.value.toInt())
+                prefs.windowY.update(it.second.y.value.toInt())
+                prefs.windowPlacement.update(it.third)
+            } catch (e: AccessDeniedException) {
+                // ignore - comes from androidx datastore...
             }
         }
+    }
         .launchIn(scope)
 
     return state
