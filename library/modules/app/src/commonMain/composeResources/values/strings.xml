@@ -1,0 +1,107 @@
+<resources>
+
+	<string name="author" translatable="false">Michael Flisar</string>
+	
+	 <!-- Acra -->
+    <string name="crash_dialog_title">App crashed</string>
+    <string name="crash_dialog_text">An unexpected error occurred. Please help me to fix this by sending me the error data by clicking OK.</string>
+
+    <!-- Ads -->
+    <string name="placeholder_ads">Advertisement</string>
+   
+	<!-- Menus -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_more">More</string>
+    <string name="menu_go_pro">Get PRO Version</string>
+
+    <!-- Dialoge -->
+    <string name="dlg_pro_version_title">Pro Version</string>
+    <string name="dlg_pro_version_info">The Pro Version removes all ads from this app. Do you want to get the pro version?</string>
+    <string name="dlg_pro_version_info_bought">Congratulations. You just got the pro version of this app. Have fun with it.</string>
+    <string name="dlg_getting_pro_error_info">Error getting pro version! Please try again later or contact the developer.\n\nError: %1$s</string>
+	<string name="dlg_getting_pro_error_info2">Error getting pro version! Please try again later or contact the developer.</string>
+
+    <!-- Enums -->
+    <string name="theme_system">System</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
+    <string name="contrast_normal">Normal</string>
+    <string name="contrast_medium">Medium</string>
+    <string name="contrast_high">High</string>
+    <string name="toolbar_mode_primary">Primary Color</string>
+    <string name="toolbar_mode_background">Background Color</string>
+    <string name="toolbar_mode_black">Black</string>
+
+    <!-- Settings -->
+	<string name="by_name">By %1$s</string>
+    <string name="settings_group_style">Style</string>
+    <string name="settings_group_about">About</string>
+    <string name="settings_group_infos">Infos</string>
+	<string name="settings_group_privacy">Privacy</string>
+    <string name="settings_group_backup">Backups</string>
+    <string name="settings_group_auto_backup">Automatic Backup</string>
+    <string name="settings_group_infos_details">Check app version, changelog, …</string>
+    <string name="settings_group_others">Others</string>
+    <string name="settings_group_others_details">Send feedback, open play store</string>
+    <string name="settings_group_consent">Consents</string>
+    <string name="settings_group_consent_details">GDPR informations</string>
+    <string name="settings_group_language">Language</string>
+    <string name="settings_dynamic_theme">Dynamic Colors</string>
+    <string name="settings_dynamic_theme_details">If enabled, colors are dynamically deduced from your wallpaper</string>
+    <string name="settings_toolbar_style">Toolbar Style</string>
+    <string name="settings_contrast">Contrast</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_details">Select a theme, a theme color and a theme variant</string>
+    <string name="settings_version">Version Code</string>
+    <string name="settings_changelog">Changelog</string>
+	<string name="settings_privacy_policy">Privacy Policy</string>
+	<string name="settings_privacy_policy_details">Click to show the privacy policy</string>
+    <string name="settings_feedback">Feedback</string>
+    <string name="settings_feedback_details">Contact me via email and optionally attach this apps log file</string>
+    <string name="settings_gdpr_conset">GDPR Consent</string>
+    <string name="settings_gdpr_conset_details">Withdraw given GDPR consent</string>
+    <string name="settings_pro_version">Version</string>
+    <string name="settings_pro_version_is_free">Free Version</string>
+    <string name="settings_pro_version_is_free_with_click_info1">Free Version</string>
+    <string name="settings_pro_version_is_free_with_click_info2">Click to get the pro version</string>
+    <string name="settings_pro_version_is_pro_info">You own the pro version, thanks for supporting this app.</string>
+    <string name="settings_pro_version_already_pro">You already own the pro version, thanks for supporting this project.</string>
+    <string name="settings_open_play_store">Play Store</string>
+    <string name="settings_open_play_store_details">Open this apps play store page</string>
+    <string name="settings_create_backup">Create Backup</string>
+    <string name="settings_restore_backup">Restore Backup</string>
+	<string name="settings_consent_settings">Consent to use personal data</string>
+	<string name="settings_gdpr_consent_show_dialog">Check and update settings</string>
+	<string name="settings_dialog_attach_log_file_label">Log File</string>
+	<string name="settings_dialog_attach_log_file_text">Do you want to attach the log file?</string>
+	<string name="settings_filter_themes_label">Filter</string>
+	<string name="settings_filter_themes_placeholder">Search in themes</string>
+	<string name="settings_change_language">Change language</string>
+
+    <!-- Snackbars/Toasts -->
+    <string name="info_getting_pro_cancelled">Getting pro version cancelled!</string>
+    <string name="info_gdpr_reset">GDPR consent withdrawn</string>
+
+    <!-- Compose -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="error_invalid_input">Invalid input</string>
+    <string name="error_invalid_length">Invalid length</string>
+    <string name="error_too_low">Too low</string>
+    <string name="error_too_high">Too high</string>
+
+    <!-- Backup -->
+    <string name="backup_export">Export</string>
+    <string name="backup_import">Import</string>
+    <string name="backup_select_file">Select file</string>
+    <string name="backup_waiting_for_file">Please select a file to continue...</string>
+    <string name="backup_exporting">Exporting...</string>
+    <string name="backup_importing">Importing...</string>
+    <string name="backup_done">Done!</string>
+    <string name="backup_error">Error: %1$s</string>
+    <string name="backup_dialog_create_document_activity_not_found_title">Create file failed</string>
+    <string name="backup_dialog_create_document_activity_not_found_info">There was no app found that allows to create documents (handling of the `ACTION_CREATE_DOCUMENT` intent!). Normally android has always a matching app installed but some manufacturers manipulate or remove this app.</string>
+    <string name="backup_dialog_open_document_activity_not_found_title">Open file failed</string>
+    <string name="backup_dialog_open_document_activity_not_found_info">There was no app found that allows to create documents (handling of the `ACTION_OPEN_DOCUMENT` intent!). Normally android has always a matching app installed but some manufacturers manipulate or remove this app.</string>
+
+</resources>

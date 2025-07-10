@@ -20,7 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
-import com.michaelflisar.toolbox.cursor
+import com.michaelflisar.toolbox.Platform.cursor
 
 @Composable
 fun MyInput(

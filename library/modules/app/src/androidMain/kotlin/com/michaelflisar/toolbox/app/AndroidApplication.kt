@@ -1,0 +1,43 @@
+package com.michaelflisar.toolbox.app
+
+import android.app.Application
+import com.jakewharton.processphoenix.ProcessPhoenix
+import com.michaelflisar.toolbox.AppContext
+import com.michaelflisar.toolbox.app.resources.Res
+import com.michaelflisar.toolbox.app.resources.crash_dialog_text
+import com.michaelflisar.toolbox.app.resources.crash_dialog_title
+import com.michaelflisar.toolbox.managers.AcraManager
+import com.michaelflisar.toolbox.utils.AcraUtil
+import kotlinx.coroutines.runBlocking
+
+abstract class AndroidApplication : Application() {
+
+    abstract val appIcon: Int
+    abstract val appName: Int
+
+    override fun onCreate() {
+
+        super.onCreate()
+
+        if (AcraManager.isACRAProcess())
+            return
+        if (ProcessPhoenix.isPhoenixProcess(this))
+            return
+
+        // 1) init base app
+        AppContext.init(this)
+        val setup = createSetup()
+        CommonApp.init(setup)
+        AcraUtil.initAcra(
+            this,
+            appIcon = appIcon,
+            appName = runBlocking { getString(appName) },
+            fileLoggerSetup = setup.fileLoggerSetup,
+            crash_dialog_text = Res.string.crash_dialog_text,
+            crash_dialog_title = Res.string.crash_dialog_title
+        )
+    }
+
+    abstract fun createSetup(): AppSetup
+
+}

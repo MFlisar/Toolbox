@@ -1,0 +1,105 @@
+package com.michaelflisar.toolbox.app.features.preferences.groups
+
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.michaelflisar.composedialogs.core.DialogStateNoData
+import com.michaelflisar.composepreferences.core.PreferenceInfo
+import com.michaelflisar.composepreferences.core.classes.Dependency
+import com.michaelflisar.composepreferences.core.classes.LocalPreferenceSettings
+import com.michaelflisar.composepreferences.core.composables.PreferenceItemDefaults
+import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
+import com.michaelflisar.composepreferences.screen.button.PreferenceButton
+import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.features.proversion.ProState
+import com.michaelflisar.toolbox.app.resources.Res
+import com.michaelflisar.toolbox.app.resources.dlg_pro_version_title
+import com.michaelflisar.toolbox.app.resources.settings_pro_version
+import com.michaelflisar.toolbox.app.resources.settings_pro_version_is_free
+import com.michaelflisar.toolbox.app.resources.settings_pro_version_is_free_with_click_info2
+import com.michaelflisar.toolbox.app.resources.settings_pro_version_is_pro_info
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Crown
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun PreferenceGroupScope.SettingsProVersionHeader(
+    showProVersionDialog: DialogStateNoData,
+) {
+    val setup = CommonApp.setup
+    val proVersionManager = setup.proVersionManager
+
+    val proState = proVersionManager.proState.collectAsState()
+
+    if (proVersionManager.supportsProVersion) {
+
+        when (proState.value) {
+            ProState.No -> SettingsNotPro(
+                proState,
+                stringResource(Res.string.settings_pro_version_is_free_with_click_info2),
+                showProVersionDialog
+            )
+
+            ProState.Unknown -> SettingsNotPro(proState, null, showProVersionDialog)
+            ProState.Yes -> {
+                SettingsPro()
+            }
+        }
+    }
+}
+
+@Composable
+private fun PreferenceGroupScope.SettingsNotPro(
+    proState: State<ProState>,
+    info: String?,
+    showProVersionDialog: DialogStateNoData,
+) {
+    PreferenceButton(
+        onClick = {
+            showProVersionDialog.show()
+        },
+        title = stringResource(if (info == null) Res.string.settings_pro_version else Res.string.settings_pro_version_is_free),
+        subtitle = info ?: "",
+        enabled = Dependency.State(proState) { it == ProState.No },
+        icon = {
+            Icon(
+                modifier = Modifier.size(24.dp),
+                imageVector = FontAwesomeIcons.Solid.Crown,
+                contentDescription = null
+            )
+        },
+        itemStyle = LocalPreferenceSettings.current.style.defaultItemStyle.copy(
+            colors = PreferenceItemDefaults.colors(
+                backgroundColor = MaterialTheme.colorScheme.primary,
+                foregroundColor = MaterialTheme.colorScheme.onPrimary,
+            )
+        )
+    )
+}
+
+@Composable
+private fun PreferenceGroupScope.SettingsPro() {
+    PreferenceInfo(
+        title = stringResource(Res.string.dlg_pro_version_title),
+        subtitle = stringResource(Res.string.settings_pro_version_is_pro_info),
+        icon = {
+            Icon(
+                modifier = Modifier.size(24.dp),
+                imageVector = FontAwesomeIcons.Solid.Crown,
+                contentDescription = null
+            )
+        },
+        itemStyle = LocalPreferenceSettings.current.style.defaultItemStyle.copy(
+            colors = PreferenceItemDefaults.colors(
+                backgroundColor = MaterialTheme.colorScheme.primary,
+                foregroundColor = MaterialTheme.colorScheme.onPrimary,
+            )
+        )
+    )
+}

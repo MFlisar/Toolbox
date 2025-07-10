@@ -1,5 +1,12 @@
 package com.michaelflisar.toolbox
 
+import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.lumberjack.core.getLatestLogFile
+import com.michaelflisar.lumberjack.extensions.feedback.sendFeedback
+import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
+import com.michaelflisar.toolbox.utils.AcraUtil
+import java.io.File
+
 // TODO: HACK to avoid java.lang.NoSuchMethodError: No virtual method removeLast()Ljava/lang/Object; in class Landroidx/compose/runtime/snapshots/SnapshotStateList; or its super classes
 // issue only happens on android!
 // this is a target API 35 problem that makes issues on all android devices using API <= 34
@@ -10,4 +17,18 @@ fun <T> MutableList<T>.removeLastSave() : T {
 
 fun <T> MutableList<T>.removeFirstSave() : T {
     return removeAt(0)
+}
+
+fun L.sendFeedback(
+    fileLoggingSetup: FileLoggerSetup,
+    files: List<File> = emptyList(),
+    appendLogFile: Boolean = true
+) {
+    L.sendFeedback(
+        context = AppContext.context(),
+        receiver = AcraUtil.MAIL,
+        attachments = files + (fileLoggingSetup.getLatestLogFile()?.takeIf { appendLogFile }?.let {
+            listOf(it)
+        } ?: emptyList())
+    )
 }

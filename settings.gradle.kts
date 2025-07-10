@@ -34,6 +34,7 @@ pluginManagement {
         google()
         gradlePluginPortal()
         maven("https://jitpack.io")
+        mavenLocal()
     }
 }
 
@@ -54,13 +55,15 @@ includeModule("library\\core",                      ":toolbox:core")
 includeModule("library\\modules\\table",            ":toolbox:modules:table")
 includeModule("library\\modules\\form",             ":toolbox:modules:form")
 includeModule("library\\modules\\ui",               ":toolbox:modules:ui")
-includeModule("library\\modules\\windows",          ":toolbox:modules:windows")
 includeModule("library\\modules\\android-demo-app", ":toolbox:modules:androiddemoapp")
+includeModule("library\\modules\\open-source-demo", ":toolbox:modules:opensourcedemo")
+
+includeModule("library\\modules\\platforms\\windows",          ":toolbox:modules:windows")
+
+includeModule("library\\modules\\app",              ":toolbox:modules:app")
 
 // --------------
 // App
 // --------------
 
-include(":demo:android")
-include(":demo:windows")
-include(":demo:web")
+include(":demo")

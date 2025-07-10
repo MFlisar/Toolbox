@@ -17,8 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
-import com.michaelflisar.toolbox.cursor
+import com.michaelflisar.toolbox.Platform.cursor
 
 @Composable
 fun <T : Number> MyNumericInput(

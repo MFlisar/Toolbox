@@ -1,69 +1,153 @@
 [versions]
 
-material =                      "1.12.0"
-
 # mflisar
-lumberjack =                    "7.2.0-alpha21"
-kotpreferences =        	    "0.9.0-t12"
-composepreferences =   		    "1.1.2"
-composethemer =   			    "1.0.0-test13"
+kotbilling =        		    "0.8.1"
+kotpreferences =        	    "1.0.2"
+lumberjack =                    "7.2.1"
+cachefileprovider = 		    "0.4.0"
+feedback = 		    		    "2.1.0"
+composedebugdrawer =		    "1.0.0"
+composedialogs =   		        "2.2.0-alpha01"
+composechangelog =   		    "2.0.0-alpha13"
+composepreferences =   		    "1.2.0-alpha01"
+composethemer =   			    "1.0.1-alpha01"
 composecolors =                 "1.0.1"
-composedialogs =   		        "2.1.4"
+kmp-parcelize =                 "1.0.0"
+kmp-gradle-tools =              "1.3.3"
+
+# Google
+material =                      "1.12.0"
 
 # Windows UI
 jewel =                        "0.28.0-251.26137"
 intellij-platform =            "251.23774.444"
 skiko =                        "0.9.2"
 
-[libraries]
+# Compose
+compose-icons = 		        "1.1.1"
+voyager = 				        "1.1.0-beta03"
+composables =                   "1.36.1"
 
-material =                              { module = "com.google.android.material:material", 	                    version.ref = "material" }
+# Others
+acra =		        		"5.11.3"
+processphoenix = 			"3.0.0"
+htmlconverter =             "1.1.0"
+filekit =                   "0.10.0-beta04"
+
+# ---------
+# plugins
+# ---------
+
+[plugins]
 
 # mflisar
-lumberjack-core =                       { module = "io.github.mflisar.lumberjack:core", 		                version.ref = "lumberjack" }
-lumberjack-implementation-lumberjack =  { module = "io.github.mflisar.lumberjack:implementation-lumberjack",    version.ref = "lumberjack" }
-lumberjack-logger-console =             { module = "io.github.mflisar.lumberjack:logger-console",               version.ref = "lumberjack" }
-lumberjack-logger-file =                { module = "io.github.mflisar.lumberjack:logger-file",                  version.ref = "lumberjack" }
-lumberjack-extension-composeviewer =    { module = "io.github.mflisar.lumberjack:extension-composeviewer",      version.ref = "lumberjack" }
-kotpreferences-core =                   { module = "io.github.mflisar.kotpreferences:core", 		            version.ref = "kotpreferences" }
-kotpreferences-storage-datastore =      { module = "io.github.mflisar.kotpreferences:storage-datastore", 	    version.ref = "kotpreferences" }
-kotpreferences-extension-compose =      { module = "io.github.mflisar.kotpreferences:extension-compose", 	    version.ref = "kotpreferences" }
-composepreferences-core =				{ module = "io.github.mflisar.composepreferences:core",      			version.ref = "composepreferences" }
-composepreferences-screen-bool =		{ module = "io.github.mflisar.composepreferences:screen-bool",      	version.ref = "composepreferences" }
-composepreferences-screen-button =		{ module = "io.github.mflisar.composepreferences:screen-button",      	version.ref = "composepreferences" }
-composepreferences-screen-input =		{ module = "io.github.mflisar.composepreferences:screen-input",      	version.ref = "composepreferences" }
-composepreferences-screen-color =		{ module = "io.github.mflisar.composepreferences:screen-color",      	version.ref = "composepreferences" }
-composepreferences-screen-date =		{ module = "io.github.mflisar.composepreferences:screen-date",      	version.ref = "composepreferences" }
-composepreferences-screen-time =		{ module = "io.github.mflisar.composepreferences:screen-time",      	version.ref = "composepreferences" }
-composepreferences-screen-list =		{ module = "io.github.mflisar.composepreferences:screen-list",      	version.ref = "composepreferences" }
-composepreferences-screen-number =		{ module = "io.github.mflisar.composepreferences:screen-number",      	version.ref = "composepreferences" }
-composepreferences-kotpreferences =		{ module = "io.github.mflisar.composepreferences:kotpreferences",      	version.ref = "composepreferences" }
-composethemer-core =					{ module = "io.github.mflisar.composethemer:core",      				version.ref = "composethemer" }
-composethemer-modules-picker =			{ module = "io.github.mflisar.composethemer:modules-picker",      		version.ref = "composethemer" }
-composethemer-modules-defaultpicker =   { module = "io.github.mflisar.composethemer:modules-defaultpicker",     version.ref = "composethemer" }
-composethemer-themes-flatui =			{ module = "io.github.mflisar.composethemer:themes-flatui",      		version.ref = "composethemer" }
-composethemer-themes-metro =			{ module = "io.github.mflisar.composethemer:themes-metro",      		version.ref = "composethemer" }
-composethemer-themes-material500 =		{ module = "io.github.mflisar.composethemer:themes-material500",      	version.ref = "composethemer" }
-composecolors-material =                { module = "io.github.mflisar.composecolors:material", 	                version.ref = "composecolors" }
-composecolors-x11 =                     { module = "io.github.mflisar.composecolors:x11", 	                    version.ref = "composecolors" }
-composecolors-material-palette =        { module = "io.github.mflisar.composecolors:material-palette", 	        version.ref = "composecolors" }
-composecolors-x11-palette =             { module = "io.github.mflisar.composecolors:x11-palette", 	            version.ref = "composecolors" }
-composedialogs-core =                   { module = "io.github.mflisar.composedialogs:core",      			    version.ref = "composedialogs" }
-composedialogs-dialog-info =            { module = "io.github.mflisar.composedialogs:dialog-info",      		version.ref = "composedialogs" }
-composedialogs-dialog-input =           { module = "io.github.mflisar.composedialogs:dialog-input",      		version.ref = "composedialogs" }
-composedialogs-dialog-number =          { module = "io.github.mflisar.composedialogs:dialog-number",      		version.ref = "composedialogs" }
-composedialogs-dialog-list =            { module = "io.github.mflisar.composedialogs:dialog-list",      		version.ref = "composedialogs" }
-composedialogs-dialog-progress =        { module = "io.github.mflisar.composedialogs:dialog-progress",      	version.ref = "composedialogs" }
-composedialogs-dialog-time =            { module = "io.github.mflisar.composedialogs:dialog-time",      		version.ref = "composedialogs" }
-composedialogs-dialog-date =            { module = "io.github.mflisar.composedialogs:dialog-date",      		version.ref = "composedialogs" }
-composedialogs-dialog-color =           { module = "io.github.mflisar.composedialogs:dialog-color",      		version.ref = "composedialogs" }
-composedialogs-dialog-billing =         { module = "io.github.mflisar.composedialogs:dialog-billing",      		version.ref = "composedialogs" }
+composechangelog =                      		{ id = "io.github.mflisar.composechangelog.gradle-plugin",                   		version.ref = "composechangelog" }
+kmp-gradle-tools-gradle-plugin =                { id = "io.github.mflisar.kmp-gradle-tools.gradle-plugin",                          version.ref = "kmp-gradle-tools" }
+
+# ---------
+# libraries
+# ---------
+
+[libraries]
+
+# mflisar
+kotbilling =                        			{ module = "io.github.mflisar.kotbilling:library",                         			version.ref = "kotbilling" }
+kotpreferences-core =               			{ module = "io.github.mflisar.kotpreferences:core", 								version.ref = "kotpreferences" }
+kotpreferences-storage-datastore =     			{ module = "io.github.mflisar.kotpreferences:storage-datastore",      				version.ref = "kotpreferences" }
+kotpreferences-storage-keyvalue =     			{ module = "io.github.mflisar.kotpreferences:storage-keyvalue",      				version.ref = "kotpreferences" }
+kotpreferences-encryption-aes =     			{ module = "io.github.mflisar.kotpreferences:encryption-aes",      					version.ref = "kotpreferences" }
+kotpreferences-extension-compose =     		    { module = "io.github.mflisar.kotpreferences:extension-compose",      				version.ref = "kotpreferences" }
+lumberjack-core =			        			{ module = "io.github.mflisar.lumberjack:core", 									version.ref = "lumberjack" }
+lumberjack-implementation-lumberjack =			{ module = "io.github.mflisar.lumberjack:implementation-lumberjack", 				version.ref = "lumberjack" }
+lumberjack-logger-console =			        	{ module = "io.github.mflisar.lumberjack:logger-console", 	            			version.ref = "lumberjack" }
+lumberjack-logger-file =			        	{ module = "io.github.mflisar.lumberjack:logger-file", 	            				version.ref = "lumberjack" }
+lumberjack-extension-viewer =	    			{ module = "io.github.mflisar.lumberjack:extension-viewer", 						version.ref = "lumberjack" }
+lumberjack-extension-composeviewer =	    	{ module = "io.github.mflisar.lumberjack:extension-composeviewer", 					version.ref = "lumberjack" }
+lumberjack-extension-feedback =	            	{ module = "io.github.mflisar.lumberjack:extension-feedback", 	        			version.ref = "lumberjack" }
+lumberjack-extension-notification =	        	{ module = "io.github.mflisar.lumberjack:extension-notification", 	        		version.ref = "lumberjack" }
+cachefileprovider =			            		{ module = "io.github.mflisar.cachefileprovider:library", 			            	version.ref = "cachefileprovider" }
+feedback =			            				{ module = "io.github.mflisar.feedbackmanager:library", 			            	version.ref = "feedback" }
+composedebugdrawer-core =                      	{ module = "io.github.mflisar.composedebugdrawer:core",                    			version.ref = "composedebugdrawer" }
+composedebugdrawer-infos-build =           		{ module = "io.github.mflisar.composedebugdrawer:infos-build",                 		version.ref = "composedebugdrawer" }
+composedebugdrawer-infos-device =          		{ module = "io.github.mflisar.composedebugdrawer:infos-device",                		version.ref = "composedebugdrawer" }
+composedebugdrawer-plugin-lumberjack =     		{ module = "io.github.mflisar.composedebugdrawer:plugin-lumberjack",           		version.ref = "composedebugdrawer" }
+composedebugdrawer-plugin-kotpreferences = 		{ module = "io.github.mflisar.composedebugdrawer:plugin-kotpreferences",  			version.ref = "composedebugdrawer" }
+composedialogs-core =                      		{ module = "io.github.mflisar.composedialogs:core",      			                version.ref = "composedialogs" }
+composedialogs-dialog-info =               		{ module = "io.github.mflisar.composedialogs:dialog-info",      			        version.ref = "composedialogs" }
+composedialogs-dialog-input =              		{ module = "io.github.mflisar.composedialogs:dialog-input",      			        version.ref = "composedialogs" }
+composedialogs-dialog-number =             		{ module = "io.github.mflisar.composedialogs:dialog-number",      			        version.ref = "composedialogs" }
+composedialogs-dialog-list =               		{ module = "io.github.mflisar.composedialogs:dialog-list",      			        version.ref = "composedialogs" }
+composedialogs-dialog-progress =           		{ module = "io.github.mflisar.composedialogs:dialog-progress",      			    version.ref = "composedialogs" }
+composedialogs-dialog-time =               		{ module = "io.github.mflisar.composedialogs:dialog-time",      			        version.ref = "composedialogs" }
+composedialogs-dialog-date =               		{ module = "io.github.mflisar.composedialogs:dialog-date",      			        version.ref = "composedialogs" }
+composedialogs-dialog-color =              		{ module = "io.github.mflisar.composedialogs:dialog-color",      			        version.ref = "composedialogs" }
+composedialogs-dialog-menu =              		{ module = "io.github.mflisar.composedialogs:dialog-menu",      			        version.ref = "composedialogs" }
+composedialogs-dialog-billing =              	{ module = "io.github.mflisar.composedialogs:dialog-billing",      			        version.ref = "composedialogs" }
+composechangelog-core =               			{ module = "io.github.mflisar.composechangelog:core",      			        	    version.ref = "composechangelog" }
+composechangelog-renderer-header =  		    { module = "io.github.mflisar.composechangelog:renderer-header",      		        version.ref = "composechangelog" }
+composechangelog-statesaver-preferences =  		{ module = "io.github.mflisar.composechangelog:statesaver-preferences",      		version.ref = "composechangelog" }
+composechangelog-statesaver-kotpreferences =	{ module = "io.github.mflisar.composechangelog:statesaver-kotpreferences",      	version.ref = "composechangelog" }
+composechangelog-plugin =						{ module = "io.github.mflisar.composechangelog:gradle-plugin",      				version.ref = "composechangelog" }
+composechangelog-shared =						{ module = "io.github.mflisar.composechangelog:gradle-plugin-shared",      		    version.ref = "composechangelog" }
+composepreferences-core =						{ module = "io.github.mflisar.composepreferences:core",      						version.ref = "composepreferences" }
+composepreferences-screen-bool =				{ module = "io.github.mflisar.composepreferences:screen-bool",      				version.ref = "composepreferences" }
+composepreferences-screen-button =				{ module = "io.github.mflisar.composepreferences:screen-button",      				version.ref = "composepreferences" }
+composepreferences-screen-input =				{ module = "io.github.mflisar.composepreferences:screen-input",      				version.ref = "composepreferences" }
+composepreferences-screen-color =				{ module = "io.github.mflisar.composepreferences:screen-color",      				version.ref = "composepreferences" }
+composepreferences-screen-date =				{ module = "io.github.mflisar.composepreferences:screen-date",      				version.ref = "composepreferences" }
+composepreferences-screen-time =				{ module = "io.github.mflisar.composepreferences:screen-time",      				version.ref = "composepreferences" }
+composepreferences-screen-list =				{ module = "io.github.mflisar.composepreferences:screen-list",      				version.ref = "composepreferences" }
+composepreferences-screen-number =				{ module = "io.github.mflisar.composepreferences:screen-number",      				version.ref = "composepreferences" }
+composepreferences-kotpreferences =				{ module = "io.github.mflisar.composepreferences:kotpreferences",      				version.ref = "composepreferences" }
+composethemer-core =							{ module = "io.github.mflisar.composethemer:core",      							version.ref = "composethemer" }
+composethemer-modules-picker =					{ module = "io.github.mflisar.composethemer:modules-picker",      					version.ref = "composethemer" }
+composethemer-modules-defaultpicker =		    { module = "io.github.mflisar.composethemer:modules-defaultpicker",      			version.ref = "composethemer" }
+composethemer-themes-flatui =					{ module = "io.github.mflisar.composethemer:themes-flatui",      					version.ref = "composethemer" }
+composethemer-themes-metro =					{ module = "io.github.mflisar.composethemer:themes-metro",      					version.ref = "composethemer" }
+composethemer-themes-material500 =				{ module = "io.github.mflisar.composethemer:themes-material500",      				version.ref = "composethemer" }
+composecolors-material =						{ module = "io.github.mflisar.composecolors:material",      						version.ref = "composecolors" }
+composecolors-x11 =								{ module = "io.github.mflisar.composecolors:x11",      								version.ref = "composecolors" }
+composecolors-material-palette =				{ module = "io.github.mflisar.composecolors:material-palette",      				version.ref = "composecolors" }
+composecolors-x11-palette =						{ module = "io.github.mflisar.composecolors:x11-palette",      						version.ref = "composecolors" }
+kmp-parcelize =                                 { module = "io.github.mflisar.parcelize:library", 	                                version.ref = "kmp-parcelize" }
+kmp-gradle-tools-scripts =                      { module = "io.github.mflisar.kmp-gradle-tools:scripts",                            version.ref = "kmp-gradle-tools" }
+
+# Google
+material =                                      { module = "com.google.android.material:material", 	                                version.ref = "material" }
 
 # Windows UI
-jewel-int-ui-standalone =               { module = "org.jetbrains.jewel:jewel-int-ui-standalone",               version.ref = "jewel" }
-jewel-int-ui-decorated-window =         { module = "org.jetbrains.jewel:jewel-int-ui-decorated-window",         version.ref = "jewel" }
-jewel-foundation =                      { module = "org.jetbrains.jewel:jewel-foundation",                      version.ref = "jewel" }
-jewel-decorated-window =                { module = "org.jetbrains.jewel:jewel-decorated-window",                version.ref = "jewel" }
-jewel-ui =                              { module = "org.jetbrains.jewel:jewel-ui",                              version.ref = "jewel" }
-intellij-platform-icons =               { module = "com.jetbrains.intellij.platform:icons",                     version.ref = "intellij-platform" }
-skiko =                                 { module = "org.jetbrains.skiko:skiko-awt-runtime-all",                 version.ref = "skiko" }
+jewel-int-ui-standalone =                       { module = "org.jetbrains.jewel:jewel-int-ui-standalone",                           version.ref = "jewel" }
+jewel-int-ui-decorated-window =                 { module = "org.jetbrains.jewel:jewel-int-ui-decorated-window",                     version.ref = "jewel" }
+jewel-foundation =                              { module = "org.jetbrains.jewel:jewel-foundation",                                  version.ref = "jewel" }
+jewel-decorated-window =                        { module = "org.jetbrains.jewel:jewel-decorated-window",                            version.ref = "jewel" }
+jewel-ui =                                      { module = "org.jetbrains.jewel:jewel-ui",                                          version.ref = "jewel" }
+intellij-platform-icons =                       { module = "com.jetbrains.intellij.platform:icons",                                 version.ref = "intellij-platform" }
+skiko =                                         { module = "org.jetbrains.skiko:skiko-awt-runtime-all",                             version.ref = "skiko" }
+
+# Compose
+icons-cssgg = 					                { module = "br.com.devsrsouza.compose.icons:css-gg", 						        version.ref = "compose-icons" }
+icons-weathericons = 			                { module = "br.com.devsrsouza.compose.icons:erikflowers-weather-icons", 	        version.ref = "compose-icons" }
+icons-evaicons = 				                { module = "br.com.devsrsouza.compose.icons:eva-icons", 					        version.ref = "compose-icons" }
+icons-feather = 				                { module = "br.com.devsrsouza.compose.icons:feather", 						        version.ref = "compose-icons" }
+icons-fontawesome = 			                { module = "br.com.devsrsouza.compose.icons:font-awesome", 					        version.ref = "compose-icons" }
+icons-lineawesome = 			                { module = "br.com.devsrsouza.compose.icons:line-awesome", 					        version.ref = "compose-icons" }
+icons-linea = 					                { module = "br.com.devsrsouza.compose.icons:linea", 						        version.ref = "compose-icons" }
+icons-octicons = 				                { module = "br.com.devsrsouza.compose.icons:octicons", 						        version.ref = "compose-icons" }
+icons-simpleicons = 			                { module = "br.com.devsrsouza.compose.icons:simple-icons", 					        version.ref = "compose-icons" }
+icons-tablericons = 			                { module = "br.com.devsrsouza.compose.icons:tabler-icons", 					        version.ref = "compose-icons" }
+voyager-navigator = 		                    { module = "cafe.adriel.voyager:voyager-navigator", 						        version.ref = "voyager" }
+voyager-bottomsheet = 		                    { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", 			        version.ref = "voyager" }
+voyager-tabs = 				                    { module = "cafe.adriel.voyager:voyager-tab-navigator", 					        version.ref = "voyager" }
+voyager-transitions = 		                    { module = "cafe.adriel.voyager:voyager-transitions", 						        version.ref = "voyager" }
+composables-core =                              { module = "com.composables:core", 		                                	        version.ref = "composables" }
+
+# Others
+acra-core =			                			{ module = "ch.acra:acra-core", 									    			version.ref = "acra" }
+acra-mail =			            			    { module = "ch.acra:acra-mail", 									    			version.ref = "acra" }
+acra-dialog =			        			    { module = "ch.acra:acra-dialog", 									    			version.ref = "acra" }
+processphoenix =              				    { module = "com.jakewharton:process-phoenix", 										version.ref = "processphoenix" }
+htmlconverter =                                 { module = "be.digitalia.compose.htmlconverter:htmlconverter", 			            version.ref = "htmlconverter" }
+filekit-core =                                  { module = "io.github.vinceglb:filekit-core",                                       version = "filekit" }
+filekit-dialogs =                               { module = "io.github.vinceglb:filekit-dialogs",                                    version = "filekit" }
+filekit-dialogs-compose =                       { module = "io.github.vinceglb:filekit-dialogs-compose",                            version = "filekit" }
+filekit-coil =                                  { module = "io.github.vinceglb:filekit-coil",                                       version = "filekit" }

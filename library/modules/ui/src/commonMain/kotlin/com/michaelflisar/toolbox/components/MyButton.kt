@@ -259,17 +259,27 @@ private fun ButtonContent(
     if (icon == null) {
         Text(text)
     } else {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        if (text.isEmpty()) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 modifier = Modifier.size(24.dp).rotate(iconRotation),
                 tint = iconTint ?: LocalContentColor.current
             )
-            Text(text)
+        } else {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp).rotate(iconRotation),
+                    tint = iconTint ?: LocalContentColor.current
+                )
+                Text(text)
+            }
         }
+
     }
 }

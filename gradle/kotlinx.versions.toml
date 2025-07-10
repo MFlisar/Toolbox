@@ -7,7 +7,7 @@ io-core =           "0.6.0"
 
 [libraries]
 
-coroutines =			    { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", 	version.ref = "coroutines" }
+coroutines-core =			{ module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", 	version.ref = "coroutines" }
 coroutines-android =	    { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", 	version.ref = "coroutines" }
 coroutines-swing =		    { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", 	version.ref = "coroutines" }
 serialization-json =	    { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", 	version.ref = "json" }
