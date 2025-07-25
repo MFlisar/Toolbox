@@ -114,6 +114,7 @@ composecolors-material-palette =				{ module = "io.github.mflisar.composecolors:
 composecolors-x11-palette =						{ module = "io.github.mflisar.composecolors:x11-palette",      						version.ref = "composecolors" }
 kmp-parcelize =                                 { module = "io.github.mflisar.parcelize:library", 	                                version.ref = "kmp-parcelize" }
 kmp-gradle-tools-scripts =                      { module = "io.github.mflisar.kmp-gradle-tools:scripts",                            version.ref = "kmp-gradle-tools" }
+kmp-gradle-tools-docs =                      { module = "io.github.mflisar.kmp-gradle-tools:docs",                            version.ref = "kmp-gradle-tools" }
 
 # Google
 material =                                      { module = "com.google.android.material:material", 	                                version.ref = "material" }
