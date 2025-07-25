@@ -16,7 +16,7 @@ groups:
     gradle-comment: app
   - id: modules
     label: Modules
-    gradle-comment: app
+    gradle-comment: modules
 
 # -----------
 # Modules
