@@ -15,5 +15,6 @@ expect fun MyScrollableLazyVerticalGrid(
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     gridState: LazyGridState = rememberLazyGridState(),
+    overlapScrollbar: Boolean = false,
     content: LazyGridScope.() -> Unit
 )

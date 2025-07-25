@@ -19,7 +19,7 @@ val buildFilePlugin = project.plugins.getPlugin(BuildFilePlugin::class.java)
 // Informations
 // -------------------
 
-val androidNamespace = "com.michaelflisar.toolbox"
+val androidNamespace = "com.michaelflisar.toolbox.core"
 
 val buildTargets = Targets(
     // mobile
@@ -27,7 +27,7 @@ val buildTargets = Targets(
     iOS = true,
     // desktop
     windows = true,
-    macOS = true,
+    macOS = false, // because of compose unstyled dialogs
     // web
     wasm = true
 )
@@ -35,6 +35,15 @@ val buildTargets = Targets(
 // -------------------
 // Setup
 // -------------------
+
+compose.resources {
+    packageOfResClass = "$androidNamespace.resources"
+    publicResClass = true
+}
+
+dependencies {
+    coreLibraryDesugaring(libs.desugar)
+}
 
 kotlin {
 
@@ -46,7 +55,16 @@ kotlin {
     // Targets
     //-------------
 
-    buildFilePlugin.setupTargetsApp(buildTargets)
+    buildFilePlugin.setupTargetsApp(
+        targets = buildTargets,
+        configMacOS = {
+            compilations["main"].cinterops {
+                create("macos") {
+                    defFile("src/nativeInterop/cinterop/macos.def")
+                }
+            }
+        }
+    )
 
     // -------
     // Sources
@@ -61,6 +79,7 @@ kotlin {
         // --
         // e.g.:
         // val nativeMain by creating { dependsOn(commonMain.get()) }
+        val macosMain by creating { dependsOn(commonMain.get()) }
         val featureFileSupportedMain by creating { dependsOn(commonMain.get()) }
 
         // ---------------------
@@ -86,7 +105,17 @@ kotlin {
 
         buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
             when (target) {
-                Target.ANDROID, Target.WINDOWS, Target.IOS, Target.MACOS -> {
+                Target.ANDROID -> {
+                    groupMain.dependsOn(featureFileSupportedMain)
+                }
+                Target.WINDOWS -> {
+                    groupMain.dependsOn(featureFileSupportedMain)
+                }
+                Target.IOS-> {
+                    groupMain.dependsOn(featureFileSupportedMain)
+                }
+                Target.MACOS -> {
+                    groupMain.dependsOn(macosMain)
                     groupMain.dependsOn(featureFileSupportedMain)
                 }
                 Target.WASM -> {
@@ -114,7 +143,8 @@ kotlin {
             implementation(libs.compose.material.icons.extended)
 
             // mflisar
-            implementation(deps.lumberjack.core)
+            api(deps.lumberjack.core)
+            implementation(deps.composechangelog.core)
 
         }
 
@@ -147,11 +177,16 @@ kotlin {
 
 // android configuration
 android {
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     buildFilePlugin.setupAndroidLibrary(
         androidNamespace = androidNamespace,
         compileSdk = app.versions.compileSdk,
         minSdk = app.versions.minSdk,
-        buildConfig = true
+        buildConfig = false
     )
 }
 

@@ -16,5 +16,6 @@ expect fun MyScrollableColumn(
     itemSpacing: Dp = LocalStyle.current.spacingDefault,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     scrollState: ScrollState = rememberScrollState(),
+    overlapScrollbar: Boolean = false,
     content: @Composable ColumnScope.() -> Unit
 )

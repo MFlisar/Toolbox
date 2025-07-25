@@ -8,7 +8,6 @@ import android.provider.Settings
 import android.text.Spanned
 import androidx.core.text.HtmlCompat
 import com.michaelflisar.lumberjack.core.L
-import com.michaelflisar.toolbox.BuildConfig
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.Locale
@@ -21,12 +20,12 @@ object AndroidUtil {
     // ID meines Handys
     const val TEST_DEVICE_ID = "6DCFD83105F36CF80B2D265D68258AAF"
 
-    fun isDeveloper(context: Context): Boolean {
+    fun isDeveloper(context: Context, isDebugBuild: Boolean): Boolean {
         val developerId = TEST_DEVICE_ID
         val deviceId = getDeviceId(context)
         val id = md5(deviceId).uppercase(Locale.getDefault())
         val isDeveloper = developerId == id
-        if (BuildConfig.DEBUG && !isDeveloper) {
+        if (isDebugBuild && !isDeveloper) {
             L.v { "DEVICE ID: $id (!= $developerId)" }
         }
         return isDeveloper

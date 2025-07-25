@@ -1,33 +1,36 @@
-import com.vanniktech.maven.publish.JavadocJar
-import com.vanniktech.maven.publish.KotlinMultiplatform
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.michaelflisar.kmpgradletools.BuildFilePlugin
+import com.michaelflisar.kmpgradletools.Target
+import com.michaelflisar.kmpgradletools.Targets
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.compose)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
+    alias(deps.plugins.kmp.gradle.tools.gradle.plugin)
 }
+
+// get build file plugin
+val buildFilePlugin = project.plugins.getPlugin(BuildFilePlugin::class.java)
 
 // -------------------
 // Informations
 // -------------------
 
-// Module
-val artifactId = "ui"
 val androidNamespace = "com.michaelflisar.toolbox.ui"
 
-// Library
-val libraryName = "Toolbox"
-val libraryDescription = "Toolbox - $artifactId module"
-val groupID = "io.github.mflisar.toolbox"
-val release = 2021
-val github = "https://github.com/MFlisar/Toolbox"
-val license = "Apache License 2.0"
-val licenseUrl = "$github/blob/main/LICENSE"
+val buildTargets = Targets(
+    // mobile
+    android = true,
+    iOS = true,
+    // desktop
+    windows = true,
+    macOS = false, // because of compose unstyled dialogs
+    // web
+    wasm = true
+)
 
 // -------------------
 // Setup
@@ -35,54 +38,17 @@ val licenseUrl = "$github/blob/main/LICENSE"
 
 kotlin {
 
-    //-------------
-    // Mobile
-    //-------------
-
-    // Android
-    androidTarget {
-        publishLibraryVariants("release")
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
-
-    // iOS
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
-    //-------------
-    // Desktop
-    //-------------
-
-    // Windows
-    jvm()
-
-    // macOS
-    macosX64()
-    macosArm64()
-
-    // Linux
-    // linuxX64()
-    // linuxArm64()
-
-    //-------------
-    // Web
-    //-------------
-
-    // WASM
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        nodejs()
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
     //-------------
-    // JavaScript
+    // Targets
     //-------------
 
-    // js()
-    // js(IR)
+    buildFilePlugin.setupTargetsApp(
+        targets = buildTargets
+    )
 
     // -------
     // Sources
@@ -94,36 +60,44 @@ kotlin {
         // custom shared sources
         // ---------------------
 
-        // all targets but windows
-        val notJvmMain by creating {
-            dependsOn(commonMain.get())
-        }
+        // --
+        // e.g.:
+        // val nativeMain by creating { dependsOn(commonMain.get()) }
+        val notJvmMain by creating { dependsOn(commonMain.get()) }
 
         // ---------------------
         // target sources
         // ---------------------
 
-        val groupedTargets = mapOf(
-            "android" to listOf("android"),
-            "ios" to listOf("iosX64", "iosArm64", "iosSimulatorArm64"),
-            "jvm" to listOf("jvm"),
-            "macos" to listOf("macosX64", "macosArm64"),
-            "wasmJs" to listOf("wasmJs")
-        )
+        // --
+        // e.g.:
+        // buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
+        //     when (target) {
+        //         ... // groupMain.dependsOn(nativeMain)
+        //     }
+        // }
 
-        groupedTargets.forEach { group, targets ->
-            val groupMain = sourceSets.maybeCreate("${group}Main")
-            when (group) {
-                "android", "ios", "macos", "wasmJs" -> {
+        buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
+            when (target) {
+                Target.ANDROID -> {
                     groupMain.dependsOn(notJvmMain)
                 }
-                "jvm" -> {
-
+                Target.WINDOWS -> {
+                    // --
                 }
-            }
-
-            targets.forEach { target ->
-                sourceSets.getByName("${target}Main").dependsOn(groupMain)
+                Target.IOS-> {
+                    groupMain.dependsOn(notJvmMain)
+                }
+                Target.MACOS -> {
+                    groupMain.dependsOn(notJvmMain)
+                }
+                Target.WASM -> {
+                    groupMain.dependsOn(notJvmMain)
+                }
+                Target.LINUX,
+                Target.JS -> {
+                    // not enabled
+                }
             }
         }
 
@@ -151,70 +125,20 @@ kotlin {
     }
 }
 
+// -------------------
+// Configurations
+// -------------------
+
+// android configuration
 android {
 
-    namespace = androidNamespace
-
-    compileSdk = app.versions.compileSdk.get().toInt()
-
-    buildFeatures {
-        compose = true
-    }
-
-    defaultConfig {
-        minSdk = app.versions.minSdk.get().toInt()
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+    buildFilePlugin.setupAndroidLibrary(
+        androidNamespace = androidNamespace,
+        compileSdk = app.versions.compileSdk,
+        minSdk = app.versions.minSdk,
+        buildConfig = false
+    )
 }
 
-mavenPublishing {
-
-    configure(
-        KotlinMultiplatform(
-            javadocJar = JavadocJar.Dokka("dokkaHtml"),
-            sourcesJar = true
-        )
-    )
-
-    coordinates(
-        groupId = groupID,
-        artifactId = artifactId,
-        version = System.getenv("TAG")
-    )
-
-    pom {
-        name.set(libraryName)
-        description.set(libraryDescription)
-        inceptionYear.set("$release")
-        url.set(github)
-
-        licenses {
-            license {
-                name.set(license)
-                url.set(licenseUrl)
-            }
-        }
-
-        developers {
-            developer {
-                id.set("mflisar")
-                name.set("Michael Flisar")
-                email.set("mflisar.development@gmail.com")
-            }
-        }
-
-        scm {
-            url.set(github)
-        }
-    }
-
-    // Configure publishing to Maven Central
-    publishToMavenCentral(true)
-
-    // Enable GPG signing for all publications
-    signAllPublications()
-}
+// maven publish configuration
+buildFilePlugin.setupMavenPublish()

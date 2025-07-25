@@ -9,9 +9,6 @@ import com.michaelflisar.feedbackmanager.FeedbackFile
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.getLatestLogFile
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
-import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
-import com.michaelflisar.toolbox.BuildConfig
-import com.michaelflisar.toolbox.R
 import com.michaelflisar.toolbox.utils.AndroidUtil
 import com.michaelflisar.toolbox.utils.ExceptionUtil
 import com.michaelflisar.toolbox.utils.FileUtil
@@ -26,7 +23,6 @@ import org.acra.config.dialog
 import org.acra.config.mailSender
 import org.acra.data.StringFormat
 import org.acra.ktx.initAcra
-import org.jetbrains.compose.resources.Resource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import java.io.File
@@ -44,7 +40,7 @@ object AcraManager {
         val mail: String,
         val reportError: (() -> Boolean) = { true },
         val onErrorReportedCallback: (() -> Unit)? = null,
-        val reportFileName: String = "acra.txt"
+        val reportFileName: String = "acra.txt",
     )
 
     private var fileLoggerSetup: IFileLoggingSetup? = null
@@ -55,6 +51,8 @@ object AcraManager {
         setup: Setup,
         crash_dialog_text: StringResource,
         crash_dialog_title: StringResource,
+        buildConfigClass: Class<*>,
+        isDebugBuild: Boolean
     ): Boolean {
         this.fileLoggerSetup = fileLoggingSetup
         if (setup.enableDebugNotification) {
@@ -62,7 +60,7 @@ object AcraManager {
         }
         try {
             app.initAcra {
-                buildConfigClass = BuildConfig::class.java
+                this.buildConfigClass = buildConfigClass
                 reportFormat = StringFormat.KEY_VALUE_LIST
                 reportContent = listOf(
                     ReportField.REPORT_ID,
@@ -103,7 +101,10 @@ object AcraManager {
 
             if (!ACRA.isACRASenderServiceProcess()) {
                 ACRA.errorReporter.putCustomData("AppName", setup.appName)
-                ACRA.errorReporter.putCustomData("Developer", AndroidUtil.isDeveloper(app).toString())
+                ACRA.errorReporter.putCustomData(
+                    "Developer",
+                    AndroidUtil.isDeveloper(app, isDebugBuild).toString()
+                )
             }
             if (setup.enableDebugNotification) {
                 ACRA.DEV_LOGGING = false
@@ -136,7 +137,7 @@ object AcraManager {
     private fun showErrorNotification(
         app: Application,
         e: Exception,
-        setup: Setup
+        setup: Setup,
     ) {
         try {
             val content: String? = ExceptionUtil.getStackTrace(e)

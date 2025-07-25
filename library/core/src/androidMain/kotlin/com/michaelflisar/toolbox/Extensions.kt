@@ -1,5 +1,8 @@
 package com.michaelflisar.toolbox
 
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.getLatestLogFile
 import com.michaelflisar.lumberjack.extensions.feedback.sendFeedback
@@ -11,18 +14,18 @@ import java.io.File
 // issue only happens on android!
 // this is a target API 35 problem that makes issues on all android devices using API <= 34
 
-fun <T> MutableList<T>.removeLastSave() : T {
+fun <T> MutableList<T>.removeLastSave(): T {
     return removeAt(size - 1)
 }
 
-fun <T> MutableList<T>.removeFirstSave() : T {
+fun <T> MutableList<T>.removeFirstSave(): T {
     return removeAt(0)
 }
 
 fun L.sendFeedback(
     fileLoggingSetup: FileLoggerSetup,
     files: List<File> = emptyList(),
-    appendLogFile: Boolean = true
+    appendLogFile: Boolean = true,
 ) {
     L.sendFeedback(
         context = AppContext.context(),
@@ -31,4 +34,19 @@ fun L.sendFeedback(
             listOf(it)
         } ?: emptyList())
     )
+}
+
+
+@Composable
+fun Int?.toIconComposable(): IconComposable? {
+    return this?.let {
+        @Composable { contentDescription, modifier, tint ->
+            Icon(
+                painterResource(this),
+                contentDescription = contentDescription,
+                modifier = modifier,
+                tint = tint
+            )
+        }
+    }
 }

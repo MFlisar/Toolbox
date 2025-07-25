@@ -27,4 +27,7 @@ object Prefs : SettingsModel(
 
     // Changelog
     override val lastShownVersionForChangelog by longPref(-1L)
+
+    // Backup
+    val backupPath by stringPref("")
 }

@@ -16,5 +16,6 @@ expect fun MyScrollableRow(
     itemSpacing: Dp = LocalStyle.current.spacingDefault,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     scrollState: ScrollState = rememberScrollState(),
+    overlapScrollbar: Boolean = false,
     content: @Composable RowScope.() -> Unit
 )

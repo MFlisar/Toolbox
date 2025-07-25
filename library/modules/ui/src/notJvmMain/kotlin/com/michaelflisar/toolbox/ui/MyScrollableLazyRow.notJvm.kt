@@ -15,6 +15,7 @@ actual fun MyScrollableLazyRow(
     itemSpacing: Dp,
     verticalAlignment: Alignment.Vertical,
     state: LazyListState,
+    overlapScrollbar: Boolean,
     content: LazyListScope.() -> Unit
 ) {
     LazyRow(

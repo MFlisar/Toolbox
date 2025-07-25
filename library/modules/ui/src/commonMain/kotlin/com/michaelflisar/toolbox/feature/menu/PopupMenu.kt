@@ -34,7 +34,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,7 +50,9 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.round
+import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.components.MyTooltipBox
+import com.michaelflisar.toolbox.extensions.Render
 
 @LayoutScopeMarker
 @Immutable
@@ -242,7 +243,7 @@ private fun PopupMenuScope.WrappedSubMenu(
 @Composable
 fun PopupMenuScope.MenuItem(
     text: @Composable () -> Unit,
-    icon: @Composable (() -> Unit)? = null,
+    icon: IconComposable? = null,
     endIcon: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
     onClick: () -> Unit = {},
@@ -255,7 +256,7 @@ fun PopupMenuScope.MenuItem(
                 modifier = modifier(),
                 text = text,
                 enabled = enabled,
-                leadingIcon = icon,
+                leadingIcon = icon?.let { { it.Render() } },
                 trailingIcon = endIcon,
                 onClick = {
                     onClick()
@@ -300,7 +301,7 @@ fun PopupMenuScope.MenuItem(
 fun PopupMenuScope.MenuCheckbox(
     text: @Composable () -> Unit,
     checked: MutableState<Boolean>,
-    icon: @Composable (() -> Unit)? = null,
+    icon: IconComposable? = null,
     enabled: Boolean = true,
 ) {
     MenuCheckbox(
@@ -317,7 +318,7 @@ fun PopupMenuScope.MenuCheckbox(
     text: @Composable () -> Unit,
     checked: Boolean,
     onCheckChange: (Boolean) -> Unit,
-    icon: @Composable (() -> Unit)?,
+    icon: IconComposable?,
     enabled: Boolean = true,
 ) {
     WrappedItem(content = {
@@ -338,7 +339,7 @@ fun PopupMenuScope.MenuCheckbox(
                 }
             },
             enabled = enabled,
-            leadingIcon = icon,
+            leadingIcon = icon?.let { { it.Render() } },
             trailingIcon = null,
             onClick = {
                 onCheckChange(!checked)
@@ -438,7 +439,7 @@ fun PopupMenuIconRowScope.MenuIcon(
 fun PopupMenuScope.MenuSubMenu(
     text: String,
     textColor: Color? = null,
-    icon: @Composable (() -> Unit)? = null,
+    icon: IconComposable? = null,
     enabled: Boolean = true,
     content: @Composable PopupMenuScope.() -> Unit,
 ) {
@@ -450,7 +451,7 @@ fun PopupMenuScope.MenuSubMenu(
                 modifier = modifier(),
                 text = { Text(text, color = textColor ?: Color.Unspecified) },
                 enabled = enabled,
-                leadingIcon = icon,
+                leadingIcon = icon?.let { { it.Render() } },
                 onClick = {
                     state.open(index.value)
                 },

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.classes.LocalStyle
 
@@ -25,13 +26,14 @@ actual fun MyScrollableLazyRow(
     itemSpacing: Dp,
     verticalAlignment: Alignment.Vertical,
     state: LazyListState,
+    overlapScrollbar: Boolean,
     content: LazyListScope.() -> Unit
 ) {
     Box(modifier = modifier) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = LocalStyle.current.paddingForScrollbar),
+                .padding(bottom = if (overlapScrollbar) 0.dp else LocalStyle.current.paddingForScrollbar),
             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
             verticalAlignment = verticalAlignment,
             state = state

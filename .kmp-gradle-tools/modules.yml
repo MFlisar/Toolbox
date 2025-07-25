@@ -11,6 +11,12 @@ groups:
   - id: core
     label: Core
     gradle-comment: core
+  - id: app
+    label: App
+    gradle-comment: app
+  - id: modules
+    label: Modules
+    gradle-comment: app
 
 # -----------
 # Modules
@@ -31,15 +37,64 @@ groups:
 modules:
   - relativePath: library\core
     artifact-id: core
-    #group: core
+    group: core
     description: the core module
     optional: false
     platforms-info: ""
     dependencies: []
-  - relativePath: library\modules\app
+  - relativePath: library\app
     artifact-id: app
-    #group: core
+    group: app
     description: the base app module
+    optional: true
+    platforms-info: ""
+    dependencies: []
+  - relativePath: library\modules\ui
+    artifact-id: ui
+    group: modules
+    description: a ui module
+    optional: true
+    platforms-info: ""
+    dependencies: []
+  - relativePath: library\modules\zip
+    artifact-id: zip
+    group: modules
+    description: a zip module
+    optional: true
+    platforms-info: ""
+    dependencies: []
+  - relativePath: library\modules\csv
+    artifact-id: csv
+    group: modules
+    description: a csv module
+    optional: true
+    platforms-info: ""
+    dependencies: []
+  - relativePath: library\modules\backup
+    artifact-id: backup
+    group: modules
+    description: a backup module
+    optional: true
+    platforms-info: ""
+    dependencies: []
+  - relativePath: library\modules\service
+    artifact-id: service
+    group: modules
+    description: a service module
+    optional: true
+    platforms-info: ""
+    dependencies: []
+  - relativePath: library\modules\form
+    artifact-id: form
+    group: modules
+    description: a form module
+    optional: true
+    platforms-info: ""
+    dependencies: []
+  - relativePath: library\modules\table
+    artifact-id: table
+    group: modules
+    description: a table module
     optional: true
     platforms-info: ""
     dependencies: []

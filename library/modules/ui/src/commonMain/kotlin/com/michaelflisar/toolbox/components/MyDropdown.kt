@@ -30,7 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.michaelflisar.toolbox.classes.LocalStyle
-import com.michaelflisar.toolbox.disabled
+import com.michaelflisar.toolbox.extensions.disabled
 
 object MyDropdown {
     class Filter<T>(

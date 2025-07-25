@@ -3,5 +3,10 @@
 
     <string name="app_name">Toolbox Demo</string>
 
+    <!-- pages -->
+    <string name="page_home">Home</string>
+    <string name="page_2">Page 2</string>
+    <string name="page_settings">Settings</string>
+
 
 </resources>

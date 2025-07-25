@@ -16,6 +16,7 @@ actual fun MyScrollableRow(
     itemSpacing: Dp,
     verticalAlignment: Alignment.Vertical,
     scrollState: ScrollState,
+    overlapScrollbar: Boolean,
     content: @Composable RowScope.() -> Unit
 ) {
     Row(

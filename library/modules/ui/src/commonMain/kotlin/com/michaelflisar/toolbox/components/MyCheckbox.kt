@@ -12,7 +12,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import com.michaelflisar.toolbox.disabled
+import com.michaelflisar.toolbox.extensions.disabled
 
 @Composable
 fun MyCheckbox(

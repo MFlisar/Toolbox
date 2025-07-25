@@ -1,7 +1,8 @@
 [versions]
 
-gradle = 				        "8.11.0"
+gradle = 				        "8.11.1"
 kotlin = 				        "2.2.0"
+desugar =                       "2.1.5"
 dokka =                         "1.9.20"
 gradle-maven-publish-plugin =   "0.33.0"
 
@@ -35,6 +36,9 @@ compose =                           { id = "org.jetbrains.compose",             
 buildkonfig =                       { id = "com.codingfeline.buildkonfig",              version.ref = "buildkonfig" }
 
 [libraries]
+
+# Android
+desugar =			        	    { module = "com.android.tools:desugar_jdk_libs", 	                    version.ref = "desugar" }
 
 # Compose
 compose-runtime =                   { module = "org.jetbrains.compose.runtime:runtime",                     version.ref = "compose" }

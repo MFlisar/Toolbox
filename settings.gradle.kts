@@ -55,12 +55,16 @@ includeModule("library\\core",                      ":toolbox:core")
 includeModule("library\\modules\\table",            ":toolbox:modules:table")
 includeModule("library\\modules\\form",             ":toolbox:modules:form")
 includeModule("library\\modules\\ui",               ":toolbox:modules:ui")
-includeModule("library\\modules\\android-demo-app", ":toolbox:modules:androiddemoapp")
-includeModule("library\\modules\\open-source-demo", ":toolbox:modules:opensourcedemo")
+includeModule("library\\modules\\zip",              ":toolbox:modules:zip")
+includeModule("library\\modules\\backup",           ":toolbox:modules:backup")
+includeModule("library\\modules\\service",          ":toolbox:modules:service")
+includeModule("library\\modules\\csv",              ":toolbox:modules:csv")
 
-includeModule("library\\modules\\platforms\\windows",          ":toolbox:modules:windows")
+includeModule("library\\app",                       ":toolbox:app")
 
-includeModule("library\\modules\\app",              ":toolbox:modules:app")
+includeModule("library\\todo\\android-demo-app",    ":toolbox:todo:androiddemoapp")
+includeModule("library\\todo\\open-source-demo",    ":toolbox:todo:opensourcedemo")
+includeModule("library\\todo\\windows",             ":toolbox:todo:windows")
 
 // --------------
 // App

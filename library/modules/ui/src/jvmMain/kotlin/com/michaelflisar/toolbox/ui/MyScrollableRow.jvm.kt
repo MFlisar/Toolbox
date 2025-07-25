@@ -4,6 +4,7 @@ import androidx.compose.foundation.HorizontalScrollbar
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -26,22 +27,22 @@ actual fun MyScrollableRow(
     itemSpacing: Dp,
     verticalAlignment: Alignment.Vertical,
     scrollState: ScrollState,
+    overlapScrollbar: Boolean,
     content: @Composable RowScope.() -> Unit
 ) {
-    Column(modifier = modifier) {
+    Box(modifier = modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalScroll(scrollState)
-                .padding(bottom = LocalStyle.current.paddingForScrollbar),
+                .padding(bottom = if (overlapScrollbar) 0.dp else LocalStyle.current.paddingForScrollbar),
             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
             verticalAlignment = verticalAlignment
         ) {
             content()
         }
-        Spacer(modifier = Modifier.height(4.dp))
         HorizontalScrollbar(
-            modifier = Modifier.fillMaxWidth().height(LocalStyle.current.scrollbar),
+            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(LocalStyle.current.scrollbar),
             adapter = rememberScrollbarAdapter(scrollState)
         )
     }

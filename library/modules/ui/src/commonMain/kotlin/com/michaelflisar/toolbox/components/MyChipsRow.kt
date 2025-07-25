@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.classes.LocalStyle
-import com.michaelflisar.toolbox.disabled
+import com.michaelflisar.toolbox.extensions.disabled
 
 private object MyChipsRow {
 

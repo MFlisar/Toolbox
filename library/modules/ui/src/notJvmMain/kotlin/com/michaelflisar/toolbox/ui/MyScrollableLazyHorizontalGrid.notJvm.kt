@@ -18,6 +18,7 @@ actual fun MyScrollableLazyHorizontalGrid(
     verticalArrangement: Arrangement.Vertical,
     horizontalArrangement: Arrangement.Horizontal,
     gridState: LazyGridState,
+    overlapScrollbar: Boolean,
     content: LazyGridScope.() -> Unit
 ) {
     LazyHorizontalGrid(

@@ -6,11 +6,15 @@ import com.michaelflisar.kmpgradletools.Target
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import kotlin.jvm.java
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.compose)
     alias(deps.plugins.composechangelog)
     alias(deps.plugins.kmp.gradle.tools.gradle.plugin)
@@ -47,7 +51,10 @@ val buildTargets = Targets(
 
 compose.resources {
     packageOfResClass = "com.michaelflisar.toolbox.demo.resources"
-    publicResClass = true
+}
+
+dependencies {
+    coreLibraryDesugaring(libs.desugar)
 }
 
 buildkonfig {
@@ -55,6 +62,7 @@ buildkonfig {
     defaultConfigs {
         buildConfigField(Type.STRING, "versionName", versionName)
         buildConfigField(Type.INT, "versionCode", versionCode.toString())
+        buildConfigField(Type.STRING, "packageName", androidNamespace)
     }
 }
 
@@ -143,7 +151,8 @@ kotlin {
 
             // modules
             implementation(project(":toolbox:core"))
-            implementation(project(":toolbox:modules:app"))
+            implementation(project(":toolbox:app"))
+            implementation(project(":toolbox:modules:table"))
 
             // themes
             implementation(deps.composethemer.themes.flatui)
@@ -183,6 +192,10 @@ kotlin {
 
 // android configuration
 android {
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 
     buildFilePlugin.setupAndroidApp(
         androidNamespace = androidNamespace,

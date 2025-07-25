@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.TextFields
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,7 +30,7 @@ import com.michaelflisar.toolbox.components.MyNumericInput
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.components.MySegmentedControl
 import com.michaelflisar.toolbox.components.MyTooltipBox
-import com.michaelflisar.toolbox.disabled
+import com.michaelflisar.toolbox.extensions.disabled
 import kotlin.enums.EnumEntries
 
 abstract class Filter<Item, CellValue> {
@@ -40,6 +39,7 @@ abstract class Filter<Item, CellValue> {
     abstract fun isValid(item: Item, itemToValue: (item: Item) -> CellValue): Boolean
     abstract fun isActive(): Boolean
     abstract fun clear()
+    abstract fun info(): String
 
     enum class FilterType(
         val label: String,
@@ -66,18 +66,28 @@ abstract class Filter<Item, CellValue> {
     }
 
     @Composable
-    fun render() {
-        MyRow {
-            Icon(Icons.Default.FilterAlt, null)
-            Text(modifier = Modifier.weight(1f), text = "Filter", fontWeight = FontWeight.Bold)
-            header()
-        }
-        Column(
-            modifier = Modifier
-                .padding(start = 32.dp)
-                .fillMaxWidth()
-        ) {
-            content()
+    fun render(compact: Boolean = false) {
+        if (compact) {
+            MyRow {
+                Icon(Icons.Default.FilterAlt, null)
+                header()
+                Column {
+                    content()
+                }
+            }
+        } else {
+            MyRow {
+                Icon(Icons.Default.FilterAlt, null)
+                Text(modifier = Modifier.weight(1f), text = "Filter", fontWeight = FontWeight.Bold)
+                header()
+            }
+            Column(
+                modifier = Modifier
+                    .padding(start = 32.dp)
+                    .fillMaxWidth()
+            ) {
+                content()
+            }
         }
     }
 
@@ -125,6 +135,13 @@ abstract class Filter<Item, CellValue> {
         override fun isActive() = state.value.value.isNotEmpty()
         override fun clear() {
             state.value = state.value.copy(value = "")
+        }
+
+        override fun info(): String {
+            if (!isActive()) {
+                return ""
+            }
+            return "${state.value.type.label} ${state.value.value}"
         }
 
         @Composable
@@ -261,6 +278,13 @@ abstract class Filter<Item, CellValue> {
             state.value = state.value.copy(value = null)
         }
 
+        override fun info(): String {
+            if (!isActive()) {
+                return ""
+            }
+            return "${state.value.type.label} ${state.value.value}"
+        }
+
         @Composable
         override fun RowScope.header() {
             MyDropdown(
@@ -312,6 +336,13 @@ abstract class Filter<Item, CellValue> {
             state.value = emptyList()
         }
 
+        override fun info(): String {
+            if (!isActive()) {
+                return ""
+            }
+            return state.value.joinToString(", ") { mapper(it) }
+        }
+
         @Composable
         override fun ColumnScope.content() {
             if (multiSelect) {
@@ -359,6 +390,13 @@ abstract class Filter<Item, CellValue> {
             state.value = emptyList()
         }
 
+        override fun info(): String {
+            if (!isActive()) {
+                return ""
+            }
+            return state.value.joinToString(", ") { mapper(it) }
+        }
+
         @Composable
         override fun ColumnScope.content() {
             if (multiSelect) {
@@ -399,6 +437,17 @@ abstract class Filter<Item, CellValue> {
         override fun isActive() = state.value != null
         override fun clear() {
             state.value = null
+        }
+
+        override fun info(): String {
+            if (!isActive()) {
+                return ""
+            }
+            return when (state.value) {
+                true -> labelChecked
+                false -> labelUnchecked
+                null -> labelAll
+            }
         }
 
         @Composable

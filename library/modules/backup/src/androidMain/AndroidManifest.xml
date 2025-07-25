@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- bereits Teil von toolbox::service -->
+    <!--<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/> -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <application>
+
+        <!-- dataSync zu worker hinzufügen => wird auch in den BackupWorker und RestoreWorker genutzt -->
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
+
+    </application>
+
+</manifest>

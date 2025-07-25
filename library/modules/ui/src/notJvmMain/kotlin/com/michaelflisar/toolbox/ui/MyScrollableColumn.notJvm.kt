@@ -17,6 +17,7 @@ actual fun MyScrollableColumn(
     itemSpacing: Dp,
     horizontalAlignment: Alignment.Horizontal,
     scrollState: ScrollState,
+    overlapScrollbar: Boolean,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(

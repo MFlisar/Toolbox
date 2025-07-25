@@ -16,5 +16,6 @@ expect fun MyScrollableLazyRow(
     itemSpacing: Dp = LocalStyle.current.spacingDefault,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     state: LazyListState = rememberLazyListState(),
+    overlapScrollbar: Boolean = false,
     content: LazyListScope.() -> Unit
 )

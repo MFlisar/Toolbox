@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         AndroidApp(
             screen = PageHomeScreen,
             navigationItems = { Shared.provideNavigationItems() },
-            menuItems = { Shared.provideAppMenu { } }
+            menuItems = { Shared.provideAppMenu() }
         )
     }
 }

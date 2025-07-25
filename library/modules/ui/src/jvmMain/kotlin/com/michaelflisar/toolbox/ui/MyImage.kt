@@ -2,12 +2,15 @@ package com.michaelflisar.toolbox.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.decodeToImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.loadImageBitmap
-import androidx.compose.ui.res.useResource
 import java.io.File
 
 @Composable
@@ -17,7 +20,7 @@ fun MyImage(
     contentScale: ContentScale = ContentScale.Fit
 ) {
     val bitmap = remember(file) {
-        loadImageBitmap(file.inputStream())
+        file.inputStream().readAllBytes().decodeToImageBitmap()
     }
     Image(
         modifier = modifier,
@@ -27,13 +30,23 @@ fun MyImage(
     )
 }
 
+/**
+ * use something like "Res.readBytes("files/myDir/someFile.bin")" to read the file
+ */
 @Composable
 fun MyImage(
-    path: String,
+    bytes: suspend () -> ByteArray,
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Fit
 ) {
-    val bitmap = useResource(path) { loadImageBitmap(it) }
+    var bytes by remember { mutableStateOf(ByteArray(0)) }
+    LaunchedEffect(Unit) {
+        bytes = bytes()
+    }
+    if (bytes.isEmpty()) {
+        return
+    }
+    val bitmap = bytes.decodeToImageBitmap()
     Image(
         modifier = modifier,
         painter = BitmapPainter(image = bitmap),

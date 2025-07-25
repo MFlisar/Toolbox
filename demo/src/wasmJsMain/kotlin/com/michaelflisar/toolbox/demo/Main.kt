@@ -12,7 +12,9 @@ suspend fun main() {
 
     val setup = Shared.createBaseAppSetup(
         prefs = Prefs,
-        debugStorage = LocalStorageKeyValueStorage.create(key = "debug")
+        debugStorage = LocalStorageKeyValueStorage.create(key = "debug"),
+        backupSupport = null, // no backup support in wasm
+        isDebugBuild = true // TODO: how to detect in wasm?
     )
     val wasmSetup = WasmAppSetup(
         title = "Toolbox Demo"

@@ -22,7 +22,7 @@ sealed class Header {
     ) : Header()
 
     data class Icon(
-        override val label: String,
+        override val label: String = "",
         override val description: String = "",
         override val cellPadding: Dp = 4.dp,
         val align: Alignment.Horizontal = Alignment.Start,

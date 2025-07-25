@@ -27,6 +27,8 @@ sealed class Cell<CellValue> {
 
     abstract fun sort(): Comparable<*>
 
+    abstract fun displayValue(): String
+
     @Composable
     abstract fun render(modifier: Modifier)
 
@@ -42,6 +44,8 @@ sealed class Cell<CellValue> {
     ) : Cell<String>() {
 
         override fun sort() = value
+
+        override fun displayValue() = value
 
         @Composable
         override fun render(modifier: Modifier) {
@@ -67,6 +71,8 @@ sealed class Cell<CellValue> {
 
         override fun sort() = valueToText(value)
 
+        override fun displayValue() = valueToText(value)
+
         @Composable
         override fun render(modifier: Modifier) {
             cell(modifier)
@@ -86,6 +92,8 @@ sealed class Cell<CellValue> {
     ) : Cell<T>() {
 
         override fun sort() = valueToText(value)
+
+        override fun displayValue() = valueToText(value)
 
         @Composable
         override fun render(modifier: Modifier) {
@@ -115,6 +123,8 @@ sealed class Cell<CellValue> {
 
         override fun sort() = value.name
 
+        override fun displayValue() = value.name
+
         @Composable
         override fun render(modifier: Modifier) {
             Text(
@@ -143,6 +153,8 @@ sealed class Cell<CellValue> {
 
         override fun sort() = value
 
+        override fun displayValue() = value.toString()
+
         @Composable
         override fun render(modifier: Modifier) {
             Text(
@@ -166,6 +178,8 @@ sealed class Cell<CellValue> {
     ) : Cell<Boolean>() {
 
         override fun sort() = if (value) 1 else 0
+
+        override fun displayValue() = if (value) "Checked" else "Unchecked"
 
         @Composable
         override fun render(modifier: Modifier) {

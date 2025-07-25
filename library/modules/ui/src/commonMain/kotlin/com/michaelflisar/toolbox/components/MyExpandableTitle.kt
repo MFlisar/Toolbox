@@ -222,11 +222,11 @@ fun MyExpandableTitle(
                     Box(modifier = Modifier.weight(1f)) {
                         title()
                     }
+                    if (info != null) {
+                        info()
+                    }
                 }
 
-                if (info != null) {
-                    info()
-                }
                 if (style.iconPlacement == IconPlacement.Right && (expandable || !style.hideIconIfNotExpandable)) {
                     Icon(rotation, style.getTitleContentColor())
                 }

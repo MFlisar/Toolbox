@@ -2,36 +2,37 @@ package com.michaelflisar.toolbox.demo
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Shop
 import androidx.compose.material.icons.filled.TextSnippet
 import androidx.compose.runtime.Composable
 import com.michaelflisar.toolbox.app.features.actions.ActionItem
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
+import com.michaelflisar.toolbox.demo.pages.Page2Screen
 import com.michaelflisar.toolbox.demo.pages.PageHomeScreen
+import com.michaelflisar.toolbox.demo.pages.PageTestsRootScreenContainer
 import com.michaelflisar.toolbox.demo.pages.PageSettingsScreen
+import com.michaelflisar.toolbox.extensions.toIconComposable
 
 object SharedActions {
 
-    fun pageHome() = ActionItem.Page(
-        title = "Home",
-        imageVector = Icons.Default.Home,
-        screen = PageHomeScreen
-    )
+    @Composable
+    fun pageHome() = PageHomeScreen.toActionItem()
 
-    fun pageSettings() = ActionItem.Page(
-        title = "Settings",
-        imageVector = Icons.Default.Settings,
-        screen = PageSettingsScreen
-    )
+    @Composable
+    fun page2() = Page2Screen.toActionItem()
+
+    @Composable
+    fun pageMultiLevelRoot() = PageTestsRootScreenContainer.toActionItem()
+
+    @Composable
+    fun pageSettings() = PageSettingsScreen.toActionItem()
 
     @Composable
     fun actionProVersion(): ActionItem.Action {
         val appState = LocalAppState.current
         return ActionItem.Action(
             title = "Pro Version",
-            imageVector = Icons.Default.Shop,
+            icon = Icons.Default.Shop.toIconComposable(),
             action = {
                 appState.showSnackbar("Pro Version clicked")
             }
@@ -43,7 +44,7 @@ object SharedActions {
         val appState = LocalAppState.current
         return ActionItem.Action(
             title = "Changelog",
-            imageVector = Icons.Default.TextSnippet,
+            icon = Icons.Default.TextSnippet.toIconComposable(),
             action = {
                 appState.changelogState.show()
             }
@@ -55,7 +56,7 @@ object SharedActions {
         val appState = LocalAppState.current
         return ActionItem.Action(
             title = "TEST Action",
-            imageVector = Icons.Default.ArrowRight,
+            icon = Icons.Default.ArrowRight.toIconComposable(),
             action = {
                 appState.showSnackbar("Test clicked")
             }

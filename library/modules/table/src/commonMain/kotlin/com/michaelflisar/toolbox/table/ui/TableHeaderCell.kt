@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.ArrowDownward
@@ -34,16 +33,17 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -51,8 +51,8 @@ import androidx.compose.ui.window.PopupProperties
 import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyTooltipBox
-import com.michaelflisar.toolbox.disabled
-import com.michaelflisar.toolbox.table.data.Sort
+import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.table.data.TableSort
 import com.michaelflisar.toolbox.table.definitions.Column
 import com.michaelflisar.toolbox.table.definitions.Filter
 import com.michaelflisar.toolbox.table.definitions.Header
@@ -61,7 +61,9 @@ import com.michaelflisar.toolbox.table.definitions.Header
 internal fun RowScope.TableHeaderCell(
     index: Int,
     column: Column<*, *>,
-    sorts: SnapshotStateList<Sort>,
+    width: Dp,
+    sorts: SnapshotStateList<TableSort>,
+    showFilterOnHeaderClick: Boolean,
 ) {
     val sort = remember(sorts.toList()) {
         derivedStateOf {
@@ -69,18 +71,43 @@ internal fun RowScope.TableHeaderCell(
         }
     }
     val popup = remember { mutableStateOf(false) }
+
+    val canBeSortedOnClick by remember(column.sortable) {
+        derivedStateOf { column.sortable }
+    }
+    val canBeFilteredOnClick by remember(showFilterOnHeaderClick, column.filter != null) {
+        derivedStateOf { showFilterOnHeaderClick && column.filter != null }
+    }
+
     Box(
-        modifier = column
-            .modifier(this)
+        modifier = Modifier.width(width)
+            //column.width.modifier(this)
             .width(IntrinsicSize.Min)
             .height(IntrinsicSize.Min)
     ) {
         Row(
             modifier = Modifier.fillMaxSize()
                 .clickable(
-                    enabled = column.filter != null || column.sortable
+                    enabled = canBeSortedOnClick || canBeFilteredOnClick
                 ) {
-                    popup.value = true
+                    if (showFilterOnHeaderClick) {
+                        popup.value = true
+                    } else {
+                        // toggle sort...
+                        if (sort.value == null) {
+                            sorts.add(TableSort(index, TableSort.Type.Asc))
+                        } else if (sort.value?.type == TableSort.Type.Asc) {
+                            sort.value?.let { sorts.remove(it) }
+                            sorts.add(TableSort(index, TableSort.Type.Desc))
+                        } else if (sort.value?.type == TableSort.Type.Desc) {
+                            sort.value?.let { sorts.remove(it) }
+                        } else {
+                            // should never happen
+                        }
+                        //sort.value?.let { sorts.remove(it) }
+                        //sorts.add(TableSort(index, TableSort.Type.Desc))
+                    }
+
                 }
                 .padding(column.header.cellPadding),
             verticalAlignment = Alignment.CenterVertically
@@ -122,9 +149,9 @@ internal fun RowScope.TableHeaderCell(
                     }
                 }
             }
-            HeaderMenuIcon(index, column.sortable, column.filter, sorts, sort)
+            HeaderMenuIcon(index, column.sortable, column.filter?.takeIf { showFilterOnHeaderClick }, sorts, sort)
         }
-        if (popup.value) {
+        if (showFilterOnHeaderClick && popup.value) {
             HeaderPopup(popup, index, column.sortable, sorts, column.filter, sort)
         }
     }
@@ -147,7 +174,8 @@ private fun RowScope.HeaderTooltipContainer(
             } else {
                 Text(header.label)
             }
-        }
+        },
+        enabled = header.label.isNotEmpty() || header.description.isNotEmpty()
     ) {
         content()
     }
@@ -173,8 +201,8 @@ private fun HeaderMenuIcon(
     index: Int,
     sortable: Boolean,
     filter: Filter<*, *>?,
-    sorts: SnapshotStateList<Sort>,
-    sort: State<Sort?>,
+    sorts: SnapshotStateList<TableSort>,
+    sort: State<TableSort?>,
 ) {
     val s = sort.value
 
@@ -186,13 +214,13 @@ private fun HeaderMenuIcon(
         if (s != null && filter.isActive()) {
             largeIcon = Icons.Default.FilterAlt
             smallIcon = when (s.type) {
-                Sort.Type.Asc -> Icons.Default.ArrowUpward
-                Sort.Type.Desc -> Icons.Default.ArrowDownward
+                TableSort.Type.Asc -> Icons.Default.ArrowUpward
+                TableSort.Type.Desc -> Icons.Default.ArrowDownward
             }
         } else if (s != null) {
             largeIcon = when (s.type) {
-                Sort.Type.Asc -> Icons.Default.ArrowUpward
-                Sort.Type.Desc -> Icons.Default.ArrowDownward
+                TableSort.Type.Asc -> Icons.Default.ArrowUpward
+                TableSort.Type.Desc -> Icons.Default.ArrowDownward
             }
         } else if (filter.isActive()) {
             largeIcon = Icons.Default.FilterAlt
@@ -200,8 +228,8 @@ private fun HeaderMenuIcon(
     } else if (sortable) {
         if (s != null) {
             largeIcon = when (s.type) {
-                Sort.Type.Asc -> Icons.Default.ArrowUpward
-                Sort.Type.Desc -> Icons.Default.ArrowDownward
+                TableSort.Type.Asc -> Icons.Default.ArrowUpward
+                TableSort.Type.Desc -> Icons.Default.ArrowDownward
             }
         }
     } else if (filter != null) {
@@ -270,9 +298,9 @@ private fun HeaderPopup(
     show: MutableState<Boolean>,
     index: Int,
     sortable: Boolean,
-    sorts: SnapshotStateList<Sort>,
+    sorts: SnapshotStateList<TableSort>,
     filter: Filter<*, *>?,
-    sort: State<Sort?>,
+    sort: State<TableSort?>,
 ) {
     if (show.value) {
         val popupWidth = 256.dp
@@ -329,10 +357,10 @@ private fun HeaderPopup(
                                         modifier = iconModifier,
                                         iconPaddingValues = PaddingValues(iconPadding),
                                         icon = Icons.Default.ArrowDownward,
-                                        tint = if (sort.value?.type == Sort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                        tint = if (sort.value?.type == TableSort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
                                     ) {
                                         sort.value?.let { sorts.remove(it) }
-                                        sorts.add(Sort(index, Sort.Type.Desc))
+                                        sorts.add(TableSort(index, TableSort.Type.Desc))
                                     }
                                 }
                                 MyTooltipBox(
@@ -342,10 +370,10 @@ private fun HeaderPopup(
                                         modifier = iconModifier,
                                         iconPaddingValues = PaddingValues(iconPadding),
                                         icon = Icons.Default.ArrowUpward,
-                                        tint = if (sort.value?.type == Sort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                        tint = if (sort.value?.type == TableSort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
                                     ) {
                                         sort.value?.let { sorts.remove(it) }
-                                        sorts.add(Sort(index, Sort.Type.Asc))
+                                        sorts.add(TableSort(index, TableSort.Type.Asc))
                                     }
                                 }
                                 MyIconButton(

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ToolboxDefaults
 import com.michaelflisar.toolbox.classes.LocalStyle
 
@@ -25,6 +26,7 @@ actual fun MyScrollableColumn(
     itemSpacing: Dp,
     horizontalAlignment: Alignment.Horizontal,
     scrollState: ScrollState,
+    overlapScrollbar: Boolean,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Box(modifier = modifier) {
@@ -32,7 +34,7 @@ actual fun MyScrollableColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
-                .padding(end = LocalStyle.current.paddingForScrollbar),
+                .padding(end = if (overlapScrollbar) 0.dp else LocalStyle.current.paddingForScrollbar),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
             horizontalAlignment = horizontalAlignment
         ) {
