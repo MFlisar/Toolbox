@@ -8,6 +8,7 @@ import com.michaelflisar.composedebugdrawer.buildinfos.DebugDrawerBuildInfos
 import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerButton
 import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerInfo
+import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.Constants
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import kotlinx.coroutines.CoroutineScope
@@ -21,9 +22,11 @@ internal actual fun DebugDrawerBuildInfos(
     scope: CoroutineScope,
     prefs: DebugPrefs
 ) {
+    val setup = CommonApp.setup
     DebugDrawerBuildInfos(
         image = { Icon(Icons.Default.Info, null) },
-        drawerState = drawerState
+        drawerState = drawerState,
+        isDebugBuild = setup.isDebugBuild
     ) {
         DebugDrawerInfo(title = "Author", info = Constants.DEVELOPER_NAME)
         DebugDrawerButton(label = "Disable Drawer") {

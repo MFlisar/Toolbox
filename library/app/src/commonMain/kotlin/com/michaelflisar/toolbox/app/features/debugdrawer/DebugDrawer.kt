@@ -125,7 +125,7 @@ fun DebugDrawer(
         DebugDrawerDeviceInfos(drawerState = drawerState)
     }
 
-    // Theme
+    // Theme - TODO: theme picker for desktop is wrong!
     if (showRegionThemes) {
         DebugDrawerRegion(
             image = { Icon(Icons.Default.Style, null) },
