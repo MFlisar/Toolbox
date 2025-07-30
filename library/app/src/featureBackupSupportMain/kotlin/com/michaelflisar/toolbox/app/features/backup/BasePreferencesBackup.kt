@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun  PreferenceGroupScope.BasePreferencesBackup(
+internal fun PreferenceGroupScope.BasePreferencesBackup(
     backupSupport: IBackupSupport,
     appName: String,
     formatPath: (String) -> String?,
