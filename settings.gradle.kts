@@ -34,7 +34,7 @@ pluginManagement {
         google()
         gradlePluginPortal()
         maven("https://jitpack.io")
-        mavenLocal()
+        //mavenLocal()
     }
 }
 

@@ -46,7 +46,7 @@ kotlin {
     // Targets
     //-------------
 
-    buildFilePlugin.setupTargetsApp(
+    buildFilePlugin.setupTargetsLibrary(
         targets = buildTargets
     )
 

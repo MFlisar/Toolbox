@@ -51,7 +51,7 @@ kotlin {
     // Targets
     //-------------
 
-    buildFilePlugin.setupTargetsApp(buildTargets)
+    buildFilePlugin.setupTargetsLibrary(buildTargets)
 
     // -------
     // Sources
@@ -118,7 +118,7 @@ kotlin {
                     groupMain.dependsOn(iosMain)
                     groupMain.dependsOn(notAndroidMain)
                     groupMain.dependsOn(notJvmMain)
-                    groupMain.dependsOn(featureNoBackupSupportMain)
+                    groupMain.dependsOn(featureBackupSupportMain)
                 }
                 Target.MACOS -> {
                     groupMain.dependsOn(featureFileSupportMain)

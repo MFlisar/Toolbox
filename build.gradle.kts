@@ -19,7 +19,7 @@ plugins {
 }
 
 // ------------------------
-// Scripts (kmp-template)
+// Scripts (kmp-gradle-tools)
 // ------------------------
 
 buildscript {

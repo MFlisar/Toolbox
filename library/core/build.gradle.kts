@@ -55,7 +55,7 @@ kotlin {
     // Targets
     //-------------
 
-    buildFilePlugin.setupTargetsApp(
+    buildFilePlugin.setupTargetsLibrary(
         targets = buildTargets,
         configMacOS = {
             compilations["main"].cinterops {

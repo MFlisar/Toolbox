@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
-import com.michaelflisar.toolbox.zip.interfaces.IZipContent
 import io.github.vinceglb.filekit.dialogs.uri
 
 @Composable

@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 
 @Composable
-internal actual fun PreferenceGroupScope.PreferencesBackup(
+actual fun PreferenceGroupScope.PreferencesBackup(
     backupSupport: IBackupSupport,
-    appName: String,
+    appName: String
 ) {
     BasePreferencesBackup(
         backupSupport = backupSupport,
