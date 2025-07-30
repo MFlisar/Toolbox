@@ -118,7 +118,7 @@ kotlin {
                     groupMain.dependsOn(iosMain)
                     groupMain.dependsOn(notAndroidMain)
                     groupMain.dependsOn(notJvmMain)
-                    groupMain.dependsOn(featureBackupSupportMain)
+                    groupMain.dependsOn(featureNoBackupSupportMain)
                 }
                 Target.MACOS -> {
                     groupMain.dependsOn(featureFileSupportMain)
