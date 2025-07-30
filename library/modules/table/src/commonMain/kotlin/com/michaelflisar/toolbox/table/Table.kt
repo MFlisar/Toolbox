@@ -92,6 +92,7 @@ fun <Item> Table(
             TableData(scrollState, mutableStateOf(definition.columns.map { Dp.Unspecified }))
         }
         val scrollBarWidth = LocalStyle.current.scrollbar
+
         LaunchedEffect(tableWidth.value, tableData.widths.value.toList()) {
 
             var sumOfFixedWidths = 0.dp

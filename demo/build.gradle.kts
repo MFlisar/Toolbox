@@ -6,9 +6,9 @@ import com.michaelflisar.kmpgradletools.Target
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import kotlin.jvm.java
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import com.michaelflisar.kmpgradletools.DesktopSetup
+import com.michaelflisar.kmpgradletools.setupLaunch4J
+import com.michaelflisar.kmpgradletools.setupWindowApp
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -19,6 +19,7 @@ plugins {
     alias(deps.plugins.composechangelog)
     alias(deps.plugins.kmp.gradle.tools.gradle.plugin)
     alias(libs.plugins.buildkonfig)
+    alias(libs.plugins.launch4j)
 }
 
 // get build file plugin
@@ -28,8 +29,8 @@ val buildFilePlugin = project.plugins.getPlugin(BuildFilePlugin::class.java)
 // Informations
 // -------------------
 
-val versionName = "0.0.1"
-val versionCode = Changelog.buildVersionCode(versionName, DefaultVersionFormatter(DefaultVersionFormatter.Format.MajorMinorPatch))
+val appVersionName = "0.0.1"
+val appVersionCode = Changelog.buildVersionCode(appVersionName, DefaultVersionFormatter(DefaultVersionFormatter.Format.MajorMinorPatch))
 
 val appName = "Toolbox Demo"
 val androidNamespace = "com.michaelflisar.toolbox.demo"
@@ -45,12 +46,20 @@ val buildTargets = Targets(
     wasm = true
 )
 
+val desktopSetup = DesktopSetup(
+    appName = appName,
+    appVersionName = appVersionName,
+    mainClass = "com.michaelflisar.toolbox.demo.MainKt",
+    author = "Michael Flisar",
+    ico = "logo.ico"
+)
+
 // -------------------
 // Setup
 // -------------------
 
 compose.resources {
-    packageOfResClass = "com.michaelflisar.toolbox.demo.resources"
+    packageOfResClass = "$androidNamespace.resources"
 }
 
 dependencies {
@@ -60,8 +69,8 @@ dependencies {
 buildkonfig {
     packageName = androidNamespace
     defaultConfigs {
-        buildConfigField(Type.STRING, "versionName", versionName)
-        buildConfigField(Type.INT, "versionCode", versionCode.toString())
+        buildConfigField(Type.STRING, "versionName", appVersionName)
+        buildConfigField(Type.INT, "versionCode", appVersionCode.toString())
         buildConfigField(Type.STRING, "packageName", androidNamespace)
     }
 }
@@ -202,8 +211,8 @@ android {
         compileSdk = app.versions.compileSdk,
         minSdk = app.versions.minSdk,
         targetSdk = app.versions.targetSdk,
-        versionCode = versionCode,
-        versionName = versionName,
+        versionCode = appVersionCode,
+        versionName = appVersionName,
         buildConfig = true
     )
 
@@ -224,12 +233,36 @@ android {
 // windows configuration
 compose.desktop {
     application {
-        mainClass = "com.michaelflisar.toolbox.demo.MainKt"
 
-        nativeDistributions {
-            targetFormats(TargetFormat.Exe)
-            packageName = appName
-            packageVersion = versionName
-        }
+        // BuildFilePlugin Extension
+        setupWindowApp(
+            project = project,
+            setup = desktopSetup,
+            configNativeDistribution = {
+
+                // targets
+                targetFormats(TargetFormat.Exe)
+
+                // proguard
+                buildTypes.release.proguard {
+                    version.set("7.7.0")
+                    // geht noch nicht, die config ist nicht korrekt
+                    isEnabled.set(false)
+                    configurationFiles.from(project.file("proguard-rules.pro"))
+                }
+
+            }
+        )
     }
+}
+
+// ---------
+// FAT exe
+// ---------
+
+tasks.register<edu.sc.seis.launch4j.tasks.Launch4jLibraryTask>("launch4j") {
+    // BuildFilePlugin Extension
+    setupLaunch4J(
+        setup = desktopSetup
+    )
 }

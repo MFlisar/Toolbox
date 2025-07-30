@@ -12,6 +12,9 @@ compose-icons =                 "1.7.3"
 
 buildkonfig =                   "0.17.1"
 
+# fat exe
+launch4j =                      "3.0.7"
+
 [plugins]
 
 # android
@@ -34,6 +37,9 @@ compose =                           { id = "org.jetbrains.compose",             
 
 # buildkonfig
 buildkonfig =                       { id = "com.codingfeline.buildkonfig",              version.ref = "buildkonfig" }
+
+# fat exe
+launch4j =                          { id = "edu.sc.seis.launch4j",                      version.ref = "launch4j" }
 
 [libraries]
 
