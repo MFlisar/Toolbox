@@ -62,9 +62,9 @@ includeModule("library\\modules\\csv",              ":toolbox:modules:csv")
 
 includeModule("library\\app",                       ":toolbox:app")
 
-includeModule("library\\todo\\android-demo-app",    ":toolbox:todo:androiddemoapp")
-includeModule("library\\todo\\open-source-demo",    ":toolbox:todo:opensourcedemo")
-includeModule("library\\todo\\windows",             ":toolbox:todo:windows")
+//includeModule("library\\todo\\android-demo-app",    ":toolbox:todo:androiddemoapp")
+//includeModule("library\\todo\\open-source-demo",    ":toolbox:todo:opensourcedemo")
+//includeModule("library\\todo\\windows",             ":toolbox:todo:windows")
 
 // --------------
 // App

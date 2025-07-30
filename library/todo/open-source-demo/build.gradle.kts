@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
     //alias(libs.plugins.dokka)
-    alias(libs.plugins.gradle.maven.publish.plugin)
+    //alias(libs.plugins.gradle.maven.publish.plugin)
 }
 
 // -------------------
@@ -118,6 +118,7 @@ android {
 // Configurations
 // -------------------
 
+/*
 mavenPublishing {
 
     configure(
@@ -165,4 +166,4 @@ mavenPublishing {
     // Enable GPG signing for all publications
     if (System.getenv("CI")?.toBoolean() == true)
         signAllPublications()
-}
+}*/

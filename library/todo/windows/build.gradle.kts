@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose)
     alias(libs.plugins.dokka)
-    alias(libs.plugins.gradle.maven.publish.plugin)
+    //alias(libs.plugins.gradle.maven.publish.plugin)
 }
 
 // -------------------
@@ -128,6 +128,7 @@ kotlin {
     }
 }
 
+/*
 mavenPublishing {
 
     configure(
@@ -174,4 +175,4 @@ mavenPublishing {
 
     // Enable GPG signing for all publications
     signAllPublications()
-}
+}*/
