@@ -136,4 +136,5 @@ android {
 }
 
 // maven publish configuration
-buildFilePlugin.setupMavenPublish()
+if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
+    buildFilePlugin.setupMavenPublish()
