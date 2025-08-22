@@ -138,3 +138,5 @@
 [D] 2025-08-22 18:44:58.430 [UpdateManager.kt:26]: lastVersion = 1 => currentVersion = 1 
 [D] 2025-08-22 18:47:28.187 [UpdateManager.kt:26]: lastVersion = 1 => currentVersion = 1 
 [D] 2025-08-22 18:47:28.217 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2025-08-22 20:33:07.465 [UpdateManager.kt:26]: lastVersion = 1 => currentVersion = 1 
+[D] 2025-08-22 20:33:07.497 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
