@@ -1,6 +1,9 @@
-import com.michaelflisar.kmpgradletools.BuildFilePlugin
-import com.michaelflisar.kmpgradletools.Target
-import com.michaelflisar.kmpgradletools.Targets
+import com.michaelflisar.kmplibrary.BuildFilePlugin
+import com.michaelflisar.kmplibrary.setupDependencies
+import com.michaelflisar.kmplibrary.Target
+import com.michaelflisar.kmplibrary.Targets
+import com.michaelflisar.kmplibrary.api
+import com.michaelflisar.kmplibrary.implementation
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -9,7 +12,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
-    alias(deps.plugins.kmp.gradle.tools.gradle.plugin)
+    alias(deps.plugins.kmplibrary.buildplugin)
 }
 
 // get build file plugin
@@ -46,9 +49,7 @@ kotlin {
     // Targets
     //-------------
 
-    buildFilePlugin.setupTargetsLibrary(
-        targets = buildTargets
-    )
+    buildFilePlugin.setupTargetsLibrary(buildTargets)
 
     // -------
     // Sources
@@ -61,20 +62,6 @@ kotlin {
         // ---------------------
 
         // --
-        // e.g.:
-        // val nativeMain by creating { dependsOn(commonMain.get()) }
-
-        // ---------------------
-        // target sources
-        // ---------------------
-
-        // --
-        // e.g.:
-        // buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-        //     when (target) {
-        //         ... // groupMain.dependsOn(nativeMain)
-        //     }
-        // }
 
         // ---------------------
         // dependencies
@@ -92,9 +79,9 @@ kotlin {
             api(project(":toolbox:modules:ui"))
 
             // TODO: dialogs for mac...
-            // Components
-            api(deps.composedialogs.core)
-            api(deps.composedialogs.dialog.info)
+            // mflisar
+            api(live = deps.composedialogs.core, project = ":composedialogs:core", plugin = buildFilePlugin)
+            api(live = deps.composedialogs.dialog.info, project = ":composedialogs:modules:info", plugin = buildFilePlugin)
 
         }
     }
@@ -118,3 +105,6 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
+
+
+

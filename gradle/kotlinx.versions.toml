@@ -4,6 +4,8 @@ coroutines = 	    "1.10.2"
 serialization = 	"1.9.0"
 datetime =          "0.7.1"
 io-core =           "0.8.0"
+atomicfu =          "0.29.0"
+browser =           "0.3"
 
 [libraries]
 
@@ -14,3 +16,5 @@ serialization-core =	    { module = "org.jetbrains.kotlinx:kotlinx-serialization
 serialization-json =	    { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", 	version.ref = "serialization" }
 datetime =	                { module = "org.jetbrains.kotlinx:kotlinx-datetime", 	        version.ref = "datetime" }
 io-core =			        { module = "org.jetbrains.kotlinx:kotlinx-io-core", 		    version.ref = "io-core" }
+atomicfu =			        { module = "org.jetbrains.kotlinx:atomicfu", 	                version.ref = "atomicfu" }
+browser = 	                { module = "org.jetbrains.kotlinx:kotlinx-browser",             version.ref = "browser" }

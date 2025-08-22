@@ -20,6 +20,7 @@ import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.screen.button.PreferenceButton
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.toolbox.Platform
+import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.backup.BackupDefaults
 import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.backup.ui.BackupDialog
@@ -42,7 +43,7 @@ internal fun PreferenceGroupScope.BasePreferencesBackup(
     onFolderForAutoBackupSelected: (directory: PlatformFile) -> String,
     onDisableAutoBackup: (path: String) -> Unit,
 ) {
-
+    val setup = CommonApp.setup
     val backupDialog = rememberDialogState<BackupDialog.Mode>(null)
     val scope = rememberCoroutineScope()
     val backup = remember { backupSupport }
@@ -65,7 +66,7 @@ internal fun PreferenceGroupScope.BasePreferencesBackup(
             if (directory != null) {
                 val value = onFolderForAutoBackupSelected(directory)
                 scope.launch(Platform.DispatcherIO) {
-                    backupSupport.prefBackupPath.update(value)
+                    setup.prefs.backupPath.update(value)
                 }
             }
         }
@@ -74,7 +75,7 @@ internal fun PreferenceGroupScope.BasePreferencesBackup(
             title = stringResource(Res.string.settings_group_auto_backup),
             //icon = { Icon(Icons.Default.Schedule, null) }
         ) {
-            val backupPath = backupSupport.prefBackupPath.asMutableStateNotNull()
+            val backupPath = setup.prefs.backupPath.asMutableStateNotNull()
             val backupDependencyEnabled = backupPath.asDependency { it.isNotEmpty() }
             val backupDependencyDisabled = backupPath.asDependency { it.isEmpty() }
 
@@ -135,7 +136,7 @@ internal fun PreferenceGroupScope.BasePreferencesBackup(
                 onClick = {
                     scope.launch(Platform.DispatcherIO) {
                         onDisableAutoBackup(backupPath.value)
-                        backupSupport.prefBackupPath.update("")
+                        setup.prefs.backupPath.update("")
                     }
                 }
             )

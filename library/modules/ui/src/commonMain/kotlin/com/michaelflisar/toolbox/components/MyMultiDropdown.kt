@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -163,7 +164,7 @@ private fun MyMultiDropdownImpl(
     var expanded by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (expanded) -180f else 0f)
     val selectedItems = selected.map { items[it] }
-    val empty = remember(selectedItems) { derivedStateOf { selectedItems.isEmpty() } }
+    //val empty = remember(selectedItems) { derivedStateOf { selectedItems.isEmpty() } }
     Box(
         modifier = modifier//.padding(horizontal = 16.dp)
     ) {
@@ -248,27 +249,6 @@ private fun MyMultiDropdownImpl(
                     }
                 }
             }
-            /*
-            Button(
-                modifier = Modifier
-                    .padding(ToolboxDefaults.ITEM_SPACING)
-                    .fillMaxWidth(),
-                onClick = {
-                    onSelectionChange(emptyList(), emptyList())
-                },
-                enabled = !empty.value
-            ) {
-                Icon(
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                        .padding(end = ToolboxDefaults.ITEM_SPACING),
-                    imageVector = Icons.Default.Clear,
-                    contentDescription = null
-                )
-                Text(
-                    text = "Clear Selection",
-                    modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
-                )
-            }*/
             items.forEachIndexed { index, item ->
                 DropdownMenuItem(
                     modifier = Modifier
@@ -276,8 +256,7 @@ private fun MyMultiDropdownImpl(
                     text = {
                         Row {
                             val selected = selectedItems.contains(item)
-                            val color =
-                                if (selected) MaterialTheme.colorScheme.primary else Color.Unspecified
+                            val color = if (selected) MaterialTheme.colorScheme.primary else LocalContentColor.current
                             Icon(
                                 modifier = Modifier.align(Alignment.CenterVertically)
                                     .padding(end = LocalStyle.current.spacingDefault),

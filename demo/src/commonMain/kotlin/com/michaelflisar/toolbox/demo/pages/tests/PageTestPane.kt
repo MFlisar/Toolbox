@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.demo.pages.tests
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Expand
@@ -49,7 +50,10 @@ private fun Page(
     val appState = LocalAppState.current
 
     PaneContainer(
-        modifier = Modifier.padding(paddingValues),
+        modifier = Modifier
+            .padding(paddingValues)
+            .padding(all = 16.dp)
+            .fillMaxSize(),
         left = rememberPane("Left") {
             MyColumn {
                 Text("Left Pane Content")

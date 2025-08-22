@@ -2,24 +2,37 @@
 - NEXT STEPS
 -------------------------------------
 
-    [ ] ui in ui-core, ui-table, ui-form umstrukturieren
+    [x] ui in ui-core, ui-table, ui-form umstrukturieren
     [x] jvm platform kill / restart
     [x] jvm extensions für Toolbox zu JvmUtil verschieben
-    [ ] Libraries:
-        [ ] Changelog.getAppVersionName() an JvmUtl.isDebug() anpassen!
+    [x] Libraries:
+        [x] Changelog.getAppVersionName() an JvmUtl.isDebug() anpassen!
+        [ ] Dialog ohne composable unstyled
     [ ] Java App Restart testen => kann nur funktionieren wenn man die App als exe erstellt
+    [ ] Screens - paddings nutzen?
+
+    [ ] Pages sollten immer fill size haben => ist jetzt so, sollte man das forcieren?
+    [ ] pro version
+        [ ] Icon sollte Krone sein
+        - https://github.com/RevenueCat/purchases-kmp?tab=readme-ov-file
+    [ ] Ads
+        - https://github.com/LexiLabs-App/basic-ads
+        - https://gist.github.com/trinadhthatakula/e4db4a7219f6ef6d066e109015edc44e
+    [ ] App Theming in drawer wie in settings machen sodass das theming auf allen Platformen korrekt ist
+    [ ] Store - Offline/Online Database
+        - https://store.mobilenativefoundation.org/docs/intro
+    [ ] Spotless / Detekt / Ktlint
+        - https://github.com/Tarek-Bohdima/ConsultMe
+        - https://www.reddit.com/r/JetpackComposeDev/comments/1mnzoim/how_to_use_lint_with_jetpack_compose_pro_tips/
 
 
 Changelog und Settings Dialog könnten beides Bottomsheets sein? Insets und indicator oben müssten angepasst werden
 Sprache ändern geht nicht => es fehlt glaube ich etwas im Manifest?
 Auto Backup wird nicht angezeigt
 Im Fullscreen Dialog für settings passen die padding auch nicht... falls ich den Dialog so lasse und nicht zu BS wechsel
-PrefDarkLight: log entfernen
-DebugDrawer: build config wird von der library und nicht von der app benutzt...
 Full screen Dialoge könnten im root sein  und in toolbar + content aufgeteilt werden für eine schöne Animation? Oder sie könnten die toolbar der App benutzen? Sinnvoll? Bottomsheet ist eigentlich auch ok
 Anderes menu icon????
 Test Page für alle UI Tests für meine Libraries (Dialoge, Preferences, ...)
-Pro version icon ist falsch
 MyScroll* Sachen sollten parameter scrollbar haben und sollten im Demo benutzt werden
 Theming UI aus settings in DebugDrawer wiederbenutzen
 
@@ -46,7 +59,7 @@ Windows:
 Android:
 
     [ ] BackHandler für PreferenceScreen Dialog
-    [x] Page 2 - change theme test failes
+    [x] Page 2 - change theme test fails
         => failed sogar beim drehen
     [x] Insets in landscape mode für content passen nicht
     [ ] settings page wie früher (+ breadcrumbs?)
@@ -86,10 +99,11 @@ Ads / Pro Version support:
 
 	RESPONSIVE LAYOUTS (SPÄTER)
 		- https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes
-		- naviagtion sollte auf allen Platformen ggf. Rail oder bottombar nutzen =>
+		- navigation sollte auf allen Platformen ggf. Rail oder bottombar nutzen =>
 			AdaptiveNavigation* (...Container?)
 		- adaptive navigation: https://developer.android.com/develop/ui/compose/layouts/adaptive/build-adaptive-navigation
 			=> NavigationSuiteScaffold nutzen?
+		- https://proandroiddev.com/design-smarter-with-android-16s-adaptive-layouts-6efbbba18198
 
 -------------------------------------
 

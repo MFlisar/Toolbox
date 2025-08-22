@@ -1,6 +1,9 @@
-import com.michaelflisar.kmpgradletools.BuildFilePlugin
-import com.michaelflisar.kmpgradletools.Target
-import com.michaelflisar.kmpgradletools.Targets
+import com.michaelflisar.kmplibrary.BuildFilePlugin
+import com.michaelflisar.kmplibrary.setupDependencies
+import com.michaelflisar.kmplibrary.Target
+import com.michaelflisar.kmplibrary.Targets
+import com.michaelflisar.kmplibrary.api
+import com.michaelflisar.kmplibrary.implementation
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -8,7 +11,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
-    alias(deps.plugins.kmp.gradle.tools.gradle.plugin)
+    alias(deps.plugins.kmplibrary.buildplugin)
 }
 
 // get build file plugin
@@ -45,9 +48,7 @@ kotlin {
     // Targets
     //-------------
 
-    buildFilePlugin.setupTargetsLibrary(
-        targets = buildTargets
-    )
+    buildFilePlugin.setupTargetsLibrary(buildTargets)
 
     // -------
     // Sources
@@ -56,52 +57,14 @@ kotlin {
     sourceSets {
 
         // ---------------------
-        // custom shared sources
+        // custom source sets
         // ---------------------
 
-        // --
-        // e.g.:
-        // val nativeMain by creating { dependsOn(commonMain.get()) }
+        val targetsJava = listOf(Target.ANDROID, Target.WINDOWS)
+
         val javaMain by creating { dependsOn(commonMain.get()) }
 
-        // ---------------------
-        // target sources
-        // ---------------------
-
-        // --
-        // e.g.:
-        // buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-        //     when (target) {
-        //         Target.ANDROID, Target.WINDOWS -> {
-        //             groupMain.dependsOn(nativeMain)
-        //         }
-        //         Target.IOS, Target.MACOS, Target.WASM -> {
-        //             // --
-        //         }
-        //         Target.LINUX,
-        //         Target.JS -> {
-        //             // not enabled
-        //         }
-        //     }
-        // }
-
-        buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-            when (target) {
-                Target.ANDROID, Target.WINDOWS -> {
-                    groupMain.dependsOn(javaMain)
-                }
-                Target.IOS, Target.MACOS -> {
-                    // --
-                }
-                Target.WASM -> {
-                    // not enabled
-                }
-                Target.LINUX,
-                Target.JS -> {
-
-                }
-            }
-        }
+        javaMain.setupDependencies(sourceSets, buildTargets, targetsJava)
 
         // ---------------------
         // dependencies
@@ -116,7 +79,7 @@ kotlin {
             implementation(project(":toolbox:core"))
 
             // mflisar
-            implementation(deps.lumberjack.core)
+            implementation(live = deps.lumberjack.core, project = ":lumberjack:core", plugin = buildFilePlugin)
 
         }
     }
@@ -139,3 +102,6 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
+
+
+

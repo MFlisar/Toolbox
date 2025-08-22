@@ -1,6 +1,9 @@
-import com.michaelflisar.kmpgradletools.BuildFilePlugin
-import com.michaelflisar.kmpgradletools.Target
-import com.michaelflisar.kmpgradletools.Targets
+import com.michaelflisar.kmplibrary.BuildFilePlugin
+import com.michaelflisar.kmplibrary.setupDependencies
+import com.michaelflisar.kmplibrary.Target
+import com.michaelflisar.kmplibrary.Targets
+import com.michaelflisar.kmplibrary.api
+import com.michaelflisar.kmplibrary.implementation
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -10,7 +13,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
-    alias(deps.plugins.kmp.gradle.tools.gradle.plugin)
+    alias(deps.plugins.kmplibrary.buildplugin)
 }
 
 // get build file plugin
@@ -55,9 +58,7 @@ kotlin {
     // Targets
     //-------------
 
-    buildFilePlugin.setupTargetsLibrary(
-        targets = buildTargets
-    )
+    buildFilePlugin.setupTargetsLibrary(buildTargets)
 
     // -------
     // Sources
@@ -66,58 +67,17 @@ kotlin {
     sourceSets {
 
         // ---------------------
-        // custom shared sources
+        // custom source sets
         // ---------------------
 
-        // --
-        // e.g.:
-        // val nativeMain by creating { dependsOn(commonMain.get()) }
+        val targetsBackupSupport = listOf(Target.ANDROID, Target.WINDOWS)
+        val targetsAndroid = listOf(Target.ANDROID)
+
         val notAndroidMain by creating { dependsOn(commonMain.get()) }
         val featureNoBackupSupportMain by creating { dependsOn(commonMain.get()) }
 
-        // ---------------------
-        // target sources
-        // ---------------------
-
-        // --
-        // e.g.:
-        // buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-        //     when (target) {
-        //         Target.ANDROID, Target.WINDOWS -> {
-        //             groupMain.dependsOn(nativeMain)
-        //         }
-        //         Target.IOS, Target.MACOS, Target.WASM -> {
-        //             // --
-        //         }
-        //         Target.LINUX,
-        //         Target.JS -> {
-        //             // not enabled
-        //         }
-        //     }
-        // }
-
-        buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-            when (target) {
-                Target.ANDROID -> {
-                   // --
-                }
-                Target.WINDOWS -> {
-                    groupMain.dependsOn(notAndroidMain)
-                }
-                Target.IOS, Target.MACOS -> {
-                    groupMain.dependsOn(notAndroidMain)
-                    groupMain.dependsOn(featureNoBackupSupportMain)
-                }
-                Target.WASM -> {
-                    groupMain.dependsOn(notAndroidMain)
-                    groupMain.dependsOn(featureNoBackupSupportMain)
-                }
-                Target.LINUX,
-                Target.JS -> {
-                    // not enabled
-                }
-            }
-        }
+        notAndroidMain.setupDependencies(sourceSets, buildTargets, targetsAndroid, targetsNotSupported = true)
+        featureNoBackupSupportMain.setupDependencies(sourceSets, buildTargets, targetsBackupSupport, targetsNotSupported = true)
 
         // ---------------------
         // dependencies
@@ -142,11 +102,10 @@ kotlin {
 
             api(deps.kmp.parcelize)
 
-            // lumberjack
-            implementation(deps.lumberjack.core)
-            // composedialogs
-            implementation(deps.composedialogs.core)
-            implementation(deps.composedialogs.dialog.info)
+            // mflisar
+            implementation(live = deps.lumberjack.core, project = ":lumberjack:core", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.core, project = ":composedialogs:core", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.info, project = ":composedialogs:modules:info", plugin = buildFilePlugin)
 
             // libraries
             implementation(deps.filekit.dialogs.compose)
@@ -191,3 +150,6 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
+
+
+

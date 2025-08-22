@@ -6,13 +6,8 @@ import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Icon
 import com.michaelflisar.composechangelog.Changelog
-import com.michaelflisar.composechangelog.DefaultVersionFormatter
 import com.michaelflisar.composechangelog.renderer.header.ChangelogHeaderRenderer
 import com.michaelflisar.composethemer.ComposeTheme
-import com.michaelflisar.lumberjack.core.L
-import com.michaelflisar.lumberjack.implementation.LumberjackLogger
-import com.michaelflisar.lumberjack.implementation.plant
-import com.michaelflisar.lumberjack.loggers.console.ConsoleLogger
 import com.michaelflisar.toolbox.app.features.logging.LogManager
 
 object CommonApp {

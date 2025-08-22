@@ -2,16 +2,20 @@ package com.michaelflisar.toolbox.app.features.appstate
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.awt.ComposeWindow
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.window.WindowState
 import com.michaelflisar.toolbox.app.classes.rememberJewelWindowState
-import com.michaelflisar.toolbox.app.platform.AppPrefs
+import com.michaelflisar.toolbox.app.classes.resetAll
+import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
+import com.michaelflisar.toolbox.app.WindowUtil
 
 val LocalJewelAppState =
     compositionLocalOf<JewelAppState> { throw RuntimeException("JewelAppState not initialised!") }
 
 @Composable
 fun rememberJewelAppState(
-    prefs: AppPrefs
+    prefs: DesktopPrefs,
 ): JewelAppState {
     return JewelAppState(
         rememberJewelWindowState(prefs)
@@ -20,11 +24,23 @@ fun rememberJewelAppState(
 
 @Composable
 fun rememberJewelAppState(
-    windowState: WindowState
+    windowState: WindowState,
 ): JewelAppState {
     return JewelAppState(windowState)
 }
 
 class JewelAppState internal constructor(
-    val windowState: WindowState
-)
+    val windowState: WindowState,
+) {
+    fun ensureIsAtLeastPartlyOnScreen(density: Density, window: ComposeWindow) {
+        if (!WindowUtil.isWindowOnScreen(window, true)) {
+            windowState.resetAll(density, window)
+        }
+    }
+
+    fun ensureIsFullyOnScreen(density: Density, window: ComposeWindow) {
+        if (!WindowUtil.isWindowOnScreen(window, false)) {
+            windowState.resetAll(density, window)
+        }
+    }
+}

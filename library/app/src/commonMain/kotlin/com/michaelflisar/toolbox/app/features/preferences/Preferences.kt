@@ -9,9 +9,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.app.AppSetup
+import com.michaelflisar.kotpreferences.core.interfaces.Storage
+import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.device.CurrentDevice
-import com.michaelflisar.toolbox.app.platform.AppPrefs
 
 private fun ComposeTheme.BaseTheme.toAppBaseTheme(): Preferences.AppBaseTheme {
     return Preferences.AppBaseTheme(
@@ -30,19 +30,21 @@ object Preferences {
     class AppBaseTheme(
         val text: String,
         val icon: ImageVector,
-        val data: Any
+        val data: Any,
     )
 
-    val DefaultBaseThemes = ComposeTheme.BaseTheme.entries.map(ComposeTheme.BaseTheme::toAppBaseTheme)
+    val DefaultBaseThemes =
+        ComposeTheme.BaseTheme.entries.map(ComposeTheme.BaseTheme::toAppBaseTheme)
 
     @Composable
-    fun collectDefaultBaseTheme(prefs: AppPrefs) = prefs.theme.asMutableStateNotNull(
+    fun collectDefaultBaseTheme() = CommonApp.setup.prefs.theme.asMutableStateNotNull(
         mapper = { base -> DefaultBaseThemes.find { it.data == base }!! },
         unmapper = { (it.data as ComposeTheme.BaseTheme) }
     )
 
     @Composable
-    fun rememberComposeThemeDefault(setup: AppSetup): ComposeTheme.State {
+    fun rememberComposeThemeDefault(): ComposeTheme.State {
+        val setup = CommonApp.setup
         val theme = setup.prefs.theme.collectAsStateNotNull()
         val contrast = setup.prefs.contrast.asMutableStateNotNull()
         val dynamic = setup.prefs.dynamicTheme.asMutableStateNotNull()
@@ -52,12 +54,14 @@ object Preferences {
 
 }
 
+expect fun Preferences.createStorage(name: String): Storage
+
 expect val Preferences.BaseThemes: List<Preferences.AppBaseTheme>
 
 @Composable
-expect fun Preferences.collectBaseTheme(prefs: AppPrefs): MutableState<Preferences.AppBaseTheme>
+expect fun Preferences.collectBaseTheme(): MutableState<Preferences.AppBaseTheme>
 
 @Composable
-expect fun Preferences.rememberComposeTheme(setup: AppSetup): ComposeTheme.State
+expect fun Preferences.rememberComposeTheme(): ComposeTheme.State
 
 

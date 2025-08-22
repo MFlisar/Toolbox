@@ -8,10 +8,14 @@ import androidx.compose.runtime.remember
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.app.AppSetup
+import com.michaelflisar.kotpreferences.core.interfaces.Storage
+import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
+import com.michaelflisar.kotpreferences.storage.datastore.create
+import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.jewel.JewelBaseTheme
 import com.michaelflisar.toolbox.app.jewel.JewelTheme
-import com.michaelflisar.toolbox.app.platform.AppPrefs
+import com.michaelflisar.toolbox.utils.JvmUtil
 
 private fun JewelTheme.toAppBaseTheme(): Preferences.AppBaseTheme {
     return Preferences.AppBaseTheme(
@@ -26,20 +30,29 @@ private val AppBaseThemeLightWithLightHeader = JewelTheme.LightWithLightHeader.t
 private val AppBaseThemeDark = JewelTheme.Dark.toAppBaseTheme()
 private val AppBaseThemeSystem = JewelTheme.System.toAppBaseTheme()
 
+actual fun Preferences.createStorage(name: String): Storage {
+    return DataStoreStorage.create(folder = JvmUtil.appDir(), name = name)
+}
+
 actual val Preferences.BaseThemes: List<Preferences.AppBaseTheme>
-    get() = listOf(AppBaseThemeLight, AppBaseThemeLightWithLightHeader, AppBaseThemeDark, AppBaseThemeSystem)
+    get() = listOf(
+        AppBaseThemeLight,
+        AppBaseThemeLightWithLightHeader,
+        AppBaseThemeDark,
+        AppBaseThemeSystem
+    )
 
 @Composable
-actual fun Preferences.collectBaseTheme(prefs: AppPrefs): MutableState<Preferences.AppBaseTheme> {
-    return prefs.jewelTheme.asMutableStateNotNull(
+actual fun Preferences.collectBaseTheme(): MutableState<Preferences.AppBaseTheme> {
+    return DesktopApp.setup.prefs.jewelTheme.asMutableStateNotNull(
         mapper = { jewelTheme -> BaseThemes.find { it.data == jewelTheme }!! },
         unmapper = { (it.data as JewelTheme) }
     )
 }
 
 @Composable
-actual fun Preferences.rememberComposeTheme(setup: AppSetup): ComposeTheme.State {
-    val jewelTheme by setup.prefs.jewelTheme.collectAsStateNotNull()
+actual fun Preferences.rememberComposeTheme(): ComposeTheme.State {
+    val jewelTheme by DesktopApp.setup.prefs.jewelTheme.collectAsStateNotNull()
     val theme = remember(jewelTheme) {
         mutableStateOf(jewelTheme.baseTheme().let {
             when (it) {
@@ -49,6 +62,7 @@ actual fun Preferences.rememberComposeTheme(setup: AppSetup): ComposeTheme.State
             }
         })
     }
+    val setup = CommonApp.setup
     val contrast = setup.prefs.contrast.asMutableStateNotNull()
     val dynamic = setup.prefs.dynamicTheme.asMutableStateNotNull()
     val customTheme = setup.prefs.customTheme.asMutableStateNotNull()

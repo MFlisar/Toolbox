@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Toolbox Demo</string>
+    <string name="app_name">Toolbox</string>
 
     <!-- pages -->
     <string name="page_home">Home</string>
-    <string name="page_2">Page 2</string>
+    <string name="page_states">States</string>
     <string name="page_settings">Settings</string>
 
 

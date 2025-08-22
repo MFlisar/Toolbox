@@ -1,54 +1,75 @@
 package com.michaelflisar.toolbox.app.classes
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.awt.ComposeWindow
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.rememberWindowState
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
+import com.michaelflisar.kotpreferences.core.SettingsConverter
 import com.michaelflisar.lumberjack.core.L
-import com.michaelflisar.toolbox.app.CommonApp
-import com.michaelflisar.toolbox.app.platform.AppPrefs
+import com.michaelflisar.toolbox.app.DesktopApp
+import com.michaelflisar.toolbox.app.WindowUtil
+import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import java.nio.file.AccessDeniedException
+import kotlin.div
+
+fun WindowState.resetAll(density: Density, window: ComposeWindow) {
+    reset(density, window, true, true, true)
+}
 
 fun WindowState.reset(
+    density: Density,
+    window: ComposeWindow,
     placement: Boolean,
     position: Boolean,
     size: Boolean,
 ) {
-    val prefs = CommonApp.setup.prefs
+    val prefs = DesktopApp.setup.prefs
     if (placement) {
-        this.placement = prefs.windowPlacement.defaultValue
-    }
-    if (position) {
-        this.position = WindowPosition(
-            prefs.windowX.defaultValue.dp,
-            prefs.windowY.defaultValue.dp
-        )
+        this.placement = prefs.windowState.defaultValue.windowPlacement
     }
     if (size) {
         this.size = DpSize(
-            prefs.windowWidth.defaultValue.dp,
-            prefs.windowHeight.defaultValue.dp,
+            prefs.windowState.defaultValue.windowWidth.dp,
+            prefs.windowState.defaultValue.windowHeight.dp,
         )
+    }
+    if (position) {
+        val (x, y) = WindowUtil.calcCenteredPosition(window)
+        this.position = WindowPosition(with(density) { x.toDp() }, with(density) { y.toDp() })
     }
 }
 
-fun WindowState.resetWindowSize() = reset(
-    placement = false,
-    size = true,
-    position = false
-)
+fun WindowState.resetWindowSize() {
+    val prefs = DesktopApp.setup.prefs
+    this.size = DpSize(
+        prefs.windowState.defaultValue.windowWidth.dp,
+        prefs.windowState.defaultValue.windowHeight.dp,
+    )
+}
 
-fun WindowState.resetWindowPosition() = reset(
+fun WindowState.resetWindowPosition(density: Density, window: ComposeWindow) = reset(
+    density = density,
+    window = window,
     placement = false,
     size = false,
     position = true
@@ -56,49 +77,75 @@ fun WindowState.resetWindowPosition() = reset(
 
 @Composable
 fun rememberJewelWindowState(
-    prefs: AppPrefs,
+    prefs: DesktopPrefs,
 ): WindowState {
 
     val scope = rememberCoroutineScope()
 
-    val windowWidth by prefs.windowWidth.collectAsStateNotNull()
-    val windowHeight by prefs.windowHeight.collectAsStateNotNull()
-    val windowX by prefs.windowX.collectAsStateNotNull()
-    val windowY by prefs.windowY.collectAsStateNotNull()
-    val windowPlacement by prefs.windowPlacement.collectAsStateNotNull()
+    val windowState by prefs.windowState.collectAsStateNotNull()
 
-    val size = DpSize(
-        windowWidth.dp,
-        windowHeight.dp,
-    )
-    val pos = WindowPosition(
-        windowX.dp,
-        windowY.dp
-    )
-
-    val state = rememberWindowState(
-        placement = windowPlacement,
-        position = pos,
-        size = size
-    )
+    /*val state = rememberWindowState(
+        placement = windowState.windowPlacement,
+        position = WindowPosition(
+            windowState.windowX.dp,
+            windowState.windowY.dp
+        ),
+        size = DpSize(
+            windowState.windowWidth.dp,
+            windowState.windowHeight.dp,
+        )
+    )*/
+    val state = remember(windowState) { windowState.toWindowState() }
 
     snapshotFlow {
-        Triple(state.size, state.position, state.placement)
-    }.onEach {
-        withContext(Dispatchers.IO) {
-            try {
-                prefs.windowWidth.update(it.first.width.value.toInt())
-                prefs.windowHeight.update(it.first.height.value.toInt())
-                prefs.windowX.update(it.second.x.value.toInt())
-                prefs.windowY.update(it.second.y.value.toInt())
-                prefs.windowPlacement.update(it.third)
-            } catch (e: AccessDeniedException) {
-                // ignore - comes from androidx datastore...
-                L.i(e)
+        JewelWindowState(state)
+    }
+        .distinctUntilChanged()
+        .onEach {
+            withContext(Dispatchers.IO) {
+                try {
+                    prefs.windowState.update(it)
+                } catch (e: AccessDeniedException) {
+                    // ignore - comes from androidx datastore...
+                    L.i(e)
+                }
             }
         }
-    }
         .launchIn(scope)
 
     return state
+}
+
+@Serializable
+data class JewelWindowState(
+    val windowWidth: Int = 1024,
+    val windowHeight: Int = 800,
+    val windowX: Int = 0,
+    val windowY: Int = 0,
+    val windowPlacement: WindowPlacement = WindowPlacement.Floating
+) {
+    constructor(windowState: WindowState) : this(
+        windowWidth = windowState.size.width.value.toInt(),
+        windowHeight = windowState.size.height.value.toInt(),
+        windowX = windowState.position.x.value.toInt(),
+        windowY = windowState.position.y.value.toInt(),
+        windowPlacement = windowState.placement
+    )
+
+    fun toWindowState(): WindowState {
+        return WindowState(
+            placement = windowPlacement,
+            position = WindowPosition(windowX.dp, windowY.dp),
+            size = DpSize(windowWidth.dp, windowHeight.dp)
+        )
+    }
+
+    object CONVERTER : SettingsConverter<JewelWindowState, String> {
+        override fun from(data: String): JewelWindowState = Json.decodeFromString(data)
+        override fun to(data: JewelWindowState): String = Json.encodeToString(data)
+    }
+
+    override fun toString(): String {
+        return "{w=$windowWidth, h=$windowHeight, x=$windowX, y=$windowY, placement=$windowPlacement}"
+    }
 }

@@ -58,7 +58,7 @@ fun Root(
     content: @Composable () -> Unit,
 ) {
     val setup = CommonApp.setup
-    val composeThemeState = Preferences.rememberComposeTheme(setup)
+    val composeThemeState = Preferences.rememberComposeTheme()
     val showDebugDrawer by setup.debugPrefs.showDebugDrawer.collectAsStateNotNull()
 
     ComposeTheme(

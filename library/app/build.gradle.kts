@@ -1,6 +1,9 @@
-import com.michaelflisar.kmpgradletools.BuildFilePlugin
-import com.michaelflisar.kmpgradletools.Target
-import com.michaelflisar.kmpgradletools.Targets
+import com.michaelflisar.kmplibrary.BuildFilePlugin
+import com.michaelflisar.kmplibrary.setupDependencies
+import com.michaelflisar.kmplibrary.Target
+import com.michaelflisar.kmplibrary.Targets
+import com.michaelflisar.kmplibrary.api
+import com.michaelflisar.kmplibrary.implementation
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -9,8 +12,9 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.gradle.maven.publish.plugin)
-    alias(deps.plugins.kmp.gradle.tools.gradle.plugin)
+    alias(deps.plugins.kmplibrary.buildplugin)
 }
 
 // get build file plugin
@@ -60,85 +64,28 @@ kotlin {
     sourceSets {
 
         // ---------------------
-        // custom shared sources
+        // custom source sets
         // ---------------------
 
-        // --
-        // e.g.:
-        // val nativeMain by creating { dependsOn(commonMain.get()) }
+        val targetsBackupSupport = listOf(Target.ANDROID, Target.WINDOWS)
+        val targetsAndroid = listOf(Target.ANDROID)
+        val targetsJvm = listOf(Target.WINDOWS)
 
         val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
         val featureNoFileSupportMain by creating { dependsOn(commonMain.get()) }
-
         val featureBackupSupportMain by creating { dependsOn(commonMain.get()) }
         val featureNoBackupSupportMain by creating { dependsOn(commonMain.get()) }
-
-        val iosMain by creating { dependsOn(commonMain.get()) }
-        //val macosMain by creating { dependsOn(commonMain.get()) }
-
         val notAndroidMain by creating { dependsOn(commonMain.get()) }
         val notJvmMain by creating { dependsOn(commonMain.get()) }
 
-        // ---------------------
-        // target sources
-        // ---------------------
+        featureFileSupportMain.setupDependencies(sourceSets, buildTargets, Target.LIST_FILE_SUPPORT)
+        featureNoFileSupportMain.setupDependencies(sourceSets, buildTargets, Target.LIST_FILE_SUPPORT, targetsNotSupported = true)
 
-        // --
-        // e.g.:
-        // buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-        //     when (target) {
-        //         Target.ANDROID, Target.WINDOWS -> {
-        //             groupMain.dependsOn(nativeMain)
-        //         }
-        //         Target.IOS, Target.MACOS, Target.WASM -> {
-        //             // --
-        //         }
-        //         Target.LINUX,
-        //         Target.JS -> {
-        //             // not enabled
-        //         }
-        //     }
-        // }
+        featureBackupSupportMain.setupDependencies(sourceSets, buildTargets, targetsBackupSupport)
+        featureNoBackupSupportMain.setupDependencies(sourceSets, buildTargets, targetsBackupSupport, targetsNotSupported = true)
 
-        buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-            when (target) {
-                Target.ANDROID -> {
-                    groupMain.dependsOn(featureFileSupportMain)
-                    groupMain.dependsOn(notJvmMain)
-                    groupMain.dependsOn(featureBackupSupportMain)
-                }
-                Target.WINDOWS -> {
-                    groupMain.dependsOn(featureFileSupportMain)
-                    groupMain.dependsOn(notAndroidMain)
-                    groupMain.dependsOn(featureBackupSupportMain)
-                    //groupMain.dependsOn(featureBackupMain)
-                }
-                Target.IOS -> {
-                    groupMain.dependsOn(featureFileSupportMain)
-                    groupMain.dependsOn(iosMain)
-                    groupMain.dependsOn(notAndroidMain)
-                    groupMain.dependsOn(notJvmMain)
-                    groupMain.dependsOn(featureNoBackupSupportMain)
-                }
-                Target.MACOS -> {
-                    groupMain.dependsOn(featureFileSupportMain)
-                    //groupMain.dependsOn(macosMain)
-                    groupMain.dependsOn(notAndroidMain)
-                    groupMain.dependsOn(notJvmMain)
-                    groupMain.dependsOn(featureNoBackupSupportMain)
-                }
-                Target.WASM -> {
-                    groupMain.dependsOn(featureNoFileSupportMain)
-                    groupMain.dependsOn(notAndroidMain)
-                    groupMain.dependsOn(notJvmMain)
-                    groupMain.dependsOn(featureNoBackupSupportMain)
-                }
-                Target.LINUX,
-                Target.JS -> {
-                    // not enabled
-                }
-            }
-        }
+        notAndroidMain.setupDependencies(sourceSets, buildTargets, targetsAndroid, targetsNotSupported = true)
+        notJvmMain.setupDependencies(sourceSets, buildTargets, targetsJvm, targetsNotSupported = true)
 
         // ---------------------
         // dependencies
@@ -148,6 +95,10 @@ kotlin {
 
             // resources
             implementation(compose.components.resources)
+
+            // kotlinx
+            implementation(kotlinx.serialization.core)
+            implementation(kotlinx.serialization.json)
 
             // Compose + AndroidX
             implementation(libs.compose.material3)
@@ -171,27 +122,26 @@ kotlin {
             api(project(":toolbox:modules:backup"))
 
             /* region mflisar dependencies */
-            api(deps.kmp.parcelize)
-            api(deps.lumberjack.core)
-            api(deps.lumberjack.implementation.lumberjack)
-            api(deps.lumberjack.logger.console)
-            api(deps.kotpreferences.core)
-            api(deps.composedebugdrawer.core)
-            implementation(deps.composedebugdrawer.plugin.kotpreferences)
-            api(deps.composechangelog.core)
-            implementation(deps.composechangelog.renderer.header)
-            implementation(deps.composechangelog.statesaver.kotpreferences)
-            api(deps.composedialogs.core)
-            implementation(deps.composedialogs.dialog.info)
-            api(deps.composepreferences.core)
-            implementation(deps.composepreferences.screen.bool)
-            implementation(deps.composepreferences.screen.list)
-            implementation(deps.composepreferences.screen.button)
-            implementation(deps.composepreferences.kotpreferences)
-            api(deps.kotpreferences.extension.compose)
-            api(deps.composethemer.core)
-            implementation(deps.composethemer.modules.picker)
-            implementation(deps.composethemer.modules.defaultpicker)
+            api(live = deps.lumberjack.core, project = ":lumberjack:core", plugin = buildFilePlugin)
+            api(live = deps.lumberjack.implementation.lumberjack, project = ":lumberjack:implementations:lumberjack", plugin = buildFilePlugin)
+            api(live = deps.lumberjack.logger.console, project = ":lumberjack:loggers:lumberjack:console", plugin = buildFilePlugin)
+            api(live = deps.kotpreferences.core, project = ":kotpreferences:core", plugin = buildFilePlugin)
+            api(live = deps.composedebugdrawer.core, project = ":composedebugdrawer:core", plugin = buildFilePlugin)
+            implementation(live = deps.composedebugdrawer.plugin.kotpreferences, project = ":composedebugdrawer:plugins:kotpreferences", plugin = buildFilePlugin)
+            api(live = deps.composechangelog.core, project = ":composechangelog:core", plugin = buildFilePlugin)
+            implementation(live = deps.composechangelog.renderer.header, project = ":composechangelog:modules:renderer:header", plugin = buildFilePlugin)
+            implementation(live = deps.composechangelog.statesaver.kotpreferences, project = ":composechangelog:modules:statesaver:kotpreferences", plugin = buildFilePlugin)
+            api(live = deps.composedialogs.core, project = ":composedialogs:core", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.info, project = ":composedialogs:modules:info", plugin = buildFilePlugin)
+            api(live = deps.composepreferences.core, project = ":composepreferences:core", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.bool, project = ":composepreferences:modules:screen:bool", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.list, project = ":composepreferences:modules:screen:list", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.button, project = ":composepreferences:modules:screen:button", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.kotpreferences, project = ":composepreferences:modules:kotpreferences", plugin = buildFilePlugin)
+            api(live = deps.kotpreferences.extension.compose, project = ":kotpreferences:modules:compose", plugin = buildFilePlugin)
+            api(live = deps.composethemer.core, project = ":composethemer:core", plugin = buildFilePlugin)
+            implementation(live = deps.composethemer.modules.picker, project = ":composethemer:modules:picker", plugin = buildFilePlugin)
+            implementation(live = deps.composethemer.modules.defaultpicker, project = ":composethemer:modules:defaultpicker", plugin = buildFilePlugin)
             /* endregion */
 
             implementation(deps.filekit.dialogs.compose)
@@ -201,17 +151,17 @@ kotlin {
         featureFileSupportMain.dependencies {
 
             // mflisar dependencies
-            api(deps.kotpreferences.storage.datastore)
-            api(deps.lumberjack.logger.file)
-            implementation(deps.lumberjack.extension.composeviewer)
-            implementation(deps.composedebugdrawer.plugin.lumberjack)
+            api(live = deps.kotpreferences.storage.datastore, project = ":kotpreferences:modules:storage:datastore", plugin = buildFilePlugin)
+            api(live = deps.lumberjack.logger.file, project = ":lumberjack:loggers:lumberjack:file", plugin = buildFilePlugin)
+            implementation(live = deps.lumberjack.extension.composeviewer, project = ":lumberjack:extensions:composeviewer", plugin = buildFilePlugin)
+            implementation(live = deps.composedebugdrawer.plugin.lumberjack, project = ":composedebugdrawer:plugins:lumberjack", plugin = buildFilePlugin)
 
         }
 
         featureNoFileSupportMain.dependencies {
 
             // mflisar dependencies
-            api(deps.kotpreferences.storage.keyvalue)
+            api(live = deps.kotpreferences.storage.keyvalue, project = ":kotpreferences:modules:storage:keyvalue", plugin = buildFilePlugin)
         }
 
 
@@ -231,8 +181,8 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(deps.composedebugdrawer.infos.build)
-            implementation(deps.composedebugdrawer.infos.device)
+            implementation(live = deps.composedebugdrawer.infos.build, project = ":composedebugdrawer:modules:buildinfos", plugin = buildFilePlugin)
+            implementation(live = deps.composedebugdrawer.infos.device, project = ":composedebugdrawer:modules:deviceinfos", plugin = buildFilePlugin)
         }
 
         wasmJsMain.dependencies {
@@ -262,3 +212,6 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
+
+
+

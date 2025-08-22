@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.application
 import cafe.adriel.voyager.core.screen.Screen
@@ -24,6 +27,7 @@ import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeTransition
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
+import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.app.features.root.Root
 import com.michaelflisar.toolbox.app.features.root.RootNavigator
 import com.michaelflisar.toolbox.app.features.scaffold.DesktopScaffold
@@ -40,6 +44,8 @@ import com.michaelflisar.toolbox.app.jewel.JewelTitleMenu
 import com.michaelflisar.toolbox.app.jewel.toJewelNavigationItems
 import com.michaelflisar.toolbox.utils.JvmUtil
 import io.github.vinceglb.filekit.FileKit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.jewel.window.DecoratedWindowScope
 
 object DesktopApp {
@@ -62,6 +68,7 @@ object DesktopAppDefaults {
     @Composable
     fun TitleBar(
         scope: DecoratedWindowScope,
+        prefs: DesktopPrefs,
         menuItems: List<MenuItem>,
         setup: JewelTitleBarSetup = JewelTitleBarSetup(
             showAlwaysOnTop = true,
@@ -76,7 +83,7 @@ object DesktopAppDefaults {
             val additionalMenu = navScreen.provideMenu()
 
             JewelTitleBar(
-                prefs = CommonApp.setup.prefs,
+                prefs = prefs,
                 setup = setup,
                 menubar = { JewelTitleMenu(items = menuItems + additionalMenu) }
             )
@@ -143,7 +150,7 @@ fun DesktopApp(
     menuItems: @Composable () -> List<MenuItem>,
     // customisation
     titlebar: @Composable DecoratedWindowScope.() -> Unit = {
-        DesktopAppDefaults.TitleBar(this, menuItems())
+        DesktopAppDefaults.TitleBar(this,desktopSetup.prefs,  menuItems())
     },
     statusbar: @Composable () -> Unit = {
         DesktopAppDefaults.StatusBar()
@@ -159,7 +166,7 @@ fun DesktopApp(
     application {
 
         // 1) app states
-        val jewelAppState = rememberJewelAppState(setup.prefs)
+        val jewelAppState = rememberJewelAppState(desktopSetup.prefs)
 
         // 2) app
         JewelApp {
@@ -168,6 +175,12 @@ fun DesktopApp(
                 jewelAppState = jewelAppState,
                 appIsClosing = appIsClosing
             ) {
+                val window = this.window
+                val density = LocalDensity.current
+                LaunchedEffect(this.window) {
+                    jewelAppState.ensureIsFullyOnScreen(density, window)
+                }
+
                 val appState = rememberAppState()
                 RootNavigator(appState, screen, setRootLocals = true) { navigator ->
                     Column {

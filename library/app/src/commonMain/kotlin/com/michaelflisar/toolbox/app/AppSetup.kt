@@ -8,8 +8,8 @@ import com.michaelflisar.composethemer.themes.DefaultThemes
 import com.michaelflisar.toolbox.app.classes.FileLogger
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.backup.IBackupSupport
+import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.proversion.BaseAppProVersionManager
-import com.michaelflisar.toolbox.app.platform.AppPrefs
 
 class AppSetup(
     val versionCode: Int,
@@ -18,7 +18,7 @@ class AppSetup(
     val name: @Composable () -> String,
     val icon: @Composable () -> Painter,
     val themeSupport: ThemeSupport,
-    val prefs: AppPrefs,
+    val prefs: BasePrefs,
     val debugPrefs: DebugPrefs,
     val proVersionManager: BaseAppProVersionManager,
     val supportDebugDrawer: Boolean,
@@ -30,7 +30,6 @@ class AppSetup(
     val backupSupport: IBackupSupport?,
     val isDebugBuild: Boolean,
 ) {
-
     class ThemeSupport(
         val themes: List<ComposeTheme.Theme> = DefaultThemes.getAllThemes(),
         val supportDarkLight: Boolean,

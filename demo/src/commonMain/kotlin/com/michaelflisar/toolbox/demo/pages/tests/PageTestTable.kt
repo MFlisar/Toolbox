@@ -227,7 +227,10 @@ private fun Page(
     val tableState = data?.let { rememberTableState(it, tableDefinition) }
 
     Column(
-        modifier = Modifier.padding(16.dp).fillMaxSize()
+        modifier = Modifier
+            .padding(paddingValues)
+            .padding(all = 16.dp)
+            .fillMaxSize(),
     ) {
         if (tableState == null) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))

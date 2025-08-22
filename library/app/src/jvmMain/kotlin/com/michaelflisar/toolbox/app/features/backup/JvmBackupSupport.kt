@@ -5,11 +5,14 @@ import com.michaelflisar.toolbox.backup.JvmBackupManager
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
 
 class JvmBackupSupport(
-    override val prefBackupPath: StorageSetting<String>,
     override val extension: String = "zip",
     override val addToPrefs: Boolean = true,
     override val backupContent: List<JavaZipFileContent> = createDefaultBackupContent(),
 ) : IBackupSupport {
+
+    init {
+        throw RuntimeException("JvmBackupSupport is not yet implemented")
+    }
 
     // TODO: eventuell auch unterstützen
     override val autoBackup: Boolean = false

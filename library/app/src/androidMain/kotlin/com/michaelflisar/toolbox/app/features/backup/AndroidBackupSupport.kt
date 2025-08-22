@@ -1,11 +1,9 @@
 package com.michaelflisar.toolbox.app.features.backup
 
-import com.michaelflisar.kotpreferences.core.interfaces.StorageSetting
 import com.michaelflisar.toolbox.AppContext
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
 
 class AndroidBackupSupport(
-    override val prefBackupPath: StorageSetting<String>,
     override val autoBackup: Boolean = false,
     override val extension: String = "zip",
     override val addToPrefs: Boolean = true,

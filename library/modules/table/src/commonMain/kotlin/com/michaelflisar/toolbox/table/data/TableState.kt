@@ -13,6 +13,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.michaelflisar.toolbox.table.definitions.Row
 import com.michaelflisar.toolbox.table.definitions.TableDefinition
 
+@Suppress("UNCHECKED_CAST")
 @Composable
 fun <T> rememberTableState(
     items: List<T>,

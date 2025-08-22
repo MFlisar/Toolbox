@@ -22,10 +22,9 @@ fun JewelRoot(
 ) {
     val setup = CommonApp.setup
     val desktopSetup = DesktopApp.setup
-    val prefs = setup.prefs
 
     val scope = rememberCoroutineScope()
-    val alwaysOnTop by prefs.alwaysOnTop.collectAsStateNotNull()
+    val alwaysOnTop by desktopSetup.prefs.alwaysOnTop.collectAsStateNotNull()
     JewelLocalProvider(
         jewelAppState = jewelAppState
     ) {
@@ -48,7 +47,12 @@ fun JewelRoot(
             onKeyEvent = desktopSetup.onKeyEvent,
             style = org.jetbrains.jewel.foundation.theme.JewelTheme.defaultDecoratedWindowStyle,
             content = {
-                content()
+                JewelLocalWindowProvider(
+                    window = this.window
+                ) {
+                    content()
+                }
+
             }
         )
     }

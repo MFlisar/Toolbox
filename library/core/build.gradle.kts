@@ -1,6 +1,9 @@
-import com.michaelflisar.kmpgradletools.BuildFilePlugin
-import com.michaelflisar.kmpgradletools.Target
-import com.michaelflisar.kmpgradletools.Targets
+import com.michaelflisar.kmplibrary.BuildFilePlugin
+import com.michaelflisar.kmplibrary.setupDependencies
+import com.michaelflisar.kmplibrary.Target
+import com.michaelflisar.kmplibrary.Targets
+import com.michaelflisar.kmplibrary.api
+import com.michaelflisar.kmplibrary.implementation
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -9,7 +12,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
-    alias(deps.plugins.kmp.gradle.tools.gradle.plugin)
+    alias(deps.plugins.kmplibrary.buildplugin)
 }
 
 // get build file plugin
@@ -73,60 +76,16 @@ kotlin {
     sourceSets {
 
         // ---------------------
-        // custom shared sources
+        // custom source sets
         // ---------------------
 
-        // --
-        // e.g.:
-        // val nativeMain by creating { dependsOn(commonMain.get()) }
+        val targetsMac = listOf(Target.MACOS)
+
         val macosMain by creating { dependsOn(commonMain.get()) }
-        val featureFileSupportedMain by creating { dependsOn(commonMain.get()) }
+        val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
 
-        // ---------------------
-        // target sources
-        // ---------------------
-
-        // --
-        // e.g.:
-        // buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-        //     when (target) {
-        //         Target.ANDROID, Target.WINDOWS -> {
-        //             groupMain.dependsOn(nativeMain)
-        //         }
-        //         Target.IOS, Target.MACOS, Target.WASM -> {
-        //             // --
-        //         }
-        //         Target.LINUX,
-        //         Target.JS -> {
-        //             // not enabled
-        //         }
-        //     }
-        // }
-
-        buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-            when (target) {
-                Target.ANDROID -> {
-                    groupMain.dependsOn(featureFileSupportedMain)
-                }
-                Target.WINDOWS -> {
-                    groupMain.dependsOn(featureFileSupportedMain)
-                }
-                Target.IOS-> {
-                    groupMain.dependsOn(featureFileSupportedMain)
-                }
-                Target.MACOS -> {
-                    groupMain.dependsOn(macosMain)
-                    groupMain.dependsOn(featureFileSupportedMain)
-                }
-                Target.WASM -> {
-
-                }
-                Target.LINUX,
-                Target.JS -> {
-                    // not enabled
-                }
-            }
-        }
+        macosMain.setupDependencies(sourceSets, buildTargets, targetsMac)
+        featureFileSupportMain.setupDependencies(sourceSets, buildTargets, Target.LIST_FILE_SUPPORT)
 
         // ---------------------
         // dependencies
@@ -143,8 +102,8 @@ kotlin {
             implementation(libs.compose.material.icons.extended)
 
             // mflisar
-            api(deps.lumberjack.core)
-            implementation(deps.composechangelog.core)
+            api(live = deps.lumberjack.core, project = ":lumberjack:core", plugin = buildFilePlugin)
+            implementation(live = deps.composechangelog.core, project = ":composechangelog:core", plugin = buildFilePlugin)
 
         }
 
@@ -157,15 +116,15 @@ kotlin {
             implementation(deps.acra.dialog)
 
             // mflisar
-            implementation(deps.feedback)
-            implementation(deps.lumberjack.extension.feedback)
-            implementation(deps.lumberjack.extension.notification)
+            implementation(live = deps.feedback, project = ":feedbackmanager", plugin = buildFilePlugin)
+            implementation(live = deps.lumberjack.extension.feedback, project = ":lumberjack:extensions:feedback", plugin = buildFilePlugin)
+            implementation(live = deps.lumberjack.extension.notification, project = ":lumberjack:extensions:notification", plugin = buildFilePlugin)
         }
 
-        featureFileSupportedMain.dependencies {
+        featureFileSupportMain.dependencies {
 
             // mflisar
-            implementation(deps.lumberjack.logger.file)
+            implementation(live = deps.lumberjack.logger.file, project = ":lumberjack:loggers:lumberjack:file", plugin = buildFilePlugin)
 
         }
     }
@@ -193,3 +152,6 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
+
+
+

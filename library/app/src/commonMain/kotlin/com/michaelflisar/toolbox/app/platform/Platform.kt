@@ -5,9 +5,6 @@ import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.classes.FileLogger
 import com.michaelflisar.toolbox.app.classes.PlatformContext
-import com.michaelflisar.toolbox.app.interfaces.IAppPrefs
-
-expect interface AppPrefs : IAppPrefs
 
 // Logging
 expect val Platform.fileLogger: FileLogger<*>?

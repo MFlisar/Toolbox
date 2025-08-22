@@ -21,22 +21,4 @@ object LogManager {
 
     // TODO
     val sendRelevantFiles: (() -> Unit)? = null
-
-
-    /*
-    suspend fun sendRelevantFiles() {
-        val folderDatabase = com.michaelflisar.toolbox.baseapp.LogManager.context.getDatabasePath("data.db").parentFile
-        val files = listOf(ZipFileContent.Folder(folderDatabase, "database")) +
-                getSetup().getAllExistingLogFiles().map { ZipFileContent.Folder(it, "logs/${it.name}") }
-        val zipFile = ZipManager.zipToCache(com.michaelflisar.toolbox.baseapp.LogManager.context, files)
-        sendFeedback(listOfNotNull(zipFile), false)
-    }
-
-    fun sendFeedback(files: List<File> = emptyList(), appendLogFile: Boolean = true) {
-        L.sendFeedback(
-            context = com.michaelflisar.toolbox.baseapp.LogManager.context,
-            receiver = MAIL,
-            attachments = files + (fileLoggingSetup.getLatestLogFile()?.takeIf { appendLogFile }?.let { listOf(it) } ?: emptyList())
-        )
-    }*/
 }

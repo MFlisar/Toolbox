@@ -1,58 +1,73 @@
 [versions]
 
-gradle = 				        "8.11.1"
-kotlin = 				        "2.2.0"
-desugar =                       "2.1.5"
-dokka =                         "1.9.20"
-gradle-maven-publish-plugin =   "0.34.0"
+gradle =                            "8.12.1"
+kotlin = 				            "2.2.10"
+ksp =                               "2.2.0-2.0.2"
+desugar =                           "2.1.5"
+dokka =                             "2.0.0"
+gradle-maven-publish-plugin =       "0.34.0"
+binary-compatibility-validator =    "0.18.1"
 
-compose =                       "1.8.2"
-compose-adaptive =              "1.1.2"
-compose-icons =                 "1.7.3"
+compose =                           "1.8.2"
+compose-adaptive =                  "1.1.2"
+compose-icons =                     "1.7.3"
 
-buildkonfig =                   "0.17.1"
+buildkonfig =                       "0.17.1"
+easylauncher = 					    "6.4.1"
 
 # fat exe
-launch4j =                      "3.0.7"
+launch4j =                          "4.0.0"
 
 [plugins]
 
 # android
-android-application = 			    { id = "com.android.application", 	                version.ref = "gradle" }
-android-library = 			        { id = "com.android.library", 	                    version.ref = "gradle" }
+android-application = 			        { id = "com.android.application", 	                version.ref = "gradle" }
+android-library = 			            { id = "com.android.library", 	                    version.ref = "gradle" }
 
 # kotlin
-kotlin-android = 				    { id = "org.jetbrains.kotlin.android", 			    version.ref = "kotlin" }
-kotlin-parcelize =                  { id = "org.jetbrains.kotlin.plugin.parcelize",     version.ref = "kotlin"  }
-kotlin-multiplatform = 			    { id = "org.jetbrains.kotlin.multiplatform", 	    version.ref = "kotlin" }
-kotlin-compose = 				    { id = "org.jetbrains.kotlin.plugin.compose", 	    version.ref = "kotlin" }
-kotlin-serialization = 			    { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-android = 				        { id = "org.jetbrains.kotlin.android", 			    version.ref = "kotlin" }
+kotlin-parcelize =                      { id = "org.jetbrains.kotlin.plugin.parcelize",     version.ref = "kotlin"  }
+kotlin-multiplatform = 			        { id = "org.jetbrains.kotlin.multiplatform", 	    version.ref = "kotlin" }
+kotlin-compose = 				        { id = "org.jetbrains.kotlin.plugin.compose", 	    version.ref = "kotlin" }
+kotlin-serialization = 			        { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 # github release (dokka + maven)
-dokka =                             { id = "org.jetbrains.dokka",                       version.ref = "dokka" }
-gradle-maven-publish-plugin =       { id = "com.vanniktech.maven.publish.base",         version.ref = "gradle-maven-publish-plugin" }
+dokka =                                 { id = "org.jetbrains.dokka",                       version.ref = "dokka" }
+gradle-maven-publish-plugin =           { id = "com.vanniktech.maven.publish.base",         version.ref = "gradle-maven-publish-plugin" }
+
+# binary compatibility
+binary-compatibility-validator =    { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 
 # compose
-compose =                           { id = "org.jetbrains.compose",                     version.ref = "compose" }
+compose =                               { id = "org.jetbrains.compose",                     version.ref = "compose" }
+
+# ksp
+ksp =                                   { id = "com.google.devtools.ksp",                   version.ref = "ksp" }
 
 # buildkonfig
-buildkonfig =                       { id = "com.codingfeline.buildkonfig",              version.ref = "buildkonfig" }
+buildkonfig =                           { id = "com.codingfeline.buildkonfig",              version.ref = "buildkonfig" }
+
+# easy launcher
+easylauncher =                          { id = "com.starter.easylauncher",                  version.ref = "easylauncher" }
 
 # fat exe
-launch4j =                          { id = "edu.sc.seis.launch4j",                      version.ref = "launch4j" }
+launch4j =                              { id = "edu.sc.seis.launch4j",                      version.ref = "launch4j" }
 
 [libraries]
 
 # Android
-desugar =			        	    { module = "com.android.tools:desugar_jdk_libs", 	                    version.ref = "desugar" }
+desugar =			        	        { module = "com.android.tools:desugar_jdk_libs", 	                            version.ref = "desugar" }
 
 # Compose
-compose-runtime =                   { module = "org.jetbrains.compose.runtime:runtime",                     version.ref = "compose" }
-compose-ui =                        { module = "org.jetbrains.compose.ui:ui",                               version.ref = "compose" }
-compose-ui-backhandler =            { module = "org.jetbrains.compose.ui:ui-backhandler",                   version.ref = "compose" }
-compose-material3 =                 { module = "org.jetbrains.compose.material3:material3",                 version.ref = "compose" }
-compose-material3-adaptive =        { module = "org.jetbrains.compose.material3.adaptive:adaptive",         version.ref = "compose-adaptive" }
+compose-runtime =                       { module = "org.jetbrains.compose.runtime:runtime",                             version.ref = "compose" }
+compose-ui =                            { module = "org.jetbrains.compose.ui:ui",                                       version.ref = "compose" }
+compose-ui-backhandler =                { module = "org.jetbrains.compose.ui:ui-backhandler",                           version.ref = "compose" }
+compose-ui-tooling =                    { module = "org.jetbrains.compose.ui:ui-tooling",                               version.ref = "compose" }
+compose-components-resources =          { module = "org.jetbrains.compose.components:components-resources",             version.ref = "compose" }
+compose-components-ui-tooling-preview = { module = "org.jetbrains.compose.components:components-ui-tooling-preview",    version.ref = "compose" }
+compose-material3 =                     { module = "org.jetbrains.compose.material3:material3",                         version.ref = "compose" }
+compose-material3-adaptive =            { module = "org.jetbrains.compose.material3.adaptive:adaptive",                 version.ref = "compose-adaptive" }
 
 # Compose Icons
-compose-material-icons-core = 	    { module = "org.jetbrains.compose.material:material-icons-core",        version.ref = "compose-icons" }
-compose-material-icons-extended = 	{ module = "org.jetbrains.compose.material:material-icons-extended",    version.ref = "compose-icons" }
+compose-material-icons-core = 	        { module = "org.jetbrains.compose.material:material-icons-core",                version.ref = "compose-icons" }
+compose-material-icons-extended = 	    { module = "org.jetbrains.compose.material:material-icons-extended",            version.ref = "compose-icons" }

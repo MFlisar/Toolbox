@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.app.CommonApp
-import com.michaelflisar.toolbox.app.platform.AppPrefs
+import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.keep
 import com.michaelflisar.toolbox.extensions.disabled
@@ -50,7 +50,7 @@ class JewelTitleAction(
 
 @Composable
 fun DecoratedWindowScope.JewelTitleBar(
-    prefs: AppPrefs,
+    prefs: DesktopPrefs,
     setup: JewelTitleBarSetup,
     icon: Painter? = CommonApp.setup.icon(),
     iconItems: List<JewelTitleAction> = emptyList(),

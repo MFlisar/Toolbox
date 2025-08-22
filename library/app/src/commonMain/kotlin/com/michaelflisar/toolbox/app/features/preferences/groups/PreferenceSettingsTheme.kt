@@ -98,7 +98,7 @@ private fun PreferenceScope.PreferenceSettingsThemeSubScreen() {
 
             // 1) Base Theme (dark/light/system)
             if (themeSupport.supportDarkLight) {
-                PrefDarkLight(setup.prefs)
+                PrefDarkLight()
 
             }
 

@@ -1,9 +1,9 @@
 package com.michaelflisar.toolbox.app.debug
 
 import com.michaelflisar.kotpreferences.core.SettingsModel
-import com.michaelflisar.kotpreferences.core.classes.BaseStorage
+import com.michaelflisar.kotpreferences.core.interfaces.Storage
 
-class DebugPrefs(storage: BaseStorage) : SettingsModel(storage) {
+class DebugPrefs(storage: Storage) : SettingsModel(storage) {
 
     val showDeveloperSettings by boolPref(false)
     val forceIsProInDebug by boolPref(false)

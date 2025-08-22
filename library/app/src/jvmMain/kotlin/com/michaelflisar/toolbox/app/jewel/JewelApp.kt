@@ -33,12 +33,11 @@ fun JewelApp(
 ) {
     val setup = CommonApp.setup
     val desktopSetup = DesktopApp.setup
-    val prefs = setup.prefs
 
     val textStyle = org.jetbrains.jewel.foundation.theme.JewelTheme.createDefaultTextStyle()
     val editorStyle = org.jetbrains.jewel.foundation.theme.JewelTheme.createEditorTextStyle()
 
-    val theme by prefs.jewelTheme.collectAsStateNotNull()
+    val theme by desktopSetup.prefs.jewelTheme.collectAsStateNotNull()
 
     val themeDefinition = if (theme.isDark()) {
         org.jetbrains.jewel.foundation.theme.JewelTheme.darkThemeDefinition(

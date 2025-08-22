@@ -1,38 +1,47 @@
 package com.michaelflisar.toolbox.demo
 
-import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
-import com.michaelflisar.kotpreferences.storage.datastore.create
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
-import com.michaelflisar.toolbox.app.classes.resetWindowPosition
-import com.michaelflisar.toolbox.app.classes.resetWindowSize
-import com.michaelflisar.toolbox.app.features.appstate.LocalJewelAppState
-import com.michaelflisar.toolbox.app.features.backup.JvmBackupSupport
-import com.michaelflisar.toolbox.demo.pages.PageHomeScreen
+import com.michaelflisar.toolbox.app.classes.PlatformContext
+import com.michaelflisar.toolbox.app.features.navigation.JvmNavigationUtil
+import com.michaelflisar.toolbox.app.features.navigation.NavigationUtil
+import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
+import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
+import com.michaelflisar.toolbox.app.features.preferences.Preferences
+import com.michaelflisar.toolbox.app.features.preferences.createStorage
+import com.michaelflisar.toolbox.app.features.proversion.ProVersionManagerDisabled
 import com.michaelflisar.toolbox.utils.JvmUtil
 
 fun main() {
 
-    val setup = Shared.createBaseAppSetup(
-        prefs = Prefs,
-        debugStorage = DataStoreStorage.create(folder = JvmUtil.appDir(), name = "debug"),
-        backupSupport = JvmBackupSupport(
-            prefBackupPath = Prefs.backupPath
-        ),
+    val prefs = BasePrefs(Preferences.createStorage("settings"))
+    val setup = SharedDefinitions.createBaseAppSetup(
+        prefs = prefs,
+        debugStorage = Preferences.createStorage("debug"),
+        proVersionManager = ProVersionManagerDisabled,
+        backupSupport = null,//JvmBackupSupport(),
         isDebugBuild = JvmUtil.isDebug()
     )
-    val desktopSetup = DesktopAppSetup()
+    val desktopSetup = DesktopAppSetup(
+        prefs = DesktopPrefs(Preferences.createStorage("windows"))
+    )
+
+    SharedDefinitions.update(PlatformContext.NONE, setup)
 
     DesktopApp(
         setup = setup,
         desktopSetup = desktopSetup,
-        screen = PageHomeScreen,
-        navigationItems = { Shared.provideNavigationItems() },
+        screen = SharedDefinitions.defaultPage,
+        navigationItems = {
+            NavigationUtil.getRailNavigationItems(
+                definition = SharedDefinitions,
+                regionLabelMainPages = "Pages",
+                regionLabelMainActions = "Actions"
+            )
+        },
         menuItems = {
-            val jewelAppState = LocalJewelAppState.current
-            Shared.provideAppMenu(
-                resetWindowPosition = { jewelAppState.windowState.resetWindowPosition() },
-                resetWindowSize = { jewelAppState.windowState.resetWindowSize() }
+            JvmNavigationUtil.getDesktopMenuItems(
+                definition = SharedDefinitions
             )
         }
     )

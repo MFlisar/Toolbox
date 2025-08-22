@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +24,9 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreenContainer
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
 import com.michaelflisar.toolbox.components.MyRow
+import com.michaelflisar.toolbox.demo.pages.tests.PageTestDialogs
 import com.michaelflisar.toolbox.demo.pages.tests.PageTestPane
+import com.michaelflisar.toolbox.demo.pages.tests.PageTestPreferences
 import com.michaelflisar.toolbox.demo.pages.tests.PageTestTable
 import com.michaelflisar.toolbox.extensions.Render
 import com.michaelflisar.toolbox.extensions.toIconComposable
@@ -39,7 +42,7 @@ object PageTestsRootScreen : NavScreen() {
     override fun provideData() = rememberNavScreenData(
         title = "Tests",
         subTitle = null,
-        icon = Icons.Default.List.toIconComposable()
+        icon = Icons.Default.BugReport.toIconComposable()
     )
 
     @Composable
@@ -81,7 +84,9 @@ private fun Page(
     ) {
         val tests = listOf(
             PageTestTable,
-            PageTestPane
+            PageTestPane,
+            PageTestDialogs,
+            PageTestPreferences
         )
         tests.forEach { TestRow(it) }
     }

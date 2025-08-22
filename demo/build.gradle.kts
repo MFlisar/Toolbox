@@ -1,14 +1,17 @@
 import com.michaelflisar.composechangelog.Changelog
 import com.michaelflisar.composechangelog.DefaultVersionFormatter
-import com.michaelflisar.kmpgradletools.BuildFilePlugin
-import com.michaelflisar.kmpgradletools.Targets
-import com.michaelflisar.kmpgradletools.Target
+import com.michaelflisar.kmplibrary.BuildFilePlugin
+import com.michaelflisar.kmplibrary.setupDependencies
+import com.michaelflisar.kmplibrary.Targets
+import com.michaelflisar.kmplibrary.Target
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import kotlin.jvm.java
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
-import com.michaelflisar.kmpgradletools.DesktopSetup
-import com.michaelflisar.kmpgradletools.setupLaunch4J
-import com.michaelflisar.kmpgradletools.setupWindowApp
+import com.michaelflisar.kmplibrary.DesktopSetup
+import com.michaelflisar.kmplibrary.api
+import com.michaelflisar.kmplibrary.implementation
+import com.michaelflisar.kmplibrary.setupLaunch4J
+import com.michaelflisar.kmplibrary.setupWindowApp
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -17,7 +20,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.compose)
     alias(deps.plugins.composechangelog)
-    alias(deps.plugins.kmp.gradle.tools.gradle.plugin)
+    alias(deps.plugins.kmplibrary.buildplugin)
     alias(libs.plugins.buildkonfig)
     alias(libs.plugins.launch4j)
 }
@@ -94,54 +97,14 @@ kotlin {
     sourceSets {
 
         // ---------------------
-        // custom shared sources
+        // custom source sets
         // ---------------------
-
-        // --
-        // e.g.:
-        // val nativeMain by creating { dependsOn(commonMain.get()) }
 
         val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
         val featureNoFileSupportMain by creating { dependsOn(commonMain.get()) }
 
-        // ---------------------
-        // target sources
-        // ---------------------
-
-        // --
-        // e.g.:
-        // buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-        //     when (target) {
-        //         Target.ANDROID, Target.WINDOWS -> {
-        //             groupMain.dependsOn(nativeMain)
-        //         }
-        //         Target.IOS, Target.MACOS, Target.WASM -> {
-        //             // --
-        //         }
-        //         Target.LINUX,
-        //         Target.JS -> {
-        //             // not enabled
-        //         }
-        //     }
-        // }
-
-        buildTargets.updateSourceSetDependencies(sourceSets) { groupMain, target ->
-            when (target) {
-                Target.ANDROID, Target.WINDOWS, Target.IOS, Target.MACOS, -> {
-                    groupMain.dependsOn(featureFileSupportMain)
-                }
-
-                Target.WASM -> {
-                    groupMain.dependsOn(featureNoFileSupportMain)
-                }
-
-                Target.LINUX,
-                Target.JS
-                    -> {
-                    // not enabled
-                }
-            }
-        }
+        featureFileSupportMain.setupDependencies(sourceSets, buildTargets, Target.LIST_FILE_SUPPORT)
+        featureNoFileSupportMain.setupDependencies(sourceSets, buildTargets, Target.LIST_FILE_SUPPORT, targetsNotSupported = true)
 
         // ---------------------
         // dependencies
@@ -167,15 +130,46 @@ kotlin {
             implementation(deps.composethemer.themes.flatui)
             implementation(deps.composethemer.themes.metro)
             implementation(deps.composethemer.themes.material500)
+
+            // ------------------------
+            // tests
+            // ------------------------
+
+            // kotpreferences
+            implementation(live = deps.kotpreferences.core, project = ":kotpreferences:core", plugin = buildFilePlugin)
+            implementation(live = deps.kotpreferences.extension.compose, project = ":kotpreferences:modules:compose", plugin = buildFilePlugin)
+
+            // composedialogs
+            implementation(live = deps.composedialogs.core, project = ":composedialogs:core", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.color, project = ":composedialogs:modules:color", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.date, project = ":composedialogs:modules:date", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.time, project = ":composedialogs:modules:time", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.info, project = ":composedialogs:modules:info", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.progress, project = ":composedialogs:modules:progress", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.input, project = ":composedialogs:modules:input", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.number, project = ":composedialogs:modules:number", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.list, project = ":composedialogs:modules:list", plugin = buildFilePlugin)
+            implementation(live = deps.composedialogs.dialog.menu, project = ":composedialogs:modules:menu", plugin = buildFilePlugin)
+
+            // composepreferences
+            implementation(live = deps.composepreferences.core, project = ":composepreferences:core", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.bool, project = ":composepreferences:modules:screen:bool", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.button, project = ":composepreferences:modules:screen:button", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.input, project = ":composepreferences:modules:screen:input", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.color, project = ":composepreferences:modules:screen:color", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.date, project = ":composepreferences:modules:screen:date", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.time, project = ":composepreferences:modules:screen:time", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.list, project = ":composepreferences:modules:screen:list", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.screen.number, project = ":composepreferences:modules:screen:number", plugin = buildFilePlugin)
+            implementation(live = deps.composepreferences.kotpreferences, project = ":composepreferences:modules:kotpreferences", plugin = buildFilePlugin)
         }
 
-        //featureFileSupportMain.dependencies {
-        //    // libraries
-        //    implementation(deps.composechangelog.core)
-        //}
-
-        //featureNoFileSupportMain.dependencies {
-        //}
+        featureFileSupportMain.dependencies {
+            implementation(live = deps.kotpreferences.storage.datastore, project = ":kotpreferences:modules:storage:datastore", plugin = buildFilePlugin)
+        }
+        featureNoFileSupportMain.dependencies {
+            implementation(deps.kotpreferences.storage.keyvalue, project = ":kotpreferences:modules:storage:keyvalue", plugin = buildFilePlugin)
+        }
 
         jvmMain.dependencies {
 
@@ -191,6 +185,13 @@ kotlin {
 
             implementation(deps.material)
 
+        }
+
+        featureFileSupportMain.dependencies {
+            //implementation(live = deps.kotpreferences.storage.datastore, project = ":kotpreferences:modules:storage:datastore", plugin = buildFilePlugin)
+        }
+        featureNoFileSupportMain.dependencies {
+            //implementation(deps.kotpreferences.storage.keyvalue, project = ":kotpreferences:modules:storage:keyvalue", plugin = buildFilePlugin)
         }
     }
 }
@@ -266,3 +267,8 @@ tasks.register<edu.sc.seis.launch4j.tasks.Launch4jLibraryTask>("launch4j") {
         setup = desktopSetup
     )
 }
+
+
+
+
+
