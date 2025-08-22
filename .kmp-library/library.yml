@@ -25,7 +25,7 @@ library:
   # TODO: autom. detecten?
   license:
     name: Apache License 2.0
-    link: https://github.com/MFlisar/KotPreferences/blob/main/LICENSE
+    link: https://github.com/MFlisar/Toolbox/blob/main/LICENSE
   screenshots: []
   about-me: true # set to true if you want to show the about me section on the homepage
 
