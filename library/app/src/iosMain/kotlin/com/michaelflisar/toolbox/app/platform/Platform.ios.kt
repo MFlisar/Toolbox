@@ -5,11 +5,8 @@ import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import com.michaelflisar.lumberjack.loggers.file.create
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.IOSAppPrefs
 import com.michaelflisar.toolbox.app.classes.FileLogger
 import com.michaelflisar.toolbox.app.classes.PlatformContext
-
-actual typealias AppPrefs = IOSAppPrefs
 
 actual val Platform.fileLogger: FileLogger<*>?
     get() = FileLogger<FileLoggerSetup>(

@@ -1,10 +1,8 @@
 package com.michaelflisar.toolbox.app.features.preferences
 
-import com.michaelflisar.kotpreferences.core.classes.BaseStorage
-import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
-import com.michaelflisar.kotpreferences.storage.datastore.create
+import com.michaelflisar.kotpreferences.core.interfaces.Storage
 
-actual fun Preferences.createStorage(name: String): BaseStorage {
+actual fun Preferences.createStorage(name: String): Storage {
     // TODO
     throw NotImplementedError("DataStoreStorage is not implemented for iOS yet")
 
