@@ -98,3 +98,10 @@ modules:
     optional: true
     platforms-info: ""
     dependencies: []
+  - relativePath: library\modules\room
+    artifact-id: room
+    group: modules
+    description: provides room database classes
+    optional: true
+    platforms-info: ""
+    dependencies: []

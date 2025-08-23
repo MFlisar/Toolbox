@@ -1,9 +1,8 @@
 import com.michaelflisar.kmplibrary.BuildFilePlugin
-import com.michaelflisar.kmplibrary.setupDependencies
 import com.michaelflisar.kmplibrary.Target
 import com.michaelflisar.kmplibrary.Targets
-import com.michaelflisar.kmplibrary.api
-import com.michaelflisar.kmplibrary.implementation
+import com.michaelflisar.kmplibrary.setupDependencies
+import org.gradle.kotlin.dsl.project
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -79,13 +78,33 @@ kotlin {
         val notJvmMain by creating { dependsOn(commonMain.get()) }
 
         featureFileSupportMain.setupDependencies(sourceSets, buildTargets, Target.LIST_FILE_SUPPORT)
-        featureNoFileSupportMain.setupDependencies(sourceSets, buildTargets, Target.LIST_FILE_SUPPORT, targetsNotSupported = true)
+        featureNoFileSupportMain.setupDependencies(
+            sourceSets,
+            buildTargets,
+            Target.LIST_FILE_SUPPORT,
+            targetsNotSupported = true
+        )
 
         featureBackupSupportMain.setupDependencies(sourceSets, buildTargets, targetsBackupSupport)
-        featureNoBackupSupportMain.setupDependencies(sourceSets, buildTargets, targetsBackupSupport, targetsNotSupported = true)
+        featureNoBackupSupportMain.setupDependencies(
+            sourceSets,
+            buildTargets,
+            targetsBackupSupport,
+            targetsNotSupported = true
+        )
 
-        notAndroidMain.setupDependencies(sourceSets, buildTargets, targetsAndroid, targetsNotSupported = true)
-        notJvmMain.setupDependencies(sourceSets, buildTargets, targetsJvm, targetsNotSupported = true)
+        notAndroidMain.setupDependencies(
+            sourceSets,
+            buildTargets,
+            targetsAndroid,
+            targetsNotSupported = true
+        )
+        notJvmMain.setupDependencies(
+            sourceSets,
+            buildTargets,
+            targetsJvm,
+            targetsNotSupported = true
+        )
 
         // ---------------------
         // dependencies
@@ -121,28 +140,78 @@ kotlin {
             api(project(":toolbox:modules:zip"))
             api(project(":toolbox:modules:backup"))
 
-            /* region mflisar dependencies */
-            api(live = deps.lumberjack.core, project = ":lumberjack:core", plugin = buildFilePlugin)
-            api(live = deps.lumberjack.implementation.lumberjack, project = ":lumberjack:implementations:lumberjack", plugin = buildFilePlugin)
-            api(live = deps.lumberjack.logger.console, project = ":lumberjack:loggers:lumberjack:console", plugin = buildFilePlugin)
-            api(live = deps.kotpreferences.core, project = ":kotpreferences:core", plugin = buildFilePlugin)
-            api(live = deps.composedebugdrawer.core, project = ":composedebugdrawer:core", plugin = buildFilePlugin)
-            implementation(live = deps.composedebugdrawer.plugin.kotpreferences, project = ":composedebugdrawer:plugins:kotpreferences", plugin = buildFilePlugin)
-            api(live = deps.composechangelog.core, project = ":composechangelog:core", plugin = buildFilePlugin)
-            implementation(live = deps.composechangelog.renderer.header, project = ":composechangelog:modules:renderer:header", plugin = buildFilePlugin)
-            implementation(live = deps.composechangelog.statesaver.kotpreferences, project = ":composechangelog:modules:statesaver:kotpreferences", plugin = buildFilePlugin)
-            api(live = deps.composedialogs.core, project = ":composedialogs:core", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.info, project = ":composedialogs:modules:info", plugin = buildFilePlugin)
-            api(live = deps.composepreferences.core, project = ":composepreferences:core", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.bool, project = ":composepreferences:modules:screen:bool", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.list, project = ":composepreferences:modules:screen:list", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.button, project = ":composepreferences:modules:screen:button", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.kotpreferences, project = ":composepreferences:modules:kotpreferences", plugin = buildFilePlugin)
-            api(live = deps.kotpreferences.extension.compose, project = ":kotpreferences:modules:compose", plugin = buildFilePlugin)
-            api(live = deps.composethemer.core, project = ":composethemer:core", plugin = buildFilePlugin)
-            implementation(live = deps.composethemer.modules.picker, project = ":composethemer:modules:picker", plugin = buildFilePlugin)
-            implementation(live = deps.composethemer.modules.defaultpicker, project = ":composethemer:modules:defaultpicker", plugin = buildFilePlugin)
-            /* endregion */
+            if (buildFilePlugin.useLiveDependencies()) {
+
+                // Lumberjack
+                api(deps.lumberjack.core)
+                api(deps.lumberjack.implementation.lumberjack)
+                api(deps.lumberjack.logger.console)
+
+                // KotPreferences
+                api(deps.kotpreferences.core)
+                api(deps.kotpreferences.extension.compose)
+
+                // Compose Debug Drawer
+                api(deps.composedebugdrawer.core)
+                implementation(deps.composedebugdrawer.plugin.kotpreferences)
+
+                // Compose Changelog
+                api(deps.composechangelog.core)
+                implementation(deps.composechangelog.renderer.header)
+                implementation(deps.composechangelog.statesaver.kotpreferences)
+
+                // Compose Dialogs
+                api(deps.composedialogs.core)
+                implementation(deps.composedialogs.dialog.info)
+
+                // Compose Preferences
+                api(deps.composepreferences.core)
+                implementation(deps.composepreferences.screen.bool)
+                implementation(deps.composepreferences.screen.list)
+                implementation(deps.composepreferences.screen.button)
+                implementation(deps.composepreferences.kotpreferences)
+
+                // Theming
+                api(deps.composethemer.core)
+                implementation(deps.composethemer.modules.picker)
+                implementation(deps.composethemer.modules.defaultpicker)
+
+            } else {
+
+                // Lumberjack
+                api(project(":lumberjack:core"))
+                api(project(":lumberjack:implementations:lumberjack"))
+                api(project(":lumberjack:loggers:lumberjack:console"))
+
+                // KotPreferences
+                api(project(":kotpreferences:core"))
+                api(project(":kotpreferences:modules:compose"))
+
+                // Compose Debug Drawer
+                api(project(":composedebugdrawer:core"))
+                implementation(project(":composedebugdrawer:plugins:kotpreferences"))
+
+                // Compose Changelog
+                api(project(":composechangelog:core"))
+                implementation(project(":composechangelog:modules:renderer:header"))
+                implementation(project(":composechangelog:modules:statesaver:kotpreferences"))
+
+                // Compose Dialogs
+                api(project(":composedialogs:core"))
+                implementation(project(":composedialogs:modules:info"))
+
+                // Compose Preferences
+                api(project(":composepreferences:core"))
+                implementation(project(":composepreferences:modules:screen:bool"))
+                implementation(project(":composepreferences:modules:screen:list"))
+                implementation(project(":composepreferences:modules:screen:button"))
+                implementation(project(":composepreferences:modules:kotpreferences"))
+
+                // Theming
+                api(project(":composethemer:core"))
+                implementation(project(":composethemer:modules:picker"))
+                implementation(project(":composethemer:modules:defaultpicker"))
+            }
 
             implementation(deps.filekit.dialogs.compose)
 
@@ -150,18 +219,46 @@ kotlin {
 
         featureFileSupportMain.dependencies {
 
-            // mflisar dependencies
-            api(live = deps.kotpreferences.storage.datastore, project = ":kotpreferences:modules:storage:datastore", plugin = buildFilePlugin)
-            api(live = deps.lumberjack.logger.file, project = ":lumberjack:loggers:lumberjack:file", plugin = buildFilePlugin)
-            implementation(live = deps.lumberjack.extension.composeviewer, project = ":lumberjack:extensions:composeviewer", plugin = buildFilePlugin)
-            implementation(live = deps.composedebugdrawer.plugin.lumberjack, project = ":composedebugdrawer:plugins:lumberjack", plugin = buildFilePlugin)
+            if (buildFilePlugin.useLiveDependencies()) {
+
+                // Lumberjack
+                api(deps.lumberjack.logger.file)
+                implementation(deps.lumberjack.extension.composeviewer)
+
+                // KotPreferences
+                api(deps.kotpreferences.storage.datastore)
+
+                // Compose Debug Drawer
+                implementation(deps.composedebugdrawer.plugin.lumberjack )
+
+            } else {
+
+                // Lumberjack
+                api(project(":lumberjack:loggers:lumberjack:file"))
+                implementation(":lumberjack:extensions:composeviewer")
+
+                // KotPreferences
+                api(project(":kotpreferences:modules:storage:datastore"))
+
+                // Compose Debug Drawer
+                implementation(project(":composedebugdrawer:plugins:lumberjack") )
+            }
 
         }
 
         featureNoFileSupportMain.dependencies {
 
-            // mflisar dependencies
-            api(live = deps.kotpreferences.storage.keyvalue, project = ":kotpreferences:modules:storage:keyvalue", plugin = buildFilePlugin)
+            if (buildFilePlugin.useLiveDependencies()) {
+
+                // KotPreferences
+                api(deps.kotpreferences.storage.keyvalue)
+
+            } else {
+
+                // KotPreferences
+                api(project(":kotpreferences:modules:storage:keyvalue"))
+
+            }
         }
 
 
@@ -181,8 +278,21 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(live = deps.composedebugdrawer.infos.build, project = ":composedebugdrawer:modules:buildinfos", plugin = buildFilePlugin)
-            implementation(live = deps.composedebugdrawer.infos.device, project = ":composedebugdrawer:modules:deviceinfos", plugin = buildFilePlugin)
+
+            if (buildFilePlugin.useLiveDependencies()) {
+
+                // Compose Debug Drawer
+                implementation( deps.composedebugdrawer.infos.build)
+                implementation(deps.composedebugdrawer.infos.device )
+
+            } else {
+
+                // Compose Debug Drawer
+                implementation( project(":composedebugdrawer:modules:buildinfos"))
+                implementation(project(":composedebugdrawer:modules:deviceinfos" ))
+
+            }
+
         }
 
         wasmJsMain.dependencies {
@@ -212,6 +322,7 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
+
 
 
 

@@ -8,8 +8,6 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import kotlin.jvm.java
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import com.michaelflisar.kmplibrary.DesktopSetup
-import com.michaelflisar.kmplibrary.api
-import com.michaelflisar.kmplibrary.implementation
 import com.michaelflisar.kmplibrary.setupLaunch4J
 import com.michaelflisar.kmplibrary.setupWindowApp
 
@@ -135,40 +133,86 @@ kotlin {
             // tests
             // ------------------------
 
-            // kotpreferences
-            implementation(live = deps.kotpreferences.core, project = ":kotpreferences:core", plugin = buildFilePlugin)
-            implementation(live = deps.kotpreferences.extension.compose, project = ":kotpreferences:modules:compose", plugin = buildFilePlugin)
+            if (buildFilePlugin.useLiveDependencies()) {
 
-            // composedialogs
-            implementation(live = deps.composedialogs.core, project = ":composedialogs:core", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.color, project = ":composedialogs:modules:color", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.date, project = ":composedialogs:modules:date", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.time, project = ":composedialogs:modules:time", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.info, project = ":composedialogs:modules:info", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.progress, project = ":composedialogs:modules:progress", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.input, project = ":composedialogs:modules:input", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.number, project = ":composedialogs:modules:number", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.list, project = ":composedialogs:modules:list", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.menu, project = ":composedialogs:modules:menu", plugin = buildFilePlugin)
+                // KotPreferences
+                implementation(deps.kotpreferences.core)
+                implementation(deps.kotpreferences.extension.compose)
 
-            // composepreferences
-            implementation(live = deps.composepreferences.core, project = ":composepreferences:core", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.bool, project = ":composepreferences:modules:screen:bool", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.button, project = ":composepreferences:modules:screen:button", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.input, project = ":composepreferences:modules:screen:input", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.color, project = ":composepreferences:modules:screen:color", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.date, project = ":composepreferences:modules:screen:date", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.time, project = ":composepreferences:modules:screen:time", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.list, project = ":composepreferences:modules:screen:list", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.screen.number, project = ":composepreferences:modules:screen:number", plugin = buildFilePlugin)
-            implementation(live = deps.composepreferences.kotpreferences, project = ":composepreferences:modules:kotpreferences", plugin = buildFilePlugin)
+                // Compose Dialogs
+                implementation(deps.composedialogs.core)
+                implementation(deps.composedialogs.dialog.color)
+                implementation(deps.composedialogs.dialog.date)
+                implementation(deps.composedialogs.dialog.time)
+                implementation(deps.composedialogs.dialog.info)
+                implementation(deps.composedialogs.dialog.progress)
+                implementation(deps.composedialogs.dialog.input)
+                implementation(deps.composedialogs.dialog.number)
+                implementation(deps.composedialogs.dialog.list)
+                implementation(deps.composedialogs.dialog.menu)
+
+                // Compose Preferences
+                implementation(deps.composepreferences.core)
+                implementation(deps.composepreferences.screen.bool)
+                implementation(deps.composepreferences.screen.button)
+                implementation(deps.composepreferences.screen.input)
+                implementation(deps.composepreferences.screen.color)
+                implementation(deps.composepreferences.screen.date)
+                implementation(deps.composepreferences.screen.time)
+                implementation(deps.composepreferences.screen.list)
+                implementation(deps.composepreferences.screen.number)
+                implementation(deps.composepreferences.kotpreferences)
+
+            } else {
+
+                // KotPreferences
+                implementation(project(":kotpreferences:core"))
+                implementation(project(":kotpreferences:modules:compose"))
+
+                // Compose Dialogs
+                implementation(project(":composedialogs:core"))
+                implementation(project(":composedialogs:modules:color"))
+                implementation(project(":composedialogs:modules:date"))
+                implementation(project(":composedialogs:modules:time"))
+                implementation(project(":composedialogs:modules:info"))
+                implementation(project(":composedialogs:modules:progress"))
+                implementation(project(":composedialogs:modules:input"))
+                implementation(project(":composedialogs:modules:number"))
+                implementation(project(":composedialogs:modules:list"))
+                implementation(project(":composedialogs:modules:menu"))
+
+                // Compose Preferences
+                implementation(project(":composepreferences:core"))
+                implementation(project(":composepreferences:modules:screen:bool"))
+                implementation(project(":composepreferences:modules:screen:button"))
+                implementation(project(":composepreferences:modules:screen:input"))
+                implementation(project(":composepreferences:modules:screen:color"))
+                implementation(project(":composepreferences:modules:screen:date"))
+                implementation(project(":composepreferences:modules:screen:time"))
+                implementation(project(":composepreferences:modules:screen:list"))
+                implementation(project(":composepreferences:modules:screen:number"))
+                implementation(project(":composepreferences:modules:kotpreferences"))
+
+            }
+
+
         }
 
         featureFileSupportMain.dependencies {
-            implementation(live = deps.kotpreferences.storage.datastore, project = ":kotpreferences:modules:storage:datastore", plugin = buildFilePlugin)
+
+            if (buildFilePlugin.useLiveDependencies()) {
+                implementation(deps.kotpreferences.storage.datastore)
+            } else {
+                implementation(project(":kotpreferences:modules:storage:datastore"))
+            }
+
         }
         featureNoFileSupportMain.dependencies {
-            implementation(deps.kotpreferences.storage.keyvalue, project = ":kotpreferences:modules:storage:keyvalue", plugin = buildFilePlugin)
+            if (buildFilePlugin.useLiveDependencies()) {
+                implementation(deps.kotpreferences.storage.keyvalue)
+            } else {
+                implementation(project(":kotpreferences:modules:storage:keyvalue"))
+            }
         }
 
         jvmMain.dependencies {

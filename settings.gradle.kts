@@ -45,7 +45,7 @@ pluginManagement {
 plugins {
     // version catalogue does not work here!
     // alias(deps.plugins.kmp.gradle.tools.settings.gradle.plugin)
-    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "1.9.1" //apply false
+    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "1.9.2" //apply false
 }
 
 settingsFilePlugin {
@@ -74,6 +74,7 @@ includeModule("library\\modules\\zip",              ":toolbox:modules:zip")
 includeModule("library\\modules\\backup",           ":toolbox:modules:backup")
 includeModule("library\\modules\\service",          ":toolbox:modules:service")
 includeModule("library\\modules\\csv",              ":toolbox:modules:csv")
+includeModule("library\\modules\\room",             ":toolbox:modules:room")
 
 includeModule("library\\app",                       ":toolbox:app")
 

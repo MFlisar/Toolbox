@@ -6,7 +6,6 @@ import com.michaelflisar.kmplibrary.Targets
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
     alias(deps.plugins.kmplibrary.buildplugin)
@@ -19,7 +18,7 @@ val buildFilePlugin = project.plugins.getPlugin(BuildFilePlugin::class.java)
 // Informations
 // -------------------
 
-val androidNamespace = "com.michaelflisar.toolbox.zip"
+val androidNamespace = "com.michaelflisar.toolbox.room"
 
 val buildTargets = Targets(
     // mobile
@@ -27,14 +26,18 @@ val buildTargets = Targets(
     iOS = true,
     // desktop
     windows = true,
-    macOS = false, // because of compose unstyled dialogs
+    macOS = false,
     // web
-    wasm = true
+    wasm = false
 )
 
 // -------------------
 // Setup
 // -------------------
+
+dependencies {
+    coreLibraryDesugaring(libs.desugar)
+}
 
 kotlin {
 
@@ -70,17 +73,13 @@ kotlin {
 
         commonMain.dependencies {
 
-            implementation(kotlinx.coroutines.core)
-            api(kotlinx.io.core)
-            implementation(kotlinx.serialization.core)
+            // room
+            //implementation(androidx.room)
+            implementation(androidx.room.runtime)
+            //ksp(androidx.room.compiler)
 
-            implementation(project(":toolbox:core"))
-
-            if (buildFilePlugin.useLiveDependencies()) {
-                api(deps.lumberjack.core)
-            } else {
-                api(project( ":lumberjack:core"))
-            }
+            // Library
+            api(project(":toolbox:core"))
 
         }
     }
@@ -92,6 +91,11 @@ kotlin {
 
 // android configuration
 android {
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     buildFilePlugin.setupAndroidLibrary(
         androidNamespace = androidNamespace,
         compileSdk = app.versions.compileSdk,
@@ -103,7 +107,6 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
-
 
 
 

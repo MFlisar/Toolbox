@@ -2,8 +2,6 @@ import com.michaelflisar.kmplibrary.BuildFilePlugin
 import com.michaelflisar.kmplibrary.setupDependencies
 import com.michaelflisar.kmplibrary.Target
 import com.michaelflisar.kmplibrary.Targets
-import com.michaelflisar.kmplibrary.api
-import com.michaelflisar.kmplibrary.implementation
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -101,30 +99,45 @@ kotlin {
             implementation(libs.compose.material.icons.core)
             implementation(libs.compose.material.icons.extended)
 
-            // mflisar
-            api(live = deps.lumberjack.core, project = ":lumberjack:core", plugin = buildFilePlugin)
-            implementation(live = deps.composechangelog.core, project = ":composechangelog:core", plugin = buildFilePlugin)
+            if (buildFilePlugin.useLiveDependencies()) {
+                api(deps.lumberjack.core)
+                implementation(deps.composechangelog.core)
+            } else {
+                api(project( ":lumberjack:core"))
+                implementation(project(":composechangelog:core"))
+            }
 
         }
 
         androidMain.dependencies {
 
             implementation(androidx.core)
+            implementation(androidx.activity.compose)
+
             api(deps.processphoenix)
             implementation(deps.acra.core)
             implementation(deps.acra.mail)
             implementation(deps.acra.dialog)
 
-            // mflisar
-            implementation(live = deps.feedback, project = ":feedbackmanager", plugin = buildFilePlugin)
-            implementation(live = deps.lumberjack.extension.feedback, project = ":lumberjack:extensions:feedback", plugin = buildFilePlugin)
-            implementation(live = deps.lumberjack.extension.notification, project = ":lumberjack:extensions:notification", plugin = buildFilePlugin)
+            if (buildFilePlugin.useLiveDependencies()) {
+                implementation(deps.feedback)
+                implementation(deps.lumberjack.extension.feedback)
+                implementation(deps.lumberjack.extension.notification)
+            } else {
+                implementation(project(":feedbackmanager"))
+                implementation(project(":lumberjack:extensions:feedback"))
+                implementation(project(":lumberjack:extensions:notification"))
+            }
+
         }
 
         featureFileSupportMain.dependencies {
 
-            // mflisar
-            implementation(live = deps.lumberjack.logger.file, project = ":lumberjack:loggers:lumberjack:file", plugin = buildFilePlugin)
+            if (buildFilePlugin.useLiveDependencies()) {
+                implementation(deps.lumberjack.logger.file )
+            } else {
+                implementation(project(":lumberjack:loggers:lumberjack:file"))
+            }
 
         }
     }
@@ -152,6 +165,7 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
+
 
 
 

@@ -2,8 +2,6 @@ import com.michaelflisar.kmplibrary.BuildFilePlugin
 import com.michaelflisar.kmplibrary.setupDependencies
 import com.michaelflisar.kmplibrary.Target
 import com.michaelflisar.kmplibrary.Targets
-import com.michaelflisar.kmplibrary.api
-import com.michaelflisar.kmplibrary.implementation
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -102,10 +100,15 @@ kotlin {
 
             api(deps.kmp.parcelize)
 
-            // mflisar
-            implementation(live = deps.lumberjack.core, project = ":lumberjack:core", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.core, project = ":composedialogs:core", plugin = buildFilePlugin)
-            implementation(live = deps.composedialogs.dialog.info, project = ":composedialogs:modules:info", plugin = buildFilePlugin)
+            if (buildFilePlugin.useLiveDependencies()) {
+                implementation(deps.lumberjack.core)
+                implementation(deps.composedialogs.core)
+                implementation(deps.composedialogs.dialog.info)
+            } else {
+                implementation(project(":lumberjack:core"))
+                implementation(project(":composedialogs:core"))
+                implementation(project(":composedialogs:modules:info"))
+            }
 
             // libraries
             implementation(deps.filekit.dialogs.compose)
@@ -150,6 +153,7 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
+
 
 
 

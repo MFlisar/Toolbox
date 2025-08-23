@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.util.TypedValue
+import androidx.activity.ComponentActivity
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.michaelflisar.lumberjack.core.L
 import kotlin.system.exitProcess
@@ -49,6 +50,9 @@ fun Context.isScreenLandscape(): Boolean {
     return resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 }
 
+/*
+ * same as https://github.com/google/accompanist/blob/a9506584939ed9c79890adaaeb58de01ed0bb823/permissions/src/main/java/com/google/accompanist/permissions/PermissionsUtil.kt#L132
+ */
 fun Context.getActivity(): Activity? {
     var context: Context? = this
     while (context is ContextWrapper) {
@@ -61,14 +65,7 @@ fun Context.getActivity(): Activity? {
 }
 
 fun Context.requireActivity(): Activity {
-    var context: Context? = this
-    while (context is ContextWrapper) {
-        if (context is Activity) {
-            return context
-        }
-        context = context.baseContext
-    }
-    throw RuntimeException("Context is no activity!")
+    return getActivity() ?: throw RuntimeException("Context is no Activity!")
 }
 
 fun Context.startActivitySafely(intent: Intent): Boolean {
@@ -114,14 +111,13 @@ fun CharSequence.to64BitHash(): Long {
     return result
 }
 
-/*
- * same as https://github.com/google/accompanist/blob/a9506584939ed9c79890adaaeb58de01ed0bb823/permissions/src/main/java/com/google/accompanist/permissions/PermissionsUtil.kt#L132
- */
-fun Context.findActivity(): Activity {
-    var context = this
-    while (context is ContextWrapper) {
-        if (context is Activity) return context
-        context = context.baseContext
-    }
-    throw IllegalStateException("Activity not found in this context!")
+fun Context.getComponentActivity(): ComponentActivity? {
+    val activity = getActivity()
+    if (activity == null)
+        return null
+    return activity as? ComponentActivity ?: throw RuntimeException("Activity is no ComponentActivity!")
+}
+
+fun Context.requireComponentActivity(): ComponentActivity {
+    return getComponentActivity() ?: throw RuntimeException("Context is no ComponentActivity!")
 }

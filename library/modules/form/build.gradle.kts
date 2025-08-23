@@ -2,8 +2,6 @@ import com.michaelflisar.kmplibrary.BuildFilePlugin
 import com.michaelflisar.kmplibrary.setupDependencies
 import com.michaelflisar.kmplibrary.Target
 import com.michaelflisar.kmplibrary.Targets
-import com.michaelflisar.kmplibrary.api
-import com.michaelflisar.kmplibrary.implementation
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -79,9 +77,14 @@ kotlin {
             api(project(":toolbox:modules:ui"))
 
             // TODO: dialogs for mac...
-            // mflisar
-            api(live = deps.composedialogs.core, project = ":composedialogs:core", plugin = buildFilePlugin)
-            api(live = deps.composedialogs.dialog.info, project = ":composedialogs:modules:info", plugin = buildFilePlugin)
+            if (buildFilePlugin.useLiveDependencies()) {
+                api(deps.composedialogs.core)
+                api(deps.composedialogs.dialog.info)
+            } else {
+                api(project(":composedialogs:core"))
+                api(project(":composedialogs:modules:info"))
+            }
+
 
         }
     }
@@ -105,6 +108,7 @@ android {
 // maven publish configuration
 if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
     buildFilePlugin.setupMavenPublish()
+
 
 
 

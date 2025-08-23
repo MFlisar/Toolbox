@@ -13,7 +13,7 @@ composepreferences =   		"1.3.0"
 composethemer =   			"1.0.1"
 composecolors =             "1.0.1"
 kmp-parcelize =             "1.0.0"
-kmp-library =               "1.9.1" # attention: the version for the settings plugin must be adjusted manually!
+kmp-library =               "1.9.2" # attention: the version for the settings plugin must be adjusted manually!
 
 # Google
 material =                      "1.12.0"

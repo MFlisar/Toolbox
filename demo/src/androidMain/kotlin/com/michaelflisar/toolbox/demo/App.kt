@@ -2,7 +2,6 @@ package com.michaelflisar.toolbox.demo
 
 import com.michaelflisar.toolbox.app.AndroidApplication
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.classes.AndroidAppSetup
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.features.backup.AndroidBackupSupport
