@@ -19,8 +19,8 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.classes.FileLogger
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.features.toolbar.toolbar
-import com.michaelflisar.toolbox.findActivity
 import com.michaelflisar.toolbox.killApp
+import com.michaelflisar.toolbox.requireActivity
 import com.michaelflisar.toolbox.restartApp
 
 @Composable
@@ -39,10 +39,10 @@ actual val Platform.showToast: ((message: String, duration: Int) -> Unit)?
     get() = ::showToast
 
 actual val Platform.restart: ((context: PlatformContext) -> Unit)?
-    get() = { context -> context.androidContext.findActivity().restartApp() }
+    get() = { context -> context.androidContext.requireActivity().restartApp() }
 
 actual val Platform.kill: ((context: PlatformContext) -> Unit)?
-    get() = { context -> context.androidContext.findActivity().killApp() }
+    get() = { context -> context.androidContext.requireActivity().killApp() }
 
 private fun showToast(
     message: String,

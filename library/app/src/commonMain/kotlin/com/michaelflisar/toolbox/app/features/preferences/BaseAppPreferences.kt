@@ -302,7 +302,7 @@ internal fun SettingsContent(
                                             if (appState.adManager?.privacyOptionsRequired() == true) {
                                                 PreferenceButton(
                                                     onClick = {
-                                                        appState.adManager?.showPrivacyOptionsForm(context.findActivity())
+                                                        appState.adManager?.showPrivacyOptionsForm(context.requireActivity())
                                                     },
                                                     title = stringResource(Res.string.settings_consent_settings),
                                                     subtitle = stringResource(Res.string.settings_gdpr_consent_show_dialog),
