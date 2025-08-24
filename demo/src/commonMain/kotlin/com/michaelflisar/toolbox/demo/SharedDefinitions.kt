@@ -30,6 +30,7 @@ import com.michaelflisar.toolbox.demo.pages.PageHomeScreen
 import com.michaelflisar.toolbox.demo.pages.PageSettingsScreen
 import com.michaelflisar.toolbox.demo.pages.PageStatesScreen
 import com.michaelflisar.toolbox.demo.pages.PageTestsRootScreenContainer
+import com.michaelflisar.toolbox.demo.pages.tests.PageTestExpandableHeader
 import com.michaelflisar.toolbox.demo.resources.Res
 import com.michaelflisar.toolbox.demo.resources.app_name
 import com.michaelflisar.toolbox.demo.resources.mflisar
@@ -98,7 +99,7 @@ object SharedDefinitions : INavigationDefinition {
     val defaultPage = PageHomeScreen
 
     override val pagesMain: List<INavScreen> =
-        listOf(PageHomeScreen, PageStatesScreen, PageTestsRootScreenContainer)
+        listOf(PageHomeScreen, PageStatesScreen, PageTestsRootScreenContainer, PageTestExpandableHeader)
     override val pageSetting: INavScreen = PageSettingsScreen
 
     // -------------------------

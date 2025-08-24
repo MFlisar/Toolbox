@@ -4,7 +4,6 @@ import android.os.Build
 import androidx.compose.ui.Modifier
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
-import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -24,7 +23,7 @@ actual object Platform {
     }
 
     actual val sendFeedback: ((appendLogFiles: Boolean, fileLoggerSetup: IFileLoggingSetup) -> Unit)? = { appendLogFiles, fileLoggerSetup ->
-        L.sendFeedback(fileLoggerSetup as FileLoggerSetup, appendLogFile = appendLogFiles)
+        L.sendFeedback(fileLoggerSetup, appendLogFile = appendLogFiles)
     }
 
     actual fun Modifier.cursor() : Modifier {

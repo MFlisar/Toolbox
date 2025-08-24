@@ -42,10 +42,6 @@ compose.resources {
     packageOfResClass = "$androidNamespace.resources"
 }
 
-dependencies {
-    coreLibraryDesugaring(libs.desugar)
-}
-
 kotlin {
 
     compilerOptions {
@@ -137,11 +133,6 @@ kotlin {
 
 // android configuration
 android {
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
-
     buildFilePlugin.setupAndroidLibrary(
         androidNamespace = androidNamespace,
         compileSdk = app.versions.compileSdk,

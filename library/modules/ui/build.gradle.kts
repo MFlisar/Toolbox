@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.compose)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
     alias(deps.plugins.kmplibrary.buildplugin)
@@ -78,6 +79,8 @@ kotlin {
 
             // Library
             api(project(":toolbox:core"))
+
+            implementation(deps.kmp.parcelize)
 
         }
 

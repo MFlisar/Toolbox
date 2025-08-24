@@ -130,16 +130,6 @@ kotlin {
             }
 
         }
-
-        featureFileSupportMain.dependencies {
-
-            if (buildFilePlugin.useLiveDependencies()) {
-                implementation(deps.lumberjack.logger.file )
-            } else {
-                implementation(project(":lumberjack:loggers:lumberjack:file"))
-            }
-
-        }
     }
 }
 
@@ -149,10 +139,6 @@ kotlin {
 
 // android configuration
 android {
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 
     buildFilePlugin.setupAndroidLibrary(
         androidNamespace = androidNamespace,

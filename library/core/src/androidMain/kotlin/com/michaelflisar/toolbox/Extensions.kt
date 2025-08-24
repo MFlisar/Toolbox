@@ -2,11 +2,12 @@ package com.michaelflisar.toolbox
 
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.getLatestLogFile
+import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.lumberjack.extensions.feedback.sendFeedback
-import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import com.michaelflisar.toolbox.utils.AcraUtil
 import java.io.File
 
@@ -23,7 +24,7 @@ fun <T> MutableList<T>.removeFirstSave(): T {
 }
 
 fun L.sendFeedback(
-    fileLoggingSetup: FileLoggerSetup,
+    fileLoggingSetup: IFileLoggingSetup,
     files: List<File> = emptyList(),
     appendLogFile: Boolean = true,
 ) {
@@ -38,14 +39,14 @@ fun L.sendFeedback(
 
 
 @Composable
-fun Int?.toIconComposable(): IconComposable? {
+fun Int?.toIconComposable(tint: Color = Color.Unspecified): IconComposable? {
     return this?.let {
-        @Composable { contentDescription, modifier, tint ->
+        @Composable { contentDescription, modifier, tint2 ->
             Icon(
                 painterResource(this),
                 contentDescription = contentDescription,
                 modifier = modifier,
-                tint = tint
+                tint = tint.takeIf { it != Color.Unspecified } ?: tint2
             )
         }
     }
