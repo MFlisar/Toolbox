@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.app.features.appstate
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -51,7 +52,8 @@ class AppState internal constructor(
         actionLabel: String? = null,
         cancelAllPending: Boolean = true,
         duration: SnackbarDuration = SnackbarDuration.Short,
-        scope: CoroutineScope = this.scope
+        scope: CoroutineScope = this.scope,
+        onResult: (SnackbarResult) -> Unit = {}
     ) {
         if (cancelAllPending) {
             pending.forEach { it.cancel() }
@@ -59,7 +61,8 @@ class AppState internal constructor(
             snackbarHostState.currentSnackbarData?.dismiss()
         }
         pending += scope.launch(Dispatchers.Main) {
-            snackbarHostState.showSnackbar(info, actionLabel, duration = duration)
+            val result = snackbarHostState.showSnackbar(info, actionLabel, duration = duration)
+            onResult(result)
         }
     }
 
