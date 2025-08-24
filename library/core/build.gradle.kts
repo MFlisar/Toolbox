@@ -112,7 +112,7 @@ kotlin {
         androidMain.dependencies {
 
             implementation(androidx.core)
-            implementation(androidx.activity.compose)
+            api(androidx.activity.compose)
 
             api(deps.processphoenix)
             implementation(deps.acra.core)
