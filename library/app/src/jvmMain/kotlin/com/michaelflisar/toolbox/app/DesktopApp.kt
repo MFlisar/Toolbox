@@ -17,12 +17,14 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberJewelAppState
+import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeTransition
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
@@ -149,12 +151,8 @@ fun DesktopApp(
     navigationItems: @Composable () -> List<INavItem>,
     menuItems: @Composable () -> List<MenuItem>,
     // customisation
-    titlebar: @Composable DecoratedWindowScope.() -> Unit = {
-        DesktopAppDefaults.TitleBar(this,desktopSetup.prefs,  menuItems())
-    },
-    statusbar: @Composable () -> Unit = {
-        DesktopAppDefaults.StatusBar()
-    },
+    titlebar: @Composable DecoratedWindowScope.() -> Unit = { DesktopAppDefaults.TitleBar(this,desktopSetup.prefs,  menuItems()) },
+    statusbar: @Composable () -> Unit = { DesktopAppDefaults.StatusBar() }
 ) {
     // 1) init desktop app
     DesktopApp.init(

@@ -3,11 +3,12 @@ package com.michaelflisar.toolbox.app
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import com.michaelflisar.composechangelog.Changelog
+import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.themes.DefaultThemes
-import com.michaelflisar.toolbox.app.classes.FileLogger
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.backup.IBackupSupport
+import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.proversion.BaseAppProVersionManager
 
@@ -21,7 +22,7 @@ class AppSetup(
     val prefs: BasePrefs,
     val debugPrefs: DebugPrefs,
     val proVersionManager: BaseAppProVersionManager,
-    val supportDebugDrawer: Boolean,
+    val debugDrawer: (@Composable (drawerState: DebugDrawerState) -> Unit)?,
     val supportsChangelog: Boolean,
     val privacyPolicyLink: String,
     val supportLanguagePicker: Boolean,

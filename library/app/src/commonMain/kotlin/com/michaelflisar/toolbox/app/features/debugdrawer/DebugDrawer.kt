@@ -76,7 +76,7 @@ internal expect fun DebugDrawerDeviceInfos(drawerState: DebugDrawerState)
 @Composable
 fun DebugDrawer(
     drawerState: DebugDrawerState,
-    customContent: @Composable (drawerState: DebugDrawerState) -> Unit = {}
+    customContent: @Composable () -> Unit = {}
 ) {
     val setup = CommonApp.setup
     val scope = rememberCoroutineScope()
@@ -216,7 +216,7 @@ fun DebugDrawer(
     }
 
     // Custom
-    customContent(drawerState)
+    customContent()
 
     // Logging
     val fileLogger = setup.fileLogger

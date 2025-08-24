@@ -16,8 +16,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import cafe.adriel.voyager.core.screen.Screen
+import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
+import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeTransition
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
@@ -62,9 +64,7 @@ fun ComponentActivity.AndroidApp(
     navigationItems: @Composable () -> List<INavItem>,
     menuItems: @Composable () -> List<MenuItem>,
     // customisation
-    toolbar: @Composable () -> Unit = {
-        AndroidAppDefaults.Toolbar(menuItems)
-    },
+    toolbar: @Composable () -> Unit = { AndroidAppDefaults.Toolbar(menuItems) }
 ) {
     FileKit.init(this)
     setContent {

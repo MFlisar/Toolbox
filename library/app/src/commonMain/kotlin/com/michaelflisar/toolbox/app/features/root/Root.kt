@@ -30,7 +30,6 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
-import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
 import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.preferences.Preferences
@@ -54,7 +53,6 @@ fun Root(
     setRootLocals: Boolean,
     activity: Any? = null,
     dialogs: @Composable () -> Unit = {},
-    debugDrawer: @Composable (drawerState: DebugDrawerState) -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     val setup = CommonApp.setup
@@ -75,10 +73,10 @@ fun Root(
                     .onSizeChanged { appState.size.value = it },
             ) {
                 DebugDrawer(
-                    enabled = setup.supportDebugDrawer && showDebugDrawer,
+                    enabled = setup.debugDrawer != null && showDebugDrawer,
                     drawerState = drawerState,
                     drawerContent = {
-                        DebugDrawer(drawerState, debugDrawer)
+                        setup.debugDrawer?.invoke(drawerState)
                     },
                     content = {
                         content()

@@ -2,10 +2,16 @@ package com.michaelflisar.toolbox.demo
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Shop
+import androidx.compose.material.icons.filled.Work
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import com.michaelflisar.composechangelog.ChangelogDefaults
+import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
+import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerButton
+import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerRegion
 import com.michaelflisar.composethemer.FlatUIThemes
 import com.michaelflisar.composethemer.Material500Themes
 import com.michaelflisar.composethemer.MetroThemes
@@ -18,8 +24,10 @@ import com.michaelflisar.toolbox.app.Constants
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.actions.ActionItem
+import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.backup.IBackupSupport
+import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
 import com.michaelflisar.toolbox.app.features.navigation.INavigationDefinition
 import com.michaelflisar.toolbox.app.features.navigation.screen.INavScreen
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
@@ -80,7 +88,20 @@ object SharedDefinitions : INavigationDefinition {
         debugPrefs = DebugPrefs(debugStorage),
         proVersionManager = proVersionManager,
         supportsChangelog = true,
-        supportDebugDrawer = true,
+        debugDrawer = { state ->
+            DebugDrawer(state) {
+                val appState = LocalAppState.current
+                DebugDrawerRegion(
+                    image = { Icon(Icons.Default.Info, null) },
+                    label = "Import Worker",
+                    drawerState = state
+                ) {
+                    DebugDrawerButton(label = "Test") {
+                        appState.showToast("Test clicked")
+                    }
+                }
+            }
+        },
         privacyPolicyLink = "https://mflisar.github.io/android/flash-launcher/privacy-policy/",
         supportLanguagePicker = true,
         fileLogger = Platform.fileLogger,

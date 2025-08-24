@@ -24,6 +24,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.composedialogs.core.DialogButton
 import com.michaelflisar.composedialogs.core.DialogButtonType
 import com.michaelflisar.composedialogs.core.DialogDefaults
@@ -363,7 +364,7 @@ internal fun SettingsContent(
                         icon = { Icon(Icons.Default.Description, contentDescription = null) }
                     )
 
-                    if (setup.supportDebugDrawer) {
+                    if (setup.debugDrawer != null) {
                         PreferenceBool(
                             value = debugPrefs.showDebugDrawer.asMutableStateNotNull(),
                             style = PreferenceBool.Style.Checkbox,

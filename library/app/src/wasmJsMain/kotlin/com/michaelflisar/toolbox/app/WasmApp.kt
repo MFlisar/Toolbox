@@ -11,9 +11,11 @@ import androidx.compose.ui.window.CanvasBasedWindow
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.app.classes.WasmAppSetup
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
+import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeTransition
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
@@ -56,6 +58,19 @@ object WasmAppDefaults {
     }
 }
 
+/**
+ * The main entry point for the wasm application.
+ * This function initializes the wasm app with the provided setup.
+ *
+ * Layout: TitleBar + Navigation in title bar + Content
+ *
+ * @param setup The general app setup.
+ * @param wasmSetup The specific desktop app setup.
+ * @param screen The initial screen to display.
+ * @param navigationItems A composable function that provides the list of navigation items.
+ * @param menuItems A composable function that provides the list of menu items.
+ * @param toolbar A composable function that defines the toolbar layout. Defaults to [WasmAppDefaults.Toolbar].
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 fun WasmApp(
     setup: AppSetup,
@@ -64,9 +79,7 @@ fun WasmApp(
     navigationItems: @Composable () -> List<INavItem>,
     menuItems: @Composable () -> List<MenuItem>,
     // customisation
-    toolbar: @Composable () -> Unit = {
-        WasmAppDefaults.Toolbar(navigationItems, menuItems)
-    },
+    toolbar: @Composable () -> Unit = { WasmAppDefaults.Toolbar(navigationItems, menuItems) }
 ) {
     // 1) init wasm app
     CommonApp.init(setup)

@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.app.classes
+package com.michaelflisar.toolbox.app.features.logging
 
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.lumberjack.implementation.interfaces.ILumberjackLogger
