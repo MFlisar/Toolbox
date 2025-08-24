@@ -93,7 +93,7 @@ object SharedDefinitions : INavigationDefinition {
                 val appState = LocalAppState.current
                 DebugDrawerRegion(
                     image = { Icon(Icons.Default.Info, null) },
-                    label = "Import Worker",
+                    label = "Test",
                     drawerState = state
                 ) {
                     DebugDrawerButton(label = "Test") {
