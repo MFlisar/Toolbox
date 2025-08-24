@@ -192,7 +192,7 @@ internal fun SettingsContent(
             // Region 3.1 - Informations
             // --------------------
 
-            if (setup.supportsChangelog) {
+            if (setup.changelogSetup != null) {
                 PreferenceButton(
                     onClick = {
                         changelogState.show()

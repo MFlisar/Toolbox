@@ -87,7 +87,6 @@ object SharedDefinitions : INavigationDefinition {
         prefs = prefs,
         debugPrefs = DebugPrefs(debugStorage),
         proVersionManager = proVersionManager,
-        supportsChangelog = true,
         debugDrawer = { state ->
             DebugDrawer(state) {
                 val appState = LocalAppState.current
