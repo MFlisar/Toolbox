@@ -54,7 +54,7 @@ object MyDropdownDefaults {
             MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize * .8f)
         val style2 =
             MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize)
-        Row(modifier = modifier) {
+        MyRow(modifier = modifier) {
             leadingContent()
             Column(modifier = Modifier.weight(1f)) {
                 if (title.isNotEmpty()) {
