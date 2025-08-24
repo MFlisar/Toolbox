@@ -24,7 +24,7 @@ object NavigationUtil {
     fun getRailNavigationItems(
         definition: INavigationDefinition,
         regionLabelMainPages: String?,
-        regionLabelMainActions: String?
+        regionLabelMainActions: String?,
     ): List<INavItem> {
 
         val itemsCustomAction = definition.actionCustom().map { it.toNavItem() }
@@ -63,7 +63,7 @@ object NavigationUtil {
     @Composable
     fun getMobileMenuItems(
         definition: INavigationDefinition,
-        groupedInMoreItem: Boolean
+        groupedInMoreItem: Boolean,
     ): List<MenuItem> {
 
         val setup = CommonApp.setup
@@ -73,10 +73,15 @@ object NavigationUtil {
         val itemsProVersion = if (proVersion == ProState.Yes) {
             emptyList()
         } else {
-            listOf(
-                definition.actionProVersion().toMenuItem(),
-                MenuItem.Separator()
-            )
+            val action = setup.proVersionManager.actionProVersion()?.toMenuItem()
+            if (action == null) {
+                emptyList()
+            } else {
+                listOf(
+                    action,
+                    MenuItem.Separator()
+                )
+            }
         }
 
         // 2) custom actions
@@ -163,7 +168,7 @@ object NavigationUtil {
         val itemsProVersion = if (proVersion == ProState.Yes) {
             emptyList()
         } else {
-            listOf(definition.actionProVersion().toMenuItem())
+            listOfNotNull(setup.proVersionManager.actionProVersion()?.toMenuItem())
         }
 
         // 2) custom actions
@@ -195,7 +200,7 @@ object NavigationUtil {
      */
     @Composable
     fun getWebMenuItems(
-        definition: INavigationDefinition
+        definition: INavigationDefinition,
     ): List<MenuItem> {
 
         val setup = CommonApp.setup
@@ -205,7 +210,7 @@ object NavigationUtil {
         val itemsProVersion = if (proVersion == ProState.Yes) {
             null
         } else {
-            definition.actionProVersion().toMenuItem()
+            setup.proVersionManager.actionProVersion()?.toMenuItem()
         }
 
         // 2) custom actions

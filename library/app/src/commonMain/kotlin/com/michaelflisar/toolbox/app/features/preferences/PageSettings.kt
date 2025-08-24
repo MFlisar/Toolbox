@@ -18,14 +18,11 @@ import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composepreferences.core.classes.PreferenceState
 import com.michaelflisar.composepreferences.core.classes.rememberPreferenceState
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
-import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.parcelize.IgnoredOnParcel
-import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreenBackPressHandler
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.app.features.preferences.BaseAppPreferences
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_settings
@@ -33,7 +30,7 @@ import com.michaelflisar.toolbox.extensions.toIconComposable
 import org.jetbrains.compose.resources.stringResource
 import kotlin.jvm.Transient
 
-abstract class PageSettings: NavScreen() {
+abstract class PageSettings : NavScreen() {
 
     @Transient
     @IgnoredOnParcel
@@ -47,9 +44,7 @@ abstract class PageSettings: NavScreen() {
     )
 
     @Composable
-    override fun provideMenu(): List<MenuItem> {
-        return emptyList()
-    }
+    override fun provideMenu(): List<MenuItem> = emptyList()
 
     @Composable
     override fun Screen() {

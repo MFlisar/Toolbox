@@ -128,18 +128,6 @@ object SharedDefinitions : INavigationDefinition {
     // -------------------------
 
     @Composable
-    override fun actionProVersion(): ActionItem.Action {
-        val appState = LocalAppState.current
-        return ActionItem.Action(
-            title = "Pro Version",
-            icon = Icons.Default.Shop.toIconComposable(),
-            action = {
-                appState.showSnackbar("Pro Version clicked")
-            }
-        )
-    }
-
-    @Composable
     override fun actionCustom(): List<ActionItem.Action> = listOf(
         actionTest()
     )

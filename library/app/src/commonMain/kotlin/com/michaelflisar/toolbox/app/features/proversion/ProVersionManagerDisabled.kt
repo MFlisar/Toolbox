@@ -1,5 +1,7 @@
 package com.michaelflisar.toolbox.app.features.proversion
 
+import androidx.compose.runtime.Composable
+import com.michaelflisar.toolbox.app.features.actions.ActionItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -14,4 +16,7 @@ object ProVersionManagerDisabled : BaseAppProVersionManager {
     override suspend fun checkProVersion(): ProState {
         return ProState.Yes
     }
+
+    @Composable
+    override fun actionProVersion(): ActionItem.Action? = null
 }

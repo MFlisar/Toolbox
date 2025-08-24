@@ -14,9 +14,6 @@ interface INavigationDefinition {
     // -------------------------
 
     @Composable
-    fun actionProVersion(): ActionItem.Action
-
-    @Composable
     fun actionCustom(): List<ActionItem.Action>
 
 }
