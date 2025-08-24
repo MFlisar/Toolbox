@@ -14,6 +14,7 @@ import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.app.features.device.BaseDevice
 import com.michaelflisar.toolbox.app.features.device.CurrentDevice
+import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.toolbar.DesktopToolbar
 
@@ -70,6 +71,9 @@ abstract class NavScreen : INavScreen {
 
     @Composable
     abstract fun Screen()
+
+    @Composable
+    override fun provideMenu(): List<MenuItem> = emptyList()
 
 }
 

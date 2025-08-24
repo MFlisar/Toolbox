@@ -46,8 +46,9 @@ abstract class NavScreenContainer(
         AppNavigator(
             screen = rootScreen,
             onBackPressed = {
-                L.i { "onBackPressed called in NavScreenContainer Navigator" }
-                false
+                val canHandle =  navigator.value?.canPop != true
+                L.i { "onBackPressed called in NavScreenContainer Navigator: canHandle = $canHandle" }
+                canHandle
             }
         ) { navigator ->
             DisposableEffect(navigator) {

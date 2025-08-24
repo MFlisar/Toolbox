@@ -7,7 +7,7 @@ import com.michaelflisar.parcelize.Parcelable
 import com.michaelflisar.toolbox.app.features.actions.ActionItem
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 
-sealed interface INavScreen : Screen, Parcelable {
+interface INavScreen : Screen, Parcelable {
 
     @Composable
     fun provideData(): State<NavScreenData>

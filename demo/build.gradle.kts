@@ -251,6 +251,10 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     buildFilePlugin.setupAndroidApp(
         androidNamespace = androidNamespace,
         compileSdk = app.versions.compileSdk,
