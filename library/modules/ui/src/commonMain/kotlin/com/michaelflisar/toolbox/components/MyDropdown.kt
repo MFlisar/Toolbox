@@ -4,7 +4,13 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -13,41 +19,89 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.surfaceColorAtElevation
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.michaelflisar.toolbox.classes.LocalStyle
-import com.michaelflisar.toolbox.extensions.disabled
+
+object MyDropdownDefaults {
+
+    @Composable
+    fun Content(
+        modifier: Modifier,
+        title: String,
+        text: String,
+        labelColor: Color,
+        color: Color,
+        leadingContent: @Composable () -> Unit = {}
+    ) {
+        val style1 =
+            MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize * .8f)
+        val style2 =
+            MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize)
+        Row(modifier = modifier) {
+            leadingContent()
+            Column(modifier = Modifier.weight(1f)) {
+                if (title.isNotEmpty()) {
+                    Text(
+                        text = title,
+                        style = style1,
+                        fontWeight = FontWeight.Bold,
+                        color = labelColor
+                    )
+                    //Spacer(modifier = Modifier.height(4.dp))
+                }
+                Text(
+                    text = text,
+                    style = style2,
+                    color = color
+                )
+            }
+        }
+
+    }
+
+    @Composable
+    fun DropdownContent(text: String, selected: Boolean) {
+        Text(
+            text = text,
+            color = if (selected) MaterialTheme.colorScheme.primary else Color.Unspecified,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
 
 object MyDropdown {
     class Filter<T>(
         val label: String,
-        val filter: (filter: String, item: T & Any) -> Boolean
+        val filter: (filter: String, item: T & Any) -> Boolean,
     )
 
     internal class DropdownFilter<T>(
         val label: String,
-        val filter: (filter: String, item: Item<T>) -> Boolean
+        val filter: (filter: String, item: Item<T>) -> Boolean,
     )
 
     internal class Item<T>(
         val item: T & Any,
         val index: Int,
         val text: String,
-        val textDropdown: String
+        val textDropdown: String,
     )
 }
 
@@ -62,12 +116,25 @@ fun <T> MyDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<T>? = null,
-    onSelectionChanged: ((T & Any) -> Unit)? = null
+    content: @Composable (modifier: Modifier, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, title, text, titleColor, textColor ->
+        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
+    },
+    dropdownContent: @Composable (text: String, selected: Boolean) -> Unit = { text, selected ->
+        MyDropdownDefaults.DropdownContent(text, selected)
+    },
+    onSelectionChanged: ((T & Any) -> Unit)? = null,
 ) {
     val selectedIndex = items.indexOf(selected.value)
     val dropdownItems by remember(items) {
         derivedStateOf {
-            items.mapIndexed { index, item -> MyDropdown.Item(mapper(item, false), index, mapper(item, false), mapper(item, true)) }
+            items.mapIndexed { index, item ->
+                MyDropdown.Item(
+                    mapper(item, false),
+                    index,
+                    mapper(item, false),
+                    mapper(item, true)
+                )
+            }
         }
     }
     val dropdownFilter by remember(items, filter) {
@@ -87,7 +154,9 @@ fun <T> MyDropdown(
         enabled,
         color,
         backgroundColor,
-        dropdownFilter
+        dropdownFilter,
+        content,
+        dropdownContent
     ) { item ->
         val s = items[item.index]
         selected.value = s
@@ -106,12 +175,25 @@ fun <T> MyDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<T>? = null,
-    onSelectionChanged: ((T & Any) -> Unit)? = null
+    content: @Composable (modifier: Modifier, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, title, text, titleColor, textColor ->
+        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
+    },
+    dropdownContent: @Composable (text: String, selected: Boolean) -> Unit = { text, selected ->
+        MyDropdownDefaults.DropdownContent(text, selected)
+    },
+    onSelectionChanged: ((T & Any) -> Unit)? = null,
 ) {
     val selectedIndex = items.indexOf(selected)
     val dropdownItems by remember(items) {
         derivedStateOf {
-            items.mapIndexed { index, item -> MyDropdown.Item(mapper(item, false), index, mapper(item, false), mapper(item, true)) }
+            items.mapIndexed { index, item ->
+                MyDropdown.Item(
+                    mapper(item, false),
+                    index,
+                    mapper(item, false),
+                    mapper(item, true)
+                )
+            }
         }
     }
     val dropdownFilter by remember(items, filter) {
@@ -131,7 +213,9 @@ fun <T> MyDropdown(
         enabled,
         color,
         backgroundColor,
-        dropdownFilter
+        dropdownFilter,
+        content,
+        dropdownContent
     ) { item ->
         onSelectionChanged?.invoke(items[item.index])
     }
@@ -148,7 +232,13 @@ fun MyDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<String>? = null,
-    onSelectionChanged: ((Int) -> Unit)? = null
+    content: @Composable (modifier: Modifier, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, title, text, titleColor, textColor ->
+        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
+    },
+    dropdownContent: @Composable (text: String, selected: Boolean) -> Unit = { text, selected ->
+        MyDropdownDefaults.DropdownContent(text, selected)
+    },
+    onSelectionChanged: ((Int) -> Unit)? = null,
 ) {
     val selectedIndex = selected.value
     val dropdownItems by remember(items) {
@@ -173,7 +263,9 @@ fun MyDropdown(
         enabled,
         color,
         backgroundColor,
-        dropdownFilter
+        dropdownFilter,
+        content,
+        dropdownContent
     ) { item ->
         selected.value = item.index
         onSelectionChanged?.invoke(item.index)
@@ -190,7 +282,13 @@ fun MyDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<String>? = null,
-    onSelectionChanged: ((Int) -> Unit)? = null
+    content: @Composable (modifier: Modifier, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, title, text, titleColor, textColor ->
+        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
+    },
+    dropdownContent: @Composable (text: String, selected: Boolean) -> Unit = { text, selected ->
+        MyDropdownDefaults.DropdownContent(text, selected)
+    },
+    onSelectionChanged: ((Int) -> Unit)? = null,
 ) {
     val dropdownItems by remember(items) {
         derivedStateOf {
@@ -206,7 +304,18 @@ fun MyDropdown(
             }
         }
     }
-    MyDropdownImpl(modifier, title, dropdownItems, selected, enabled, color, backgroundColor, dropdownFilter) { item ->
+    MyDropdownImpl(
+        modifier,
+        title,
+        dropdownItems,
+        selected,
+        enabled,
+        color,
+        backgroundColor,
+        dropdownFilter,
+        content,
+        dropdownContent
+    ) { item ->
         onSelectionChanged?.invoke(item.index)
     }
 }
@@ -221,14 +330,16 @@ private fun <T> MyDropdownImpl(
     color: Color,
     backgroundColor: Color,
     filter: MyDropdown.DropdownFilter<T>?,
-    onSelectionChange: (item: MyDropdown.Item<T>) -> Unit
+    content: @Composable (modifier: Modifier, title: String, text: String, titleColor: Color, textColor: Color) -> Unit,
+    dropdownContent: @Composable (text: String, selected: Boolean) -> Unit,
+    onSelectionChange: (item: MyDropdown.Item<T>) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (expanded) -180f else 0f)
     val borderColor = color.takeIf { it != Color.Unspecified }
         ?: MaterialTheme.colorScheme.outline
     Box(
-        modifier = modifier .clip(MaterialTheme.shapes.small)
+        modifier = modifier.clip(MaterialTheme.shapes.small)
             .border(1.dp, borderColor, MaterialTheme.shapes.small)
             .background(backgroundColor)
             .then(
@@ -262,27 +373,19 @@ private fun <T> MyDropdownImpl(
             }
         }
 
-        val style1 =
-            MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize * .8f)
-        val style2 = MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize)
-
         Row(
             modifier = Modifier.fillMaxWidth()
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Column(modifier = Modifier.weight(1f)) {
-                if (title.isNotEmpty()) {
-                    Text(text = title, style = style1, fontWeight = FontWeight.Bold, color = labelColor)
-                    //Spacer(modifier = Modifier.height(4.dp))
-                }
-                Text(
-                    text = items.find { it.index == selected }?.text ?: "",
-                    style = style2,
-                    color = color
-                )
-            }
+            content(
+                Modifier.weight(1f),
+                title,
+                items.find { it.index == selected }?.text ?: "",
+                labelColor,
+                color
+            )
 
             Icon(
                 modifier = Modifier.rotate(rotation),
@@ -306,7 +409,11 @@ private fun <T> MyDropdownImpl(
                         .zIndex(2f),
                     verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
                 ) {
-                    Text(text = title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold
+                    )
                     OutlinedTextField(
                         value = filterText.value,
                         label = { Text(filter.label) },
@@ -322,11 +429,7 @@ private fun <T> MyDropdownImpl(
                         .fillMaxWidth()
                         .zIndex(1f),
                     text = {
-                        Text(
-                            text = it.textDropdown,
-                            color = if (it.index == selected) MaterialTheme.colorScheme.primary else Color.Unspecified,
-                            modifier = Modifier.fillMaxWidth()
-                        )
+                        dropdownContent(it.textDropdown, it.index == selected)
                     },
                     onClick = {
                         onSelectionChange(it)
