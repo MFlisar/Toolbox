@@ -30,25 +30,20 @@ import com.michaelflisar.toolbox.extensions.Render
 
 abstract class PageScreensList : NavScreen() {
 
-    companion object {
+    sealed class Item {
+        class Icon(
+            val name: String,
+            val icon: IconComposable,
+            val screen: Screen
+        ) : Item()
 
-        sealed class Item {
-            class Icon(
-                val name: String,
-                val icon: IconComposable,
-                val screen: Screen
-            ) : Item()
-
-            class Text(
-                val name: String,
-                val iconText: String = name,
-                val color: Color,
-                val backgroundColor: Color,
-                val screen: Screen
-            ) : Item()
-        }
-
-
+        class Text(
+            val name: String,
+            val iconText: String = name,
+            val color: Color,
+            val backgroundColor: Color,
+            val screen: Screen
+        ) : Item()
     }
 
     abstract val items: List<Item>
@@ -76,7 +71,7 @@ abstract class PageScreensList : NavScreen() {
 
 @Composable
 private fun Page(
-    items: List<PageScreensList.Companion.Item>,
+    items: List<PageScreensList.Item>,
     header: @Composable () -> Unit,
     footer: @Composable () -> Unit,
 ) {
@@ -96,7 +91,7 @@ private fun Page(
         ) {
             items.forEach {
                 when (it) {
-                    is PageScreensList.Companion.Item.Icon -> {
+                    is PageScreensList.Item.Icon -> {
                         FunctionCard(
                             icon = { it.icon.Render(modifier = Modifier.size(48.dp)) },
                             label = it.name,
@@ -104,7 +99,7 @@ private fun Page(
                         )
                     }
 
-                    is PageScreensList.Companion.Item.Text -> {
+                    is PageScreensList.Item.Text -> {
                         FunctionCard(
                             icon = {
                                 TextIcon(
