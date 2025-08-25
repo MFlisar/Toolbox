@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.michaelflisar.toolbox.ToolboxDefaults
+
 import com.michaelflisar.toolbox.classes.LocalStyle
 
 @Composable

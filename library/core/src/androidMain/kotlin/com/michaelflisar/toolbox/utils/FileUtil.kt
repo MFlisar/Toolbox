@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.utils
 
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.Toolbox
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream

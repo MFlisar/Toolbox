@@ -3,7 +3,6 @@ package com.michaelflisar.toolbox.app.features.navigation.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
@@ -12,11 +11,13 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.IconComposable
+import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.features.device.BaseDevice
 import com.michaelflisar.toolbox.app.features.device.CurrentDevice
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.toolbar.DesktopToolbar
+import com.michaelflisar.toolbox.logIf
 
 class NavScreenBackPressHandler(
     val canHandle: @Composable () -> Boolean,
@@ -46,7 +47,8 @@ abstract class NavScreen : INavScreen {
                     NavBackHandler(
                         canGoBack = customBackHandlerPressCanHandleBackPress
                     ) {
-                        L.i { "onBack called in NavScreen - Toolbar | navScreenBackPressHandler = $navScreenBackPressHandler" }
+                        L.logIf(ToolboxLogging.Tag.Navigation)
+                            ?.i { "onBack called in NavScreen - Toolbar | navScreenBackPressHandler = $navScreenBackPressHandler" }
                         navScreenBackPressHandler?.handle()
                     }
                     DesktopToolbar(

@@ -8,6 +8,7 @@ import android.provider.Settings
 import android.text.Spanned
 import androidx.core.text.HtmlCompat
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.Toolbox
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.Locale

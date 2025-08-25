@@ -31,9 +31,9 @@ object NotificationUtil {
                 for (i in channels.indices.reversed()) {
                     notificationManager.deleteNotificationChannel(channels[i].id)
                 }
-                L.v { "Notification channels cleaned" }
+                L.logIf(ToolboxLogging.Tag.None)?.v { "Notification channels cleaned" }
             } catch (e: Exception) {
-                L.d(e)
+                L.e(e)
             }
         }
     }

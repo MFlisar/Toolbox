@@ -18,9 +18,12 @@ import androidx.compose.ui.window.rememberWindowState
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.kotpreferences.core.SettingsConverter
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.Toolbox
+import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.WindowUtil
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
+import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -107,7 +110,7 @@ fun rememberJewelWindowState(
                     prefs.windowState.update(it)
                 } catch (e: AccessDeniedException) {
                     // ignore - comes from androidx datastore...
-                    L.i(e)
+                    L.logIf(ToolboxLogging.Tag.None)?.i(e)
                 }
             }
         }

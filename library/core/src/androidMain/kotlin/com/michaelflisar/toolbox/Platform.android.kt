@@ -1,5 +1,7 @@
 package com.michaelflisar.toolbox
 
+import android.annotation.SuppressLint
+import android.app.LocaleManager
 import android.os.Build
 import androidx.compose.ui.Modifier
 import com.michaelflisar.lumberjack.core.L
@@ -12,7 +14,8 @@ actual object Platform {
     actual val DispatcherIO: CoroutineDispatcher = Dispatchers.IO
 
     actual val openLanguagePicker: (() -> Unit)?
-        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        @SuppressLint("DiscouragedApi")
+        get() = if (IntentUtil.supportsLanguagePicker()) {
             { IntentUtil.openLanguagePicker(AppContext.context()) }
         } else {
             null

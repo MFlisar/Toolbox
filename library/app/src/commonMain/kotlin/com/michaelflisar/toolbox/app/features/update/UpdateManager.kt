@@ -2,9 +2,10 @@ package com.michaelflisar.toolbox.app.features.update
 
 import com.michaelflisar.composedialogs.core.DispatcherIO
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.classes.PlatformContext
+import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -23,20 +24,22 @@ class UpdateManager(
 
         var lastVersion = setup.prefs.lastAppVersion.read()
         val currentVersion = setup.versionCode
-        L.tag("UPDATE").d { "lastVersion = $lastVersion => currentVersion = $currentVersion " }
+        L.logIf(ToolboxLogging.Tag.UpdateMananger)
+            ?.d { "lastVersion = $lastVersion => currentVersion = $currentVersion " }
         if (isFirstRun(lastVersion)) {
-            L.tag("UPDATE").d { "UPDATE SKIPPED - FIRST RUN!" }
+            L.logIf(ToolboxLogging.Tag.UpdateMananger)?.d { "UPDATE SKIPPED - FIRST RUN!" }
             lastVersion = currentVersion.toLong()
             setup.prefs.lastAppVersion.update(lastVersion)
         } else if (lastVersion < currentVersion) {
-            L.tag("UPDATE").d { "UPDATES gestartet..." }
+            L.logIf(ToolboxLogging.Tag.UpdateMananger)?.d { "UPDATES gestartet..." }
             updates
                 .sortedBy { it.version }
                 .forEach { it.execute(context, lastVersion) }
             setup.prefs.lastAppVersion.update(currentVersion.toLong())
-            L.tag("UPDATE").d { "UPDATES fertig" }
+            L.logIf(ToolboxLogging.Tag.UpdateMananger)?.d { "UPDATES fertig" }
         } else {
-            L.tag("UPDATE").d { "UPDATE SKIPPED weil lastVersion bereits up-to-date ist!" }
+            L.logIf(ToolboxLogging.Tag.UpdateMananger)
+                ?.d { "UPDATE SKIPPED weil lastVersion bereits up-to-date ist!" }
         }
 
     }

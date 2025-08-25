@@ -12,11 +12,11 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
+import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
-private const val DEBUG = false
 
 internal object NavBackHandler {
 
@@ -58,23 +58,23 @@ fun NavBackHandler(
     }
 
     LaunchedEffect(enabled) {
-        L.logIf { DEBUG }?.i { "NavBackHandler: enabled = $enabled" }
+        L.logIf(ToolboxLogging.Tag.Navigation)?.i { "NavBackHandler: enabled = $enabled" }
     }
 
     BackHandler(
         enabled = enabled
     ) {
-        L.logIf { DEBUG }?.i { "NavBackHandler called..." }
+        L.logIf(ToolboxLogging.Tag.Navigation)?.i { "NavBackHandler called..." }
         if (navBackHandlerCanHandleBackPress) {
             NavBackHandler.handleBackPress(scope, debugDrawerState)
-            L.logIf { DEBUG }?.i { "NavBackHandler::handleBackPress called..." }
+            L.logIf(ToolboxLogging.Tag.Navigation)?.i { "NavBackHandler::handleBackPress called..." }
         } else {
             if (canGoBack) {
                 onBack()
-                L.logIf { DEBUG }?.i { "NavBackHandler - onBack called..." }
+                L.logIf(ToolboxLogging.Tag.Navigation)?.i { "NavBackHandler - onBack called..." }
             } else {
                 navigator.pop()
-                L.logIf { DEBUG }?.i { "NavBackHandler - navigator.pop()..." }
+                L.logIf(ToolboxLogging.Tag.Navigation)?.i { "NavBackHandler - navigator.pop()..." }
             }
         }
     }

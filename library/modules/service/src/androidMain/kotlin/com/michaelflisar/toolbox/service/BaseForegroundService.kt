@@ -13,6 +13,9 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.NotificationUtil
+import com.michaelflisar.toolbox.Toolbox
+import com.michaelflisar.toolbox.ToolboxLogging
+import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.launch
 
 abstract class BaseForegroundService<Result> : LifecycleService() {
@@ -38,12 +41,12 @@ abstract class BaseForegroundService<Result> : LifecycleService() {
 
     override fun onCreate() {
         super.onCreate()
-        L.logIf { ServiceConstants.DEBUG }?.d { "onCreate" }
+        L.logIf(ToolboxLogging.Tag.Service)?.d { "onCreate" }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        L.logIf { ServiceConstants.DEBUG }?.d { "onStartCommand" }
+        L.logIf(ToolboxLogging.Tag.Service)?.d { "onStartCommand" }
         intent?.let {
             when (it.action) {
                 ServiceConstants.ACTION_START_SERVICE -> {
@@ -62,17 +65,17 @@ abstract class BaseForegroundService<Result> : LifecycleService() {
 
     override fun onBind(intent: Intent): IBinder {
         super.onBind(intent)
-        L.logIf { ServiceConstants.DEBUG }?.d { "onBind" }
+        L.logIf(ToolboxLogging.Tag.Service)?.d { "onBind" }
         return binder
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        L.logIf { ServiceConstants.DEBUG }?.d { "onUnbind" }
+        L.logIf(ToolboxLogging.Tag.Service)?.d { "onUnbind" }
         return super.onUnbind(intent)
     }
 
     override fun onDestroy() {
-        L.logIf { ServiceConstants.DEBUG }?.d { "onDestroy" }
+        L.logIf(ToolboxLogging.Tag.Service)?.d { "onDestroy" }
         super.onDestroy()
     }
 
@@ -122,7 +125,7 @@ abstract class BaseForegroundService<Result> : LifecycleService() {
     }
 
     private fun startForegroundService() {
-        L.logIf { ServiceConstants.DEBUG }?.d { "startForegroundService" }
+        L.logIf(ToolboxLogging.Tag.Service)?.d { "startForegroundService" }
         NotificationUtil.createChannelIfNecessary(
             this,
             setup.channel.name,
@@ -140,16 +143,16 @@ abstract class BaseForegroundService<Result> : LifecycleService() {
     private fun stopForegroundService() {
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        L.logIf { ServiceConstants.DEBUG }?.d { "stopForegroundService" }
+        L.logIf(ToolboxLogging.Tag.Service)?.d { "stopForegroundService" }
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
-        L.logIf { ServiceConstants.DEBUG }?.d { "keep notification: ${setup.keptNotificationId}" }
+        L.logIf(ToolboxLogging.Tag.Service)?.d { "keep notification: ${setup.keptNotificationId}" }
         if (setup.keptNotificationId != null) {
             notificationManager.notify(setup.keptNotificationId!!, builder.build())
         }
     }
 
     private fun stopService() {
-        L.logIf { ServiceConstants.DEBUG }?.d { "stopService" }
+        L.logIf(ToolboxLogging.Tag.Service)?.d { "stopService" }
         stopSelf()
     }
 

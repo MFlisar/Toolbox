@@ -32,6 +32,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.Toolbox
+import com.michaelflisar.toolbox.ToolboxLogging
+import com.michaelflisar.toolbox.logIf
 import kotlin.math.abs
 
 private val cardContentPaddingVertical = 8.dp
@@ -85,11 +88,11 @@ fun SwipeActionContent(
     val positionalThreshold = SwipeToDismissBoxDefaults.positionalThreshold
     val confirmValueChange = { value: SwipeToDismissBoxValue ->
         if (value == directionFromLeft && swipeFromLeft != null) {
-            L.v { "onSwipeFromLeft..." }
+            L.logIf(ToolboxLogging.Tag.None)?.v { "onSwipeFromLeft..." }
             swipeFromLeft.onSwipe()
             false // State wird immer resettet
         } else if (value == directionFromRight && swipeFromRight != null) {
-            L.v { "onSwipeFromRight..." }
+            L.logIf(ToolboxLogging.Tag.None)?.v { "onSwipeFromRight..." }
             swipeFromRight.onSwipe()
             false // State wird immer resettet
         } else false

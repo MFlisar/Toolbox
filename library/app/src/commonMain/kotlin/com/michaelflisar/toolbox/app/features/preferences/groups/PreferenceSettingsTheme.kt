@@ -62,6 +62,25 @@ private fun PreferenceScope.PreferenceSettingsThemeSubScreen() {
         return
     }
 
+    PreferenceSubScreen(
+        title = stringResource(Res.string.settings_theme),
+        icon = { Icon(Icons.Outlined.Style, contentDescription = null) }
+    ) {
+        PreferenceSection(
+            title = stringResource(Res.string.settings_theme)
+        ) {
+            PreferenceSettingsThemeContent(compact = false)
+        }
+    }
+}
+
+@Composable
+fun PreferenceScope.PreferenceSettingsThemeContent(
+    compact: Boolean
+) {
+
+    val setup = CommonApp.setup
+    val themeSupport = setup.themeSupport
     val supportCustomTheme = themeSupport.supportsCustomThemes()
 
     val pickerState = rememberThemePicker(
@@ -71,57 +90,29 @@ private fun PreferenceScope.PreferenceSettingsThemeSubScreen() {
         themeId = setup.prefs.customTheme.asMutableStateNotNull()
     )
 
-    PreferenceSubScreen(
-        title = stringResource(Res.string.settings_theme),
-        icon = { Icon(Icons.Outlined.Style, contentDescription = null) }
-    ) {
-        PreferenceSection(
-            title = stringResource(Res.string.settings_theme)
-        ) {
-            /*
-            PreferenceCustom {
-                    // check out the source code of [DefaultThemePicker] to see how to design your own layout
-                    // I do provide states for easy implementations of your own layouts
-                    // DefaultThemePicker is just an example...
-                DefaultThemePicker(
-                    modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                    baseTheme = pickerState.baseTheme,
-                    contrast = pickerState.contrast,
-                    dynamic = pickerState.dynamic,
-                    theme = pickerState.selectedThemeId,
-                    singleLevelThemePicker = false
-                )
-            }
-*/
+    // 1) Base Theme (dark/light/system)
+    if (themeSupport.supportDarkLight) {
+        PrefDarkLight(showText = !compact)
+    }
 
-            // TODO: am Desktop fehlt LightWithLightHeader!!!
+    // 2) Toolbar Style
+    if (themeSupport.supportToolbarStyles) {
+        PrefToolbarStyle()
+    }
 
-            // 1) Base Theme (dark/light/system)
-            if (themeSupport.supportDarkLight) {
-                PrefDarkLight()
+    // 3) Dynamic Colors
+    if (themeSupport.supportDynamicColors && ComposeTheme.isDynamicColorsSupported) {
+        PrefDynamicTheme(pickerState)
+    }
 
-            }
+    // 4) Contrast
+    if (themeSupport.supportContrast && ComposeTheme.isSystemContrastSupported) {
+        PrefContrast(pickerState, ComposeTheme.isSystemContrastSupported)
+    }
 
-            // 2) Toolbar Style
-            if (themeSupport.supportToolbarStyles) {
-                PrefToolbarStyle()
-            }
-
-            // 3) Dynamic Colors
-            if (themeSupport.supportDynamicColors && ComposeTheme.isDynamicColorsSupported) {
-                PrefDynamicTheme(pickerState)
-            }
-
-            // 4) Contrast
-            if (themeSupport.supportContrast && ComposeTheme.isSystemContrastSupported) {
-                PrefContrast(pickerState, ComposeTheme.isSystemContrastSupported)
-            }
-
-            // 5) Theme
-            if (supportCustomTheme) {
-                val multiLevelState = rememberMultiLevelThemePicker(pickerState)
-                PrefTheme(pickerState, multiLevelState)
-            }
-        }
+    // 5) Theme
+    if (supportCustomTheme) {
+        val multiLevelState = rememberMultiLevelThemePicker(pickerState)
+        PrefTheme(pickerState, multiLevelState)
     }
 }

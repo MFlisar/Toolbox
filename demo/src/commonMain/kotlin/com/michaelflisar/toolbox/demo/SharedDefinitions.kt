@@ -65,6 +65,12 @@ object SharedDefinitions : INavigationDefinition {
         return painterResource(Res.drawable.mflisar)
     }
 
+    /*
+     * Language Picker:
+     *      - res/resources.properties file erstellen
+     *      - androidResources { generateLocaleConfig = true } im build.gradle.kts
+     *      => sonst geht der language picker nicht
+     */
     fun createBaseAppSetup(
         prefs: BasePrefs,
         debugStorage: Storage,
@@ -102,8 +108,8 @@ object SharedDefinitions : INavigationDefinition {
             }
         },
         privacyPolicyLink = "https://mflisar.github.io/android/flash-launcher/privacy-policy/",
-        supportLanguagePicker = true,
         fileLogger = Platform.fileLogger,
+        disableLanguagePicker = false,
         changelogSetup = ChangelogDefaults.setup(
             logFileReader = { Res.readBytes(Constants.CHANGELOG_PATH) },
             versionFormatter = Constants.CHANGELOG_FORMATTER

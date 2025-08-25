@@ -251,6 +251,7 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
+    // res/resources.properties file erstellen!
     androidResources {
         generateLocaleConfig = true
     }

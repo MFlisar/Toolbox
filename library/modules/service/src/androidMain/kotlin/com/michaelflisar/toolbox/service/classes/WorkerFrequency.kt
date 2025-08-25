@@ -2,6 +2,9 @@ package com.michaelflisar.toolbox.service.classes
 
 import androidx.work.PeriodicWorkRequest
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.Toolbox
+import com.michaelflisar.toolbox.ToolboxLogging
+import com.michaelflisar.toolbox.logIf
 import com.michaelflisar.toolbox.utils.TimeUtil
 import java.util.Calendar
 
@@ -79,7 +82,7 @@ sealed class WorkerFrequency {
         val now = Calendar.getInstance()
         val nextAlarm = getNextUpdateTime()
 
-        L.d { "Alarm [frequency = $this | factor = $factor]: ${nextAlarm.time.toLocaleString()} (${now.time.toLocaleString()})" }
+        L.logIf(ToolboxLogging.Tag.None)?.d { "Alarm [frequency = $this | factor = $factor]: ${nextAlarm.time.toLocaleString()} (${now.time.toLocaleString()})" }
 
         var counter = 0
         while (nextAlarm.timeInMillis - now.timeInMillis <= MIN_TIME_IN_FUTURE) {
@@ -91,7 +94,7 @@ sealed class WorkerFrequency {
             }
         }
 
-        L.d { "Alarm wird registriert: ${nextAlarm.time.toLocaleString()}" }
+        L.logIf(ToolboxLogging.Tag.None)?.d { "Alarm wird registriert: ${nextAlarm.time.toLocaleString()}" }
 
         return AlarmData(
             (nextAlarm.timeInMillis - Calendar.getInstance().timeInMillis).coerceAtLeast(0L),

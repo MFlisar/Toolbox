@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -50,10 +51,9 @@ object MyDropdownDefaults {
         color: Color,
         leadingContent: @Composable () -> Unit = {}
     ) {
-        val style1 =
-            MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize * .8f)
-        val style2 =
-            MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize)
+        val style1 = MaterialTheme.typography.titleSmall
+        val style2 = LocalTextStyle.current.merge(fontSize = LocalTextStyle.current.fontSize * .8f)
+
         MyRow(modifier = modifier) {
             leadingContent()
             Column(modifier = Modifier.weight(1f)) {
@@ -64,7 +64,6 @@ object MyDropdownDefaults {
                         fontWeight = FontWeight.Bold,
                         color = labelColor
                     )
-                    //Spacer(modifier = Modifier.height(4.dp))
                 }
                 Text(
                     text = text,
@@ -77,7 +76,11 @@ object MyDropdownDefaults {
     }
 
     @Composable
-    fun DropdownContent(text: String, selected: Boolean,  leadingContent: @Composable () -> Unit = {}) {
+    fun DropdownContent(
+        text: String,
+        selected: Boolean,
+        leadingContent: @Composable () -> Unit = {}
+    ) {
         MyRow(modifier = Modifier.fillMaxWidth()) {
             leadingContent()
             Text(
@@ -149,12 +152,21 @@ fun <T> MyDropdown(
             }
         }
     }
-    val content: @Composable (modifier: Modifier, item: MyDropdown.Item<String>?, title: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, titleColor, textColor ->
-        content(modifier, item?.index?.takeIf { it != -1 }?.let { items[it] }, title, item?.text ?: "", titleColor, textColor)
-    }
-    val dropdownContent: @Composable (item: MyDropdown.Item<String>, selected: Boolean) -> Unit = { item, selected ->
-        dropdownContent(items[item.index], item.textDropdown, selected)
-    }
+    val content: @Composable (modifier: Modifier, item: MyDropdown.Item<String>?, title: String, titleColor: Color, textColor: Color) -> Unit =
+        { modifier, item, title, titleColor, textColor ->
+            content(
+                modifier,
+                item?.index?.takeIf { it != -1 }?.let { items[it] },
+                title,
+                item?.text ?: "",
+                titleColor,
+                textColor
+            )
+        }
+    val dropdownContent: @Composable (item: MyDropdown.Item<String>, selected: Boolean) -> Unit =
+        { item, selected ->
+            dropdownContent(items[item.index], item.textDropdown, selected)
+        }
     MyDropdownImpl(
         modifier,
         title,
@@ -214,12 +226,21 @@ fun <T> MyDropdown(
             }
         }
     }
-    val content: @Composable (modifier: Modifier, item: MyDropdown.Item<String>?, title: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, titleColor, textColor ->
-        content(modifier, item?.index?.takeIf { it != -1 }?.let { items[it] }, title, item?.text ?: "", titleColor, textColor)
-    }
-    val dropdownContent: @Composable (item: MyDropdown.Item<String>, selected: Boolean) -> Unit = { item, selected ->
-        dropdownContent(items[item.index], item.textDropdown, selected)
-    }
+    val content: @Composable (modifier: Modifier, item: MyDropdown.Item<String>?, title: String, titleColor: Color, textColor: Color) -> Unit =
+        { modifier, item, title, titleColor, textColor ->
+            content(
+                modifier,
+                item?.index?.takeIf { it != -1 }?.let { items[it] },
+                title,
+                item?.text ?: "",
+                titleColor,
+                textColor
+            )
+        }
+    val dropdownContent: @Composable (item: MyDropdown.Item<String>, selected: Boolean) -> Unit =
+        { item, selected ->
+            dropdownContent(items[item.index], item.textDropdown, selected)
+        }
     MyDropdownImpl(
         modifier,
         title,
@@ -270,12 +291,21 @@ fun MyDropdown(
             }
         }
     }
-    val content: @Composable (modifier: Modifier, item: MyDropdown.Item<String>?, title: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, titleColor, textColor ->
-        content(modifier, item?.index?.takeIf { it != -1 }?.let { items[it] }, title, item?.text ?: "", titleColor, textColor)
-    }
-    val dropdownContent: @Composable (item: MyDropdown.Item<String>, selected: Boolean) -> Unit = { item, selected ->
-        dropdownContent(items[item.index], item.textDropdown, selected)
-    }
+    val content: @Composable (modifier: Modifier, item: MyDropdown.Item<String>?, title: String, titleColor: Color, textColor: Color) -> Unit =
+        { modifier, item, title, titleColor, textColor ->
+            content(
+                modifier,
+                item?.index?.takeIf { it != -1 }?.let { items[it] },
+                title,
+                item?.text ?: "",
+                titleColor,
+                textColor
+            )
+        }
+    val dropdownContent: @Composable (item: MyDropdown.Item<String>, selected: Boolean) -> Unit =
+        { item, selected ->
+            dropdownContent(items[item.index], item.textDropdown, selected)
+        }
     MyDropdownImpl(
         modifier,
         title,
@@ -325,12 +355,21 @@ fun MyDropdown(
             }
         }
     }
-    val content: @Composable (modifier: Modifier, item: MyDropdown.Item<String>?, title: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, titleColor, textColor ->
-        content(modifier, item?.index?.takeIf { it != -1 }?.let { items[it] }, title, item?.text ?: "", titleColor, textColor)
-    }
-    val dropdownContent: @Composable (item: MyDropdown.Item<String>, selected: Boolean) -> Unit = { item, selected ->
-        dropdownContent(items[item.index], item.textDropdown, selected)
-    }
+    val content: @Composable (modifier: Modifier, item: MyDropdown.Item<String>?, title: String, titleColor: Color, textColor: Color) -> Unit =
+        { modifier, item, title, titleColor, textColor ->
+            content(
+                modifier,
+                item?.index?.takeIf { it != -1 }?.let { items[it] },
+                title,
+                item?.text ?: "",
+                titleColor,
+                textColor
+            )
+        }
+    val dropdownContent: @Composable (item: MyDropdown.Item<String>, selected: Boolean) -> Unit =
+        { item, selected ->
+            dropdownContent(items[item.index], item.textDropdown, selected)
+        }
     MyDropdownImpl(
         modifier,
         title,

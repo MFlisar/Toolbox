@@ -24,7 +24,7 @@ class AppSetup(
     val proVersionManager: BaseAppProVersionManager,
     val debugDrawer: (@Composable (drawerState: DebugDrawerState) -> Unit)?,
     val privacyPolicyLink: String,
-    val supportLanguagePicker: Boolean,
+    val disableLanguagePicker: Boolean,
     val fileLogger: FileLogger<*>?,
     val changelogSetup: Changelog.Setup?,
     val backupSupport: IBackupSupport?,

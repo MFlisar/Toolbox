@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.ToolboxDefaults
+
 import com.michaelflisar.toolbox.classes.LocalStyle
 
 @Composable

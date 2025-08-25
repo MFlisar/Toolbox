@@ -9,14 +9,16 @@ import com.michaelflisar.toolbox.app.features.preferences.Preferences
 import com.michaelflisar.toolbox.app.features.preferences.collectBaseTheme
 
 @Composable
-fun PreferenceScope.PrefDarkLight() {
+fun PreferenceScope.PrefDarkLight(
+    showText: Boolean
+) {
     val baseThemes = Preferences.BaseThemes
     val value = Preferences.collectBaseTheme()
     PreferenceList(
         style = PreferenceList.Style.SegmentedButtons,
         value = value,
         items = baseThemes,
-        itemTextProvider = { it.text },
+        itemTextProvider = { it.text.takeIf { showText } ?: "" },
         itemIconProvider = { Icon(it.icon, null) },
         title = ""
     )

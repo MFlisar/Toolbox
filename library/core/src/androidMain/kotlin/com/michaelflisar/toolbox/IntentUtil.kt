@@ -45,7 +45,6 @@ object IntentUtil {
             data = uri
         }
         context.startActivitySafely(intent)
-
     }
 
     fun share(context: Context, subject: String?, text: String?, apply: ((intent: Intent) -> Unit)? = null) {

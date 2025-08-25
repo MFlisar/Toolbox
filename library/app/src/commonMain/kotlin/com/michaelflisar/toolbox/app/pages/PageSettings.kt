@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.app.features.preferences
+package com.michaelflisar.toolbox.app.pages
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +23,7 @@ import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreenBackPressHandler
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.app.features.preferences.BaseAppPreferences
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_settings
@@ -95,7 +96,8 @@ private fun Page(
             // inside a dialog it should handle the back press automatically though
             handleBackPress = navigator != null
         ) {
-            PreferenceSettingsTheme(true)
+            if (addThemeSetting)
+                PreferenceSettingsTheme(true)
             customContent()
         }
     }

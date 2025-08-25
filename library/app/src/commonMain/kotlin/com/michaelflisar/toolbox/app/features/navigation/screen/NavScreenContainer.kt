@@ -10,11 +10,13 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.parcelize.IgnoredOnParcel
 import com.michaelflisar.parcelize.Parcelable
+import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorSlideTransition
 import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
+import com.michaelflisar.toolbox.logIf
 import kotlin.jvm.Transient
 
 abstract class NavScreenContainer(
@@ -46,8 +48,9 @@ abstract class NavScreenContainer(
         AppNavigator(
             screen = rootScreen,
             onBackPressed = {
-                val canHandle =  navigator.value?.canPop != true
-                L.i { "onBackPressed called in NavScreenContainer Navigator: canHandle = $canHandle" }
+                val canHandle = navigator.value?.canPop != true
+                L.logIf(ToolboxLogging.Tag.Navigation)
+                    ?.i { "NavScreenContainer::onBackPressed called - canHandle = $canHandle" }
                 canHandle
             }
         ) { navigator ->

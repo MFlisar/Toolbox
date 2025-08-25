@@ -27,7 +27,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerButton
 import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerCheckbox
@@ -39,11 +41,17 @@ import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composepreferences.core.PreferenceScreen
+import com.michaelflisar.composepreferences.core.PreferenceSection
 import com.michaelflisar.composepreferences.core.classes.PreferenceSettingsDefaults
+import com.michaelflisar.composepreferences.core.classes.rememberPreferenceState
+import com.michaelflisar.composepreferences.core.styles.DefaultStyle
 import com.michaelflisar.composepreferences.core.styles.ModernStyle
 import com.michaelflisar.composepreferences.screen.bool.PreferenceBool
 import com.michaelflisar.composethemer.ComposeTheme
+import com.michaelflisar.composethemer.isDynamicColorsSupported
+import com.michaelflisar.composethemer.isSystemContrastSupported
 import com.michaelflisar.composethemer.picker.composables.ThemeColorPreview
+import com.michaelflisar.composethemer.picker.rememberMultiLevelThemePicker
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
@@ -51,8 +59,19 @@ import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.Constants
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.logging.LogManager
+import com.michaelflisar.toolbox.app.features.preferences.BaseAppPreferences
+import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
+import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsThemeContent
+import com.michaelflisar.toolbox.app.features.preferences.singles.PrefContrast
+import com.michaelflisar.toolbox.app.features.preferences.singles.PrefDarkLight
+import com.michaelflisar.toolbox.app.features.preferences.singles.PrefDynamicTheme
+import com.michaelflisar.toolbox.app.features.preferences.singles.PrefTheme
+import com.michaelflisar.toolbox.app.features.preferences.singles.PrefToolbarStyle
+import com.michaelflisar.toolbox.core.resources.Res
+import com.michaelflisar.toolbox.core.resources.settings_theme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 internal expect val supportsBuildAndDeviceInfos: Boolean
 
@@ -134,6 +153,23 @@ fun DebugDrawer(
             collapsible = true,
             drawerState = drawerState
         ) {
+            val state = rememberPreferenceState()
+            val settings = PreferenceSettingsDefaults.settings(
+                toggleBooleanOnItemClick = true,
+                style = ModernStyle.create(
+                    backgroundColor = Color.Transparent
+                )
+            )
+            PreferenceScreen(
+                modifier = Modifier.fillMaxWidth(),
+                settings = settings,
+                state = state,
+                handleBackPress = false,
+                scrollable = false
+            ) {
+                PreferenceSettingsThemeContent(compact = true)
+            }
+            /*
             val themes = ComposeTheme.getRegisteredThemes()
             val theme = setup.prefs.theme.collectAsStateNotNull()
             val contrast = setup.prefs.contrast.collectAsStateNotNull()
@@ -211,7 +247,7 @@ fun DebugDrawer(
                         }
                     }
                 )
-            }
+            }*/
         }
     }
 

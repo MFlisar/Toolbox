@@ -166,7 +166,7 @@ internal fun SettingsContent(
         // Region 2 - Sprache
         // --------------------
 
-        if (Platform.openLanguagePicker != null && setup.supportLanguagePicker) {
+        if (Platform.openLanguagePicker != null && !setup.disableLanguagePicker) {
             PreferenceSection(
                 title = stringResource(Res.string.settings_group_language)
             ) {

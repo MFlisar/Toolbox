@@ -101,7 +101,6 @@ fun WasmApp(
                         // Nav Items are shown in the toolbar on web!
                     }
                 ) { paddingValues ->
-                    L.d { "WasmApp - 5" }
                     Box(modifier = Modifier.padding(paddingValues)) {
                         AppNavigatorFadeTransition(navigator)
                     }

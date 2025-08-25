@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.Toolbox
 
 object AndroidAppIconUtil {
 

@@ -1,8 +1,10 @@
 package com.michaelflisar.toolbox.app.features.update
 
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.classes.PlatformContext
+import com.michaelflisar.toolbox.logIf
 
 abstract class BaseUpdate(
     val version: Long
@@ -15,15 +17,15 @@ abstract class BaseUpdate(
 
     suspend fun execute(context: PlatformContext, lastVersion: Long) {
         if (lastVersion < version) {
-            L.tag("UPDATE").d { "Konvertierung $version - START" }
+            L.logIf(ToolboxLogging.Tag.AppUpdate)?.d { "Konvertierung $version - START" }
             update(context)
-            L.tag("UPDATE").d { "Konvertierung $version - END" }
+            L.logIf(ToolboxLogging.Tag.AppUpdate)?.d { "Konvertierung $version - END" }
         }
     }
 
     suspend fun forceExecute(context: PlatformContext) {
-        L.tag("UPDATE").d { "FORCED Konvertierung $version - START" }
+        L.logIf(ToolboxLogging.Tag.AppUpdate)?.d { "FORCED Konvertierung $version - START" }
         update(context)
-        L.tag("UPDATE").d { "FORCED Konvertierung $version - END" }
+        L.logIf(ToolboxLogging.Tag.AppUpdate)?.d { "FORCED Konvertierung $version - END" }
     }
 }
