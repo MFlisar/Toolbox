@@ -10,6 +10,8 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import com.michaelflisar.kmplibrary.DesktopSetup
 import com.michaelflisar.kmplibrary.setupLaunch4J
 import com.michaelflisar.kmplibrary.setupWindowApp
+import org.gradle.kotlin.dsl.implementation
+import org.gradle.kotlin.dsl.project
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -124,11 +126,6 @@ kotlin {
             implementation(project(":toolbox:app"))
             implementation(project(":toolbox:modules:table"))
 
-            // themes
-            implementation(deps.composethemer.themes.flatui)
-            implementation(deps.composethemer.themes.metro)
-            implementation(deps.composethemer.themes.material500)
-
             // ------------------------
             // tests
             // ------------------------
@@ -163,6 +160,11 @@ kotlin {
                 implementation(deps.composepreferences.screen.number)
                 implementation(deps.composepreferences.kotpreferences)
 
+                // Compose Themer
+                implementation(deps.composethemer.themes.flatui)
+                implementation(deps.composethemer.themes.metro)
+                implementation(deps.composethemer.themes.material500)
+
             } else {
 
                 // KotPreferences
@@ -193,6 +195,11 @@ kotlin {
                 implementation(project(":composepreferences:modules:screen:number"))
                 implementation(project(":composepreferences:modules:kotpreferences"))
 
+                // Compose Themer
+                implementation(project(":composethemer:modules:themes:flatui"))
+                implementation(project(":composethemer:modules:themes:metro"))
+                implementation(project(":composethemer:modules:themes:material500"))
+
             }
 
 
@@ -208,11 +215,13 @@ kotlin {
 
         }
         featureNoFileSupportMain.dependencies {
+
             if (buildFilePlugin.useLiveDependencies()) {
                 implementation(deps.kotpreferences.storage.keyvalue)
             } else {
                 implementation(project(":kotpreferences:modules:storage:keyvalue"))
             }
+
         }
 
         jvmMain.dependencies {

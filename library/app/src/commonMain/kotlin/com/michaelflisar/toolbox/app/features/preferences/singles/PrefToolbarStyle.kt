@@ -13,7 +13,7 @@ import com.michaelflisar.toolbox.core.resources.settings_toolbar_style
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun PreferenceScope.PrefToolbarStyle() {
+fun PreferenceScope.PrefToolbarStyle(showIcon: Boolean) {
     val setting = CommonApp.setup.prefs.toolbarStyle
     PreferenceList(
         style = PreferenceList.Style.Spinner,
@@ -21,11 +21,13 @@ fun PreferenceScope.PrefToolbarStyle() {
         items = ToolbarStyle.entries,
         itemTextProvider = { stringResource(it.label) },
         title = stringResource(Res.string.settings_toolbar_style),
-        icon = {
-            Icon(
-                Toolbar,
-                contentDescription = null
-            )
-        }
+        icon = if (showIcon) {
+            {
+                Icon(
+                    Toolbar,
+                    contentDescription = null
+                )
+            }
+        } else null
     )
 }

@@ -1,19 +1,19 @@
 [versions]
 
 # mflisar
-kotbilling =        		"0.8.1"
-kotpreferences =        	"1.0.4"
-lumberjack =                "8.0.0"
-cachefileprovider = 		"0.4.0"
-feedback = 		    		"2.1.0"
-composedebugdrawer =		"1.0.1"
-composedialogs =   		    "2.3.0"
-composechangelog =   		"2.0.1"
-composepreferences =   		"1.3.0"
+cachefileprovider = 		"1.0.0"
+feedback = 		    		"3.0.0"
+kotbilling =        		"2.0.0"
+kotpreferences =        	"2.0.0"
+lumberjack =                "9.0.0"
+composedebugdrawer =		"2.0.0"
+composedialogs =   		    "3.0.0"
+composechangelog =   		"3.0.0"
+composepreferences =   		"2.0.0"
 composethemer =   			"1.0.1"
 composecolors =             "1.0.1"
 kmp-parcelize =             "1.0.0"
-kmp-library =               "1.9.3" # attention: the version for the settings plugin must be adjusted manually!
+kmp-library =               "1.9.7" # attention: the version for the settings plugin must be adjusted manually!
 
 # Google
 material =                      "1.12.0"

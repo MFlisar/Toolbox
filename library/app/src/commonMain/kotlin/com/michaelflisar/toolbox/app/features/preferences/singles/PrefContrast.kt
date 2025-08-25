@@ -30,7 +30,8 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun PreferenceScope.PrefContrast(
     pickerState: ThemePicker.State,
-    isSystemContrastSupported: Boolean
+    isSystemContrastSupported: Boolean,
+    showIcon: Boolean
 ) {
     BasePreference(
         itemSetup = PreferenceItemSetup(
@@ -38,7 +39,9 @@ fun PreferenceScope.PrefContrast(
         ),
         enabled = Dependency.State(pickerState.isContrastEnabled) { it },
         title = stringResource(Res.string.settings_contrast),
-        icon = { Icon(Icons.Outlined.SettingsBrightness, contentDescription = null) }
+        icon = if (showIcon) {
+            { Icon(Icons.Outlined.SettingsBrightness, contentDescription = null) }
+        } else null
     ) {
         ContrastPicker(
             modifier = Modifier.fillMaxWidth(),

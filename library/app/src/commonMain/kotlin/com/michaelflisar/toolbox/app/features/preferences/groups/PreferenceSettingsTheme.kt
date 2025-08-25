@@ -97,22 +97,22 @@ fun PreferenceScope.PreferenceSettingsThemeContent(
 
     // 2) Toolbar Style
     if (themeSupport.supportToolbarStyles) {
-        PrefToolbarStyle()
+        PrefToolbarStyle(showIcon = !compact)
     }
 
     // 3) Dynamic Colors
     if (themeSupport.supportDynamicColors && ComposeTheme.isDynamicColorsSupported) {
-        PrefDynamicTheme(pickerState)
+        PrefDynamicTheme(pickerState, showIcon = !compact)
     }
 
     // 4) Contrast
     if (themeSupport.supportContrast && ComposeTheme.isSystemContrastSupported) {
-        PrefContrast(pickerState, ComposeTheme.isSystemContrastSupported)
+        PrefContrast(pickerState, ComposeTheme.isSystemContrastSupported, showIcon = !compact)
     }
 
     // 5) Theme
     if (supportCustomTheme) {
         val multiLevelState = rememberMultiLevelThemePicker(pickerState)
-        PrefTheme(pickerState, multiLevelState)
+        PrefTheme(pickerState, multiLevelState, showIcon = !compact)
     }
 }

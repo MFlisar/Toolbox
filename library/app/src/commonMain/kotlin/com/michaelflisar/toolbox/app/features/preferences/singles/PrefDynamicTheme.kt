@@ -14,18 +14,21 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PreferenceScope.PrefDynamicTheme(
-    pickerState: ThemePicker.State
+    pickerState: ThemePicker.State,
+    showIcon: Boolean
 ) {
     PreferenceBool(
         value = pickerState.dynamic,
         style = PreferenceBool.Style.Checkbox,
         title = stringResource(Res.string.settings_dynamic_theme),
         subtitle = stringResource(Res.string.settings_dynamic_theme_details),
-        icon = {
-            Icon(
-                Icons.Outlined.FormatPaint,
-                contentDescription = null
-            )
-        }
+        icon = if (showIcon) {
+            {
+                Icon(
+                    Icons.Outlined.FormatPaint,
+                    contentDescription = null
+                )
+            }
+        } else null
     )
 }

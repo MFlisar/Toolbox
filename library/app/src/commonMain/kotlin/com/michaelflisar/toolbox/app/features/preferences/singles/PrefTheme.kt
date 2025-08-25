@@ -30,7 +30,8 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun PreferenceScope.PrefTheme(
     pickerState: ThemePicker.State,
-    multiLevelState: ThemePicker.MultiLevelState
+    multiLevelState: ThemePicker.MultiLevelState,
+    showIcon: Boolean
 ) {
     BasePreference(
         itemSetup = PreferenceItemSetup(
@@ -38,7 +39,9 @@ fun PreferenceScope.PrefTheme(
         ),
         title = stringResource(Res.string.settings_theme),
         subtitle = stringResource(Res.string.settings_theme_details),
-        icon = { Icon(Icons.Outlined.Style, contentDescription = null) },
+        icon = if (showIcon) {
+            { Icon(Icons.Outlined.Style, contentDescription = null) }
+        } else null,
         enabled = Dependency.State(pickerState.isThemeEnabled) { it },
     ) {
         Column(
