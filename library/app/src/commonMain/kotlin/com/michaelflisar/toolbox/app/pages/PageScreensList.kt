@@ -46,7 +46,9 @@ abstract class PageScreensList : NavScreen() {
         ) : Item()
     }
 
+
     abstract val items: List<Item>
+        @Composable get
 
     @Composable
     open fun Header() {
