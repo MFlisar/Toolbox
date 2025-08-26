@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
@@ -58,7 +60,7 @@ object NavigationUtil {
     }
 
     /**
-     * MenuIcon + Main Actions, dann Sub Actions, dann Divider und darunter die Settings Page
+     * MenuIcon + Main Actions, dann Sub Actions, dann divider, dann current page actions, dann Divider und darunter die Settings Page
      */
     @Composable
     fun getMobileMenuItems(
@@ -87,13 +89,18 @@ object NavigationUtil {
         // 2) custom actions
         val itemsCustomAction = definition.actionCustom().map { it.toMenuItem() }
 
+        // 3) Separator + current page actions
+        val navigator = LocalNavigator.currentOrThrow
+        val navScreen = navigator.lastNavItem
+        val additionalMenu = listOf(MenuItem.Separator()) + navScreen.provideMenu()
+
         // 3) Separator + Settings
         val itemsSettings = listOf(
             MenuItem.Separator(),
             definition.pageSetting.toActionItem().toMenuItem()
         )
 
-        val subItems = listOfNotNull(itemsProVersion + itemsCustomAction + itemsSettings)
+        val subItems = listOfNotNull(itemsProVersion + itemsCustomAction + additionalMenu + itemsSettings)
             .flatten()
             .removeConsecutiveSeparators()
 

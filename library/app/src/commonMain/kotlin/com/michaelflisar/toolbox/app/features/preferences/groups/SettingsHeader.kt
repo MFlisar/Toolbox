@@ -63,32 +63,41 @@ fun PreferenceGroupScope.SettingsHeader(
             }
         }
     ) {
-        MyColumn {
-            MyRow(modifier = Modifier.fillMaxWidth()) {
-                Image(
-                    painter = setup.icon(),
-                    contentDescription = null,
-                    modifier = Modifier.size(64.dp)
+        SettingsHeaderContent(version, versionName)
+    }
+}
+
+@Composable
+fun SettingsHeaderContent(
+    version: Long,
+    versionName: String
+) {
+    val setup = CommonApp.setup
+    MyColumn {
+        MyRow(modifier = Modifier.fillMaxWidth()) {
+            Image(
+                painter = setup.icon(),
+                contentDescription = null,
+                modifier = Modifier.size(64.dp)
+            )
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = setup.name(),
+                    style = MaterialTheme.typography.titleLarge
                 )
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(
-                        text = setup.name(),
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Text(
-                        text = "$versionName ($version)",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = LocalContentColor.current.variant()
-                    )
-                    Text(
-                        text = stringResource(Res.string.by_name, stringResource(Res.string.author)),
-                        style = MaterialTheme.typography.bodySmall,
-                        fontStyle = FontStyle.Italic,
-                        color = LocalContentColor.current.variant()
-                    )
-                }
+                Text(
+                    text = "$versionName ($version)",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = LocalContentColor.current.variant()
+                )
+                Text(
+                    text = stringResource(Res.string.by_name, stringResource(Res.string.author)),
+                    style = MaterialTheme.typography.bodySmall,
+                    fontStyle = FontStyle.Italic,
+                    color = LocalContentColor.current.variant()
+                )
             }
         }
     }
