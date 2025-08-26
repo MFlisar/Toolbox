@@ -34,9 +34,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PreferenceGroupScope.SettingsHeader(
-    settings: PreferenceSettings,
-    version: Long,
-    versionName: String
+    settings: PreferenceSettings
 ) {
     val setup = CommonApp.setup
     val debugPrefs = setup.debugPrefs
@@ -63,16 +61,15 @@ fun PreferenceGroupScope.SettingsHeader(
             }
         }
     ) {
-        SettingsHeaderContent(version, versionName)
+        SettingsHeaderContent()
     }
 }
 
 @Composable
-fun SettingsHeaderContent(
-    version: Long,
-    versionName: String
-) {
+fun SettingsHeaderContent() {
     val setup = CommonApp.setup
+    val versionCode = setup.versionCode
+    val versionName = setup.versionName
     MyColumn {
         MyRow(modifier = Modifier.fillMaxWidth()) {
             Image(
@@ -88,7 +85,7 @@ fun SettingsHeaderContent(
                     style = MaterialTheme.typography.titleLarge
                 )
                 Text(
-                    text = "$versionName ($version)",
+                    text = "$versionName ($versionCode)",
                     style = MaterialTheme.typography.bodySmall,
                     color = LocalContentColor.current.variant()
                 )

@@ -144,15 +144,11 @@ internal fun SettingsContent(
         state = state,
         handleBackPress = handleBackPress
     ) {
-
-        val versionCode = setup.versionCode
-        val versionName = setup.versionName
-
         // --------------------
         // Region 0 - Header
         // --------------------
 
-        SettingsHeader(settings, versionCode.toLong(), versionName)
+        SettingsHeader(settings)
         SettingsProVersionHeader(showProVersionDialog)
         SettingsHeaderButtons(buttons)
 
