@@ -8,7 +8,7 @@ import com.michaelflisar.toolbox.app.features.toolbar.ToolbarStyle
 
 open class BasePrefs(
     storage: Storage,
-    initialTheme: ThemeDefault.Theme = ThemeDefault.Theme
+    initialTheme: ComposeTheme.Theme = ThemeDefault.Theme
 ) : SettingsModel(storage) {
 
     // Theme
