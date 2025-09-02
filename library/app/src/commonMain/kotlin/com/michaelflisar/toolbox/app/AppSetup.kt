@@ -30,10 +30,11 @@ class AppSetup(
     val fileLogger: FileLogger<*>?,
     val changelogSetup: Changelog.Setup?,
     val backupSupport: IBackupSupport?,
-    val isDebugBuild: Boolean,
+    val isDebugBuild: Boolean
 ) {
     class ThemeSupport(
         val themes: List<ComposeTheme.Theme> = DefaultThemes.getAllThemes(),
+        val supportThemeSelector: Boolean,
         val supportDarkLight: Boolean,
         val supportContrast: Boolean,
         val supportDynamicColors: Boolean,
@@ -42,14 +43,15 @@ class AppSetup(
         companion object {
             fun disabled(
                 themes: List<ComposeTheme.Theme> = DefaultThemes.getAllThemes(),
-            ) = ThemeSupport(themes, false, false, false, false)
+            ) = ThemeSupport(themes, false,false, false, false, false)
 
             fun full(
                 themes: List<ComposeTheme.Theme> = DefaultThemes.getAllThemes(),
-            ) = ThemeSupport(themes, true, true, true, true)
+            ) = ThemeSupport(themes, true, true, true, true, true)
         }
 
         fun supportsCustomThemes() = ComposeTheme.getRegisteredThemes().size > 1
+
         fun supportsTheming() =
             ComposeTheme.getRegisteredThemes().size > 1 || supportDarkLight || supportContrast || supportDynamicColors
     }

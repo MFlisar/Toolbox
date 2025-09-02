@@ -35,18 +35,21 @@ sealed class JewelStatusBarItem {
 
     class Custom(
         val content: @Composable () -> Unit
-    ): JewelStatusBarItem()
+    ) : JewelStatusBarItem()
 }
 
 @Composable
 fun JewelStatusBar(
     left: List<JewelStatusBarItem> = emptyList(),
     right: List<JewelStatusBarItem> = emptyList(),
+    foreground: Color = Color.Unspecified,
+    background: Color = Color.Unspecified,
     content: @Composable (() -> Unit)? = null
 ) {
-    val jewelTitleTheme = JewelTheme.defaultTitleBarStyle
-    val foreground = jewelTitleTheme.colors.content
-    val background = jewelTitleTheme.colors.background
+    val foreground = foreground.takeIf { it != Color.Unspecified }
+        ?: JewelTheme.defaultTitleBarStyle.colors.content
+    val background = background.takeIf { it != Color.Unspecified }
+        ?: JewelTheme.defaultTitleBarStyle.colors.background
 
     CompositionLocalProvider(LocalContentColor provides foreground) {
         Column(
@@ -64,7 +67,11 @@ fun JewelStatusBar(
                 left.forEach { item ->
                     when (item) {
                         is JewelStatusBarItem.Custom -> StatusBarCustom(item.content)
-                        is JewelStatusBarItem.Text -> StatusBarText(text = item.text, onClick = item.onClick, color = item.color)
+                        is JewelStatusBarItem.Text -> StatusBarText(
+                            text = item.text,
+                            onClick = item.onClick,
+                            color = item.color
+                        )
                     }
 
                     VerticalDivider()
@@ -84,7 +91,11 @@ fun JewelStatusBar(
                     VerticalDivider()
                     when (item) {
                         is JewelStatusBarItem.Custom -> StatusBarCustom(item.content)
-                        is JewelStatusBarItem.Text -> StatusBarText(text = item.text, onClick = item.onClick, color = item.color)
+                        is JewelStatusBarItem.Text -> StatusBarText(
+                            text = item.text,
+                            onClick = item.onClick,
+                            color = item.color
+                        )
                     }
                 }
             }

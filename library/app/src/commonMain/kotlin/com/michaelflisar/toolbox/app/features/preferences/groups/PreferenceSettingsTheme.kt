@@ -81,7 +81,7 @@ fun PreferenceScope.PreferenceSettingsThemeContent(
 
     val setup = CommonApp.setup
     val themeSupport = setup.themeSupport
-    val supportCustomTheme = themeSupport.supportsCustomThemes()
+    val supportCustomTheme = themeSupport.supportsCustomThemes() && themeSupport.supportThemeSelector
 
     val pickerState = rememberThemePicker(
         baseTheme = setup.prefs.theme.asMutableStateNotNull(),

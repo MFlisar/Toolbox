@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.NativeKeyEvent
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -54,7 +55,9 @@ import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.window.DecoratedWindowScope
+import org.jetbrains.jewel.window.defaultTitleBarStyle
 
 object DesktopApp {
 
@@ -93,7 +96,6 @@ object DesktopAppDefaults {
 
             val navigator = LocalNavigator.currentOrThrow
             val navScreen = navigator.lastNavItem
-            val menuItems = menuItems
             val additionalMenu = navScreen.provideMenu()
 
             JewelTitleBar(
@@ -116,6 +118,8 @@ object DesktopAppDefaults {
         onJavaVersionClick: (() -> Unit)? = null,
         onUserNameClick: (() -> Unit)? = null,
         onHostNameClick: (() -> Unit)? = null,
+        foreground: Color = Color.Unspecified,
+        background: Color = Color.Unspecified
     ) {
         val setup = CommonApp.setup
         val appState = LocalAppState.current
@@ -145,6 +149,8 @@ object DesktopAppDefaults {
         JewelStatusBar(
             left = statusBarLeft,
             right = statusBarRight,
+            foreground = foreground,
+            background = background
         )
     }
 

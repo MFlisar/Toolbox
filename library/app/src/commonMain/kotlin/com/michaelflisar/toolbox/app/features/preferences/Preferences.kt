@@ -5,6 +5,9 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
@@ -45,7 +48,7 @@ object Preferences {
     @Composable
     fun rememberComposeThemeDefault(): ComposeTheme.State {
         val setup = CommonApp.setup
-        val theme = setup.prefs.theme.collectAsStateNotNull()
+        val theme =  setup.prefs.theme.collectAsStateNotNull()
         val contrast = setup.prefs.contrast.asMutableStateNotNull()
         val dynamic = setup.prefs.dynamicTheme.asMutableStateNotNull()
         val customTheme = setup.prefs.customTheme.asMutableStateNotNull()
