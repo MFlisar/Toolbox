@@ -83,6 +83,7 @@
     <!-- Compose -->
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
+    <string name="cancel">Abbrechen</string>
     <string name="error_invalid_input">Ungültige Eingabe</string>
     <string name="error_invalid_length">Ungültige Länge</string>
     <string name="error_too_low">Wert zu klein</string>

@@ -28,7 +28,7 @@ internal actual fun DebugDrawerBuildInfos(
         drawerState = drawerState,
         isDebugBuild = setup.isDebugBuild
     ) {
-        DebugDrawerInfo(title = "Author", info = Constants.DEVELOPER_NAME)
+        DebugDrawerInfo(title = "Author", info = setup.developer.name)
         DebugDrawerButton(label = "Disable Drawer") {
             scope.launch {
                 drawerState.drawerState.close()

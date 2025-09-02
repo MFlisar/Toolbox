@@ -171,6 +171,9 @@ kotlin {
                 implementation(deps.composepreferences.screen.button)
                 implementation(deps.composepreferences.kotpreferences)
 
+                // Compose Colors
+                implementation(deps.composecolors.material)
+
                 // Theming
                 api(deps.composethemer.core)
                 implementation(deps.composethemer.modules.picker)
@@ -206,6 +209,9 @@ kotlin {
                 implementation(project(":composepreferences:modules:screen:list"))
                 implementation(project(":composepreferences:modules:screen:button"))
                 implementation(project(":composepreferences:modules:kotpreferences"))
+
+                // Compose Colors
+                implementation(project(":composecolors:modules:material"))
 
                 // Theming
                 api(project(":composethemer:core"))

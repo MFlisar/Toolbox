@@ -37,7 +37,8 @@ class TableFooterColors constructor(
 fun <T> TableFooter(
     state: TableState<T>,
     modifier: Modifier = Modifier,
-    colors: TableFooterColors = TableDefaults.footerColors()
+    colors: TableFooterColors = TableDefaults.footerColors(),
+    customContent: @Composable () -> Unit = {}
 ) {
     val countFiltered by remember(state.filteredRows.size) {
         derivedStateOf {
@@ -58,6 +59,7 @@ fun <T> TableFooter(
         containerColor = colors.containerColor,
         contentColor = colors.contentColor
     ) {
+        customContent()
         Spacer(modifier = modifier.weight(1f))
         MyTitle(
             modifier = Modifier.padding(vertical = LocalStyle.current.paddingDefault),

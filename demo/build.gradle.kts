@@ -10,8 +10,6 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import com.michaelflisar.kmplibrary.DesktopSetup
 import com.michaelflisar.kmplibrary.setupLaunch4J
 import com.michaelflisar.kmplibrary.setupWindowApp
-import org.gradle.kotlin.dsl.implementation
-import org.gradle.kotlin.dsl.project
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)

@@ -1,6 +1,13 @@
 package com.michaelflisar.toolbox.app.features.preferences
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.More
 import androidx.compose.material.icons.automirrored.outlined.TextSnippet
@@ -15,16 +22,22 @@ import androidx.compose.material.icons.outlined.Mail
 import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.composedialogs.core.DialogButton
 import com.michaelflisar.composedialogs.core.DialogButtonType
 import com.michaelflisar.composedialogs.core.DialogDefaults
@@ -45,20 +58,25 @@ import com.michaelflisar.composepreferences.kotpreferences.asDependency
 import com.michaelflisar.composepreferences.screen.bool.PreferenceBool
 import com.michaelflisar.composepreferences.screen.button.PreferenceButton
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
+import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.Platform
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.backup.ContentPreferencesAsSubPreference
 import com.michaelflisar.toolbox.app.features.logging.LogManager
+import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeader
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeaderButtons
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsProVersionHeader
 import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.localContext
 import com.michaelflisar.toolbox.app.platform.restart
+import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.core.resources.Res
+import com.michaelflisar.toolbox.core.resources.menu_settings
 import com.michaelflisar.toolbox.core.resources.no
 import com.michaelflisar.toolbox.core.resources.settings_change_language
 import com.michaelflisar.toolbox.core.resources.settings_changelog
@@ -91,14 +109,61 @@ internal expect fun LumberjackDialog(
     setup: IFileLoggingSetup,
 )
 
+sealed class AppPreferencesStyle {
+
+    abstract val addThemeSetting: Boolean
+
+    class Default internal constructor(
+        override val addThemeSetting: Boolean,
+        val customContent: @Composable PreferenceGroupScope.() -> Unit
+    ) : AppPreferencesStyle()
+
+    class Pager internal constructor(
+        override val addThemeSetting: Boolean,
+        val labelDefaultPage: String,
+        val contentPadding: PaddingValues = PaddingValues(0.dp),
+        val customPages: List<Page>
+    ) : AppPreferencesStyle() {
+        class Page(
+            val title: String,
+            val content: @Composable PreferenceGroupScope.() -> Unit
+        )
+    }
+}
+
+object AppPreferencesDefaults {
+
+    @Composable
+    fun styleDefault(
+        addThemeSettings: Boolean,
+        customContent: @Composable PreferenceGroupScope.() -> Unit
+    ) = AppPreferencesStyle.Default(addThemeSettings, customContent)
+
+    @Composable
+    fun stylePager(
+        addThemeSettings: Boolean,
+        labelDefaultPage: String = stringResource(Res.string.menu_settings),
+        contentPadding: PaddingValues = PaddingValues(0.dp),
+        customPages: List<AppPreferencesStyle.Pager.Page>,
+    ): AppPreferencesStyle.Pager {
+        return AppPreferencesStyle.Pager(
+            addThemeSettings,
+            labelDefaultPage,
+            contentPadding,
+            customPages
+        )
+    }
+
+}
+
 @Composable
-fun BaseAppPreferences(
+fun AppPreferences(
+    style: AppPreferencesStyle,
     modifier: Modifier = Modifier,
     showProVersionDialog: DialogStateNoData = rememberDialogState(),
     buttons: List<SettingsHeaderButtons.Button> = emptyList(),
-    preferenceState: PreferenceState = rememberPreferenceState(),
-    handleBackPress: Boolean,
-    customContent: @Composable PreferenceGroupScope.() -> Unit,
+    onPreferenceStateChanged: (state: PreferenceState) -> Unit,
+    handleBackPress: Boolean = true,
 ) {
 
     val settings = PreferenceSettingsDefaults.settings(
@@ -109,11 +174,11 @@ fun BaseAppPreferences(
     SettingsContent(
         modifier,
         settings,
-        preferenceState,
+        onPreferenceStateChanged,
         handleBackPress,
         showProVersionDialog,
         buttons,
-        customContent
+        style
     )
 
 }
@@ -122,64 +187,224 @@ fun BaseAppPreferences(
 internal fun SettingsContent(
     modifier: Modifier,
     settings: PreferenceSettings,
-    state: PreferenceState,
+    onPreferenceStateChanged: (state: PreferenceState) -> Unit,
     handleBackPress: Boolean,
     showProVersionDialog: DialogStateNoData,
     buttons: List<SettingsHeaderButtons.Button> = emptyList(),
-    customContent: @Composable() (PreferenceGroupScope.() -> Unit),
+    style: AppPreferencesStyle
 ) {
     val setup = CommonApp.setup
-    val appState = LocalAppState.current
-    val debugPrefs = setup.debugPrefs
 
     val showLogFile = rememberSaveable { mutableStateOf(false) }
     val showAttachLogFile = rememberDialogState()
-    val scope = rememberCoroutineScope()
+
     //val backup = remember { setup.backup }
-    val changelogState = appState.changelogState
 
-    PreferenceScreen(
-        modifier = modifier,
-        settings = settings,
-        state = state,
-        handleBackPress = handleBackPress
-    ) {
-        // --------------------
-        // Region 0 - Header
-        // --------------------
-
-        SettingsHeader(settings)
-        SettingsProVersionHeader(showProVersionDialog)
-        SettingsHeaderButtons(buttons)
-
-        // --------------------
-        // Region 1 - Content
-        // --------------------
-
-        customContent()
-
-        // --------------------
-        // Region 2 - Sprache
-        // --------------------
-
-        if (Platform.openLanguagePicker != null && !setup.disableLanguagePicker) {
-            PreferenceSection(
-                title = stringResource(Res.string.settings_group_language)
+    when (style) {
+        is AppPreferencesStyle.Default -> {
+            val state = rememberPreferenceState()
+            LaunchedEffect(Unit) {
+                onPreferenceStateChanged(state)
+            }
+            PreferenceScreen(
+                modifier = modifier,
+                settings = settings,
+                state = state,
+                handleBackPress = handleBackPress
             ) {
-                PreferenceButton(
-                    onClick = {
-                        Platform.openLanguagePicker?.invoke()
-                    },
-                    title = stringResource(Res.string.settings_change_language),
-                    icon = { Icon(Icons.Default.Language, contentDescription = null) }
-                )
+                // --------------------
+                // Region 0 - Header
+                // --------------------
+
+                RegionHeader(settings, showProVersionDialog, buttons)
+
+                // --------------------
+                // Region 1 - Content
+                // --------------------
+
+                if (style.addThemeSetting)
+                    PreferenceSettingsTheme(true)
+                style.customContent(this)
+
+                // --------------------
+                // Region 2 - Sprache
+                // --------------------
+
+                RegionLanguage(setup)
+
+                // --------------------
+                // Region 3 - Über
+                // --------------------
+
+                RegionAbout(setup, showLogFile, showAttachLogFile)
             }
         }
 
-        // --------------------
-        // Region 3 - Über
-        // --------------------
+        is AppPreferencesStyle.Pager -> {
+            val pagerState = rememberPagerState(pageCount = { style.customPages.size + 1 })
+            val scope = rememberCoroutineScope()
 
+            Column(
+                modifier = modifier
+            ) {
+                TabRow(
+                    selectedTabIndex = pagerState.currentPage,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    repeat(pagerState.pageCount) { page ->
+                        Tab(
+                            selected = pagerState.currentPage == page,
+                            onClick = {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(page)
+                                }
+                            }
+                        ) {
+                            Text(
+                                text = if (page == 0) style.labelDefaultPage else style.customPages[page - 1].title,
+                                modifier = Modifier.padding(LocalStyle.current.paddingDefault)
+                            )
+                        }
+                    }
+                }
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.weight(1f),
+                    contentPadding = style.contentPadding,
+                    verticalAlignment = Alignment.Top
+                ) { page ->
+
+                    val state = rememberPreferenceState()
+                    LaunchedEffect(state.currentLevel, pagerState.currentPage) {
+                        if (page == pagerState.currentPage) {
+                            onPreferenceStateChanged(state)
+                        }
+                    }
+
+                    if (page == 0) {
+                        PreferenceScreen(
+                            modifier = Modifier.fillMaxSize(),
+                            settings = settings,
+                            state = state,
+                            handleBackPress = handleBackPress
+                        ) {
+                            RegionHeader(settings, showProVersionDialog, buttons)
+                            if (style.addThemeSetting)
+                                PreferenceSettingsTheme(true)
+                            RegionLanguage(setup)
+                            RegionAbout(setup, showLogFile, showAttachLogFile)
+                        }
+                    } else {
+                        val customPage = style.customPages[page - 1]
+                        PreferenceScreen(
+                            modifier = Modifier.fillMaxSize(),
+                            settings = settings,
+                            state = state,
+                            handleBackPress = handleBackPress
+                        ) {
+                            customPage.content(this)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (showLogFile.value && setup.fileLogger != null) {
+        LumberjackDialog(
+            visible = showLogFile,
+            title = "Log",
+            setup = setup.fileLogger.setup
+        )
+    }
+
+    if (Platform.sendFeedback != null && setup.fileLogger != null && showAttachLogFile.visible) {
+        DialogInfo(
+            state = showAttachLogFile,
+            icon = { Icon(Icons.Outlined.Mail, contentDescription = null) },
+            infoLabel = stringResource(Res.string.settings_dialog_attach_log_file_label),
+            info = stringResource(Res.string.settings_dialog_attach_log_file_text),
+            title = {
+                Text(stringResource(Res.string.settings_feedback))
+            },
+            buttons = DialogDefaults.buttons(
+                positive = DialogButton(stringResource(Res.string.yes)),
+                negative = DialogButton(stringResource(Res.string.no))
+            )
+        ) {
+            when (it) {
+                is DialogEvent.Button -> {
+                    when (it.button) {
+                        DialogButtonType.Positive -> Platform.sendFeedback?.invoke(
+                            true,
+                            setup.fileLogger.setup
+                        )
+
+                        DialogButtonType.Negative -> Platform.sendFeedback?.invoke(
+                            false,
+                            setup.fileLogger.setup
+                        )
+                    }
+                }
+
+                DialogEvent.Dismissed -> {
+                    // nichts
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PreferenceGroupScope.RegionHeader(
+    settings: PreferenceSettings,
+    showProVersionDialog: DialogStateNoData,
+    buttons: List<SettingsHeaderButtons.Button>
+) {
+    SettingsHeader(settings)
+    SettingsProVersionHeader(showProVersionDialog)
+    SettingsHeaderButtons(buttons)
+}
+
+@Composable
+private fun PreferenceGroupScope.RegionLanguage(
+    setup: AppSetup
+) {
+    if (Platform.openLanguagePicker != null && !setup.disableLanguagePicker) {
+        PreferenceSection(
+            title = stringResource(Res.string.settings_group_language)
+        ) {
+            PreferenceButton(
+                onClick = {
+                    Platform.openLanguagePicker?.invoke()
+                },
+                title = stringResource(Res.string.settings_change_language),
+                icon = { Icon(Icons.Default.Language, contentDescription = null) }
+            )
+        }
+    }
+}
+
+@Composable
+private fun PreferenceGroupScope.RegionAbout(
+    setup: AppSetup,
+    showLogFile: MutableState<Boolean>,
+    showAttachLogFile: DialogStateNoData,
+) {
+
+    val scope = rememberCoroutineScope()
+    val appState = LocalAppState.current
+    val debugPrefs = setup.debugPrefs
+    val changelogState = appState.changelogState
+
+    val showChangelog = remember { setup.changelogSetup != null }
+    val showBackup = remember { setup.backupSupport?.addToPrefs == true }
+    val showFeedback = remember { Platform.sendFeedback != null && setup.fileLogger != null }
+    val showPrivacy =
+        remember { setup.privacyPolicyLink.isNotEmpty() || setup.proVersionManager.supportsProVersion }
+    val showDeveloper by debugPrefs.showDeveloperSettings.collectAsStateNotNull()
+
+    if (showChangelog || showBackup || showFeedback || showPrivacy || showDeveloper) {
         PreferenceSection(
             title = stringResource(Res.string.settings_group_about)
         ) {
@@ -208,7 +433,7 @@ internal fun SettingsContent(
             // --------------------
 
             if (setup.backupSupport?.addToPrefs == true) {
-                ContentPreferencesAsSubPreference(setup.backupSupport,  setup.name())
+                ContentPreferencesAsSubPreference(setup.backupSupport, setup.name())
             }
 
             // --------------------
@@ -237,7 +462,10 @@ internal fun SettingsContent(
                                     if (L.isEnabled()) {
                                         showAttachLogFile.show()
                                     } else {
-                                        Platform.sendFeedback?.invoke(false, setup.fileLogger.setup)
+                                        Platform.sendFeedback?.invoke(
+                                            false,
+                                            setup.fileLogger.setup
+                                        )
                                     }
                                 },
                                 title = stringResource(Res.string.settings_feedback),
@@ -269,50 +497,54 @@ internal fun SettingsContent(
             // Region 3.4 - Privacy
             // --------------------
 
-            PreferenceSubScreen(
-                title = stringResource(Res.string.settings_group_privacy),
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.PrivacyTip,
-                        contentDescription = null
-                    )
-                }
-            ) {
-                PreferenceSection(
-                    title = stringResource(Res.string.settings_group_privacy)
+            if (setup.privacyPolicyLink.isNotEmpty() || setup.proVersionManager.supportsProVersion) {
+                PreferenceSubScreen(
+                    title = stringResource(Res.string.settings_group_privacy),
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.PrivacyTip,
+                            contentDescription = null
+                        )
+                    }
                 ) {
-                    PreferenceButton(
-                        onClick = {
-                            Platform.openUrl(setup.privacyPolicyLink)
-                        },
-                        title = stringResource(Res.string.settings_privacy_policy),
-                        subtitle = stringResource(Res.string.settings_privacy_policy_details),
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Outlined.PrivacyTip,
-                                contentDescription = null
+                    PreferenceSection(
+                        title = stringResource(Res.string.settings_group_privacy)
+                    ) {
+                        if (setup.privacyPolicyLink.isNotEmpty()) {
+                            PreferenceButton(
+                                onClick = {
+                                    Platform.openUrl(setup.privacyPolicyLink)
+                                },
+                                title = stringResource(Res.string.settings_privacy_policy),
+                                subtitle = stringResource(Res.string.settings_privacy_policy_details),
+                                icon = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.PrivacyTip,
+                                        contentDescription = null
+                                    )
+                                }
                             )
                         }
-                    )
-                    if (setup.proVersionManager.supportsProVersion) {
-                        /*
-                                            if (appState.adManager?.privacyOptionsRequired() == true) {
-                                                PreferenceButton(
-                                                    onClick = {
-                                                        appState.adManager?.showPrivacyOptionsForm(context.requireActivity())
-                                                    },
-                                                    title = stringResource(Res.string.settings_consent_settings),
-                                                    subtitle = stringResource(Res.string.settings_gdpr_consent_show_dialog),
-                                                    icon = {
-                                                        Icon(
-                                                            Icons.Outlined.PrivacyTip,
-                                                            contentDescription = null
-                                                        )
-                                                    }
-                                                )
-                                            }
+                        if (setup.proVersionManager.supportsProVersion) {
+                            /*
+                                        if (appState.adManager?.privacyOptionsRequired() == true) {
+                                            PreferenceButton(
+                                                onClick = {
+                                                    appState.adManager?.showPrivacyOptionsForm(context.requireActivity())
+                                                },
+                                                title = stringResource(Res.string.settings_consent_settings),
+                                                subtitle = stringResource(Res.string.settings_gdpr_consent_show_dialog),
+                                                icon = {
+                                                    Icon(
+                                                        Icons.Outlined.PrivacyTip,
+                                                        contentDescription = null
+                                                    )
+                                                }
+                                            )
+                                        }
 
-                     */
+                 */
+                        }
                     }
                 }
             }
@@ -422,24 +654,24 @@ internal fun SettingsContent(
                 }
                 // TODO
                 /*
-                if (setup.ads != null) {
-                    PreferenceSection(
-                        title = "Ads"
-                    ) {
-                        PreferenceButton(
-                            onClick = {
-                                appState.adManager?.resetConsent()
-                            },
-                            title = "Consent zurücksetzen",
-                            icon = {
-                                Icon(
-                                    Icons.Outlined.HideSource,
-                                    contentDescription = null
-                                )
-                            }
-                        )
-                    }
-                }*/
+            if (setup.ads != null) {
+                PreferenceSection(
+                    title = "Ads"
+                ) {
+                    PreferenceButton(
+                        onClick = {
+                            appState.adManager?.resetConsent()
+                        },
+                        title = "Consent zurücksetzen",
+                        icon = {
+                            Icon(
+                                Icons.Outlined.HideSource,
+                                contentDescription = null
+                            )
+                        }
+                    )
+                }
+            }*/
                 // TODO
                 val platformContext = Platform.localContext()
                 val kill = Platform.kill
@@ -491,50 +723,6 @@ internal fun SettingsContent(
                         title = "Hide Developer Settings",
                         icon = { Icon(Icons.Outlined.HideSource, contentDescription = null) }
                     )
-                }
-            }
-        }
-    }
-
-    if (showLogFile.value && setup.fileLogger != null) {
-        LumberjackDialog(
-            visible = showLogFile,
-            title = "Log",
-            setup = setup.fileLogger.setup
-        )
-    }
-
-    if (Platform.sendFeedback != null && setup.fileLogger != null && showAttachLogFile.visible) {
-        DialogInfo(
-            state = showAttachLogFile,
-            icon = { Icon(Icons.Outlined.Mail, contentDescription = null) },
-            infoLabel = stringResource(Res.string.settings_dialog_attach_log_file_label),
-            info = stringResource(Res.string.settings_dialog_attach_log_file_text),
-            title = {
-                Text(stringResource(Res.string.settings_feedback))
-            },
-            buttons = DialogDefaults.buttons(
-                positive = DialogButton(stringResource(Res.string.yes)),
-                negative = DialogButton(stringResource(Res.string.no))
-            )
-        ) {
-            when (it) {
-                is DialogEvent.Button -> {
-                    when (it.button) {
-                        DialogButtonType.Positive -> Platform.sendFeedback?.invoke(
-                            true,
-                            setup.fileLogger.setup
-                        )
-
-                        DialogButtonType.Negative -> Platform.sendFeedback?.invoke(
-                            false,
-                            setup.fileLogger.setup
-                        )
-                    }
-                }
-
-                DialogEvent.Dismissed -> {
-                    // nichts
                 }
             }
         }

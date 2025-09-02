@@ -6,6 +6,7 @@ import com.michaelflisar.composechangelog.Changelog
 import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.themes.DefaultThemes
+import com.michaelflisar.toolbox.app.classes.Developer
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.backup.IBackupSupport
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
@@ -13,6 +14,7 @@ import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.proversion.BaseAppProVersionManager
 
 class AppSetup(
+    val developer: Developer = Developer.Author(Constants.DEVELOPER_NAME, Constants.DEVELOPER_EMAIL),
     val versionCode: Int,
     val versionName: String,
     val packageName: String,

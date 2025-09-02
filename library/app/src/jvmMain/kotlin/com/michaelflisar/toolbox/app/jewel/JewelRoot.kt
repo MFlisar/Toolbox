@@ -1,14 +1,17 @@
 package com.michaelflisar.toolbox.app.jewel
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.input.key.NativeKeyEvent
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.features.appstate.JewelAppState
+import com.michaelflisar.toolbox.app.features.filekit.LocalFileKitDialogSettingsState
+import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import kotlinx.coroutines.launch
 import org.jetbrains.jewel.window.DecoratedWindow
 import org.jetbrains.jewel.window.DecoratedWindowScope
@@ -18,6 +21,9 @@ import org.jetbrains.jewel.window.defaultDecoratedWindowStyle
 fun JewelRoot(
     jewelAppState: JewelAppState,
     appIsClosing: MutableState<Boolean>,
+    onClosed: (suspend () -> Unit)?,
+    onPreviewKeyEvent: (NativeKeyEvent) -> Boolean,
+    onKeyEvent: (NativeKeyEvent) -> Boolean,
     content: @Composable DecoratedWindowScope.() -> Unit,
 ) {
     val setup = CommonApp.setup
@@ -31,7 +37,7 @@ fun JewelRoot(
         DecoratedWindow(
             onCloseRequest = {
                 scope.launch {
-                    desktopSetup.onClosed?.invoke()
+                    onClosed?.invoke()
                     appIsClosing.value = true
                 }
             },
@@ -43,12 +49,13 @@ fun JewelRoot(
             enabled = desktopSetup.enabled,
             focusable = desktopSetup.focusable,
             alwaysOnTop = alwaysOnTop,
-            onPreviewKeyEvent = desktopSetup.onPreviewKeyEvent,
-            onKeyEvent = desktopSetup.onKeyEvent,
+            onPreviewKeyEvent = onPreviewKeyEvent,
+            onKeyEvent = onKeyEvent,
             style = org.jetbrains.jewel.foundation.theme.JewelTheme.defaultDecoratedWindowStyle,
             content = {
-                JewelLocalWindowProvider(
-                    window = this.window
+                CompositionLocalProvider(
+                    LocalJewelWindowState provides window,
+                    LocalFileKitDialogSettingsState provides FileKitDialogSettings(window),
                 ) {
                     content()
                 }

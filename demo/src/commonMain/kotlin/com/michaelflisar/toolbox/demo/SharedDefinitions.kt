@@ -21,6 +21,7 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.Constants
+import com.michaelflisar.toolbox.app.classes.Developer
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.actions.ActionItem
@@ -72,6 +73,7 @@ object SharedDefinitions : INavigationDefinition {
      *      => sonst geht der language picker nicht
      */
     fun createBaseAppSetup(
+        developer: Developer = Developer.Author(Constants.DEVELOPER_NAME, Constants.DEVELOPER_EMAIL),
         prefs: BasePrefs,
         debugStorage: Storage,
         icon: @Composable () -> Painter = { appIcon() },
@@ -79,6 +81,7 @@ object SharedDefinitions : INavigationDefinition {
         backupSupport: IBackupSupport?,
         isDebugBuild: Boolean,
     ) = AppSetup(
+        developer = developer,
         versionCode = BuildKonfig.versionCode,
         versionName = BuildKonfig.versionName,
         packageName = BuildKonfig.packageName,

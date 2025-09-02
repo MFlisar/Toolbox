@@ -34,11 +34,11 @@ object NavigationUtil {
         val itemsSetting = definition.pageSetting.toActionItem().toNavItem().let { listOf(it) }
 
         return listOfNotNull(
-            regionLabelMainPages?.let { NavItemRegion(it) }?.let { listOf(it) },
+            regionLabelMainPages?.let { NavItemRegion(it) }?.let { listOf(it) }.takeIf { definition.pagesMain.isNotEmpty() },
             definition.pagesMain.map { it.toActionItem().toNavItem() },
-            regionLabelMainActions?.let { NavItemRegion(it) }?.let { listOf(it) },
+            regionLabelMainActions?.let { NavItemRegion(it) }?.let { listOf(it) }.takeIf { itemsCustomAction.isNotEmpty() },
             itemsCustomAction,
-            NavItemSpacer().let { listOf(it) },
+            listOf(NavItemSpacer()),
             itemsSetting
         ).flatten()
     }
@@ -102,7 +102,9 @@ object NavigationUtil {
 
         val subItems = listOfNotNull(itemsProVersion + itemsCustomAction + additionalMenu + itemsSettings)
             .flatten()
-            .removeConsecutiveSeparators()
+            .let {
+                removeConsecutiveSeparators(it)
+            }
 
         return if (groupedInMoreItem) {
             listOfNotNull(
@@ -235,8 +237,8 @@ object NavigationUtil {
         )
     }
 
-    private fun List<MenuItem>.removeConsecutiveSeparators(): List<MenuItem> {
-        return fold(mutableListOf<MenuItem>()) { acc, item ->
+    fun removeConsecutiveSeparators(items: List<MenuItem>): List<MenuItem> {
+        return items.fold(mutableListOf<MenuItem>()) { acc, item ->
             if (item is MenuItem.Separator && acc.lastOrNull() is MenuItem.Separator) {
                 acc // überspringen
             } else {

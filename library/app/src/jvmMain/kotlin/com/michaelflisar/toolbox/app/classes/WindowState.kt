@@ -25,6 +25,8 @@ import com.michaelflisar.toolbox.app.WindowUtil
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
@@ -78,6 +80,7 @@ fun WindowState.resetWindowPosition(density: Density, window: ComposeWindow) = r
     position = true
 )
 
+@OptIn(FlowPreview::class)
 @Composable
 fun rememberJewelWindowState(
     prefs: DesktopPrefs,
@@ -86,23 +89,12 @@ fun rememberJewelWindowState(
     val scope = rememberCoroutineScope()
 
     val windowState by prefs.windowState.collectAsStateNotNull()
-
-    /*val state = rememberWindowState(
-        placement = windowState.windowPlacement,
-        position = WindowPosition(
-            windowState.windowX.dp,
-            windowState.windowY.dp
-        ),
-        size = DpSize(
-            windowState.windowWidth.dp,
-            windowState.windowHeight.dp,
-        )
-    )*/
     val state = remember(windowState) { windowState.toWindowState() }
 
     snapshotFlow {
         JewelWindowState(state)
     }
+        .debounce(500)
         .distinctUntilChanged()
         .onEach {
             withContext(Dispatchers.IO) {

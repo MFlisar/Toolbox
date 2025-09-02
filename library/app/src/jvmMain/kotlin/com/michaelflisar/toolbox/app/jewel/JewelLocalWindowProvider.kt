@@ -9,15 +9,3 @@ import com.michaelflisar.toolbox.app.features.appstate.LocalJewelAppState
 
 val LocalJewelWindowState =
     compositionLocalOf<ComposeWindow> { throw RuntimeException("JewelWindowState not initialised!") }
-
-@Composable
-fun JewelLocalWindowProvider(
-    window: ComposeWindow,
-    content: @Composable () -> Unit,
-) {
-    CompositionLocalProvider(
-        LocalJewelWindowState provides window
-    ) {
-        content()
-    }
-}

@@ -21,6 +21,7 @@ import com.michaelflisar.composepreferences.screen.button.PreferenceButton
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.features.filekit.LocalFileKitDialogSettingsState
 import com.michaelflisar.toolbox.backup.BackupDefaults
 import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.backup.ui.BackupDialog
@@ -153,7 +154,8 @@ internal fun PreferenceGroupScope.BasePreferencesBackup(
             )
         },
         files = backup.backupContent,
-        backupManager = BackupManager
+        backupManager = BackupManager,
+        fileKitDialogSettings = LocalFileKitDialogSettingsState.current
     )
 
 }

@@ -1,5 +1,6 @@
 package com.michaelflisar.toolbox.demo
 
+import androidx.compose.ui.window.application
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.PlatformContext
@@ -28,21 +29,24 @@ fun main() {
 
     SharedDefinitions.update(PlatformContext.NONE, setup)
 
-    DesktopApp(
-        setup = setup,
-        desktopSetup = desktopSetup,
-        screen = SharedDefinitions.defaultPage,
-        navigationItems = {
-            NavigationUtil.getRailNavigationItems(
-                definition = SharedDefinitions,
-                regionLabelMainPages = "Pages",
-                regionLabelMainActions = "Actions"
-            )
-        },
-        menuItems = {
-            JvmNavigationUtil.getDesktopMenuItems(
-                definition = SharedDefinitions
-            )
-        }
-    )
+    application {
+
+        DesktopApp(
+            setup = setup,
+            desktopSetup = desktopSetup,
+            screen = SharedDefinitions.defaultPage,
+            navigationItems = {
+                NavigationUtil.getRailNavigationItems(
+                    definition = SharedDefinitions,
+                    regionLabelMainPages = "Pages",
+                    regionLabelMainActions = "Actions"
+                )
+            },
+            menuItems = {
+                JvmNavigationUtil.getDesktopMenuItems(
+                    definition = SharedDefinitions
+                )
+            }
+        )
+    }
 }

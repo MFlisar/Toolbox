@@ -17,3 +17,6 @@ expect val Platform.restart: ((context: PlatformContext) -> Unit)?
 
 @Composable
 expect fun Platform.UpdateComposeThemeStatusBar(activity: Any?, composeThemeState: ComposeTheme.State)
+
+@Composable
+expect fun Platform.isDarkTheme(): Boolean

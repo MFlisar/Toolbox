@@ -1,7 +1,5 @@
 <resources>
 
-	<string name="author" translatable="false">Michael Flisar</string>
-	
 	 <!-- Acra -->
     <string name="crash_dialog_title">App crashed</string>
     <string name="crash_dialog_text">An unexpected error occurred. Please help me to fix this by sending me the error data by clicking OK.</string>
@@ -85,6 +83,7 @@
     <!-- Compose -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="cancel">Cancel</string>
     <string name="error_invalid_input">Invalid input</string>
     <string name="error_invalid_length">Invalid length</string>
     <string name="error_too_low">Too low</string>

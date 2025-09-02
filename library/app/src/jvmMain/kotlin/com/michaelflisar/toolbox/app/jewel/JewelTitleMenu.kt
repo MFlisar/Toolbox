@@ -18,8 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
-import com.michaelflisar.toolbox.extensions.Render
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
+import com.michaelflisar.toolbox.app.features.navigation.NavigationUtil
+import com.michaelflisar.toolbox.extensions.Render
 import org.jetbrains.jewel.ui.component.ActionButton
 import org.jetbrains.jewel.ui.component.Icon
 import org.jetbrains.jewel.ui.component.MenuScope
@@ -32,6 +33,7 @@ import org.jetbrains.jewel.window.defaultTitleBarStyle
 fun JewelTitleMenu(
     items: List<MenuItem>,
 ) {
+    val items = remember(items) { NavigationUtil.removeConsecutiveSeparators(items) }
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)

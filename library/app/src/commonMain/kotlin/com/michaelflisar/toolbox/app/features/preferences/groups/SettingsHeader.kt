@@ -22,7 +22,6 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.core.resources.Res
-import com.michaelflisar.toolbox.core.resources.author
 import com.michaelflisar.toolbox.core.resources.by_name
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyRow
@@ -61,17 +60,21 @@ fun PreferenceGroupScope.SettingsHeader(
             }
         }
     ) {
-        SettingsHeaderContent()
+        SettingsHeaderContent(Modifier.fillMaxWidth())
     }
 }
 
 @Composable
-fun SettingsHeaderContent() {
+fun SettingsHeaderContent(
+    modifier: Modifier = Modifier
+) {
     val setup = CommonApp.setup
     val versionCode = setup.versionCode
     val versionName = setup.versionName
-    MyColumn {
-        MyRow(modifier = Modifier.fillMaxWidth()) {
+    MyColumn(
+        modifier = modifier
+    ) {
+        MyRow {
             Image(
                 painter = setup.icon(),
                 contentDescription = null,
@@ -90,7 +93,7 @@ fun SettingsHeaderContent() {
                     color = LocalContentColor.current.variant()
                 )
                 Text(
-                    text = stringResource(Res.string.by_name, stringResource(Res.string.author)),
+                    text = stringResource(Res.string.by_name, setup.developer.name),
                     style = MaterialTheme.typography.bodySmall,
                     fontStyle = FontStyle.Italic,
                     color = LocalContentColor.current.variant()

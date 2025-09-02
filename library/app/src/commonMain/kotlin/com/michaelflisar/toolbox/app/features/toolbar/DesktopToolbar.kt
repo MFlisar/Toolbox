@@ -24,8 +24,15 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
 import com.michaelflisar.toolbox.app.features.navigation.navItemContainer
+import com.michaelflisar.toolbox.app.features.navigation.screen.INavScreen
 import com.michaelflisar.toolbox.app.features.toolbar.parts.ToolbarBackButton
 import com.michaelflisar.toolbox.app.features.toolbar.parts.ToolbarTitle
+import com.michaelflisar.toolbox.components.MyRow
+
+interface IDesktopToolbarContentProvider {
+    @Composable
+    fun ToolbarContent()
+}
 
 @ExperimentalMaterial3Api
 @Composable
@@ -47,12 +54,21 @@ fun DesktopToolbar(
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.toolbar)
         ) {
-            ToolbarTitle(toolbarData, modifier = Modifier.align(Alignment.Center).padding(8.dp))
-            CompositionLocalProvider(
-                LocalMinimumInteractiveComponentSize provides 0.dp
-            ) {
-                ToolbarBackButton(showBackButton, onBack)
+            if (currentNavScreen is IDesktopToolbarContentProvider) {
+                MyRow {
+                    ToolbarBackButton(showBackButton, onBack)
+                    ToolbarTitle(toolbarData, modifier = Modifier.padding(8.dp).weight(1f))
+                    currentNavScreen.ToolbarContent()
+                }
+            } else {
+                ToolbarTitle(toolbarData, modifier = Modifier.align(Alignment.Center).padding(8.dp))
+                CompositionLocalProvider(
+                    LocalMinimumInteractiveComponentSize provides 0.dp
+                ) {
+                    ToolbarBackButton(showBackButton, onBack)
+                }
             }
+
         }
     }
 }

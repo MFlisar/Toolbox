@@ -16,15 +16,13 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composepreferences.core.classes.PreferenceState
-import com.michaelflisar.composepreferences.core.classes.rememberPreferenceState
-import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.parcelize.IgnoredOnParcel
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreenBackPressHandler
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.app.features.preferences.BaseAppPreferences
-import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
+import com.michaelflisar.toolbox.app.features.preferences.AppPreferences
+import com.michaelflisar.toolbox.app.features.preferences.AppPreferencesStyle
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_settings
 import com.michaelflisar.toolbox.extensions.toIconComposable
@@ -32,6 +30,9 @@ import org.jetbrains.compose.resources.stringResource
 import kotlin.jvm.Transient
 
 abstract class PageSettings : NavScreen() {
+
+    abstract val style: AppPreferencesStyle
+        @Composable get
 
     @Transient
     @IgnoredOnParcel
@@ -49,17 +50,7 @@ abstract class PageSettings : NavScreen() {
 
     @Composable
     override fun Screen() {
-        val state = rememberPreferenceState()
-        DisposableEffect(state) {
-            //L.i { "PageSettingsScreen: DisposableEffect called" }
-            preferenceState.value = state
-            onDispose {
-                preferenceState.value = null
-            }
-        }
-        Page(state, addThemeSetting) {
-            CustomContent()
-        }
+        Page(style, preferenceState)
     }
 
     override val navScreenBackPressHandler = NavScreenBackPressHandler(
@@ -68,17 +59,13 @@ abstract class PageSettings : NavScreen() {
     )
 
     open val addThemeSetting: Boolean = true
-
-    @Composable
-    abstract fun PreferenceGroupScope.CustomContent()
 }
 
 @Composable
 private fun Page(
-    preferenceState: PreferenceState,
-    addThemeSetting: Boolean,
-    paddingValues: PaddingValues = PaddingValues(0.dp),
-    customContent: @Composable PreferenceGroupScope.() -> Unit,
+    style: AppPreferencesStyle,
+    preferenceState: MutableState<PreferenceState?>,
+    paddingValues: PaddingValues = PaddingValues(0.dp)
 ) {
     Column(
         modifier = Modifier
@@ -89,16 +76,13 @@ private fun Page(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         val navigator = LocalNavigator.current
-        BaseAppPreferences(
+        AppPreferences(
+            style = style,
             showProVersionDialog = rememberDialogState(),
-            preferenceState = preferenceState,
+            onPreferenceStateChanged = { preferenceState.value = it },
             // the screen handles the back press itself, so we don't want to handle it here
             // inside a dialog it should handle the back press automatically though
             handleBackPress = navigator != null
-        ) {
-            if (addThemeSetting)
-                PreferenceSettingsTheme(true)
-            customContent()
-        }
+        )
     }
 }

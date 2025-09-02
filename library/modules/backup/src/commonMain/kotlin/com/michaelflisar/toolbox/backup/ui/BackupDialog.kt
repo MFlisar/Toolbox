@@ -36,6 +36,7 @@ import com.michaelflisar.toolbox.core.resources.backup_importing
 import com.michaelflisar.toolbox.core.resources.backup_select_file
 import com.michaelflisar.toolbox.core.resources.backup_waiting_for_file
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.dialogs.compose.rememberFileSaverLauncher
@@ -92,6 +93,7 @@ fun BackupDialog(
     exportFileName: @Composable () -> String,
     files: List<ZipFileContent>,
     backupManager: BackupManager,
+    fileKitDialogSettings: FileKitDialogSettings,
     extension: String = "zip",
 ) {
     if (dialogState.visible) {
@@ -125,11 +127,12 @@ fun BackupDialog(
 
         // https://github.com/vinceglb/FileKit/issues/111
         // https://github.com/vinceglb/FileKit/blob/main/filekit-dialogs-compose/src/webMain/kotlin/io/github/vinceglb/filekit/dialogs/compose/FileKitCompose.web.kt#L16
-        val createFilePicker = rememberFileSaverLauncher {
+        val createFilePicker = rememberFileSaverLauncher(fileKitDialogSettings) {
             selectedFile.value = it
         }
         val openFilePicker = rememberFilePickerLauncher(
-            type = FileKitType.File(extensions = listOf(extension))
+            type = FileKitType.File(extensions = listOf(extension)),
+            dialogSettings = fileKitDialogSettings
         ) {
             selectedFile.value = it
         }

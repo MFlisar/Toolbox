@@ -1,6 +1,6 @@
 [versions]
 
-gradle =                            "8.12.1"
+gradle =                            "8.12.2"
 kotlin = 				            "2.2.10"
 ksp =                               "2.2.10-2.0.2"
 desugar =                           "2.1.5"

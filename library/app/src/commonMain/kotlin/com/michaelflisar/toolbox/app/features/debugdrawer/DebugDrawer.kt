@@ -1,18 +1,13 @@
 package com.michaelflisar.toolbox.app.features.debugdrawer
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BrightnessHigh
-import androidx.compose.material.icons.filled.BrightnessLow
-import androidx.compose.material.icons.filled.BrightnessMedium
 import androidx.compose.material.icons.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Mail
-import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Style
 import androidx.compose.material.icons.outlined.Visibility
@@ -29,49 +24,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.navigator.LocalNavigator
 import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerButton
-import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerCheckbox
-import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerDropdown
 import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerRegion
-import com.michaelflisar.composedebugdrawer.core.composables.DebugDrawerSegmentedButtons
 import com.michaelflisar.composedebugdrawer.plugin.kotpreferences.getDebugLabel
 import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composepreferences.core.PreferenceScreen
-import com.michaelflisar.composepreferences.core.PreferenceSection
 import com.michaelflisar.composepreferences.core.classes.PreferenceSettingsDefaults
 import com.michaelflisar.composepreferences.core.classes.rememberPreferenceState
-import com.michaelflisar.composepreferences.core.styles.DefaultStyle
 import com.michaelflisar.composepreferences.core.styles.ModernStyle
 import com.michaelflisar.composepreferences.screen.bool.PreferenceBool
-import com.michaelflisar.composethemer.ComposeTheme
-import com.michaelflisar.composethemer.isDynamicColorsSupported
-import com.michaelflisar.composethemer.isSystemContrastSupported
-import com.michaelflisar.composethemer.picker.composables.ThemeColorPreview
-import com.michaelflisar.composethemer.picker.rememberMultiLevelThemePicker
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.app.CommonApp
-import com.michaelflisar.toolbox.app.Constants
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.logging.LogManager
-import com.michaelflisar.toolbox.app.features.preferences.BaseAppPreferences
-import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsThemeContent
-import com.michaelflisar.toolbox.app.features.preferences.singles.PrefContrast
-import com.michaelflisar.toolbox.app.features.preferences.singles.PrefDarkLight
-import com.michaelflisar.toolbox.app.features.preferences.singles.PrefDynamicTheme
-import com.michaelflisar.toolbox.app.features.preferences.singles.PrefTheme
-import com.michaelflisar.toolbox.app.features.preferences.singles.PrefToolbarStyle
-import com.michaelflisar.toolbox.core.resources.Res
-import com.michaelflisar.toolbox.core.resources.settings_theme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.stringResource
 
 internal expect val supportsBuildAndDeviceInfos: Boolean
 
@@ -256,13 +229,13 @@ fun DebugDrawer(
 
     // Logging
     val fileLogger = setup.fileLogger
-    if (showRegionLogging && fileLogger != null) {
+    if (showRegionLogging && fileLogger != null && setup.developer.email.isNotEmpty()) {
         // TODO: funktioniert das auf platformen != android? intern wird nämlich feedback genutzt!!!
         // + setup sollte nullable sein
         DebugDrawerLumberjack(
             drawerState = drawerState,
             setup = fileLogger.setup,
-            mailReceiver = Constants.DEVELOPER_EMAIL
+            mailReceiver = setup.developer.email
         )
     }
 
