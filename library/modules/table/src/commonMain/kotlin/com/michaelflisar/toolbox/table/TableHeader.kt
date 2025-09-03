@@ -2,19 +2,28 @@ package com.michaelflisar.toolbox.table
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.FilterAltOff
+import androidx.compose.material.icons.filled.Sort
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyTooltipBox
@@ -39,14 +48,11 @@ class TableHeaderColors constructor(
 fun <T> TableHeader(
     state: TableState<T>,
     title: @Composable () -> Unit = {},
-    textResetFilter: String = "Reset filter",
     textResetSort: String = "Reset sort",
     modifier: Modifier = Modifier,
     colors: TableHeaderColors = TableDefaults.headerColors(),
     additionalMenuContent: @Composable RowScope.() -> Unit = {}
 ) {
-    val filterIsActive = state.filterIsActive.value
-
     TableRow(
         modifier = modifier
             .fillMaxWidth()
@@ -59,31 +65,34 @@ fun <T> TableHeader(
         title()
         Spacer(modifier = modifier.weight(1f))
         AnimatedVisibility(
-            visible = filterIsActive
-        ) {
-            MyTooltipBox(
-                tooltip = textResetFilter
-            ) {
-                MyIconButton(
-                    icon = Icons.Default.FilterAltOff,
-                    onClick = {
-                        state.clearFilter()
-                    }
-                )
-            }
-        }
-        AnimatedVisibility(
             visible = state.sorts.isNotEmpty()
         ) {
             MyTooltipBox(
                 tooltip = textResetSort
             ) {
-                MyIconButton(
-                    icon = Icons.Default.Clear,
-                    onClick = {
-                        state.sorts.clear()
+                Box(
+                    contentAlignment = Alignment.Center
+                ) {
+                    MyIconButton(
+                        icon = Icons.Default.Sort,
+                        onClick = {
+                            state.sorts.clear()
+                        }
+                    )
+                    val color = LocalContentColor.current
+                    Canvas(
+                        modifier = Modifier
+                            .size(24.dp)
+                        //.padding(8.dp)
+                    ) {
+                        drawLine(
+                            color = color,
+                            start = Offset(0f, 0f),
+                            end = Offset(size.width, size.height),
+                            strokeWidth = 2f
+                        )
                     }
-                )
+                }
             }
         }
         additionalMenuContent()

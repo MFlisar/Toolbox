@@ -66,7 +66,10 @@ abstract class Filter<Item, CellValue> {
     }
 
     @Composable
-    fun render(compact: Boolean = false) {
+    fun render(
+        compact: Boolean = false,
+        text: String = "Filter"
+    ) {
         if (compact) {
             MyRow {
                 Icon(Icons.Default.FilterAlt, null)
@@ -78,7 +81,7 @@ abstract class Filter<Item, CellValue> {
         } else {
             MyRow {
                 Icon(Icons.Default.FilterAlt, null)
-                Text(modifier = Modifier.weight(1f), text = "Filter", fontWeight = FontWeight.Bold)
+                Text(modifier = Modifier.weight(1f), text = text, fontWeight = FontWeight.Bold)
                 header()
             }
             Column(

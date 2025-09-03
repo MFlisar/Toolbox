@@ -137,14 +137,14 @@ object SharedDefinitions : INavigationDefinition {
 
     @Composable
     override fun actionCustom(): List<ActionItem.Action> = listOf(
-        //actionTest()
+        actionTest()
     )
 
     @Composable
     private fun actionTest(): ActionItem.Action {
         val appState = LocalAppState.current
         return ActionItem.Action(
-            title = "TEST Action",
+            title = "GLOBAL TEST Action",
             icon = Icons.Default.ArrowRight.toIconComposable(),
             action = {
                 appState.showSnackbar("Test clicked")

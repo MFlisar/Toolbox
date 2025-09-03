@@ -57,7 +57,7 @@ fun MyChip(
             )
         ) {
             if (icon != null) {
-                Box(modifier = Modifier.size(18.dp)) {
+                Box(modifier = Modifier.size(18.dp), contentAlignment = Alignment.Center) {
                     icon()
                 }
 
@@ -71,7 +71,7 @@ fun MyChip(
                 )
             }
             if (endIcon != null) {
-                Box(modifier = Modifier.size(18.dp)) {
+                Box(modifier = Modifier.size(18.dp), contentAlignment = Alignment.Center) {
                     endIcon()
                 }
             }
@@ -112,16 +112,14 @@ fun MyChip(
                 Alignment.CenterHorizontally
             )
         ) {
-
             if (icon != null) {
-
-                Box(modifier = Modifier.size(18.dp)) {
+                Box(modifier = Modifier.size(18.dp), contentAlignment = Alignment.Center) {
                     icon()
                 }
             }
             content()
             if (endIcon != null) {
-                Box(modifier = Modifier.size(18.dp)) {
+                Box(modifier = Modifier.size(18.dp), contentAlignment = Alignment.Center) {
                     endIcon()
                 }
             }

@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.table.data
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -41,7 +42,8 @@ fun <T> rememberTableState(
                             valid = column.isFilterValid(row.item)
                         }
                         if (valid && textFilter.value.isNotEmpty()) {
-                            valid = row.cells.joinToString { it.displayValue() }.contains(textFilter.value, ignoreCase = true)
+                            valid = row.cells.joinToString { it.displayValue() }
+                                .contains(textFilter.value, ignoreCase = true)
                         }
                         if (!valid) {
                             break
@@ -70,7 +72,7 @@ fun <T> rememberTableState(
                 }
             }
         }
-        listOf(textFilter, rows,filteredList, sortedList)
+        listOf(textFilter, rows, filteredList, sortedList)
     }
 
     val filter = data[0] as MutableState<String>
@@ -85,12 +87,46 @@ fun <T> rememberTableState(
     //}
     //val page = remember(pages) { mutableIntStateOf(0) }
 
-    val filterIsActive = remember(definition.columns, filter.value) {
+
+    val textFilterIsActive = remember(filter.value) {
         derivedStateOf {
-            filter.value.isNotEmpty() || definition.columns.map { it.filter?.isActive() ?: false }.contains(true)
+            filter.value.isNotEmpty()
         }
     }
-    return TableState(items, definition, filter, /*pages, page,*/ sorts, selectedRows, allRows, filteredRows, sortedRows, filterIsActive)
+    val columnFilterIsActive = remember(definition.columns) {
+        derivedStateOf {
+            definition.columns.map { it.filter?.isActive() ?: false }.contains(true)
+        }
+    }
+
+    val filterState = remember {
+        derivedStateOf {
+            TableFilterState(
+                textFilterIsActive.value,
+                columnFilterIsActive.value
+            )
+        }
+    }
+
+    return TableState(
+        items,
+        definition,
+        filter, /*pages, page,*/
+        sorts,
+        selectedRows,
+        allRows,
+        filteredRows,
+        sortedRows,
+        filterState
+    )
+}
+
+@Stable
+class TableFilterState(
+    val isTextFilterActive: Boolean = false,
+    val isColumnFilterActive: Boolean = false
+) {
+    var isActive = isTextFilterActive || isColumnFilterActive
 }
 
 class TableState<T>(
@@ -104,10 +140,15 @@ class TableState<T>(
     val allRows: List<Row<T>>,
     val filteredRows: List<Row<T>>,
     val sortedRows: List<Row<T>>,
-    val filterIsActive: State<Boolean>
+    val filterState: State<TableFilterState>
 ) {
-    fun clearFilter() {
-        definition.clearFilter()
-        filter.value = ""
+    fun clearFilter(
+        textFilter: Boolean,
+        columnFilters: Boolean
+    ) {
+        if (columnFilters)
+            definition.clearFilter()
+        if (textFilter)
+            filter.value = ""
     }
 }

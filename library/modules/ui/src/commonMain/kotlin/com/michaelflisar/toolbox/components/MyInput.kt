@@ -32,11 +32,13 @@ fun MyInput(
     readOnly: Boolean = false,
     enabled: Boolean = true,
     focusable: Boolean = true,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
-    MyInput(modifier, title, value.value, minLines, maxLines, readOnly, enabled, focusable, colors, keyboardOptions, keyboardActions) {
+    MyInput(modifier, title, value.value, minLines, maxLines, readOnly, enabled, focusable, placeholder, leadingIcon, colors, keyboardOptions, keyboardActions) {
         value.value = it
     }
 }
@@ -51,6 +53,8 @@ fun MyInput(
     readOnly: Boolean = false,
     enabled: Boolean = true,
     focusable: Boolean = true,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -68,6 +72,8 @@ fun MyInput(
         } else null,
         readOnly = readOnly,
         enabled = enabled,
+        placeholder = placeholder,
+        leadingIcon = leadingIcon,
         trailingIcon = if (!readOnly && enabled && value.isNotEmpty()) {
             {
                 Icon(

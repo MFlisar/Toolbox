@@ -1,27 +1,28 @@
 package com.michaelflisar.toolbox.table
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.FilterAlt
+import androidx.compose.material.icons.filled.FilterAltOff
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
@@ -35,21 +36,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.components.MyChip
+import com.michaelflisar.toolbox.components.MyColumn
+import com.michaelflisar.toolbox.components.MyFlowRow
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyInput
-import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.components.MyTooltipBox
-import com.michaelflisar.toolbox.extensions.variant
+import com.michaelflisar.toolbox.feature.menu.MenuItem
+import com.michaelflisar.toolbox.feature.menu.PopupMenu
+import com.michaelflisar.toolbox.feature.menu.rememberMenuState
 import com.michaelflisar.toolbox.table.data.TableState
+import com.michaelflisar.toolbox.table.definitions.Column
 import com.michaelflisar.toolbox.table.ui.TableRow
-import com.michaelflisar.toolbox.ui.MyScrollableRow
 
 @Immutable
 class TableSearchBarColors constructor(
@@ -73,10 +76,9 @@ fun <T> TableSearchBar(
     state: TableState<T>,
     modifier: Modifier = Modifier,
     textSearch: String = "Search",
-    textClearAllFilters: String = "Clear all filters",
+    textResetFilter: String = "Reset filter",
     showTextSearch: Boolean = true,
     showColumnFilters: Boolean = true,
-    searchWidth: Dp = 256.dp,
     shape: Shape = MaterialTheme.shapes.medium,
     colors: TableSearchBarColors = TableDefaults.searchBarColors()
 ) {
@@ -94,87 +96,124 @@ fun <T> TableSearchBar(
         borderColor = colors.borderColor,
         horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
     ) {
-        if (showTextSearch) {
-            Text(text = textSearch)
-            MyInput(
-                //title = textSearch,
-                modifier = Modifier.width(searchWidth),
-                value = state.filter,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = LocalContentColor.current,
-                    unfocusedTextColor = LocalContentColor.current,
-                    cursorColor = LocalContentColor.current,
-                    focusedPlaceholderColor = LocalContentColor.current,
-                    unfocusedPlaceholderColor = LocalContentColor.current,
-                    focusedLabelColor = LocalContentColor.current,
-                    unfocusedLabelColor = LocalContentColor.current,
-                    focusedBorderColor = MaterialTheme.colorScheme.outline,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                    focusedTrailingIconColor = LocalContentColor.current,
-                    unfocusedTrailingIconColor = LocalContentColor.current,
-                    focusedLeadingIconColor = LocalContentColor.current,
-                    unfocusedLeadingIconColor = LocalContentColor.current,
+        MyColumn {
+            if (showTextSearch) {
+                MyInput(
+                    leadingIcon = { Icon(Icons.Default.Search, null) },
+                    placeholder = { Text(textSearch) },
+                    //modifier = Modifier.width(searchWidth),
+                    value = state.filter,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = LocalContentColor.current,
+                        unfocusedTextColor = LocalContentColor.current,
+                        cursorColor = LocalContentColor.current,
+                        focusedPlaceholderColor = LocalContentColor.current,
+                        unfocusedPlaceholderColor = LocalContentColor.current,
+                        focusedLabelColor = LocalContentColor.current,
+                        unfocusedLabelColor = LocalContentColor.current,
+                        focusedBorderColor = MaterialTheme.colorScheme.outline,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedTrailingIconColor = LocalContentColor.current,
+                        unfocusedTrailingIconColor = LocalContentColor.current,
+                        focusedLeadingIconColor = LocalContentColor.current,
+                        unfocusedLeadingIconColor = LocalContentColor.current,
+                    )
                 )
-            )
-        }
-        if (showColumnFilters) {
-            MyScrollableRow(
-                modifier = Modifier
-                    .weight(1f),
-                verticalAlignment = Alignment.CenterVertically,
-                overlapScrollbar = true
-            ) {
-                state.definition.columns.filter { it.filter != null }
-                    .forEach {
-                        val show = remember { mutableStateOf(false) }
-                        Box {
-                            val filter = it.filter!!
-                            val label by remember(filter.state.value) {
-                                derivedStateOf {
-                                    if (!filter.isActive()) {
-                                        it.header.label
-                                    } else {
-                                        it.header.label + " " + filter.info()
+            }
+            if (showColumnFilters) {
+                MyFlowRow(
+                    verticalAlignment = Alignment.CenterVertically,
+                    verticalItemAlignment = Alignment.CenterVertically,
+                ) {
+                    Crossfade(
+                        targetState = state.filterState.value.isColumnFilterActive
+                    ) { active ->
+                        if (active) {
+                            MyTooltipBox(
+                                tooltip = textResetFilter
+                            ) {
+                                MyIconButton(
+                                    icon = Icons.Default.FilterAltOff,
+                                    onClick = {
+                                        state.clearFilter(textFilter = false, columnFilters = true)
                                     }
-                                }
+                                )
                             }
-                            MyRow {
-                                MyChip(
-                                    onClick = { show.value = true }
-                                ) {
-                                    Text(
-                                        text = label,
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        color = if (filter.isActive()) LocalContentColor.current else LocalContentColor.current.variant()
-                                    )
-                                    Icon(
-                                        modifier = Modifier.size(18.dp),
-                                        imageVector = Icons.Default.ArrowDropDown,
-                                        contentDescription = null,
-                                    )
-                                    AnimatedVisibility(
-                                        visible = filter.isActive()
-                                    ) {
-                                        CompositionLocalProvider(
-                                            LocalMinimumInteractiveComponentSize provides 0.dp
-                                        ) {
-                                            MyIconButton(
-                                                modifier = Modifier.size(18.dp),
-                                                icon = Icons.Default.Clear,
-                                                onClick = { filter.clear() }
-                                            )
+                        } else {
+                            Icon(
+                                Icons.Default.FilterAlt,
+                                null,
+                                modifier = Modifier.minimumInteractiveComponentSize()
+                            )
+                        }
+                    }
+
+                    state.definition.columns.filter { it.filter != null }
+                        .forEach { column ->
+                            if (column.filter?.isActive() == true) {
+                                val label by remember(column.filter.state.value) {
+                                    derivedStateOf {
+                                        if (!column.filter.isActive()) {
+                                            column.header.label
+                                        } else {
+                                            column.header.label + " " + column.filter.info()
                                         }
                                     }
                                 }
-
+                                MyChip(
+                                    //title = label,
+                                    endIcon = {
+                                        Icon(
+                                            imageVector = Icons.Default.Clear,
+                                            contentDescription = null,
+                                            //modifier = Modifier.size(12.dp)
+                                        )
+                                    },
+                                    onClick = {
+                                        column.filter.clear()
+                                    }
+                                ) {
+                                    Text(label)
+                                }
                             }
-                            if (show.value) {
+
+                        }
+                    CompositionLocalProvider(
+                        LocalMinimumInteractiveComponentSize provides 0.dp
+                    ) {
+                        val menu = rememberMenuState()
+                        val subMenu = remember { mutableStateOf<Column<*, *>?>(null) }
+                        IconButton(
+                            modifier = Modifier.size(24.dp),
+                            onClick = { menu.show() }
+                        ) {
+                            Icon(Icons.Default.Add, null)
+
+                            // Main Menu
+                            PopupMenu(
+                                state = menu,
+                                //setup = rememberMenuSetup(autoDismiss = false)
+                            ) {
+                                state.definition.columns.filter { it.filter != null }
+                                    .forEach { column ->
+                                        MenuItem(
+                                            text = {
+                                                Text(column.header.label)
+                                            },
+                                            onClick = {
+                                                subMenu.value = column
+                                            },
+                                            enabled = column.filter?.isActive() == false
+                                        )
+                                    }
+                            }
+
+                            // SubMenu
+                            subMenu.value?.let { column ->
                                 val popupWidth = 256.dp
                                 Popup(
                                     alignment = Alignment.TopEnd,
-                                    onDismissRequest = {
-                                        show.value = false
-                                    },
+                                    onDismissRequest = { subMenu.value = null },
                                     properties = PopupProperties(focusable = true),
                                     offset = IntOffset(
                                         with(LocalDensity.current) { (popupWidth / 2 - 12.dp).roundToPx() },
@@ -191,28 +230,14 @@ fun <T> TableSearchBar(
                                                 .width(popupWidth),
                                             verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
                                         ) {
-                                            filter.render(compact = true)
+                                            column.filter!!.render(compact = false, text = column.header.label)
                                         }
                                     }
-
                                 }
                             }
                         }
                     }
-                Spacer(modifier.width(1.dp).height(LocalMinimumInteractiveComponentSize.current))
-            }
-            AnimatedVisibility(visible = state.filterIsActive.value) {
-                MyTooltipBox(
-                    tooltip = textClearAllFilters
-                ) {
-                    MyIconButton(
-                        icon = Icons.Default.Clear,
-                        onClick = {
-                            state.clearFilter()
-                        }
-                    )
                 }
-
             }
         }
     }
