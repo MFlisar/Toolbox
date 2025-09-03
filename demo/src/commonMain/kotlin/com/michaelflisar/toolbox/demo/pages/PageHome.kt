@@ -56,7 +56,7 @@ object PageHomeScreen : NavScreen() {
         val actionText = "Page Home Action"
         return listOf(
             MenuItem.Group(
-                text = stringResource(com.michaelflisar.toolbox.demo.resources.Res.string.page_home),
+                text = stringResource(Res.string.page_home),
                 icon = Icons.Default.Pages.toIconComposable(),
                 items = listOf(
                     MenuItem.Item(

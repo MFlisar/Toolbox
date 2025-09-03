@@ -102,9 +102,7 @@ object NavigationUtil {
 
         val subItems = listOfNotNull(itemsProVersion + itemsCustomAction + additionalMenu + itemsSettings)
             .flatten()
-            .let {
-                removeConsecutiveSeparators(it)
-            }
+            .removeConsecutiveSeparators()
 
         return if (groupedInMoreItem) {
             listOfNotNull(
@@ -194,6 +192,7 @@ object NavigationUtil {
             ).takeIf { it.items.isNotEmpty() }?.let { listOf(it) }
         )
             .flatten()
+            .removeConsecutiveSeparators()
 
         return listOfNotNull(
             MenuItem.Group(
@@ -236,17 +235,16 @@ object NavigationUtil {
             ).takeIf { it.items.isNotEmpty() }
         )
     }
+}
 
-    fun removeConsecutiveSeparators(items: List<MenuItem>): List<MenuItem> {
-        return items.fold(mutableListOf<MenuItem>()) { acc, item ->
-            if (item is MenuItem.Separator && acc.lastOrNull() is MenuItem.Separator) {
-                acc // überspringen
-            } else {
-                acc.also { it.add(item) }
-            }
+fun List<MenuItem>.removeConsecutiveSeparators(): List<MenuItem> {
+    return fold(mutableListOf<MenuItem>()) { acc, item ->
+        if (item is MenuItem.Separator && acc.lastOrNull() is MenuItem.Separator) {
+            acc // überspringen
+        } else {
+            acc.also { it.add(item) }
         }
-            .dropWhile { it is MenuItem.Separator }
-            .dropLastWhile { it is MenuItem.Separator }
     }
-
+        .dropWhile { it is MenuItem.Separator }
+        .dropLastWhile { it is MenuItem.Separator }
 }
