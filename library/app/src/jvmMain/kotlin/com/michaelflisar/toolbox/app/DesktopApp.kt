@@ -106,6 +106,48 @@ object DesktopAppDefaults {
         }
     }
 
+    object StatusBarDefaults {
+
+        fun getItemsLeft(
+            showAppIconLeft: Boolean = true,
+            showAppVersionLeft: Boolean = true,
+            onAppIconClick: (() -> Unit)? = null,
+            onAppVersionClick: (() -> Unit)? = null,
+        ): List<JewelStatusBarItem> {
+            val setup = CommonApp.setup
+            return listOfNotNull(
+                JewelStatusBarItem.Custom {
+                    Image(
+                        painter = setup.icon(),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp).padding(4.dp)
+                            .then(
+                                if (onAppIconClick != null) {
+                                    Modifier.clickable { onAppIconClick() }
+                                } else Modifier
+                            )
+                    )
+                }.takeIf { showAppIconLeft },
+                JewelStatusBarItem.Text("App Version: ${setup.versionName}", onClick = onAppVersionClick).takeIf { showAppVersionLeft }
+            )
+        }
+
+        fun getItemsRight(
+            showJavaVersionRight: Boolean = true,
+            showUserNameRight: Boolean = true,
+            showHostNameRight: Boolean = true,
+            onJavaVersionClick: (() -> Unit)? = null,
+            onUserNameClick: (() -> Unit)? = null,
+            onHostNameClick: (() -> Unit)? = null,
+        ): List<JewelStatusBarItem> {
+            return listOfNotNull(
+                JewelStatusBarItem.Text(JvmUtil.javaVersion(), onClick = onJavaVersionClick).takeIf { showJavaVersionRight },
+                JewelStatusBarItem.Text(JvmUtil.userName(), onClick = onUserNameClick).takeIf { showUserNameRight },
+                JewelStatusBarItem.Text(JvmUtil.hostName(), onClick = onHostNameClick).takeIf { showHostNameRight }
+            )
+        }
+    }
+
     @Composable
     fun StatusBar(
         showAppIconLeft: Boolean = true,
@@ -121,28 +163,8 @@ object DesktopAppDefaults {
         foreground: Color = Color.Unspecified,
         background: Color = Color.Unspecified
     ) {
-        val setup = CommonApp.setup
-        val appState = LocalAppState.current
-        val statusBarLeft = listOfNotNull(
-            JewelStatusBarItem.Custom {
-                Image(
-                    painter = setup.icon(),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp).padding(4.dp)
-                        .then(
-                            if (onAppIconClick != null) {
-                                Modifier.clickable { onAppIconClick() }
-                            } else Modifier
-                        )
-                )
-            }.takeIf { showAppIconLeft },
-            JewelStatusBarItem.Text("App Version: ${setup.versionName}", onClick = onAppVersionClick).takeIf { showAppVersionLeft }
-        )
-        val statusBarRight = listOfNotNull(
-            JewelStatusBarItem.Text(JvmUtil.javaVersion(), onClick = onJavaVersionClick).takeIf { showJavaVersionRight },
-            JewelStatusBarItem.Text(JvmUtil.userName(), onClick = onUserNameClick).takeIf { showUserNameRight },
-            JewelStatusBarItem.Text(JvmUtil.hostName(), onClick = onHostNameClick).takeIf { showHostNameRight }
-        )
+        val statusBarLeft = StatusBarDefaults.getItemsLeft(showAppIconLeft, showAppVersionLeft, onAppIconClick, onAppVersionClick)
+        val statusBarRight = StatusBarDefaults.getItemsRight(showJavaVersionRight, showUserNameRight, showHostNameRight, onJavaVersionClick, onUserNameClick, onHostNameClick)
         if (statusBarLeft.isEmpty() && statusBarRight.isEmpty()) {
             return // nothing to show
         }
