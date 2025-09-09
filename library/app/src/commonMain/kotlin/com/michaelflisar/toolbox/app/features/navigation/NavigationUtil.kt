@@ -1,6 +1,8 @@
 package com.michaelflisar.toolbox.app.features.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Clear
@@ -13,6 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
+import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
@@ -119,6 +122,9 @@ object NavigationUtil {
         definition: INavigationDefinition,
         menuLabel: String = "App",
         menuWindowLabel: String = "Window",
+        menuDevLabel: String = "Dev",
+        menuIcon: IconComposable? = Icons.Default.Apps.toIconComposable(),
+        menuDevIcon: IconComposable? = Icons.Default.BugReport.toIconComposable(),
         labelResetWindowSize: String = "Reset Window Size",
         labelResetWindowPosition: String = "Reset Window Position",
         labelOpenDebugDrawer: String = "Open Debug Drawer",
@@ -150,7 +156,8 @@ object NavigationUtil {
         val showDebugDrawer by setup.debugPrefs.showDebugDrawer.collectAsStateNotNull()
         val debugMenu = if (showDebugDrawer) {
             MenuItem.Group(
-                text = "Dev",
+                text = menuDevLabel,
+                icon = menuDevIcon,
                 items = listOf(
                     MenuItem.Item(
                         icon = if (drawerState.drawerState.isOpen) Icons.Default.ChevronRight.toIconComposable() else Icons.Default.ChevronLeft.toIconComposable(),
@@ -197,7 +204,8 @@ object NavigationUtil {
         return listOfNotNull(
             MenuItem.Group(
                 text = menuLabel,
-                items = subItems
+                items = subItems,
+                icon = menuIcon,
             ).takeIf { it.items.isNotEmpty() },
             debugMenu
         )

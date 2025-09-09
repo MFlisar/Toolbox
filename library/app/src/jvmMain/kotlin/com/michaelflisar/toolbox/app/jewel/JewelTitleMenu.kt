@@ -10,25 +10,32 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
-import com.michaelflisar.toolbox.app.features.navigation.NavigationUtil
 import com.michaelflisar.toolbox.app.features.navigation.removeConsecutiveSeparators
 import com.michaelflisar.toolbox.extensions.Render
+import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.ui.component.ActionButton
 import org.jetbrains.jewel.ui.component.Icon
 import org.jetbrains.jewel.ui.component.MenuScope
 import org.jetbrains.jewel.ui.component.PopupMenu
 import org.jetbrains.jewel.ui.component.Text
 import org.jetbrains.jewel.ui.component.separator
+import org.jetbrains.jewel.ui.theme.iconButtonStyle
+import org.jetbrains.jewel.ui.theme.menuStyle
+import org.jetbrains.jewel.window.defaultDecoratedWindowStyle
 import org.jetbrains.jewel.window.defaultTitleBarStyle
+import org.jetbrains.jewel.window.styling.LocalTitleBarStyle
 
 @Composable
 fun JewelTitleMenu(
@@ -49,6 +56,7 @@ fun JewelTitleMenu(
                     ) {
                         TitleMenuItem(it.text, it.icon, TitleMenuItem.Dropdown(true))
                         if (popup.value) {
+                            val foreground = JewelTheme.globalColors.text.normal
                             PopupMenu(
                                 onDismissRequest = {
                                     popup.value = false
@@ -57,7 +65,7 @@ fun JewelTitleMenu(
                                 horizontalAlignment = Alignment.Start
                             ) {
                                 it.items.forEach {
-                                    titleMenuContent(it)
+                                    titleMenuContent(it, foreground)
                                 }
                             }
                         }
@@ -74,7 +82,9 @@ fun JewelTitleMenu(
 
                 }
 
-                is MenuItem.Separator -> VerticalDivider()
+                is MenuItem.Separator -> {
+                    VerticalDivider()
+                }
 
                 is MenuItem.Checkbox -> {
                     ActionButton(
@@ -110,8 +120,8 @@ private fun TitleMenuItem(
     type: TitleMenuItem,
 ) {
 
-    val jewelTitleTheme = org.jetbrains.jewel.foundation.theme.JewelTheme.defaultTitleBarStyle
-    val contentColor = org.jetbrains.jewel.foundation.theme.JewelTheme.contentColor
+    val jewelTitleTheme = JewelTheme.defaultTitleBarStyle
+    val contentColor = JewelTheme.contentColor
     val foreground = if (!type.root) contentColor else jewelTitleTheme.colors.content
 
     Row(
@@ -148,17 +158,28 @@ private fun TitleMenuItem(
     }
 }
 
-private fun MenuScope.titleMenuContent(item: MenuItem) {
+private fun MenuScope.titleMenuContent(item: MenuItem, contentColor: Color) {
     when (item) {
         is MenuItem.Separator -> {
-            separator()
+            if (item.text.isEmpty()) {
+                separator()
+            } else {
+                passiveItem {
+                    Text(
+                        text = item.text,
+                        modifier = Modifier.padding(8.dp),
+                        color = contentColor,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
+            }
         }
 
         is MenuItem.Group -> {
             submenu(
                 submenu = {
                     item.items.forEach {
-                        titleMenuContent(it)
+                        titleMenuContent(it, contentColor)
                     }
                 }
             ) {
