@@ -4,6 +4,7 @@ import androidx.compose.ui.window.application
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.PlatformContext
+import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.JvmNavigationUtil
 import com.michaelflisar.toolbox.app.features.navigation.NavigationUtil
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
@@ -30,23 +31,26 @@ fun main() {
     SharedDefinitions.update(PlatformContext.NONE, setup)
 
     application {
-
-        DesktopApp(
-            setup = setup,
-            desktopSetup = desktopSetup,
-            screen = SharedDefinitions.defaultPage,
-            navigationItems = {
-                NavigationUtil.getRailNavigationItems(
-                    definition = SharedDefinitions,
-                    regionLabelMainPages = "Pages",
-                    regionLabelMainActions = "Actions"
-                )
-            },
-            menuItems = {
-                JvmNavigationUtil.getDesktopMenuItems(
-                    definition = SharedDefinitions
-                )
-            }
-        )
+        AppNavigator(
+            screen = SharedDefinitions.defaultPage
+        ) { navigator ->
+            DesktopApp(
+                setup = setup,
+                desktopSetup = desktopSetup,
+                navigator = navigator,
+                navigationItems = {
+                    NavigationUtil.getRailNavigationItems(
+                        definition = SharedDefinitions,
+                        regionLabelMainPages = "Pages",
+                        regionLabelMainActions = "Actions"
+                    )
+                },
+                menuItems = {
+                    JvmNavigationUtil.getDesktopMenuItems(
+                        definition = SharedDefinitions
+                    )
+                }
+            )
+        }
     }
 }

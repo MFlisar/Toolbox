@@ -121,7 +121,6 @@ data object JewelNavigationItemDivider : IJewelNavigationItem
 
 object JewelNavigation {
     class Setup(
-        val expanded: Boolean = false,
         val showExpand: Boolean = true,
         val minWidth: Dp = 0.dp,
     )
@@ -145,9 +144,9 @@ fun JewelNavigationContainer(
 fun JewelNavigation(
     items: List<IJewelNavigationItem>,
     selected: (screen: Screen) -> Boolean,
+    expanded: MutableState<Boolean> = remember { mutableStateOf(false) },
     setup: JewelNavigation.Setup = JewelNavigation.Setup(),
 ) {
-    val expanded = remember { mutableStateOf(setup.expanded) }
     Rail(items, selected, expanded, setup)
 }
 

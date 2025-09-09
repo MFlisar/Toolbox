@@ -2,9 +2,11 @@ package com.michaelflisar.toolbox.demo
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.window.CanvasBasedWindow
 import com.michaelflisar.toolbox.app.WasmApp
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.classes.WasmAppSetup
+import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.NavigationUtil
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.preferences.Preferences
@@ -28,11 +30,17 @@ suspend fun main() {
 
     SharedDefinitions.update(PlatformContext.NONE, setup)
 
-    WasmApp(
-        setup = setup,
-        wasmSetup = wasmSetup,
-        screen = SharedDefinitions.defaultPage,
-        navigationItems = { NavigationUtil.getWebNavigationItems(SharedDefinitions) },
-        menuItems = { NavigationUtil.getWebMenuItems(SharedDefinitions) }
-    )
+    CanvasBasedWindow(wasmSetup.title, canvasElementId = wasmSetup.canvasElementId) {
+        AppNavigator(
+            screen = SharedDefinitions.defaultPage
+        ) { navigator ->
+            WasmApp(
+                setup = setup,
+                wasmSetup = wasmSetup,
+                navigator = navigator,
+                navigationItems = { NavigationUtil.getWebNavigationItems(SharedDefinitions) },
+                menuItems = { NavigationUtil.getWebMenuItems(SharedDefinitions) }
+            )
+        }
+    }
 }

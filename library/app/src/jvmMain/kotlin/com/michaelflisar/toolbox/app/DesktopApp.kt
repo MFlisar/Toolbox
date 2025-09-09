@@ -10,33 +10,25 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.NativeKeyEvent
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ApplicationScope
-import androidx.compose.ui.window.application
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
-import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
-import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberJewelAppState
-import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeTransition
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.app.features.root.Root
-import com.michaelflisar.toolbox.app.features.root.RootNavigator
+import com.michaelflisar.toolbox.app.features.root.RootLocalProvider
 import com.michaelflisar.toolbox.app.features.scaffold.DesktopScaffold
 import com.michaelflisar.toolbox.app.jewel.JewelApp
 import com.michaelflisar.toolbox.app.jewel.JewelExitHandler
@@ -48,16 +40,10 @@ import com.michaelflisar.toolbox.app.jewel.JewelStatusBarItem
 import com.michaelflisar.toolbox.app.jewel.JewelTitleBar
 import com.michaelflisar.toolbox.app.jewel.JewelTitleBarSetup
 import com.michaelflisar.toolbox.app.jewel.JewelTitleMenu
-import com.michaelflisar.toolbox.app.jewel.LocalJewelWindowState
 import com.michaelflisar.toolbox.app.jewel.toJewelNavigationItems
 import com.michaelflisar.toolbox.utils.JvmUtil
 import io.github.vinceglb.filekit.FileKit
-import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.window.DecoratedWindowScope
-import org.jetbrains.jewel.window.defaultTitleBarStyle
 
 object DesktopApp {
 
@@ -126,7 +112,10 @@ object DesktopAppDefaults {
                         )
                 )
             }.takeIf { showAppIconLeft },
-            JewelStatusBarItem.Text("App Version: ${setup.versionName}", onClick = onAppVersionClick).takeIf { showAppVersionLeft }
+            JewelStatusBarItem.Text(
+                "App Version: ${setup.versionName}",
+                onClick = onAppVersionClick
+            ).takeIf { showAppVersionLeft }
         )
     }
 
@@ -139,9 +128,12 @@ object DesktopAppDefaults {
         onHostNameClick: (() -> Unit)? = null,
     ): List<JewelStatusBarItem> {
         return listOfNotNull(
-            JewelStatusBarItem.Text(JvmUtil.javaVersion(), onClick = onJavaVersionClick).takeIf { showJavaVersionRight },
-            JewelStatusBarItem.Text(JvmUtil.userName(), onClick = onUserNameClick).takeIf { showUserNameRight },
-            JewelStatusBarItem.Text(JvmUtil.hostName(), onClick = onHostNameClick).takeIf { showHostNameRight }
+            JewelStatusBarItem.Text(JvmUtil.javaVersion(), onClick = onJavaVersionClick)
+                .takeIf { showJavaVersionRight },
+            JewelStatusBarItem.Text(JvmUtil.userName(), onClick = onUserNameClick)
+                .takeIf { showUserNameRight },
+            JewelStatusBarItem.Text(JvmUtil.hostName(), onClick = onHostNameClick)
+                .takeIf { showHostNameRight }
         )
     }
 
@@ -160,8 +152,20 @@ object DesktopAppDefaults {
         foreground: Color = Color.Unspecified,
         background: Color = Color.Unspecified
     ) {
-        val statusBarLeft = getDefaultStatusBarItemsLeft(showAppIconLeft, showAppVersionLeft, onAppIconClick, onAppVersionClick)
-        val statusBarRight = getDefaultStatusBarItemsRight(showJavaVersionRight, showUserNameRight, showHostNameRight, onJavaVersionClick, onUserNameClick, onHostNameClick)
+        val statusBarLeft = getDefaultStatusBarItemsLeft(
+            showAppIconLeft,
+            showAppVersionLeft,
+            onAppIconClick,
+            onAppVersionClick
+        )
+        val statusBarRight = getDefaultStatusBarItemsRight(
+            showJavaVersionRight,
+            showUserNameRight,
+            showHostNameRight,
+            onJavaVersionClick,
+            onUserNameClick,
+            onHostNameClick
+        )
         if (statusBarLeft.isEmpty() && statusBarRight.isEmpty()) {
             return // nothing to show
         }
@@ -183,7 +187,7 @@ object DesktopAppDefaults {
  *
  * @param setup The general app setup.
  * @param desktopSetup The specific desktop app setup.
- * @param screen The initial screen to display.
+ * @param navigator the voyager navigator instance
  * @param navigationItems A composable function that provides the list of navigation items.
  * @param menuItems A composable function that provides the list of menu items.
  * @param titlebar A composable function for the title bar, defaulting to [DesktopAppDefaults.TitleBar].
@@ -193,12 +197,19 @@ object DesktopAppDefaults {
 fun ApplicationScope.DesktopApp(
     setup: AppSetup,
     desktopSetup: DesktopAppSetup,
-    screen: Screen,
+    navigator: Navigator,
     navigationItems: @Composable () -> List<INavItem>,
     menuItems: @Composable () -> List<MenuItem>,
     // customisation
-    titlebar: @Composable DecoratedWindowScope.() -> Unit = { DesktopAppDefaults.TitleBar(this,desktopSetup.prefs,  menuItems()) },
+    titlebar: @Composable DecoratedWindowScope.() -> Unit = {
+        DesktopAppDefaults.TitleBar(
+            this,
+            desktopSetup.prefs,
+            menuItems()
+        )
+    },
     statusbar: @Composable () -> Unit = { DesktopAppDefaults.StatusBar() },
+    navigationExpanded: MutableState<Boolean> = remember { mutableStateOf(false) },
     // JVM specific
     onClosed: (suspend () -> Unit)? = null,
     onPreviewKeyEvent: (NativeKeyEvent) -> Boolean = { false },
@@ -237,7 +248,7 @@ fun ApplicationScope.DesktopApp(
             }
 
             val appState = rememberAppState()
-            RootNavigator(appState, screen, setRootLocals = true) { navigator ->
+            RootLocalProvider(appState, setRootLocals = true) {
                 Column {
                     titlebar()
                     Root(
@@ -254,7 +265,8 @@ fun ApplicationScope.DesktopApp(
                                 navigation = {
                                     JewelNavigation(
                                         items = jewelItems,
-                                        selected = { it == navigator.lastItem }
+                                        selected = { it == navigator.lastItem },
+                                        expanded = navigationExpanded
                                     )
                                 },
                                 content = {

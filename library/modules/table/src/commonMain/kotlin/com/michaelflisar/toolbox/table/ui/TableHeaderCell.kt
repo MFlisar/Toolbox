@@ -389,7 +389,7 @@ private fun HeaderPopup(
                         }
                     }
 
-                    filter?.render()
+                    filter?.Render(style = Filter.Style.HeaderPopup())
                 }
             }
 

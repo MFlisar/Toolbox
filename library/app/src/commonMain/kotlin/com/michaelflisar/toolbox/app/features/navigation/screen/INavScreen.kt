@@ -25,4 +25,7 @@ interface INavScreen : Screen, Parcelable {
         )
     }
 
+     @Composable
+     fun toNavItem() = toActionItem().toNavItem()
+
 }

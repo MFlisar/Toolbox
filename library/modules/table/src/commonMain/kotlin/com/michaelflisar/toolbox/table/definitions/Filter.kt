@@ -35,6 +35,11 @@ import kotlin.enums.EnumEntries
 
 abstract class Filter<Item, CellValue> {
 
+    sealed class Style {
+        class HeaderPopup(val text: String = "Filter") : Style()
+        class ChipPopup(val text: String) : Style()
+    }
+
     abstract val state: MutableState<*>
     abstract fun isValid(item: Item, itemToValue: (item: Item) -> CellValue): Boolean
     abstract fun isActive(): Boolean
@@ -66,30 +71,35 @@ abstract class Filter<Item, CellValue> {
     }
 
     @Composable
-    fun render(
-        compact: Boolean = false,
-        text: String = "Filter"
+    fun Render(
+        style: Style
     ) {
-        if (compact) {
-            MyRow {
-                Icon(Icons.Default.FilterAlt, null)
-                header()
-                Column {
+        when (style) {
+            is Style.HeaderPopup -> {
+                MyRow {
+                    Icon(Icons.Default.FilterAlt, null)
+                    Text(modifier = Modifier.weight(1f), text = style.text, fontWeight = FontWeight.Bold)
+                    header()
+                }
+                Column(
+                    modifier = Modifier
+                        .padding(start = 32.dp)
+                        .fillMaxWidth()
+                ) {
                     content()
                 }
             }
-        } else {
-            MyRow {
-                Icon(Icons.Default.FilterAlt, null)
-                Text(modifier = Modifier.weight(1f), text = text, fontWeight = FontWeight.Bold)
-                header()
-            }
-            Column(
-                modifier = Modifier
-                    .padding(start = 32.dp)
-                    .fillMaxWidth()
-            ) {
-                content()
+            is Style.ChipPopup -> {
+                MyRow {
+                    Icon(Icons.Default.FilterAlt, null)
+                    Text(text = style.text, fontWeight = FontWeight.Bold)
+                }
+                MyRow {
+                    header()
+                    Column {
+                        content()
+                    }
+                }
             }
         }
     }

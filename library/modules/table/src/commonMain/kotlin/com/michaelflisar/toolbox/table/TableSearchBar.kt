@@ -3,10 +3,11 @@ package com.michaelflisar.toolbox.table
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -15,7 +16,6 @@ import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.FilterAltOff
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +26,7 @@ import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +37,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -47,11 +50,14 @@ import com.michaelflisar.toolbox.components.MyFlowRow
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyTooltipBox
+import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.extensions.variant
 import com.michaelflisar.toolbox.feature.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 import com.michaelflisar.toolbox.feature.menu.rememberMenuState
 import com.michaelflisar.toolbox.table.data.TableState
 import com.michaelflisar.toolbox.table.definitions.Column
+import com.michaelflisar.toolbox.table.definitions.Filter
 import com.michaelflisar.toolbox.table.ui.TableRow
 
 @Immutable
@@ -148,89 +154,95 @@ fun <T> TableSearchBar(
                         }
                     }
 
-                    state.definition.columns.filter { it.filter != null }
-                        .forEach { column ->
-                            if (column.filter?.isActive() == true) {
-                                val label by remember(column.filter.state.value) {
-                                    derivedStateOf {
-                                        if (!column.filter.isActive()) {
-                                            column.header.label
-                                        } else {
-                                            column.header.label + " " + column.filter.info()
-                                        }
-                                    }
-                                }
-                                MyChip(
-                                    //title = label,
-                                    endIcon = {
-                                        Icon(
-                                            imageVector = Icons.Default.Clear,
-                                            contentDescription = null,
-                                            //modifier = Modifier.size(12.dp)
-                                        )
-                                    },
-                                    onClick = {
-                                        column.filter.clear()
-                                    }
-                                ) {
-                                    Text(label)
-                                }
-                            }
+                    // remembed selected filters IN ORDER
+                    val currentFilter = state.definition.columns.filter { it.filter != null && it.filter.isActive() }
+                    val filter = remember { mutableStateOf(currentFilter) }
+                    LaunchedEffect(currentFilter) {
+                        val add = currentFilter.filter { it !in filter.value }
+                        val remove = filter.value.filter { it !in currentFilter }
+                        filter.value = (filter.value - remove) + add
+                    }
 
+                    filter.value.forEach { column ->
+                        MyChip(
+                            //title = label,
+                            endIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Clear,
+                                    contentDescription = null,
+                                    //modifier = Modifier.size(12.dp)
+                                )
+                            },
+                            onClick = {
+                                column.filter!!.clear()
+                            }
+                        ) {
+                            Row {
+                                Text(column.header.label, fontWeight = FontWeight.SemiBold)
+                                Text(" ")
+                                Text(column.filter!!.info())
+                            }
                         }
+                    }
                     CompositionLocalProvider(
                         LocalMinimumInteractiveComponentSize provides 0.dp
                     ) {
                         val menu = rememberMenuState()
                         val subMenu = remember { mutableStateOf<Column<*, *>?>(null) }
-                        IconButton(
-                            modifier = Modifier.size(24.dp),
+                        MyChip(
                             onClick = { menu.show() }
                         ) {
-                            Icon(Icons.Default.Add, null)
+                            Box {
+                                Icon(Icons.Default.Add, null)
 
-                            // Main Menu
-                            PopupMenu(
-                                state = menu,
-                                //setup = rememberMenuSetup(autoDismiss = false)
-                            ) {
-                                state.definition.columns.filter { it.filter != null }
-                                    .forEach { column ->
-                                        MenuItem(
-                                            text = {
-                                                Text(column.header.label)
-                                            },
-                                            onClick = {
-                                                subMenu.value = column
-                                            },
-                                            enabled = column.filter?.isActive() == false
-                                        )
-                                    }
-                            }
-
-                            // SubMenu
-                            subMenu.value?.let { column ->
-                                val popupWidth = 256.dp
-                                Popup(
-                                    alignment = Alignment.TopEnd,
-                                    onDismissRequest = { subMenu.value = null },
-                                    properties = PopupProperties(focusable = true),
-                                    offset = IntOffset(
-                                        with(LocalDensity.current) { (popupWidth / 2 - 12.dp).roundToPx() },
-                                        with(LocalDensity.current) { 32.dp.roundToPx() }
-                                    )
+                                // Main Menu
+                                PopupMenu(
+                                    state = menu,
+                                    //setup = rememberMenuSetup(autoDismiss = false)
                                 ) {
-                                    Surface(
-                                        shape = MaterialTheme.shapes.medium,
-                                        tonalElevation = 8.dp,
-                                        shadowElevation = 8.dp
+                                    state.definition.columns.filter { it.filter != null }
+                                        .forEach { column ->
+                                            MenuItem(
+                                                text = {
+                                                    Text(column.header.label)
+                                                },
+                                                onClick = {
+                                                    subMenu.value = column
+                                                },
+                                                enabled = column.filter?.isActive() == false
+                                            )
+                                        }
+                                }
+
+
+                                // SubMenu
+                                subMenu.value?.let { column ->
+                                    val popupWidth = 256.dp
+                                    Popup(
+                                        alignment = Alignment.TopEnd,
+                                        onDismissRequest = { subMenu.value = null },
+                                        properties = PopupProperties(focusable = true),
+                                        offset = IntOffset(
+                                            with(LocalDensity.current) { (popupWidth / 2 - 12.dp).roundToPx() },
+                                            with(LocalDensity.current) { 32.dp.roundToPx() }
+                                        )
                                     ) {
-                                        Column(
-                                            modifier = Modifier.padding(LocalStyle.current.paddingDefault)
-                                                .width(popupWidth),
-                                            verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
+                                        Surface(
+                                            shape = MaterialTheme.shapes.medium,
+                                            tonalElevation = 8.dp,
+                                            shadowElevation = 8.dp
                                         ) {
-                                            column.filter!!.render(compact = false, text = column.header.label)
+                                            Column(
+                                                modifier = Modifier.padding(LocalStyle.current.paddingDefault)
+                                                    .width(popupWidth),
+                                                verticalArrangement = Arrangement.spacedBy(
+                                                    LocalStyle.current.spacingDefault
+                                                )
+                                            ) {
+                                                column.filter!!.Render(
+                                                    style = Filter.Style.ChipPopup(column.header.label)
+                                                )
+                                            }
                                         }
                                     }
                                 }

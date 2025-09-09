@@ -15,7 +15,10 @@ import cafe.adriel.voyager.transitions.SlideTransition
 fun AppNavigator(
     screen: Screen,
     disposeBehavior: NavigatorDisposeBehavior = NavigatorDisposeBehavior(disposeSteps = false),
-    onBackPressed: OnBackPressed = { true },
+    onBackPressed: OnBackPressed = { screen ->
+        // does not work reliable (windows + esc key e.g.) => I use the BackHandler instead
+        false
+    },
     content: NavigatorContent = { CurrentScreen() },
 ) {
     Navigator(

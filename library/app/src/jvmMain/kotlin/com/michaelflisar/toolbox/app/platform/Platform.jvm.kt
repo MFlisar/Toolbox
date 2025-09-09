@@ -9,16 +9,12 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.app.classes.PlatformContext
+import com.michaelflisar.toolbox.app.createFileLogger
 import com.michaelflisar.toolbox.utils.JvmUtil
 import java.io.File
 
 actual val Platform.fileLogger: FileLogger<*>?
-    get() = FileLogger<FileLoggerSetup>(
-        setup = FileLoggerSetup.SingleFile.create(
-            file = File(System.getProperty("user.dir"), "log.txt")
-        ),
-        logger = { com.michaelflisar.lumberjack.loggers.file.FileLogger(it) }
-    )
+    get() = JvmUtil.createFileLogger()
 
 actual val Platform.restart: ((context: PlatformContext) -> Unit)?
     get() = { JvmUtil.restartApp() }
