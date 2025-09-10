@@ -4,6 +4,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
 import com.michaelflisar.toolbox.app.WasmApp
+import com.michaelflisar.toolbox.app.WasmAppContent
+import com.michaelflisar.toolbox.app.WasmToolbar
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.classes.WasmAppSetup
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
@@ -37,10 +39,22 @@ suspend fun main() {
             WasmApp(
                 setup = setup,
                 wasmSetup = wasmSetup,
-                navigator = navigator,
-                navigationItems = { NavigationUtil.getWebNavigationItems(SharedDefinitions) },
-                menuItems = { NavigationUtil.getWebMenuItems(SharedDefinitions) }
-            )
+                navigator = navigator
+            ) {
+                // theme + root (drawer state, app state) are available
+                WasmAppContent(
+                    toolbar = {
+                        WasmToolbar(
+                            navigationItems = {
+                                NavigationUtil.getWebNavigationItems(
+                                    SharedDefinitions
+                                )
+                            },
+                            menuItems = { NavigationUtil.getWebMenuItems(SharedDefinitions) }
+                        )
+                    }
+                )
+            }
         }
     }
 }

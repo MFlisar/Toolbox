@@ -18,10 +18,9 @@ import com.michaelflisar.toolbox.extensions.Render
 
 @Composable
 fun MobileNavigationBar(
-    items: @Composable () -> List<INavItem>,
+    items: List<INavItem>,
     showForSingleItem: Boolean = false
 ) {
-    val items = items()
     if (items.size <= 1 && !showForSingleItem) {
         return // no need to show the navigation bar if there is only one item
     }

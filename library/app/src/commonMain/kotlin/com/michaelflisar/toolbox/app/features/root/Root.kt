@@ -23,18 +23,12 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.composechangelog.Changelog
 import com.michaelflisar.composechangelog.statesaver.kotpreferences.ChangelogStateSaverKotPreferences
 import com.michaelflisar.composedebugdrawer.core.DebugDrawer
-import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
-import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
 import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
-import com.michaelflisar.toolbox.app.features.preferences.Preferences
-import com.michaelflisar.toolbox.app.features.preferences.rememberComposeTheme
-import com.michaelflisar.toolbox.app.platform.UpdateComposeThemeStatusBar
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.settings_changelog
 import org.jetbrains.compose.resources.stringResource
@@ -51,41 +45,31 @@ import org.jetbrains.compose.resources.stringResource
 fun Root(
     appState: AppState,
     setRootLocals: Boolean,
-    activity: Any? = null,
     dialogs: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     val setup = CommonApp.setup
-    val composeThemeState = Preferences.rememberComposeTheme()
     val showDebugDrawer by setup.debugPrefs.showDebugDrawer.collectAsStateNotNull()
-
-    ComposeTheme(
-        state = composeThemeState,
-        shapes = MaterialTheme.shapes,
-        typography = MaterialTheme.typography
-    ) {
-        Platform.UpdateComposeThemeStatusBar(activity, composeThemeState)
-        RootLocalProvider(appState, setRootLocals) {
-            val drawerState = LocalDebugDrawerState.current
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .onSizeChanged { appState.size.value = it },
-            ) {
-                DebugDrawer(
-                    enabled = setup.debugDrawer != null && showDebugDrawer,
-                    drawerState = drawerState,
-                    drawerContent = {
-                        setup.debugDrawer?.invoke(drawerState)
-                    },
-                    content = {
-                        content()
-                        NavBackHandler()
-                        RootDialogs()
-                        dialogs()
-                    }
-                )
-            }
+    RootLocalProvider(appState, setRootLocals) {
+        val drawerState = LocalDebugDrawerState.current
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .onSizeChanged { appState.size.value = it },
+        ) {
+            DebugDrawer(
+                enabled = setup.debugDrawer != null && showDebugDrawer,
+                drawerState = drawerState,
+                drawerContent = {
+                    setup.debugDrawer?.invoke(drawerState)
+                },
+                content = {
+                    content()
+                    NavBackHandler()
+                    RootDialogs()
+                    dialogs()
+                }
+            )
         }
     }
 }

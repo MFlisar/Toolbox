@@ -18,38 +18,13 @@ import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.root.Root
 import com.michaelflisar.toolbox.app.features.root.RootLocalProvider
 import com.michaelflisar.toolbox.app.features.scaffold.MobileScaffold
+import com.michaelflisar.toolbox.app.features.theme.AppThemeProvider
 import com.michaelflisar.toolbox.app.features.toolbar.WebToolbar
 import kotlinx.browser.document
 
 object WasmApp
 
-object WasmAppDefaults {
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun Toolbar(
-        navigationItems: @Composable () -> List<INavItem>,
-        menuItems: @Composable () -> List<MenuItem>,
-    ) {
-        val navigator = LocalNavigator.currentOrThrow
-        val canNavBackHandlerHandleBackPress = NavBackHandler.canHandleBackPress()
-
-        WebToolbar(
-            menuItems = menuItems(),
-            navigationItems = navigationItems,
-            showNavigationForSingleItem = false,
-            showBackButton = navigator.canPop,
-            onBack = {
-                if (canNavBackHandlerHandleBackPress) {
-                    // --
-                } else {
-                    navigator.pop()
-                }
-            }
-        )
-
-    }
-}
+object WasmAppDefaults
 
 /**
  * The main entry point for the wasm application.
@@ -61,8 +36,7 @@ object WasmAppDefaults {
  * @param wasmSetup The specific desktop app setup.
  * @param navigator the voyager navigator instance
  * @param navigationItems A composable function that provides the list of navigation items.
- * @param menuItems A composable function that provides the list of menu items.
- * @param toolbar A composable function that defines the toolbar layout. Defaults to [WasmAppDefaults.Toolbar].
+
  */
 @Composable
 @OptIn(ExperimentalComposeUiApi::class)
@@ -70,10 +44,7 @@ fun WasmApp(
     setup: AppSetup,
     wasmSetup: WasmAppSetup,
     navigator: Navigator,
-    navigationItems: @Composable () -> List<INavItem>,
-    menuItems: @Composable () -> List<MenuItem>,
-    // customisation
-    toolbar: @Composable () -> Unit = { WasmAppDefaults.Toolbar(navigationItems, menuItems) }
+    content: @Composable () -> Unit
 ) {
     // 1) init wasm app
     CommonApp.init(setup)
@@ -82,21 +53,62 @@ fun WasmApp(
     document.getElementById(wasmSetup.divLoadingElementId)?.remove()
 
     val appState = rememberAppState()
-    RootLocalProvider(appState, setRootLocals = true) {
-        Root(
-            appState = appState,
-            setRootLocals = false
-        ) {
-            MobileScaffold(
-                topBar = { toolbar() },
-                bottomBar = {
-                    // Nav Items are shown in the toolbar on web!
-                }
-            ) { paddingValues ->
-                Box(modifier = Modifier.padding(paddingValues)) {
-                    AppNavigatorFadeTransition(navigator)
-                }
+    AppThemeProvider {
+        RootLocalProvider(appState, setRootLocals = true) {
+            Root(
+                appState = appState,
+                setRootLocals = false
+            ) {
+                content()
             }
         }
     }
+}
+
+/**
+ * The main content composable for the wasm application.
+ *
+ * Layout: TitleBar + Navigation in title bar + Content
+ *
+ * @param menuItems A composable function that provides the list of menu items.
+ * @param toolbar A composable function that defines the toolbar layout. [WasmToolbar] should be used here.
+ */
+@Composable
+fun WasmAppContent(
+    toolbar: @Composable () -> Unit
+) {
+    val navigator = LocalNavigator.currentOrThrow
+    MobileScaffold(
+        topBar = { toolbar() },
+        bottomBar = {
+            // Nav Items are shown in the toolbar on web!
+        }
+    ) { paddingValues ->
+        Box(modifier = Modifier.padding(paddingValues)) {
+            AppNavigatorFadeTransition(navigator)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WasmToolbar(
+    navigationItems: @Composable () -> List<INavItem>,
+    menuItems: @Composable () -> List<MenuItem>,
+) {
+    val navigator = LocalNavigator.currentOrThrow
+    val canNavBackHandlerHandleBackPress = NavBackHandler.canHandleBackPress()
+    WebToolbar(
+        menuItems = menuItems(),
+        navigationItems = navigationItems,
+        showNavigationForSingleItem = false,
+        showBackButton = navigator.canPop,
+        onBack = {
+            if (canNavBackHandlerHandleBackPress) {
+                // --
+            } else {
+                navigator.pop()
+            }
+        }
+    )
 }

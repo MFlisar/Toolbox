@@ -1,13 +1,23 @@
 package com.michaelflisar.toolbox.demo
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.application
 import com.michaelflisar.toolbox.app.DesktopApp
+import com.michaelflisar.toolbox.app.DesktopAppContent
+import com.michaelflisar.toolbox.app.DesktopStatusBar
+import com.michaelflisar.toolbox.app.DesktopTitleBar
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.PlatformContext
+import com.michaelflisar.toolbox.app.features.dialogs.ErrorDialogProvider
+import com.michaelflisar.toolbox.app.features.dialogs.LocalErrorDialogState
+import com.michaelflisar.toolbox.app.features.dialogs.rememberErrorDialogState
+import com.michaelflisar.toolbox.app.features.dialogs.show
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
+import com.michaelflisar.toolbox.app.features.navigation.INavItem
 import com.michaelflisar.toolbox.app.features.navigation.JvmNavigationUtil
 import com.michaelflisar.toolbox.app.features.navigation.NavigationUtil
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
@@ -41,39 +51,75 @@ fun main() {
             DesktopApp(
                 setup = setup,
                 desktopSetup = desktopSetup,
-                navigator = navigator,
-                navigationItems = {
-                    NavigationUtil.getRailNavigationItems(
-                        definition = SharedDefinitions,
-                        regionLabelMainPages = "Pages",
-                        regionLabelMainActions = "Actions"
-                    )
-                },
-                menuItems = {
-                    JvmNavigationUtil.getDesktopMenuItems(
-                        definition = SharedDefinitions
-                    ) + MenuItem.Group(
-                        text = "Test",
-                        icon = Icons.Default.Folder.toIconComposable(),
-                        items = listOf(
-                            MenuItem.Separator(text = "Group 1"),
-                            MenuItem.Item("Action 1", Icons.Default.Folder.toIconComposable()) {
-                                // ...
-                            },
-                            MenuItem.Item("Action 2", Icons.Default.Folder.toIconComposable()) {
-                                // ...
-                            },
-                            MenuItem.Separator(text = "Group 2"),
-                            MenuItem.Item("Action 3", Icons.Default.Folder.toIconComposable()) {
-                                // ...
-                            },
-                            MenuItem.Item("Action 4", Icons.Default.Folder.toIconComposable()) {
-                                // ...
-                            },
-                        )
+                navigator = navigator
+            ) {
+                // theme + root (drawer state, app state) are available
+                ErrorDialogProvider {
+                    DesktopAppContent(
+                        navigationItems = provideNavigationItems(),
+                        titlebar = {
+                            DesktopTitleBar(
+                                menuItems = provideMenuItems()
+                            )
+                        },
+                        statusbar = { DesktopStatusBar() }
                     )
                 }
-            )
+            }
         }
     }
+}
+
+@Composable
+private fun provideMenuItems(): List<MenuItem> {
+    val errorDialogState = LocalErrorDialogState.current
+    return JvmNavigationUtil.getDesktopMenuItems(
+        definition = SharedDefinitions
+    ) + MenuItem.Group(
+        text = "Test",
+        icon = Icons.Default.Folder.toIconComposable(),
+        items = listOf(
+            MenuItem.Item(
+                "Error Dialog Test",
+                Icons.Default.Error.toIconComposable()
+            ) {
+                errorDialogState.show("Test Error", "This is a test error message")
+            },
+            MenuItem.Separator(text = "Group 1"),
+            MenuItem.Item(
+                "Action 1",
+                Icons.Default.Folder.toIconComposable()
+            ) {
+                // ...
+            },
+            MenuItem.Item(
+                "Action 2",
+                Icons.Default.Folder.toIconComposable()
+            ) {
+                // ...
+            },
+            MenuItem.Separator(text = "Group 2"),
+            MenuItem.Item(
+                "Action 3",
+                Icons.Default.Folder.toIconComposable()
+            ) {
+                // ...
+            },
+            MenuItem.Item(
+                "Action 4",
+                Icons.Default.Folder.toIconComposable()
+            ) {
+                // ...
+            },
+        )
+    )
+}
+
+@Composable
+private fun provideNavigationItems(): List<INavItem> {
+    return NavigationUtil.getRailNavigationItems(
+        definition = SharedDefinitions,
+        regionLabelMainPages = "Pages",
+        regionLabelMainActions = "Actions"
+    )
 }
