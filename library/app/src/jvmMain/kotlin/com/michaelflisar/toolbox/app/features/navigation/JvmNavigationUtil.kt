@@ -15,8 +15,8 @@ object JvmNavigationUtil {
         definition: INavigationDefinition,
         menuLabel: String = "App",
         menuWindowLabel: String = "Window",
-        labelResetWindowSize: String = "Reset Window Size",
-        labelResetWindowPosition: String = "Reset Window Position",
+        labelResetWindowSize: String = "Reset Size",
+        labelResetWindowPosition: String = "Center Window",
         labelOpenDebugDrawer: String = "Open Debug Drawer",
         labelCloseDebugDrawer: String = "Close Debug Drawer"
     ): List<MenuItem> {

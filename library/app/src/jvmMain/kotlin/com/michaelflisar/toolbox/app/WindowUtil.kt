@@ -1,5 +1,8 @@
 package com.michaelflisar.toolbox.app
 
+import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.ToolboxLogging
+import com.michaelflisar.toolbox.logIf
 import java.awt.GraphicsEnvironment
 import java.awt.Window
 
@@ -11,13 +14,13 @@ object WindowUtil {
             val config = gd.defaultConfiguration
             val screenBounds = config.bounds
             if (partlyOnly) {
-                if (windowBounds.intersects(screenBounds)) {
-                    return true
-                }
+                val intersects = windowBounds.intersects(screenBounds)
+                L.logIf(ToolboxLogging.Tag.Window)?.i { "intersects = $intersects (screenBounds = $screenBounds | windowBounds = $windowBounds)" }
+                return intersects
             } else {
-                if (screenBounds.contains(windowBounds)) {
-                    return true
-                }
+                val contains = screenBounds.contains(windowBounds)
+                L.logIf(ToolboxLogging.Tag.Window)?.i { "contains = $contains (screenBounds = $screenBounds | windowBounds = $windowBounds)" }
+                return contains
             }
         }
         return false

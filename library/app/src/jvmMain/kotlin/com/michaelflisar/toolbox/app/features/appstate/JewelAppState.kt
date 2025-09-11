@@ -32,13 +32,13 @@ fun rememberJewelAppState(
 class JewelAppState internal constructor(
     val windowState: WindowState,
 ) {
-    fun ensureIsAtLeastPartlyOnScreen(density: Density, window: ComposeWindow) {
+    suspend fun ensureIsAtLeastPartlyOnScreen(density: Density, window: ComposeWindow) {
         if (!WindowUtil.isWindowOnScreen(window, true)) {
             windowState.resetAll(density, window)
         }
     }
 
-    fun ensureIsFullyOnScreen(density: Density, window: ComposeWindow) {
+    suspend fun ensureIsFullyOnScreen(density: Density, window: ComposeWindow) {
         if (!WindowUtil.isWindowOnScreen(window, false)) {
             windowState.resetAll(density, window)
         }

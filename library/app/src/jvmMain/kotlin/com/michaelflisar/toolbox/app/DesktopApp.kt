@@ -27,6 +27,7 @@ import com.michaelflisar.toolbox.app.DesktopAppDefaults.getDefaultStatusBarItems
 import com.michaelflisar.toolbox.app.DesktopAppDefaults.getDefaultStatusBarItemsRight
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
+import com.michaelflisar.toolbox.app.features.appstate.LocalJewelAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberJewelAppState
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
@@ -173,7 +174,7 @@ fun ApplicationScope.DesktopApp(
         ) {
             val window = this.window
             val density = LocalDensity.current
-            LaunchedEffect(this.window) {
+            LaunchedEffect(density, window) {
                 jewelAppState.ensureIsFullyOnScreen(density, window)
             }
             val appState = rememberAppState()

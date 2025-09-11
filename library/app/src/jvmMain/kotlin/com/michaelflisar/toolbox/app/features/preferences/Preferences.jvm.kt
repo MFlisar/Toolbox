@@ -16,6 +16,7 @@ import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.jewel.JewelBaseTheme
 import com.michaelflisar.toolbox.app.jewel.JewelTheme
+import com.michaelflisar.toolbox.utils.JvmFolderUtil
 import com.michaelflisar.toolbox.utils.JvmUtil
 
 private fun JewelTheme.toAppBaseTheme(): Preferences.AppBaseTheme {
@@ -32,7 +33,7 @@ private val AppBaseThemeDark = JewelTheme.Dark.toAppBaseTheme()
 private val AppBaseThemeSystem = JewelTheme.System.toAppBaseTheme()
 
 actual fun Preferences.createStorage(name: String): Storage {
-    return DataStoreStorage.create(folder = JvmUtil.appDir(), name = name)
+    return DataStoreStorage.create(folder = JvmFolderUtil.getApplicationPath(), name = name)
 }
 
 actual val Preferences.BaseThemes: List<Preferences.AppBaseTheme>

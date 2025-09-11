@@ -202,3 +202,24 @@
 [D] 2025-08-24 10:59:48.525 [UpdateManager.kt:26]: lastVersion = 1 => currentVersion = 1 
 [D] 2025-08-24 11:00:38.914 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
 [D] 2025-08-24 11:00:38.888 [UpdateManager.kt:26]: lastVersion = 1 => currentVersion = 1 
+[I] 2025-09-11 14:48:38.512 [WindowUtil.kt:22]: contains = true (screenBounds = java.awt.Rectangle[x=0,y=0,width=1920,height=1080] | windowBounds = java.awt.Rectangle[x=433,y=106,width=1024,height=800])
+[I] 2025-09-11 14:48:51.301 [WindowUtil.kt:22]: contains = false (screenBounds = java.awt.Rectangle[x=0,y=0,width=1920,height=1080] | windowBounds = java.awt.Rectangle[x=1275,y=169,width=1024,height=800])
+[I] 2025-09-11 14:53:31.089 [WindowUtil.kt:22]: contains = false (screenBounds = java.awt.Rectangle[x=0,y=0,width=1920,height=1080] | windowBounds = java.awt.Rectangle[x=1275,y=169,width=1024,height=800])
+[I] 2025-09-11 14:54:39.908 [WindowUtil.kt:22]: contains = false (screenBounds = java.awt.Rectangle[x=0,y=0,width=1920,height=1080] | windowBounds = java.awt.Rectangle[x=1275,y=169,width=1024,height=800])
+[I] 2025-09-11 14:54:41.073 [WindowState.kt:96]: snapshotFlow = {w=1024, h=800, x=1275, y=169, placement=Floating}
+[I] 2025-09-11 14:57:05.516 [WindowUtil.kt:22]: contains = false (screenBounds = java.awt.Rectangle[x=0,y=0,width=1920,height=1080] | windowBounds = java.awt.Rectangle[x=1275,y=169,width=1024,height=800])
+[I] 2025-09-11 14:57:06.645 [WindowState.kt:97]: snapshotFlow = {w=1024, h=800, x=1275, y=169, placement=Floating}
+[I] 2025-09-11 15:00:26.028 [WindowUtil.kt:22]: contains = false (screenBounds = java.awt.Rectangle[x=0,y=0,width=1920,height=1080] | windowBounds = java.awt.Rectangle[x=1275,y=169,width=1024,height=800])
+[I] 2025-09-11 15:00:27.257 [WindowState.kt:101]: snapshotFlow = {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-11 15:00:27.268 [WindowState.kt:101]: snapshotFlow = {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-11 15:00:39.528 [WindowUtil.kt:22]: contains = true (screenBounds = java.awt.Rectangle[x=0,y=0,width=1920,height=1080] | windowBounds = java.awt.Rectangle[x=448,y=140,width=1024,height=800])
+[I] 2025-09-11 15:00:40.767 [WindowState.kt:101]: snapshotFlow = {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-11 15:02:08.617 [WindowState.kt:101]: snapshotFlow = {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-11 15:03:04.086 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-11 15:03:06.212 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=778, y=120, placement=Floating}
+[I] 2025-09-11 15:03:06.747 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=778, y=120, placement=Floating}
+[I] 2025-09-11 15:03:08.082 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=211, y=145, placement=Floating}
+[I] 2025-09-11 15:03:08.599 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=211, y=145, placement=Floating}
+[I] 2025-09-11 15:03:17.444 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=211, y=145, placement=Floating}
+[I] 2025-09-11 15:03:20.708 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-11 15:03:20.741 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=448, y=140, placement=Floating}

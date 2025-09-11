@@ -1,9 +1,8 @@
 package com.michaelflisar.toolbox.app.classes
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
@@ -14,11 +13,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
-import androidx.compose.ui.window.rememberWindowState
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.kotpreferences.core.SettingsConverter
 import com.michaelflisar.lumberjack.core.L
-import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.WindowUtil
@@ -28,20 +25,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.nio.file.AccessDeniedException
-import kotlin.div
 
-fun WindowState.resetAll(density: Density, window: ComposeWindow) {
+suspend fun WindowState.resetAll(density: Density, window: ComposeWindow) {
     reset(density, window, true, true, true)
 }
 
-fun WindowState.reset(
+suspend fun WindowState.reset(
     density: Density,
     window: ComposeWindow,
     placement: Boolean,
@@ -49,6 +45,7 @@ fun WindowState.reset(
     size: Boolean,
 ) {
     val prefs = DesktopApp.setup.prefs
+
     if (placement) {
         this.placement = prefs.windowState.defaultValue.windowPlacement
     }
@@ -62,17 +59,20 @@ fun WindowState.reset(
         val (x, y) = WindowUtil.calcCenteredPosition(window)
         this.position = WindowPosition(with(density) { x.toDp() }, with(density) { y.toDp() })
     }
+
+    prefs.windowState.update(JewelWindowState(this))
 }
 
-fun WindowState.resetWindowSize() {
+suspend fun WindowState.resetWindowSize() {
     val prefs = DesktopApp.setup.prefs
     this.size = DpSize(
         prefs.windowState.defaultValue.windowWidth.dp,
         prefs.windowState.defaultValue.windowHeight.dp,
     )
+    prefs.windowState.update(JewelWindowState(this))
 }
 
-fun WindowState.resetWindowPosition(density: Density, window: ComposeWindow) = reset(
+suspend fun WindowState.resetWindowPosition(density: Density, window: ComposeWindow) = reset(
     density = density,
     window = window,
     placement = false,
@@ -91,9 +91,7 @@ fun rememberJewelWindowState(
     val windowState by prefs.windowState.collectAsStateNotNull()
     val state = remember(windowState) { windowState.toWindowState() }
 
-    snapshotFlow {
-        JewelWindowState(state)
-    }
+    snapshotFlow { JewelWindowState(state) }
         .debounce(500)
         .distinctUntilChanged()
         .onEach {

@@ -9,7 +9,8 @@ object ToolboxLogging {
         Service,
         Navigation,
         AppUpdate,
-        UpdateMananger
+        UpdateMananger,
+        Window
     }
 
     private var enabledTags: List<Tag> = emptyList()

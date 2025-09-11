@@ -16,13 +16,9 @@ object JvmUtil {
     //return Changelog.getAppVersionName().takeIf { it != "<UNKNOWN>" } == null
     fun getAppVersion(): String? {
         val exePath = getEXEPath()
-        val version = runPS("(Get-Item '${exePath}').VersionInfo.FileVersion").takeIf { it.isNotEmpty() && it != "unspecified" }
+        val version =
+            runPS("(Get-Item '${exePath}').VersionInfo.FileVersion").takeIf { it.isNotEmpty() && it != "unspecified" }
         return version
-    }
-
-    fun getLocalAppDataFolder(appName: String) : File {
-        val appDataLocal = System.getenv("LOCALAPPDATA")
-        return File(appDataLocal, appName)
     }
 
     fun isDebug(): Boolean {
@@ -46,8 +42,6 @@ object JvmUtil {
         val clipboard = Toolkit.getDefaultToolkit().systemClipboard
         clipboard.setContents(selection, selection)
     }
-
-    fun appDir() = File(System.getProperty("user.dir"))
 
     fun javaVersion(versionOnly: Boolean = false) = System.getProperty("java.version").let {
         if (versionOnly) {
