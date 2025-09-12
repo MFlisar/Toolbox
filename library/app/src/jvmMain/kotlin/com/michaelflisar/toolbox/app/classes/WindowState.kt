@@ -1,7 +1,6 @@
 package com.michaelflisar.toolbox.app.classes
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,7 +25,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -60,7 +58,7 @@ suspend fun WindowState.reset(
         this.position = WindowPosition(with(density) { x.toDp() }, with(density) { y.toDp() })
     }
 
-    prefs.windowState.update(JewelWindowState(this))
+    //prefs.windowState.update(JewelWindowState(this))
 }
 
 suspend fun WindowState.resetWindowSize() {
@@ -69,7 +67,7 @@ suspend fun WindowState.resetWindowSize() {
         prefs.windowState.defaultValue.windowWidth.dp,
         prefs.windowState.defaultValue.windowHeight.dp,
     )
-    prefs.windowState.update(JewelWindowState(this))
+    //prefs.windowState.update(JewelWindowState(this))
 }
 
 suspend fun WindowState.resetWindowPosition(density: Density, window: ComposeWindow) = reset(
@@ -89,12 +87,13 @@ fun rememberJewelWindowState(
     val scope = rememberCoroutineScope()
 
     val windowState by prefs.windowState.collectAsStateNotNull()
-    val state = remember(windowState) { windowState.toWindowState() }
+    val state = remember(windowState) {  windowState.toWindowState() }
 
     snapshotFlow { JewelWindowState(state) }
-        .debounce(500)
         .distinctUntilChanged()
+        .debounce(500)
         .onEach {
+            L.logIf(ToolboxLogging.Tag.Window)?.i { "Saving window state: $it" }
             withContext(Dispatchers.IO) {
                 try {
                     prefs.windowState.update(it)

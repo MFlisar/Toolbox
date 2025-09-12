@@ -8,5 +8,6 @@ class DesktopAppSetup(
     val resizable: Boolean = true,
     val enabled: Boolean = true,
     val focusable: Boolean = true,
-    val swingCompatMode: Boolean = false
+    val swingCompatMode: Boolean = false,
+    val ensureIsFullyOnScreen: Boolean = false
 )

@@ -1,9 +1,13 @@
 package com.michaelflisar.toolbox.utils
 
-import java.io.File
-
 enum class AppData {
+    /**
+     * C:\Users\<USER>\AppData\Local
+     */
     Local,
+    /**
+     * C:\Users\<USER>\AppData\Roaming
+     */
     Roaming
 }
 

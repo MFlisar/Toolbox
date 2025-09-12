@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.application
+import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.DesktopAppContent
 import com.michaelflisar.toolbox.app.DesktopStatusBar
@@ -53,6 +54,8 @@ fun main() {
                 desktopSetup = desktopSetup,
                 navigator = navigator
             ) {
+                ToolboxLogging.enableAll()
+
                 // theme + root (drawer state, app state) are available
                 ErrorDialogProvider {
                     DesktopAppContent(

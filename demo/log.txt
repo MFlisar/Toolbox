@@ -223,3 +223,203 @@
 [I] 2025-09-11 15:03:17.444 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=211, y=145, placement=Floating}
 [I] 2025-09-11 15:03:20.708 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=448, y=140, placement=Floating}
 [I] 2025-09-11 15:03:20.741 [WindowState.kt:100]: snapshotFlow = {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 09:45:12.598 [WindowUtil.kt:22]: contains = false (screenBounds = java.awt.Rectangle[x=-1920,y=0,width=1920,height=1080] | windowBounds = java.awt.Rectangle[x=280,y=140,width=1024,height=800])
+[I] 2025-09-12 09:45:13.223 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:45:13.232 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:46:15.865 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:46:15.896 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:47:03.168 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:47:03.204 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:47:03.680 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 09:47:11.175 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 09:47:12.141 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:12.663 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:19.327 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:47:19.359 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:47:19.835 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:19.973 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:20.417 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:20.535 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:20.979 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:21.089 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:21.532 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:21.643 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:22.087 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:22.198 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:22.641 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:22.752 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:23.194 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:23.305 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:23.748 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:23.864 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:24.309 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:24.419 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:24.862 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:24.977 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:25.411 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:25.522 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:47:25.965 [WindowState.kt:96]: Saving window state: {w=1248, h=800, x=156, y=139, placement=Floating}
+[I] 2025-09-12 09:47:26.076 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:48:31.164 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:48:31.200 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:48:31.751 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:48:35.814 [WindowState.kt:96]: Saving window state: {w=1401, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:48:36.357 [WindowState.kt:96]: Saving window state: {w=1401, h=800, x=336, y=140, placement=Floating}
+[I] 2025-09-12 09:48:37.780 [WindowState.kt:96]: Saving window state: {w=1401, h=800, x=123, y=85, placement=Floating}
+[I] 2025-09-12 09:48:38.302 [WindowState.kt:96]: Saving window state: {w=1401, h=800, x=123, y=85, placement=Floating}
+[I] 2025-09-12 09:49:16.023 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:49:16.061 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:49:16.663 [WindowState.kt:96]: Saving window state: {w=1401, h=800, x=123, y=85, placement=Floating}
+[I] 2025-09-12 09:49:23.026 [WindowState.kt:96]: Saving window state: {w=1401, h=800, x=387, y=119, placement=Floating}
+[I] 2025-09-12 09:49:23.565 [WindowState.kt:96]: Saving window state: {w=1401, h=800, x=387, y=119, placement=Floating}
+[I] 2025-09-12 09:52:36.144 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:52:36.172 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:52:36.750 [WindowState.kt:96]: Saving window state: {w=1401, h=800, x=387, y=119, placement=Floating}
+[I] 2025-09-12 09:53:30.058 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:53:30.101 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:53:30.684 [WindowState.kt:96]: Saving window state: {w=1401, h=800, x=387, y=119, placement=Floating}
+[I] 2025-09-12 09:53:37.648 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=387, y=119, placement=Floating}
+[I] 2025-09-12 09:53:38.186 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=387, y=119, placement=Floating}
+[I] 2025-09-12 09:53:56.041 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:53:56.079 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:53:56.548 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=387, y=119, placement=Floating}
+[I] 2025-09-12 09:53:59.707 [WindowState.kt:96]: Saving window state: {w=1273, h=800, x=387, y=119, placement=Floating}
+[I] 2025-09-12 09:54:00.983 [WindowState.kt:96]: Saving window state: {w=1273, h=800, x=27, y=53, placement=Floating}
+[I] 2025-09-12 09:54:01.505 [WindowState.kt:96]: Saving window state: {w=1273, h=800, x=27, y=53, placement=Floating}
+[I] 2025-09-12 09:57:58.107 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:57:58.131 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:57:58.614 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=27, y=53, placement=Floating}
+[I] 2025-09-12 09:58:12.668 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=337, y=163, placement=Floating}
+[I] 2025-09-12 09:58:12.689 [WindowState.kt:93]: rememberJewelWindowState called...
+[I] 2025-09-12 09:58:13.215 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=337, y=163, placement=Floating}
+[I] 2025-09-12 09:58:17.216 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=150, y=54, placement=Floating}
+[I] 2025-09-12 09:58:17.217 [WindowState.kt:93]: rememberJewelWindowState called...
+[I] 2025-09-12 09:58:17.734 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=150, y=54, placement=Floating}
+[I] 2025-09-12 09:58:39.204 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:58:39.252 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 09:58:39.884 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=150, y=54, placement=Floating}
+[I] 2025-09-12 09:58:41.663 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=144, y=142, placement=Floating}
+[I] 2025-09-12 09:58:41.679 [WindowState.kt:93]: rememberJewelWindowState called... state = androidx.compose.ui.window.WindowStateImpl@65eaf886
+[I] 2025-09-12 09:58:42.204 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=144, y=142, placement=Floating}
+[I] 2025-09-12 09:58:48.642 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=-8, y=51, placement=Floating}
+[I] 2025-09-12 09:58:48.642 [WindowState.kt:93]: rememberJewelWindowState called... state = androidx.compose.ui.window.WindowStateImpl@a2cb0ec
+[I] 2025-09-12 09:58:49.166 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=-8, y=51, placement=Floating}
+[I] 2025-09-12 09:58:54.810 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=252, y=70, placement=Floating}
+[I] 2025-09-12 09:58:54.817 [WindowState.kt:93]: rememberJewelWindowState called... state = androidx.compose.ui.window.WindowStateImpl@549e206f
+[I] 2025-09-12 09:58:55.333 [WindowState.kt:99]: Saving window state: {w=1273, h=800, x=252, y=70, placement=Floating}
+[I] 2025-09-12 10:00:39.868 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:00:39.903 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:00:40.363 [WindowState.kt:101]: Saving window state: {w=1273, h=800, x=252, y=70, placement=Floating}
+[I] 2025-09-12 10:00:43.155 [WindowState.kt:101]: Saving window state: {w=1273, h=800, x=51, y=81, placement=Floating}
+[I] 2025-09-12 10:00:43.175 [WindowState.kt:95]: rememberJewelWindowState called... state = androidx.compose.ui.window.WindowStateImpl@4b67ede7 | jewelWindowState = DerivedState(value={w=1273, h=800, x=51, y=81, placement=Floating})@1686370117
+[I] 2025-09-12 10:00:43.695 [WindowState.kt:101]: Saving window state: {w=1273, h=800, x=51, y=81, placement=Floating}
+[I] 2025-09-12 10:01:33.205 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:01:33.231 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:01:33.746 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=51, y=81, placement=Floating}
+[I] 2025-09-12 10:01:35.866 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=324, y=91, placement=Floating}
+[I] 2025-09-12 10:01:35.888 [WindowState.kt:94]: state = androidx.compose.ui.window.WindowStateImpl@6a9554fc | jewelWindowState = DerivedState(value=<Not calculated>)@1650896614
+[I] 2025-09-12 10:01:36.413 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=324, y=91, placement=Floating}
+[I] 2025-09-12 10:01:38.756 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=115, y=78, placement=Floating}
+[I] 2025-09-12 10:01:38.762 [WindowState.kt:94]: state = androidx.compose.ui.window.WindowStateImpl@519d4fef | jewelWindowState = DerivedState(value=<Not calculated>)@344516405
+[I] 2025-09-12 10:01:39.278 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=115, y=78, placement=Floating}
+[I] 2025-09-12 10:03:34.963 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=535, y=91, placement=Floating}
+[I] 2025-09-12 10:03:34.970 [WindowState.kt:94]: state = androidx.compose.ui.window.WindowStateImpl@22b060be | jewelWindowState = DerivedState(value=<Not calculated>)@1399608234
+[I] 2025-09-12 10:03:35.480 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=535, y=91, placement=Floating}
+[I] 2025-09-12 10:03:38.830 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=73, y=63, placement=Floating}
+[I] 2025-09-12 10:03:38.835 [WindowState.kt:94]: state = androidx.compose.ui.window.WindowStateImpl@4c3d16b4 | jewelWindowState = DerivedState(value=<Not calculated>)@161251126
+[I] 2025-09-12 10:03:39.347 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=73, y=63, placement=Floating}
+[I] 2025-09-12 10:03:47.277 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:03:47.305 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:03:47.776 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=73, y=63, placement=Floating}
+[I] 2025-09-12 10:03:49.101 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=616, y=40, placement=Floating}
+[I] 2025-09-12 10:03:49.124 [WindowState.kt:94]: state = androidx.compose.ui.window.WindowStateImpl@15af32b4 | jewelWindowState = DerivedState(value=<Not calculated>)@128894491
+[I] 2025-09-12 10:03:49.648 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=616, y=40, placement=Floating}
+[I] 2025-09-12 10:03:56.489 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:03:56.524 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:03:56.997 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=616, y=40, placement=Floating}
+[I] 2025-09-12 10:03:58.314 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=305, y=48, placement=Floating}
+[I] 2025-09-12 10:03:58.339 [WindowState.kt:94]: state = androidx.compose.ui.window.WindowStateImpl@6a9554fc | jewelWindowState = DerivedState(value=<Not calculated>)@1650896614
+[I] 2025-09-12 10:03:58.865 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=305, y=48, placement=Floating}
+[I] 2025-09-12 10:04:02.588 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=183, y=140, placement=Floating}
+[I] 2025-09-12 10:04:02.593 [WindowState.kt:94]: state = androidx.compose.ui.window.WindowStateImpl@519d4fef | jewelWindowState = DerivedState(value=<Not calculated>)@344516405
+[I] 2025-09-12 10:04:03.108 [WindowState.kt:100]: Saving window state: {w=1273, h=800, x=183, y=140, placement=Floating}
+[I] 2025-09-12 10:06:28.896 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:06:28.926 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:06:29.396 [WindowState.kt:105]: Saving window state: {w=1024, h=800, x=323, y=140, placement=Floating}
+[I] 2025-09-12 10:06:29.425 [WindowState.kt:99]: state = androidx.compose.ui.window.WindowStateImpl@24c0e94b | jewelWindowState = MutableState(value={w=1024, h=800, x=323, y=140, placement=Floating})@2135407324
+[I] 2025-09-12 10:06:29.483 [WindowState.kt:105]: Saving window state: {w=1024, h=800, x=323, y=140, placement=Floating}
+[I] 2025-09-12 10:06:29.986 [WindowState.kt:105]: Saving window state: {w=1024, h=800, x=323, y=140, placement=Floating}
+[I] 2025-09-12 10:07:34.663 [WindowState.kt:99]: state = androidx.compose.ui.window.WindowStateImpl@66b2d76b | jewelWindowState = MutableState(value={w=1024, h=800, x=448, y=140, placement=Floating})@1935994311
+[I] 2025-09-12 10:07:34.693 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:07:34.699 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:07:35.256 [WindowState.kt:105]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:07:35.271 [WindowState.kt:105]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:07:35.279 [WindowState.kt:99]: state = androidx.compose.ui.window.WindowStateImpl@73a867a6 | jewelWindowState = MutableState(value={w=1024, h=800, x=448, y=140, placement=Floating})@1935994311
+[I] 2025-09-12 10:07:35.799 [WindowState.kt:105]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:08:40.044 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:08:40.071 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:08:40.649 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:08:44.315 [WindowState.kt:100]: state = androidx.compose.ui.window.WindowStateImpl@6e0dc3e5 | jewelWindowState = MutableState(value={w=1024, h=800, x=448, y=140, placement=Floating})@48821117
+[I] 2025-09-12 10:08:44.836 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:09:19.136 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:09:19.167 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:09:19.635 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:09:21.942 [WindowState.kt:100]: state = androidx.compose.ui.window.WindowStateImpl@50aa55d0 | jewelWindowState = MutableState(value={w=1024, h=800, x=448, y=140, placement=Floating})@502049966
+[I] 2025-09-12 10:09:22.460 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:09:58.915 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:09:58.944 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:09:59.415 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:10:00.236 [WindowState.kt:100]: state = androidx.compose.ui.window.WindowStateImpl@152df331 | jewelWindowState = MutableState(value={w=1024, h=800, x=448, y=140, placement=Floating})@1338994860
+[I] 2025-09-12 10:10:00.766 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:13:14.317 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:13:14.344 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:13:14.814 [WindowState.kt:100]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:13:16.802 [WindowState.kt:100]: Saving window state: {w=1024, h=800, x=741, y=96, placement=Floating}
+[I] 2025-09-12 10:13:16.823 [WindowState.kt:94]: rememberJewelWindowState called... state = androidx.compose.ui.window.WindowStateImpl@2db15567 | jewelWindowState = DerivedState(value={w=1024, h=800, x=741, y=96, placement=Floating})@1369210230
+[I] 2025-09-12 10:13:17.351 [WindowState.kt:100]: Saving window state: {w=1024, h=800, x=741, y=96, placement=Floating}
+[I] 2025-09-12 10:13:49.638 [WindowState.kt:94]: rememberJewelWindowState called... state = androidx.compose.ui.window.WindowStateImpl@6b946e2a | jewelWindowState = {w=1024, h=800, x=741, y=96, placement=Floating}
+[I] 2025-09-12 10:13:49.665 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:13:49.671 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:13:50.239 [WindowState.kt:100]: Saving window state: {w=1024, h=800, x=741, y=96, placement=Floating}
+[I] 2025-09-12 10:13:50.254 [WindowState.kt:100]: Saving window state: {w=1024, h=800, x=741, y=96, placement=Floating}
+[I] 2025-09-12 10:14:36.678 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:14:36.713 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:14:37.178 [WindowState.kt:98]: Saving window state: {w=1024, h=800, x=741, y=96, placement=Floating}
+[I] 2025-09-12 10:14:39.313 [WindowState.kt:98]: Saving window state: {w=1024, h=800, x=141, y=45, placement=Floating}
+[I] 2025-09-12 10:14:39.336 [WindowState.kt:92]: Saving window state: androidx.compose.ui.window.WindowStateImpl@4fe63f51
+[I] 2025-09-12 10:14:39.859 [WindowState.kt:98]: Saving window state: {w=1024, h=800, x=141, y=45, placement=Floating}
+[I] 2025-09-12 10:14:42.843 [WindowState.kt:98]: Saving window state: {w=1024, h=800, x=818, y=73, placement=Floating}
+[I] 2025-09-12 10:14:42.850 [WindowState.kt:92]: Saving window state: androidx.compose.ui.window.WindowStateImpl@605cf72e
+[I] 2025-09-12 10:14:43.364 [WindowState.kt:98]: Saving window state: {w=1024, h=800, x=818, y=73, placement=Floating}
+[I] 2025-09-12 10:14:48.578 [WindowState.kt:98]: Saving window state: {w=1156, h=800, x=686, y=73, placement=Floating}
+[I] 2025-09-12 10:14:48.587 [WindowState.kt:92]: Saving window state: androidx.compose.ui.window.WindowStateImpl@4b7f9c3d
+[I] 2025-09-12 10:14:49.097 [WindowState.kt:98]: Saving window state: {w=1156, h=800, x=686, y=73, placement=Floating}
+[I] 2025-09-12 10:14:56.504 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:14:56.533 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:14:57.100 [WindowState.kt:98]: Saving window state: {w=1156, h=800, x=686, y=73, placement=Floating}
+[I] 2025-09-12 10:16:20.113 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:16:20.146 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:16:20.609 [WindowState.kt:104]: Saving window state: {w=1024, h=800, x=382, y=140, placement=Floating}
+[I] 2025-09-12 10:16:20.700 [WindowState.kt:104]: Saving window state: {w=1024, h=800, x=382, y=140, placement=Floating}
+[I] 2025-09-12 10:16:21.202 [WindowState.kt:104]: Saving window state: {w=1024, h=800, x=382, y=140, placement=Floating}
+[I] 2025-09-12 10:17:18.813 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:17:18.840 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:17:19.415 [WindowState.kt:104]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:17:19.428 [WindowState.kt:104]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:17:19.963 [WindowState.kt:104]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:17:40.291 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:17:40.321 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:17:40.796 [WindowState.kt:104]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:17:42.672 [WindowState.kt:104]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:18:02.992 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:18:03.019 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:18:03.490 [WindowState.kt:99]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2025-09-12 10:18:05.398 [WindowState.kt:99]: Saving window state: {w=1024, h=800, x=53, y=33, placement=Floating}
+[I] 2025-09-12 10:18:05.942 [WindowState.kt:99]: Saving window state: {w=1024, h=800, x=53, y=33, placement=Floating}
+[I] 2025-09-12 10:18:10.862 [WindowState.kt:99]: Saving window state: {w=1024, h=800, x=840, y=39, placement=Floating}
+[I] 2025-09-12 10:18:11.383 [WindowState.kt:99]: Saving window state: {w=1024, h=800, x=840, y=39, placement=Floating}
+[I] 2025-09-12 10:19:41.756 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:19:41.786 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-09-12 10:19:42.260 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=840, y=39, placement=Floating}
+[I] 2025-09-12 10:19:43.984 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=241, y=52, placement=Floating}
+[I] 2025-09-12 10:19:44.531 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=241, y=52, placement=Floating}

@@ -172,10 +172,12 @@ fun ApplicationScope.DesktopApp(
             onPreviewKeyEvent = onPreviewKeyEvent,
             onKeyEvent = onKeyEvent,
         ) {
-            val window = this.window
-            val density = LocalDensity.current
-            LaunchedEffect(density, window) {
-                jewelAppState.ensureIsFullyOnScreen(density, window)
+            if (desktopSetup.ensureIsFullyOnScreen) {
+                val window = this.window
+                val density = LocalDensity.current
+                LaunchedEffect(density, window) {
+                    jewelAppState.ensureIsFullyOnScreen(density, window)
+                }
             }
             val appState = rememberAppState()
             AppThemeProvider {
