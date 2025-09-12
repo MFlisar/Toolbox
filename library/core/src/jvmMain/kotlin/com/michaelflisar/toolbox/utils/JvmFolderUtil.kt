@@ -9,7 +9,7 @@ enum class AppData {
 
 object JvmFolderUtil {
 
-    fun getApplicationPath() = File(System.getProperty("user.dir"))
+    fun getApplicationPath() = System.getProperty("user.dir")
 
     fun getDesktopPath() = "${System.getProperty("user.home").replace("\\", "/")}/Desktop"
 
