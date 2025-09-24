@@ -122,15 +122,15 @@ sealed class Cell<CellValue> {
         val valueToString: (T) -> String = { it.name }
     ) : Cell<T>() {
 
-        override fun sort() = valueToString()
+        override fun sort() = valueToString(value)
 
-        override fun displayValue() = valueToString()
+        override fun displayValue() = valueToString(value)
 
         @Composable
         override fun render(modifier: Modifier) {
             Text(
                 modifier = modifier,
-                text = valueToString(),
+                text = valueToString(value),
                 style = textStyle ?: LocalTextStyle.current,
                 fontWeight = fontWeight,
                 color = color,
