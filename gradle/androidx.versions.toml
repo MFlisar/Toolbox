@@ -9,7 +9,7 @@ sqlite =          		"2.5.2"
 startup = 				"1.2.0"
 work =          		"2.10.2"
 datastoreprefs =        "1.1.7"
-browser =               "1.9.0"
+browser =               "1.8.0"
 
 [plugins]
 
