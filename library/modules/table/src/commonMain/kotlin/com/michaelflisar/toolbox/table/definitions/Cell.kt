@@ -119,17 +119,18 @@ sealed class Cell<CellValue> {
         val maxLines: Int = Int.MAX_VALUE,
         val minLines: Int = 1,
         override val verticalCellAlignment: Alignment.Vertical = Alignment.Top,
+        val valueToString: (T) -> String = { it.name }
     ) : Cell<T>() {
 
-        override fun sort() = value.name
+        override fun sort() = valueToString()
 
-        override fun displayValue() = value.name
+        override fun displayValue() = valueToString()
 
         @Composable
         override fun render(modifier: Modifier) {
             Text(
                 modifier = modifier,
-                text = value.name,
+                text = valueToString(),
                 style = textStyle ?: LocalTextStyle.current,
                 fontWeight = fontWeight,
                 color = color,

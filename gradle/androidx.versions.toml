@@ -9,6 +9,7 @@ sqlite =          		"2.5.2"
 startup = 				"1.2.0"
 work =          		"2.10.2"
 datastoreprefs =        "1.1.7"
+browser =               "1.9.0"
 
 [plugins]
 
@@ -34,3 +35,4 @@ sqlite-bundled = 		{ module = "androidx.sqlite:sqlite-bundled", 			    	version.
 startup = 		        { module = "androidx.startup:startup-runtime", 			    	version.ref = "startup" }
 work = 		            { module = "androidx.work:work-runtime-ktx", 			    	version.ref = "work" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", 	        version.ref = "datastoreprefs" }
+browser =               { module = "androidx.browser:browser",                          version.ref = "browser" }

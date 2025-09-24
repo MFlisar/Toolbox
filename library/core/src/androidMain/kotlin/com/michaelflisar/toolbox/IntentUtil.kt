@@ -6,7 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
+import com.michaelflisar.lumberjack.core.L
 
 object IntentUtil {
 
@@ -67,9 +69,23 @@ object IntentUtil {
         return intent
     }
 
-    fun openUrl(context: Context, url: String): Boolean {
-        val intent = getUrlIntent(url)
-        return context.startActivitySafely(intent)
+    fun openUrl(context: Context, url: String, useCustomTabIntent: Boolean = false): Boolean {
+        if (useCustomTabIntent) {
+            val customTabsIntent = CustomTabsIntent.Builder()
+                .setShowTitle(true)
+                .build()
+            customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            return try {
+                customTabsIntent.launchUrl(context, url.toUri())
+                true
+            } catch (e: ActivityNotFoundException) {
+                L.e(e)
+                false
+            }
+        } else {
+            val intent = getUrlIntent(url)
+            return context.startActivitySafely(intent)
+        }
     }
 
     fun openUri(context: Context, uri: Uri, action: String = Intent.ACTION_VIEW): Boolean {

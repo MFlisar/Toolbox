@@ -113,6 +113,7 @@ kotlin {
 
             implementation(androidx.core)
             api(androidx.activity.compose)
+            implementation(androidx.browser)
 
             api(deps.processphoenix)
             implementation(deps.acra.core)

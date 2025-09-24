@@ -9,7 +9,7 @@ import kotlin.jvm.java
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import com.michaelflisar.kmplibrary.DesktopSetup
 import com.michaelflisar.kmplibrary.setupLaunch4J
-import com.michaelflisar.kmplibrary.setupWindowApp
+import com.michaelflisar.kmplibrary.setupWindowsApp
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -280,7 +280,7 @@ compose.desktop {
     application {
 
         // BuildFilePlugin Extension
-        setupWindowApp(
+        setupWindowsApp(
             project = project,
             setup = desktopSetup,
             configNativeDistribution = {

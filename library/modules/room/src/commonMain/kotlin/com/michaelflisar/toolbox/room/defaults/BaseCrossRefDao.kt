@@ -43,7 +43,7 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
 
     suspend fun getAllLeft(ids: List<ID>) : List<T> {
         val items = ArrayList<T>()
-        RoomUtil.runQueryInChuncks(ids) {
+        RoomUtil.runQueryInChunks(ids) {
             items += rawQueryList(queryAllLeft(it))
             it
         }
@@ -52,7 +52,7 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
 
     suspend fun getAllRight(ids: List<ID>) : List<T> {
         val items = ArrayList<T>()
-        RoomUtil.runQueryInChuncks(ids) {
+        RoomUtil.runQueryInChunks(ids) {
             items += rawQueryList(queryAllRight(it))
             it
         }
@@ -68,7 +68,7 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
     @Transaction
     open suspend fun deleteLeftIds(ids: List<ID>): Int {
         var count = 0
-        RoomUtil.runQueryInChuncks(ids) {
+        RoomUtil.runQueryInChunks(ids) {
             count += _deleteLeftIds(it)
             it
         }
@@ -80,7 +80,7 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
     @Transaction
     open suspend fun deleteRightIds(ids: List<ID>): Int {
         var count = 0
-        RoomUtil.runQueryInChuncks(ids) {
+        RoomUtil.runQueryInChunks(ids) {
             count += _deleteRightIds(it)
             it
         }
@@ -99,7 +99,7 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
     @Transaction
     open suspend fun delete(items: List<T>): Int {
         var count = 0
-        RoomUtil.runQueryInChuncks(items) {
+        RoomUtil.runQueryInChunks(items) {
             count += _delete(it)
             it
         }

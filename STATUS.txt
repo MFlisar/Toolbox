@@ -18,7 +18,6 @@
     [ ] Ads
         - https://github.com/LexiLabs-App/basic-ads
         - https://gist.github.com/trinadhthatakula/e4db4a7219f6ef6d066e109015edc44e
-    [ ] App Theming in drawer wie in settings machen sodass das theming auf allen Platformen korrekt ist
     [ ] Store - Offline/Online Database
         - https://store.mobilenativefoundation.org/docs/intro
     [ ] Spotless / Detekt / Ktlint

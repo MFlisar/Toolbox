@@ -51,7 +51,7 @@ abstract class BaseDao<ID : Number, T : IRoomEntity<ID, T>>(
     suspend fun _getAllIn(ids: List<ID>) = rawQueryList(queryAllIn(ids))
 
     suspend fun getAllIn(ids: List<ID>): List<T> {
-        return RoomUtil.runQueryInChuncks(ids) {
+        return RoomUtil.runQueryInChunks(ids) {
             _getAllIn(it)
         }
     }
@@ -69,7 +69,7 @@ abstract class BaseDao<ID : Number, T : IRoomEntity<ID, T>>(
     @Transaction
     open suspend fun delete(items: List<T>): Int {
         var count = 0
-        RoomUtil.runQueryInChuncks(items) {
+        RoomUtil.runQueryInChunks(items) {
             count += _delete(it)
             it
         }
@@ -87,7 +87,7 @@ abstract class BaseDao<ID : Number, T : IRoomEntity<ID, T>>(
     abstract suspend fun _insertOrUpdate(item: T): Long
 
     suspend fun insertOrUpdate(items: List<T>): List<T> {
-        return RoomUtil.runQueryInChuncks(items) { items ->
+        return RoomUtil.runQueryInChunks(items) { items ->
             val newIds = _insertOrUpdate(items)
             newIds.mapIndexed { index, newId ->
                 items[index].copyWithId(convertId(newId))
