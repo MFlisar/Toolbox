@@ -105,3 +105,10 @@ modules:
     optional: true
     platforms-info: ""
     dependencies: []
+  - relativePath: library\modules\ads
+    artifact-id: ads
+    group: modules
+    description: provides ads composables
+    optional: true
+    platforms-info: ""
+    dependencies: []

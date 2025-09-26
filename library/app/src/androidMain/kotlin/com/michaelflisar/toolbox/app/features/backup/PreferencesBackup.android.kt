@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
-import io.github.vinceglb.filekit.dialogs.uri
+import com.michaelflisar.toolbox.backup.toAndroidUriInternal
 
 @Composable
 actual fun PreferenceGroupScope.PreferencesBackup(
@@ -21,7 +21,7 @@ actual fun PreferenceGroupScope.PreferencesBackup(
         appName = appName,
         formatPath = { it.toUri().path },
         onFolderForAutoBackupSelected = { directory ->
-            val uri = directory.uri
+            val uri = directory.toAndroidUriInternal()
             context.contentResolver.takePersistableUriPermission(uri, takeFlags)
             uri.toString()
         },

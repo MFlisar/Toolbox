@@ -16,8 +16,10 @@ kmp-parcelize =             "1.0.0"
 kmp-library =               "2.0.1" # attention: the version for the settings plugin must be adjusted manually!
 
 # Google
-material =                      "1.12.0"
-google-guava =					"33.4.8-android"
+material =                      "1.13.0"
+google-guava =					"33.5.0-android"
+google-ads =	                "24.6.0"
+google-ump =	                "3.2.0"
 
 # Windows UI
 jewel =                        "0.29.0-252.24604"
@@ -34,16 +36,17 @@ stately =                   "2.1.0"
 acra =		        		"5.12.0"
 processphoenix = 			"3.0.0"
 htmlconverter =             "1.1.0"
-filekit =                   "0.10.0"
+filekit =                   "0.11.0"
 accompanist = 			    "0.37.3"
 csv =                       "1.14.1"
-ktor3 =                     "3.2.3"
+ktor3 =                     "3.3.0"
 coil =						"3.3.0"
 coil-transform =			"3.0.0"
+basic-ads =                 "0.2.7"
 
 # TODO
 google-playservice-coroutines =	"1.10.2"
-billing =		    			"7.1.1"
+billing =		    			"8.0.0"
 
 # ---------
 # plugins
@@ -126,6 +129,8 @@ kmplibrary-docs =                               { module = "io.github.mflisar.km
 # Google
 material =                                      { module = "com.google.android.material:material", 	                                version.ref = "material" }
 google-guava =			     					{ module = "com.google.guava:guava", 												version.ref = "google-guava" }
+google-ads =			     					{ module = "com.google.android.gms:play-services-ads", 								version.ref = "google-ads" }
+google-ump =			     					{ module = "com.google.android.ump:user-messaging-platform", 						version.ref = "google-ump" }
 
 # Windows UI
 jewel-int-ui-standalone =                       { module = "org.jetbrains.jewel:jewel-int-ui-standalone",                           version.ref = "jewel" }
@@ -172,6 +177,7 @@ ktor-client-java =					            { module = "io.ktor:ktor-client-java", 						
 coil-compose =					        	    { module = "io.coil-kt.coil3:coil-compose", 							            version.ref = "coil" }
 coil-network-ktor3 =					        { module = "io.coil-kt.coil3:coil-network-ktor3", 							        version.ref = "coil" }
 coil-transformations =	        			    { module = "com.github.Commit451.coil-transformations:transformations", 			version.ref = "coil-transform" }
+basic-ads =	        			                { module = "app.lexilabs.basic:basic-ads", 			                                version.ref = "basic-ads" }
 
 google-playservice-coroutines =			   		{ module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", 				version.ref = "google-playservice-coroutines" }
 billing =			     						{ module = "com.android.billingclient:billing-ktx", 								version.ref = "billing" }

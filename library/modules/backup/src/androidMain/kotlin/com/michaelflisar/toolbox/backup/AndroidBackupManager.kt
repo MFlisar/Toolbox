@@ -1,13 +1,14 @@
 package com.michaelflisar.toolbox.backup
 
+import android.net.Uri
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.AppContext
 import com.michaelflisar.toolbox.restartApp
 import com.michaelflisar.toolbox.zip.AndroidZipFile
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
 import com.michaelflisar.toolbox.zip.JavaZipManager
+import io.github.vinceglb.filekit.AndroidFile
 import io.github.vinceglb.filekit.PlatformFile
-import io.github.vinceglb.filekit.dialogs.uri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -16,6 +17,12 @@ actual typealias ZipFileContent = JavaZipFileContent
 actual typealias BackupManager = AndroidBackupManager
 
 actual typealias ActivityNotFoundException = android.content.ActivityNotFoundException
+
+fun PlatformFile.toAndroidUriInternal(): Uri =
+    when (val androidFile = androidFile) {
+        is AndroidFile.UriWrapper -> androidFile.uri
+        is AndroidFile.FileWrapper ->  Uri.fromFile(androidFile.file)
+    }
 
 object AndroidBackupManager : IBackupManager<JavaZipFileContent.File, JavaZipFileContent> {
 
@@ -30,7 +37,7 @@ object AndroidBackupManager : IBackupManager<JavaZipFileContent.File, JavaZipFil
         return try {
             val result = withContext(Dispatchers.IO) {
                 // Zip direkt an der backup uri erstellen
-                JavaZipManager.zip(files, AndroidZipFile(backupFile.uri))
+                JavaZipManager.zip(files, AndroidZipFile(backupFile.toAndroidUriInternal()))
             }
             if (result.isSuccess) {
                 null
@@ -51,7 +58,7 @@ object AndroidBackupManager : IBackupManager<JavaZipFileContent.File, JavaZipFil
             val result = withContext(Dispatchers.IO) {
                 // backup uri direkt im parent folder entpacken
                 JavaZipManager.unzip(
-                    AndroidZipFile(backupFile.uri),
+                    AndroidZipFile(backupFile.toAndroidUriInternal()),
                     files,
                     replaceExistingFiles = true
                 )

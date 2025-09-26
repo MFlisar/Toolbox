@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.app
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -69,11 +70,13 @@ fun ComponentActivity.AndroidApp(
  *
  * @param navigationItems A composable function that provides the list of navigation items.
  * @param toolbar A composable function that defines the toolbar layout. [AndroidToolbar] should be used here.
+ * @param footer A n always visible footer at the bottom of the screen, below the content - should be used for ads only!
  */
 @Composable
 fun AndroidAppContent(
     navigationItems: List<INavItem>,
-    toolbar: @Composable () -> Unit
+    toolbar: @Composable () -> Unit,
+    footer: @Composable (() -> Unit)? = null
 ) {
     val navigator = LocalNavigator.currentOrThrow
     MobileScaffold(
@@ -83,7 +86,16 @@ fun AndroidAppContent(
         }
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
-            AppNavigatorFadeTransition(navigator)
+            if (footer != null) {
+                Column {
+                    Box(modifier = Modifier.weight(1f, true)) {
+                        AppNavigatorFadeTransition(navigator)
+                    }
+                    footer()
+                }
+            } else {
+                AppNavigatorFadeTransition(navigator)
+            }
         }
     }
 }

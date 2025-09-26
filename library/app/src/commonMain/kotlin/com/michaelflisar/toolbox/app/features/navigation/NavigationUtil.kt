@@ -19,7 +19,7 @@ import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
-import com.michaelflisar.toolbox.app.features.proversion.ProState
+import com.michaelflisar.toolbox.classes.ProState
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import kotlinx.coroutines.launch
 

@@ -15,7 +15,7 @@
     [ ] pro version
         [ ] Icon sollte Krone sein
         - https://github.com/RevenueCat/purchases-kmp?tab=readme-ov-file
-    [ ] Ads
+    [x] Ads
         - https://github.com/LexiLabs-App/basic-ads
         - https://gist.github.com/trinadhthatakula/e4db4a7219f6ef6d066e109015edc44e
     [ ] Store - Offline/Online Database

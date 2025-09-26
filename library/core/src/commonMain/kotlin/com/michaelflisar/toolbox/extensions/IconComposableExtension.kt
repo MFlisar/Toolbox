@@ -9,16 +9,14 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.michaelflisar.toolbox.IconComposable
 
-@Composable
-fun ImageVector?.toIconComposable(tint: Color = Color.Unspecified): IconComposable? {
-    return this?.let {
+fun ImageVector.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
+    return this.let {
         @Composable { contentDescription, modifier, tint2 -> Icon(imageVector = this, contentDescription = contentDescription, modifier = modifier, tint = tint.takeIf { it != Color.Unspecified } ?: tint2) }
     }
 }
 
-@Composable
-fun Painter?.toIconComposable(tint: Color = Color.Unspecified): IconComposable? {
-    return this?.let {
+fun Painter.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
+    return this.let {
         @Composable { contentDescription, modifier, tint2 -> Icon(this, contentDescription = contentDescription, modifier = modifier, tint = tint.takeIf { it != Color.Unspecified } ?: tint2) }
     }
 }

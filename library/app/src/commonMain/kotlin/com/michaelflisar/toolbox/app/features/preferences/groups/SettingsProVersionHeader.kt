@@ -16,7 +16,7 @@ import com.michaelflisar.composepreferences.core.composables.PreferenceItemDefau
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.screen.button.PreferenceButton
 import com.michaelflisar.toolbox.app.CommonApp
-import com.michaelflisar.toolbox.app.features.proversion.ProState
+import com.michaelflisar.toolbox.classes.ProState
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.dlg_pro_version_title
 import com.michaelflisar.toolbox.core.resources.settings_pro_version
