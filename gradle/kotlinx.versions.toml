@@ -5,7 +5,7 @@ serialization = 	"1.9.0"
 datetime =          "0.7.1"
 io-core =           "0.8.0"
 atomicfu =          "0.29.0"
-browser =           "0.3"
+browser =           "0.5.0"
 
 [libraries]
 

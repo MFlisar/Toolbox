@@ -8,8 +8,9 @@ dokka =                             "2.0.0"
 gradle-maven-publish-plugin =       "0.34.0"
 binary-compatibility-validator =    "0.18.1"
 
-compose =                           "1.8.2"
-compose-adaptive =                  "1.1.2"
+compose =                           "1.9.0"
+compose-material3 =                 "1.8.2"
+compose-material3-adaptive =        "1.1.2"
 compose-icons =                     "1.7.3"
 
 buildkonfig =                       "0.17.1"
@@ -65,8 +66,8 @@ compose-ui-backhandler =                { module = "org.jetbrains.compose.ui:ui-
 compose-ui-tooling =                    { module = "org.jetbrains.compose.ui:ui-tooling",                               version.ref = "compose" }
 compose-components-resources =          { module = "org.jetbrains.compose.components:components-resources",             version.ref = "compose" }
 compose-components-ui-tooling-preview = { module = "org.jetbrains.compose.components:components-ui-tooling-preview",    version.ref = "compose" }
-compose-material3 =                     { module = "org.jetbrains.compose.material3:material3",                         version.ref = "compose" }
-compose-material3-adaptive =            { module = "org.jetbrains.compose.material3.adaptive:adaptive",                 version.ref = "compose-adaptive" }
+compose-material3 =                     { module = "org.jetbrains.compose.material3:material3",                         version.ref = "compose-material3" }
+compose-material3-adaptive =            { module = "org.jetbrains.compose.material3.adaptive:adaptive",                 version.ref = "compose-material3-adaptive" }
 
 # Compose Icons
 compose-material-icons-core = 	        { module = "org.jetbrains.compose.material:material-icons-core",                version.ref = "compose-icons" }
