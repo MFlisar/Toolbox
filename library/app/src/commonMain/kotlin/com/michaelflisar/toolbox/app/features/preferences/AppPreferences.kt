@@ -36,7 +36,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composedialogs.core.DialogButton
 import com.michaelflisar.composedialogs.core.DialogButtonType
@@ -53,6 +52,7 @@ import com.michaelflisar.composepreferences.core.classes.PreferenceSettingsDefau
 import com.michaelflisar.composepreferences.core.classes.PreferenceState
 import com.michaelflisar.composepreferences.core.classes.rememberPreferenceState
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
+import com.michaelflisar.composepreferences.core.scopes.PreferenceScope
 import com.michaelflisar.composepreferences.core.styles.ModernStyle
 import com.michaelflisar.composepreferences.kotpreferences.asDependency
 import com.michaelflisar.composepreferences.screen.bool.PreferenceBool
@@ -71,6 +71,7 @@ import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSetti
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeader
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeaderButtons
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsProVersionHeader
+import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.localContext
 import com.michaelflisar.toolbox.app.platform.restart
@@ -108,6 +109,9 @@ internal expect fun LumberjackDialog(
     title: String,
     setup: IFileLoggingSetup,
 )
+
+@Composable
+internal expect fun PreferenceScope.PreferenceRegionAds()
 
 sealed class AppPreferencesStyle {
 
@@ -160,7 +164,6 @@ object AppPreferencesDefaults {
 fun AppPreferences(
     style: AppPreferencesStyle,
     modifier: Modifier = Modifier,
-    showProVersionDialog: DialogStateNoData = rememberDialogState(),
     buttons: List<SettingsHeaderButtons.Button> = emptyList(),
     onPreferenceStateChanged: (state: PreferenceState) -> Unit,
     handleBackPress: Boolean = true,
@@ -176,7 +179,6 @@ fun AppPreferences(
         settings,
         onPreferenceStateChanged,
         handleBackPress,
-        showProVersionDialog,
         buttons,
         style
     )
@@ -189,7 +191,6 @@ internal fun SettingsContent(
     settings: PreferenceSettings,
     onPreferenceStateChanged: (state: PreferenceState) -> Unit,
     handleBackPress: Boolean,
-    showProVersionDialog: DialogStateNoData,
     buttons: List<SettingsHeaderButtons.Button> = emptyList(),
     style: AppPreferencesStyle
 ) {
@@ -216,7 +217,7 @@ internal fun SettingsContent(
                 // Region 0 - Header
                 // --------------------
 
-                RegionHeader(settings, showProVersionDialog, buttons)
+                RegionHeader(settings, buttons)
 
                 // --------------------
                 // Region 1 - Content
@@ -288,7 +289,7 @@ internal fun SettingsContent(
                             state = state,
                             handleBackPress = handleBackPress
                         ) {
-                            RegionHeader(settings, showProVersionDialog, buttons)
+                            RegionHeader(settings, buttons)
                             if (style.addThemeSetting)
                                 PreferenceSettingsTheme(true)
                             RegionLanguage(setup)
@@ -358,11 +359,10 @@ internal fun SettingsContent(
 @Composable
 private fun PreferenceGroupScope.RegionHeader(
     settings: PreferenceSettings,
-    showProVersionDialog: DialogStateNoData,
     buttons: List<SettingsHeaderButtons.Button>
 ) {
     SettingsHeader(settings)
-    SettingsProVersionHeader(showProVersionDialog)
+    SettingsProVersionHeader()
     SettingsHeaderButtons(buttons)
 }
 
@@ -396,12 +396,13 @@ private fun PreferenceGroupScope.RegionAbout(
     val appState = LocalAppState.current
     val debugPrefs = setup.debugPrefs
     val changelogState = appState.changelogState
+    val proVersionManager = ProVersionManager.setup
 
     val showChangelog = remember { setup.changelogSetup != null }
     val showBackup = remember { setup.backupSupport?.addToPrefs == true }
     val showFeedback = remember { Platform.sendFeedback != null && setup.fileLogger != null }
     val showPrivacy =
-        remember { setup.privacyPolicyLink.isNotEmpty() || setup.proVersionManager.supportsProVersion }
+        remember { setup.privacyPolicyLink.isNotEmpty() || proVersionManager.supported }
     val showDeveloper by debugPrefs.showDeveloperSettings.collectAsStateNotNull()
 
     if (showChangelog || showBackup || showFeedback || showPrivacy || showDeveloper) {
@@ -497,7 +498,7 @@ private fun PreferenceGroupScope.RegionAbout(
             // Region 3.4 - Privacy
             // --------------------
 
-            if (setup.privacyPolicyLink.isNotEmpty() || setup.proVersionManager.supportsProVersion) {
+            if (setup.privacyPolicyLink.isNotEmpty() || proVersionManager.supported) {
                 PreferenceSubScreen(
                     title = stringResource(Res.string.settings_group_privacy),
                     icon = {
@@ -525,25 +526,8 @@ private fun PreferenceGroupScope.RegionAbout(
                                 }
                             )
                         }
-                        if (setup.proVersionManager.supportsProVersion) {
-                            /*
-                                        if (appState.adManager?.privacyOptionsRequired() == true) {
-                                            PreferenceButton(
-                                                onClick = {
-                                                    appState.adManager?.showPrivacyOptionsForm(context.requireActivity())
-                                                },
-                                                title = stringResource(Res.string.settings_consent_settings),
-                                                subtitle = stringResource(Res.string.settings_gdpr_consent_show_dialog),
-                                                icon = {
-                                                    Icon(
-                                                        Icons.Outlined.PrivacyTip,
-                                                        contentDescription = null
-                                                    )
-                                                }
-                                            )
-                                        }
-
-                 */
+                        if (proVersionManager.supported) {
+                            PreferenceRegionAds()
                         }
                     }
                 }
@@ -606,7 +590,7 @@ private fun PreferenceGroupScope.RegionAbout(
                         )
                     }
 
-                    if (setup.proVersionManager.supportsProVersion) {
+                    if (proVersionManager.supported) {
                         PreferenceBool(
                             value = debugPrefs.forceIsProInDebug.asMutableStateNotNull(),
                             style = PreferenceBool.Style.Checkbox,

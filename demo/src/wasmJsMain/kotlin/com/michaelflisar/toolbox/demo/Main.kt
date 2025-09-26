@@ -13,7 +13,6 @@ import com.michaelflisar.toolbox.app.features.navigation.NavigationUtil
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.preferences.Preferences
 import com.michaelflisar.toolbox.app.features.preferences.createStorage
-import com.michaelflisar.toolbox.app.features.proversion.ProVersionManagerDisabled
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 suspend fun main() {
@@ -22,7 +21,6 @@ suspend fun main() {
     val setup = SharedDefinitions.createBaseAppSetup(
         prefs = prefs,
         debugStorage = Preferences.createStorage("debug"),
-        proVersionManager = ProVersionManagerDisabled,
         backupSupport = null, // no backup support in wasm
         isDebugBuild = true // TODO: how to detect in wasm?
     )

@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -22,13 +20,10 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.DesktopApp
-import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
-import com.michaelflisar.toolbox.core.resources.Res
-import com.michaelflisar.toolbox.core.resources.keep
+import com.michaelflisar.toolbox.drawables.Keep
 import com.michaelflisar.toolbox.extensions.disabled
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.jewel.ui.component.Icon
 import org.jetbrains.jewel.ui.component.IconButton
 import org.jetbrains.jewel.ui.component.Text
@@ -90,7 +85,7 @@ fun DecoratedWindowScope.JewelTitleBar(
             if (setup.showAlwaysOnTop) {
                 val alwaysOnTop = prefs.alwaysOnTop.collectAsStateNotNull()
                 TitleIconButton(
-                    painterResource(Res.drawable.keep),
+                    rememberVectorPainter(Keep),
                     "Always On Top",
                     if (alwaysOnTop.value) foreground else foreground.disabled()
                 ) {

@@ -30,7 +30,7 @@ import app.lexilabs.basic.ads.composable.rememberBannerAd
 import app.lexilabs.basic.ads.composable.rememberConsent
 import app.lexilabs.basic.ads.toAndroid
 import com.michaelflisar.lumberjack.core.L
-import com.michaelflisar.toolbox.classes.ProState
+import com.michaelflisar.toolbox.features.proversion.ProState
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.placeholder_ads
 import org.jetbrains.compose.resources.stringResource

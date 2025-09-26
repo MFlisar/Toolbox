@@ -6,7 +6,6 @@ import androidx.core.app.NotificationCompat
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.michaelflisar.toolbox.backup.AndroidBackupManager
-import com.michaelflisar.toolbox.backup.IBackupManager
 import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
 import com.michaelflisar.toolbox.backup.R
 import com.michaelflisar.toolbox.service.BaseWorker

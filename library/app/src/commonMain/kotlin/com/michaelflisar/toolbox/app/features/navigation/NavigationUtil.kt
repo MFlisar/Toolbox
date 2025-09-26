@@ -19,7 +19,9 @@ import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
-import com.michaelflisar.toolbox.classes.ProState
+import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
+import com.michaelflisar.toolbox.app.features.proversion.ProVersionSetup
+import com.michaelflisar.toolbox.features.proversion.ProState
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import kotlinx.coroutines.launch
 
@@ -71,14 +73,14 @@ object NavigationUtil {
         groupedInMoreItem: Boolean,
     ): List<MenuItem> {
 
-        val setup = CommonApp.setup
-        val proVersion by setup.proVersionManager.proState.collectAsState()
+        val proVersionManager = ProVersionManager.setup
+        val proVersion by proVersionManager.proState.collectAsState()
 
         // 1) Pro Version + Separator
         val itemsProVersion = if (proVersion == ProState.Yes) {
             emptyList()
         } else {
-            val action = setup.proVersionManager.actionProVersion()?.toMenuItem()
+            val action = (proVersionManager as? ProVersionSetup.Supported)?.action?.invoke()?.toMenuItem()
             if (action == null) {
                 emptyList()
             } else {
@@ -176,13 +178,14 @@ object NavigationUtil {
             null
         }
 
-        val proVersion by setup.proVersionManager.proState.collectAsState()
+        val proVersionManager = ProVersionManager.setup
+        val proVersion by proVersionManager.proState.collectAsState()
 
         // 1) Pro Version + Separator
         val itemsProVersion = if (proVersion == ProState.Yes) {
             emptyList()
         } else {
-            listOfNotNull(setup.proVersionManager.actionProVersion()?.toMenuItem())
+            listOfNotNull((proVersionManager as? ProVersionSetup.Supported)?.action?.invoke()?.toMenuItem())
         }
 
         // 2) custom actions
@@ -219,14 +222,14 @@ object NavigationUtil {
         definition: INavigationDefinition,
     ): List<MenuItem> {
 
-        val setup = CommonApp.setup
-        val proVersion by setup.proVersionManager.proState.collectAsState()
+        val proVersionManager = ProVersionManager.setup
+        val proVersion by proVersionManager.proState.collectAsState()
 
         // 1) Pro Version + Separator
         val itemsProVersion = if (proVersion == ProState.Yes) {
             null
         } else {
-            setup.proVersionManager.actionProVersion()?.toMenuItem()
+            (proVersionManager as? ProVersionSetup.Supported)?.action?.invoke()?.toMenuItem()
         }
 
         // 2) custom actions

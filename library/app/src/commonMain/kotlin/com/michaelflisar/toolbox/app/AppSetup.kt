@@ -11,10 +11,12 @@ import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.backup.IBackupSupport
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
-import com.michaelflisar.toolbox.app.features.proversion.BaseAppProVersionManager
 
 class AppSetup(
-    val developer: Developer = Developer.Author(Constants.DEVELOPER_NAME, Constants.DEVELOPER_EMAIL),
+    val developer: Developer = Developer.Author(
+        Constants.DEVELOPER_NAME,
+        Constants.DEVELOPER_EMAIL
+    ),
     val versionCode: Int,
     val versionName: String,
     val packageName: String,
@@ -23,7 +25,6 @@ class AppSetup(
     val themeSupport: ThemeSupport,
     val prefs: BasePrefs,
     val debugPrefs: DebugPrefs,
-    val proVersionManager: BaseAppProVersionManager,
     val debugDrawer: (@Composable (drawerState: DebugDrawerState) -> Unit)?,
     val privacyPolicyLink: String,
     val disableLanguagePicker: Boolean,
@@ -43,7 +44,7 @@ class AppSetup(
         companion object {
             fun disabled(
                 themes: List<ComposeTheme.Theme> = DefaultThemes.getAllThemes(),
-            ) = ThemeSupport(themes, false,false, false, false, false)
+            ) = ThemeSupport(themes, false, false, false, false, false)
 
             fun full(
                 themes: List<ComposeTheme.Theme> = DefaultThemes.getAllThemes(),
@@ -55,4 +56,5 @@ class AppSetup(
         fun supportsTheming() =
             ComposeTheme.getRegisteredThemes().size > 1 || supportDarkLight || supportContrast || supportDynamicColors
     }
+
 }

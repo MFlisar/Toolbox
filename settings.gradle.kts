@@ -76,6 +76,7 @@ includeModule("library\\modules\\service",          ":toolbox:modules:service")
 includeModule("library\\modules\\csv",              ":toolbox:modules:csv")
 includeModule("library\\modules\\room",             ":toolbox:modules:room")
 includeModule("library\\modules\\ads",              ":toolbox:modules:ads")
+includeModule("library\\modules\\proversion",       ":toolbox:modules:proversion")
 
 includeModule("library\\app",                       ":toolbox:app")
 

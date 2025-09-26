@@ -1,7 +1,9 @@
 package com.michaelflisar.toolbox.service
 
+import android.Manifest
 import android.content.Context
 import android.os.Build
+import androidx.annotation.RequiresPermission
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
@@ -15,6 +17,7 @@ abstract class BaseWorker<Data>(
 
     private var _builder: NotificationCompat.Builder? = null
     protected val builder: NotificationCompat.Builder
+        @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
         get() {
             if (_builder == null) {
                 createNotification(::onInitNotification, false)
@@ -30,6 +33,7 @@ abstract class BaseWorker<Data>(
 
     abstract suspend fun run(): Data
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     final override suspend fun doWork(): Result {
         if (cancelWork())
             return Result.success()
@@ -62,10 +66,12 @@ abstract class BaseWorker<Data>(
         return false
     }
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     protected fun updateNotification() {
         showNotification()
     }
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     private fun createNotification(block: NotificationCompat.Builder.() -> Unit, show: Boolean) {
         if (_builder == null) {
             _builder = NotificationCompat.Builder(applicationContext, setup.channel.id)
@@ -87,6 +93,7 @@ abstract class BaseWorker<Data>(
         }
     }
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     private fun showNotification() {
         NotificationManagerCompat.from(applicationContext)
             .notify(setup.notificationId, builder.build())
@@ -96,6 +103,7 @@ abstract class BaseWorker<Data>(
         NotificationManagerCompat.from(applicationContext).cancel(setup.notificationId)
     }
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     protected open fun showKeptNotification(result: Data) {
         NotificationManagerCompat.from(applicationContext)
             .notify(setup.keptNotificationId!!, builder.build())

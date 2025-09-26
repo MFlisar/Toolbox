@@ -78,7 +78,6 @@ private fun Page(
         val navigator = LocalNavigator.current
         AppPreferences(
             style = style,
-            showProVersionDialog = rememberDialogState(),
             onPreferenceStateChanged = { preferenceState.value = it },
             // the screen handles the back press itself, so we don't want to handle it here
             // inside a dialog it should handle the back press automatically though

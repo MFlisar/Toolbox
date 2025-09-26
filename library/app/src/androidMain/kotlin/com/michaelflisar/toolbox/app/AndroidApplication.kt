@@ -16,7 +16,7 @@ abstract class AndroidApplication : Application() {
     abstract val appIcon: Int
     abstract val appName: Int
 
-    override fun onCreate() {
+    final override fun onCreate() {
 
         super.onCreate()
 
@@ -40,6 +40,11 @@ abstract class AndroidApplication : Application() {
             buildConfigClass = androidSetup.buildConfigClass.java,
             isDebugBuild = setup.isDebugBuild
         )
+
+        onAfterCreate()
+    }
+
+    open fun onAfterCreate() {
     }
 
     abstract fun createSetup(): AppSetup

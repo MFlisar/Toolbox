@@ -14,6 +14,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.unit.IntSize
 import com.michaelflisar.composechangelog.classes.ChangelogState
 import com.michaelflisar.composechangelog.classes.rememberChangelogState
+import com.michaelflisar.composedialogs.core.DialogStateNoData
+import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.CommonApp
@@ -28,15 +30,17 @@ fun rememberAppState(
     scope: CoroutineScope = rememberCoroutineScope(),
     size: MutableState<IntSize> = remember { mutableStateOf(IntSize.Zero) },
     changelogState: ChangelogState = rememberChangelogState(),
+    showProVersionDialog: DialogStateNoData = rememberDialogState(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ): AppState {
-    return AppState(scope, size, changelogState, snackbarHostState)
+    return AppState(scope, size, changelogState, showProVersionDialog, snackbarHostState)
 }
 
 class AppState internal constructor(
     val scope: CoroutineScope,
     val size: MutableState<IntSize>,
     val changelogState: ChangelogState,
+    val showProVersionDialog: DialogStateNoData,
     internal val snackbarHostState: SnackbarHostState
 ) {
     val landscape: Boolean

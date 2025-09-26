@@ -102,9 +102,11 @@ kotlin {
             if (buildFilePlugin.useLiveDependencies()) {
                 api(deps.lumberjack.core)
                 implementation(deps.composechangelog.core)
+                implementation(deps.composedialogs.core)
             } else {
                 api(project( ":lumberjack:core"))
                 implementation(project(":composechangelog:core"))
+                implementation(project(":composedialogs:core"))
             }
 
         }

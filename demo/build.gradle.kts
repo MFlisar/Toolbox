@@ -240,8 +240,13 @@ kotlin {
             // - 1) App ID im Manifest eintragen
             // - 2) AdManager.init(activity) in MainActivity.onCreate aufrufen
             // - 3) FooterAdsBanner im Footer platzieren
+            // - 4) AdsManager in Application konfigurieren
             // INFOS: https://github.com/LexiLabs-App/basic-ads
             implementation(project(":toolbox:modules:ads"))
+
+            // PRO VERSION
+            // - 1) ProVersionManager in Application konfigurieren
+            implementation(project(":toolbox:modules:proversion"))
 
         }
 

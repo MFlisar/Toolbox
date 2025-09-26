@@ -1,30 +1,47 @@
 package com.michaelflisar.toolbox.demo
 
-import androidx.compose.runtime.Composable
+import com.michaelflisar.kotbilling.classes.Product
+import com.michaelflisar.kotbilling.classes.ProductType
+import com.michaelflisar.toolbox.ads.AndroidAdManager
 import com.michaelflisar.toolbox.app.AndroidApplication
 import com.michaelflisar.toolbox.app.AppSetup
+import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.classes.AndroidAppSetup
 import com.michaelflisar.toolbox.app.classes.PlatformContext
-import com.michaelflisar.toolbox.app.features.actions.ActionItem
+import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.backup.AndroidBackupSupport
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.preferences.Preferences
 import com.michaelflisar.toolbox.app.features.preferences.createStorage
-import com.michaelflisar.toolbox.app.features.proversion.BaseAppProVersionManager
-import com.michaelflisar.toolbox.app.features.proversion.ProVersionManagerDisabled
+import com.michaelflisar.toolbox.app.features.proversion.ProVersionAppDefaults
+import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.utils.AndroidAppIconUtil
-import com.michaelflisar.toolbox.classes.ProState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.michaelflisar.toolbox.features.proversion.ProState
+import com.michaelflisar.toolbox.proversion.AndroidProVersionManager
+import kotlinx.coroutines.GlobalScope
 
 class App : AndroidApplication() {
 
     override val appIcon: Int = R.mipmap.ic_launcher
     override val appName: Int = R.string.app_name
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun onAfterCreate() {
         SharedDefinitions.update(PlatformContext(this))
+
+        // Ads + Pro Version enabled
+        val setup = CommonApp.setup
+        AdsManager.init(AndroidAdManager)
+        ProVersionManager.init(
+            manager = AndroidProVersionManager(
+                scope = GlobalScope,
+                products = listOf(Product("pro", ProductType.InApp, false)),
+                forceIsProInDebug = setup.debugPrefs.forceIsProInDebug,
+                isDebug = BuildConfig.DEBUG,
+                initialState = ProState.Unknown,
+                log = true
+            ),
+            action = ProVersionAppDefaults.actionItem()
+        )
     }
 
     override fun createSetup(): AppSetup {
@@ -32,8 +49,10 @@ class App : AndroidApplication() {
         return SharedDefinitions.createBaseAppSetup(
             prefs = prefs,
             debugStorage = Preferences.createStorage("debug"),
-            icon = { AndroidAppIconUtil.adaptiveIconPainterResource(appIcon) ?: SharedDefinitions.appIcon() },
-            proVersionManager = ProVersionManagerFixed(ProState.No),
+            icon = {
+                AndroidAppIconUtil.adaptiveIconPainterResource(appIcon)
+                    ?: SharedDefinitions.appIcon()
+            },
             backupSupport = AndroidBackupSupport(),
             isDebugBuild = BuildConfig.DEBUG
         )
@@ -42,24 +61,4 @@ class App : AndroidApplication() {
     override fun createAndroidSetup() = AndroidAppSetup(
         buildConfigClass = BuildConfig::class
     )
-
-    // TODO: nur für Testzwecke hier!
-    class ProVersionManagerFixed(
-        private val state: ProState
-    ) : BaseAppProVersionManager {
-
-        override val supportsProVersion = false
-
-        private val _proState = MutableStateFlow(state)
-        override val proState: StateFlow<ProState>
-            get() = _proState
-
-        override suspend fun checkProVersion(): ProState {
-            return state
-        }
-
-        @Composable
-        override fun actionProVersion(): ActionItem.Action? = null
-    }
-
 }

@@ -14,7 +14,6 @@ import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.features.dialogs.ErrorDialogProvider
 import com.michaelflisar.toolbox.app.features.dialogs.LocalErrorDialogState
-import com.michaelflisar.toolbox.app.features.dialogs.rememberErrorDialogState
 import com.michaelflisar.toolbox.app.features.dialogs.show
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
@@ -25,7 +24,6 @@ import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.app.features.preferences.Preferences
 import com.michaelflisar.toolbox.app.features.preferences.createStorage
-import com.michaelflisar.toolbox.app.features.proversion.ProVersionManagerDisabled
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.utils.JvmUtil
 
@@ -35,7 +33,6 @@ fun main() {
     val setup = SharedDefinitions.createBaseAppSetup(
         prefs = prefs,
         debugStorage = Preferences.createStorage("debug"),
-        proVersionManager = ProVersionManagerDisabled,
         backupSupport = null,//JvmBackupSupport(),
         isDebugBuild = JvmUtil.isDebug()
     )

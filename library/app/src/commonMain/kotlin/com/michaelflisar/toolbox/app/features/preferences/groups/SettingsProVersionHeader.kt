@@ -16,7 +16,9 @@ import com.michaelflisar.composepreferences.core.composables.PreferenceItemDefau
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.screen.button.PreferenceButton
 import com.michaelflisar.toolbox.app.CommonApp
-import com.michaelflisar.toolbox.classes.ProState
+import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
+import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
+import com.michaelflisar.toolbox.features.proversion.ProState
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.dlg_pro_version_title
 import com.michaelflisar.toolbox.core.resources.settings_pro_version
@@ -29,24 +31,20 @@ import compose.icons.fontawesomeicons.solid.Crown
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun PreferenceGroupScope.SettingsProVersionHeader(
-    showProVersionDialog: DialogStateNoData,
-) {
-    val setup = CommonApp.setup
-    val proVersionManager = setup.proVersionManager
+fun PreferenceGroupScope.SettingsProVersionHeader() {
 
+    val proVersionManager = ProVersionManager.setup
     val proState = proVersionManager.proState.collectAsState()
 
-    if (proVersionManager.supportsProVersion) {
+    if (proVersionManager.supported) {
 
         when (proState.value) {
             ProState.No -> SettingsNotPro(
                 proState,
-                stringResource(Res.string.settings_pro_version_is_free_with_click_info2),
-                showProVersionDialog
+                stringResource(Res.string.settings_pro_version_is_free_with_click_info2)
             )
 
-            ProState.Unknown -> SettingsNotPro(proState, null, showProVersionDialog)
+            ProState.Unknown -> SettingsNotPro(proState, null)
             ProState.Yes -> {
                 SettingsPro()
             }
@@ -57,12 +55,12 @@ fun PreferenceGroupScope.SettingsProVersionHeader(
 @Composable
 private fun PreferenceGroupScope.SettingsNotPro(
     proState: State<ProState>,
-    info: String?,
-    showProVersionDialog: DialogStateNoData,
+    info: String?
 ) {
+    val appState = LocalAppState.current
     PreferenceButton(
         onClick = {
-            showProVersionDialog.show()
+            appState.showProVersionDialog.show()
         },
         title = stringResource(if (info == null) Res.string.settings_pro_version else Res.string.settings_pro_version_is_free),
         subtitle = info ?: "",
