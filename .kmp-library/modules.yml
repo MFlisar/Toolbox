@@ -113,9 +113,9 @@ modules:
     platforms-info: ""
     dependencies: []
   - relativePath: library\modules\proversion
-    artifact-id: ads
+    artifact-id: proversion
     group: modules
     description: provides proversion checker functions
     optional: true
     platforms-info: ""
-    dependencies: [ ]
+    dependencies: []
