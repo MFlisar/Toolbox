@@ -39,8 +39,8 @@ fun L.sendFeedback(
 
 
 @Composable
-fun Int?.toIconComposable(tint: Color = Color.Unspecified): IconComposable? {
-    return this?.let {
+fun Int.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
+    return this.let {
         @Composable { contentDescription, modifier, tint2 ->
             Icon(
                 painterResource(this),

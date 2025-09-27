@@ -45,7 +45,7 @@ pluginManagement {
 plugins {
     // version catalogue does not work here!
     // alias(deps.plugins.kmp.gradle.tools.settings.gradle.plugin)
-    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "2.0.2" //apply false
+    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "2.0.3" //apply false
 }
 
 settingsFilePlugin {
