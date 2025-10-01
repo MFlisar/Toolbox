@@ -61,7 +61,6 @@ object BackupServiceUtil {
         WorkManager.getInstance(context).cancelAllWorkByTag(tag)
     }
 
-    @RequiresApi(26)
     fun enqueue(
         context: Context,
         inputData: Data,
@@ -77,7 +76,7 @@ object BackupServiceUtil {
                 }
             }
             .build()
-        val initialDelayDuration = initialDelay.toJavaDuration()
+        val initialDelayMilliseconds = initialDelay.inWholeMilliseconds
         val backupRequest = OneTimeWorkRequestBuilder<BackupWorker>()
             .let {
                 if (tag != null) {
@@ -86,7 +85,7 @@ object BackupServiceUtil {
                     it
                 }
             }
-            .setInitialDelay(initialDelayDuration.toMillis(), TimeUnit.MILLISECONDS)
+            .setInitialDelay(initialDelayMilliseconds, TimeUnit.MILLISECONDS)
             .setInputData(inputData)
             .setConstraints(constraints)
             .let {
