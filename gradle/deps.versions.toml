@@ -14,7 +14,7 @@ composethemer =   			"1.0.2"
 composecolors =             "1.0.1"
 kmp-parcelize =             "1.0.0"
 kmp-library =               "2.0.5" # attention: the version for the settings plugin must be adjusted manually!
-toolbox =                   "2.8.6" # für hello world demo
+toolbox =                   "2.8.5" # für hello world demo
 
 # Google
 material =                      "1.13.0"
