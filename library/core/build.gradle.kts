@@ -94,6 +94,9 @@ kotlin {
             // resources
             implementation(compose.components.resources)
 
+            // kotlinx
+            implementation(kotlinx.datetime)
+
             // Compose + AndroidX
             implementation(libs.compose.material3)
             implementation(libs.compose.material.icons.core)
@@ -109,6 +112,7 @@ kotlin {
                 implementation(project(":composedialogs:core"))
             }
 
+            implementation(deps.filekit.dialogs.compose)
         }
 
         androidMain.dependencies {

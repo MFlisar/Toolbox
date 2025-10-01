@@ -1,9 +1,6 @@
 package com.michaelflisar.toolbox.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.interaction.InteractionSource
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
@@ -38,7 +34,21 @@ fun MyInput(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
-    MyInput(modifier, title, value.value, minLines, maxLines, readOnly, enabled, focusable, placeholder, leadingIcon, colors, keyboardOptions, keyboardActions) {
+    MyInput(
+        modifier,
+        title,
+        value.value,
+        minLines,
+        maxLines,
+        readOnly,
+        enabled,
+        focusable,
+        placeholder,
+        leadingIcon,
+        colors,
+        keyboardOptions,
+        keyboardActions
+    ) {
         value.value = it
     }
 }
@@ -61,7 +71,7 @@ fun MyInput(
     onValueChange: (String) -> Unit = {}
 ) {
     OutlinedTextField(
-        modifier = modifier.fillMaxWidth().focusProperties { canFocus = focusable },
+        modifier = modifier.focusProperties { canFocus = focusable },
         value = value,
         onValueChange = onValueChange,
         singleLine = minLines == 1 && maxLines == 1,
@@ -94,3 +104,4 @@ fun MyInput(
         keyboardActions = keyboardActions,
     )
 }
+

@@ -9,29 +9,22 @@ import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.core.scopes.PreferenceScope
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.settings_group_backup
-import com.michaelflisar.toolbox.zip.interfaces.IZipContent
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal expect fun PreferenceGroupScope.PreferencesBackup(
-    backupSupport: IBackupSupport,
-    appName: String,
-)
+internal expect fun PreferenceGroupScope.PreferencesBackup()
 
 @Composable
-fun PreferenceGroupScope.ContentPreferences(backupSupport: IBackupSupport, appName: String) {
-    PreferencesBackup(backupSupport, appName)
+fun PreferenceGroupScope.ContentPreferences() {
+    PreferencesBackup()
 }
 
 @Composable
-fun PreferenceScope.ContentPreferencesAsSubPreference(
-    backupSupport: IBackupSupport,
-    appName: String,
-) {
+fun PreferenceScope.ContentPreferencesAsSubPreference() {
     PreferenceSubScreen(
         title = stringResource(Res.string.settings_group_backup),
         icon = { Icon(Icons.Default.CloudUpload, null) }
     ) {
-        ContentPreferences(backupSupport, appName)
+        ContentPreferences()
     }
 }

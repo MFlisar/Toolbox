@@ -5,10 +5,14 @@ import com.michaelflisar.composethemer.themes.ThemeDefault
 import com.michaelflisar.kotpreferences.core.SettingsModel
 import com.michaelflisar.kotpreferences.core.interfaces.Storage
 import com.michaelflisar.toolbox.app.features.toolbar.ToolbarStyle
+import com.michaelflisar.composedialogs.dialogs.frequency.classes.Frequency
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalTime
 
 open class BasePrefs(
     storage: Storage,
-    initialTheme: ComposeTheme.Theme = ThemeDefault.Theme
+    initialTheme: ComposeTheme.Theme = ThemeDefault.Theme,
+    initialFrequency: Frequency = Frequency.Weekly(DayOfWeek.SUNDAY, LocalTime(22, 0), 1)
 ) : SettingsModel(storage) {
 
     // Theme
@@ -36,5 +40,6 @@ open class BasePrefs(
     val lastAppVersion by longPref(-1L)
 
     // Backup
-    val backupPath by stringPref("")
+    val backupPathData by stringPref("")
+    val autoBackupFrequency by stringPref(initialFrequency.serialize())
 }

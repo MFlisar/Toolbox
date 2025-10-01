@@ -7,13 +7,13 @@ kotbilling =        		"2.0.0"
 kotpreferences =        	"2.0.0"
 lumberjack =                "9.0.0"
 composedebugdrawer =		"2.0.0"
-composedialogs =   		    "3.0.0"
+composedialogs =   		    "3.0.5"
 composechangelog =   		"3.0.0"
 composepreferences =   		"2.0.0"
 composethemer =   			"1.0.2"
 composecolors =             "1.0.1"
 kmp-parcelize =             "1.0.0"
-kmp-library =               "2.0.4" # attention: the version for the settings plugin must be adjusted manually!
+kmp-library =               "2.0.5" # attention: the version for the settings plugin must be adjusted manually!
 
 # Google
 material =                      "1.13.0"
@@ -57,6 +57,7 @@ billing =		    			"8.0.0"
 # mflisar
 composechangelog =                      		{ id = "io.github.mflisar.composechangelog.gradle-plugin",                   		version.ref = "composechangelog" }
 kmplibrary-buildplugin =                        { id = "io.github.mflisar.kmp-library.plugins-build-gradle",                        version.ref = "kmp-library" }
+kmplibrary-projectplugin =                      { id = "io.github.mflisar.kmp-library.plugins-project-gradle",                      version.ref = "kmp-library" }
 
 # ---------
 # libraries
@@ -97,6 +98,7 @@ composedialogs-dialog-date =               		{ module = "io.github.mflisar.compo
 composedialogs-dialog-color =              		{ module = "io.github.mflisar.composedialogs:dialog-color",      			        version.ref = "composedialogs" }
 composedialogs-dialog-menu =              		{ module = "io.github.mflisar.composedialogs:dialog-menu",      			        version.ref = "composedialogs" }
 composedialogs-dialog-billing =              	{ module = "io.github.mflisar.composedialogs:dialog-billing",      			        version.ref = "composedialogs" }
+composedialogs-dialog-frequency =              	{ module = "io.github.mflisar.composedialogs:dialog-frequency",      			    version.ref = "composedialogs" }
 composechangelog-core =               			{ module = "io.github.mflisar.composechangelog:core",      			        	    version.ref = "composechangelog" }
 composechangelog-renderer-header =  		    { module = "io.github.mflisar.composechangelog:renderer-header",      		        version.ref = "composechangelog" }
 composechangelog-statesaver-preferences =  		{ module = "io.github.mflisar.composechangelog:statesaver-preferences",      		version.ref = "composechangelog" }

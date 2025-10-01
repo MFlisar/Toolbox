@@ -45,7 +45,7 @@ pluginManagement {
 plugins {
     // version catalogue does not work here!
     // alias(deps.plugins.kmp.gradle.tools.settings.gradle.plugin)
-    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "2.0.4" //apply false
+    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "2.0.5" //apply false
 }
 
 settingsFilePlugin {
@@ -66,6 +66,10 @@ fun includeModule(path: String, name: String) {
 // Modules
 // --------------
 
+// empty folders
+includeModule("library",                            ":toolbox")
+includeModule("library\\modules",                   ":toolbox:modules")
+// modules
 includeModule("library\\core",                      ":toolbox:core")
 includeModule("library\\modules\\table",            ":toolbox:modules:table")
 includeModule("library\\modules\\form",             ":toolbox:modules:form")

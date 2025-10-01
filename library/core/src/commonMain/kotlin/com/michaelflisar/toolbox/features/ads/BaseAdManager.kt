@@ -14,4 +14,6 @@ interface BaseAdManager {
         onDismissed: () -> Unit = {},
         onError: (Exception) -> Unit = { _ -> }
     )
+
+    fun resetConsent(consent: Any)
 }

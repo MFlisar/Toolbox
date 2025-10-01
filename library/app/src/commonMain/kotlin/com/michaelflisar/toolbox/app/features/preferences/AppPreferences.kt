@@ -64,8 +64,10 @@ import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.backup.ContentPreferencesAsSubPreference
+import com.michaelflisar.toolbox.app.features.feedback.FeedbackManager
 import com.michaelflisar.toolbox.app.features.logging.LogManager
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeader
@@ -75,6 +77,7 @@ import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.localContext
 import com.michaelflisar.toolbox.app.platform.restart
+import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.classes.LocalStyle
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_settings
@@ -112,6 +115,9 @@ internal expect fun LumberjackDialog(
 
 @Composable
 internal expect fun PreferenceScope.PreferenceRegionAds()
+
+@Composable
+internal expect fun PreferenceGroupScope.PreferenceRegionAdsDeveloper()
 
 sealed class AppPreferencesStyle {
 
@@ -319,7 +325,7 @@ internal fun SettingsContent(
         )
     }
 
-    if (Platform.sendFeedback != null && setup.fileLogger != null && showAttachLogFile.visible) {
+    if (FeedbackManager.supported && setup.fileLogger != null && showAttachLogFile.visible) {
         DialogInfo(
             state = showAttachLogFile,
             icon = { Icon(Icons.Outlined.Mail, contentDescription = null) },
@@ -336,14 +342,16 @@ internal fun SettingsContent(
             when (it) {
                 is DialogEvent.Button -> {
                     when (it.button) {
-                        DialogButtonType.Positive -> Platform.sendFeedback?.invoke(
+                        DialogButtonType.Positive -> FeedbackManager.sendFeedback(
+                            setup.fileLogger.setup,
+                            emptyList(),
                             true,
-                            setup.fileLogger.setup
                         )
 
-                        DialogButtonType.Negative -> Platform.sendFeedback?.invoke(
-                            false,
-                            setup.fileLogger.setup
+                        DialogButtonType.Negative -> FeedbackManager.sendFeedback(
+                            setup.fileLogger.setup,
+                            emptyList(),
+                            false
                         )
                     }
                 }
@@ -397,10 +405,11 @@ private fun PreferenceGroupScope.RegionAbout(
     val debugPrefs = setup.debugPrefs
     val changelogState = appState.changelogState
     val proVersionManager = ProVersionManager.setup
+    val adsManager = AdsManager.manager
 
     val showChangelog = remember { setup.changelogSetup != null }
-    val showBackup = remember { setup.backupSupport?.addToPrefs == true }
-    val showFeedback = remember { Platform.sendFeedback != null && setup.fileLogger != null }
+    val showBackup = remember { BackupManager.manager?.config?.addToPrefs == true }
+    val showFeedback = remember { FeedbackManager.supported && setup.fileLogger != null }
     val showPrivacy =
         remember { setup.privacyPolicyLink.isNotEmpty() || proVersionManager.supported }
     val showDeveloper by debugPrefs.showDeveloperSettings.collectAsStateNotNull()
@@ -433,15 +442,15 @@ private fun PreferenceGroupScope.RegionAbout(
             // Region 3.2 - Export/Import
             // --------------------
 
-            if (setup.backupSupport?.addToPrefs == true) {
-                ContentPreferencesAsSubPreference(setup.backupSupport, setup.name())
+            if (BackupManager.manager?.config?.addToPrefs == true) {
+                ContentPreferencesAsSubPreference()
             }
 
             // --------------------
             // Region 3.3 - Sonstiges
             // --------------------
 
-            if ((Platform.sendFeedback != null && setup.fileLogger != null) || Platform.openMarket != null) {
+            if ((FeedbackManager.supported && setup.fileLogger != null) || Platform.openMarket != null) {
                 PreferenceSubScreen(
                     title = stringResource(Res.string.settings_group_others),
                     subtitle = stringResource(Res.string.settings_group_others_details),
@@ -457,15 +466,16 @@ private fun PreferenceGroupScope.RegionAbout(
                     PreferenceSection(
                         title = stringResource(Res.string.settings_group_others)
                     ) {
-                        if (Platform.sendFeedback != null && setup.fileLogger != null) {
+                        if (FeedbackManager.supported && setup.fileLogger != null) {
                             PreferenceButton(
                                 onClick = {
                                     if (L.isEnabled()) {
                                         showAttachLogFile.show()
                                     } else {
-                                        Platform.sendFeedback?.invoke(
-                                            false,
-                                            setup.fileLogger.setup
+                                        FeedbackManager.sendFeedback(
+                                            setup.fileLogger.setup,
+                                            emptyList(),
+                                            false
                                         )
                                     }
                                 },
@@ -526,7 +536,7 @@ private fun PreferenceGroupScope.RegionAbout(
                                 }
                             )
                         }
-                        if (proVersionManager.supported) {
+                        if (adsManager != null && proVersionManager.supported) {
                             PreferenceRegionAds()
                         }
                     }
@@ -622,11 +632,11 @@ private fun PreferenceGroupScope.RegionAbout(
                             }
                         )
 
-                        if (LogManager.sendRelevantFiles != null) {
+                        if (FeedbackManager.supported) {
                             PreferenceButton(
                                 onClick = {
                                     scope.launch {
-                                        LogManager.sendRelevantFiles()
+                                        FeedbackManager.sendRelevantFiles()
                                     }
                                 },
                                 title = "Send All App Files As Mail",
@@ -636,27 +646,9 @@ private fun PreferenceGroupScope.RegionAbout(
                         }
                     }
                 }
-                // TODO
-                /*
-            if (setup.ads != null) {
-                PreferenceSection(
-                    title = "Ads"
-                ) {
-                    PreferenceButton(
-                        onClick = {
-                            appState.adManager?.resetConsent()
-                        },
-                        title = "Consent zurücksetzen",
-                        icon = {
-                            Icon(
-                                Icons.Outlined.HideSource,
-                                contentDescription = null
-                            )
-                        }
-                    )
+                if (adsManager != null && proVersionManager.supported) {
+                    PreferenceRegionAdsDeveloper()
                 }
-            }*/
-                // TODO
                 val platformContext = Platform.localContext()
                 val kill = Platform.kill
                 val restart = Platform.restart

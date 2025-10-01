@@ -4,10 +4,12 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -16,10 +18,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,7 +32,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,8 +39,11 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.michaelflisar.toolbox.Platform.cursor
 import com.michaelflisar.toolbox.classes.LocalStyle
 
 object MyDropdownDefaults {
@@ -90,9 +96,13 @@ object MyDropdownDefaults {
             )
         }
     }
+
+    @Composable
+    fun style(): MyDropdown.Style = MyDropdown.Style.Button
 }
 
 object MyDropdown {
+
     class Filter<T>(
         val label: String,
         val filter: (filter: String, item: T & Any) -> Boolean,
@@ -109,6 +119,11 @@ object MyDropdown {
         val text: String,
         val textDropdown: String,
     )
+
+    enum class Style {
+        Button,
+        OutlinedButton,
+    }
 }
 
 @Composable
@@ -122,6 +137,7 @@ fun <T> MyDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<T>? = null,
+    style: MyDropdown.Style = MyDropdownDefaults.style(),
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
         MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
     },
@@ -176,6 +192,7 @@ fun <T> MyDropdown(
         color,
         backgroundColor,
         dropdownFilter,
+        style,
         content,
         dropdownContent
     ) { item ->
@@ -196,6 +213,7 @@ fun <T> MyDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<T>? = null,
+    style: MyDropdown.Style = MyDropdownDefaults.style(),
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
         MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
     },
@@ -250,6 +268,7 @@ fun <T> MyDropdown(
         color,
         backgroundColor,
         dropdownFilter,
+        style,
         content,
         dropdownContent
     ) { item ->
@@ -268,6 +287,7 @@ fun MyDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<String>? = null,
+    style: MyDropdown.Style = MyDropdownDefaults.style(),
     content: @Composable (modifier: Modifier, item: String?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
         MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
     },
@@ -315,6 +335,7 @@ fun MyDropdown(
         color,
         backgroundColor,
         dropdownFilter,
+        style,
         content,
         dropdownContent
     ) { item ->
@@ -333,6 +354,7 @@ fun MyDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<String>? = null,
+    style: MyDropdown.Style = MyDropdownDefaults.style(),
     content: @Composable (modifier: Modifier, item: String?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
         MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
     },
@@ -379,6 +401,7 @@ fun MyDropdown(
         color,
         backgroundColor,
         dropdownFilter,
+        style,
         content,
         dropdownContent
     ) { item ->
@@ -386,6 +409,7 @@ fun MyDropdown(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun <T> MyDropdownImpl(
     modifier: Modifier = Modifier,
@@ -396,114 +420,216 @@ private fun <T> MyDropdownImpl(
     color: Color,
     backgroundColor: Color,
     filter: MyDropdown.DropdownFilter<T>?,
+    style: MyDropdown.Style = MyDropdownDefaults.style(),
     content: @Composable (modifier: Modifier, item: MyDropdown.Item<T>?, title: String, titleColor: Color, textColor: Color) -> Unit,
     dropdownContent: @Composable (item: MyDropdown.Item<T>, selected: Boolean) -> Unit,
     onSelectionChange: (item: MyDropdown.Item<T>) -> Unit,
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    val rotation by animateFloatAsState(if (expanded) -180f else 0f)
-    val borderColor = color.takeIf { it != Color.Unspecified }
-        ?: MaterialTheme.colorScheme.outline
-    Box(
-        modifier = modifier.clip(MaterialTheme.shapes.small)
-            .border(1.dp, borderColor, MaterialTheme.shapes.small)
-            .background(backgroundColor)
-            .then(
-                if (enabled) {
-                    Modifier.clickable {
-                        expanded = !expanded
-                    }
-                } else Modifier
-            ),
-        contentAlignment = Alignment.Center
-    ) {
+    val expanded = remember { mutableStateOf(false) }
+    val rotation by animateFloatAsState(if (expanded.value) -180f else 0f)
+    val borderColor = color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.outline
 
-        val labelColor =
-            color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.onSurfaceVariant
+    val filterText = remember { mutableStateOf("") }
+    val filteredItems = remember(items) { mutableStateOf(items) }
 
-        val filterText = remember { mutableStateOf("") }
-        val filteredItems = remember(items) { mutableStateOf(items) }
-
-        if (filter != null) {
-            LaunchedEffect(filterText.value, filteredItems.value, expanded) {
-                if (expanded) {
-                    filteredItems.value = items.filter {
-                        filter.filter(filterText.value, it)
-                    }
-                }
-            }
-            LaunchedEffect(expanded) {
-                if (!expanded) {
-                    filterText.value = ""
-                }
+    when (style) {
+        MyDropdown.Style.Button -> {
+            Box(
+                modifier = modifier.clip(MaterialTheme.shapes.small)
+                    .border(1.dp, borderColor, MaterialTheme.shapes.small)
+                    .background(backgroundColor)
+                    .then(
+                        if (enabled) {
+                            Modifier.clickable {
+                                expanded.value = !expanded.value
+                            }
+                        } else Modifier
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                MyDropdownContent(
+                    Modifier.fillMaxWidth().padding(8.dp),
+                    expanded,
+                    rotation,
+                    title,
+                    items,
+                    selected,
+                    color,
+                    filter,
+                    filterText,
+                    filteredItems,
+                    content
+                )
+                MyDropdownDropdown(
+                    expanded,
+                    filter,
+                    title,
+                    filterText,
+                    filteredItems,
+                    dropdownContent,
+                    selected,
+                    onSelectionChange
+                )
             }
         }
 
-        Row(
-            modifier = Modifier.fillMaxWidth()
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val item = items.find { it.index == selected }
-            content(
-                Modifier.weight(1f),
-                item,
-                title,
-                labelColor,
-                color
+        MyDropdown.Style.OutlinedButton -> {
+            val colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = borderColor,
             )
-
-            Icon(
-                modifier = Modifier.rotate(rotation),
-                imageVector = Icons.Default.ArrowDropDown,
-                contentDescription = null,
-                tint = labelColor
-            )
-        }
-        val scrollState = rememberScrollState()
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            scrollState = scrollState
-        ) {
-            if (filter != null) {
-                Column(
-                    modifier = Modifier
-                        .offset(y = with(LocalDensity.current) { scrollState.value.toDp() })
-                        .background(MaterialTheme.colorScheme.surfaceContainer)
-                        .padding(all = LocalStyle.current.paddingDefault)
-                        .zIndex(2f),
-                    verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
-                ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.Bold
-                    )
-                    OutlinedTextField(
-                        value = filterText.value,
-                        label = { Text(filter.label) },
-                        singleLine = true,
-                        onValueChange = { filterText.value = it },
-                    )
-                }
-
-            }
-            filteredItems.value.forEach {
-                DropdownMenuItem(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .zIndex(1f),
-                    text = {
-                        dropdownContent(it, it.index == selected)
-                    },
+            Box(
+                modifier = modifier
+            ) {
+                MyOutlinedDecoratedContainer(
+                    title = title,
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = enabled,
+                    placeholder = null,
+                    leadingIcon = null,
+                    trailingIcon = null,
+                    colors = colors,
                     onClick = {
-                        onSelectionChange(it)
-                        expanded = false
+                        expanded.value = !expanded.value
                     }
+                ) {
+                    MyDropdownContent(
+                        // TODO: find out why extra padding is necessary + fix it
+                        Modifier.fillMaxWidth().then(MyOutlinedDecoratedContainer.MODIFIER_CORRECTION),
+                        expanded,
+                        rotation,
+                        "",
+                        items,
+                        selected,
+                        color,
+                        filter,
+                        filterText,
+                        filteredItems,
+                        content
+                    )
+                }
+                MyDropdownDropdown(
+                    expanded,
+                    filter,
+                    title,
+                    filterText,
+                    filteredItems,
+                    dropdownContent,
+                    selected,
+                    onSelectionChange
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun <T> MyDropdownContent(
+    modifier: Modifier,
+    expanded: MutableState<Boolean>,
+    rotation: Float,
+    title: String,
+    items: List<MyDropdown.Item<T>>,
+    selected: Int,
+    color: Color,
+    filter: MyDropdown.DropdownFilter<T>?,
+    filterText: MutableState<String>,
+    filteredItems: MutableState<List<MyDropdown.Item<T>>>,
+    content: @Composable (modifier: Modifier, item: MyDropdown.Item<T>?, title: String, titleColor: Color, textColor: Color) -> Unit
+) {
+    val labelColor =
+        color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.onSurfaceVariant
+
+    if (filter != null) {
+        LaunchedEffect(filterText.value, filteredItems.value, expanded) {
+            if (expanded.value) {
+                filteredItems.value = items.filter {
+                    filter.filter(filterText.value, it)
+                }
+            }
+        }
+        LaunchedEffect(expanded) {
+            if (!expanded.value) {
+                filterText.value = ""
+            }
+        }
+    }
+
+
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val item = items.find { it.index == selected }
+        content(
+            Modifier.weight(1f),
+            item,
+            title,
+            labelColor,
+            color
+        )
+
+        Icon(
+            modifier = Modifier.rotate(rotation),
+            imageVector = Icons.Default.ArrowDropDown,
+            contentDescription = null,
+            tint = labelColor
+        )
+    }
+}
+
+@Composable
+private fun <T> MyDropdownDropdown(
+    expanded: MutableState<Boolean>,
+    filter: MyDropdown.DropdownFilter<T>?,
+    title: String,
+    filterText: MutableState<String>,
+    filteredItems: MutableState<List<MyDropdown.Item<T>>>,
+    dropdownContent: @Composable ((MyDropdown.Item<T>, Boolean) -> Unit),
+    selected: Int,
+    onSelectionChange: (MyDropdown.Item<T>) -> Unit
+) {
+    val scrollState = rememberScrollState()
+    DropdownMenu(
+        expanded = expanded.value,
+        onDismissRequest = { expanded.value = false },
+        scrollState = scrollState
+    ) {
+        if (filter != null) {
+            Column(
+                modifier = Modifier
+                    .offset(y = with(LocalDensity.current) { scrollState.value.toDp() })
+                    .background(MaterialTheme.colorScheme.surfaceContainer)
+                    .padding(all = LocalStyle.current.paddingDefault)
+                    .zIndex(2f),
+                verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold
+                )
+                OutlinedTextField(
+                    value = filterText.value,
+                    label = { Text(filter.label) },
+                    singleLine = true,
+                    onValueChange = { filterText.value = it },
                 )
             }
 
+        }
+        filteredItems.value.forEach {
+            DropdownMenuItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .zIndex(1f),
+                text = {
+                    dropdownContent(it, it.index == selected)
+                },
+                onClick = {
+                    onSelectionChange(it)
+                    expanded.value = false
+                }
+            )
         }
     }
 }

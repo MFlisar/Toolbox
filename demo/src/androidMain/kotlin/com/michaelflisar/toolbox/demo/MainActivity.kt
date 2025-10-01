@@ -9,7 +9,6 @@ import com.michaelflisar.toolbox.ads.FooterAdsBanner
 import com.michaelflisar.toolbox.app.AndroidApp
 import com.michaelflisar.toolbox.app.AndroidAppContent
 import com.michaelflisar.toolbox.app.AndroidToolbar
-import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.NavigationUtil
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager

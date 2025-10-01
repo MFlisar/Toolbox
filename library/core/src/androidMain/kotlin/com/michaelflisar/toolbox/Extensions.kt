@@ -24,14 +24,14 @@ fun <T> MutableList<T>.removeFirstSave(): T {
 }
 
 fun L.sendFeedback(
-    fileLoggingSetup: IFileLoggingSetup,
+    fileLoggingSetup: IFileLoggingSetup?,
     files: List<File> = emptyList(),
     appendLogFile: Boolean = true,
 ) {
     L.sendFeedback(
         context = AppContext.context(),
         receiver = AcraUtil.MAIL,
-        attachments = files + (fileLoggingSetup.getLatestLogFile()?.takeIf { appendLogFile }?.let {
+        attachments = files + (fileLoggingSetup?.getLatestLogFile()?.takeIf { appendLogFile }?.let {
             listOf(it)
         } ?: emptyList())
     )

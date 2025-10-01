@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.compose.ui.Modifier
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
+import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -23,10 +24,6 @@ actual object Platform {
 
     actual val openMarket: (() -> Unit)? = {
         IntentUtil.openMarket(AppContext.context())
-    }
-
-    actual val sendFeedback: ((appendLogFiles: Boolean, fileLoggerSetup: IFileLoggingSetup) -> Unit)? = { appendLogFiles, fileLoggerSetup ->
-        L.sendFeedback(fileLoggerSetup, appendLogFile = appendLogFiles)
     }
 
     actual fun Modifier.cursor() : Modifier {

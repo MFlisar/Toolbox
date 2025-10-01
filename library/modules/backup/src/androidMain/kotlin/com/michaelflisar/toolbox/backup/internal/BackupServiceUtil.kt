@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox.backup.internal
 
-import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.ServiceInfo
 import android.os.Build
@@ -16,6 +15,8 @@ import com.michaelflisar.toolbox.NotificationUtil
 import com.michaelflisar.toolbox.backup.worker.BackupWorker
 import com.michaelflisar.toolbox.service.ServiceSetup
 import kotlinx.serialization.json.Json
+import kotlin.time.Duration
+import kotlin.time.toJavaDuration
 
 object BackupServiceUtil {
 
@@ -49,8 +50,21 @@ object BackupServiceUtil {
         }
     }
 
+    fun cancelAll(context: Context) {
+        WorkManager.getInstance(context).cancelAllWork()
+    }
 
-    fun enqueue(context: Context, inputData: Data, needsInternet: Boolean) {
+    fun cancelAllWorkByTag(context: Context, tag: String) {
+        WorkManager.getInstance(context).cancelAllWorkByTag(tag)
+    }
+
+    fun enqueue(
+        context: Context,
+        inputData: Data,
+        needsInternet: Boolean,
+        initialDelay: Duration,
+        tag: String?
+    ) {
         val workManager = WorkManager.getInstance(context)
         val constraints = Constraints.Builder()
             .apply {
@@ -60,12 +74,65 @@ object BackupServiceUtil {
             }
             .build()
         val backupRequest = OneTimeWorkRequestBuilder<BackupWorker>()
+            .let {
+                if (tag != null) {
+                    it.addTag(tag)
+                } else {
+                    it
+                }
+            }
+            .setInitialDelay(initialDelay.toJavaDuration())
             .setInputData(inputData)
             .setConstraints(constraints)
-            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .let {
+                if (initialDelay.inWholeSeconds == 0L) {
+                    // beschleunigte (wenn möglich sofortige) ausführung
+                    it.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                } else {
+                    it
+                }
+            }
             .build()
         workManager.enqueue(backupRequest)
     }
+/*
+    fun enqueuePeriodic(
+        context: Context,
+        firstStart: LocalTime,
+        periodicDuration: Duration,
+        inputData: Data,
+        needsInternet: Boolean,
+        tag: String? = null
+    ) {
+        val now = LocalDateTime.now()
+        val delay = if (now.isBefore(firstStart)) {
+            Duration.between(now, target)
+        } else {
+            Duration.between(now, firstStart).plusHours(24)
+        }
+
+        val workManager = WorkManager.getInstance(context)
+        val constraints = Constraints.Builder()
+            .apply {
+                if (needsInternet) {
+                    setRequiredNetworkType(NetworkType.CONNECTED)
+                }
+            }
+            .build()
+        val backupRequest = PeriodicWorkRequestBuilder<BackupWorker>(duration)
+            .let {
+                if (tag != null) {
+                    it.addTag(tag)
+                } else {
+                    it
+                }
+            }
+            .setInitialDelay(delay.toJavaDuration())
+            .setInputData(inputData)
+            .setConstraints(constraints)
+            .build()
+        workManager.enqueue(backupRequest)
+    }*/
 
     val SERVICE_BACKUP_SETUP = ServiceSetup(
         channel = CHANNEL,

@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.backup
 
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.utils.JvmUtil
 import com.michaelflisar.toolbox.zip.JavaZipFile
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
@@ -11,9 +12,11 @@ import kotlinx.coroutines.withContext
 
 actual typealias ZipFileContentFile = JavaZipFileContent.File
 actual typealias ZipFileContent = JavaZipFileContent
-actual typealias BackupManager = JvmBackupManager
 
-object JvmBackupManager : IBackupManager<JavaZipFileContent.File, JavaZipFileContent> {
+class JvmBackupManager(
+    override val config: BackupConfig,
+    override val autoBackupConfig: AutoBackupConfig? = null
+) : IBackupManager<JavaZipFileContent.File, JavaZipFileContent> {
 
     override fun onBackupRestored() {
         // TODO
@@ -63,5 +66,18 @@ object JvmBackupManager : IBackupManager<JavaZipFileContent.File, JavaZipFileCon
             L.e(e)
             e
         }
+    }
+
+    override fun getAutoBackupFileName(): String {
+        // --
+        return ""
+    }
+
+    override fun onSettingsChanged() {
+        // not supported on jvm currently
+    }
+
+    override fun onEnqueueNextAutoBackup() {
+        // not supported on jvm currently
     }
 }

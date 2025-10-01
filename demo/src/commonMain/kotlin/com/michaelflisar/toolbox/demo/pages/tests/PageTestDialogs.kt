@@ -23,6 +23,9 @@ import com.michaelflisar.composedialogs.dialogs.color.DialogColor
 import com.michaelflisar.composedialogs.dialogs.color.rememberDialogColor
 import com.michaelflisar.composedialogs.dialogs.date.DialogDate
 import com.michaelflisar.composedialogs.dialogs.date.rememberDialogDate
+import com.michaelflisar.composedialogs.dialogs.frequency.DialogFrequency
+import com.michaelflisar.composedialogs.dialogs.frequency.classes.Frequency
+import com.michaelflisar.composedialogs.dialogs.frequency.rememberDialogFrequency
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 import com.michaelflisar.composedialogs.dialogs.input.DialogInput
 import com.michaelflisar.composedialogs.dialogs.list.DialogList
@@ -32,15 +35,13 @@ import com.michaelflisar.composedialogs.dialogs.number.NumberPickerSetup
 import com.michaelflisar.composedialogs.dialogs.progress.DialogProgress
 import com.michaelflisar.composedialogs.dialogs.time.DialogTime
 import com.michaelflisar.composedialogs.dialogs.time.rememberDialogTime
-import com.michaelflisar.kotpreferences.core.SettingsModel
-import com.michaelflisar.kotpreferences.core.interfaces.Storage
 import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.app.features.preferences.Preferences
-import com.michaelflisar.toolbox.app.features.preferences.createStorage
 import com.michaelflisar.toolbox.extensions.toIconComposable
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalTime
 
 @Parcelize
 object PageTestDialogs : NavScreen() {
@@ -147,7 +148,15 @@ private fun Page(
                 state = state,
                 title = { Text(name) }
             )
-        }
+        },
+        rememberDialogTest("Frequency") { name, state ->
+            val frequency = rememberDialogFrequency(Frequency.Weekly(DayOfWeek.MONDAY, LocalTime(12, 0), 1))
+            DialogFrequency(
+                state = state,
+                frequency = frequency,
+                title = { Text(name) }
+            )
+        },
     )
 
     Column(

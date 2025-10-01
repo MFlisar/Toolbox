@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -72,7 +73,7 @@ fun rememberMySegmentedControlStyle(
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     borderColor: Color = color,
-    buttonContentPadding: PaddingValues = PaddingValues(4.dp)
+    buttonContentPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
 ) = MySegmentedControl.Style(
     fixedWidth,
     minWidth,
@@ -234,6 +235,7 @@ private fun Item(
                     onSelectionChange(index)
                 }
             }
+            .minimumInteractiveComponentSize()
             .padding(style.buttonContentPadding),
         text = text,
         fontWeight = FontWeight.Normal,

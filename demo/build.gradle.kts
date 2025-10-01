@@ -10,6 +10,7 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import com.michaelflisar.kmplibrary.DesktopSetup
 import com.michaelflisar.kmplibrary.setupLaunch4J
 import com.michaelflisar.kmplibrary.setupWindowsApp
+import com.michaelflisar.kmplibrary.setupExtractProguardMapFromAAB
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -19,6 +20,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(deps.plugins.composechangelog)
     alias(deps.plugins.kmplibrary.buildplugin)
+    alias(deps.plugins.kmplibrary.projectplugin)
     alias(libs.plugins.buildkonfig)
     alias(libs.plugins.launch4j)
 }
@@ -145,6 +147,7 @@ kotlin {
                 implementation(deps.composedialogs.dialog.number)
                 implementation(deps.composedialogs.dialog.list)
                 implementation(deps.composedialogs.dialog.menu)
+                implementation(deps.composedialogs.dialog.frequency)
 
                 // Compose Preferences
                 implementation(deps.composepreferences.core)
@@ -180,6 +183,7 @@ kotlin {
                 implementation(project(":composedialogs:modules:number"))
                 implementation(project(":composedialogs:modules:list"))
                 implementation(project(":composedialogs:modules:menu"))
+                implementation(project(":composedialogs:modules:frequency"))
 
                 // Compose Preferences
                 implementation(project(":composepreferences:core"))
@@ -324,6 +328,14 @@ tasks.register<edu.sc.seis.launch4j.tasks.Launch4jLibraryTask>("launch4j") {
     )
 }
 
+// ------------------------
+// Proguard Map aus AAB extrahieren + im release Ordner abspeichern
+// ------------------------
+
+project.setupExtractProguardMapFromAAB(
+    appName,
+    appVersionName
+)
 
 
 

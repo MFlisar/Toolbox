@@ -1,17 +1,20 @@
 package com.michaelflisar.toolbox.backup.worker
 
 import android.content.Context
-import android.net.Uri
 import androidx.core.app.NotificationCompat
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
+import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.backup.R
+import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
+import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
 import com.michaelflisar.toolbox.service.BaseWorker
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
-import androidx.core.net.toUri
-import com.michaelflisar.toolbox.backup.AndroidBackupManager
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.div
+import io.github.vinceglb.filekit.fromBookmarkData
+import kotlin.time.Duration
 
 class BackupWorker internal constructor(
     context: Context,
@@ -21,15 +24,37 @@ class BackupWorker internal constructor(
     companion object {
 
         private const val KEY_FILES = "files"
-        private const val KEY_BACKUP_URI = "backup_uri"
+        private const val KEY_BACKUP_FOLDER_DATA = "backup_folder"
+        private const val DEFAULT_AUTO_TAG = "auto_backup"
 
-        private fun data(files: List<JavaZipFileContent>, backupUri: Uri) = workDataOf(
+        private fun data(
+            files: List<JavaZipFileContent>,
+            backupFolderData: ByteArray
+        ) = workDataOf(
             KEY_FILES to files.map { BackupServiceUtil.JSON.encodeToString(it) }.toTypedArray(),
-            KEY_BACKUP_URI to backupUri.toString()
+            KEY_BACKUP_FOLDER_DATA to backupFolderData
         )
 
-        fun enqueueWorker(context: Context, files: List<JavaZipFileContent>, backupUri: Uri, needsInternet: Boolean) {
-            BackupServiceUtil.enqueue(context, data(files, backupUri), needsInternet)
+        fun enqueueAutoWorker(
+            context: Context,
+            files: List<JavaZipFileContent>,
+            backupFolderData: ByteArray,
+            initialDelay: Duration
+        ) {
+            BackupServiceUtil.enqueue(
+                context = context,
+                inputData = data(
+                    files,
+                    backupFolderData
+                ),
+                needsInternet = false,
+                initialDelay = initialDelay,
+                tag = DEFAULT_AUTO_TAG
+            )
+        }
+
+        fun cancelAutoWorker(context: Context) {
+            BackupServiceUtil.cancelAllWorkByTag(context, DEFAULT_AUTO_TAG)
         }
 
     }
@@ -58,8 +83,24 @@ class BackupWorker internal constructor(
     }
 
     override suspend fun run(): Throwable? {
-        val files = inputData.getStringArray(KEY_FILES)!!.map { BackupServiceUtil.JSON.decodeFromString<JavaZipFileContent>(it) }
-        val backupUri = inputData.getString(KEY_BACKUP_URI)!!.toUri()
-        return AndroidBackupManager.backup(files, PlatformFile(backupUri))
+
+        val manager = BackupManager.manager!!
+
+        val files = inputData.getStringArray(KEY_FILES)!!
+            .map { BackupServiceUtil.JSON.decodeFromString<JavaZipFileContent>(it) }
+        val backupFolderData = inputData.getByteArray(KEY_BACKUP_FOLDER_DATA)!!
+        val backupFolder = PlatformFile.fromBookmarkData(backupFolderData)
+        val backupFileName = manager.getAutoBackupFileName()
+        val backupFile = backupFolder / backupFileName
+        val throwable = try {
+            manager.backup(files, backupFile)
+        } catch (e: Exception) {
+            L.e(e)
+            e
+        }
+
+        manager.onEnqueueNextAutoBackup()
+
+        return throwable
     }
 }

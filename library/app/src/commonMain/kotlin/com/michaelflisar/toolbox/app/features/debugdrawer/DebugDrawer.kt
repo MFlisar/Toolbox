@@ -41,7 +41,7 @@ import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
-import com.michaelflisar.toolbox.app.features.logging.LogManager
+import com.michaelflisar.toolbox.app.features.feedback.FeedbackManager
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsThemeContent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -117,7 +117,6 @@ fun DebugDrawer(
         DebugDrawerDeviceInfos(drawerState = drawerState)
     }
 
-    // Theme - TODO: theme picker for desktop is wrong!
     if (showRegionThemes) {
         DebugDrawerRegion(
             image = { Icon(Icons.Default.Style, null) },
@@ -240,7 +239,7 @@ fun DebugDrawer(
     }
 
     // Daten
-    if (showRegionData && LogManager.sendRelevantFiles != null) {
+    if (showRegionData && FeedbackManager.supported) {
         DebugDrawerRegion(
             image = { Icon(Icons.Default.InsertDriveFile, null) },
             label = "Data",
@@ -253,7 +252,7 @@ fun DebugDrawer(
                 label = "Send relevant app files"
             ) {
                 scope.launch {
-                    LogManager.sendRelevantFiles.invoke()
+                    FeedbackManager.sendRelevantFiles()
                 }
             }
         }

@@ -14,8 +14,6 @@ actual object Platform {
 
     actual val openLanguagePicker: (() -> Unit)? = null
     actual val openMarket: (() -> Unit)? = null
-    actual val sendFeedback: ((appendLogFiles: Boolean, fileLoggerSetup: IFileLoggingSetup) -> Unit)? = null
-
     actual fun Modifier.cursor() : Modifier {
         return this
     }

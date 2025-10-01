@@ -13,17 +13,3 @@ sealed class NoZipFileContent : IZipContent<NoZipFileContent.File> {
         }
     }
 }
-
-actual object BackupManager : IBackupManager<NoZipFileContent.File, NoZipFileContent> {
-    actual override fun onBackupRestored() {
-        // No operation for no backup support
-    }
-
-    actual override suspend fun backup(files: List<NoZipFileContent>, backupFile: PlatformFile): Throwable? {
-        return null // No operation for no backup support
-    }
-
-    actual override suspend fun restore(files: List<NoZipFileContent>, backupFile: PlatformFile): Throwable? {
-        return null // No operation for no backup support
-    }
-}

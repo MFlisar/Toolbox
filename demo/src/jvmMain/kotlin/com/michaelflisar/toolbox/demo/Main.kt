@@ -33,7 +33,6 @@ fun main() {
     val setup = SharedDefinitions.createBaseAppSetup(
         prefs = prefs,
         debugStorage = Preferences.createStorage("debug"),
-        backupSupport = null,//JvmBackupSupport(),
         isDebugBuild = JvmUtil.isDebug()
     )
     val desktopSetup = DesktopAppSetup(

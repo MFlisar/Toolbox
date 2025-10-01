@@ -1,13 +1,27 @@
 -------------------------------------
-- NEXT STEPS
+- OFFENE WICHTIGE PUNKTE
 -------------------------------------
 
+    [ ] Screens - paddings nutzen?
+    [ ] Pages sollten immer fill size haben => ist jetzt so, sollte man das forcieren?
+    [ ] Preferene Screen
+        [x] Android: Back Arrow in Toolbar
+        [ ] Expandable Header wie früher in SwissArmy
+        [ ] Breadcrumbs anzeigen?
+        [x] Option um Custom Pages in Android zu deaktivieren und direkt in Custom Content einzubetten? (Pager sieht dort nicht gut aus)
+    [ ] Auto Backup geht noch nicht
+        [ ] Frequenz speichern
+        [ ] Auto Backup Logik implementieren
+
+-------------------------------------
+- SPÄTER
+-------------------------------------
+
+    [ ] Texte in backup (zip?, service?)
     [ ] https://github.com/RevenueCat/purchases-kmp => SPÄTER! KotBilling reicht dzt einmal aus!
     [ ] Dialoge ohne composable unstyled
 
     [ ] Java App Restart testen => kann nur funktionieren wenn man die App als exe erstellt
-    [ ] Screens - paddings nutzen?
-    [ ] Pages sollten immer fill size haben => ist jetzt so, sollte man das forcieren?
 
     [ ] Store - Offline/Online Database
         - https://store.mobilenativefoundation.org/docs/intro
@@ -16,48 +30,11 @@
         - https://www.reddit.com/r/JetpackComposeDev/comments/1mnzoim/how_to_use_lint_with_jetpack_compose_pro_tips/
 
 
-Changelog und Settings Dialog könnten beides Bottomsheets sein? Insets und indicator oben müssten angepasst werden
-Auto Backup wird nicht angezeigt
-Im Fullscreen Dialog für settings passen die padding auch nicht... falls ich den Dialog so lasse und nicht zu BS wechsel
+
 Full screen Dialoge könnten im root sein  und in toolbar + content aufgeteilt werden für eine schöne Animation? Oder sie könnten die toolbar der App benutzen? Sinnvoll? Bottomsheet ist eigentlich auch ok
 Anderes menu icon????
 Test Page für alle UI Tests für meine Libraries (Dialoge, Preferences, ...)
 MyScroll* Sachen sollten parameter scrollbar haben und sollten im Demo benutzt werden
-Theming UI aus settings in DebugDrawer wiederbenutzen
-
-ALLE PLATFORMEN:
-
-    [ ] LogManager::sendRelevantFiles: send relevant log files => sollte möglich sein, ansonsten entfernen
-    [ ] backup + feedback
-    [ ] Texte in backup (zip?, service?)
-
-Windows:
-
-    - Debug Drawer
-        [x] Open Drawer sollte in TitleBar sein
-        [x] Theming geht nicht
-        [x] back press via esc => Debug Drawer schließt sich nachdem Sub Pages geschlossen werden
-    - Settings
-        [x] Navigation muss per toolbar oder so ähnlich gemacht werden!
-    - BackHandler
-        [x] PreferenceScreen braucht option ob er den backpress abfangen soll oder nicht
-
-Android:
-
-    [ ] BackHandler für PreferenceScreen Dialog
-        => + Back Arrow in Toolbar
-    [x] Page 2 - change theme test fails
-        => failed sogar beim drehen
-    [x] Insets in landscape mode für content passen nicht
-    [ ] settings page wie früher (+ breadcrumbs?)
-        [ ] breadcrumbs für navigation anzeigen
-        [ ] eventuell in Root Navigator anzeigen???
-    [x] bottom nav color ist falsch
-
-    Theme
-        [x] Änderung resettet level + navigator im hintergrund (falls man sub page offen hat)
-        [x] selektiertes Theme wird nicht angezeigt
-        [x] Statusbar color
 
 -------------------------------------
 

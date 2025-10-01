@@ -5,12 +5,13 @@ import android.net.Uri
 import androidx.core.app.NotificationCompat
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.michaelflisar.toolbox.backup.AndroidBackupManager
+import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
 import com.michaelflisar.toolbox.backup.R
 import com.michaelflisar.toolbox.service.BaseWorker
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
 import io.github.vinceglb.filekit.PlatformFile
+import kotlin.time.Duration.Companion.seconds
 
 class RestoreWorker internal constructor(
     context: Context,
@@ -22,13 +23,15 @@ class RestoreWorker internal constructor(
         private const val KEY_FILES = "files"
         private const val KEY_BACKUP_URI = "backup_uri"
 
+        private const val DEFAULT_MANUAL_TAG = "manual_restore"
+
         private fun data(files: List<JavaZipFileContent>, backupUri: Uri) = workDataOf(
             KEY_FILES to files.map { BackupServiceUtil.JSON.encodeToString(it) }.toTypedArray(),
             KEY_BACKUP_URI to backupUri.toString()
         )
 
-        fun enqueueWorker(context: Context, files: List<JavaZipFileContent>, backupUri: Uri, needsInternet: Boolean) {
-            BackupServiceUtil.enqueue(context, data(files, backupUri), needsInternet)
+        fun enqueueWorker(context: Context, files: List<JavaZipFileContent>, backupUri: Uri) {
+            BackupServiceUtil.enqueue(context, data(files, backupUri), false, 0.seconds, DEFAULT_MANUAL_TAG)
         }
 
     }
@@ -56,8 +59,11 @@ class RestoreWorker internal constructor(
     }
 
     override suspend fun run(): Throwable? {
+
+        val manager = BackupManager.manager!!
+
         val files = inputData.getStringArray(KEY_FILES)!!.map { BackupServiceUtil.JSON.decodeFromString<JavaZipFileContent>(it) }
         val backupUri = Uri.parse(inputData.getString(KEY_BACKUP_URI))
-        return AndroidBackupManager.restore(files, PlatformFile(backupUri))
+        return manager.restore(files, PlatformFile(backupUri))
     }
 }

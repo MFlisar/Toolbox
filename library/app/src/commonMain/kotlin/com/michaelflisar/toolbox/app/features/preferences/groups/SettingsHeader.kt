@@ -45,7 +45,7 @@ fun PreferenceGroupScope.SettingsHeader(
     PreferenceCustom(
         itemStyle = LocalPreferenceSettings.current.style.defaultItemStyle.let {
             if (settings.style is ModernStyle) {
-                it.copy(outerPadding = PaddingValues())
+                it.copy(outerPadding = PaddingValues(vertical = 16.dp))
             } else it
         },
         onLongClick = {

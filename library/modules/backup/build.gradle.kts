@@ -100,10 +100,12 @@ kotlin {
                 implementation(deps.lumberjack.core)
                 implementation(deps.composedialogs.core)
                 implementation(deps.composedialogs.dialog.info)
+                api(deps.composedialogs.dialog.frequency)
             } else {
                 implementation(project(":lumberjack:core"))
                 implementation(project(":composedialogs:core"))
                 implementation(project(":composedialogs:modules:info"))
+                api(project(":composedialogs:modules:frequency"))
             }
 
             // libraries

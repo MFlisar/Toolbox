@@ -18,7 +18,4 @@ object LogManager {
         L.plant(ConsoleLogger())
         setup.fileLogger?.createLogger()?.let { L.plant(it) }
     }
-
-    // TODO
-    val sendRelevantFiles: (() -> Unit)? = null
 }

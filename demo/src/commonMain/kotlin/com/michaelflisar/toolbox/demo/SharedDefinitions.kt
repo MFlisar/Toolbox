@@ -23,7 +23,6 @@ import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.actions.ActionItem
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
-import com.michaelflisar.toolbox.app.features.backup.IBackupSupport
 import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
 import com.michaelflisar.toolbox.app.features.navigation.INavigationDefinition
 import com.michaelflisar.toolbox.app.features.navigation.screen.INavScreen
@@ -75,7 +74,6 @@ object SharedDefinitions : INavigationDefinition {
         prefs: BasePrefs,
         debugStorage: Storage,
         icon: @Composable () -> Painter = { appIcon() },
-        backupSupport: IBackupSupport?,
         isDebugBuild: Boolean,
     ): AppSetup {
         val debugPrefs = DebugPrefs(debugStorage)
@@ -115,7 +113,6 @@ object SharedDefinitions : INavigationDefinition {
                 logFileReader = { Res.readBytes(Constants.CHANGELOG_PATH) },
                 versionFormatter = Constants.CHANGELOG_FORMATTER
             ),
-            backupSupport = backupSupport,
             isDebugBuild = isDebugBuild
         )
     }

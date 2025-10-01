@@ -118,6 +118,7 @@ kotlin {
             // kotlinx
             implementation(kotlinx.serialization.core)
             implementation(kotlinx.serialization.json)
+            implementation(kotlinx.datetime)
 
             // Compose + AndroidX
             implementation(libs.compose.material3)
@@ -163,6 +164,8 @@ kotlin {
                 // Compose Dialogs
                 api(deps.composedialogs.core)
                 implementation(deps.composedialogs.dialog.info)
+                implementation(deps.composedialogs.dialog.time)
+                implementation(deps.composedialogs.dialog.frequency)
 
                 // Compose Preferences
                 api(deps.composepreferences.core)
@@ -202,6 +205,7 @@ kotlin {
                 // Compose Dialogs
                 api(project(":composedialogs:core"))
                 implementation(project(":composedialogs:modules:info"))
+                implementation(project(":composedialogs:modules:frequency"))
 
                 // Compose Preferences
                 api(project(":composepreferences:core"))

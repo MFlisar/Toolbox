@@ -1,7 +1,9 @@
 package com.michaelflisar.toolbox
 
 import androidx.compose.ui.Modifier
+import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
+import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlin.time.Duration
 
@@ -11,7 +13,6 @@ expect object Platform {
 
     val openLanguagePicker: (() -> Unit)?
     val openMarket: (() -> Unit)?
-    val sendFeedback: ((appendLogFiles: Boolean, fileLoggerSetup: IFileLoggingSetup) -> Unit)?
 
     fun Modifier.cursor() : Modifier
 

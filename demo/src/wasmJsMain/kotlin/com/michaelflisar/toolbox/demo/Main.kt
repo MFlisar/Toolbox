@@ -21,7 +21,6 @@ suspend fun main() {
     val setup = SharedDefinitions.createBaseAppSetup(
         prefs = prefs,
         debugStorage = Preferences.createStorage("debug"),
-        backupSupport = null, // no backup support in wasm
         isDebugBuild = true // TODO: how to detect in wasm?
     )
     val wasmSetup = WasmAppSetup(

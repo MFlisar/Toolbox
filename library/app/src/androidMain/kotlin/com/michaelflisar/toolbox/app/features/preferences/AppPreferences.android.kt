@@ -1,10 +1,13 @@
 package com.michaelflisar.toolbox.app.features.preferences
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.HideSource
 import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.michaelflisar.composepreferences.core.PreferenceSection
+import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.core.scopes.PreferenceScope
 import com.michaelflisar.composepreferences.screen.button.PreferenceButton
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
@@ -33,6 +36,32 @@ internal actual fun PreferenceScope.PreferenceRegionAds() {
                 icon = {
                     Icon(
                         Icons.Outlined.PrivacyTip,
+                        contentDescription = null
+                    )
+                }
+            )
+        }
+    }
+}
+
+@Composable
+internal actual fun PreferenceGroupScope.PreferenceRegionAdsDeveloper() {
+
+    val context = LocalContext.current
+    val adsManager = AdsManager.manager
+    if (adsManager != null) {
+        val consent = adsManager.rememberConsent(context.requireActivity())
+        PreferenceSection(
+            title = "Ads"
+        ) {
+            PreferenceButton(
+                onClick = {
+                    adsManager.resetConsent(consent)
+                },
+                title = "Consent zurücksetzen",
+                icon = {
+                    Icon(
+                        Icons.Outlined.HideSource,
                         contentDescription = null
                     )
                 }

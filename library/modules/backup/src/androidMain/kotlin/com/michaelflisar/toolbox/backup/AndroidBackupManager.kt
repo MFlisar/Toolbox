@@ -1,30 +1,30 @@
 package com.michaelflisar.toolbox.backup
 
-import android.net.Uri
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.AppContext
+import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
+import com.michaelflisar.toolbox.backup.worker.BackupWorker
+import com.michaelflisar.toolbox.extensions.now
 import com.michaelflisar.toolbox.restartApp
+import com.michaelflisar.toolbox.toAndroidUriInternal
 import com.michaelflisar.toolbox.zip.AndroidZipFile
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
 import com.michaelflisar.toolbox.zip.JavaZipManager
-import io.github.vinceglb.filekit.AndroidFile
 import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.LocalDateTime
+import kotlin.time.ExperimentalTime
 
 actual typealias ZipFileContentFile = JavaZipFileContent.File
 actual typealias ZipFileContent = JavaZipFileContent
-actual typealias BackupManager = AndroidBackupManager
 
 actual typealias ActivityNotFoundException = android.content.ActivityNotFoundException
 
-fun PlatformFile.toAndroidUriInternal(): Uri =
-    when (val androidFile = androidFile) {
-        is AndroidFile.UriWrapper -> androidFile.uri
-        is AndroidFile.FileWrapper ->  Uri.fromFile(androidFile.file)
-    }
-
-object AndroidBackupManager : IBackupManager<JavaZipFileContent.File, JavaZipFileContent> {
+class AndroidBackupManager(
+    override val config: BackupConfig,
+    override val autoBackupConfig: AutoBackupConfig? = null
+) : IBackupManager<JavaZipFileContent.File, JavaZipFileContent> {
 
     override fun onBackupRestored() {
         AppContext.context().restartApp()
@@ -72,5 +72,34 @@ object AndroidBackupManager : IBackupManager<JavaZipFileContent.File, JavaZipFil
             L.e(e)
             e
         }
+    }
+
+    override fun getAutoBackupFileName( ): String {
+        val backupFileName = BackupDefaults.getDefaultBackupFileName(
+            autoBackupConfig!!.appName,
+            config.extension,
+            true
+        )
+        return backupFileName.name
+    }
+
+    @OptIn(ExperimentalTime::class)
+    override fun onSettingsChanged( ) {
+        BackupWorker.cancelAutoWorker(AppContext.context())
+        onEnqueueNextAutoBackup()
+    }
+
+    override fun onEnqueueNextAutoBackup() {
+        val frequency = autoBackupConfig?.getFrequency() ?: return
+        val backupPath = autoBackupConfig.backupPathData().takeIf { it.isNotEmpty() } ?: return
+        val backupFolderData = backupPath.toByteArray(Charsets.UTF_8)
+        val initialDelay = BackupDefaults.getInitialDay(LocalDateTime.now(), frequency)
+        val files = config.backupContent
+        BackupWorker.enqueueAutoWorker(
+            context = AppContext.context(),
+            files = files,
+            backupFolderData = backupFolderData,
+            initialDelay = initialDelay
+        )
     }
 }

@@ -20,7 +20,7 @@ import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.backup.ActivityNotFoundException
-import com.michaelflisar.toolbox.backup.BackupManager
+import com.michaelflisar.toolbox.backup.BaseBackupManager
 import com.michaelflisar.toolbox.backup.ZipFileContent
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.backup_dialog_create_document_activity_not_found_info
@@ -85,14 +85,22 @@ object BackupDialog {
         Create, Open
     }
 
+    class FileName(
+        val nameWithoutExtension: String,
+        val extension: String
+    )  {
+        val name: String
+            get() = "$nameWithoutExtension.$extension"
+    }
+
 }
 
 @Composable
 fun BackupDialog(
     dialogState: DialogStateWithData<BackupDialog.Mode>,
-    exportFileName: @Composable () -> String,
+    exportFileName: BackupDialog.FileName,
     files: List<ZipFileContent>,
-    backupManager: BackupManager,
+    backupManager: BaseBackupManager?,
     fileKitDialogSettings: FileKitDialogSettings,
     extension: String = "zip",
 ) {
@@ -114,8 +122,8 @@ fun BackupDialog(
                         state.value = BackupDialog.State.Running(mode.running)
                         withContext(Platform.DispatcherIO) {
                             val exception = when (mode) {
-                                BackupDialog.Mode.Export -> backupManager.backup(files, file)
-                                BackupDialog.Mode.Import -> backupManager.restore(files, file)
+                                BackupDialog.Mode.Export -> backupManager!!.backup(files, file)
+                                BackupDialog.Mode.Import -> backupManager!!.restore(files, file)
                             }
                             state.value = if (exception == null) {
                                 BackupDialog.State.Done
@@ -137,8 +145,6 @@ fun BackupDialog(
             selectedFile.value = it
         }
 
-        val exportFileName = exportFileName()
-
         val dialogActivityNotFound = rememberDialogState<BackupDialog.ActivityNotFoundError>(null)
 
         Dialog(
@@ -146,7 +152,7 @@ fun BackupDialog(
             title = { Text(stringResource(mode.title)) },
             onEvent = {
                 if (it.isPositiveButton && mode == BackupDialog.Mode.Import && state.value is BackupDialog.State.Done) {
-                    backupManager.onBackupRestored()
+                    backupManager!!.onBackupRestored()
                 }
             }
         ) {
@@ -164,7 +170,7 @@ fun BackupDialog(
                             when (mode) {
                                 BackupDialog.Mode.Export -> {
                                     try {
-                                        createFilePicker.launch(exportFileName)
+                                        createFilePicker.launch(exportFileName.nameWithoutExtension, exportFileName.extension)
                                     } catch (_: ActivityNotFoundException) {
                                         dialogActivityNotFound.show(BackupDialog.ActivityNotFoundError.Create)
                                     }

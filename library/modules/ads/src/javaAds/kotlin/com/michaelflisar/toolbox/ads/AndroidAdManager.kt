@@ -46,4 +46,9 @@ object AndroidAdManager : BaseAdManager {
     ) {
         (consent as MutableState<Consent>).value.showPrivacyOptionsForm(onDismissed, onError)
     }
+
+    @OptIn(DependsOnGoogleUserMessagingPlatform::class, ExperimentalBasicAds::class)
+    override fun resetConsent(consent: Any) {
+        (consent as MutableState<Consent>).value.reset()
+    }
 }
