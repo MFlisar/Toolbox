@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "M:\\tmp\\HelloWorld\\app.app.web\\dist\\wasmJs\\productionExecutable",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">Hello World</string>
+
+    <!-- pages -->
+    <string name="page_1">Page 1</string>
+    <string name="page_2">Page 2</string>
+    <string name="page_tests_dialogs">Dialog Tests</string>
+    <string name="page_tests_preferences">Preference Tests</string>
+
+
+</resources>

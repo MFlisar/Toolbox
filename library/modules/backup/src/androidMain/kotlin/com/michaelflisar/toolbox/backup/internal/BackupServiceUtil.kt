@@ -1,8 +1,10 @@
 package com.michaelflisar.toolbox.backup.internal
 
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.pm.ServiceInfo
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Constraints
 import androidx.work.Data
@@ -15,6 +17,7 @@ import com.michaelflisar.toolbox.NotificationUtil
 import com.michaelflisar.toolbox.backup.worker.BackupWorker
 import com.michaelflisar.toolbox.service.ServiceSetup
 import kotlinx.serialization.json.Json
+import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
 import kotlin.time.toJavaDuration
 
@@ -58,6 +61,7 @@ object BackupServiceUtil {
         WorkManager.getInstance(context).cancelAllWorkByTag(tag)
     }
 
+    @RequiresApi(26)
     fun enqueue(
         context: Context,
         inputData: Data,
@@ -73,6 +77,7 @@ object BackupServiceUtil {
                 }
             }
             .build()
+        val initialDelayDuration = initialDelay.toJavaDuration()
         val backupRequest = OneTimeWorkRequestBuilder<BackupWorker>()
             .let {
                 if (tag != null) {
@@ -81,7 +86,7 @@ object BackupServiceUtil {
                     it
                 }
             }
-            .setInitialDelay(initialDelay.toJavaDuration())
+            .setInitialDelay(initialDelayDuration.toMillis(), TimeUnit.MILLISECONDS)
             .setInputData(inputData)
             .setConstraints(constraints)
             .let {

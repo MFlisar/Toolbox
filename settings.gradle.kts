@@ -88,4 +88,15 @@ includeModule("library\\app",                       ":toolbox:app")
 // App
 // --------------
 
-include(":demo")
+if (System.getenv("CI") != "true") {
+    // demo app
+    include(":demo:toolbox")
+    // hello world app
+    include(":demo:hello-world:app")
+    include(":demo:hello-world:common")
+    include(":demo:hello-world:common:core")
+    include(":demo:hello-world:common:database")
+    include(":demo:hello-world:feature")
+    include(":demo:hello-world:feature:page1")
+    include(":demo:hello-world:feature:page2")
+}

@@ -14,6 +14,7 @@ composethemer =   			"1.0.2"
 composecolors =             "1.0.1"
 kmp-parcelize =             "1.0.0"
 kmp-library =               "2.0.5" # attention: the version for the settings plugin must be adjusted manually!
+toolbox =                   "2.8.6" # für hello world demo
 
 # Google
 material =                      "1.13.0"
@@ -127,6 +128,17 @@ composecolors-material-palette =				{ module = "io.github.mflisar.composecolors:
 composecolors-x11-palette =						{ module = "io.github.mflisar.composecolors:x11-palette",      						version.ref = "composecolors" }
 kmp-parcelize =                                 { module = "io.github.mflisar.parcelize:library", 	                                version.ref = "kmp-parcelize" }
 kmplibrary-docs =                               { module = "io.github.mflisar.kmp-library:docs",                                    version.ref = "kmp-library" }
+toolbox-core =                                  { module = "io.github.mflisar.toolbox:core",                                        version.ref = "toolbox" }
+toolbox-app =                                   { module = "io.github.mflisar.toolbox:app",                                         version.ref = "toolbox" }
+toolbox-ui =                                    { module = "io.github.mflisar.toolbox:ui",                                          version.ref = "toolbox" }
+toolbox-zip =                                   { module = "io.github.mflisar.toolbox:zip",                                         version.ref = "toolbox" }
+toolbox-csv =                                   { module = "io.github.mflisar.toolbox:csv",                                         version.ref = "toolbox" }
+toolbox-backup =                                { module = "io.github.mflisar.toolbox:backup",                                      version.ref = "toolbox" }
+toolbox-service =                               { module = "io.github.mflisar.toolbox:service",                                     version.ref = "toolbox" }
+toolbox-form =                                  { module = "io.github.mflisar.toolbox:form",                                        version.ref = "toolbox" }
+toolbox-table =                                 { module = "io.github.mflisar.toolbox:table",                                       version.ref = "toolbox" }
+toolbox-proversion =                            { module = "io.github.mflisar.toolbox:proversion",                                  version.ref = "toolbox" }
+toolbox-ads =                                   { module = "io.github.mflisar.toolbox:ads",                                         version.ref = "toolbox" }
 
 # Google
 material =                                      { module = "com.google.android.material:material", 	                                version.ref = "material" }
