@@ -23,8 +23,11 @@ class BackupWorker internal constructor(
 
     companion object {
 
+        // keys
         private const val KEY_FILES = "files"
         private const val KEY_BACKUP_FOLDER_DATA = "backup_folder"
+
+        // tags
         private const val DEFAULT_AUTO_TAG = "auto_backup"
 
         private fun data(

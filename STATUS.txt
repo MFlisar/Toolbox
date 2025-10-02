@@ -10,7 +10,7 @@
         [ ] Breadcrumbs anzeigen?
         [x] Option um Custom Pages in Android zu deaktivieren und direkt in Custom Content einzubetten? (Pager sieht dort nicht gut aus)
     [ ] Auto Backup geht noch nicht
-        [ ] Frequenz speichern
+        [x] Frequenz speichern
         [ ] Auto Backup Logik implementieren
 
 -------------------------------------

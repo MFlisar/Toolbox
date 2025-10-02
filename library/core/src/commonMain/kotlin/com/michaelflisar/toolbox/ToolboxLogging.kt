@@ -24,7 +24,7 @@ object ToolboxLogging {
     }
 
     internal fun isEnabled(tag: Tag): Boolean {
-        return enabledTags.contains(tag)
+        return enabledTags.isNotEmpty() && enabledTags.contains(tag)
     }
 }
 

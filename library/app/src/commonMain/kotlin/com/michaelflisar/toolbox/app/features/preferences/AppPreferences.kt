@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,8 +68,9 @@ import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.backup.ContentPreferencesAsSubPreference
+import com.michaelflisar.toolbox.app.features.device.BaseDevice
+import com.michaelflisar.toolbox.app.features.device.CurrentDevice
 import com.michaelflisar.toolbox.app.features.feedback.FeedbackManager
-import com.michaelflisar.toolbox.app.features.logging.LogManager
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeader
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeaderButtons
@@ -125,18 +127,18 @@ sealed class AppPreferencesStyle {
 
     class Default internal constructor(
         override val addThemeSetting: Boolean,
-        val customContent: @Composable PreferenceGroupScope.() -> Unit
+        val customContent: @Composable PreferenceGroupScope.() -> Unit,
     ) : AppPreferencesStyle()
 
     class Pager internal constructor(
         override val addThemeSetting: Boolean,
         val labelDefaultPage: String,
         val contentPadding: PaddingValues = PaddingValues(0.dp),
-        val customPages: List<Page>
+        val customPages: List<Page>,
     ) : AppPreferencesStyle() {
         class Page(
             val title: String,
-            val content: @Composable PreferenceGroupScope.() -> Unit
+            val content: @Composable PreferenceGroupScope.() -> Unit,
         )
     }
 }
@@ -144,10 +146,36 @@ sealed class AppPreferencesStyle {
 object AppPreferencesDefaults {
 
     @Composable
+    fun styleDeviceDefault(
+        addThemeSettings: Boolean,
+        customContent: @Composable PreferenceGroupScope.() -> Unit,
+    ): AppPreferencesStyle {
+        return when (CurrentDevice.base) {
+            BaseDevice.Mobile -> styleDefault(
+                addThemeSettings = addThemeSettings,
+                customContent = customContent
+            )
+
+            BaseDevice.Desktop,
+            BaseDevice.Web,
+                -> stylePager(
+                addThemeSettings = addThemeSettings,
+                customPages = listOf(
+                    AppPreferencesStyle.Pager.Page("Custom") { customContent() }
+                )
+            )
+        }
+    }
+
+    @Composable
     fun styleDefault(
         addThemeSettings: Boolean,
-        customContent: @Composable PreferenceGroupScope.() -> Unit
-    ) = AppPreferencesStyle.Default(addThemeSettings, customContent)
+        customContent: @Composable PreferenceGroupScope.() -> Unit,
+    ): AppPreferencesStyle {
+        return remember(addThemeSettings, customContent) {
+            AppPreferencesStyle.Default(addThemeSettings, customContent)
+        }
+    }
 
     @Composable
     fun stylePager(
@@ -156,12 +184,14 @@ object AppPreferencesDefaults {
         contentPadding: PaddingValues = PaddingValues(0.dp),
         customPages: List<AppPreferencesStyle.Pager.Page>,
     ): AppPreferencesStyle.Pager {
-        return AppPreferencesStyle.Pager(
-            addThemeSettings,
-            labelDefaultPage,
-            contentPadding,
-            customPages
-        )
+        return remember(addThemeSettings, labelDefaultPage, contentPadding, customPages) {
+            AppPreferencesStyle.Pager(
+                addThemeSettings,
+                labelDefaultPage,
+                contentPadding,
+                customPages
+            )
+        }
     }
 
 }
@@ -198,7 +228,7 @@ internal fun SettingsContent(
     onPreferenceStateChanged: (state: PreferenceState) -> Unit,
     handleBackPress: Boolean,
     buttons: List<SettingsHeaderButtons.Button> = emptyList(),
-    style: AppPreferencesStyle
+    style: AppPreferencesStyle,
 ) {
     val setup = CommonApp.setup
 
@@ -367,7 +397,7 @@ internal fun SettingsContent(
 @Composable
 private fun PreferenceGroupScope.RegionHeader(
     settings: PreferenceSettings,
-    buttons: List<SettingsHeaderButtons.Button>
+    buttons: List<SettingsHeaderButtons.Button>,
 ) {
     SettingsHeader(settings)
     SettingsProVersionHeader()
@@ -376,7 +406,7 @@ private fun PreferenceGroupScope.RegionHeader(
 
 @Composable
 private fun PreferenceGroupScope.RegionLanguage(
-    setup: AppSetup
+    setup: AppSetup,
 ) {
     if (Platform.openLanguagePicker != null && !setup.disableLanguagePicker) {
         PreferenceSection(

@@ -3,6 +3,7 @@ package com.michaelflisar.toolbox.backup
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.AppContext
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
+import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
 import com.michaelflisar.toolbox.backup.worker.BackupWorker
 import com.michaelflisar.toolbox.extensions.now
 import com.michaelflisar.toolbox.restartApp
@@ -85,6 +86,7 @@ class AndroidBackupManager(
 
     @OptIn(ExperimentalTime::class)
     override fun onSettingsChanged( ) {
+        BackupServiceUtil.createChannels()
         BackupWorker.cancelAutoWorker(AppContext.context())
         onEnqueueNextAutoBackup()
     }

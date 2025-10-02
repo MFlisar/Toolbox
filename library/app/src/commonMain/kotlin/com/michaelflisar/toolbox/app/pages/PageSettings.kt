@@ -27,8 +27,8 @@ import kotlin.jvm.Transient
 
 abstract class PageSettings : NavScreen() {
 
-    abstract val style: AppPreferencesStyle
-        @Composable get
+    @Composable
+    abstract fun provideStyle(): AppPreferencesStyle
 
     @Transient
     @IgnoredOnParcel
@@ -46,7 +46,7 @@ abstract class PageSettings : NavScreen() {
 
     @Composable
     override fun Screen() {
-        Page(style, preferenceState)
+        Page(provideStyle(), preferenceState)
     }
 
     override val navScreenBackPressHandler = NavScreenBackPressHandler(

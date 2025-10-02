@@ -1,10 +1,8 @@
 package com.michaelflisar.toolbox.backup.internal
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.pm.ServiceInfo
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Constraints
 import androidx.work.Data
@@ -19,7 +17,6 @@ import com.michaelflisar.toolbox.service.ServiceSetup
 import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
-import kotlin.time.toJavaDuration
 
 object BackupServiceUtil {
 
@@ -89,7 +86,7 @@ object BackupServiceUtil {
             .setInputData(inputData)
             .setConstraints(constraints)
             .let {
-                if (initialDelay.inWholeSeconds == 0L) {
+                if (initialDelayMilliseconds == 0L) {
                     // beschleunigte (wenn möglich sofortige) ausführung
                     it.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 } else {

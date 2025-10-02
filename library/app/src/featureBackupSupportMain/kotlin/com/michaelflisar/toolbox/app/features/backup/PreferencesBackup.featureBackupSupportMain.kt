@@ -194,7 +194,6 @@ fun PreferenceGroupScope.PreferencesBackup(
                 //negative = DialogButton("DISABLE")
             ),
             onEvent = {
-                println("onEvent: $it")
                 if (it is DialogEvent.Button) {
                     val dataToSave = when (it.button) {
                         DialogButtonType.Positive -> frequency.value.serialize()
