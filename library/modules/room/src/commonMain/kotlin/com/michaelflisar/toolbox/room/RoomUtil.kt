@@ -36,3 +36,7 @@ object RoomUtil {
     }
 
 }
+
+suspend fun RoomDatabase.withTransaction(block: suspend () -> Unit) {
+    RoomUtil.runInTransaction(this, block)
+}
