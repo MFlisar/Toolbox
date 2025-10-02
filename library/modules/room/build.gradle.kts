@@ -23,7 +23,7 @@ val androidNamespace = "com.michaelflisar.toolbox.room"
 val buildTargets = Targets(
     // mobile
     android = true,
-    iOS = true,
+    iOS = false,
     // desktop
     windows = true,
     macOS = false,

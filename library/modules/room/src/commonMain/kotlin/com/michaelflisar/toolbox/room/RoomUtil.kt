@@ -4,6 +4,12 @@ import androidx.room.RoomDatabase
 import androidx.room.immediateTransaction
 import androidx.room.useWriterConnection
 
+expect inline  fun <reified DB: RoomDatabase> RoomUtil.createDatabaseBuilder(
+    databasePath: String = "data.db",
+    noinline apply: RoomDatabase.Builder<DB>.() -> Unit = { },
+): RoomDatabase.Builder<DB>
+
+
 object RoomUtil {
 
     suspend fun <S, T> runQueryInChunks(list: List<S>, chunkSize: Int = 999, block: suspend (List<S>) -> List<T>): List<T> {

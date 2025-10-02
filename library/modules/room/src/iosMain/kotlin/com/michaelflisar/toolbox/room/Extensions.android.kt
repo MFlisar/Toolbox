@@ -5,11 +5,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-inline fun <reified DB: RoomDatabase> RoomUtil.createDatabaseBuilder(databasePath: String = "data.db") : RoomDatabase.Builder<AppDatabase> {
+actual inline fun <reified DB: RoomDatabase> RoomUtil.createDatabaseBuilder(
+    databasePath: String,
+    noinline apply: RoomDatabase.Builder<DB>.() -> Unit
+) : RoomDatabase.Builder<AppDatabase> {
     val dbFilePath = documentDirectory() + "/" + databasePath
     return Room.databaseBuilder<AppDatabase>(
         name = dbFilePath,
-    )
+    ).apply(apply)
 }
 
 private fun documentDirectory(): String {
