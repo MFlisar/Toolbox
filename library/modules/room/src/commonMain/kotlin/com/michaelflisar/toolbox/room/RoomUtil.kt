@@ -26,8 +26,8 @@ object RoomUtil {
      *
      * as documented here: https://developer.android.com/kotlin/multiplatform/room#transactions
      */
-    suspend fun runInTransaction(database: RoomDatabase, block: suspend () -> Unit) {
-        database.useWriterConnection { transactor ->
+    suspend fun<R> runInTransaction(database: RoomDatabase, block: suspend () -> R) : R{
+        return database.useWriterConnection { transactor ->
             transactor.immediateTransaction {
                 // perform database operations in transaction
                 block()
@@ -37,6 +37,4 @@ object RoomUtil {
 
 }
 
-suspend fun RoomDatabase.withTransaction(block: suspend () -> Unit) {
-    RoomUtil.runInTransaction(this, block)
-}
+suspend fun <R> RoomDatabase.withTransaction(block: suspend () -> R): R =  RoomUtil.runInTransaction(this, block)
