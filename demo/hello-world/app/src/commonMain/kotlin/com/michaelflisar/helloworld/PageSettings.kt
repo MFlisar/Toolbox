@@ -4,8 +4,6 @@ import androidx.compose.runtime.Composable
 import com.michaelflisar.composepreferences.core.PreferenceInfo
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.parcelize.Parcelize
-import com.michaelflisar.toolbox.app.features.device.BaseDevice
-import com.michaelflisar.toolbox.app.features.device.CurrentDevice
 import com.michaelflisar.toolbox.app.features.preferences.AppPreferencesDefaults
 import com.michaelflisar.toolbox.app.features.preferences.AppPreferencesStyle
 import com.michaelflisar.toolbox.app.pages.PageSettings

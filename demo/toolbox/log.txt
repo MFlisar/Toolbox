@@ -1194,3 +1194,12 @@
 [I] 2025-10-02 12:12:10.670 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
 [I] 2025-10-02 12:12:14.367 [NavBackHandler.kt:61]: NavBackHandler: enabled = true
 [I] 2025-10-02 12:12:15.687 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 16:54:20.831 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 16:54:21.006 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 16:54:21.732 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=241, y=52, placement=Floating}
+[I] 2025-10-02 16:55:32.575 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 16:55:32.603 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 16:55:33.195 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=241, y=52, placement=Floating}
+[I] 2025-10-02 16:57:25.267 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 16:57:25.297 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 16:57:25.761 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=241, y=52, placement=Floating}

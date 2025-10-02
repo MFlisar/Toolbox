@@ -49,3 +49,6 @@
 [I] 2025-10-01 18:20:55.716 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
 [I] 2025-10-01 18:21:00.758 [NavBackHandler.kt:61]: NavBackHandler: enabled = true
 [I] 2025-10-01 18:21:02.341 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 13:42:39.395 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 13:42:39.421 [NavBackHandler.kt:61]: NavBackHandler: enabled = false
+[I] 2025-10-02 13:42:39.943 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
