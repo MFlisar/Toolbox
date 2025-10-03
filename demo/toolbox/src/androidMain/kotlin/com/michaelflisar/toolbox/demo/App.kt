@@ -3,7 +3,7 @@ package com.michaelflisar.toolbox.demo
 import com.michaelflisar.kotbilling.classes.Product
 import com.michaelflisar.kotbilling.classes.ProductType
 import com.michaelflisar.kotpreferences.core.value
-import com.michaelflisar.toolbox.ads.AndroidAdManager
+import com.michaelflisar.toolbox.ads.AdManagerImpl
 import com.michaelflisar.toolbox.app.AndroidApplication
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.CommonApp
@@ -16,11 +16,12 @@ import com.michaelflisar.toolbox.app.features.preferences.createStorage
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionAppDefaults
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.utils.AndroidAppIconUtil
-import com.michaelflisar.toolbox.backup.AndroidBackupDefaults
-import com.michaelflisar.toolbox.backup.AndroidBackupManager
-import com.michaelflisar.toolbox.backup.BackupConfig
+import com.michaelflisar.toolbox.backup.BackupDefaults
+import com.michaelflisar.toolbox.backup.classes.BackupConfig
 import com.michaelflisar.toolbox.backup.BackupManager
+import com.michaelflisar.toolbox.backup.BackupManagerImpl
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
+import com.michaelflisar.toolbox.backup.createDefaultBackupContent
 import com.michaelflisar.toolbox.features.proversion.ProState
 import com.michaelflisar.toolbox.proversion.AndroidProVersionManager
 import kotlinx.coroutines.GlobalScope
@@ -35,7 +36,7 @@ class App : AndroidApplication() {
 
         // Ads + Pro Version enabled
         val setup = CommonApp.setup
-        AdsManager.init(AndroidAdManager)
+        AdsManager.init(AdManagerImpl)
         ProVersionManager.init(
             manager = AndroidProVersionManager(
                 scope = GlobalScope,
@@ -50,9 +51,9 @@ class App : AndroidApplication() {
 
         // Backup Support
         BackupManager.init(
-            manager = AndroidBackupManager(
+            manager = BackupManagerImpl(
                 config = BackupConfig(
-                    backupContent = AndroidBackupDefaults.createDefaultBackupContent()
+                    backupContent = BackupDefaults.createDefaultBackupContent()
                 ),
                 autoBackupConfig = AutoBackupConfig(
                     appName = getString(R.string.app_name),

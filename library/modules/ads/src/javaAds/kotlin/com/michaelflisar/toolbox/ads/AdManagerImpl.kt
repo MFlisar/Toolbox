@@ -12,7 +12,7 @@ import app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform
 import app.lexilabs.basic.ads.ExperimentalBasicAds
 import com.michaelflisar.toolbox.features.ads.BaseAdManager
 
-object AndroidAdManager : BaseAdManager {
+object AdManagerImpl : BaseAdManager {
 
     object Ids {
         const val BANNER_DEFAULT = AdUnitId.BANNER_DEFAULT

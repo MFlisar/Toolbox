@@ -88,10 +88,10 @@ fun rememberMySegmentedControlStyle(
 @Composable
 fun <T> MySegmentedControl(
     modifier: Modifier = Modifier,
-    items: List<T & Any>,
+    items: List<T>,
     selected: MutableState<T>,
     forceSelection: Boolean = true,
-    mapper: (item: T & Any) -> String = { it.toString() },
+    mapper: (item: T) -> String = { it.toString() },
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
     onSelectionChanged: ((T) -> Unit)? = null
 ) {
@@ -107,10 +107,10 @@ fun <T> MySegmentedControl(
 @Composable
 fun <T> MySegmentedControl(
     modifier: Modifier = Modifier,
-    items: List<T & Any>,
+    items: List<T>,
     selected: T,
     forceSelection: Boolean = true,
-    mapper: (item: T & Any) -> String = { it.toString() },
+    mapper: (item: T) -> String = { it.toString() },
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
     onSelectionChanged: ((T) -> Unit)? = null
 ) {

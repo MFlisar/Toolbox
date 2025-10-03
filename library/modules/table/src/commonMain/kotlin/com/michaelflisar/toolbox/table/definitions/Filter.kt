@@ -373,7 +373,7 @@ abstract class Filter<Item, CellValue> {
                 MyDropdown(
                     title = "",
                     items = listOf(labelAll) + texts,
-                    selected = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0,
+                    selectedIndex = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0,
                     onSelectionChanged = {
                         state.value =
                             it.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()
@@ -427,7 +427,7 @@ abstract class Filter<Item, CellValue> {
                 MyDropdown(
                     title = "",
                     items = listOf(labelAll) + texts,
-                    selected = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0,
+                    selectedIndex = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0,
                     onSelectionChanged = {
                         state.value =
                             it.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()

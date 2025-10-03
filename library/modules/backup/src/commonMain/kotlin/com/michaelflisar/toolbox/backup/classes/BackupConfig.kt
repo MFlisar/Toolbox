@@ -1,4 +1,6 @@
-package com.michaelflisar.toolbox.backup
+package com.michaelflisar.toolbox.backup.classes
+
+import com.michaelflisar.toolbox.backup.ZipFileContent
 
 class BackupConfig(
     val backupContent: List<ZipFileContent>,

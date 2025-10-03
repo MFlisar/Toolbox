@@ -14,11 +14,11 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun <T> MySegmentedButtonRow(
     modifier: Modifier = Modifier,
-    items: List<T & Any>,
+    items: List<T>,
     icons: List<@Composable () -> Unit>? = null,
     selected: MutableState<T>,
     forceSelection: Boolean = true,
-    mapper: (item: T & Any) -> String = { it.toString() },
+    mapper: (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     onSelectionChanged: ((T) -> Unit)? = null
@@ -43,11 +43,11 @@ fun <T> MySegmentedButtonRow(
 @Composable
 fun <T> MySegmentedButtonRow(
     modifier: Modifier = Modifier,
-    items: List<T & Any>,
+    items: List<T>,
     icons: List<@Composable () -> Unit>? = null,
     selected: T,
     forceSelection: Boolean = true,
-    mapper: (item: T & Any) -> String = { it.toString() },
+    mapper: (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     onSelectionChanged: ((T) -> Unit)? = null

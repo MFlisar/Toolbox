@@ -73,7 +73,7 @@ private fun Page(
                 modifier = Modifier.width(200.dp),
                 title = "Dropdown",
                 items = listOf("One", "Two", "Three"),
-                selected = remember { mutableStateOf(0) },
+                selectedIndex = remember { mutableStateOf(0) },
                 style = MyDropdown.Style.OutlinedButton
             )
             MyInput(
@@ -95,7 +95,7 @@ private fun Page(
                 modifier = Modifier.width(128.dp),
                 title = "Button Style",
                 items = listOf("One", "Two", "Three"),
-                selected = remember { mutableStateOf(0) }
+                selectedIndex = remember { mutableStateOf(0) }
             )
         }
     }

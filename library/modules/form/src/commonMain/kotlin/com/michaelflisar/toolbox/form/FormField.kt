@@ -108,7 +108,7 @@ sealed class FormField<T> {
 
         @Composable
         override fun render() {
-            MyDropdown(title = "", items = items, selected = value)
+            MyDropdown(title = "", items = items, selectedIndex = value)
         }
     }
 

@@ -13,14 +13,14 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun <T> MyThemeSwitcher(
     modifier: Modifier = Modifier,
-    dark: T & Any,
-    light: T & Any,
-    system: T & Any,
+    dark: T,
+    light: T,
+    system: T,
     iconDark: @Composable () -> Unit = @Composable { Icon(Icons.Default.DarkMode, null) },
     iconLight: @Composable () -> Unit = @Composable { Icon(Icons.Default.LightMode, null) },
     iconSystem: @Composable () -> Unit = @Composable { Icon(Icons.Default.PhoneAndroid, null) },
     selected: T,
-    mapper: (item: T & Any) -> String,
+    mapper: (item: T) -> String,
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     onSelectionChanged: (T) -> Unit

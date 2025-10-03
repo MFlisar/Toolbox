@@ -2,6 +2,8 @@
 - OFFENE WICHTIGE PUNKTE
 -------------------------------------
 
+    [ ] Android* und Jvm* entfernen + allgemeine Sachen die keine eigene Klasse brauchen als Toolbox.* implementieren
+
     [ ] Screens - paddings nutzen?
     [ ] Pages sollten immer fill size haben => ist jetzt so, sollte man das forcieren?
     [ ] Preferene Screen

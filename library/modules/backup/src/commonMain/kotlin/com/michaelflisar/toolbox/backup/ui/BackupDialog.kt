@@ -20,7 +20,7 @@ import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.backup.ActivityNotFoundException
-import com.michaelflisar.toolbox.backup.BaseBackupManager
+import com.michaelflisar.toolbox.backup.BackupManagerImpl
 import com.michaelflisar.toolbox.backup.ZipFileContent
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.backup_dialog_create_document_activity_not_found_info
@@ -100,7 +100,7 @@ fun BackupDialog(
     dialogState: DialogStateWithData<BackupDialog.Mode>,
     exportFileName: BackupDialog.FileName,
     files: List<ZipFileContent>,
-    backupManager: BaseBackupManager?,
+    backupManager: BackupManagerImpl?,
     fileKitDialogSettings: FileKitDialogSettings,
     extension: String = "zip",
 ) {

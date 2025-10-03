@@ -1,7 +1,6 @@
 package com.michaelflisar.toolbox.backup
 
 import com.michaelflisar.toolbox.zip.interfaces.IZipContent
-import io.github.vinceglb.filekit.PlatformFile
 
 actual typealias ZipFileContentFile = NoZipFileContent.File
 actual typealias ZipFileContent = NoZipFileContent

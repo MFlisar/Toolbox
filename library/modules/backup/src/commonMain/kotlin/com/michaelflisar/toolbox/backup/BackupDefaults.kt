@@ -11,6 +11,8 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
+expect fun BackupDefaults.createDefaultBackupContent(): List<ZipFileContent>
+
 object BackupDefaults {
 
     @OptIn(ExperimentalTime::class)

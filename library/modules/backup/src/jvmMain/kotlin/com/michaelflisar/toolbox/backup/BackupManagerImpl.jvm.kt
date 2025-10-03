@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.backup
 
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
+import com.michaelflisar.toolbox.backup.classes.BackupConfig
 import com.michaelflisar.toolbox.utils.JvmUtil
 import com.michaelflisar.toolbox.zip.JavaZipFile
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
@@ -10,21 +11,18 @@ import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-actual typealias ZipFileContentFile = JavaZipFileContent.File
-actual typealias ZipFileContent = JavaZipFileContent
+actual class BackupManagerImpl actual constructor(
+    actual val config: BackupConfig,
+    actual val autoBackupConfig: AutoBackupConfig?,
+) {
 
-class JvmBackupManager(
-    override val config: BackupConfig,
-    override val autoBackupConfig: AutoBackupConfig? = null
-) : IBackupManager<JavaZipFileContent.File, JavaZipFileContent> {
-
-    override fun onBackupRestored() {
+    actual fun onBackupRestored() {
         // TODO
         // app neu starten oder alle Daten neu laden...
         JvmUtil.restartApp()
     }
 
-    override suspend fun backup(
+    actual suspend fun backup(
         files: List<JavaZipFileContent>,
         backupFile: PlatformFile,
     ): Throwable? {
@@ -44,7 +42,7 @@ class JvmBackupManager(
         }
     }
 
-    override suspend fun restore(
+    actual suspend fun restore(
         files: List<JavaZipFileContent>,
         backupFile: PlatformFile,
     ): Throwable? {
@@ -68,16 +66,16 @@ class JvmBackupManager(
         }
     }
 
-    override fun getAutoBackupFileName(): String {
+    actual fun getAutoBackupFileName(): String {
         // --
         return ""
     }
 
-    override fun onSettingsChanged() {
+    actual fun onSettingsChanged() {
         // not supported on jvm currently
     }
 
-    override fun onEnqueueNextAutoBackup() {
+    actual fun onEnqueueNextAutoBackup() {
         // not supported on jvm currently
     }
 }

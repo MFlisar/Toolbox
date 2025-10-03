@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
-import com.michaelflisar.toolbox.ads.AndroidAdManager
+import com.michaelflisar.toolbox.ads.AdManagerImpl
 import com.michaelflisar.toolbox.ads.FooterAdsBanner
 import com.michaelflisar.toolbox.app.AndroidApp
 import com.michaelflisar.toolbox.app.AndroidAppContent
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AndroidAdManager.init(this)
+        AdManagerImpl.init(this)
 
         setContent {
             AppNavigator(
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         footer = {
                             val proVersionManager = ProVersionManager.setup
                             val proState = proVersionManager.proState.collectAsState()
-                            val adUnitId = AndroidAdManager.Ids.BANNER_DEFAULT // TODO: mit App spezifischer Banner ID ersetzen
+                            val adUnitId = AdManagerImpl.Ids.BANNER_DEFAULT // TODO: mit App spezifischer Banner ID ersetzen
                             FooterAdsBanner(this, proState, adUnitId)
                         }
                     )
