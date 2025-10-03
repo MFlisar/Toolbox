@@ -40,15 +40,19 @@ fun FormDialog(
     // dialog
     icon: (@Composable () -> Unit)? = null
 ) {
+    val showConfirmDelete = rememberDialogState()
+
     if (state.visible) {
+
+        val dismissOnButtonClick = false
+        val style = DialogDefaults.styleDialog(dismissOnBackPress = dismissOnButtonClick)
+
         LaunchedEffect(fields) {
             snapshotFlow { fields.isValid.value }.collect {
                 state.enableButton(DialogButtonType.Positive, it)
             }
         }
-        val showConfirmDelete = rememberDialogState()
-        val dismissOnButtonClick = false
-        val style = DialogDefaults.styleDialog(dismissOnBackPress = dismissOnButtonClick)
+
         Dialog(
             state = state,
             title = { Text(texts.title(name)) },
@@ -85,29 +89,30 @@ fun FormDialog(
                 Form(fields, labelWidth = labelWidth)
             }
         }
+    }
 
-        if (showConfirmDelete.visible) {
-            val dismissOnButtonClick = true
-            DialogInfo(
-                state = showConfirmDelete,
-                title = { Text(texts.confirmDeleteTitle(name)) },
-                info = texts.confirmDeleteText(name),
-                style = style,
-                // TODO!!!!!!
-                // dialogOptions = DialogOptions.create(style, dismissOnButtonClick = dismissOnButtonClick),
-                buttons = DialogDefaults.buttons(
-                    positive = DialogButton(texts.confirmDeleteYes),
-                    negative = DialogButton(texts.confirmDeleteNo)
-                ),
-                onEvent = {
-                    if (it.isPositiveButton) {
-                        onDelete()
-                        if (dismissOnButtonClick) {
-                            state.dismiss()
-                        }
+    if (showConfirmDelete.visible) {
+        val dismissOnButtonClick = true
+        val style = DialogDefaults.styleDialog(dismissOnBackPress = dismissOnButtonClick)
+        DialogInfo(
+            state = showConfirmDelete,
+            title = { Text(texts.confirmDeleteTitle(name)) },
+            info = texts.confirmDeleteText(name),
+            style = style,
+            // TODO!!!!!!
+            // dialogOptions = DialogOptions.create(style, dismissOnButtonClick = dismissOnButtonClick),
+            buttons = DialogDefaults.buttons(
+                positive = DialogButton(texts.confirmDeleteYes),
+                negative = DialogButton(texts.confirmDeleteNo)
+            ),
+            onEvent = {
+                if (it.isPositiveButton) {
+                    onDelete()
+                    if (dismissOnButtonClick) {
+                        state.dismiss()
                     }
                 }
-            )
-        }
+            }
+        )
     }
 }

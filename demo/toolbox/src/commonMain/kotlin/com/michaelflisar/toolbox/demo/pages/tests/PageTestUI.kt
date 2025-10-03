@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,7 +27,9 @@ import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyDropdown
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyInputButton
+import com.michaelflisar.toolbox.components.MyNumberPicker
 import com.michaelflisar.toolbox.components.MyRow
+import com.michaelflisar.toolbox.components.rememberMyNumberPickerIntClasses
 import com.michaelflisar.toolbox.extensions.toIconComposable
 
 @Parcelize
@@ -98,6 +101,17 @@ private fun Page(
                 selectedIndex = remember { mutableStateOf(0) }
             )
         }
+
+        val number = remember { mutableIntStateOf(5) }
+        val (validator1, parser1) = rememberMyNumberPickerIntClasses(number.value, 1, 10, 1)
+        MyNumberPicker(
+            modifier = Modifier.weight(1f),
+            //modifierInnerPicker = Modifier.fillMaxWidth(),
+            validator = validator1,
+            parser = parser1,
+            label = "Number Picker",
+            value = number
+        )
     }
 
 }

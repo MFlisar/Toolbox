@@ -40,6 +40,13 @@ import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
 import com.michaelflisar.toolbox.extensions.toIconComposable
+import com.michaelflisar.toolbox.form.FormDialog
+import com.michaelflisar.toolbox.form.fields.rememberFormFieldCheckbox
+import com.michaelflisar.toolbox.form.fields.rememberFormFieldDropdown
+import com.michaelflisar.toolbox.form.fields.rememberFormFieldInfo
+import com.michaelflisar.toolbox.form.fields.rememberFormFieldNumber
+import com.michaelflisar.toolbox.form.fields.rememberFormFieldText
+import com.michaelflisar.toolbox.form.rememberFormFields
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalTime
 
@@ -150,11 +157,37 @@ private fun Page(
             )
         },
         rememberDialogTest("Frequency") { name, state ->
-            val frequency = rememberDialogFrequency(Frequency.Weekly(DayOfWeek.MONDAY, LocalTime(12, 0), 1))
+            val frequency =
+                rememberDialogFrequency(Frequency.Weekly(DayOfWeek.MONDAY, LocalTime(12, 0), 1))
             DialogFrequency(
                 state = state,
                 frequency = frequency,
                 title = { Text(name) }
+            )
+        },
+        rememberDialogTest("Form") { name, state ->
+
+            val field1 = rememberFormFieldInfo("Info", "This is some info")
+            val field2 = rememberFormFieldText("Text", "Some text")
+            val field3 = rememberFormFieldNumber("Number", 5)
+            val field4 = rememberFormFieldCheckbox("Checkbox", false)
+            val field5 = rememberFormFieldDropdown("Liste", 0, listOf("A", "B", "C"))
+            FormDialog(
+                state = state,
+                name = name,
+                labelWidth = 200.dp,
+                fields = rememberFormFields(listOf(field1, field2, field3, field4, field5)),
+                onSave = {
+                    val text = field2.value
+                    val number = field3.value
+                    val bool = field4.value
+                    val list = field5.value
+                    println("text: $text, number: $number, bool: $bool, list: $list" )
+                },
+                onDelete = {
+
+                }
+
             )
         },
     )
@@ -184,7 +217,7 @@ private fun Page(
 @Composable
 private fun rememberDialogTest(
     name: String,
-    dialog: @Composable (name: String, state: DialogState) -> Unit
+    dialog: @Composable (name: String, state: DialogState) -> Unit,
 ) = DialogTest(
     name = name,
     state = rememberDialogState(),
@@ -194,7 +227,7 @@ private fun rememberDialogTest(
 private class DialogTest(
     val name: String,
     val state: DialogStateNoData,
-    val dialog: @Composable (name: String, state: DialogState) -> Unit
+    val dialog: @Composable (name: String, state: DialogState) -> Unit,
 ) {
     @Composable
     fun Render() {

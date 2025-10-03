@@ -198,7 +198,7 @@ abstract class Filter<Item, CellValue> {
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
                 value = state.value.value,
-                onValueChange = {
+                onValueChanged = {
                     state.value = state.value.copy(value = it)
                 }
             )
@@ -319,7 +319,7 @@ abstract class Filter<Item, CellValue> {
                 title = "",
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 value = state.value.value,
-                onValueChange = {
+                onValueChanged = {
                     state.value = state.value.copy(value = it)
                 }
             )

@@ -68,12 +68,12 @@ fun MyInput(
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    onValueChange: (String) -> Unit = {}
+    onValueChanged: (String) -> Unit = {}
 ) {
     OutlinedTextField(
         modifier = modifier.focusProperties { canFocus = focusable },
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = onValueChanged,
         singleLine = minLines == 1 && maxLines == 1,
         minLines = minLines,
         maxLines = maxLines,
@@ -94,7 +94,7 @@ fun MyInput(
                         .cursor()
                         .focusProperties { canFocus = false }
                         .clickable {
-                            onValueChange("")
+                            onValueChanged("")
                         }
                 )
             }

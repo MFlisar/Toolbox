@@ -88,6 +88,8 @@
     <string name="error_invalid_length">Ungültige Länge</string>
     <string name="error_too_low">Wert zu klein</string>
     <string name="error_too_high">Wert zu hoch</string>
+    <string name="from">Von</string>
+    <string name="to">Bis</string>
 
     <!-- Backup -->
     <string name="backup_export">Export</string>

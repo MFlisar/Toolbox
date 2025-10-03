@@ -16,7 +16,7 @@ fun rememberFormFields(
 ): FormFields {
     val isValid = remember {
         derivedStateOf {
-            fields.all { it.state.value.isEmpty() }
+            fields.all { it.stateInfo.value.isEmpty() }
         }
     }
     return FormFields(fields, isValid)

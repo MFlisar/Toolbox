@@ -12,7 +12,7 @@ import com.michaelflisar.toolbox.components.MyLabeledInformationHorizontal
 fun Form(
     fields: FormFields,
     modifier: Modifier = Modifier,
-    labelWidth: Dp? = null
+    labelWidth: Dp? = null,
 ) {
     MyColumn(
         modifier = modifier

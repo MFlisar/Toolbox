@@ -125,6 +125,7 @@ kotlin {
             implementation(project(":toolbox:core"))
             implementation(project(":toolbox:app"))
             implementation(project(":toolbox:modules:table"))
+            implementation(project(":toolbox:modules:form"))
 
             // ------------------------
             // tests

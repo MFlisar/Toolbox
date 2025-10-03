@@ -38,7 +38,7 @@ fun <T : Number> MyNumericInput(
     value: T?,
     modifier: Modifier = Modifier,
     readOnly: Boolean = false,
-    onValueChange: (T?) -> Unit = {}
+    onValueChanged: (T?) -> Unit = {}
 ) {
     val text = remember { mutableStateOf(value?.toString() ?: "") }
     OutlinedTextField(
@@ -47,12 +47,12 @@ fun <T : Number> MyNumericInput(
         onValueChange = {
             text.value = it
             when (value) {
-                is Int? -> onValueChange(it.toIntOrNull() as T?)
-                is Double? -> onValueChange(it.toDoubleOrNull() as T?)
-                is Float? -> onValueChange(it.toFloatOrNull() as T?)
-                is Long? -> onValueChange(it.toLongOrNull() as T?)
-                is Short? -> onValueChange(it.toShortOrNull() as T?)
-                is Byte? -> onValueChange(it.toByteOrNull() as T?)
+                is Int? -> onValueChanged(it.toIntOrNull() as T?)
+                is Double? -> onValueChanged(it.toDoubleOrNull() as T?)
+                is Float? -> onValueChanged(it.toFloatOrNull() as T?)
+                is Long? -> onValueChanged(it.toLongOrNull() as T?)
+                is Short? -> onValueChanged(it.toShortOrNull() as T?)
+                is Byte? -> onValueChanged(it.toByteOrNull() as T?)
                 else -> throw RuntimeException("Type not handled!")
             }
         },
@@ -81,7 +81,7 @@ fun <T : Number> MyNumericInput(
                         .focusProperties { canFocus = false }
                         .clickable {
                             text.value = ""
-                            onValueChange(null)
+                            onValueChanged(null)
                         }
                 )
             }

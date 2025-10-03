@@ -92,12 +92,13 @@ kotlin {
         commonMain.dependencies {
 
             // resources
-            implementation(compose.components.resources)
+            api(compose.components.resources)
 
             // kotlinx
             implementation(kotlinx.datetime)
 
             // Compose + AndroidX
+            api(libs.compose.components.resources) // needed for kmp resources
             implementation(libs.compose.material3)
             implementation(libs.compose.material.icons.core)
             implementation(libs.compose.material.icons.extended)
