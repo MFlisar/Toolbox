@@ -18,8 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 
-object MyIconButton {
-    sealed class Style {
+internal object MyIconButton {
+
+    internal sealed class Style {
 
         @Composable
         internal abstract fun Button(
@@ -129,7 +130,7 @@ object MyIconButton {
     }
 }
 
-object MyIconButtonDefaults {
+internal object MyIconButtonDefaults {
 
     @Composable
     fun styleDefault(
@@ -164,12 +165,232 @@ object MyIconButtonDefaults {
     }
 }
 
+// -------------------------
+// public API
+// -------------------------
 
 @Composable
 fun MyIconButton(
     onClick: () -> Unit,
-    style: MyIconButton.Style = MyIconButtonDefaults.styleDefault(),
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // style
+    colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
+    // content
+    content: @Composable () -> Unit
+) {
+    MyIconButton(
+        onClick = onClick,
+        modifier = modifier,
+        style = MyIconButtonDefaults.styleDefault(colors = colors),
+        enabled = enabled,
+        interactionSource = interactionSource,
+        content = content
+    )
+}
+
+@Composable
+fun MyOutlinedIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // style
+    shape: Shape = IconButtonDefaults.outlinedShape,
+    colors: IconButtonColors = IconButtonDefaults.outlinedIconButtonColors(),
+    border: BorderStroke? = IconButtonDefaults.outlinedIconButtonBorder(enabled = true),
+    // content
+    content: @Composable () -> Unit
+) {
+    MyIconButton(
+        onClick = onClick,
+        modifier = modifier,
+        style = MyIconButtonDefaults.styleOutlined(
+            shape = shape,
+            colors = colors,
+            border = border
+        ),
+        enabled = enabled,
+        interactionSource = interactionSource,
+        content = content
+    )
+}
+
+@Composable
+fun MyFilledIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // style
+    shape: Shape = IconButtonDefaults.filledShape,
+    colors: IconButtonColors = IconButtonDefaults.filledIconButtonColors(),
+    // content
+    content: @Composable () -> Unit
+) {
+    MyIconButton(
+        onClick = onClick,
+        modifier = modifier,
+        style = MyIconButtonDefaults.styleFilled(
+            shape = shape,
+            colors = colors
+        ),
+        enabled = enabled,
+        interactionSource = interactionSource,
+        content = content
+    )
+}
+
+@Composable
+fun MyFilledTonalIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // style
+    shape: Shape = IconButtonDefaults.filledShape,
+    colors: IconButtonColors = IconButtonDefaults.filledTonalIconButtonColors(),
+    // content
+    content: @Composable () -> Unit
+) {
+    MyIconButton(
+        onClick = onClick,
+        modifier = modifier,
+        style = MyIconButtonDefaults.styleFilledTonal(
+            shape = shape,
+            colors = colors
+        ),
+        enabled = enabled,
+        interactionSource = interactionSource,
+        content = content
+    )
+}
+
+@Composable
+fun MyIconButton(
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    iconPaddingValues: PaddingValues = PaddingValues(),
+    iconTint: Color? = null,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // style
+    colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
+    // click
+    onClick: () -> Unit,
+) {
+    MyIconButton(
+        icon = icon,
+        modifier = modifier,
+        style = MyIconButtonDefaults.styleDefault(colors = colors),
+        iconPaddingValues = iconPaddingValues,
+        iconTint = iconTint,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun MyOutlinedIconButton(
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    iconPaddingValues: PaddingValues = PaddingValues(),
+    iconTint: Color? = null,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // style
+    shape: Shape = IconButtonDefaults.outlinedShape,
+    colors: IconButtonColors = IconButtonDefaults.outlinedIconButtonColors(),
+    border: BorderStroke? = IconButtonDefaults.outlinedIconButtonBorder(enabled = true),
+    // click
+    onClick: () -> Unit,
+) {
+    MyIconButton(
+        icon = icon,
+        modifier = modifier,
+        style = MyIconButtonDefaults.styleOutlined(
+            shape = shape,
+            colors = colors,
+            border = border
+        ),
+        iconPaddingValues = iconPaddingValues,
+        iconTint = iconTint,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun MyFilledIconButton(
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    iconPaddingValues: PaddingValues = PaddingValues(),
+    iconTint: Color? = null,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // style
+    shape: Shape = IconButtonDefaults.filledShape,
+    colors: IconButtonColors = IconButtonDefaults.filledIconButtonColors(),
+    // click
+    onClick: () -> Unit,
+) {
+    MyIconButton(
+        icon = icon,
+        modifier = modifier,
+        style = MyIconButtonDefaults.styleFilled(
+            shape = shape,
+            colors = colors
+        ),
+        iconPaddingValues = iconPaddingValues,
+        iconTint = iconTint,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun MyFilledTonalIconButton(
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    iconPaddingValues: PaddingValues = PaddingValues(),
+    iconTint: Color? = null,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // style
+    shape: Shape = IconButtonDefaults.filledShape,
+    colors: IconButtonColors = IconButtonDefaults.filledTonalIconButtonColors(),
+    // click
+    onClick: () -> Unit,
+) {
+    MyIconButton(
+        icon = icon,
+        modifier = modifier,
+        style = MyIconButtonDefaults.styleFilledTonal(
+            shape = shape,
+            colors = colors
+        ),
+        iconPaddingValues = iconPaddingValues,
+        iconTint = iconTint,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        onClick = onClick
+    )
+}
+
+
+// -------------------------
+// internal API
+// -------------------------
+
+@Composable
+private fun MyIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    style: MyIconButton.Style = MyIconButtonDefaults.styleDefault(),
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     content: @Composable () -> Unit,
@@ -184,12 +405,12 @@ fun MyIconButton(
 }
 
 @Composable
-fun MyIconButton(
+private fun MyIconButton(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     style: MyIconButton.Style = MyIconButtonDefaults.styleDefault(),
     iconPaddingValues: PaddingValues = PaddingValues(),
-    tint: Color? = null,
+    iconTint: Color? = null,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     onClick: () -> Unit,
@@ -204,7 +425,7 @@ fun MyIconButton(
             modifier = Modifier.padding(iconPaddingValues),
             imageVector = icon,
             contentDescription = null,
-            tint = tint ?: LocalContentColor.current
+            tint = iconTint ?: LocalContentColor.current
         )
     }
 }

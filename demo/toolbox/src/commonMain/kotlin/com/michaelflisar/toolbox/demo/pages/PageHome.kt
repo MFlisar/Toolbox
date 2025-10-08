@@ -29,10 +29,10 @@ import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.localContext
 import com.michaelflisar.toolbox.app.platform.restart
 import com.michaelflisar.toolbox.components.MyButton
-import com.michaelflisar.toolbox.components.MyButtonDefaults
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyFlowRow
 import com.michaelflisar.toolbox.components.MyLabeledInformationHorizontal
+import com.michaelflisar.toolbox.components.MyOutlinedButton
 import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.demo.resources.Res
 import com.michaelflisar.toolbox.demo.resources.page_home
@@ -115,7 +115,7 @@ private fun Page(
             color = MaterialTheme.colorScheme.primary
         )
         MyFlowRow {
-            MyButton(
+            MyOutlinedButton(
                 onClick = {
                     scope.launch {
                         if (setup.debugPrefs.showDebugDrawer.read())
@@ -123,27 +123,24 @@ private fun Page(
                         else
                             appState.showSnackbar("Debug Drawer is disabled in the settings!")
                     }
-                },
-                style = MyButtonDefaults.styleOutlined()
+                }
             ) {
                 Text("Open Drawer")
             }
             if (Platform.restart != null) {
-                MyButton(
+                MyOutlinedButton(
                     onClick = {
                         Platform.restart?.invoke(context)
-                    },
-                    style = MyButtonDefaults.styleOutlined()
+                    }
                 ) {
                     Text("Restart App")
                 }
             }
             if (Platform.kill != null) {
-                MyButton(
+                MyOutlinedButton(
                     onClick = {
                         Platform.kill?.invoke(context)
-                    },
-                    style = MyButtonDefaults.styleOutlined()
+                    }
                 ) {
                     Text("Kill App")
                 }

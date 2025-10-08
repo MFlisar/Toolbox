@@ -357,7 +357,7 @@ private fun HeaderPopup(
                                         modifier = iconModifier,
                                         iconPaddingValues = PaddingValues(iconPadding),
                                         icon = Icons.Default.ArrowDownward,
-                                        tint = if (sort.value?.type == TableSort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                        iconTint = if (sort.value?.type == TableSort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
                                     ) {
                                         sort.value?.let { sorts.remove(it) }
                                         sorts.add(TableSort(index, TableSort.Type.Desc))
@@ -370,7 +370,7 @@ private fun HeaderPopup(
                                         modifier = iconModifier,
                                         iconPaddingValues = PaddingValues(iconPadding),
                                         icon = Icons.Default.ArrowUpward,
-                                        tint = if (sort.value?.type == TableSort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                        iconTint = if (sort.value?.type == TableSort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
                                     ) {
                                         sort.value?.let { sorts.remove(it) }
                                         sorts.add(TableSort(index, TableSort.Type.Asc))
@@ -381,7 +381,7 @@ private fun HeaderPopup(
                                     modifier = iconModifier,
                                     iconPaddingValues = PaddingValues(iconPadding),
                                     icon = Icons.Default.Clear,
-                                    tint = if (sort.value != null) LocalContentColor.current else LocalContentColor.current.disabled()
+                                    iconTint = if (sort.value != null) LocalContentColor.current else LocalContentColor.current.disabled()
                                 ) {
                                     sort.value?.let { sorts.remove(it) }
                                 }

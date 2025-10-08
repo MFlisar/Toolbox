@@ -173,7 +173,7 @@ abstract class Filter<Item, CellValue> {
             MyTooltipBox("Case Sensitive") {
                 MyIconButton(
                     icon = Icons.Default.TextFields,
-                    tint = if (!state.value.ignoreCase) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground.disabled()
+                    iconTint = if (!state.value.ignoreCase) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground.disabled()
                 ) {
                     state.value = state.value.copy(ignoreCase = !state.value.ignoreCase)
                 }

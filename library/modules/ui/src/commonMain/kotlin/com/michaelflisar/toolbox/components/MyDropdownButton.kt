@@ -128,10 +128,15 @@ object MyDropdownButtonDefaults {
 fun MyDropdownButton(
     type: MyDropdownButton.Type,
     modifier: Modifier = Modifier,
-    // button properties
-    style: MyButton.Style = MyButtonDefaults.styleDefault(),
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
+    // button style
+    // style
+    shape: Shape = ButtonDefaults.shape,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
+    border: BorderStroke? = null,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -144,10 +149,15 @@ fun MyDropdownButton(
         contentAlignment = Alignment.Center
     ) {
         Row {
-            style.Button(
+            MyButton(
                 enabled = enabled,
                 onClick = type::onClick,
-                interactionSource = interactionSource
+                interactionSource = interactionSource,
+                shape = shape,
+                colors = colors,
+                elevation = elevation,
+                border = border,
+                contentPadding = contentPadding
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
