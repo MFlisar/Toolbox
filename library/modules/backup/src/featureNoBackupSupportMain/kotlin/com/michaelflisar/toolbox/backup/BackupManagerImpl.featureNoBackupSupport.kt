@@ -34,7 +34,7 @@ actual class BackupManagerImpl actual constructor(
         TODO("Not yet implemented")
     }
 
-    actual fun getAutoBackupFileName(): String {
+    actual suspend fun getAutoBackupFileName(): String {
         TODO("Not yet implemented")
     }
 

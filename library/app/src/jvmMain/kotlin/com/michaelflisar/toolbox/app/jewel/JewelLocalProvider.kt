@@ -6,7 +6,7 @@ import com.michaelflisar.toolbox.app.features.appstate.JewelAppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalJewelAppState
 
 @Composable
-fun JewelLocalProvider(
+internal fun JewelLocalProvider(
     jewelAppState: JewelAppState,
     content: @Composable () -> Unit,
 ) {

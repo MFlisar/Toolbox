@@ -66,7 +66,7 @@ actual class BackupManagerImpl actual constructor(
         }
     }
 
-    actual fun getAutoBackupFileName(): String {
+    actual suspend fun getAutoBackupFileName(): String {
         // --
         return ""
     }

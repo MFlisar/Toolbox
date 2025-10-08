@@ -1,45 +1,49 @@
 package com.michaelflisar.toolbox.demo
 
+import androidx.compose.material3.LocalContentColor
 import com.michaelflisar.kotbilling.classes.Product
 import com.michaelflisar.kotbilling.classes.ProductType
 import com.michaelflisar.kotpreferences.core.value
+import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
+import com.michaelflisar.kotpreferences.storage.datastore.create
 import com.michaelflisar.toolbox.ads.AdManagerImpl
 import com.michaelflisar.toolbox.app.AndroidApplication
+import com.michaelflisar.toolbox.app.AppScope
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.classes.AndroidAppSetup
 import com.michaelflisar.toolbox.app.classes.PlatformContext
+import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
-import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
-import com.michaelflisar.toolbox.app.features.preferences.Preferences
-import com.michaelflisar.toolbox.app.features.preferences.createStorage
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionAppDefaults
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.utils.AndroidAppIconUtil
+import com.michaelflisar.toolbox.app.utils.createFileLogger
 import com.michaelflisar.toolbox.backup.BackupDefaults
-import com.michaelflisar.toolbox.backup.classes.BackupConfig
 import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.backup.BackupManagerImpl
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
+import com.michaelflisar.toolbox.backup.classes.BackupConfig
 import com.michaelflisar.toolbox.backup.createDefaultBackupContent
+import com.michaelflisar.toolbox.extensions.isLight
 import com.michaelflisar.toolbox.features.proversion.ProState
 import com.michaelflisar.toolbox.proversion.AndroidProVersionManager
-import kotlinx.coroutines.GlobalScope
+import com.michaelflisar.toolbox.utils.AndroidUtil
 
 class App : AndroidApplication() {
 
     override val appIcon: Int = R.mipmap.ic_launcher
-    override val appName: Int = R.string.app_name
 
     override fun onAfterCreate() {
-        SharedDefinitions.update(PlatformContext(this))
 
-        // Ads + Pro Version enabled
-        val setup = CommonApp.setup
+        // 1) Init function
+        Shared.init(PlatformContext(this))
+
+        // 2) Ads + Pro Version enabled
+        val setup = AppSetup.get()
         AdsManager.init(AdManagerImpl)
         ProVersionManager.init(
             manager = AndroidProVersionManager(
-                scope = GlobalScope,
+                scope = AppScope,
                 products = listOf(Product("pro", ProductType.InApp, false)),
                 forceIsProInDebug = setup.debugPrefs.forceIsProInDebug,
                 isDebug = BuildConfig.DEBUG,
@@ -49,14 +53,14 @@ class App : AndroidApplication() {
             action = ProVersionAppDefaults.actionItem()
         )
 
-        // Backup Support
+        // 3) Backup Support
         BackupManager.init(
             manager = BackupManagerImpl(
                 config = BackupConfig(
                     backupContent = BackupDefaults.createDefaultBackupContent()
                 ),
                 autoBackupConfig = AutoBackupConfig(
-                    appName = getString(R.string.app_name),
+                    appName = setup.name,
                     frequencyData = { setup.prefs.autoBackupFrequency.value },
                     backupPathData = { setup.prefs.backupPathData.value },
                 )
@@ -65,17 +69,24 @@ class App : AndroidApplication() {
     }
 
     override fun createSetup(): AppSetup {
-        val prefs = BasePrefs(Preferences.createStorage("settings"))
-        return SharedDefinitions.createBaseAppSetup(
-            prefs = prefs,
-            debugStorage = Preferences.createStorage("debug"),
+
+        // 1) ) Storages erstellen
+        val storageSettings = DataStoreStorage.create(name = "settings")
+        val storageDebug = DataStoreStorage.create(name = "debug")
+
+        // 2) Setups erstellen
+        val setup = Shared.createBaseAppSetup(
+            prefs = Prefs(storageSettings),
+            debugPrefs = DebugPrefs(storageDebug),
+            isDebugBuild = BuildConfig.DEBUG,
+            fileLogger = AndroidUtil.createFileLogger(),
             icon = {
                 AndroidAppIconUtil.adaptiveIconPainterResource(appIcon)
-                    ?: SharedDefinitions.appIcon()
-            },
-
-            isDebugBuild = BuildConfig.DEBUG
+                    ?: Shared.appIcon(LocalContentColor.current.isLight())
+            }
         )
+
+        return setup
     }
 
     override fun createAndroidSetup() = AndroidAppSetup(

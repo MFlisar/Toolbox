@@ -5,7 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.window.ApplicationScope
 
 @Composable
-fun ApplicationScope.JewelExitHandler(
+internal fun ApplicationScope.JewelExitHandler(
     appIsClosing: MutableState<Boolean>,
 ) {
     if (appIsClosing.value) {

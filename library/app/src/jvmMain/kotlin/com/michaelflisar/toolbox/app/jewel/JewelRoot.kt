@@ -7,18 +7,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.input.key.NativeKeyEvent
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.app.CommonApp
-import com.michaelflisar.toolbox.app.DesktopApp
+import com.michaelflisar.toolbox.app.AppSetup
+import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.features.appstate.JewelAppState
 import com.michaelflisar.toolbox.app.features.filekit.LocalFileKitDialogSettingsState
 import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.window.DecoratedWindow
 import org.jetbrains.jewel.window.DecoratedWindowScope
 import org.jetbrains.jewel.window.defaultDecoratedWindowStyle
 
 @Composable
-fun JewelRoot(
+internal fun JewelRoot(
     jewelAppState: JewelAppState,
     appIsClosing: MutableState<Boolean>,
     onClosed: (suspend () -> Unit)?,
@@ -26,11 +27,12 @@ fun JewelRoot(
     onKeyEvent: (NativeKeyEvent) -> Boolean,
     content: @Composable DecoratedWindowScope.() -> Unit,
 ) {
-    val setup = CommonApp.setup
-    val desktopSetup = DesktopApp.setup
+    val setup = AppSetup.get()
+    val desktopSetup = DesktopAppSetup.get()
 
     val scope = rememberCoroutineScope()
     val alwaysOnTop by desktopSetup.prefs.alwaysOnTop.collectAsStateNotNull()
+
     JewelLocalProvider(
         jewelAppState = jewelAppState
     ) {
@@ -43,8 +45,8 @@ fun JewelRoot(
             },
             state = jewelAppState.windowState,
             visible = desktopSetup.visible,
-            title = setup.name(),
-            icon = setup.icon(),
+            title = stringResource(setup.name),
+            icon = desktopSetup.appIcon(), // icon in windows toolbar
             resizable = desktopSetup.resizable,
             enabled = desktopSetup.enabled,
             focusable = desktopSetup.focusable,

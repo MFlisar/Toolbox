@@ -24,7 +24,8 @@ import com.michaelflisar.composechangelog.Changelog
 import com.michaelflisar.composechangelog.statesaver.kotpreferences.ChangelogStateSaverKotPreferences
 import com.michaelflisar.composedebugdrawer.core.DebugDrawer
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.App
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
@@ -50,7 +51,7 @@ fun Root(
     dialogs: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val showDebugDrawer by setup.debugPrefs.showDebugDrawer.collectAsStateNotNull()
     RootLocalProvider(appState, setRootLocals) {
         val drawerState = LocalDebugDrawerState.current
@@ -81,7 +82,7 @@ fun Root(
 fun RootDialogs() {
 
     val appState = LocalAppState.current
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val changelogSetup = setup.changelogSetup
     if (changelogSetup == null) {
         return // no changelog setup, so we don't show anything
@@ -123,7 +124,7 @@ fun RootDialogs() {
                 Spacer(modifier = Modifier.height(16.dp))
                 Changelog(
                     appState.changelogState,
-                    CommonApp.setup.changelogSetup!!,
+                    changelogSetup,
                     Modifier.fillMaxWidth()
                 )
             }

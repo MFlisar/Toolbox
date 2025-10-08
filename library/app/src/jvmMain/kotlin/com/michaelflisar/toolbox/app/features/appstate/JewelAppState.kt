@@ -8,13 +8,13 @@ import androidx.compose.ui.window.WindowState
 import com.michaelflisar.toolbox.app.classes.rememberJewelWindowState
 import com.michaelflisar.toolbox.app.classes.resetAll
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
-import com.michaelflisar.toolbox.app.WindowUtil
+import com.michaelflisar.toolbox.app.utils.WindowUtil
 
-val LocalJewelAppState =
+internal val LocalJewelAppState =
     compositionLocalOf<JewelAppState> { throw RuntimeException("JewelAppState not initialised!") }
 
 @Composable
-fun rememberJewelAppState(
+internal fun rememberJewelAppState(
     prefs: DesktopPrefs,
 ): JewelAppState {
     return JewelAppState(
@@ -23,13 +23,13 @@ fun rememberJewelAppState(
 }
 
 @Composable
-fun rememberJewelAppState(
+internal fun rememberJewelAppState(
     windowState: WindowState,
 ): JewelAppState {
     return JewelAppState(windowState)
 }
 
-class JewelAppState internal constructor(
+internal class JewelAppState internal constructor(
     val windowState: WindowState,
 ) {
     suspend fun ensureIsAtLeastPartlyOnScreen(density: Density, window: ComposeWindow) {

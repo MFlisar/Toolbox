@@ -175,13 +175,9 @@ kotlin {
             // INFOS: https://github.com/LexiLabs-App/basic-ads
             // PRO VERSION
             // - 1) ProVersionManager in Application konfigurieren
-            if (buildFilePlugin.useLiveDependencies()) {
-                implementation(deps.toolbox.proversion)
-                implementation(deps.toolbox.ads)
-            } else {
-                implementation(project(":toolbox:modules:ads"))
-                implementation(project(":toolbox:modules:proversion"))
-            }
+            implementation(deps.toolbox.proversion)
+            implementation(deps.toolbox.ads)
+
 
         }
 

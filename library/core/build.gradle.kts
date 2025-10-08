@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.compose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
     alias(deps.plugins.kmplibrary.buildplugin)
@@ -95,6 +96,8 @@ kotlin {
             api(compose.components.resources)
 
             // kotlinx
+            implementation(kotlinx.serialization.core)
+            implementation(kotlinx.serialization.json)
             implementation(kotlinx.datetime)
 
             // Compose + AndroidX
@@ -103,15 +106,9 @@ kotlin {
             implementation(libs.compose.material.icons.core)
             implementation(libs.compose.material.icons.extended)
 
-            if (buildFilePlugin.useLiveDependencies()) {
-                api(deps.lumberjack.core)
-                implementation(deps.composechangelog.core)
-                implementation(deps.composedialogs.core)
-            } else {
-                api(project( ":lumberjack:core"))
-                implementation(project(":composechangelog:core"))
-                implementation(project(":composedialogs:core"))
-            }
+            api(deps.lumberjack.core)
+            implementation(deps.composechangelog.core)
+            implementation(deps.composedialogs.core)
 
             implementation(deps.filekit.dialogs.compose)
         }
@@ -127,15 +124,9 @@ kotlin {
             implementation(deps.acra.mail)
             implementation(deps.acra.dialog)
 
-            if (buildFilePlugin.useLiveDependencies()) {
-                implementation(deps.feedback)
-                implementation(deps.lumberjack.extension.feedback)
-                implementation(deps.lumberjack.extension.notification)
-            } else {
-                implementation(project(":feedbackmanager"))
-                implementation(project(":lumberjack:extensions:feedback"))
-                implementation(project(":lumberjack:extensions:notification"))
-            }
+            implementation(deps.feedback)
+            implementation(deps.lumberjack.extension.feedback)
+            implementation(deps.lumberjack.extension.notification)
 
         }
     }

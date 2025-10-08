@@ -18,10 +18,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.DesktopApp
+import com.michaelflisar.toolbox.app.DesktopTitleAction
+import com.michaelflisar.toolbox.app.DesktopTitleBarSetup
+import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.drawables.Keep
 import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.extensions.isLight
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.jewel.ui.component.Icon
@@ -33,30 +37,22 @@ import org.jetbrains.jewel.window.TitleBar
 import org.jetbrains.jewel.window.defaultTitleBarStyle
 import org.jetbrains.jewel.window.newFullscreenControls
 
-class JewelTitleBarSetup(
-    val showAlwaysOnTop: Boolean = true,
-    val showThemeSelector: Boolean = true
-)
 
-class JewelTitleAction(
-    val title: String,
-    val imageVector: ImageVector,
-    val onClick: () -> Unit,
-)
 
 @Composable
-fun DecoratedWindowScope.JewelTitleBar(
-    setup: JewelTitleBarSetup,
-    icon: Painter? = CommonApp.setup.icon(),
-    iconItems: List<JewelTitleAction> = emptyList(),
+internal fun DecoratedWindowScope.JewelTitleBar(
+    setup: DesktopTitleBarSetup,
+    iconItems: List<DesktopTitleAction>,
     menubar: @Composable () -> Unit = {},
 ) {
-    val prefs = DesktopApp.setup.prefs
+    val prefs = DesktopAppSetup.get().prefs
     val scope = rememberCoroutineScope()
     val theme by prefs.jewelTheme.collectAsStateNotNull()
 
     val jewelTitleTheme = org.jetbrains.jewel.foundation.theme.JewelTheme.defaultTitleBarStyle
     val foreground = jewelTitleTheme.colors.content
+
+    val icon = DesktopAppSetup.get().titleBarIcon(foreground.isLight())
 
     TitleBar(Modifier.newFullscreenControls()) {
         Row(

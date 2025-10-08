@@ -71,24 +71,11 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.material3)
 
-            // pro version
-            if (buildFilePlugin.useLiveDependencies()) {
+            implementation(deps.kotpreferences.core)
 
-                implementation(deps.kotpreferences.core)
-
-                implementation(deps.composedialogs.core)
-                implementation(deps.composedialogs.dialog.info)
-                api(deps.composedialogs.dialog.billing)
-
-            } else {
-
-                implementation(project(":kotpreferences:core"))
-
-                implementation(project(":composedialogs:core"))
-                implementation(project(":composedialogs:modules:info"))
-                api(project(":composedialogs:modules:billing"))
-
-            }
+            implementation(deps.composedialogs.core)
+            implementation(deps.composedialogs.dialog.info)
+            api(deps.composedialogs.dialog.billing)
 
             // Library
             api(project(":toolbox:core"))

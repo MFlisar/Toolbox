@@ -9,7 +9,7 @@ import com.michaelflisar.composedialogs.dialogs.frequency.classes.Frequency
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalTime
 
-open class BasePrefs(
+abstract class BasePrefs(
     storage: Storage,
     initialTheme: ComposeTheme.Theme = ThemeDefault.Theme,
     initialFrequency: Frequency = Frequency.Weekly(DayOfWeek.SUNDAY, LocalTime(22, 0), 1)

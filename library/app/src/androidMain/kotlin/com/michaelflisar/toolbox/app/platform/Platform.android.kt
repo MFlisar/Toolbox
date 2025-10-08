@@ -26,15 +26,6 @@ import com.michaelflisar.toolbox.restartApp
 @Composable
 actual fun Platform.localContext() = PlatformContext(LocalContext.current)
 
-actual val Platform.fileLogger: FileLogger<*>?
-    get() = FileLogger<FileLoggerSetup>(
-        setup = FileLoggerSetup.Daily.create(
-            context = AppContext.context(),
-            fileExtension = "txt"
-        ),
-        logger = { com.michaelflisar.lumberjack.loggers.file.FileLogger(it) }
-    )
-
 actual val Platform.showToast: ((message: String, duration: Int) -> Unit)?
     get() = ::showToast
 

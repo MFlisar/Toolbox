@@ -77,14 +77,8 @@ kotlin {
             api(project(":toolbox:modules:ui"))
 
             // TODO: dialogs for mac...
-            if (buildFilePlugin.useLiveDependencies()) {
-                api(deps.composedialogs.core)
-                api(deps.composedialogs.dialog.info)
-            } else {
-                api(project(":composedialogs:core"))
-                api(project(":composedialogs:modules:info"))
-            }
-
+            api(deps.composedialogs.core)
+            api(deps.composedialogs.dialog.info)
 
         }
     }

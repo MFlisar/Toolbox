@@ -13,7 +13,6 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.NotificationUtil
-import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.launch
@@ -28,7 +27,10 @@ abstract class BaseForegroundService<Result> : LifecycleService() {
 
     abstract val setup: ServiceSetup
 
-    abstract suspend fun run(intent: Intent): Result
+    abstract suspend fun doWork(intent: Intent): Result
+    abstract fun stopWork(intent: Intent): Result
+
+
     abstract fun onInitNotification(builder: NotificationCompat.Builder)
 
     abstract fun onPrepareKeptNotification(result: Result)
@@ -50,10 +52,21 @@ abstract class BaseForegroundService<Result> : LifecycleService() {
         intent?.let {
             when (it.action) {
                 ServiceConstants.ACTION_START_SERVICE -> {
-                    doWork(it)
+                    createNotification(::onInitNotification)
+                    startForegroundService()
+                    lifecycleScope.launch {
+                        val result = doWork(intent)
+                        if (setup.keptNotificationId != null) {
+                            onPrepareKeptNotification(result)
+                            createKeepNotification()
+                        }
+                        stopForegroundService()
+                        stopService()
+                    }
                 }
 
                 ServiceConstants.ACTION_STOP_SERVICE -> {
+                    stopWork(it)
                     stopService()
                 }
 
@@ -109,20 +122,6 @@ abstract class BaseForegroundService<Result> : LifecycleService() {
     // ------------
     // Functions
     // ------------
-
-    private fun doWork(intent: Intent) {
-        createNotification(::onInitNotification)
-        startForegroundService()
-        lifecycleScope.launch {
-            val result = run(intent)
-            if (setup.keptNotificationId != null) {
-                onPrepareKeptNotification(result)
-                createKeepNotification()
-            }
-            stopForegroundService()
-            stopService()
-        }
-    }
 
     private fun startForegroundService() {
         L.logIf(ToolboxLogging.Tag.Service)?.d { "startForegroundService" }

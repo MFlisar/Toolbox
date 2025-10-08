@@ -2,7 +2,21 @@
 - OFFENE WICHTIGE PUNKTE
 -------------------------------------
 
-    [ ] Android* und Jvm* entfernen + allgemeine Sachen die keine eigene Klasse brauchen als Toolbox.* implementieren
+    [ ] AppUtil sollte funktionen anbieten wie:
+        * openSettings
+        * ...
+        damit man nicht wissen muss wo was ist (LocalAppState, ...)
+
+    [ ] WASM:
+        Back Handling gibt es noch nicht + Toolbar anders gestalten? (Title zentrieren + Menus ohne Texte + Back Arrow) + Web Back Handling geht auch nicht
+
+    ------------------------------------------
+
+    [ ] DrawerSettings? für in app einstellungen die man sofort sieht (wie in Iron via DebugDrawer)?
+    [ ] IOS Support
+        => wenn er implementiert ist dann target mobile anlegen und dort android/ios geteilte Funktionen ablegen!!!
+
+    ----------------------------------
 
     [ ] Screens - paddings nutzen?
     [ ] Pages sollten immer fill size haben => ist jetzt so, sollte man das forcieren?

@@ -17,7 +17,7 @@ import com.michaelflisar.kotpreferences.core.SettingsConverter
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.DesktopApp
-import com.michaelflisar.toolbox.app.WindowUtil
+import com.michaelflisar.toolbox.app.utils.WindowUtil
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +42,7 @@ suspend fun WindowState.reset(
     position: Boolean,
     size: Boolean,
 ) {
-    val prefs = DesktopApp.setup.prefs
+    val prefs = DesktopAppSetup.get().prefs
 
     if (placement) {
         this.placement = prefs.windowState.defaultValue.windowPlacement
@@ -62,7 +62,7 @@ suspend fun WindowState.reset(
 }
 
 suspend fun WindowState.resetWindowSize() {
-    val prefs = DesktopApp.setup.prefs
+    val prefs = DesktopAppSetup.get().prefs
     this.size = DpSize(
         prefs.windowState.defaultValue.windowWidth.dp,
         prefs.windowState.defaultValue.windowHeight.dp,
@@ -89,7 +89,7 @@ fun rememberJewelWindowState(
     val windowState by prefs.windowState.collectAsStateNotNull()
     val state = remember(windowState) {  windowState.toWindowState() }
 
-    snapshotFlow { JewelWindowState(state) }
+    snapshotFlow { DesktopWindowState(state) }
         .distinctUntilChanged()
         .debounce(500)
         .onEach {
@@ -109,7 +109,7 @@ fun rememberJewelWindowState(
 }
 
 @Serializable
-data class JewelWindowState(
+data class DesktopWindowState(
     val windowWidth: Int = 1024,
     val windowHeight: Int = 800,
     val windowX: Int = 0,
@@ -132,9 +132,9 @@ data class JewelWindowState(
         )
     }
 
-    object CONVERTER : SettingsConverter<JewelWindowState, String> {
-        override fun from(data: String): JewelWindowState = Json.decodeFromString(data)
-        override fun to(data: JewelWindowState): String = Json.encodeToString(data)
+    object CONVERTER : SettingsConverter<DesktopWindowState, String> {
+        override fun from(data: String): DesktopWindowState = Json.decodeFromString(data)
+        override fun to(data: DesktopWindowState): String = Json.encodeToString(data)
     }
 
     override fun toString(): String {

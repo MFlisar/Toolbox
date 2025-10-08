@@ -70,7 +70,7 @@ kotlin {
 
         androidMain.dependencies {
             implementation(androidx.core)
-            implementation(deps.google.guava)
+            implementation(deps.google.guava) // TODO: wieso ist das notwendig?
             api(androidx.lifecycle.service)
             api(androidx.work)
         }

@@ -22,26 +22,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.app.DesktopStatusBarItem
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.window.defaultTitleBarStyle
 
-sealed class JewelStatusBarItem {
-
-    class Text(
-        val text: String,
-        val color: Color = Color.Unspecified,
-        val onClick: (() -> Unit)? = null
-    ) : JewelStatusBarItem()
-
-    class Custom(
-        val content: @Composable () -> Unit
-    ) : JewelStatusBarItem()
-}
-
 @Composable
-fun JewelStatusBar(
-    left: List<JewelStatusBarItem> = emptyList(),
-    right: List<JewelStatusBarItem> = emptyList(),
+internal fun JewelStatusBar(
+    left: List<DesktopStatusBarItem> = emptyList(),
+    right: List<DesktopStatusBarItem> = emptyList(),
     foreground: Color = Color.Unspecified,
     background: Color = Color.Unspecified,
     content: @Composable (() -> Unit)? = null
@@ -66,8 +54,8 @@ fun JewelStatusBar(
             ) {
                 left.forEach { item ->
                     when (item) {
-                        is JewelStatusBarItem.Custom -> StatusBarCustom(item.content)
-                        is JewelStatusBarItem.Text -> StatusBarText(
+                        is DesktopStatusBarItem.Custom -> StatusBarCustom(item.content)
+                        is DesktopStatusBarItem.Text -> StatusBarText(
                             text = item.text,
                             onClick = item.onClick,
                             color = item.color
@@ -90,8 +78,8 @@ fun JewelStatusBar(
                 right.forEach { item ->
                     VerticalDivider()
                     when (item) {
-                        is JewelStatusBarItem.Custom -> StatusBarCustom(item.content)
-                        is JewelStatusBarItem.Text -> StatusBarText(
+                        is DesktopStatusBarItem.Custom -> StatusBarCustom(item.content)
+                        is DesktopStatusBarItem.Text -> StatusBarText(
                             text = item.text,
                             onClick = item.onClick,
                             color = item.color

@@ -21,7 +21,7 @@ object AcraUtil {
     fun initAcra(
         app: Application,
         appIcon: Int,
-        appName: String,
+        appName: StringResource,
         fileLoggerSetup: IFileLoggingSetup?,
         crash_dialog_text: StringResource,
         crash_dialog_title: StringResource,

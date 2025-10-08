@@ -2,16 +2,16 @@ package com.michaelflisar.toolbox.app.features.update
 
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.ToolboxLogging
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.logIf
 
 abstract class BaseUpdate(
-    val version: Long
+    val version: Long,
 ) {
     constructor(
-        versionName: String
-    ) : this(CommonApp.setup.changelogSetup!!.versionFormatter.parseVersion(versionName).toLong())
+        versionName: String,
+    ) : this(AppSetup.get().changelogSetup!!.versionFormatter.parseVersion(versionName).toLong())
 
     abstract suspend fun update(context: PlatformContext)
 

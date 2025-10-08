@@ -1,11 +1,16 @@
 package com.michaelflisar.toolbox.app.features.navigation.screen
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.parcelize.Parcelable
 import com.michaelflisar.toolbox.app.features.actions.ActionItem
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
+import com.michaelflisar.toolbox.feature.menu.MenuItem
+import com.michaelflisar.toolbox.feature.menu.PopupMenuScope
 
 interface INavScreen : Screen, Parcelable {
 
@@ -25,7 +30,24 @@ interface INavScreen : Screen, Parcelable {
         )
     }
 
-     @Composable
-     fun toNavItem() = toActionItem().toNavItem()
+    @Composable
+    fun toNavItem() = toActionItem().toNavItem()
+
+    @Composable
+    fun PopupMenuItem(scope: PopupMenuScope) {
+        val titleData = provideData()
+        val navigator = LocalNavigator.currentOrThrow
+        with(scope) {
+            MenuItem(
+                text = { Text(titleData.value.title) },
+                icon = titleData.value.icon
+            ) {
+                navigator.replaceAll(this@INavScreen)
+            }
+        }
+    }
+
+    val navScreenBackPressHandler: NavScreenBackPressHandler?
+        get() = null
 
 }

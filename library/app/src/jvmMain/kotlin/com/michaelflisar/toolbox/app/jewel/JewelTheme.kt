@@ -9,11 +9,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import org.jetbrains.skiko.SystemTheme
 import org.jetbrains.skiko.currentSystemTheme
 
-enum class JewelBaseTheme {
+internal enum class JewelBaseTheme {
     Light, Dark, System;
 }
 
-enum class JewelTheme(
+internal enum class JewelTheme(
     val imageVector: ImageVector,
     val label: String,
     val switchLabel: String,

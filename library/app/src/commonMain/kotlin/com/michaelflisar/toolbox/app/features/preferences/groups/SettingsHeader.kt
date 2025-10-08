@@ -19,12 +19,13 @@ import com.michaelflisar.composepreferences.core.classes.PreferenceSettings
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.core.styles.ModernStyle
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.App
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
-import com.michaelflisar.toolbox.core.resources.Res
-import com.michaelflisar.toolbox.core.resources.by_name
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyRow
+import com.michaelflisar.toolbox.core.resources.Res
+import com.michaelflisar.toolbox.core.resources.by_name
 import com.michaelflisar.toolbox.extensions.variant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,9 +34,9 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PreferenceGroupScope.SettingsHeader(
-    settings: PreferenceSettings
+    settings: PreferenceSettings,
 ) {
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val debugPrefs = setup.debugPrefs
     val appState = LocalAppState.current
 
@@ -66,9 +67,9 @@ fun PreferenceGroupScope.SettingsHeader(
 
 @Composable
 fun SettingsHeaderContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val versionCode = setup.versionCode
     val versionName = setup.versionName
     MyColumn(
@@ -84,7 +85,7 @@ fun SettingsHeaderContent(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = setup.name(),
+                    text = stringResource(setup.name),
                     style = MaterialTheme.typography.titleLarge
                 )
                 Text(

@@ -23,7 +23,7 @@ expect class BackupManagerImpl(
         backupFile: PlatformFile,
     ): Throwable?
 
-    fun getAutoBackupFileName(): String
+    suspend fun getAutoBackupFileName(): String
     fun onSettingsChanged()
     fun onEnqueueNextAutoBackup()
 

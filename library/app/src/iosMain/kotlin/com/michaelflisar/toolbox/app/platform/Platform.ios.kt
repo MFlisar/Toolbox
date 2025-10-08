@@ -8,13 +8,6 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 
-actual val Platform.fileLogger: FileLogger<*>?
-    get() = FileLogger<FileLoggerSetup>(
-        setup = FileLoggerSetup.Daily.create(
-            fileExtension = "txt"
-        ),
-        logger = { com.michaelflisar.lumberjack.loggers.file.FileLogger(it) }
-    )
 actual val Platform.restart: ((context: PlatformContext) -> Unit)?
     get() = null
 

@@ -100,17 +100,10 @@ kotlin {
 
             api(deps.kmp.parcelize)
 
-            if (buildFilePlugin.useLiveDependencies()) {
-                implementation(deps.lumberjack.core)
-                implementation(deps.composedialogs.core)
-                implementation(deps.composedialogs.dialog.info)
-                api(deps.composedialogs.dialog.frequency)
-            } else {
-                implementation(project(":lumberjack:core"))
-                implementation(project(":composedialogs:core"))
-                implementation(project(":composedialogs:modules:info"))
-                api(project(":composedialogs:modules:frequency"))
-            }
+            implementation(deps.lumberjack.core)
+            implementation(deps.composedialogs.core)
+            implementation(deps.composedialogs.dialog.info)
+            api(deps.composedialogs.dialog.frequency)
 
             // libraries
             implementation(deps.filekit.dialogs.compose)

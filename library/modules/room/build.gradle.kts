@@ -71,7 +71,7 @@ kotlin {
 
             // room
             //implementation(androidx.room)
-            implementation(androidx.room.runtime)
+            api(androidx.room.runtime)
             //ksp(androidx.room.compiler)
 
             // Library

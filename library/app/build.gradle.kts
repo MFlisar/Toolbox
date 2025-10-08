@@ -141,87 +141,44 @@ kotlin {
             api(project(":toolbox:modules:zip"))
             api(project(":toolbox:modules:backup"))
 
-            if (buildFilePlugin.useLiveDependencies()) {
+            // Lumberjack
+            api(deps.lumberjack.core)
+            api(deps.lumberjack.implementation.lumberjack)
+            api(deps.lumberjack.logger.console)
 
-                // Lumberjack
-                api(deps.lumberjack.core)
-                api(deps.lumberjack.implementation.lumberjack)
-                api(deps.lumberjack.logger.console)
+            // KotPreferences
+            api(deps.kotpreferences.core)
+            api(deps.kotpreferences.extension.compose)
 
-                // KotPreferences
-                api(deps.kotpreferences.core)
-                api(deps.kotpreferences.extension.compose)
+            // Compose Debug Drawer
+            api(deps.composedebugdrawer.core)
+            implementation(deps.composedebugdrawer.plugin.kotpreferences)
 
-                // Compose Debug Drawer
-                api(deps.composedebugdrawer.core)
-                implementation(deps.composedebugdrawer.plugin.kotpreferences)
+            // Compose Changelog
+            api(deps.composechangelog.core)
+            implementation(deps.composechangelog.renderer.header)
+            implementation(deps.composechangelog.statesaver.kotpreferences)
 
-                // Compose Changelog
-                api(deps.composechangelog.core)
-                implementation(deps.composechangelog.renderer.header)
-                implementation(deps.composechangelog.statesaver.kotpreferences)
+            // Compose Dialogs
+            api(deps.composedialogs.core)
+            implementation(deps.composedialogs.dialog.info)
+            implementation(deps.composedialogs.dialog.time)
+            implementation(deps.composedialogs.dialog.frequency)
 
-                // Compose Dialogs
-                api(deps.composedialogs.core)
-                implementation(deps.composedialogs.dialog.info)
-                implementation(deps.composedialogs.dialog.time)
-                implementation(deps.composedialogs.dialog.frequency)
+            // Compose Preferences
+            api(deps.composepreferences.core)
+            implementation(deps.composepreferences.screen.bool)
+            implementation(deps.composepreferences.screen.list)
+            implementation(deps.composepreferences.screen.button)
+            implementation(deps.composepreferences.kotpreferences)
 
-                // Compose Preferences
-                api(deps.composepreferences.core)
-                implementation(deps.composepreferences.screen.bool)
-                implementation(deps.composepreferences.screen.list)
-                implementation(deps.composepreferences.screen.button)
-                implementation(deps.composepreferences.kotpreferences)
+            // Compose Colors
+            implementation(deps.composecolors.material)
 
-                // Compose Colors
-                implementation(deps.composecolors.material)
-
-                // Theming
-                api(deps.composethemer.core)
-                implementation(deps.composethemer.modules.picker)
-                implementation(deps.composethemer.modules.defaultpicker)
-
-            } else {
-
-                // Lumberjack
-                api(project(":lumberjack:core"))
-                api(project(":lumberjack:implementations:lumberjack"))
-                api(project(":lumberjack:loggers:lumberjack:console"))
-
-                // KotPreferences
-                api(project(":kotpreferences:core"))
-                api(project(":kotpreferences:modules:compose"))
-
-                // Compose Debug Drawer
-                api(project(":composedebugdrawer:core"))
-                implementation(project(":composedebugdrawer:plugins:kotpreferences"))
-
-                // Compose Changelog
-                api(project(":composechangelog:core"))
-                implementation(project(":composechangelog:modules:renderer:header"))
-                implementation(project(":composechangelog:modules:statesaver:kotpreferences"))
-
-                // Compose Dialogs
-                api(project(":composedialogs:core"))
-                implementation(project(":composedialogs:modules:info"))
-                implementation(project(":composedialogs:modules:frequency"))
-
-                // Compose Preferences
-                api(project(":composepreferences:core"))
-                implementation(project(":composepreferences:modules:screen:bool"))
-                implementation(project(":composepreferences:modules:screen:list"))
-                implementation(project(":composepreferences:modules:screen:button"))
-                implementation(project(":composepreferences:modules:kotpreferences"))
-
-                // Compose Colors
-                implementation(project(":composecolors:modules:material"))
-
-                // Theming
-                api(project(":composethemer:core"))
-                implementation(project(":composethemer:modules:picker"))
-                implementation(project(":composethemer:modules:defaultpicker"))
-            }
+            // Theming
+            api(deps.composethemer.core)
+            implementation(deps.composethemer.modules.picker)
+            implementation(deps.composethemer.modules.defaultpicker)
 
             implementation(deps.filekit.dialogs.compose)
 
@@ -229,46 +186,23 @@ kotlin {
 
         featureFileSupportMain.dependencies {
 
-            if (buildFilePlugin.useLiveDependencies()) {
+            // Lumberjack
+            api(deps.lumberjack.logger.file)
+            implementation(deps.lumberjack.extension.composeviewer)
 
-                // Lumberjack
-                api(deps.lumberjack.logger.file)
-                implementation(deps.lumberjack.extension.composeviewer)
+            // KotPreferences
+            api(deps.kotpreferences.storage.datastore)
 
-                // KotPreferences
-                api(deps.kotpreferences.storage.datastore)
-
-                // Compose Debug Drawer
-                implementation(deps.composedebugdrawer.plugin.lumberjack )
-
-            } else {
-
-                // Lumberjack
-                api(project(":lumberjack:loggers:lumberjack:file"))
-                implementation(":lumberjack:extensions:composeviewer")
-
-                // KotPreferences
-                api(project(":kotpreferences:modules:storage:datastore"))
-
-                // Compose Debug Drawer
-                implementation(project(":composedebugdrawer:plugins:lumberjack") )
-            }
+            // Compose Debug Drawer
+            implementation(deps.composedebugdrawer.plugin.lumberjack )
 
         }
 
         featureNoFileSupportMain.dependencies {
 
-            if (buildFilePlugin.useLiveDependencies()) {
+            // KotPreferences
+            api(deps.kotpreferences.storage.keyvalue)
 
-                // KotPreferences
-                api(deps.kotpreferences.storage.keyvalue)
-
-            } else {
-
-                // KotPreferences
-                api(project(":kotpreferences:modules:storage:keyvalue"))
-
-            }
         }
 
 
@@ -289,19 +223,9 @@ kotlin {
 
         androidMain.dependencies {
 
-            if (buildFilePlugin.useLiveDependencies()) {
-
-                // Compose Debug Drawer
-                implementation( deps.composedebugdrawer.infos.build)
-                implementation(deps.composedebugdrawer.infos.device )
-
-            } else {
-
-                // Compose Debug Drawer
-                implementation( project(":composedebugdrawer:modules:buildinfos"))
-                implementation(project(":composedebugdrawer:modules:deviceinfos" ))
-
-            }
+            // Compose Debug Drawer
+            implementation( deps.composedebugdrawer.infos.build)
+            implementation(deps.composedebugdrawer.infos.device )
 
         }
 

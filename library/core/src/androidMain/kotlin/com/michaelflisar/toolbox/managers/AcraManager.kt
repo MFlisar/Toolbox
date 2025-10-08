@@ -35,7 +35,7 @@ object AcraManager {
         val enableDebugNotification: Boolean,
         val appendLogFile: Boolean,
         val appIcon: Int,
-        val appName: String,
+        val appName: StringResource,
         val notificationChannelId: String,
         val notificationId: Int = 9999,
         val mail: String,
@@ -60,6 +60,7 @@ object AcraManager {
             ACRA.DEV_LOGGING = true
         }
         try {
+            val appName = runBlocking { getString(setup.appName) }
             app.initAcra {
                 this.buildConfigClass = buildConfigClass
                 reportFormat = StringFormat.KEY_VALUE_LIST
@@ -96,12 +97,12 @@ object AcraManager {
                     mailTo = setup.mail
                     reportFileName = setup.reportFileName
                     reportAsFile = true
-                    subject = getDefaultSubject(app, setup.appName)
+                    subject = getDefaultSubject(app, appName)
                 }
             }
 
             if (!ACRA.isACRASenderServiceProcess()) {
-                ACRA.errorReporter.putCustomData("AppName", setup.appName)
+                ACRA.errorReporter.putCustomData("AppName", appName)
                 ACRA.errorReporter.putCustomData(
                     "Developer",
                     AndroidUtil.isDeveloper(app, isDebugBuild).toString()

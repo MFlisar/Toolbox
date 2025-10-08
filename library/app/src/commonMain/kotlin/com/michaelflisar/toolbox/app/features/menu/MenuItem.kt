@@ -176,3 +176,15 @@ private fun PopupMenuScope.Menu(menuState: MenuState, items: List<MenuItem>) {
         }
     }
 }
+
+fun List<MenuItem>.removeConsecutiveSeparators(): List<MenuItem> {
+    return fold(mutableListOf<MenuItem>()) { acc, item ->
+        if (item is MenuItem.Separator && acc.lastOrNull() is MenuItem.Separator) {
+            acc // überspringen
+        } else {
+            acc.also { it.add(item) }
+        }
+    }
+        .dropWhile { it is MenuItem.Separator }
+        .dropLastWhile { it is MenuItem.Separator }
+}

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pages
-import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -22,8 +21,7 @@ import com.michaelflisar.composethemer.themes.ThemeFlatUIGreensea
 import com.michaelflisar.composethemer.themes.ThemeFlatUIOrange
 import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.CommonApp
-import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
@@ -51,19 +49,20 @@ object PageStatesScreen : NavScreen() {
     @Composable
     override fun provideData() = rememberNavScreenData(
         title = stringResource(Res.string.page_states),
-        subTitle = null,
+        subTitle = "Sub Title",
         icon = Icons.Default.Pages.toIconComposable()
     )
 
     @Composable
-    override fun provideMenu() : List<MenuItem> {
+    override fun provideMenu(): List<MenuItem> {
         return emptyList()
     }
 
     @Composable
     override fun Screen() {
         val navigator = LocalNavigator.currentOrThrow
-        val navigatorScreenModel = navigator.rememberNavigatorScreenModel { PageStatesScreenModel() }
+        val navigatorScreenModel =
+            navigator.rememberNavigatorScreenModel { PageStatesScreenModel() }
         val screenModel = rememberScreenModel { PageStatesScreenModel() }
         Page(navigatorScreenModel, screenModel)
     }
@@ -76,7 +75,7 @@ private fun Page(
     screenModel: PageStatesScreenModel,
     paddingValues: PaddingValues = PaddingValues(0.dp),
 ) {
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val scope = rememberCoroutineScope()
 
     MyColumn(

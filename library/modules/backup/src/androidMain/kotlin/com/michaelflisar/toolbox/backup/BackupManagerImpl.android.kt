@@ -16,6 +16,7 @@ import io.github.vinceglb.filekit.PlatformFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
+import org.jetbrains.compose.resources.getString
 import kotlin.time.ExperimentalTime
 
 actual class BackupManagerImpl actual constructor(
@@ -70,9 +71,9 @@ actual class BackupManagerImpl actual constructor(
         }
     }
 
-    actual fun getAutoBackupFileName( ): String {
+    actual suspend fun getAutoBackupFileName( ): String {
         val backupFileName = BackupDefaults.getDefaultBackupFileName(
-            autoBackupConfig!!.appName,
+            getString(autoBackupConfig!!.appName),
             config.extension,
             true
         )

@@ -35,11 +35,13 @@ import com.michaelflisar.composepreferences.core.PreferenceScreen
 import com.michaelflisar.composepreferences.core.classes.PreferenceSettingsDefaults
 import com.michaelflisar.composepreferences.core.classes.rememberPreferenceState
 import com.michaelflisar.composepreferences.core.styles.ModernStyle
+import com.michaelflisar.composepreferences.core.styles.ModernStyle.Companion.DEFAULT_OUTER_PADDING
 import com.michaelflisar.composepreferences.screen.bool.PreferenceBool
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.App
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.feedback.FeedbackManager
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsThemeContent
@@ -70,7 +72,7 @@ fun DebugDrawer(
     drawerState: DebugDrawerState,
     customContent: @Composable () -> Unit = {}
 ) {
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val scope = rememberCoroutineScope()
     val debugPrefs = setup.debugPrefs
 
@@ -129,7 +131,9 @@ fun DebugDrawer(
             val settings = PreferenceSettingsDefaults.settings(
                 toggleBooleanOnItemClick = true,
                 style = ModernStyle.create(
-                    backgroundColor = Color.Transparent
+                    backgroundColor = Color.Transparent,
+                    outerPadding = PaddingValues(horizontal = 0.dp),
+                    innerPadding = PaddingValues(horizontal = 0.dp, 8.dp)
                 )
             )
             PreferenceScreen(
@@ -266,7 +270,7 @@ fun DebugDrawer(
 @Composable
 private fun DialogSettings(state: DialogState) {
 
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val debugPrefs = setup.debugPrefs
 
     Dialog(

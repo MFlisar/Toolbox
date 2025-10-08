@@ -10,11 +10,11 @@ import com.michaelflisar.toolbox.core.resources.crash_dialog_title
 import com.michaelflisar.toolbox.managers.AcraManager
 import com.michaelflisar.toolbox.utils.AcraUtil
 import kotlinx.coroutines.runBlocking
+import org.jetbrains.compose.resources.StringResource
 
 abstract class AndroidApplication : Application() {
 
     abstract val appIcon: Int
-    abstract val appName: Int
 
     final override fun onCreate() {
 
@@ -29,11 +29,11 @@ abstract class AndroidApplication : Application() {
         AppContext.init(this)
         val setup = createSetup()
         val androidSetup = createAndroidSetup()
-        CommonApp.init(setup)
+        App.init(setup)
         AcraUtil.initAcra(
             this,
             appIcon = appIcon,
-            appName = runBlocking { getString(appName) },
+            appName = setup.name,
             fileLoggerSetup = setup.fileLogger?.setup,
             crash_dialog_text = Res.string.crash_dialog_text,
             crash_dialog_title = Res.string.crash_dialog_title,

@@ -55,11 +55,15 @@ import com.michaelflisar.toolbox.app.features.navigation.INavItem
 import com.michaelflisar.toolbox.app.features.navigation.NavItem
 import com.michaelflisar.toolbox.app.features.navigation.NavItemAction
 import com.michaelflisar.toolbox.app.features.navigation.NavItemDivider
+import com.michaelflisar.toolbox.app.features.navigation.NavItemPopupMenu
 import com.michaelflisar.toolbox.app.features.navigation.NavItemRegion
 import com.michaelflisar.toolbox.app.features.navigation.NavItemSpacer
 import com.michaelflisar.toolbox.extensions.toIconComposable
+import com.michaelflisar.toolbox.feature.menu.MenuState
+import com.michaelflisar.toolbox.feature.menu.PopupMenu
+import com.michaelflisar.toolbox.feature.menu.PopupMenuScope
 
-fun List<INavItem>.toJewelNavigationItems(): List<IJewelNavigationItem> {
+internal fun List<INavItem>.toJewelNavigationItems(): List<IJewelNavigationItem> {
     return map {
         when (it) {
             is NavItem -> {
@@ -75,6 +79,15 @@ fun List<INavItem>.toJewelNavigationItems(): List<IJewelNavigationItem> {
                     title = it.title,
                     icon = it.icon,
                     action = it.action
+                )
+            }
+
+            is NavItemPopupMenu -> {
+                JewelNavigationPopupMenu(
+                    title = it.title,
+                    icon = it.icon,
+                    state = it.state,
+                    content = it.content
                 )
             }
 
@@ -96,30 +109,37 @@ fun List<INavItem>.toJewelNavigationItems(): List<IJewelNavigationItem> {
     }
 }
 
-sealed interface IJewelNavigationItem
+internal sealed interface IJewelNavigationItem
 
-class JewelNavigationItem(
+internal class JewelNavigationItem(
     val title: String,
     val icon: IconComposable?,
     val screen: Screen,
 ) : IJewelNavigationItem
 
-class JewelNavigationAction(
+internal class JewelNavigationAction(
     val title: String,
     val icon: IconComposable?,
     val action: () -> Unit,
 ) : IJewelNavigationItem
 
-class JewelNavigationRegion(
+internal class JewelNavigationPopupMenu(
+    val title: String,
+    val icon: IconComposable? = null,
+    val state: MenuState,
+    val content: @Composable PopupMenuScope.() -> Unit
+) : IJewelNavigationItem
+
+internal class JewelNavigationRegion(
     val title: String,
     val icon: IconComposable? = null,
 ) : IJewelNavigationItem
 
-class JewelNavigationItemSpacer(val weight: Float = 1f) : IJewelNavigationItem
+internal class JewelNavigationItemSpacer(val weight: Float = 1f) : IJewelNavigationItem
 
-data object JewelNavigationItemDivider : IJewelNavigationItem
+internal data object JewelNavigationItemDivider : IJewelNavigationItem
 
-object JewelNavigation {
+internal object JewelNavigation {
     class Setup(
         val showExpand: Boolean = true,
         val minWidth: Dp = 0.dp,
@@ -127,7 +147,7 @@ object JewelNavigation {
 }
 
 @Composable
-fun JewelNavigationContainer(
+internal fun JewelNavigationContainer(
     modifier: Modifier = Modifier,
     navigation: @Composable () -> Unit,
     content: @Composable () -> Unit,
@@ -141,7 +161,7 @@ fun JewelNavigationContainer(
 }
 
 @Composable
-fun JewelNavigation(
+internal fun JewelNavigation(
     items: List<IJewelNavigationItem>,
     selected: (screen: Screen) -> Boolean,
     expanded: MutableState<Boolean> = remember { mutableStateOf(false) },
@@ -174,11 +194,15 @@ private fun Rail(
             items.forEach {
                 when (it) {
                     is JewelNavigationItem -> {
-                        NavItem(it, items, selected, expanded, setup)
+                        NavItem(it, selected, expanded, setup)
                     }
 
                     is JewelNavigationAction -> {
                         NavAction(it, expanded, setup)
+                    }
+
+                    is JewelNavigationPopupMenu -> {
+                        NavPopupMenu(it, expanded, setup)
                     }
 
                     JewelNavigationItemDivider -> {
@@ -231,7 +255,6 @@ private fun NavExpandableItem(
 @Composable
 private fun NavItem(
     item: JewelNavigationItem,
-    items: List<IJewelNavigationItem>,
     selected: (screen: Screen) -> Boolean,
     expanded: MutableState<Boolean>,
     setup: JewelNavigation.Setup,
@@ -263,6 +286,28 @@ private fun NavAction(
         SelectionIndicator(false)
         NavIcon(item.icon)
         NavText(expanded.value, item.title, setup)
+    }
+}
+
+@Composable
+private fun NavPopupMenu(
+    item: JewelNavigationPopupMenu,
+    expanded: MutableState<Boolean>,
+    setup: JewelNavigation.Setup,
+) {
+    NavRow(
+        onClick = {
+            item.state.show()
+        }
+    ) {
+        SelectionIndicator(false)
+        NavIcon(item.icon)
+        NavText(expanded.value, item.title, setup)
+        PopupMenu(
+            state = item.state
+        ) {
+            item.content(this)
+        }
     }
 }
 

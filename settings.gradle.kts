@@ -45,44 +45,36 @@ pluginManagement {
 plugins {
     // version catalogue does not work here!
     // alias(deps.plugins.kmp.gradle.tools.settings.gradle.plugin)
-    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "2.0.5" //apply false
+    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "2.2.3" //apply false
 }
 
-settingsFilePlugin {
-    logging = true
-    includeLibraries = !useLiveDependencies(settings)
-}
-
-// --------------
-// Functions
-// --------------
-
-fun includeModule(path: String, name: String) {
-    include(name)
-    project(name).projectDir = file(path)
-}
+val settingsPlugin = plugins.getPlugin(com.michaelflisar.kmplibrary.SettingsFilePlugin::class.java)
 
 // --------------
 // Modules
 // --------------
 
-// empty folders
-includeModule("library",                            ":toolbox")
-includeModule("library\\modules",                   ":toolbox:modules")
-// modules
-includeModule("library\\core",                      ":toolbox:core")
-includeModule("library\\modules\\table",            ":toolbox:modules:table")
-includeModule("library\\modules\\form",             ":toolbox:modules:form")
-includeModule("library\\modules\\ui",               ":toolbox:modules:ui")
-includeModule("library\\modules\\zip",              ":toolbox:modules:zip")
-includeModule("library\\modules\\backup",           ":toolbox:modules:backup")
-includeModule("library\\modules\\service",          ":toolbox:modules:service")
-includeModule("library\\modules\\csv",              ":toolbox:modules:csv")
-includeModule("library\\modules\\room",             ":toolbox:modules:room")
-includeModule("library\\modules\\ads",              ":toolbox:modules:ads")
-includeModule("library\\modules\\proversion",       ":toolbox:modules:proversion")
+with(settingsPlugin) {
 
-includeModule("library\\app",                       ":toolbox:app")
+    // empty folders
+    includeModule("library", ":toolbox")
+    includeModule("library\\modules", ":toolbox:modules")
+
+    // modules
+    includeModule("library\\core", ":toolbox:core")
+    includeModule("library\\modules\\table", ":toolbox:modules:table")
+    includeModule("library\\modules\\form", ":toolbox:modules:form")
+    includeModule("library\\modules\\ui", ":toolbox:modules:ui")
+    includeModule("library\\modules\\zip", ":toolbox:modules:zip")
+    includeModule("library\\modules\\backup", ":toolbox:modules:backup")
+    includeModule("library\\modules\\service", ":toolbox:modules:service")
+    includeModule("library\\modules\\csv", ":toolbox:modules:csv")
+    includeModule("library\\modules\\room", ":toolbox:modules:room")
+    includeModule("library\\modules\\ads", ":toolbox:modules:ads")
+    includeModule("library\\modules\\proversion", ":toolbox:modules:proversion")
+
+    includeModule("library\\app", ":toolbox:app")
+}
 
 // --------------
 // App

@@ -28,7 +28,8 @@ import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.screen.button.PreferenceButton
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.App
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.filekit.LocalFileKitDialogSettingsState
 import com.michaelflisar.toolbox.backup.BackupDefaults
@@ -53,8 +54,8 @@ import org.jetbrains.compose.resources.stringResource
 fun PreferenceGroupScope.PreferencesBackup(
     formatPath: (String) -> String?,
 ) {
-    val setup = CommonApp.setup
-    val appName = setup.name()
+    val setup = AppSetup.get()
+    val appName = stringResource(setup.name)
     val backupDialog = rememberDialogState<BackupDialog.Mode>(null)
     val autoBackupFrequencyDialog = rememberDialogState()
     val scope = rememberCoroutineScope()

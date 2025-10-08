@@ -1,18 +1,10 @@
 package com.michaelflisar.toolbox.app.jewel
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.window.ApplicationScope
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.app.CommonApp
-import com.michaelflisar.toolbox.app.DesktopApp
-import com.michaelflisar.toolbox.app.features.appstate.AppState
-import com.michaelflisar.toolbox.app.features.appstate.JewelAppState
-import com.michaelflisar.toolbox.app.features.appstate.LocalJewelAppState
+import com.michaelflisar.toolbox.app.AppSetup
+import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
 import org.jetbrains.jewel.intui.standalone.theme.createDefaultTextStyle
 import org.jetbrains.jewel.intui.standalone.theme.createEditorTextStyle
@@ -24,15 +16,13 @@ import org.jetbrains.jewel.intui.window.styling.dark
 import org.jetbrains.jewel.intui.window.styling.light
 import org.jetbrains.jewel.intui.window.styling.lightWithLightHeader
 import org.jetbrains.jewel.ui.ComponentStyling
-import org.jetbrains.jewel.window.DecoratedWindowScope
 import org.jetbrains.jewel.window.styling.TitleBarStyle
 
 @Composable
-fun JewelApp(
+internal fun JewelApp(
     content: @Composable () -> Unit,
 ) {
-    val setup = CommonApp.setup
-    val desktopSetup = DesktopApp.setup
+    val desktopSetup = DesktopAppSetup.get()
 
     val textStyle = org.jetbrains.jewel.foundation.theme.JewelTheme.createDefaultTextStyle()
     val editorStyle = org.jetbrains.jewel.foundation.theme.JewelTheme.createEditorTextStyle()
@@ -57,14 +47,14 @@ fun JewelApp(
             .default()
             .decoratedWindow(
                 titleBarStyle = when (theme) {
-                    JewelTheme.Light -> TitleBarStyle.Companion.light()
-                    JewelTheme.LightWithLightHeader -> TitleBarStyle.Companion.lightWithLightHeader()
-                    JewelTheme.Dark -> TitleBarStyle.Companion.dark()
+                    JewelTheme.Light -> TitleBarStyle.light()
+                    JewelTheme.LightWithLightHeader -> TitleBarStyle.lightWithLightHeader()
+                    JewelTheme.Dark -> TitleBarStyle.dark()
                     JewelTheme.System ->
                         if (theme.isDark()) {
-                            TitleBarStyle.Companion.dark()
+                            TitleBarStyle.dark()
                         } else {
-                            TitleBarStyle.Companion.light()
+                            TitleBarStyle.light()
                         }
                 }
             ),

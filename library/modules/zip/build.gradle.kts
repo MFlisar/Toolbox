@@ -76,11 +76,7 @@ kotlin {
 
             implementation(project(":toolbox:core"))
 
-            if (buildFilePlugin.useLiveDependencies()) {
-                api(deps.lumberjack.core)
-            } else {
-                api(project( ":lumberjack:core"))
-            }
+            api(deps.lumberjack.core)
 
         }
     }

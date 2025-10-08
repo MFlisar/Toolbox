@@ -87,19 +87,9 @@ kotlin {
             // Meine + Libraries
             // ------------------------
 
-            if (buildFilePlugin.useLiveDependencies()) {
-
-                // Toolbox
-                api(deps.toolbox.core)
-                api(deps.toolbox.app)
-
-            } else {
-
-                // Toolbox
-                api(":toolbox:core")
-                api(":toolbox:app")
-
-            }
+            // Toolbox
+            api(deps.toolbox.core)
+            api(deps.toolbox.app)
         }
     }
 }

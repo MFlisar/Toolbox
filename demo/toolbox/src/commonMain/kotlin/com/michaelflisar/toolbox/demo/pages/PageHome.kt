@@ -17,7 +17,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
 import com.michaelflisar.toolbox.app.features.device.CurrentDevice
@@ -82,7 +82,7 @@ private fun Page(
     paddingValues: PaddingValues = PaddingValues(0.dp),
 ) {
     val appState = LocalAppState.current
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val scope = rememberCoroutineScope()
     val drawerState = LocalDebugDrawerState.current
 

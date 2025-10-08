@@ -32,7 +32,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,7 +63,7 @@ import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.backup.ContentPreferencesAsSubPreference
@@ -148,6 +147,7 @@ object AppPreferencesDefaults {
     @Composable
     fun styleDeviceDefault(
         addThemeSettings: Boolean,
+        customPageName: String,
         customContent: @Composable PreferenceGroupScope.() -> Unit,
     ): AppPreferencesStyle {
         return when (CurrentDevice.base) {
@@ -161,7 +161,7 @@ object AppPreferencesDefaults {
                 -> stylePager(
                 addThemeSettings = addThemeSettings,
                 customPages = listOf(
-                    AppPreferencesStyle.Pager.Page("Custom") { customContent() }
+                    AppPreferencesStyle.Pager.Page(customPageName) { customContent() }
                 )
             )
         }
@@ -230,7 +230,7 @@ internal fun SettingsContent(
     buttons: List<SettingsHeaderButtons.Button> = emptyList(),
     style: AppPreferencesStyle,
 ) {
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
 
     val showLogFile = rememberSaveable { mutableStateOf(false) }
     val showAttachLogFile = rememberDialogState()

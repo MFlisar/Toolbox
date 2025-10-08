@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -35,11 +34,10 @@ import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.core.SettingsModel
 import com.michaelflisar.kotpreferences.core.interfaces.Storage
 import com.michaelflisar.parcelize.Parcelize
+import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.app.features.preferences.Preferences
-import com.michaelflisar.toolbox.app.features.preferences.createStorage
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
@@ -68,7 +66,7 @@ object PageTestPreferences : NavScreen() {
 private fun Page(
     paddingValues: PaddingValues = PaddingValues(0.dp),
 ) {
-    val prefs = Prefs.INSTANCE
+    val prefs = TestPrefs.get()
 
     val style = ModernStyle.create()
     val settings =
@@ -205,13 +203,12 @@ private fun Page(
     }
 }
 
-class Prefs(storage: Storage) : SettingsModel(storage) {
+class TestPrefs(storage: Storage) : SettingsModel(storage) {
 
     companion object {
-        val INSTANCE: Prefs by lazy {
-            Prefs(Preferences.createStorage("tests"))
-        }
+        fun get() = App.requireSingleton<TestPrefs>()
     }
+
     val bool by boolPref()
     val color by intPref()
     val date by intPref()

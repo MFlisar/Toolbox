@@ -131,99 +131,50 @@ kotlin {
             // tests
             // ------------------------
 
-            if (buildFilePlugin.useLiveDependencies()) {
+            // KotPreferences
+            implementation(deps.kotpreferences.core)
+            implementation(deps.kotpreferences.extension.compose)
 
-                // KotPreferences
-                implementation(deps.kotpreferences.core)
-                implementation(deps.kotpreferences.extension.compose)
+            // Compose Dialogs
+            implementation(deps.composedialogs.core)
+            implementation(deps.composedialogs.dialog.color)
+            implementation(deps.composedialogs.dialog.date)
+            implementation(deps.composedialogs.dialog.time)
+            implementation(deps.composedialogs.dialog.info)
+            implementation(deps.composedialogs.dialog.progress)
+            implementation(deps.composedialogs.dialog.input)
+            implementation(deps.composedialogs.dialog.number)
+            implementation(deps.composedialogs.dialog.list)
+            implementation(deps.composedialogs.dialog.menu)
+            implementation(deps.composedialogs.dialog.frequency)
 
-                // Compose Dialogs
-                implementation(deps.composedialogs.core)
-                implementation(deps.composedialogs.dialog.color)
-                implementation(deps.composedialogs.dialog.date)
-                implementation(deps.composedialogs.dialog.time)
-                implementation(deps.composedialogs.dialog.info)
-                implementation(deps.composedialogs.dialog.progress)
-                implementation(deps.composedialogs.dialog.input)
-                implementation(deps.composedialogs.dialog.number)
-                implementation(deps.composedialogs.dialog.list)
-                implementation(deps.composedialogs.dialog.menu)
-                implementation(deps.composedialogs.dialog.frequency)
+            // Compose Preferences
+            implementation(deps.composepreferences.core)
+            implementation(deps.composepreferences.screen.bool)
+            implementation(deps.composepreferences.screen.button)
+            implementation(deps.composepreferences.screen.input)
+            implementation(deps.composepreferences.screen.color)
+            implementation(deps.composepreferences.screen.date)
+            implementation(deps.composepreferences.screen.time)
+            implementation(deps.composepreferences.screen.list)
+            implementation(deps.composepreferences.screen.number)
+            implementation(deps.composepreferences.kotpreferences)
 
-                // Compose Preferences
-                implementation(deps.composepreferences.core)
-                implementation(deps.composepreferences.screen.bool)
-                implementation(deps.composepreferences.screen.button)
-                implementation(deps.composepreferences.screen.input)
-                implementation(deps.composepreferences.screen.color)
-                implementation(deps.composepreferences.screen.date)
-                implementation(deps.composepreferences.screen.time)
-                implementation(deps.composepreferences.screen.list)
-                implementation(deps.composepreferences.screen.number)
-                implementation(deps.composepreferences.kotpreferences)
-
-                // Compose Themer
-                implementation(deps.composethemer.themes.flatui)
-                implementation(deps.composethemer.themes.metro)
-                implementation(deps.composethemer.themes.material500)
-
-            } else {
-
-                // KotPreferences
-                implementation(project(":kotpreferences:core"))
-                implementation(project(":kotpreferences:modules:compose"))
-
-                // Compose Dialogs
-                implementation(project(":composedialogs:core"))
-                implementation(project(":composedialogs:modules:color"))
-                implementation(project(":composedialogs:modules:date"))
-                implementation(project(":composedialogs:modules:time"))
-                implementation(project(":composedialogs:modules:info"))
-                implementation(project(":composedialogs:modules:progress"))
-                implementation(project(":composedialogs:modules:input"))
-                implementation(project(":composedialogs:modules:number"))
-                implementation(project(":composedialogs:modules:list"))
-                implementation(project(":composedialogs:modules:menu"))
-                implementation(project(":composedialogs:modules:frequency"))
-
-                // Compose Preferences
-                implementation(project(":composepreferences:core"))
-                implementation(project(":composepreferences:modules:screen:bool"))
-                implementation(project(":composepreferences:modules:screen:button"))
-                implementation(project(":composepreferences:modules:screen:input"))
-                implementation(project(":composepreferences:modules:screen:color"))
-                implementation(project(":composepreferences:modules:screen:date"))
-                implementation(project(":composepreferences:modules:screen:time"))
-                implementation(project(":composepreferences:modules:screen:list"))
-                implementation(project(":composepreferences:modules:screen:number"))
-                implementation(project(":composepreferences:modules:kotpreferences"))
-
-                // Compose Themer
-                implementation(project(":composethemer:modules:themes:flatui"))
-                implementation(project(":composethemer:modules:themes:metro"))
-                implementation(project(":composethemer:modules:themes:material500"))
-
-            }
-
+            // Compose Themer
+            implementation(deps.composethemer.themes.flatui)
+            implementation(deps.composethemer.themes.metro)
+            implementation(deps.composethemer.themes.material500)
 
         }
 
         featureFileSupportMain.dependencies {
 
-            if (buildFilePlugin.useLiveDependencies()) {
-                implementation(deps.kotpreferences.storage.datastore)
-            } else {
-                implementation(project(":kotpreferences:modules:storage:datastore"))
-            }
+            implementation(deps.kotpreferences.storage.datastore)
 
         }
         featureNoFileSupportMain.dependencies {
 
-            if (buildFilePlugin.useLiveDependencies()) {
-                implementation(deps.kotpreferences.storage.keyvalue)
-            } else {
-                implementation(project(":kotpreferences:modules:storage:keyvalue"))
-            }
+            implementation(deps.kotpreferences.storage.keyvalue)
 
         }
 

@@ -3,14 +3,11 @@ package com.michaelflisar.toolbox.app.features.root
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.composedebugdrawer.core.rememberDebugDrawerState
-import com.michaelflisar.composethemer.ComposeTheme
-import com.michaelflisar.kotpreferences.compose.collectAsState
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.App
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
@@ -26,7 +23,7 @@ fun RootLocalProvider(
         return
     }
 
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
 
     val stateInitiallyExpandedIds = remember { mutableStateOf<List<String>?>(null) }
     LaunchedEffect(stateInitiallyExpandedIds.value) {

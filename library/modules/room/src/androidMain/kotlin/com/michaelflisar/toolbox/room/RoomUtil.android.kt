@@ -5,12 +5,12 @@ import androidx.room.RoomDatabase
 import com.michaelflisar.toolbox.AppContext
 import kotlin.apply
 
-actual inline fun <reified DB : RoomDatabase> RoomUtil.createDatabaseBuilder(
-    databasePath: String,
-    noinline apply: RoomDatabase.Builder<DB>.() -> Unit,
+inline fun <reified DB : RoomDatabase> RoomUtil.createDatabaseBuilder(
+    fileName: String = DEFAULT_DB_FILE,
+    noinline apply: RoomDatabase.Builder<DB>.() -> Unit = {}
 ): RoomDatabase.Builder<DB> {
     val appContext = AppContext.context()
-    val dbFile = appContext.getDatabasePath(databasePath)
+    val dbFile = appContext.getDatabasePath(fileName)
     return Room.databaseBuilder<DB>(
         context = appContext,
         name = dbFile.absolutePath

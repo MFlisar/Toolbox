@@ -6,9 +6,6 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 
-actual val Platform.fileLogger: FileLogger<*>?
-    get() = null
-
 actual val Platform.restart: ((context: PlatformContext) -> Unit)?
     get() = null
 

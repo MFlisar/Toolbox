@@ -15,7 +15,8 @@ import com.michaelflisar.composethemer.isSystemContrastSupported
 import com.michaelflisar.composethemer.picker.rememberMultiLevelThemePicker
 import com.michaelflisar.composethemer.picker.rememberThemePicker
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
-import com.michaelflisar.toolbox.app.CommonApp
+import com.michaelflisar.toolbox.app.App
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.preferences.singles.PrefContrast
 import com.michaelflisar.toolbox.app.features.preferences.singles.PrefDarkLight
 import com.michaelflisar.toolbox.app.features.preferences.singles.PrefDynamicTheme
@@ -30,7 +31,7 @@ import org.jetbrains.compose.resources.stringResource
 fun PreferenceGroupScope.PreferenceSettingsTheme(
     wrapInSection: Boolean,
 ) {
-    val themeSupport = CommonApp.setup.themeSupport
+    val themeSupport = AppSetup.get().themeSupport
     if (themeSupport.supportsTheming()) {
         if (wrapInSection) {
             PreferenceSection(
@@ -46,7 +47,7 @@ fun PreferenceGroupScope.PreferenceSettingsTheme(
 
 @Composable
 fun PreferenceSectionScope.PreferenceSettingsTheme() {
-    val themeSupport = CommonApp.setup.themeSupport
+    val themeSupport = AppSetup.get().themeSupport
     if (themeSupport.supportsTheming()) {
         PreferenceSettingsThemeSubScreen()
     }
@@ -55,7 +56,7 @@ fun PreferenceSectionScope.PreferenceSettingsTheme() {
 @Composable
 private fun PreferenceScope.PreferenceSettingsThemeSubScreen() {
 
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val themeSupport = setup.themeSupport
 
     if (!themeSupport.supportsTheming()) {
@@ -79,7 +80,7 @@ fun PreferenceScope.PreferenceSettingsThemeContent(
     compact: Boolean
 ) {
 
-    val setup = CommonApp.setup
+    val setup = AppSetup.get()
     val themeSupport = setup.themeSupport
     val supportCustomTheme = themeSupport.supportsCustomThemes() && themeSupport.supportThemeSelector
 
