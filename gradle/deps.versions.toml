@@ -4,7 +4,7 @@
 cachefileprovider = 		"1.0.0"
 feedback = 		    		"3.0.0"
 kotbilling =        		"2.0.0"
-kotpreferences =        	"2.0.0"
+kotpreferences =        	"2.0.1"
 lumberjack =                "9.0.0"
 composedebugdrawer =		"2.0.0"
 composedialogs =   		    "3.0.5"
