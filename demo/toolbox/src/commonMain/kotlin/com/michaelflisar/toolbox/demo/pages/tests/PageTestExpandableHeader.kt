@@ -56,9 +56,9 @@ private fun Page(
             .background(Color.Blue)
             .padding(all = 16.dp)
             .fillMaxSize(),
-        header = { modifier ->
+        header = {
             Column(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.Red)
             ) {
@@ -67,18 +67,18 @@ private fun Page(
                 Text("Header 3")
             }
         },
-        stickyHeader = { modifier ->
+        stickyHeader = {
             Column(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.DarkGray)
             ) {
                 Text("Sticky Header 1")
             }
         }
-    ) { modifier ->
+    ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
                 .background(Color.Green)

@@ -68,13 +68,15 @@ object MyDropdownDefaults {
                         text = title,
                         style = style1,
                         fontWeight = FontWeight.Bold,
-                        color = labelColor
+                        color = labelColor,
+                        maxLines = 1
                     )
                 }
                 Text(
                     text = text,
                     style = style2,
-                    color = color
+                    color = color,
+                    maxLines = 1
                 )
             }
         }
@@ -132,7 +134,7 @@ fun <T> MyDropdown(
     selected: MutableState<T>,
     modifier: Modifier = Modifier,
     title: String = "",
-    mapper: (item: T, dropdown: Boolean) -> String,
+    mapper: @Composable (item: T, dropdown: Boolean) -> String,
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
@@ -147,17 +149,13 @@ fun <T> MyDropdown(
     onSelectionChanged: ((T) -> Unit)? = null,
 ) {
     val selectedIndex = items.indexOf(selected.value)
-    val dropdownItems by remember(items) {
-        derivedStateOf {
-            items.mapIndexed { index, item ->
-                MyDropdown.Item(
-                    mapper(item, false),
-                    index,
-                    mapper(item, false),
-                    mapper(item, true)
-                )
-            }
-        }
+    val dropdownItems = items.mapIndexed { index, item ->
+        MyDropdown.Item(
+            mapper(item, false),
+            index,
+            mapper(item, false),
+            mapper(item, true)
+        )
     }
     val dropdownFilter by remember(items, filter) {
         derivedStateOf {
@@ -208,7 +206,7 @@ fun <T> MyDropdown(
     selected: T,
     modifier: Modifier = Modifier,
     title: String = "",
-    mapper: (item: T, dropdown: Boolean) -> String,
+    mapper: @Composable (item: T, dropdown: Boolean) -> String,
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
@@ -223,17 +221,13 @@ fun <T> MyDropdown(
     onSelectionChanged: ((T) -> Unit)? = null,
 ) {
     val selectedIndex = items.indexOf(selected)
-    val dropdownItems by remember(items) {
-        derivedStateOf {
-            items.mapIndexed { index, item ->
-                MyDropdown.Item(
-                    mapper(item, false),
-                    index,
-                    mapper(item, false),
-                    mapper(item, true)
-                )
-            }
-        }
+    val dropdownItems = items.mapIndexed { index, item ->
+        MyDropdown.Item(
+            mapper(item, false),
+            index,
+            mapper(item, false),
+            mapper(item, true)
+        )
     }
     val dropdownFilter by remember(items, filter) {
         derivedStateOf {

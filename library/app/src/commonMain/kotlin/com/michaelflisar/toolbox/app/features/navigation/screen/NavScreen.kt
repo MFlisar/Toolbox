@@ -9,6 +9,7 @@ import com.michaelflisar.toolbox.app.features.device.BaseDevice
 import com.michaelflisar.toolbox.app.features.device.CurrentDevice
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.toolbar.DesktopPage
+import com.michaelflisar.toolbox.app.features.toolbar.LocalDesktopToolbarProvider
 
 class NavScreenBackPressHandler(
     val canHandle: @Composable () -> Boolean,
@@ -28,8 +29,9 @@ abstract class NavScreen : INavScreen {
             }
 
             BaseDevice.Desktop -> {
+                val toolbarContentProvider = LocalDesktopToolbarProvider.current
                 DesktopPage(
-                    screen = this
+                    toolbar = {  toolbarContentProvider(this) }
                 ) {
                     Screen()
                 }
@@ -56,7 +58,7 @@ class NavScreenData internal constructor(
 @Composable
 fun rememberNavScreenData(
     title: String,
-    subTitle: String?,
+    subTitle: String? = null,
     icon: IconComposable? = null,
 ): State<NavScreenData> {
     return remember(title, subTitle, icon) {

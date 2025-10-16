@@ -2,57 +2,66 @@ package com.michaelflisar.helloworld
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.kotpreferences.storage.keyvalue.LocalStorageKeyValueStorage
 import com.michaelflisar.toolbox.app.WasmApp
-import com.michaelflisar.toolbox.app.WasmAppContent
+import com.michaelflisar.toolbox.app.WasmAppDefaults
+import com.michaelflisar.toolbox.app.WasmApplication
+import com.michaelflisar.toolbox.app.WasmScaffold
 import com.michaelflisar.toolbox.app.WasmToolbar
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.classes.WasmAppSetup
-import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
-import com.michaelflisar.toolbox.app.features.navigation.NavigationUtil
-import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
-import com.michaelflisar.toolbox.app.features.preferences.Preferences
-import com.michaelflisar.toolbox.app.features.preferences.createStorage
+import com.michaelflisar.toolbox.app.debug.DebugPrefs
+import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeTransition
 
 @OptIn(ExperimentalComposeUiApi::class)
 suspend fun main() {
-    val prefs = BasePrefs(Preferences.createStorage("settings"))
-    val setup = SharedDefinitions.createBaseAppSetup(
-        prefs = prefs,
-        debugStorage = Preferences.createStorage("debug"),
-        backupSupport = null, // no backup support in wasm
-        isDebugBuild = true // TODO: how to detect in wasm?
+
+    // 1) Storages erstellen
+    val storageSettings = LocalStorageKeyValueStorage.create(key = "settings")
+    val storageDebug = LocalStorageKeyValueStorage.create(key = "debug")
+
+    // 2) Setups erstellen
+    val setup = Shared.createBaseAppSetup(
+        prefs = Prefs(storageSettings),
+        debugPrefs = DebugPrefs(storageDebug),
+        isDebugBuild = true, // TODO: how to detect in wasm?
+        fileLogger = null
     )
-    // TODO HELLO WORLD
-    // title anpassen
     val wasmSetup = WasmAppSetup(
         title = "Hello World"
     )
+    WasmApp.init(
+        setup = setup
+    )
 
-    SharedDefinitions.update(PlatformContext.NONE, setup)
+    // 3) App Data ggf. updaten
+    Shared.init(PlatformContext.NONE, setup)
 
+    // 4) Application
     CanvasBasedWindow(wasmSetup.title, canvasElementId = wasmSetup.canvasElementId) {
-        AppNavigator(
-            screen = SharedDefinitions.defaultPage
+
+        WasmApplication(
+            screen = Shared.page1,
+            wasmSetup = wasmSetup
         ) { navigator ->
-            WasmApp(
-                setup = setup,
-                wasmSetup = wasmSetup,
-                navigator = navigator
-            ) {
-                // theme + root (drawer state, app state) are available
-                WasmAppContent(
-                    toolbar = {
-                        WasmToolbar(
-                            navigationItems = {
-                                NavigationUtil.getWebNavigationItems(
-                                    SharedDefinitions
-                                )
-                            },
-                            menuItems = { NavigationUtil.getWebMenuItems(SharedDefinitions) }
+
+            // theme + root (drawer state, app state) are available
+            val navigator = LocalNavigator.currentOrThrow
+            WasmScaffold(
+                topBar = {
+                    WasmToolbar(
+                        navigationItems = Shared.pages.map { it.toNavItem() },
+                        menuItems = WasmAppDefaults.getWebMenuItems(
+                            pageSettings = Shared.pageSettings
                         )
-                    }
-                )
+                    )
+                },
+            ) {
+                AppNavigatorFadeTransition(navigator)
             }
         }
     }
 }
+

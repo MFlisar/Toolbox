@@ -50,7 +50,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.toolbox.IconComposable
-import com.michaelflisar.toolbox.extensions.Render
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
 import com.michaelflisar.toolbox.app.features.navigation.NavItem
 import com.michaelflisar.toolbox.app.features.navigation.NavItemAction
@@ -58,6 +57,7 @@ import com.michaelflisar.toolbox.app.features.navigation.NavItemDivider
 import com.michaelflisar.toolbox.app.features.navigation.NavItemPopupMenu
 import com.michaelflisar.toolbox.app.features.navigation.NavItemRegion
 import com.michaelflisar.toolbox.app.features.navigation.NavItemSpacer
+import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.menu.MenuState
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
@@ -164,20 +164,24 @@ internal fun JewelNavigationContainer(
 internal fun JewelNavigation(
     items: List<IJewelNavigationItem>,
     selected: (screen: Screen) -> Boolean,
+    modifier: Modifier = Modifier,
     expanded: MutableState<Boolean> = remember { mutableStateOf(false) },
     setup: JewelNavigation.Setup = JewelNavigation.Setup(),
 ) {
-    Rail(items, selected, expanded, setup)
+    Rail(modifier, items, selected, expanded, setup)
 }
 
 @Composable
 private fun Rail(
+    modifier: Modifier,
     items: List<IJewelNavigationItem>,
     selected: (screen: Screen) -> Boolean,
     expanded: MutableState<Boolean>,
     setup: JewelNavigation.Setup,
 ) {
-    Row {
+    Row(
+        modifier = modifier
+    ) {
         Column(
             modifier = Modifier.fillMaxHeight()
                 .wrapContentWidth()
@@ -377,7 +381,7 @@ private fun NavIcon(
         return
     }
     Box(modifier = modifier.size(28.dp).padding(4.dp)) {
-        icon.Render()
+        Icon(icon)
     }
 }
 

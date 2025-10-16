@@ -30,7 +30,7 @@ import com.michaelflisar.toolbox.app.features.navigation.NavItemAction
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.toolbar.onToolbar
 import com.michaelflisar.toolbox.app.features.toolbar.toolbar
-import com.michaelflisar.toolbox.extensions.Render
+import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.extensions.isDark
 
 sealed class ActionItem {
@@ -106,7 +106,9 @@ sealed class ActionItem {
                 Dialog(
                     state = state,
                     title = { Text(title) },
-                    icon = icon?.takeIf { !hideIconInDialog }?.let { { it.Render() } },
+                    icon = icon?.takeIf { !hideIconInDialog }?.let { {
+                        Icon(it)
+                    } },
                     style = style,
                     buttons = DialogDefaults.buttonsDisabled()
                 ) {

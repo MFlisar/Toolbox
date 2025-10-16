@@ -2,25 +2,27 @@ package com.michaelflisar.toolbox.app.features.toolbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.State
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,11 +32,22 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.ToolboxLogging
+import com.michaelflisar.toolbox.app.features.menu.Menu
+import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
-import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreenData
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.logIf
+
+typealias DesktopToolbarProvider = @Composable (screen: NavScreen) -> Unit
+internal val LocalDesktopToolbarProvider = compositionLocalOf<DesktopToolbarProvider> { throw IllegalStateException("No DesktopToolbarProvider provided") }
+
+object DesktopToolbar {
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    val height = TopAppBarDefaults.TopAppBarExpandedHeight
+
+}
 
 interface IDesktopToolbarContentProvider {
     @Composable
@@ -42,9 +55,8 @@ interface IDesktopToolbarContentProvider {
 }
 
 @Composable
-fun DesktopPage(
-    screen: NavScreen,
-    toolbar: @Composable () -> Unit = { DesktopToolbar(screen) },
+internal fun DesktopPage(
+    toolbar: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
     Column {
@@ -61,7 +73,8 @@ fun DesktopPage(
 
 @Composable
 fun DesktopToolbar(
-    screen: NavScreen
+    screen: NavScreen,
+    menuItems: List<MenuItem> = emptyList(),
 ) {
     val navigator = LocalNavigator.currentOrThrow
     val isBackPressHandled = NavBackHandler.canHandleBackPress()
@@ -77,6 +90,7 @@ fun DesktopToolbar(
     }
     DesktopToolbar(
         screen = screen,
+        menuItems = menuItems,
         showBackButton = canPop || customBackHandlerPressCanHandleBackPress,
         onBack = {
             if (isBackPressHandled) {
@@ -90,11 +104,13 @@ fun DesktopToolbar(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DesktopToolbar(
     screen: NavScreen,
     modifier: Modifier = Modifier,
     showBackButton: Boolean = false,
+    menuItems: List<MenuItem> = emptyList(),
     onBack: () -> Unit = {}
 ) {
     val navigator = LocalNavigator.currentOrThrow
@@ -107,6 +123,7 @@ private fun DesktopToolbar(
         Box(
             modifier = modifier
                 .fillMaxWidth()
+                .height(DesktopToolbar.height)
                 .background(MaterialTheme.colorScheme.toolbar),
             contentAlignment = Alignment.CenterStart
         ) {
@@ -117,11 +134,17 @@ private fun DesktopToolbar(
                         .padding(horizontal = 8.dp)
                 ) {
                     ToolbarBackButton(
-                        showBackButton,
+                        showBackButton = showBackButton,
                         onClick = onBack,
                         modifier = Modifier.padding(start = 8.dp)
                     )
-                    ToolbarTitle(toolbarData, modifier = Modifier.weight(1f).heightIn(min = 56.dp))
+                    ToolbarTitle(
+                        toolbarData = toolbarData,
+                        modifier = Modifier.weight(1f).heightIn(min = DesktopToolbar.height),
+                        endContent = {
+                            Menu(menuItems)
+                        }
+                    )
                     screen.ToolbarContent()
                 }
             } else {
@@ -129,11 +152,14 @@ private fun DesktopToolbar(
                     toolbarData = toolbarData,
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .heightIn(min = 56.dp)
-                        .padding(start = 56.dp, end = 56.dp)
+                        .heightIn(min = DesktopToolbar.height)
+                        .padding(start = 56.dp, end = 56.dp),
+                    endContent = {
+                        Menu(menuItems)
+                    }
                 )
                 ToolbarBackButton(
-                    showBackButton,
+                    showBackButton = showBackButton,
                     onClick = onBack,
                     modifier = Modifier.padding(start = 8.dp)
                 )
@@ -168,25 +194,3 @@ internal fun ToolbarBackButton(
     }
 }
 
-@Composable
-internal fun ToolbarTitle(
-    toolbarData: State<NavScreenData>,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = toolbarData.value.title,
-            style = MaterialTheme.typography.titleMedium
-        )
-        toolbarData.value.subTitle?.let {
-            Text(
-                text = it,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-    }
-}

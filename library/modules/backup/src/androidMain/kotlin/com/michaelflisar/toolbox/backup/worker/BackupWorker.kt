@@ -11,6 +11,7 @@ import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
 import com.michaelflisar.toolbox.service.BaseWorker
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
+import io.github.vinceglb.filekit.AndroidFile
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.div
 import io.github.vinceglb.filekit.fromBookmarkData
@@ -93,8 +94,27 @@ class BackupWorker internal constructor(
             .map { BackupServiceUtil.JSON.decodeFromString<JavaZipFileContent>(it) }
         val backupFolderData = inputData.getByteArray(KEY_BACKUP_FOLDER_DATA)!!
         val backupFolder = PlatformFile.fromBookmarkData(backupFolderData)
+
+        // TODO:
         val backupFileName = manager.getAutoBackupFileName()
-        val backupFile = backupFolder / backupFileName
+        val backupFile = try {
+            backupFolder / backupFileName
+        } catch (e: Exception) {
+            L.e(e)
+            return e
+        }
+
+        // Android Solution
+        // val backupFile = when (val af = backupFolder.androidFile) {
+        //     is AndroidFile.FileWrapper -> backupFolder / backupFileName
+        //     is AndroidFile.UriWrapper -> {
+        //         val folder = DocumentFile.fromTreeUri(context, af.uri)
+        //         val newFile = folder.createFile(mimeType, backupFileName)
+        //         val androidFileWrapper = AndroidFile.UriWrapper(newFile.getUri())
+        //         PlatformFile(androidFileWrapper)
+        //     }
+        // }
+
         val throwable = try {
             manager.backup(files, backupFile)
         } catch (e: Exception) {

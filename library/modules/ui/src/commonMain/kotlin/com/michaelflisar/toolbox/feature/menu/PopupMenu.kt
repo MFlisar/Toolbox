@@ -52,7 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.round
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.components.MyTooltipBox
-import com.michaelflisar.toolbox.extensions.Render
+import com.michaelflisar.toolbox.extensions.Icon
 
 @LayoutScopeMarker
 @Immutable
@@ -256,7 +256,7 @@ fun PopupMenuScope.MenuItem(
                 modifier = modifier(),
                 text = text,
                 enabled = enabled,
-                leadingIcon = icon?.let { { it.Render() } },
+                leadingIcon = icon?.let { { Icon(it) } },
                 trailingIcon = endIcon,
                 onClick = {
                     onClick()
@@ -339,7 +339,7 @@ fun PopupMenuScope.MenuCheckbox(
                 }
             },
             enabled = enabled,
-            leadingIcon = icon?.let { { it.Render() } },
+            leadingIcon = icon?.let { { Icon(it) } },
             trailingIcon = null,
             onClick = {
                 onCheckChange(!checked)
@@ -451,7 +451,7 @@ fun PopupMenuScope.MenuSubMenu(
                 modifier = modifier(),
                 text = { Text(text, color = textColor ?: Color.Unspecified) },
                 enabled = enabled,
-                leadingIcon = icon?.let { { it.Render() } },
+                leadingIcon = icon?.let { { Icon(it) } },
                 onClick = {
                     state.open(index.value)
                 },

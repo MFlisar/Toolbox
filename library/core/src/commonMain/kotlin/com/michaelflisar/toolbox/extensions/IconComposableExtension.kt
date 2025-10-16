@@ -13,27 +13,46 @@ import org.jetbrains.compose.resources.painterResource
 
 fun ImageVector.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
     return this.let {
-        @Composable { contentDescription, modifier, tint2 -> Icon(imageVector = this, contentDescription = contentDescription, modifier = modifier, tint = tint.takeIf { it != Color.Unspecified } ?: tint2) }
+        @Composable { contentDescription, modifier, tint2 ->
+            Icon(
+                imageVector = this,
+                contentDescription = contentDescription,
+                modifier = modifier,
+                tint = tint.takeIf { it != Color.Unspecified } ?: tint2)
+        }
     }
 }
 
 fun Painter.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
     return this.let {
-        @Composable { contentDescription, modifier, tint2 -> Icon(this, contentDescription = contentDescription, modifier = modifier, tint = tint.takeIf { it != Color.Unspecified } ?: tint2) }
+        @Composable { contentDescription, modifier, tint2 ->
+            Icon(
+                this,
+                contentDescription = contentDescription,
+                modifier = modifier,
+                tint = tint.takeIf { it != Color.Unspecified } ?: tint2)
+        }
     }
 }
 
 fun DrawableResource.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
     return this.let {
-        @Composable { contentDescription, modifier, tint2 -> Icon(painterResource(this), contentDescription = contentDescription, modifier = modifier, tint = tint.takeIf { it != Color.Unspecified } ?: tint2) }
+        @Composable { contentDescription, modifier, tint2 ->
+            Icon(
+                painterResource(this),
+                contentDescription = contentDescription,
+                modifier = modifier,
+                tint = tint.takeIf { it != Color.Unspecified } ?: tint2)
+        }
     }
 }
 
 @Composable
-fun IconComposable.Render(
+fun Icon(
+    icon: IconComposable,
     contentDescription: String? = null,
     modifier: Modifier = Modifier,
     tint: Color = LocalContentColor.current
 ) {
-    this.invoke(contentDescription, modifier, tint)
+    icon.invoke(contentDescription, modifier, tint)
 }

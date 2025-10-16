@@ -10,11 +10,14 @@ import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.navigator.OnBackPressed
 import cafe.adriel.voyager.transitions.FadeTransition
 import cafe.adriel.voyager.transitions.SlideTransition
+import com.michaelflisar.toolbox.app.features.toolbar.selection.ResetSelectionToolbarOnScreenChange
 
 @Composable
 fun AppNavigator(
     screen: Screen,
-    disposeBehavior: NavigatorDisposeBehavior = NavigatorDisposeBehavior(disposeSteps = false),
+    disposeBehavior: NavigatorDisposeBehavior = NavigatorDisposeBehavior(
+        disposeSteps = false
+    ),
     onBackPressed: OnBackPressed = { screen ->
         // does not work reliable (windows + esc key e.g.) => I use the BackHandler instead
         false
@@ -26,6 +29,7 @@ fun AppNavigator(
         disposeBehavior = disposeBehavior,
         onBackPressed = onBackPressed
     ) { navigator ->
+        ResetSelectionToolbarOnScreenChange()
         content(navigator)
     }
 }

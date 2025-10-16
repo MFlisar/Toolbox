@@ -22,26 +22,25 @@ import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.dialogs.LocalErrorDialogState
 import com.michaelflisar.toolbox.app.features.dialogs.show
-import com.michaelflisar.toolbox.app.features.menu.Menu
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeTransition
-import com.michaelflisar.toolbox.app.features.navigation.NavItemAction
 import com.michaelflisar.toolbox.app.features.navigation.NavItemPopupMenu
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.app.features.scaffold.NavigationStyle
 import com.michaelflisar.toolbox.app.features.scaffold.rememberNavigationStyleAuto
+import com.michaelflisar.toolbox.app.features.toolbar.DesktopToolbar
+import com.michaelflisar.toolbox.app.features.toolbar.selection.AnimatedSelectionToolbarWrapper
+import com.michaelflisar.toolbox.app.features.toolbar.selection.SelectionToolbar
 import com.michaelflisar.toolbox.app.utils.createFileLogger
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_more
 import com.michaelflisar.toolbox.demo.pages.tests.TestPrefs
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.feature.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 import com.michaelflisar.toolbox.feature.menu.rememberMenuState
 import com.michaelflisar.toolbox.utils.JvmFolderUtil
 import com.michaelflisar.toolbox.utils.JvmUtil
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.jewel.ui.component.Text
 
 fun main() {
 
@@ -104,7 +103,7 @@ fun main() {
                     val menu = rememberMenuState()
                     DesktopNavigation(
                         navigationStyle = navigationStyle,
-                        items = Shared.pages.map { it.toNavItem() },
+                        items = { Shared.pages.map { it.toNavItem() } },
                         additionalItems = {
                             when (it) {
                                 NavigationStyle.Left -> listOf(Shared.pageSettings.toNavItem())
@@ -121,7 +120,19 @@ fun main() {
                                 )
                             }
                         },
-                        alwaysShowBottomLabel = false
+                        alwaysShowBottomLabel = false,
+                        showAdditionalItemsAtBottomIfRail = true,
+                    )
+                },
+                contentToolbar = { screen ->
+                    AnimatedSelectionToolbarWrapper(
+                        toolbar = {
+                            DesktopToolbar(
+                                screen = screen,
+                                menuItems = emptyList()
+                            )
+                        },
+                        selectionToolbar = { SelectionToolbar() }
                     )
                 }
             ) {

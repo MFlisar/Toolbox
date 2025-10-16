@@ -55,7 +55,7 @@ object CollapsibleHeader {
 class CollapsibleHeaderState(
     val headerHeight: MutableState<CollapsibleHeader.Height>,
     val stickyHeaderHeight: MutableState<CollapsibleHeader.Height>,
-    val headerOffset: MutableState<CollapsibleHeader.Offset>
+    val headerOffset: MutableState<CollapsibleHeader.Offset>,
 )
 
 @Composable
@@ -68,11 +68,10 @@ fun rememberCollapsibleHeaderState() = CollapsibleHeaderState(
 @Composable
 fun CollapsibleHeader(
     modifier: Modifier,
-    headerModifier: Modifier = Modifier,
     state: CollapsibleHeaderState = rememberCollapsibleHeaderState(),
-    header: @Composable (modifier: Modifier) -> Unit,
-    stickyHeader: (@Composable (modifier: Modifier) -> Unit)? = null,
-    content: @Composable (modifier: Modifier) -> Unit
+    header: @Composable () -> Unit,
+    stickyHeader: (@Composable () -> Unit)? = null,
+    content: @Composable () -> Unit,
 ) {
 
     val density = LocalDensity.current
@@ -86,10 +85,7 @@ fun CollapsibleHeader(
                 return if (state.headerOffset.value.pxFloat != newOffsetFloatValue) {
                     val oldOffset = state.headerOffset.value.pxFloat
                     val offset = newOffset.coerceIn(-state.headerHeight.value.pxFloat, 0f)
-                    state.headerOffset.value = CollapsibleHeader.Offset(
-                        offset,
-                        //with(density) { offset.toDp() }
-                    )
+                    state.headerOffset.value = CollapsibleHeader.Offset(offset)
                     Offset(0f, newOffsetFloatValue - oldOffset)
                 } else Offset.Zero
             }
@@ -104,30 +100,40 @@ fun CollapsibleHeader(
             modifier = Modifier
                 .zIndex(1f)
                 .offset { IntOffset(x = 0, y = state.headerOffset.value.pxInt) }
-                .then(headerModifier)
         ) {
-            header(
-                Modifier
-                    .onSizeChanged {
-                        state.headerHeight.value = CollapsibleHeader.Height(it.height)
-                    }
-            )
-            stickyHeader?.invoke(
-                Modifier
-                    .onSizeChanged {
-                        state.stickyHeaderHeight.value = CollapsibleHeader.Height(it.height)
-                    }
-            )
+            Box(
+                Modifier.onSizeChanged {
+                    state.headerHeight.value = CollapsibleHeader.Height(it.height)
+                }
+            ) {
+                header()
+            }
+            if (stickyHeader != null) {
+                Box(
+                    Modifier
+                        .onSizeChanged {
+                            state.stickyHeaderHeight.value = CollapsibleHeader.Height(it.height)
+                        }
+                ) {
+                    stickyHeader()
+                }
+            }
         }
 
         //L.v { "headerHeight = ${state.headerHeight.value.dp(density)} | stickyHeaderHeight = ${state.stickyHeaderHeight.value.dp(density)} | headerOffset = ${state.headerOffset.value.dp(density)}" }
 
         if (state.headerHeight.value.pxInt > 0 && (stickyHeader == null || state.stickyHeaderHeight.value.pxInt > 0)) {
-            content(
+            Box(
                 Modifier
                     .zIndex(0f)
-                    .padding(top = state.headerHeight.value.dp(density) + state.stickyHeaderHeight.value.dp(density) + state.headerOffset.value.dp(density))
-            )
+                    .padding(
+                        top = state.headerHeight.value.dp(density) +
+                                state.stickyHeaderHeight.value.dp(density) +
+                                state.headerOffset.value.dp(density)
+                    )
+            ) {
+                content()
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.menu.removeConsecutiveSeparators
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
@@ -23,6 +24,7 @@ object AndroidAppDefaults {
         pageSettings: PageSettings,
         customActions: List<MenuItem> = emptyList(),
         groupedInMoreItem: Boolean = true,
+        moreIcon: IconComposable = Icons.Default.MoreVert.toIconComposable()
     ): List<MenuItem> {
 
         val proVersionManager = ProVersionManager.setup
@@ -64,7 +66,7 @@ object AndroidAppDefaults {
         return if (groupedInMoreItem) {
             listOfNotNull(
                 MenuItem.Group(
-                    icon = Icons.Default.MoreVert.toIconComposable(),
+                    icon = moreIcon,
                     items = subItems
                 ).takeIf { it.items.isNotEmpty() }
             )

@@ -29,6 +29,7 @@ import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.update.UpdateManager
 import com.michaelflisar.toolbox.demo.pages.PageHomeScreen
+import com.michaelflisar.toolbox.demo.pages.PageSelectionScreen
 import com.michaelflisar.toolbox.demo.pages.PageSettingsScreen
 import com.michaelflisar.toolbox.demo.pages.PageStatesScreen
 import com.michaelflisar.toolbox.demo.pages.PageTestsRootScreenContainer
@@ -120,7 +121,8 @@ object Shared {
     val page2 = PageStatesScreen
     val page3 = PageTestsRootScreenContainer
     val page4 = PageTestExpandableHeader
-    val pages = listOf(page1, page2, page3, page4)
+    val page5 = PageSelectionScreen
+    val pages = listOf(page1, page2, page3, page4, page5)
 
     // Settings Page
     val pageSettings = PageSettingsScreen

@@ -2,6 +2,10 @@
 - OFFENE WICHTIGE PUNKTE
 -------------------------------------
 
+    [ ] Backup:
+        Auto Backuo crasht: Uri-based PlatformFile does not have a Path representation
+        => weil man mit uri + filename keinen path machen kann...
+
     [ ] AppUtil sollte funktionen anbieten wie:
         * openSettings
         * ...

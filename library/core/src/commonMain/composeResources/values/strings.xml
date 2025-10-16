@@ -11,6 +11,7 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_more">More</string>
     <string name="menu_go_pro">Get PRO Version</string>
+    <string name="menu_selection_info">%1$d/%2$d selected</string>
 
     <!-- Dialoge -->
     <string name="dlg_pro_version_title">Pro Version</string>

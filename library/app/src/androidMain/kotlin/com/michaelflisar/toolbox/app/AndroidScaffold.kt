@@ -1,7 +1,6 @@
 package com.michaelflisar.toolbox.app
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,8 +39,8 @@ import com.michaelflisar.toolbox.app.features.root.Root
 import com.michaelflisar.toolbox.app.features.root.RootLocalProvider
 import com.michaelflisar.toolbox.app.features.scaffold.NavigationStyle
 import com.michaelflisar.toolbox.app.features.scaffold.rememberNavigationStyleAuto
-import com.michaelflisar.toolbox.app.features.theme.AppThemeProvider
 import com.michaelflisar.toolbox.app.features.statusbar.UpdateStatusBarColor
+import com.michaelflisar.toolbox.app.features.theme.AppThemeProvider
 import com.michaelflisar.toolbox.app.features.toolbar.ToolbarBackButton
 import com.michaelflisar.toolbox.app.features.toolbar.ToolbarTitle
 import com.michaelflisar.toolbox.app.features.toolbar.onToolbar
@@ -76,7 +75,6 @@ fun AndroidScaffold(
     toolbar: @Composable () -> Unit = {},
     navigationStyle: State<NavigationStyle> = rememberNavigationStyleAuto(),
     navigation: @Composable () -> Unit = {},
-    footer: @Composable (() -> Unit)? = null,
     floatingActionButton: @Composable () -> Unit = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
     containerColor: Color = MaterialTheme.colorScheme.background,
@@ -102,47 +100,12 @@ fun AndroidScaffold(
             contentColor = contentColor,
             contentWindowInsets = contentWindowInsets
         ) { paddingValues ->
-            if (navigationStyle.value == NavigationStyle.Left) {
-                if (footer != null) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues)
-                    ) {
-                        navigation()
-                        Column(modifier = Modifier.weight(1f, true)) {
-                            Box(modifier = Modifier.weight(1f, true)) {
-                                content()
-                            }
-                            footer()
-                        }
-                    }
-                } else {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues)
-                    ) {
-                        navigation()
-                        content()
-                    }
-                }
-
-            } else {
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)) {
-                    if (footer != null) {
-                        Column {
-                            Box(modifier = Modifier.weight(1f, true)) {
-                                content()
-                            }
-                            footer()
-                        }
-                    } else {
-                        content()
-                    }
-                }
+            Row(
+                modifier = Modifier.fillMaxSize().padding(paddingValues)
+            ) {
+                if (navigationStyle.value == NavigationStyle.Left)
+                    navigation()
+                content()
             }
         }
     }
@@ -197,6 +160,7 @@ fun AndroidToolbar(
 fun AndroidNavigation(
     navigationStyle: State<NavigationStyle>,
     items: List<INavItem>,
+    modifier: Modifier = Modifier,
     alwaysShowLabel: Boolean = true,
     showForSingleItem: Boolean = false,
 ) {
@@ -204,6 +168,7 @@ fun AndroidNavigation(
         NavigationStyle.Left -> {
             AndroidNavigationRail(
                 items = items,
+                modifier = modifier,
                 alwaysShowLabel = alwaysShowLabel,
                 showForSingleItem = showForSingleItem
             )
@@ -212,6 +177,7 @@ fun AndroidNavigation(
         NavigationStyle.Bottom -> {
             AndroidNavigationBar(
                 items = items,
+                modifier = modifier,
                 alwaysShowLabel = alwaysShowLabel,
                 showForSingleItem = showForSingleItem
             )
@@ -222,10 +188,12 @@ fun AndroidNavigation(
 @Composable
 fun AndroidNavigationRail(
     items: List<INavItem>,
+    modifier: Modifier = Modifier,
     alwaysShowLabel: Boolean = true,
     showForSingleItem: Boolean = false,
 ) {
     NavigationRail(
+        modifier = modifier,
         items = items,
         alwaysShowLabel = alwaysShowLabel,
         showForSingleItem = showForSingleItem
@@ -235,10 +203,12 @@ fun AndroidNavigationRail(
 @Composable
 fun AndroidNavigationBar(
     items: List<INavItem>,
+    modifier: Modifier = Modifier,
     alwaysShowLabel: Boolean = true,
     showForSingleItem: Boolean = false,
 ) {
     NavigationBar(
+        modifier = modifier,
         items = items,
         alwaysShowLabel = alwaysShowLabel,
         showForSingleItem = showForSingleItem

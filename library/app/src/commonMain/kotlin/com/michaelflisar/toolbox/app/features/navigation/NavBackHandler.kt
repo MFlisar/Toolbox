@@ -14,26 +14,37 @@ import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
+import com.michaelflisar.toolbox.app.features.toolbar.selection.LocalSelectionToolbarState
+import com.michaelflisar.toolbox.app.features.toolbar.selection.SelectionToolbarState
 import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 internal object NavBackHandler {
 
-    fun handleBackPress(scope: CoroutineScope, debugDrawerState: DebugDrawerState) {
-        scope.launch {
-            debugDrawerState.drawerState.close()
+    fun handleBackPress(
+        scope: CoroutineScope,
+        debugDrawerState: DebugDrawerState,
+        selectionToolbarState: SelectionToolbarState
+    ) {
+        if (selectionToolbarState.isInSelectionMode) {
+            selectionToolbarState.clearSelection(finish = true)
+            return
+        } else {
+            scope.launch { debugDrawerState.drawerState.close() }
         }
     }
 
     @Composable
     fun canHandleBackPress(): Boolean {
         val debugDrawerState = LocalDebugDrawerState.current
-        return remember {
+        val selectionToolbarState = LocalSelectionToolbarState.current
+        val canCloseDrawer by remember {
             derivedStateOf {
                 debugDrawerState.drawerState.isOpen
             }
-        }.value
+        }
+        return canCloseDrawer || selectionToolbarState.isInSelectionMode
     }
 }
 
@@ -47,6 +58,7 @@ fun NavBackHandler(
     onBack: () -> Unit = {}
 ) {
     val debugDrawerState = LocalDebugDrawerState.current
+    val selectionToolbarState = LocalSelectionToolbarState.current
     val navigator = LocalNavigator.currentOrThrow
 
     val scope = rememberCoroutineScope()
@@ -66,8 +78,9 @@ fun NavBackHandler(
     ) {
         L.logIf(ToolboxLogging.Tag.Navigation)?.i { "NavBackHandler called..." }
         if (navBackHandlerCanHandleBackPress) {
-            NavBackHandler.handleBackPress(scope, debugDrawerState)
-            L.logIf(ToolboxLogging.Tag.Navigation)?.i { "NavBackHandler::handleBackPress called..." }
+            NavBackHandler.handleBackPress(scope, debugDrawerState, selectionToolbarState)
+            L.logIf(ToolboxLogging.Tag.Navigation)
+                ?.i { "NavBackHandler::handleBackPress called..." }
         } else {
             if (canGoBack) {
                 onBack()

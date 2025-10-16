@@ -31,6 +31,17 @@ interface INavScreen : Screen, Parcelable {
     }
 
     @Composable
+    fun toMenuItem(
+        hideIconInDialog: Boolean = true,
+        hideTitleIfIconIsAvailable: Boolean = false,
+    ): MenuItem {
+        return toActionItem().toMenuItem(
+            hideIconInDialog = hideIconInDialog,
+            hideTitleIfIconIsAvailable = hideTitleIfIconIsAvailable
+        )
+    }
+
+    @Composable
     fun toNavItem() = toActionItem().toNavItem()
 
     @Composable

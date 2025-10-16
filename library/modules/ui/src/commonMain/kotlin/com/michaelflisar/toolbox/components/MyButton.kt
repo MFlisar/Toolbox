@@ -26,9 +26,9 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
-internal object MyButton {
+private object MyButton {
 
-    internal sealed class Style {
+    sealed class Style {
 
         @Composable
         internal abstract fun Button(
@@ -162,7 +162,7 @@ internal object MyButton {
     }
 }
 
-internal object MyButtonDefaults {
+private object MyButtonDefaults {
 
     @Composable
     fun styleDefault(

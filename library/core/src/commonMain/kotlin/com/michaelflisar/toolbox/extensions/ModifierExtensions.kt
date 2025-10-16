@@ -3,12 +3,14 @@ package com.michaelflisar.toolbox.extensions
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.DrawModifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.layout.layout
 
 fun Modifier.disabled(applyAlpha: Boolean = true, applyGreyscale: Boolean = true) =
     this.then(if (applyAlpha) alphaDisabled() else Modifier)
@@ -32,5 +34,17 @@ private class GreyscaleModifier(val factor: Float) : DrawModifier {
     }
 }
 
+fun Modifier.vertical(
+    degrees: Float = -90f
+) =
+    layout { measurable, constraints ->
+        val placeable = measurable.measure(constraints)
+        layout(placeable.height, placeable.width) {
+            placeable.place(
+                x = -(placeable.width / 2 - placeable.height / 2),
+                y = -(placeable.height / 2 - placeable.width / 2)
+            )
+        }
+    }.rotate(degrees)
 
 

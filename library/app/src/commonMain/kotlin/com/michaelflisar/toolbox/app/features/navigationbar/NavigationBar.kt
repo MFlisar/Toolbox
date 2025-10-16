@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox.app.features.navigationbar
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -18,12 +17,13 @@ import com.michaelflisar.toolbox.app.features.navigation.NavItemDivider
 import com.michaelflisar.toolbox.app.features.navigation.NavItemPopupMenu
 import com.michaelflisar.toolbox.app.features.navigation.NavItemRegion
 import com.michaelflisar.toolbox.app.features.navigation.NavItemSpacer
-import com.michaelflisar.toolbox.extensions.Render
+import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 
 @Composable
 fun NavigationBar(
     items: List<INavItem>,
+    modifier: Modifier = Modifier,
     alwaysShowLabel: Boolean = true,
     showForSingleItem: Boolean = false,
 ) {
@@ -33,13 +33,15 @@ fun NavigationBar(
 
     val navigator = LocalNavigator.currentOrThrow
 
-    NavigationBar {
+    NavigationBar(
+        modifier
+    ) {
         items.forEachIndexed { index, item ->
             when (item) {
                 is NavItem -> {
                     NavigationBarItem(
                         icon = {
-                            item.icon?.Render(modifier = Modifier.size(24.dp))
+                            item.icon?.let { Icon(it, modifier = Modifier.size(24.dp)) }
                         },
                         label = { Text(item.title) },
                         alwaysShowLabel = alwaysShowLabel,
@@ -54,7 +56,7 @@ fun NavigationBar(
                     //throw IllegalArgumentException("NavItemAction is not supported in NavigationBar!")
                     NavigationBarItem(
                         icon = {
-                            item.icon?.Render(modifier = Modifier.size(24.dp))
+                            item.icon?.let { Icon(it, modifier = Modifier.size(24.dp)) }
                         },
                         label = { Text(item.title) },
                         alwaysShowLabel = alwaysShowLabel,
@@ -65,10 +67,11 @@ fun NavigationBar(
                     )
 
                 }
+
                 is NavItemPopupMenu -> {
                     NavigationBarItem(
                         icon = {
-                            item.icon?.Render(modifier = Modifier.size(24.dp))
+                            item.icon?.let { Icon(it, modifier = Modifier.size(24.dp)) }
                             PopupMenu(
                                 state = item.state
                             ) {

@@ -15,7 +15,7 @@ fun <T> FormScope.FormSpinner(
     title: String,
     value: T,
     items: List<T & Any>,
-    mapper: (item: T, dropdown: Boolean) -> String,
+    mapper: @Composable (item: T, dropdown: Boolean) -> String,
     modifier: Modifier = Modifier.fillMaxWidth(),
     onValueChanged: (value: T) -> Unit,
 ) {
@@ -31,7 +31,7 @@ fun <T> FormScope.FormSpinner(
     title: String,
     value: MutableState<T>,
     items: List<T & Any>,
-    mapper: (item: T, dropdown: Boolean) -> String,
+    mapper: @Composable (item: T, dropdown: Boolean) -> String,
     modifier: Modifier = Modifier.fillMaxWidth(),
 ) {
     FormItem(

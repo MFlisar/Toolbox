@@ -34,4 +34,4 @@ class NavItemPopupMenu(
     val content: @Composable PopupMenuScope.() -> Unit
 ) : INavItem
 
-data object NavItemDivider : INavItem
+object NavItemDivider : INavItem

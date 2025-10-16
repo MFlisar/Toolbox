@@ -1,22 +1,21 @@
 package com.michaelflisar.toolbox.app.features.menu
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.components.MyCheckbox
 import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.extensions.Render
+import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.feature.menu.MenuCheckbox
 import com.michaelflisar.toolbox.feature.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.MenuSeparator
@@ -54,7 +53,12 @@ sealed class MenuItem {
 }
 
 @Composable
-fun Menu(items: List<MenuItem>) {
+fun Menu(
+    items: List<MenuItem>
+) {
+    if (items.isEmpty()) {
+        return
+    }
     items.forEach {
         when (it) {
             is MenuItem.Item -> {
@@ -75,9 +79,10 @@ fun Menu(items: List<MenuItem>) {
                     text = it.text,
                     onClick = { menuStateOfGroup.show() },
                     icon = it.icon
-                )
-                PopupMenu(menuStateOfGroup) {
-                    Menu(menuStateOfGroup, it.items)
+                ) {
+                    PopupMenu(menuStateOfGroup) {
+                        Menu(menuStateOfGroup, it.items)
+                    }
                 }
             }
 
@@ -85,10 +90,10 @@ fun Menu(items: List<MenuItem>) {
                 MyCheckbox(
                     title = {
                         if (it.text.isEmpty() && it.icon != null) {
-                            it.icon.Render()
+                            Icon(it.icon)
                         } else {
                             MyRow(itemSpacing = 4.dp) {
-                                it.icon?.Render()
+                                it.icon?.let { Icon(it) }
                                 Text(it.text)
                             }
                         }
@@ -101,39 +106,51 @@ fun Menu(items: List<MenuItem>) {
 }
 
 @Composable
-private fun MenuButton(text: String, icon: IconComposable?, onClick: () -> Unit) {
-    if (icon != null) {
-        if (text.isNotEmpty()) {
+private fun MenuButton(
+    text: String,
+    icon: IconComposable?,
+    onClick: () -> Unit,
+    content: @Composable (() -> Unit) = { }
+) {
+    Box {
+        if (icon != null) {
+            if (text.isNotEmpty()) {
+
+                Button(
+                    onClick = onClick,
+                    elevation = ButtonDefaults.buttonElevation(
+                        hoveredElevation = 0.dp // same as IconButton
+                    ),
+                ) {
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(icon)
+                        Text(text)
+                    }
+
+                }
+
+            } else {
+                IconButton(
+                    onClick = onClick
+                ) {
+                    Icon(icon)
+                }
+            }
+        } else {
             Button(
                 onClick = onClick,
                 elevation = ButtonDefaults.buttonElevation(
                     hoveredElevation = 0.dp // same as IconButton
-                ),
+                )
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    icon.Render()
-                    Text(text)
-                }
-            }
-        } else {
-            IconButton(
-                onClick = onClick
-            ) {
-                icon.Render()
+                Text(text)
             }
         }
-    } else {
-        Button(
-            onClick = onClick,
-            elevation = ButtonDefaults.buttonElevation(
-                hoveredElevation = 0.dp // same as IconButton
-            )
-        ) {
-            Text(text)
-        }
+        content()
     }
 }
 

@@ -2,6 +2,7 @@ package com.michaelflisar.helloworld
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import com.michaelflisar.composechangelog.ChangelogDefaults
@@ -10,59 +11,50 @@ import com.michaelflisar.composethemer.Material500Themes
 import com.michaelflisar.composethemer.MetroThemes
 import com.michaelflisar.composethemer.themes.DefaultThemes
 import com.michaelflisar.helloworld.app.BuildKonfig
-import com.michaelflisar.helloworld.core.resources.Res
 import com.michaelflisar.helloworld.core.resources.app_name
 import com.michaelflisar.helloworld.core.resources.mflisar
 import com.michaelflisar.helloworld.feature.page1.ScreenPage1
 import com.michaelflisar.helloworld.feature.page2.ScreenPage2
-import com.michaelflisar.kotpreferences.core.interfaces.Storage
-import com.michaelflisar.toolbox.Platform
+import com.michaelflisar.toolbox.app.AppScope
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.CommonApp
 import com.michaelflisar.toolbox.app.Constants
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.actions.ActionItem
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
-import com.michaelflisar.toolbox.app.features.navigation.INavigationDefinition
-import com.michaelflisar.toolbox.app.features.navigation.screen.INavScreen
+import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.update.UpdateManager
-import com.michaelflisar.toolbox.app.platform.fileLogger
+import com.michaelflisar.toolbox.extensions.isLight
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
+import com.michaelflisar.helloworld.PageSettingsScreen
+import com.michaelflisar.helloworld.core.resources.Res
 
-object SharedDefinitions : INavigationDefinition {
+object Shared {
 
-    fun update(context: PlatformContext, setup: AppSetup = CommonApp.setup) {
-        val updateManager = UpdateManager(
-            listOf(
-                //UpdateTo1,
-            )
-        )
-        @OptIn(DelicateCoroutinesApi::class)
-        updateManager.update(GlobalScope, context, setup)
-    }
+    // --------------------
+    // Setup
+    // --------------------
 
-    @Composable
-    fun appIcon(): Painter {
-        return painterResource(Res.drawable.mflisar)
-    }
-
+    /*
+     * Language Picker:
+     *   - res/resources.properties file erstellen
+     *   - androidResources { generateLocaleConfig = true } im build.gradle.kts
+     *   => sonst geht der language picker nicht
+     */
     fun createBaseAppSetup(
         prefs: BasePrefs,
-        debugStorage: Storage,
-        icon: @Composable () -> Painter = { appIcon() },
+        debugPrefs: DebugPrefs,
+        icon: @Composable () -> Painter = { appIcon(LocalContentColor.current.isLight()) },
         isDebugBuild: Boolean,
+        fileLogger: FileLogger<*>?
     ) = AppSetup(
         versionCode = BuildKonfig.versionCode,
         versionName = BuildKonfig.versionName,
         packageName = BuildKonfig.packageName,
-        name = { stringResource(Res.string.app_name) },
+        name = Res.string.app_name,
         icon = icon,
         themeSupport = AppSetup.ThemeSupport.full(
             DefaultThemes.getAllThemes() +
@@ -71,7 +63,7 @@ object SharedDefinitions : INavigationDefinition {
                     Material500Themes.getAllThemes()
         ),
         prefs = prefs,
-        debugPrefs = DebugPrefs(debugStorage),
+        debugPrefs = debugPrefs,
         debugDrawer = { state ->
             DebugDrawer(state) {
                 // custom debug drawer content
@@ -80,7 +72,7 @@ object SharedDefinitions : INavigationDefinition {
         // TODO HELLO WORLD
         // Link anpassen
         privacyPolicyLink = "https://mflisar.github.io/android/flash-launcher/privacy-policy/",
-        fileLogger = Platform.fileLogger,
+        fileLogger = fileLogger,
         disableLanguagePicker = false,
         changelogSetup = ChangelogDefaults.setup(
             logFileReader = { Res.readBytes(Constants.CHANGELOG_PATH) },
@@ -89,22 +81,42 @@ object SharedDefinitions : INavigationDefinition {
         isDebugBuild = isDebugBuild
     )
 
-    // -------------------------
+    @Composable
+    fun appIcon(light: Boolean): Painter {
+        return painterResource(Res.drawable.mflisar)
+    }
+
+    // --------------------
     // Pages
-    // -------------------------
+    // --------------------
 
-    val defaultPage = ScreenPage1
+    val page1 = ScreenPage1
+    val page2 = ScreenPage2
 
-    override val pagesMain: List<INavScreen> =
-        listOf(ScreenPage1, ScreenPage2)
-    override val pageSetting: INavScreen = PageSettingsScreen
+    val pages = listOf(page1, page2)
+
+    val pageSettings = PageSettingsScreen
+
+    // --------------------
+    // Functions
+    // --------------------
+
+
+    fun init(context: PlatformContext) {
+        val updateManager = UpdateManager(
+            listOf(
+                //UpdateTo1,
+            )
+        )
+        updateManager.update(AppScope, context, AppSetup.get())
+    }
 
     // -------------------------
     // Actions
     // -------------------------
 
     @Composable
-    override fun actionCustom(): List<ActionItem.Action> = listOf(
+    fun actionCustom(): List<ActionItem.Action> = listOf(
         actionTest()
     )
 

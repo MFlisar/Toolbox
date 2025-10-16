@@ -6,7 +6,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.michaelflisar.composedebugdrawer.core.rememberDebugDrawerState
-import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
@@ -25,19 +24,21 @@ fun RootLocalProvider(
 
     val setup = AppSetup.get()
 
+    val drawerState = rememberDebugDrawerState(
+        expandSingleOnly = true,
+        initialExpandedIds = emptyList()
+    )
+
     val stateInitiallyExpandedIds = remember { mutableStateOf<List<String>?>(null) }
     LaunchedEffect(stateInitiallyExpandedIds.value) {
         if (stateInitiallyExpandedIds.value == null) {
-            stateInitiallyExpandedIds.value =
-                setup.debugPrefs.debugDrawerExpandedIds.read().toList()
+            stateInitiallyExpandedIds.value = setup.debugPrefs.debugDrawerExpandedIds.read().toList()
+            stateInitiallyExpandedIds.value?.forEach {
+                drawerState.expand(it)
+            }
+
         }
     }
-    val initiallyExpandedIds = stateInitiallyExpandedIds.value ?: return
-
-    val drawerState = rememberDebugDrawerState(
-        expandSingleOnly = true,
-        initialExpandedIds = initiallyExpandedIds
-    )
 
     CompositionLocalProvider(
         LocalAppState provides appState,

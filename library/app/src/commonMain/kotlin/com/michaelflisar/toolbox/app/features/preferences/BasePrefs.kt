@@ -12,6 +12,8 @@ import kotlinx.datetime.LocalTime
 abstract class BasePrefs(
     storage: Storage,
     initialTheme: ComposeTheme.Theme = ThemeDefault.Theme,
+    initialContrast: ComposeTheme.Contrast = ComposeTheme.Contrast.System,
+    initialToolbarStyle: ToolbarStyle = ToolbarStyle.Primary,
     initialFrequency: Frequency = Frequency.Weekly(DayOfWeek.SUNDAY, LocalTime(22, 0), 1)
 ) : SettingsModel(storage) {
 
@@ -22,8 +24,8 @@ abstract class BasePrefs(
         ComposeTheme.BaseTheme.entries
     )
     val dynamicTheme by boolPref(false)
-    val contrast by enumPref(ComposeTheme.Contrast.System, ComposeTheme.Contrast.entries)
-    val toolbarStyle by enumPref(ToolbarStyle.Primary, ToolbarStyle.entries)
+    val contrast by enumPref(initialContrast, ComposeTheme.Contrast.entries)
+    val toolbarStyle by enumPref(initialToolbarStyle, ToolbarStyle.entries)
 
     suspend fun isDark(isSystemInDarkTheme: Boolean): Boolean {
         return when (theme.read()) {

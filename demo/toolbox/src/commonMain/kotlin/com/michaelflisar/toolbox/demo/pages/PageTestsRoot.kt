@@ -29,7 +29,7 @@ import com.michaelflisar.toolbox.demo.pages.tests.PageTestPane
 import com.michaelflisar.toolbox.demo.pages.tests.PageTestPreferences
 import com.michaelflisar.toolbox.demo.pages.tests.PageTestTable
 import com.michaelflisar.toolbox.demo.pages.tests.PageTestUI
-import com.michaelflisar.toolbox.extensions.Render
+import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.ui.MyScrollableColumn
 
@@ -109,7 +109,7 @@ private fun TestRow(
             .padding(all = 8.dp)
     ) {
         val data = test.provideData().value
-        data.icon?.Render()
+        data.icon?.let { Icon(it) }
         Text(data.title)
     }
 }

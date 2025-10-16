@@ -26,7 +26,7 @@ import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.extensions.Render
+import com.michaelflisar.toolbox.extensions.Icon
 
 abstract class PageScreensList : NavScreen() {
 
@@ -95,7 +95,7 @@ private fun Page(
                 when (it) {
                     is PageScreensList.Item.Icon -> {
                         FunctionCard(
-                            icon = { it.icon.Render(modifier = Modifier.size(48.dp)) },
+                            icon = { Icon(it.icon, modifier = Modifier.size(48.dp)) },
                             label = it.name,
                             screen = it.screen
                         )

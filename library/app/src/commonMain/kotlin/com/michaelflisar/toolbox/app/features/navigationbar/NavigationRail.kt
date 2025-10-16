@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
@@ -21,12 +22,13 @@ import com.michaelflisar.toolbox.app.features.navigation.NavItemDivider
 import com.michaelflisar.toolbox.app.features.navigation.NavItemPopupMenu
 import com.michaelflisar.toolbox.app.features.navigation.NavItemRegion
 import com.michaelflisar.toolbox.app.features.navigation.NavItemSpacer
-import com.michaelflisar.toolbox.extensions.Render
+import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 
 @Composable
 internal fun NavigationRail(
     items: List<INavItem>,
+    modifier: Modifier,
     alwaysShowLabel: Boolean = true,
     showForSingleItem: Boolean = false,
 ) {
@@ -40,17 +42,18 @@ internal fun NavigationRail(
         //windowInsets = WindowInsets.systemBarsForVisualComponents.only(
         //    WindowInsetsSides.Vertical + WindowInsetsSides.Start
         //),
-        windowInsets = WindowInsets.systemBars.only(
-            WindowInsetsSides.Start
-        ),
-        modifier = Modifier.padding(vertical = 16.dp)
+        //windowInsets = WindowInsets.systemBars.only(
+        //    WindowInsetsSides.Start
+        //),
+        windowInsets = WindowInsets(),
+        modifier = modifier.padding(vertical = 16.dp)
     ) {
         items.forEachIndexed { index, item ->
             when (item) {
                 is NavItem -> {
                     NavigationRailItem(
                         icon = {
-                            item.icon?.Render()
+                            item.icon?.let { Icon(it, modifier = Modifier.size(24.dp)) }
                         },
                         label = { Text(item.title) },
                         alwaysShowLabel = alwaysShowLabel,
@@ -64,7 +67,7 @@ internal fun NavigationRail(
                 is NavItemPopupMenu -> {
                     NavigationRailItem(
                         icon = {
-                            item.icon?.Render()
+                            item.icon?.let { Icon(it, modifier = Modifier.size(24.dp)) }
                             PopupMenu(item.state) {
                                 item.content(this)
                             }

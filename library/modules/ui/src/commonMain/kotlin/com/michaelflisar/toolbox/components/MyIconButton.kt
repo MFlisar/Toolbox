@@ -18,9 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 
-internal object MyIconButton {
+private object MyIconButton {
 
-    internal sealed class Style {
+    sealed class Style {
 
         @Composable
         internal abstract fun Button(
@@ -130,7 +130,7 @@ internal object MyIconButton {
     }
 }
 
-internal object MyIconButtonDefaults {
+private object MyIconButtonDefaults {
 
     @Composable
     fun styleDefault(

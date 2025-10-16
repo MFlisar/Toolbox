@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.menu.removeConsecutiveSeparators
-import com.michaelflisar.toolbox.extensions.Render
+import com.michaelflisar.toolbox.extensions.Icon
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.ui.component.ActionButton
 import org.jetbrains.jewel.ui.component.Icon
@@ -124,7 +124,8 @@ private fun TitleMenuItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (icon != null) {
-            icon.Render(
+            Icon(
+                icon,
                 modifier = Modifier.size(24.dp).padding(4.dp),
                 tint = foreground
             )

@@ -10,8 +10,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -66,7 +77,10 @@ object MyDropdownButton {
                                                         ?: LocalContentColor.current//.copy(alpha = LocalContentAlpha.current)
                                                 )
                                             }
-                                            Text(item.text, color = item.foregroundColor ?: Color.Unspecified)
+                                            Text(
+                                                item.text,
+                                                color = item.foregroundColor ?: Color.Unspecified
+                                            )
                                         }
                                     }
                                 )
@@ -106,7 +120,7 @@ object MyDropdownButton {
 
 }
 
-object MyDropdownButtonDefaults {
+private object MyDropdownButtonDefaults {
 
     @Composable
     fun typeDropdown(
@@ -124,8 +138,77 @@ object MyDropdownButtonDefaults {
     }
 }
 
+// -------------------------
+// public API
+// -------------------------
+
 @Composable
 fun MyDropdownButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // button style
+    // style
+    shape: Shape = ButtonDefaults.shape,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
+    border: BorderStroke? = null,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    // content
+    content: @Composable RowScope.() -> Unit,
+) {
+    MyDropdownButton(
+        type = MyDropdownButtonDefaults.typeClick(onClick),
+        modifier = modifier,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        shape = shape,
+        colors = colors,
+        elevation = elevation,
+        border = border,
+        contentPadding = contentPadding,
+        content = content
+    )
+}
+
+@Composable
+fun MyDropdownButton(
+    items: List<MyDropdownButton.Entry>,
+    expanded: MutableState<Boolean> = remember { mutableStateOf(false) },
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // button style
+    // style
+    shape: Shape = ButtonDefaults.shape,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
+    border: BorderStroke? = null,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    // content
+    content: @Composable RowScope.() -> Unit,
+) {
+    MyDropdownButton(
+        type = MyDropdownButtonDefaults.typeDropdown(items, expanded),
+        modifier = modifier,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        shape = shape,
+        colors = colors,
+        elevation = elevation,
+        border = border,
+        contentPadding = contentPadding,
+        content = content
+    )
+}
+
+// -------------------------
+// internal API
+// -------------------------
+
+@Composable
+private fun MyDropdownButton(
     type: MyDropdownButton.Type,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -176,28 +259,11 @@ fun MyDropdownButton(
             is MyDropdownButton.Type.Click -> {
                 // -
             }
+
             is MyDropdownButton.Type.Dropdown -> type.Popup()
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*

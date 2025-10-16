@@ -45,7 +45,8 @@ import org.jetbrains.compose.resources.stringResource
 fun FooterAdsBanner(
     activity: Activity,
     proState: State<ProState>,
-    adUnitId: String
+    adUnitId: String,
+    modifier: Modifier = Modifier
 ) {
     if (proState.value == ProState.No) {
         val consent by rememberConsent(activity)
@@ -56,22 +57,26 @@ fun FooterAdsBanner(
 
         val adSize = AdSize.FULL_BANNER
 
-        if (consent.canRequestAds) {
-            val bannerAd by rememberBannerAd(
-                activity = activity,
-                adUnitId = adUnitId,
-                adSize = adSize
-            )
-            LaunchedEffect(bannerAd.state) {
-                L.d { "bannerAd.state = ${bannerAd.state}" }
-            }
-            if (bannerAd.state == AdState.READY) {
-                BannerAd(bannerAd)
+        Box(
+            modifier = modifier
+        ) {
+            if (consent.canRequestAds) {
+                val bannerAd by rememberBannerAd(
+                    activity = activity,
+                    adUnitId = adUnitId,
+                    adSize = adSize
+                )
+                LaunchedEffect(bannerAd.state) {
+                    L.d { "bannerAd.state = ${bannerAd.state}" }
+                }
+                if (bannerAd.state == AdState.READY) {
+                    BannerAd(bannerAd)
+                } else {
+                    ShowAdPlaceholder(adSize)
+                }
             } else {
                 ShowAdPlaceholder(adSize)
             }
-        } else {
-            ShowAdPlaceholder(adSize)
         }
     }
 }

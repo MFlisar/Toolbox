@@ -15,6 +15,7 @@ object PageSettingsScreen : PageSettings() {
     override fun provideStyle(): AppPreferencesStyle {
         return AppPreferencesDefaults.styleDeviceDefault(
             addThemeSettings = true,
+            customPageName = "Settings",
             customContent = { CustomContent() }
         )
     }

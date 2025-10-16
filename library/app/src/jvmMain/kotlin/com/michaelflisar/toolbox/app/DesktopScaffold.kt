@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox.app
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -13,6 +12,7 @@ import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -45,6 +45,9 @@ import com.michaelflisar.toolbox.app.features.root.RootLocalProvider
 import com.michaelflisar.toolbox.app.features.scaffold.NavigationStyle
 import com.michaelflisar.toolbox.app.features.scaffold.rememberNavigationStyleAuto
 import com.michaelflisar.toolbox.app.features.theme.AppThemeProvider
+import com.michaelflisar.toolbox.app.features.toolbar.DesktopToolbar
+import com.michaelflisar.toolbox.app.features.toolbar.DesktopToolbarProvider
+import com.michaelflisar.toolbox.app.features.toolbar.LocalDesktopToolbarProvider
 import com.michaelflisar.toolbox.app.jewel.JewelApp
 import com.michaelflisar.toolbox.app.jewel.JewelExitHandler
 import com.michaelflisar.toolbox.app.jewel.JewelNavigation
@@ -119,47 +122,47 @@ fun DecoratedWindowScope.DesktopScaffold(
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
+    contentToolbar: DesktopToolbarProvider = { screen -> DesktopToolbar(screen) },
     content: @Composable () -> Unit,
 ) {
-    ErrorDialogProvider {
-        val appState = LocalAppState.current
-        Column {
-            titleBar()
-            Root(
-                appState = appState,
-                setRootLocals = false
-            ) {
-                val appState = LocalAppState.current
-                Column(modifier = Modifier) {
-                    Scaffold(
-                        modifier = Modifier.weight(1f),
-                        topBar = {},
-                        bottomBar = {
-                            if (navigationStyle.value == NavigationStyle.Bottom) {
-                                navigation()
-                            }
-                        },
-                        snackbarHost = { SnackbarHost(appState.snackbarHostState) },
-                        floatingActionButton = floatingActionButton,
-                        floatingActionButtonPosition = floatingActionButtonPosition,
-                        containerColor = containerColor,
-                        contentColor = contentColor,
-                        contentWindowInsets = contentWindowInsets
-                    ) { paddingValues ->
-                        if (navigationStyle.value == NavigationStyle.Left) {
+    CompositionLocalProvider(
+        LocalDesktopToolbarProvider provides contentToolbar
+    ) {
+        ErrorDialogProvider {
+            val appState = LocalAppState.current
+            Column {
+                titleBar()
+                Root(
+                    appState = appState,
+                    setRootLocals = false
+                ) {
+                    val appState = LocalAppState.current
+                    Column(modifier = Modifier) {
+                        Scaffold(
+                            modifier = Modifier.weight(1f),
+                            topBar = {},
+                            bottomBar = {
+                                if (navigationStyle.value == NavigationStyle.Bottom) {
+                                    navigation()
+                                }
+                            },
+                            snackbarHost = { SnackbarHost(appState.snackbarHostState) },
+                            floatingActionButton = floatingActionButton,
+                            floatingActionButtonPosition = floatingActionButtonPosition,
+                            containerColor = containerColor,
+                            contentColor = contentColor,
+                            contentWindowInsets = contentWindowInsets
+                        ) { paddingValues ->
                             Row(
                                 modifier = Modifier.fillMaxSize().padding(paddingValues)
                             ) {
-                                navigation()
-                                content()
-                            }
-                        } else {
-                            Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+                                if (navigationStyle.value == NavigationStyle.Left)
+                                    navigation()
                                 content()
                             }
                         }
+                        statusBar()
                     }
-                    statusBar()
                 }
             }
         }
@@ -273,20 +276,25 @@ fun DesktopStatusBarCustom(
 @Composable
 fun DesktopNavigation(
     navigationStyle: State<NavigationStyle>,
-    items: List<INavItem>,
+    items:  @Composable (style: NavigationStyle) -> List<INavItem>,
     additionalItems: @Composable (style: NavigationStyle) -> List<INavItem>,
+    modifier: Modifier = Modifier,
     showForSingleItem: Boolean = false,
     // Rail
     isRailExpandable: Boolean = true,
     isRailExpanded: MutableState<Boolean> = remember { mutableStateOf(false) },
+    showAdditionalItemsAtBottomIfRail: Boolean = true,
     // Bottom
     alwaysShowBottomLabel: Boolean = true,
 ) {
     when (navigationStyle.value) {
         NavigationStyle.Left -> {
             DesktopNavigationRail(
-                itemsTop = items,
-                itemsBottom = additionalItems(NavigationStyle.Left),
+                modifier = modifier,
+                itemsTop = items(NavigationStyle.Left) + if (showAdditionalItemsAtBottomIfRail) emptyList() else additionalItems(
+                    NavigationStyle.Left
+                ),
+                itemsBottom = if (showAdditionalItemsAtBottomIfRail) additionalItems(NavigationStyle.Left) else emptyList(),
                 //alwaysShowLabel = alwaysShowLabel,
                 showForSingleItem = showForSingleItem,
                 expandable = isRailExpandable,
@@ -296,7 +304,8 @@ fun DesktopNavigation(
 
         NavigationStyle.Bottom -> {
             DesktopNavigationBottom(
-                items = items + additionalItems(NavigationStyle.Bottom),
+                modifier = modifier,
+                items = items(NavigationStyle.Bottom) + additionalItems(NavigationStyle.Bottom),
                 alwaysShowLabel = alwaysShowBottomLabel,
                 showForSingleItem = showForSingleItem
             )
@@ -308,8 +317,9 @@ fun DesktopNavigation(
 fun DesktopNavigationRail(
     itemsTop: List<INavItem>,
     itemsBottom: List<INavItem>,
-    showForSingleItem: Boolean = false,
+    showForSingleItem: Boolean,
     expandable: Boolean,
+    modifier: Modifier = Modifier,
     navigationExpanded: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
     if (itemsTop.size + itemsBottom.size <= 1 && !showForSingleItem) {
@@ -320,6 +330,7 @@ fun DesktopNavigationRail(
         itemsTop + (itemsBottom.takeIf { it.isNotEmpty() }?.let { listOf(NavItemSpacer()) + it }
             ?: emptyList())
     JewelNavigation(
+        modifier = modifier,
         items = items.toJewelNavigationItems(),
         selected = { it == navigator.lastItem },
         expanded = navigationExpanded,
@@ -332,8 +343,9 @@ fun DesktopNavigationRail(
 @Composable
 fun DesktopNavigationBottom(
     items: List<INavItem>,
+    modifier: Modifier = Modifier,
     alwaysShowLabel: Boolean = true,
     showForSingleItem: Boolean = false,
 ) {
-    NavigationBar(items, alwaysShowLabel, showForSingleItem)
+    NavigationBar(items, modifier, alwaysShowLabel, showForSingleItem)
 }
