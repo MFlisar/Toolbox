@@ -1,5 +1,7 @@
 package com.michaelflisar.toolbox.utils
 
+import kotlinx.datetime.DayOfWeek
+
 object TimeUtil {
 
     fun getTimeString(millis: Long): String {
@@ -27,5 +29,14 @@ object TimeUtil {
         }
 
         return info.joinToString(" ")
+    }
+
+    fun getSortedWeekDays(firstDayOfWeek: DayOfWeek): List<DayOfWeek> {
+        val days = DayOfWeek.entries.toMutableList()
+        while (days.first() != firstDayOfWeek) {
+            val last = days.removeAt(days.lastIndex)
+            days.add(0, last)
+        }
+        return days
     }
 }

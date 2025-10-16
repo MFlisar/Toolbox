@@ -1,11 +1,13 @@
 package com.michaelflisar.toolbox.extensions
 
+import com.michaelflisar.toolbox.utils.TimeUtil
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
+import kotlinx.datetime.daysUntil
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
@@ -94,3 +96,32 @@ fun LocalDate.startOfYear(): LocalDate {
 fun LocalDate.endOfYear(): LocalDate {
     return LocalDate(year, 12, 31)
 }
+
+fun LocalDate.Companion.fromCalendarWeek(year: Int, week: Int, day: DayOfWeek, firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY): LocalDate {
+    // Erster Tag des Jahres
+    val jan1 = LocalDate(year, 1, 1)
+    // Wochentag des ersten Tages
+    val jan1DayOfWeek = jan1.dayOfWeek.ordinal
+    val firstDayOfWeek = TimeUtil.getSortedWeekDays(firstDayOfWeek).first().ordinal
+    // Offset zur ersten Woche
+    val daysOffset = ((firstDayOfWeek - jan1DayOfWeek + 7) % 7)
+    // Erster Tag der ersten Kalenderwoche
+    val firstWeekStart = jan1.plus(daysOffset.toLong(), DateTimeUnit.DAY)
+    // Zieltag berechnen
+    val targetDate = firstWeekStart.plus(
+        ((week - 1) * 7 + (day.ordinal - firstDayOfWeek)).toLong(),
+        DateTimeUnit.DAY
+    )
+    return targetDate
+}
+
+fun LocalDate.calendarWeek(firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY): Int {
+    val firstDayOfWeek = TimeUtil.getSortedWeekDays(firstDayOfWeek).first().ordinal
+    val jan1 = LocalDate(this.year, 1, 1)
+    val jan1DayOfWeek = jan1.dayOfWeek.ordinal
+    val daysOffset = ((firstDayOfWeek - jan1DayOfWeek + 7) % 7)
+    val firstWeekStart = jan1.plus(daysOffset.toLong(), DateTimeUnit.DAY)
+    val daysSinceFirstWeek = firstWeekStart.daysUntil(this)
+    return if (daysSinceFirstWeek < 0) 1 else (daysSinceFirstWeek / 7) + 1
+}
+

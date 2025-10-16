@@ -38,7 +38,7 @@ import com.michaelflisar.toolbox.app.features.navigation.NavItemPopupMenu
 import com.michaelflisar.toolbox.app.features.navigation.NavItemRegion
 import com.michaelflisar.toolbox.app.features.navigation.NavItemSpacer
 import com.michaelflisar.toolbox.app.features.toolbar.onToolbar
-import com.michaelflisar.toolbox.extensions.Render
+import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 
 @Composable
@@ -136,7 +136,7 @@ private fun ToolbarButton(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    icon?.Render()
+                    icon?.let { Icon(it) }
                     Text(
                         modifier = Modifier.wrapContentWidth(),
                         text = text,

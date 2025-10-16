@@ -22,6 +22,8 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.OutlinedTextFieldDefaults.FocusedBorderThickness
+import androidx.compose.material3.OutlinedTextFieldDefaults.UnfocusedBorderThickness
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
@@ -287,6 +289,7 @@ fun <T : Number> rememberMyNumberValidatorAlwaysValid(): MyNumberValidator<T> {
     )
 }
 
+@Suppress("UNCHECKED_CAST")
 fun <T : Number> createNumberParser(stepSize: T): MyNumberParser<T> {
     return when (stepSize) {
         is Int -> createNumberParserInt(stepSize)
@@ -580,7 +583,15 @@ private fun OutlinedNumberTextField(
             colors = colors,
             contentPadding = paddingValues,
             container = {
-                OutlinedTextFieldDefaults.ContainerBox(enabled, isError, interactionSource, colors)
+                OutlinedTextFieldDefaults.Container(
+                    enabled = enabled,
+                    isError = isError,
+                    interactionSource = interactionSource,
+                    colors = colors,
+                    shape = OutlinedTextFieldDefaults.shape,
+                    focusedBorderThickness = FocusedBorderThickness,
+                    unfocusedBorderThickness = UnfocusedBorderThickness,
+                )
             },
         )
     }

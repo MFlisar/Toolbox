@@ -1,11 +1,8 @@
 package com.michaelflisar.toolbox.app.features.navigationbar
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
@@ -45,7 +42,7 @@ internal fun NavigationRail(
         //windowInsets = WindowInsets.systemBars.only(
         //    WindowInsetsSides.Start
         //),
-        windowInsets = WindowInsets(),
+        windowInsets = WindowInsets(0, 0, 0, 0),
         modifier = modifier.padding(vertical = 16.dp)
     ) {
         items.forEachIndexed { index, item ->
