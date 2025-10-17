@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 fun MyLoading(
@@ -23,7 +23,7 @@ fun MyLoading(
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
+            verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
         ) {
             CircularProgressIndicator()
             MyTitle(text, fontWeight = FontWeight.Normal)

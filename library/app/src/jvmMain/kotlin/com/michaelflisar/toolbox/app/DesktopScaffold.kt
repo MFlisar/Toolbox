@@ -28,6 +28,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.app.DesktopAppDefaults.getDefaultStatusBarItemsLeft
 import com.michaelflisar.toolbox.app.DesktopAppDefaults.getDefaultStatusBarItemsRight
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
@@ -62,6 +63,7 @@ import org.jetbrains.jewel.window.DecoratedWindowScope
 fun ApplicationScope.DesktopApplication(
     // Navigator
     screen: Screen,
+    theme: MyTheme = MyTheme.windowsDefault(),
     // JVM specific
     onClosed: (suspend () -> Unit)? = null,
     onPreviewKeyEvent: (NativeKeyEvent) -> Boolean = { false },
@@ -97,7 +99,7 @@ fun ApplicationScope.DesktopApplication(
                     }
                 }
                 val appState = rememberAppState()
-                AppThemeProvider {
+                AppThemeProvider(theme) {
                     RootLocalProvider(appState, setRootLocals = true) {
                         content(navigator)
                     }

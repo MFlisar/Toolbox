@@ -1,7 +1,6 @@
 package com.michaelflisar.toolbox.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
@@ -12,8 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 fun <T> MyMultiSegmentedButtonRow(
@@ -135,7 +133,7 @@ private fun MyMultiSegmentedButtonRowImpl(
     ) {
         if (showSelectionInfo) {
             MyLabeledInformationHorizontal(
-                modifier = Modifier.padding(bottom = LocalStyle.current.spacingSmall),
+                modifier = Modifier.padding(bottom = LocalTheme.current.spacing.small),
                 label = "Selected",
                 info = "${selected.size}/${items.size}"
             )

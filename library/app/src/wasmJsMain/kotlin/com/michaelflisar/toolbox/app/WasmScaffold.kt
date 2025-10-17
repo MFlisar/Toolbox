@@ -18,6 +18,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.app.classes.WasmAppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
@@ -36,6 +37,7 @@ import kotlinx.browser.document
 fun WasmApplication(
     screen: Screen,
     wasmSetup: WasmAppSetup,
+    theme: MyTheme = MyTheme.default(),
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
@@ -47,7 +49,7 @@ fun WasmApplication(
         document.getElementById(wasmSetup.divLoadingElementId)?.remove()
 
         val appState = rememberAppState()
-        AppThemeProvider {
+        AppThemeProvider(theme) {
             RootLocalProvider(appState, setRootLocals = true) {
                 Root(
                     appState = appState,

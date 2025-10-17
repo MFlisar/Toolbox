@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox.table.ui
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -24,7 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.table.data.TableClickHandler
 import com.michaelflisar.toolbox.table.data.TableData
 import com.michaelflisar.toolbox.table.definitions.Column
@@ -107,7 +106,7 @@ internal fun <Item> TableRow(
                     Modifier.background(MaterialTheme.colorScheme.secondary)
                 } else Modifier
             )
-            .padding(end = LocalStyle.current.scrollbar) // für Scrollbar
+            .padding(end = LocalTheme.current.scrollbar.size) // für Scrollbar
     ) {
         columns.forEachIndexed { index, column ->
             val modifier = when (val clickType = clickHandler) {

@@ -4,12 +4,10 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -39,12 +37,9 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import com.michaelflisar.toolbox.Platform.cursor
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 object MyDropdownDefaults {
 
@@ -593,9 +588,9 @@ private fun <T> MyDropdownDropdown(
                 modifier = Modifier
                     .offset(y = with(LocalDensity.current) { scrollState.value.toDp() })
                     .background(MaterialTheme.colorScheme.surfaceContainer)
-                    .padding(all = LocalStyle.current.paddingDefault)
+                    .padding(all = LocalTheme.current.padding.default)
                     .zIndex(2f),
-                verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
+                verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small)
             ) {
                 Text(
                     text = title,

@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -19,7 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -34,7 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.components.MyExpandableTitle.IconPlacement
 
 object MyExpandableTitle {
@@ -204,11 +201,11 @@ fun MyExpandableTitle(
                             IconPlacement.Left -> 0.dp
                             IconPlacement.Right,
                             IconPlacement.Hide,
-                                -> LocalStyle.current.paddingDefault
+                                -> LocalTheme.current.padding.default
                         },
-                        bottom = LocalStyle.current.paddingDefault,
-                        top = LocalStyle.current.paddingDefault,
-                        end = LocalStyle.current.paddingDefault
+                        bottom = LocalTheme.current.padding.default,
+                        top = LocalTheme.current.padding.default,
+                        end = LocalTheme.current.padding.default
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {

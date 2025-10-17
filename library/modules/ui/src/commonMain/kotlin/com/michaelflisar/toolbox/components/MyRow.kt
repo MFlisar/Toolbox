@@ -8,12 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 fun MyRow(
     modifier: Modifier = Modifier,
-    itemSpacing: Dp = LocalStyle.current.spacingDefault,
+    itemSpacing: Dp = LocalTheme.current.spacing.default,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     content: @Composable RowScope.() -> Unit

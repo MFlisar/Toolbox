@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 fun MyPicker(
@@ -36,7 +36,7 @@ fun MyPicker(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
+        horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
     ) {
         Text(value, modifier = Modifier.weight(1f), maxLines = maxLines)
         IconButton(

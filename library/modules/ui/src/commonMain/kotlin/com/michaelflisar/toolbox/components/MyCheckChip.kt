@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
@@ -23,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 fun MyCheckChip(
@@ -69,13 +68,13 @@ fun MyCheckChip(
             onCheckedChange(!checked)
         }
         //.widthIn(min = 40.dp)
-        .padding(LocalStyle.current.paddingSmall)
+        .padding(LocalTheme.current.padding.small)
 
     if (icon != null) {
         Row(
             modifier = m,
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall, Alignment.CenterHorizontally)
+            horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small, Alignment.CenterHorizontally)
         ) {
             CompositionLocalProvider(
                 LocalContentColor provides if (checked) colorSelectedText else colorNotSelectedText

@@ -30,7 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 object MyDropdownButton {
 
@@ -67,7 +67,7 @@ object MyDropdownButton {
                                     text = {
                                         Row(
                                             verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall)
+                                            horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small)
                                         ) {
                                             item.icon?.let {
                                                 Icon(

@@ -27,8 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,21 +35,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.components.MyChip
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyFlowRow
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyTooltipBox
-import com.michaelflisar.toolbox.extensions.disabled
-import com.michaelflisar.toolbox.extensions.variant
 import com.michaelflisar.toolbox.feature.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 import com.michaelflisar.toolbox.feature.menu.rememberMenuState
@@ -92,15 +87,15 @@ fun <T> TableSearchBar(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                horizontal = LocalStyle.current.paddingDefault,
-                vertical = LocalStyle.current.paddingDefault
+                horizontal = LocalTheme.current.padding.default,
+                vertical = LocalTheme.current.padding.default
             )
             .animateContentSize(),
         containerColor = colors.containerColor,
         contentColor = colors.contentColor,
         shape = shape,
         borderColor = colors.borderColor,
-        horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
+        horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
     ) {
         MyColumn {
             if (showTextSearch) {
@@ -233,10 +228,10 @@ fun <T> TableSearchBar(
                                             shadowElevation = 8.dp
                                         ) {
                                             Column(
-                                                modifier = Modifier.padding(LocalStyle.current.paddingDefault)
+                                                modifier = Modifier.padding(LocalTheme.current.padding.default)
                                                     .width(popupWidth),
                                                 verticalArrangement = Arrangement.spacedBy(
-                                                    LocalStyle.current.spacingDefault
+                                                    LocalTheme.current.spacing.default
                                                 )
                                             ) {
                                                 column.filter!!.Render(

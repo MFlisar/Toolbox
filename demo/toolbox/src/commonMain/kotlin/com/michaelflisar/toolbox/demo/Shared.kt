@@ -14,6 +14,7 @@ import com.michaelflisar.composethemer.FlatUIThemes
 import com.michaelflisar.composethemer.Material500Themes
 import com.michaelflisar.composethemer.MetroThemes
 import com.michaelflisar.composethemer.themes.DefaultThemes
+import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppScope
@@ -65,7 +66,7 @@ object Shared {
         debugPrefs: DebugPrefs,
         icon: @Composable () -> Painter = { appIcon(LocalContentColor.current.isLight()) },
         isDebugBuild: Boolean,
-        fileLogger: FileLogger<*>?,
+        fileLogger: FileLogger<*>?
     ): AppSetup {
         return AppSetup(
             developer = developer,

@@ -26,7 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.extensions.disabled
 
 @Composable
@@ -173,7 +172,7 @@ private fun MyMultiDropdownImpl(
         val labelColor =
             color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.onSurfaceVariant
         Column(
-            verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
+            verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth()
@@ -187,7 +186,7 @@ private fun MyMultiDropdownImpl(
                             }
                         } else Modifier
                     )
-                    .padding(LocalStyle.current.paddingDefault)
+                    .padding(LocalTheme.current.padding.default)
                 //.padding(horizontal = 16.dp, vertical = 8.dp)
                 ,
                 verticalAlignment = Alignment.CenterVertically
@@ -259,7 +258,7 @@ private fun MyMultiDropdownImpl(
                             val color = if (selected) MaterialTheme.colorScheme.primary else LocalContentColor.current
                             Icon(
                                 modifier = Modifier.align(Alignment.CenterVertically)
-                                    .padding(end = LocalStyle.current.spacingDefault),
+                                    .padding(end = LocalTheme.current.spacing.default),
                                 imageVector = if (selected) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
                                 contentDescription = null,
                                 tint = color

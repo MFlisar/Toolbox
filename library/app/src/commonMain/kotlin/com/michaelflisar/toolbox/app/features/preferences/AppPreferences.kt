@@ -63,7 +63,6 @@ import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.backup.ContentPreferencesAsSubPreference
@@ -79,7 +78,7 @@ import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.localContext
 import com.michaelflisar.toolbox.app.platform.restart
 import com.michaelflisar.toolbox.backup.BackupManager
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_settings
 import com.michaelflisar.toolbox.core.resources.no
@@ -299,7 +298,7 @@ internal fun SettingsContent(
                         ) {
                             Text(
                                 text = if (page == 0) style.labelDefaultPage else style.customPages[page - 1].title,
-                                modifier = Modifier.padding(LocalStyle.current.paddingDefault)
+                                modifier = Modifier.padding(LocalTheme.current.padding.default)
                             )
                         }
                     }

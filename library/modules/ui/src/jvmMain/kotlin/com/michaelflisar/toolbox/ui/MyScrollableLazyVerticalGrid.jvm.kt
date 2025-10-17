@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 actual fun MyScrollableLazyVerticalGrid(
@@ -28,9 +28,9 @@ actual fun MyScrollableLazyVerticalGrid(
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = if (overlapScrollbar) 0.dp else LocalStyle.current.paddingForScrollbar),
+                .padding(end = if (overlapScrollbar) 0.dp else LocalTheme.current.scrollbar.paddingForScrollbar),
             columns = gridCells,
-            contentPadding = PaddingValues(LocalStyle.current.paddingForScrollbar),
+            contentPadding = PaddingValues(LocalTheme.current.scrollbar.paddingForScrollbar),
             verticalArrangement = verticalArrangement,
             horizontalArrangement = horizontalArrangement,
             state = gridState
@@ -39,7 +39,7 @@ actual fun MyScrollableLazyVerticalGrid(
         }
 
         VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(LocalStyle.current.scrollbar),
+            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(LocalTheme.current.scrollbar.size),
             adapter = rememberScrollbarAdapter(gridState)
         )
     }

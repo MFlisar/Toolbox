@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.extensions.disabled
 
 private object MyChipsRow {
@@ -177,15 +177,15 @@ private fun <T> MyChipsFlowRowImpl(
     ) {
         if (showSelectionInfo && selection !is MyChipsRow.Selection.Single) {
             MyLabeledInformationHorizontal(
-                modifier = Modifier.padding(bottom = LocalStyle.current.spacingSmall),
+                modifier = Modifier.padding(bottom = LocalTheme.current.spacing.small),
                 label = "Selected",
                 info = "${selectedIndices.size}/${items.size}"
             )
         }
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall),
-            verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingSmall, Alignment.CenterVertically)
+            horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small),
+            verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small, Alignment.CenterVertically)
         ) {
             if (selection !is MyChipsRow.Selection.Single) {
                 val iconSize = 24.dp
@@ -232,7 +232,7 @@ private fun <T> MyChipsFlowRowImpl(
                             onSelectionChange(selectedNew)
                         }
                         .widthIn(min =  minSegmentWidth)
-                        .padding(LocalStyle.current.paddingSmall),
+                        .padding(LocalTheme.current.padding.small),
                     text = mapper(item),
                     maxLines = 1,
                     color = if (selectedIndices.contains(index)) colorSelectedText else colorNotSelectedText,

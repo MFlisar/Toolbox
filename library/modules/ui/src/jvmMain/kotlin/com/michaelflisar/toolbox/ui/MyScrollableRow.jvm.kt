@@ -5,10 +5,8 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 actual fun MyScrollableRow(
@@ -35,14 +33,14 @@ actual fun MyScrollableRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalScroll(scrollState)
-                .padding(bottom = if (overlapScrollbar) 0.dp else LocalStyle.current.paddingForScrollbar),
+                .padding(bottom = if (overlapScrollbar) 0.dp else LocalTheme.current.scrollbar.paddingForScrollbar),
             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
             verticalAlignment = verticalAlignment
         ) {
             content()
         }
         HorizontalScrollbar(
-            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(LocalStyle.current.scrollbar),
+            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(LocalTheme.current.scrollbar.size),
             adapter = rememberScrollbarAdapter(scrollState)
         )
     }

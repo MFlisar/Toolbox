@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.disabled
@@ -321,24 +321,24 @@ private fun HeaderPopup(
                 shadowElevation = 8.dp
             ) {
                 Column(
-                    modifier = Modifier.padding(LocalStyle.current.paddingDefault)
+                    modifier = Modifier.padding(LocalTheme.current.padding.default)
                         .width(popupWidth),
-                    verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
+                    verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
                 ) {
                     CompositionLocalProvider(
                         LocalMinimumInteractiveComponentSize provides 0.dp
                     ) {
 
-                        val iconPadding = LocalStyle.current.paddingSmall
+                        val iconPadding = LocalTheme.current.padding.small
                         val iconSize = 24.dp
                         val iconModifier = Modifier.size(iconSize + iconPadding)
                         val contentInsetStart =
-                            iconSize + iconPadding + LocalStyle.current.spacingDefault
+                            iconSize + iconPadding + LocalTheme.current.spacing.default
 
                         if (sortable) {
                             Row(
                                 modifier = Modifier.heightIn(min = iconSize + iconPadding),
-                                horizontalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault),
+                                horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Icon(

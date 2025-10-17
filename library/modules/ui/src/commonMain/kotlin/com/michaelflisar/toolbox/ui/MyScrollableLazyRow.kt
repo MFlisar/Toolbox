@@ -8,12 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 expect fun MyScrollableLazyRow(
     modifier: Modifier = Modifier,
-    itemSpacing: Dp = LocalStyle.current.spacingDefault,
+    itemSpacing: Dp = LocalTheme.current.spacing.default,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     state: LazyListState = rememberLazyListState(),
     overlapScrollbar: Boolean = false,

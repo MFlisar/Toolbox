@@ -1866,3 +1866,20 @@
 [D] 2025-10-10 14:02:48.549 [PageSelection.kt:119]: add 2 | selected: 3
 [I] 2025-10-10 14:02:49.936 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
 [I] 2025-10-10 14:02:49.937 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[D] 2025-10-17 12:58:34.302 [UpdateManager.kt:42]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2025-10-17 12:58:34.274 [UpdateManager.kt:28]: lastVersion = 1 => currentVersion = 1 
+[I] 2025-10-17 12:58:36.025 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:36.456 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:37.183 [WindowState.kt:96]: Saving window state: {w=918, h=800, x=845, y=115, placement=Floating}
+[I] 2025-10-17 12:58:40.346 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:41.499 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:41.499 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:42.135 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:42.867 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:42.869 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:44.926 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-17 12:58:44.926 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-17 12:58:44.927 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-17 12:58:49.347 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:49.965 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-17 12:58:51.312 [NavBackHandler.kt:73]: NavBackHandler: enabled = false

@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 actual fun MyScrollableLazyHorizontalGrid(
@@ -28,9 +28,9 @@ actual fun MyScrollableLazyHorizontalGrid(
         LazyHorizontalGrid(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = if (overlapScrollbar) 0.dp else LocalStyle.current.paddingForScrollbar),
+                .padding(bottom = if (overlapScrollbar) 0.dp else LocalTheme.current.scrollbar.paddingForScrollbar),
             rows = gridRows,
-            contentPadding = PaddingValues(LocalStyle.current.paddingForScrollbar),
+            contentPadding = PaddingValues(LocalTheme.current.scrollbar.paddingForScrollbar),
             verticalArrangement = verticalArrangement,
             horizontalArrangement = horizontalArrangement,
             state = gridState
@@ -39,7 +39,7 @@ actual fun MyScrollableLazyHorizontalGrid(
         }
 
         HorizontalScrollbar(
-            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(LocalStyle.current.scrollbar),
+            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(LocalTheme.current.scrollbar.size),
             adapter = rememberScrollbarAdapter(gridState)
         )
     }

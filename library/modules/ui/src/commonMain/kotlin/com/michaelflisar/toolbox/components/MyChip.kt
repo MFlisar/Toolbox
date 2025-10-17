@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 fun MyChip(
@@ -42,7 +42,7 @@ fun MyChip(
             if (onClick != null) Modifier.clickable { onClick() }
             else Modifier
         )
-        .padding(LocalStyle.current.paddingSmall)
+        .padding(LocalTheme.current.padding.small)
 
     CompositionLocalProvider(
         LocalContentColor provides (labelColor.takeIf { it != Color.Unspecified }
@@ -52,7 +52,7 @@ fun MyChip(
             modifier = m,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(
-                LocalStyle.current.spacingSmall,
+                LocalTheme.current.spacing.small,
                 Alignment.CenterHorizontally
             )
         ) {
@@ -98,7 +98,7 @@ fun MyChip(
             if (onClick != null) Modifier.clickable { onClick() }
             else Modifier
         )
-        .padding(LocalStyle.current.paddingSmall)
+        .padding(LocalTheme.current.padding.small)
 
     CompositionLocalProvider(
         LocalContentColor provides (labelColor.takeIf { it != Color.Unspecified }
@@ -108,7 +108,7 @@ fun MyChip(
             modifier = m,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(
-                LocalStyle.current.spacingSmall,
+                LocalTheme.current.spacing.small,
                 Alignment.CenterHorizontally
             )
         ) {

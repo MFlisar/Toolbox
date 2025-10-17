@@ -4,10 +4,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.application
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
+import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.DesktopAppDefaults
@@ -42,6 +44,7 @@ import com.michaelflisar.toolbox.utils.JvmFolderUtil
 import com.michaelflisar.toolbox.utils.JvmUtil
 import org.jetbrains.compose.resources.stringResource
 
+@OptIn(ExperimentalMaterial3Api::class)
 fun main() {
 
     // 1) Pfade

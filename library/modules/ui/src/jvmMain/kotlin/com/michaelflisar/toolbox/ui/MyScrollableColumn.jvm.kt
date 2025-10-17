@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 actual fun MyScrollableColumn(
@@ -34,14 +34,14 @@ actual fun MyScrollableColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
-                .padding(end = if (overlapScrollbar) 0.dp else LocalStyle.current.paddingForScrollbar),
+                .padding(end = if (overlapScrollbar) 0.dp else LocalTheme.current.scrollbar.paddingForScrollbar),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
             horizontalAlignment = horizontalAlignment
         ) {
             content()
         }
         VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(LocalStyle.current.scrollbar),
+            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(LocalTheme.current.scrollbar.size),
             adapter = rememberScrollbarAdapter(scrollState)
         )
     }

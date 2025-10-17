@@ -25,6 +25,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
 import com.michaelflisar.toolbox.app.features.dialogs.ErrorDialogProvider
@@ -50,6 +51,7 @@ import com.michaelflisar.toolbox.app.features.toolbar.toolbar
 fun ComponentActivity.AndroidApplication(
     // Navigator
     screen: Screen,
+    theme: MyTheme = MyTheme.default(),
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
@@ -57,7 +59,7 @@ fun ComponentActivity.AndroidApplication(
         screen = screen
     ) { navigator ->
         val appState = rememberAppState()
-        AppThemeProvider(this) {
+        AppThemeProvider(theme, this) {
             RootLocalProvider(appState, setRootLocals = true) {
                 Root(
                     appState = appState,

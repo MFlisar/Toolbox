@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.michaelflisar.toolbox.classes.LocalStyle
+import com.michaelflisar.toolbox.LocalTheme
 
 enum class PaneSide {
     Left, Right
@@ -93,8 +93,8 @@ fun PaneSide(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(LocalStyle.current.paddingDefault),
-                        verticalArrangement = Arrangement.spacedBy(LocalStyle.current.spacingDefault)
+                            .padding(LocalTheme.current.padding.default),
+                        verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
                     ) {
                         content()
                     }
@@ -152,7 +152,7 @@ private fun Title(
         exit = fadeOut() + shrinkHorizontally(),
     ) {
         Text(
-            modifier = modifier.padding(LocalStyle.current.paddingDefault),
+            modifier = modifier.padding(LocalTheme.current.padding.default),
             text = label,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold
