@@ -1883,3 +1883,142 @@
 [I] 2025-10-17 12:58:49.347 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
 [I] 2025-10-17 12:58:49.965 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
 [I] 2025-10-17 12:58:51.312 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[D] 2025-10-18 12:56:16.296 [UpdateManager.kt:42]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2025-10-18 12:56:16.270 [UpdateManager.kt:28]: lastVersion = 1 => currentVersion = 1 
+[I] 2025-10-18 12:56:17.497 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:17.829 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:18.537 [WindowState.kt:96]: Saving window state: {w=918, h=800, x=845, y=115, placement=Floating}
+[I] 2025-10-18 12:56:19.403 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:19.968 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:20.461 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:20.462 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:20.985 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:21.540 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:21.540 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:22.417 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-18 12:56:22.418 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-18 12:56:22.418 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-18 12:56:38.398 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:38.398 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:38.399 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:40.812 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:42.141 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:43.043 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:43.043 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:45.081 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-18 12:56:45.728 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[D] 2025-10-28 12:59:07.711 [UpdateManager.kt:42]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2025-10-28 12:59:07.681 [UpdateManager.kt:28]: lastVersion = 1 => currentVersion = 1 
+[I] 2025-10-28 12:59:09.197 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 12:59:09.595 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 12:59:10.320 [WindowState.kt:96]: Saving window state: {w=918, h=800, x=845, y=115, placement=Floating}
+[I] 2025-10-28 12:59:11.419 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 12:59:12.226 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 12:59:12.226 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 12:59:13.763 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 12:59:13.763 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 12:59:13.764 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[D] 2025-10-28 12:59:56.894 [UpdateManager.kt:28]: lastVersion = 1 => currentVersion = 1 
+[D] 2025-10-28 12:59:56.932 [UpdateManager.kt:42]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2025-10-28 12:59:58.393 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 12:59:58.698 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 12:59:59.366 [WindowState.kt:96]: Saving window state: {w=918, h=800, x=845, y=115, placement=Floating}
+[I] 2025-10-28 12:59:59.998 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:00:00.790 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:00:00.790 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:00:01.876 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:00:01.877 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:00:01.877 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[D] 2025-10-28 13:00:05.287 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='7', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='7', selection=TextRange(0, 0), composition=null)
+[D] 2025-10-28 13:00:09.158 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='7', selection=TextRange(0, 0), composition=null) | stateText = TextFieldValue(text='7', selection=TextRange(1, 1), composition=null)
+[D] 2025-10-28 13:00:09.886 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='7', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='7', selection=TextRange(0, 0), composition=null)
+[D] 2025-10-28 13:00:39.017 [UpdateManager.kt:42]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2025-10-28 13:00:38.987 [UpdateManager.kt:28]: lastVersion = 1 => currentVersion = 1 
+[I] 2025-10-28 13:00:40.512 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:00:40.853 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:00:41.518 [WindowState.kt:96]: Saving window state: {w=918, h=800, x=845, y=115, placement=Floating}
+[I] 2025-10-28 13:00:42.095 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:00:43.202 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:00:43.202 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:00:44.092 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:00:44.093 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:00:44.093 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[D] 2025-10-28 13:00:45.167 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='5', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='5', selection=TextRange(0, 0), composition=null)
+[D] 2025-10-28 13:00:47.051 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='1', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='5', selection=TextRange(0, 1), composition=null)
+[D] 2025-10-28 13:00:47.465 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='11', selection=TextRange(2, 2), composition=null) | stateText = TextFieldValue(text='1', selection=TextRange(1, 1), composition=null)
+[D] 2025-10-28 13:00:48.796 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='1', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='11', selection=TextRange(2, 2), composition=null)
+[D] 2025-10-28 13:00:48.967 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='', selection=TextRange(0, 0), composition=null) | stateText = TextFieldValue(text='1', selection=TextRange(1, 1), composition=null)
+[D] 2025-10-28 13:00:49.561 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='0', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='', selection=TextRange(0, 0), composition=null)
+[D] 2025-10-28 13:00:50.599 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='', selection=TextRange(0, 0), composition=null) | stateText = TextFieldValue(text='0', selection=TextRange(1, 1), composition=null)
+[D] 2025-10-28 13:00:50.810 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='1', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='', selection=TextRange(0, 0), composition=null)
+[D] 2025-10-28 13:00:52.984 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='', selection=TextRange(0, 0), composition=null) | stateText = TextFieldValue(text='1', selection=TextRange(1, 1), composition=null)
+[D] 2025-10-28 13:00:53.912 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='1', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='', selection=TextRange(0, 0), composition=null)
+[D] 2025-10-28 13:00:54.071 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='15', selection=TextRange(2, 2), composition=null) | stateText = TextFieldValue(text='1', selection=TextRange(1, 1), composition=null)
+[D] 2025-10-28 13:00:54.536 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='1', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='15', selection=TextRange(2, 2), composition=null)
+[D] 2025-10-28 13:00:54.712 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='', selection=TextRange(0, 0), composition=null) | stateText = TextFieldValue(text='1', selection=TextRange(1, 1), composition=null)
+[D] 2025-10-28 13:00:55.512 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='5', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='', selection=TextRange(0, 0), composition=null)
+[I] 2025-10-28 13:01:03.311 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:01:03.851 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[D] 2025-10-28 13:01:05.177 [PageSelection.kt:122]: add 0 | selected: 1
+[I] 2025-10-28 13:01:05.206 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:01:05.207 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[D] 2025-10-28 13:01:05.340 [PageSelection.kt:122]: add 1 | selected: 2
+[D] 2025-10-28 13:01:05.506 [PageSelection.kt:122]: add 2 | selected: 3
+[I] 2025-10-28 13:01:07.910 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:01:07.911 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[D] 2025-10-28 13:01:09.195 [PageSelection.kt:122]: add 0 | selected: 1
+[I] 2025-10-28 13:01:09.210 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:01:09.211 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[D] 2025-10-28 13:01:09.360 [PageSelection.kt:122]: add 1 | selected: 2
+[I] 2025-10-28 13:01:11.210 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:01:11.211 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:01:12.500 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:01:13.144 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[D] 2025-10-28 13:15:39.578 [UpdateManager.kt:28]: lastVersion = 1 => currentVersion = 1 
+[D] 2025-10-28 13:15:39.607 [UpdateManager.kt:42]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2025-10-28 13:15:41.172 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:15:41.510 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:15:42.153 [WindowState.kt:96]: Saving window state: {w=918, h=800, x=845, y=115, placement=Floating}
+[I] 2025-10-28 13:15:53.280 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:15:54.339 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:15:54.340 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:15:56.189 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:15:56.189 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:15:56.190 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[D] 2025-10-28 13:15:58.302 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='4', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='4', selection=TextRange(0, 0), composition=null)
+[D] 2025-10-28 13:15:59.179 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='4', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='4', selection=TextRange(0, 1), composition=null)
+[I] 2025-10-28 13:16:00.488 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:16:01.718 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:16:02.287 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:16:03.567 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:16:03.568 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:16:04.542 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:16:04.542 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:16:04.543 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[D] 2025-10-28 13:18:53.249 [UpdateManager.kt:42]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2025-10-28 13:18:53.224 [UpdateManager.kt:28]: lastVersion = 1 => currentVersion = 1 
+[I] 2025-10-28 13:18:54.712 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:18:55.030 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:18:55.688 [WindowState.kt:96]: Saving window state: {w=918, h=800, x=845, y=115, placement=Floating}
+[D] 2025-10-28 13:19:37.313 [UpdateManager.kt:28]: lastVersion = 1 => currentVersion = 1 
+[D] 2025-10-28 13:19:37.346 [UpdateManager.kt:42]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2025-10-28 13:19:38.906 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:39.261 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:39.919 [WindowState.kt:96]: Saving window state: {w=918, h=800, x=845, y=115, placement=Floating}
+[I] 2025-10-28 13:19:41.871 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:42.833 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:42.833 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:45.044 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:19:45.044 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:19:45.045 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[D] 2025-10-28 13:19:48.064 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='9', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='8', selection=TextRange(0, 1), composition=null)
+[I] 2025-10-28 13:19:50.351 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:51.281 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:52.164 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:52.165 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:52.577 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:53.164 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:53.164 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-10-28 13:19:53.922 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:19:53.922 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[I] 2025-10-28 13:19:53.922 [NavBackHandler.kt:73]: NavBackHandler: enabled = true

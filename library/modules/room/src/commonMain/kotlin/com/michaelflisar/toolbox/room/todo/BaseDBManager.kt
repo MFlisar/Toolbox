@@ -1,20 +1,13 @@
-package com.michaelflisar.toolbox.room
+package com.michaelflisar.toolbox.room.todo
 
 import androidx.room.RoomDatabase
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.room.interfaces.IBaseDao
-import com.michaelflisar.toolbox.room.interfaces.IBaseDaoClear
-import com.michaelflisar.toolbox.room.interfaces.IBaseDaoFullEntity
-import com.michaelflisar.toolbox.room.interfaces.IBaseFlowDao
-import com.michaelflisar.toolbox.room.interfaces.IBaseFullFlowDao
-import com.michaelflisar.toolbox.room.interfaces.IBaseFullLoadDao
-import com.michaelflisar.toolbox.room.interfaces.IBaseLoadDao
-import com.michaelflisar.toolbox.room.interfaces.IDefaultDao
 import com.michaelflisar.toolbox.room.interfaces.IIDProvider
 import com.michaelflisar.toolbox.room.interfaces.IRoomEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
+@Deprecated("")
 abstract class BaseDBManager<Database : RoomDatabase, ID : Number> {
 
     abstract fun createRoomDatabase(): Database
@@ -26,7 +19,7 @@ abstract class BaseDBManager<Database : RoomDatabase, ID : Number> {
     // -----------------
     // DAOs
     // -----------------
-    
+
     val DAOS: List<IBaseDao<*, *>> by lazy {
         getAllDaos()
     }

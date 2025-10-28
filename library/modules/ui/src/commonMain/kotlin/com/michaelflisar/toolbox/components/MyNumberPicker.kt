@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,11 +28,14 @@ import androidx.compose.material3.OutlinedTextFieldDefaults.UnfocusedBorderThick
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -41,78 +45,99 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.core.resources.Res
-import com.michaelflisar.toolbox.core.resources.error_invalid_input
-import com.michaelflisar.toolbox.core.resources.error_invalid_length
-import com.michaelflisar.toolbox.core.resources.error_too_high
-import com.michaelflisar.toolbox.core.resources.error_too_low
+import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.numbers.MyNumberParser
+import com.michaelflisar.toolbox.numbers.MyNumberValidator
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.stringResource
+
+// ------------------
+// Overloads
+// ------------------
 
 @Composable
 fun <T : Number> MyNumberPicker(
-    modifier: Modifier = Modifier,
-    modifierInnerPicker: Modifier = Modifier,
+    value: MutableState<T>,
     validator: MyNumberValidator<T>,
     parser: MyNumberParser<T>,
-    value: MutableState<T>,
+    modifier: Modifier = Modifier,
+    modifierInnerPicker: Modifier = Modifier,
     label: String = "",
     enabled: Boolean = true,
     showButtons: Boolean = true,
     overrun: Pair<T, T>? = null,
     allowManualInput: Boolean = true,
     clearFocusOnButtonPress: Boolean = true,
+    selectAllOnFocus: Boolean = false,
     textStyle: TextStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
     focused: Boolean = false,
+    prefix: @Composable (() -> Unit)? = null,
+    suffix: @Composable (() -> Unit)? = null,
     onCurrentValueIsInvalid: (text: String) -> Unit = {}
 ) {
     MyNumberPicker(
-        modifier,
-        modifierInnerPicker,
-        validator,
-        parser,
-        value.value,
-        label,
-        enabled,
-        showButtons,
-        overrun,
-        allowManualInput,
-        clearFocusOnButtonPress,
-        textStyle,
-        focused,
-        onCurrentValueIsInvalid
+        value = value.value,
+        validator = validator,
+        parser = parser,
+        modifier = modifier,
+        modifierInnerPicker = modifierInnerPicker,
+        label = label,
+        enabled = enabled,
+        showButtons = showButtons,
+        overrun = overrun,
+        allowManualInput = allowManualInput,
+        clearFocusOnButtonPress = clearFocusOnButtonPress,
+        selectAllOnFocus = selectAllOnFocus,
+        textStyle = textStyle,
+        focused = focused,
+        prefix = prefix,
+        suffix = suffix,
+        onCurrentValueIsInvalid = onCurrentValueIsInvalid
     ) {
         value.value = it
     }
 }
 
+// ------------------
+// Implementierung
+// ------------------
+
 @Composable
 fun <T : Number> MyNumberPicker(
-    modifier: Modifier = Modifier,
-    modifierInnerPicker: Modifier = Modifier,
+    value: T,
     validator: MyNumberValidator<T>,
     parser: MyNumberParser<T>,
-    value: T,
+    modifier: Modifier = Modifier,
+    modifierInnerPicker: Modifier = Modifier,
     label: String = "",
     enabled: Boolean = true,
     showButtons: Boolean = true,
     overrun: Pair<T, T>? = null,
     allowManualInput: Boolean = true,
     clearFocusOnButtonPress: Boolean = true,
+    selectAllOnFocus: Boolean = false,
     textStyle: TextStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
     focused: Boolean = false,
+    prefix: @Composable (() -> Unit)? = null,
+    suffix: @Composable (() -> Unit)? = null,
     onCurrentValueIsInvalid: (text: String) -> Unit = {},
     onValueChanged: (T) -> Unit = {}
 ) {
-    val stateValue = remember(value) { mutableStateOf(value) }
-    val stateText = remember(value) { mutableStateOf(value.toString()) }
+    val value = parser.correct(value)
+
+    val initialValue = rememberSaveable { value }
+    val stateValue = rememberSaveable { mutableStateOf(value) }
+    var stateText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(TextFieldValue(parser.formatValue(value)))
+    }
 
     val focusManager = LocalFocusManager.current
     val lines = 1
@@ -130,7 +155,7 @@ fun <T : Number> MyNumberPicker(
                         overrun.first
                     } else parser.getPrevValue(stateValue.value)
                 stateValue.value = next
-                stateText.value = next.toString()
+                stateText = stateText.copy(text = parser.formatValue(next))
                 onValueChanged(stateValue.value)
                 if (clearFocusOnButtonPress) {
                     focusManager.clearFocus()
@@ -147,7 +172,7 @@ fun <T : Number> MyNumberPicker(
                         overrun.second
                     } else parser.getNextValue(stateValue.value)
                 stateValue.value = next
-                stateText.value = next.toString()
+                stateText = stateText.copy(text = parser.formatValue(next))
                 onValueChanged(stateValue.value)
                 if (clearFocusOnButtonPress) {
                     focusManager.clearFocus()
@@ -160,7 +185,7 @@ fun <T : Number> MyNumberPicker(
 
     if (custom) {
 
-        val isFocused = remember(focused) { mutableStateOf(focused) }
+        val isFocused = remember { mutableStateOf(focused) }
         // isFocused.value = focused
 
         //L.d { "[$label] isFocused = ${isFocused.value} | focused = $focused" }
@@ -171,50 +196,97 @@ fun <T : Number> MyNumberPicker(
             bottom = 4.dp
         )
 
+        val isError = !validator.isValid.value
+        val errorText = validator.error.value
+
+
         // Input in Box and Card with Custom Label and Error Texts and custom focus handling
         MyLabeledBox(
             modifier = modifier,
             modifierInner = modifierInnerPicker,
-            label,
-            enabled,
-            validator.error.value,
-            isFocused.value
+            label = label,
+            enabled = enabled,
+            error = errorText,
+            focused = isFocused.value
         ) {
             Row(
                 modifier = Modifier,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 buttonDecrease?.invoke()
-                val isError = !validator.isValid()
+
+                val mutableInteractionSource = remember { MutableInteractionSource() }
+
+                if (selectAllOnFocus) {
+                    LaunchedEffect(Unit) {
+                        mutableInteractionSource.interactions
+                            .collect { interaction ->
+                                if (interaction is FocusInteraction.Focus) {
+                                    delay(100)
+                                    stateText = stateText.copy(selection = TextRange(0, stateText.text.length))
+                                    //L.tag("SELECT").d { "interactionSource: text = '${stateText.text}' | selection = ${stateText.selection}" }
+                                } else if (interaction is FocusInteraction.Unfocus) {
+                                    stateText = stateText.copy(selection = TextRange.Zero)
+                                    //L.tag("SELECT").d { "interactionSource: focus lost => selection cleared | selection = ${stateText.selection}" }
+                                }
+                            }
+                    }
+                }
+
                 OutlinedNumberTextField(
+                    interactionSource = mutableInteractionSource,
                     modifier = Modifier
                         .weight(1f)
                         .onFocusChanged {
-                            if (allowManualInput)
+                            if (allowManualInput) {
                                 isFocused.value = it.isFocused
+                            }
+                            //if (it.isFocused && selectAllOnFocus) {
+                            //    L.tag("SELECT").d { "setting selectAll to true..." }
+                            //    stateText = stateText.copy(selection = TextRange(0, stateText.text.length))
+                            //}
                         },
-                    value = stateText.value,
+                    value = stateText,
                     enabled = enabled && allowManualInput,
                     readOnly = !allowManualInput,
                     onValueChange = {
-                        stateText.value = it
-                        val value = parser.parse(it)
-                        validator.check(value, true)
-                        if (validator.isValid()) {
-                            stateValue.value = value!!
-                            onValueChanged(value)
+
+                        if (it == stateText) {
+                            // skip
+                            L.tag("SELECT").d { "onValueChange skipped" }
+
                         } else {
-                            onCurrentValueIsInvalid(it)
+
+                            L.tag("SELECT").d { "onValueChange: $it | stateText = $stateText" }
+
+                            stateText = it
+
+
+                            val newValue = parser.parse(it.text)?.let { parser.correct(it) }
+                            val valid = validator.check(newValue, true)
+
+                            if (valid) {
+                                stateValue.value = newValue!!
+                                onValueChanged(newValue)
+                            } else {
+                                // zurückfallen auf initial wert
+                                stateValue.value = initialValue
+                                onValueChanged(initialValue)
+                                // fehler danach melden
+                                onCurrentValueIsInvalid(it.text)
+                            }
                         }
                     },
-                    isError = isError,
+                    isError= isError,
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     label = null,
-                    placeholder = { Text(text = label) },
+                    //placeholder = { Text(text = label) },
                     minLines = lines,
                     maxLines = lines,
                     singleLine = lines == 1,
                     textStyle = textStyle,
+                    prefix = prefix,
+                    suffix = suffix,
                     supportingText = null,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.Transparent,
@@ -230,36 +302,59 @@ fun <T : Number> MyNumberPicker(
         }
     } else {
 
+        var selectAll by remember { mutableStateOf(false) }
+
         Row(
             modifier = modifier,
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(
-                modifier = modifier,
-                value = stateText.value,
-                enabled = enabled,
+                modifier = Modifier
+                    .weight(1f)
+                    .onFocusChanged {
+                        if (it.isFocused && selectAllOnFocus) {
+                            selectAll = true
+
+                        }
+                    },
+                value = stateText,
+                enabled = enabled && allowManualInput,
                 readOnly = !allowManualInput,
                 onValueChange = {
-                    stateText.value = it
-                    val value = parser.parse(it)
-                    validator.check(value, true)
-                    if (validator.isValid()) {
-                        stateValue.value = value!!
-                        onValueChanged(value)
+                    if (selectAll) {
+                        // select all once
+                        stateText = it.copy(selection = TextRange(0, it.text.length))
+                        selectAll = false
                     } else {
-                        onCurrentValueIsInvalid(it)
+                        stateText = it
+                    }
+
+                    val newValue = parser.parse(it.text)?.let { parser.correct(it) }
+                    val valid = validator.check(newValue, true)
+
+                    if (valid) {
+                        stateValue.value = newValue!!
+                        onValueChanged(newValue)
+                    } else {
+                        // zurückfallen auf initial wert
+                        stateValue.value = initialValue
+                        onValueChanged(initialValue)
+                        // fehler danach melden
+                        onCurrentValueIsInvalid(it.text)
                     }
                 },
-                isError = !validator.isValid(),
+                isError = !validator.isValid.value,
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 label = if (label.isNotEmpty()) {
                     @Composable { Text(text = label) }
                 } else null,
-                placeholder = { Text(text = label) },
+                //placeholder = { Text(text = label) },
                 minLines = lines,
                 maxLines = lines,
                 singleLine = lines == 1,
                 textStyle = textStyle,
+                prefix = prefix,
+                suffix = suffix,
                 supportingText = {
                     val error = validator.error.value
                     AnimatedVisibility(visible = error != null && enabled) {
@@ -281,170 +376,9 @@ fun <T : Number> MyNumberPicker(
     }
 }
 
-@Composable
-fun <T : Number> rememberMyNumberValidatorAlwaysValid(): MyNumberValidator<T> {
-    return MyNumberValidator(
-        error = remember { mutableStateOf(null) },
-        validate = { null }
-    )
-}
-
-@Suppress("UNCHECKED_CAST")
-fun <T : Number> createNumberParser(stepSize: T): MyNumberParser<T> {
-    return when (stepSize) {
-        is Int -> createNumberParserInt(stepSize)
-        is Double -> createNumberParserDouble(stepSize)
-        is Long -> createNumberParserLong(stepSize)
-        is Float -> createNumberParserFloat(stepSize)
-        else -> throw RuntimeException("Class ${stepSize::class.simpleName} not supported!")
-    } as MyNumberParser<T>
-}
-
-private fun createNumberParserDouble(stepSize: Double = 1.0): MyNumberParser<Double> {
-    return MyNumberParser(
-        parse = { it.toDoubleOrNull() },
-        getPrevValue = { it - stepSize },
-        getNextValue = { it + stepSize }
-    )
-}
-
-private fun createNumberParserInt(stepSize: Int = 1): MyNumberParser<Int> {
-    return MyNumberParser(
-        parse = { it.toIntOrNull() },
-        getPrevValue = { it - stepSize },
-        getNextValue = { it + stepSize }
-    )
-}
-
-private fun createNumberParserFloat(stepSize: Float = 1f): MyNumberParser<Float> {
-    return MyNumberParser(
-        parse = { it.toFloatOrNull() },
-        getPrevValue = { it - stepSize },
-        getNextValue = { it + stepSize }
-    )
-}
-
-private fun createNumberParserLong(stepSize: Long = 1): MyNumberParser<Long> {
-    return MyNumberParser(
-        parse = { it.toLongOrNull() },
-        getPrevValue = { it - stepSize },
-        getNextValue = { it + stepSize }
-    )
-}
-
-@Composable
-fun <T : Number> rememberMyNumberValidator(
-    value: T,
-    validate: (value: T?) -> String?
-): MyNumberValidator<T> {
-    val error = remember(value) { mutableStateOf(validate(value)) }
-    return MyNumberValidator(error, validate)
-}
-
-@Composable
-fun rememberMyNumberPickerIntClasses(
-    value: Int,
-    min: Int = Int.MIN_VALUE,
-    max: Int = Int.MAX_VALUE,
-    stepSize: Int = 1
-): Pair<MyNumberValidator<Int>, MyNumberParser<Int>> {
-    val stringInvalid = stringResource(Res.string.error_invalid_input)
-    val stringTooLow = stringResource(Res.string.error_too_low)
-    val stringTooHigh = stringResource(Res.string.error_too_high)
-    val validator = rememberMyNumberValidator(value) { value ->
-        if (value == null) {
-            stringInvalid
-        } else if (value < min) {
-            stringTooLow
-        } else if (value > max) {
-            stringTooHigh
-        } else null
-    }
-    val parser = createNumberParserInt(stepSize)
-    return Pair(validator, parser)
-}
-
-@Composable
-fun rememberMyNumberPickerIntLengthClasses(
-    value: Int,
-    length: Int,
-    stepSize: Int
-): Pair<MyNumberValidator<Int>, MyNumberParser<Int>> {
-    val stringInvalid = stringResource(Res.string.error_invalid_input)
-    val stringInvalidLength = stringResource(Res.string.error_invalid_length)
-    val validator = rememberMyNumberValidator(value) { value ->
-        if (value == null) {
-            stringInvalid
-        } else if (length != value.toString().length) {
-            stringInvalidLength
-        } else null
-    }
-    val parser = MyNumberParser(
-        parse = { it.toIntOrNull() },
-        getPrevValue = { it - stepSize },
-        getNextValue = { it + stepSize }
-    )
-    return Pair(validator, parser)
-}
-
-@Composable
-fun rememberMyNumberPickerDoubleClasses(
-    value: Double,
-    min: Double = Double.MIN_VALUE,
-    max: Double = Double.MAX_VALUE,
-    stepSize: Double = 1.0
-): Pair<MyNumberValidator<Double>, MyNumberParser<Double>> {
-    val stringInvalid = stringResource(Res.string.error_invalid_input)
-    val stringTooLow = stringResource(Res.string.error_too_low)
-    val stringTooHigh = stringResource(Res.string.error_too_high)
-    val validator = rememberMyNumberValidator(value) { value ->
-        if (value == null) {
-            stringInvalid
-        } else if (value < min) {
-            stringTooLow
-        } else if (value > max) {
-            stringTooHigh
-        } else null
-    }
-    val parser = createNumberParserDouble(stepSize)
-    return Pair(validator, parser)
-}
-
-class MyNumberParser<T : Number>(
-    val parse: (value: String) -> T?,
-    val getPrevValue: (value: T) -> T,
-    val getNextValue: (value: T) -> T
-)
-
-class MyNumberValidator<T : Number>(
-    val error: MutableState<String?> = mutableStateOf(null),
-    val validate: (value: T?) -> String? = { _ -> null }
-) {
-    fun isValid() = error.value == null
-
-    fun check(value: T?, setError: Boolean): Boolean {
-        val error = validate(value)
-        if (setError)
-            this.error.value = error
-        return error == null
-    }
-
-    fun hasValidPrev(value: MutableState<T>, adjuster: MyNumberParser<T>): Boolean {
-        val current = value.value
-        val next = adjuster.getPrevValue(current)
-        if (next == current)
-            return false
-        return check(next, false)
-    }
-
-    fun hasValidNext(value: MutableState<T>, adjuster: MyNumberParser<T>): Boolean {
-        val current = value.value
-        val next = adjuster.getNextValue(current)
-        if (next == current)
-            return false
-        return check(next, false)
-    }
-}
+// ------------------
+// Sub components
+// ------------------
 
 @Composable
 private fun RepeatingIconButton(
@@ -517,8 +451,8 @@ private fun Modifier.repeatingClickable(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun OutlinedNumberTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     readOnly: Boolean = false,
@@ -566,7 +500,7 @@ private fun OutlinedNumberTextField(
         interactionSource = interactionSource
     ) { innerTextField ->
         OutlinedTextFieldDefaults.DecorationBox(
-            value = value,
+            value = value.text,
             innerTextField = innerTextField,
             enabled = enabled,
             singleLine = singleLine,

@@ -12,6 +12,7 @@ import com.michaelflisar.composedialogs.core.DialogButtonType
 import com.michaelflisar.composedialogs.core.DialogContentScrollableColumn
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogEvent
+import com.michaelflisar.composedialogs.core.DialogEventType
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 
@@ -106,7 +107,7 @@ fun FormDialog(
                 negative = DialogButton(texts.confirmDeleteNo)
             ),
             onEvent = {
-                if (it.isPositiveButton) {
+                if (it.type == DialogEventType.ButtonPositive) {
                     onDelete()
                     if (dismissOnButtonClick) {
                         state.dismiss()

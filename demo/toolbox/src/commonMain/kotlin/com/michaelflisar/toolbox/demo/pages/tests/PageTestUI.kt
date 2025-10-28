@@ -39,13 +39,15 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScree
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyCheckbox
 import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyInputButton
 import com.michaelflisar.toolbox.components.MyNumberPicker
 import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.components.rememberMyNumberPickerIntClasses
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.translatablecontent.TranslatableContent
+import com.michaelflisar.toolbox.numbers.rememberMyNumberParser
+import com.michaelflisar.toolbox.numbers.rememberMyNumberValidator
 import com.michaelflisar.toolbox.ui.MyScrollableColumn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -91,7 +93,7 @@ private fun Page(
                 .padding(all = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            MyDropdown(
+            MyDropdownIndex(
                 modifier = Modifier.width(200.dp),
                 title = "Dropdown",
                 items = listOf("One", "Two", "Three"),
@@ -113,23 +115,42 @@ private fun Page(
             )
         }
         MyRow {
-            MyDropdown(
+            MyDropdownIndex(
                 modifier = Modifier.width(128.dp),
                 title = "Button Style",
                 items = listOf("One", "Two", "Three"),
                 selectedIndex = remember { mutableStateOf(0) }
             )
+
+            MyDropdown(
+                modifier = Modifier.width(128.dp),
+                title = "Button Style",
+                items = listOf("One", "Two", "Three"),
+                selected = remember { mutableStateOf("One") }
+            )
+
+            MyDropdown(
+                modifier = Modifier.width(128.dp),
+                title = "Button Style",
+                items = listOf("One", "Two", "Three"),
+                selected = "One",
+                onSelectionChanged = {
+
+                }
+            )
         }
 
         val number = remember { mutableIntStateOf(5) }
-        val (validator1, parser1) = rememberMyNumberPickerIntClasses(number.value, 1, 10, 1)
+        val validator = rememberMyNumberValidator(number.value, 1, 10)
+        val parser = rememberMyNumberParser(number.value, 1, 1)
         MyNumberPicker(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.fillMaxWidth(),
             //modifierInnerPicker = Modifier.fillMaxWidth(),
-            validator = validator1,
-            parser = parser1,
+            validator = validator,
+            parser = parser,
             label = "Number Picker",
-            value = number
+            value = number,
+            selectAllOnFocus = true
         )
 
         val stretch = remember { mutableStateOf(false) }

@@ -1,7 +1,7 @@
 package com.michaelflisar.toolbox.app.classes
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.michaelflisar.kotpreferences.compose.asStateFlowNotNull
@@ -25,8 +25,11 @@ class MutableStateFlowWrapper<T> internal constructor(
         }
     }
 
+    //@Composable
+    //fun collectAsState() = state.collectAsState()
+
     @Composable
-    fun collectAsState() = state.collectAsState()
+    fun collectAsStateWithLifecycle() = state.collectAsStateWithLifecycle()
 }
 
 fun <T> ScreenModel.mutableStateFlowWrapper(initialValue: T) =
@@ -46,8 +49,11 @@ class MutableStateFlowSettingWrapper<T> internal constructor(
         }
     }
 
+    //@Composable
+    //fun collectAsState() = state.collectAsState()
+
     @Composable
-    fun collectAsState() = state.collectAsState()
+    fun collectAsStateWithLifecycle() = state.collectAsStateWithLifecycle()
 }
 
 fun <T> ScreenModel.mutableStateFlowWrapper(

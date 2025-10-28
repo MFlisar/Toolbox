@@ -4,26 +4,26 @@
 cachefileprovider = 		"1.0.0"
 feedback = 		    		"3.0.0"
 kotbilling =        		"2.0.0"
-kotpreferences =        	"2.0.1"
+kotpreferences =        	"3.0.1"
 lumberjack =                "9.0.0"
 composedebugdrawer =		"2.0.0"
-composedialogs =   		    "3.0.5"
+composedialogs =   		    "3.0.6"
 composechangelog =   		"3.0.0"
 composepreferences =   		"2.0.0"
 composethemer =   			"1.0.2"
 composecolors =             "1.0.1"
 kmp-parcelize =             "1.0.1"
-kmp-library =               "2.2.3" # attention: the version for the settings plugin must be adjusted manually!
-toolbox =                   "3.0.0" # für hello world demo
+kmp-library =               "2.2.5" # attention: the version for the settings plugin must be adjusted manually!
+toolbox =                   "3.0.2" # für hello world demo
 
 # Google
 material =                      "1.13.0"
 google-guava =					"33.5.0-android"
-google-ads =	                "24.6.0"
+google-ads =	                "24.7.0"
 google-ump =	                "3.2.0"
 
 # Windows UI
-jewel =                        "0.30.0-252.26252"
+jewel =                        "0.31.0-252.27409"
 intellij-platform =            "251.23774.444"
 skiko =                        "0.9.2"
 

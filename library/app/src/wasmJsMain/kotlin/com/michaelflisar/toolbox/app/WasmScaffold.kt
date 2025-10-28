@@ -12,6 +12,8 @@ import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.core.screen.Screen
@@ -22,6 +24,7 @@ import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.app.classes.WasmAppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
+import com.michaelflisar.toolbox.app.features.backhandler.WasmBackHandlerUtil
 import com.michaelflisar.toolbox.app.features.dialogs.ErrorDialogProvider
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
@@ -55,6 +58,7 @@ fun WasmApplication(
                     appState = appState,
                     setRootLocals = false
                 ) {
+                    WasmBackHandlerUtil.ProvideMouseBackHandler()
                     content(navigator)
                 }
             }

@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.components.MyNumericInput
 import com.michaelflisar.toolbox.form.FormField
 
-class FormFieldNumber<T : Number?> internal constructor(
+class FormFieldNumber<T : Number> internal constructor(
     override val label: String,
     override val stateValue: MutableState<T>,
     override val stateInfo: MutableState<String>,
@@ -28,7 +28,7 @@ class FormFieldNumber<T : Number?> internal constructor(
 }
 
 @Composable
-fun <T : Number?> rememberFormFieldNumber(
+fun <T : Number> rememberFormFieldNumber(
     label: String,
     value: T,
     isValid: (value: T?) -> String = { "" },

@@ -7,15 +7,15 @@ import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.components.MyColumn
 
 @Composable
-fun FormScope.FormItem(
+fun FormItem(
     label: String,
     modifier: Modifier = Modifier,
-    content: @Composable FormScope.() -> Unit,
+    content: @Composable () -> Unit,
 ) {
     MyColumn(
         modifier = modifier,
     ) {
         Text(text = label, style = MaterialTheme.typography.titleSmall)
-        FormScopeImpl.content()
+        content()
     }
 }

@@ -11,54 +11,78 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.components.MyNumberPicker
 import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.components.rememberMyNumberPickerIntClasses
+import com.michaelflisar.toolbox.numbers.NumberUtil
+import com.michaelflisar.toolbox.numbers.rememberMyNumberParser
+import com.michaelflisar.toolbox.numbers.rememberMyNumberValidator
 
 @Composable
-fun FormScope.FormNumberInput(
+fun <T : Number> FormNumberInput(
     title: String,
-    min: Int,
-    max: Int,
-    value: Int,
-    stepSize: Int,
+    value: T,
     modifier: Modifier = Modifier.fillMaxWidth(),
-    onValueChanged: (value: Int) -> Unit,
+    min: T = NumberUtil.min(value),
+    max: T = NumberUtil.max(value),
+    stepSize: T = NumberUtil.one(value),
+    commas: Int? = null,
+    selectAllOnFocus: Boolean = false,
+    prefix: @Composable (() -> Unit)? = null,
+    suffix: @Composable (() -> Unit)? = null,
+    onValueChanged: (value: T) -> Unit,
 ) {
     val value = remember { mutableStateOf(value) }
     LaunchedEffect(Unit) {
         snapshotFlow { value.value }.collect { onValueChanged(it) }
     }
-    FormNumberInput(title, min, max, stepSize, value, modifier)
+    FormNumberInput(
+        title = title,
+        value = value,
+        modifier = modifier,
+        min = min,
+        max = max,
+        stepSize = stepSize,
+        commas = commas,
+        selectAllOnFocus = selectAllOnFocus,
+        prefix = prefix,
+        suffix = suffix
+    )
 }
 
 @Composable
-fun FormScope.FormNumberInput(
+fun <T : Number> FormNumberInput(
     title: String,
-    min: Int,
-    max: Int,
-    stepSize: Int,
-    value: MutableState<Int>,
+    value: MutableState<T>,
     modifier: Modifier = Modifier.fillMaxWidth(),
+    min: T = NumberUtil.min(value.value),
+    max: T = NumberUtil.max(value.value),
+    stepSize: T = NumberUtil.one(value.value),
+    commas: Int? = NumberUtil.defaultCommas(value.value),
+    selectAllOnFocus: Boolean = false,
+    prefix: @Composable (() -> Unit)? = null,
+    suffix: @Composable (() -> Unit)? = null,
 ) {
     MyRow(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val (validator1, parser1) = rememberMyNumberPickerIntClasses(
-            value.value,
-            min,
-            max,
-            stepSize
+        val validator = rememberMyNumberValidator(
+            value = value.value,
+            min = min,
+            max = max
         )
+        val parser = rememberMyNumberParser(instance = value.value, stepSize = stepSize, commas = commas)
         MyNumberPicker(
             modifier = Modifier.weight(1f),
-            //modifierInnerPicker = Modifier.fillMaxWidth(),
-            validator = validator1,
-            parser = parser1,
+            validator = validator,
+            parser = parser,
             label = title,
-            value = value
+            value = value,
+            selectAllOnFocus = selectAllOnFocus,
+            prefix = prefix,
+            suffix = suffix
         )
     }
 }
+
 /*
 @PreviewCurrent
 @Composable

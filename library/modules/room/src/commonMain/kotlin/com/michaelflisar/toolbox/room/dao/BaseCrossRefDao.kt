@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.room.defaults
+package com.michaelflisar.toolbox.room.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

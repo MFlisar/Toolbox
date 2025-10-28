@@ -21,3 +21,7 @@ actual object Platform {
         window.open(url, "_blank")
     }
 }
+
+actual fun Platform.getDecimalSeparator(): Char {
+    return '.'
+}

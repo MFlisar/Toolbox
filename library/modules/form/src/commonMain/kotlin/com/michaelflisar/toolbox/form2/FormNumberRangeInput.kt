@@ -13,14 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.components.MyNumberPicker
 import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.components.rememberMyNumberPickerIntClasses
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.from
 import com.michaelflisar.toolbox.core.resources.to
+import com.michaelflisar.toolbox.numbers.rememberMyNumberParser
+import com.michaelflisar.toolbox.numbers.rememberMyNumberValidator
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun FormScope.FormNumberRangeInput(
+fun FormNumberRangeInput(
     valueFrom: Int,
     valueTo: Int,
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -36,13 +37,15 @@ fun FormScope.FormNumberRangeInput(
     val valueTo = remember { mutableIntStateOf(valueTo) }
     LaunchedEffect(Unit) {
         snapshotFlow { valueFrom.intValue }.collect { onValueChanged(it, valueTo.intValue) }
+    }
+    LaunchedEffect(Unit) {
         snapshotFlow { valueTo.intValue }.collect { onValueChanged(valueFrom.intValue, it) }
     }
     FormNumberRangeInput(valueFrom, valueTo, modifier, min, max, step, title, titleFrom, titleTo)
 }
 
 @Composable
-fun FormScope.FormNumberRangeInput(
+fun FormNumberRangeInput(
     valueFrom: MutableIntState,
     valueTo: MutableIntState,
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -57,19 +60,20 @@ fun FormScope.FormNumberRangeInput(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val (validator1, parser1) = rememberMyNumberPickerIntClasses(
+        val validator1 = rememberMyNumberValidator(
             value = valueFrom.intValue,
             min = min,
-            max = valueTo.intValue - 1,
-            stepSize = step
+            max = valueTo.intValue - 1
         )
+        val parser1 = rememberMyNumberParser(valueFrom.intValue, step, 0)
 
-        val (validator2, parser2) = rememberMyNumberPickerIntClasses(
+        val validator2 = rememberMyNumberValidator(
             value = valueTo.intValue,
             min = valueFrom.intValue + 1,
-            max = max,
-            stepSize = step
+            max = max
         )
+        val parser2 = rememberMyNumberParser(valueTo.intValue, step, 0)
+
         if (title != null) {
             Text(
                 modifier = Modifier.weight(1f),

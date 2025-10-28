@@ -15,24 +15,24 @@ import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 fun <T> MyMultiSegmentedButtonRow(
-    modifier: Modifier = Modifier,
     items: List<T>,
     selected: MutableState<List<T>>,
-    mapper: (item: T) -> String,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     showSelectionInfo: Boolean = true,
-    onSelectionChange: ((List<T>) -> Unit)? = null
+    onSelectionChange: ((List<T>) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndizes = selected.value.map { items.indexOf(it) }
     MyMultiSegmentedButtonRowImpl(
-        modifier,
-        texts,
-        selectedIndizes,
-        color,
-        onColor,
-        showSelectionInfo
+        modifier = modifier,
+        items = texts,
+        selected = selectedIndizes,
+        color = color,
+        onColor = onColor,
+        showSelectionInfo = showSelectionInfo
     ) { selectedIndizes, selectedItems ->
         selected.value = selectedIndizes.map { items[it] }
         onSelectionChange?.invoke(selected.value)
@@ -41,75 +41,75 @@ fun <T> MyMultiSegmentedButtonRow(
 
 @Composable
 fun <T> MyMultiSegmentedButtonRow(
-    modifier: Modifier = Modifier,
     items: List<T>,
     selected: List<T>,
-    mapper: (item: T) -> String,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     showSelectionInfo: Boolean = true,
-    onSelectionChange: (List<T>) -> Unit
+    onSelectionChange: (List<T>) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndizes = selected.map { items.indexOf(it) }
     MyMultiSegmentedButtonRowImpl(
-        modifier,
-        texts,
-        selectedIndizes,
-        color,
-        onColor,
-        showSelectionInfo
+        modifier = modifier,
+        items = texts,
+        selected = selectedIndizes,
+        color = color,
+        onColor = onColor,
+        showSelectionInfo = showSelectionInfo
     ) { selectedIndizes, selectedItems ->
         onSelectionChange(selectedIndizes.map { items[it] })
     }
 }
 
 @Composable
-fun MyMultiSegmentedButtonRow(
+fun <T> MyMultiSegmentedButtonRowIndex(
+    items: List<T>,
+    selectedIndizes: MutableState<List<Int>>,
     modifier: Modifier = Modifier,
-    items: List<String>,
-    selected: MutableState<List<String>>,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     showSelectionInfo: Boolean = true,
-    onSelectionChange: ((List<String>) -> Unit)? = null
+    onSelectionChange: ((List<Int>) -> Unit)? = null,
 ) {
-    val texts = items
-    val selectedIndizes = selected.value.map { items.indexOf(it) }
+    val texts = items.map { mapper(it) }
     MyMultiSegmentedButtonRowImpl(
-        modifier,
-        texts,
-        selectedIndizes,
-        color,
-        onColor,
-        showSelectionInfo
-    ) { _, selectedItems ->
-        selected.value = selectedItems
-        onSelectionChange?.invoke(selected.value)
+        modifier = modifier,
+        items = texts,
+        selected = selectedIndizes.value,
+        color = color,
+        onColor = onColor,
+        showSelectionInfo = showSelectionInfo
+    ) { selectedIndizes2, selectedItems ->
+        selectedIndizes.value = selectedIndizes2
+        onSelectionChange?.invoke(selectedIndizes2)
     }
 }
 
 @Composable
-fun MyMultiSegmentedButtonRow(
+fun <T> MyMultiSegmentedButtonRowIndex(
+    items: List<T>,
+    selectedIndizes: List<Int>,
     modifier: Modifier = Modifier,
-    items: List<String>,
-    selected: List<String>,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     showSelectionInfo: Boolean = true,
-    onSelectionChange: (List<String>) -> Unit
+    onSelectionChange: (List<Int>) -> Unit
 ) {
-    val texts = items
-    val selectedIndizes = selected.map { items.indexOf(it) }
+    val texts = items.map { mapper(it) }
     MyMultiSegmentedButtonRowImpl(
-        modifier,
-        texts,
-        selectedIndizes,
-        color,
-        onColor,
-        showSelectionInfo
-    ) { _, selectedItems ->
-        onSelectionChange(selectedItems)
+        modifier = modifier,
+        items = texts,
+        selected = selectedIndizes,
+        color = color,
+        onColor = onColor,
+        showSelectionInfo = showSelectionInfo
+    ) { selectedIndizes, selectedItems ->
+        onSelectionChange.invoke(selectedIndizes)
     }
 }
 
@@ -121,7 +121,7 @@ private fun MyMultiSegmentedButtonRowImpl(
     color: Color,
     onColor: Color,
     showSelectionInfo: Boolean,
-    onSelectionChange: (indices: List<Int>, items: List<String>) -> Unit
+    onSelectionChange: (indices: List<Int>, items: List<String>) -> Unit,
 ) {
     val colorSelected =
         color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.primary

@@ -1,9 +1,12 @@
 package com.michaelflisar.toolbox.app.features.navigation.screen
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.app.features.device.BaseDevice
 import com.michaelflisar.toolbox.app.features.device.CurrentDevice
@@ -16,12 +19,27 @@ class NavScreenBackPressHandler(
     val handle: () -> Unit = {},
 )
 
-abstract class NavScreen : INavScreen {
+abstract class NavScreen(
+    val fillMaxSize: Boolean = true
+) : INavScreen {
 
     //override val key: ScreenKey = if (DISABLE_ANIMATION) super.key else uniqueScreenKey
 
     @Composable
     final override fun Content() {
+        if (fillMaxSize) {
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                DeviceContent()
+            }
+        } else {
+            DeviceContent()
+        }
+    }
+
+    @Composable
+    private fun DeviceContent() {
         when (CurrentDevice.base) {
             BaseDevice.Mobile,
             BaseDevice.Web -> {
@@ -31,7 +49,7 @@ abstract class NavScreen : INavScreen {
             BaseDevice.Desktop -> {
                 val toolbarContentProvider = LocalDesktopToolbarProvider.current
                 DesktopPage(
-                    toolbar = {  toolbarContentProvider(this) }
+                    toolbar = { toolbarContentProvider(this) }
                 ) {
                     Screen()
                 }

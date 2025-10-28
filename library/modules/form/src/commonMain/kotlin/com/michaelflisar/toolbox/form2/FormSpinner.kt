@@ -11,11 +11,12 @@ import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.components.MyDropdown
 
 @Composable
-fun <T> FormScope.FormSpinner(
+fun <T> FormSpinner(
     title: String,
     value: T,
     items: List<T & Any>,
-    mapper: @Composable (item: T, dropdown: Boolean) -> String,
+    mapper: @Composable (item: T) -> String,
+    mapperDropdown: @Composable (item: T) -> String = mapper,
     modifier: Modifier = Modifier.fillMaxWidth(),
     onValueChanged: (value: T) -> Unit,
 ) {
@@ -23,15 +24,16 @@ fun <T> FormScope.FormSpinner(
     LaunchedEffect(Unit) {
         snapshotFlow { value.value }.collect { onValueChanged(it) }
     }
-    FormSpinner(title, value, items, mapper, modifier)
+    FormSpinner(title, value, items, mapper, mapperDropdown, modifier)
 }
 
 @Composable
-fun <T> FormScope.FormSpinner(
+fun <T> FormSpinner(
     title: String,
     value: MutableState<T>,
     items: List<T & Any>,
-    mapper: @Composable (item: T, dropdown: Boolean) -> String,
+    mapper: @Composable (item: T) -> String,
+    mapperDropdown: @Composable (item: T) -> String = mapper,
     modifier: Modifier = Modifier.fillMaxWidth(),
 ) {
     FormItem(
@@ -43,7 +45,8 @@ fun <T> FormScope.FormSpinner(
             title = "",
             items = items,
             selected = value,
-            mapper = mapper
+            mapper = mapper,
+            mapperDropdown = mapperDropdown
         )
     }
 }

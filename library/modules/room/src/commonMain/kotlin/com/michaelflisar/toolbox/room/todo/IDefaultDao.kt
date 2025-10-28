@@ -1,5 +1,9 @@
-package com.michaelflisar.toolbox.room.interfaces
+package com.michaelflisar.toolbox.room.todo
 
+import com.michaelflisar.toolbox.room.interfaces.IIDProvider
+import com.michaelflisar.toolbox.room.interfaces.IRoomEntity
+
+@Deprecated("")
 interface IDefaultDao<ID: Number, Entity : IRoomEntity<ID, Entity>> :
     IBaseDao<ID, Entity>,
     IBaseLoadDao<ID, Entity>,
@@ -9,6 +13,7 @@ interface IDefaultDao<ID: Number, Entity : IRoomEntity<ID, Entity>> :
     IBaseDaoClear,
     IBaseFlowDao<ID, Entity>
 
+@Deprecated("")
 interface IDefaultFullDao<ID: Number, Entity : IRoomEntity<ID, Entity>, FullEntity : IIDProvider<ID>> :
     IDefaultDao<ID, Entity>,
     IBaseFullLoadDao<ID, FullEntity>,

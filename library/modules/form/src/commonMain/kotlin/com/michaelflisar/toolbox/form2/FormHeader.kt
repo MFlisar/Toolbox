@@ -37,7 +37,7 @@ object FormHeader {
 }
 
 @Composable
-fun FormScope.FormHeader(
+fun FormHeader(
     title: String,
     info: FormHeader.InfoData? = null,
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -46,7 +46,7 @@ fun FormScope.FormHeader(
 }
 
 @Composable
-fun <T> FormScope.FormHeader(
+fun <T> FormHeader(
     title: String,
     info: FormHeader.InfoData? = null,
     spinner: FormHeader.SpinnerData<T>,
@@ -56,7 +56,7 @@ fun <T> FormScope.FormHeader(
 }
 
 @Composable
-fun <T> FormScope.FormHeader(
+fun <T> FormHeader(
     title: String,
     info: FormHeader.InfoData? = null,
     checkbox: MutableState<Boolean>,
@@ -66,7 +66,7 @@ fun <T> FormScope.FormHeader(
 }
 
 @Composable
-private fun <T> FormScope.Header(
+private fun <T> Header(
     title: String,
     info: FormHeader.InfoData?,
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -102,9 +102,10 @@ private fun <T> FormScope.Header(
         if (spinner != null) {
             val selected = remember { mutableStateOf(spinner.selectedItem) }
             MyDropdown(
+                modifier = Modifier.weight(1f),
                 items = spinner.items,
                 selected = spinner.selectedItem,
-                mapper = { item, _ -> spinner.mapper(item) },
+                mapper = { spinner.mapper(it) },
                 color = MaterialTheme.colorScheme.surface,
                 backgroundColor = MaterialTheme.colorScheme.onSurface,
                 onSelectionChanged = { item: T ->

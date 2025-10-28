@@ -9,3 +9,12 @@ fun String.between(from: String, to: String): String? {
         return null
    return substring(indexFrom + from.length, indexEnd)
 }
+
+fun String.toSentenceCase() : String {
+    if (this.isEmpty()) return this
+    return this[0].uppercaseChar() + this.substring(1).lowercase()
+}
+
+fun String.toTitleCase() : String {
+    return this.split(" ").joinToString(" ") { it.toSentenceCase() }
+}

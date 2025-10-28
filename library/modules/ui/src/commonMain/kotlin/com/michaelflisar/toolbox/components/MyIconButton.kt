@@ -23,7 +23,7 @@ private object MyIconButton {
     sealed class Style {
 
         @Composable
-        internal abstract fun Button(
+        abstract fun Button(
             onClick: () -> Unit,
             modifier: Modifier = Modifier,
             enabled: Boolean = true,
@@ -31,7 +31,8 @@ private object MyIconButton {
             content: @Composable () -> Unit,
         )
 
-        class Default internal constructor(
+        class Default constructor(
+            val shape: Shape,
             val colors: IconButtonColors,
         ) : Style() {
 
@@ -49,12 +50,13 @@ private object MyIconButton {
                     enabled,
                     colors,
                     interactionSource,
+                    shape,
                     content
                 )
             }
         }
 
-        class Outlined internal constructor(
+        class Outlined constructor(
             val shape: Shape,
             val colors: IconButtonColors,
             val border: BorderStroke?,
@@ -80,7 +82,7 @@ private object MyIconButton {
             }
         }
 
-        class FilledIconButton internal constructor(
+        class FilledIconButton constructor(
             val shape: Shape,
             val colors: IconButtonColors,
         ) : Style() {
@@ -104,7 +106,7 @@ private object MyIconButton {
             }
         }
 
-        class FilledTonal internal constructor(
+        class FilledTonal constructor(
             val shape: Shape,
             val colors: IconButtonColors,
         ) : Style() {
@@ -134,9 +136,10 @@ private object MyIconButtonDefaults {
 
     @Composable
     fun styleDefault(
+        shape: Shape = IconButtonDefaults.standardShape,
         colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     ): MyIconButton.Style.Default {
-        return MyIconButton.Style.Default(colors)
+        return MyIconButton.Style.Default(shape, colors)
     }
 
     @Composable

@@ -1,5 +1,6 @@
 package com.michaelflisar.toolbox.app.features.navigationbar
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -36,6 +37,7 @@ fun NavigationBar(
     NavigationBar(
         modifier
     ) {
+        Spacer(modifier = Modifier.size(8.dp))
         items.forEachIndexed { index, item ->
             when (item) {
                 is NavItem -> {
@@ -95,7 +97,7 @@ fun NavigationBar(
                     L.i { "NavItem of type ${item::class.simpleName} is not supported in NavigationBar (index = $index)" }
                 }
             }
-
         }
+        Spacer(modifier = Modifier.size(8.dp))
     }
 }

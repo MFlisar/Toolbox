@@ -45,7 +45,7 @@ pluginManagement {
 plugins {
     // version catalogue does not work here!
     // alias(deps.plugins.kmp.gradle.tools.settings.gradle.plugin)
-    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "2.2.3" //apply false
+    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "2.2.5" //apply false
 }
 
 val settingsPlugin = plugins.getPlugin(com.michaelflisar.kmplibrary.SettingsFilePlugin::class.java)

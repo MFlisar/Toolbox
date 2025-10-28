@@ -3,7 +3,15 @@ package com.michaelflisar.toolbox.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.ButtonDefaults
@@ -25,6 +33,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.ui.MyScrollableRow
 
 private object MyChipsRow {
 
@@ -32,70 +41,136 @@ private object MyChipsRow {
 
         class Single<T>(
             val selected: Int,
-            val onSelectionChange: ((index: Int, item: T) -> Unit)? = null
+            val onSelectionChange: ((index: Int, item: T) -> Unit)? = null,
         ) : Selection<T>()
 
         class Multi<T>(
             val selected: List<Int>,
-            val onSelectionChange: ((indices: List<Int>, items: List<T>) -> Unit)? = null
+            val onSelectionChange: ((indices: List<Int>, items: List<T>) -> Unit)? = null,
         ) : Selection<T>()
     }
 }
 
 @Composable
 fun <T> MyChipsSingleRow(
-    modifier: Modifier = Modifier,
     items: List<T>,
-    selectedIndex: MutableState<Int>,
-    mapper: (item: T) -> String = { it.toString() },
+    selected: MutableState<T>,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     minSegmentWidth: Dp = 40.dp,
-    color: Color = Color.Unspecified
+    color: Color = Color.Unspecified,
+    singleRow: Boolean = false,
+    onSelectionChange: ((T) -> Unit)? = null,
 ) {
+    val selectedIndex = items.indexOf(selected.value)
     MyChipsFlowRowImpl(
         modifier = modifier,
         items = items,
-        selection = MyChipsRow.Selection.Single( selectedIndex.value) { selectedIndizes, selectedItems ->
-            selectedIndex.value = selectedIndizes
+        selection = MyChipsRow.Selection.Single(selectedIndex) { index, item ->
+            selected.value = item
+            onSelectionChange?.invoke(item)
         },
         mapper = mapper,
         minSegmentWidth = minSegmentWidth,
         color = color,
+        singleRow = singleRow,
+        showClear = false,
         showSelectionInfo = false
     )
 }
 
 @Composable
 fun <T> MyChipsSingleRow(
-    modifier: Modifier = Modifier,
     items: List<T>,
-    selectedIndex: Int,
-    mapper: (item: T) -> String = { it.toString() },
+    selected: T,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
-    onSelectionChange: (T) -> Unit
+    singleRow: Boolean = false,
+    onSelectionChange: (T) -> Unit,
+) {
+    val selectedIndex = items.indexOf(selected)
+    MyChipsFlowRowImpl(
+        modifier = modifier,
+        items = items,
+        selection = MyChipsRow.Selection.Single(selectedIndex) { index, item ->
+            onSelectionChange(item)
+        },
+        mapper = mapper,
+        minSegmentWidth = minSegmentWidth,
+        color = color,
+        singleRow = singleRow,
+        showClear = false,
+        showSelectionInfo = false
+    )
+}
+
+@Composable
+fun <T> MyChipsSingleRowIndex(
+    items: List<T>,
+    selectedIndex: MutableState<Int>,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    minSegmentWidth: Dp = 40.dp,
+    color: Color = Color.Unspecified,
+    singleRow: Boolean = false,
+    onSelectionChange: ((Int) -> Unit)? = null,
+) {
+    MyChipsFlowRowImpl(
+        modifier = modifier,
+        items = items,
+        selection = MyChipsRow.Selection.Single(selectedIndex.value) { selectedIndizes, selectedItems ->
+            selectedIndex.value = selectedIndizes
+            onSelectionChange?.invoke(selectedIndizes)
+        },
+        mapper = mapper,
+        minSegmentWidth = minSegmentWidth,
+        color = color,
+        singleRow = singleRow,
+        showClear = false,
+        showSelectionInfo = false
+    )
+}
+
+@Composable
+fun <T> MyChipsSingleRowIndex(
+    items: List<T>,
+    selectedIndex: Int,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    minSegmentWidth: Dp = 40.dp,
+    color: Color = Color.Unspecified,
+    singleRow: Boolean = false,
+    onSelectionChange: (Int) -> Unit,
 ) {
     MyChipsFlowRowImpl(
         modifier = modifier,
         items = items,
         selection = MyChipsRow.Selection.Single(selectedIndex) { selectedIndizes, selectedItems ->
-            onSelectionChange(selectedItems)
+            onSelectionChange(selectedIndizes)
         },
         mapper = mapper,
         minSegmentWidth = minSegmentWidth,
         color = color,
+        singleRow = singleRow,
+        showClear = false,
         showSelectionInfo = false
     )
 }
 
 @Composable
 fun <T> MyChipsMultiRow(
-    modifier: Modifier = Modifier,
     items: List<T>,
     selected: MutableState<List<T>>,
-    mapper: (item: T) -> String = { it.toString() },
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
-    showSelectionInfo: Boolean = true
+    singleRow: Boolean = false,
+    showClear: Boolean = true,
+    showSelectionInfo: Boolean = true,
+    onSelectionChange: ((List<T>) -> Unit)? = null,
 ) {
     val selectedIndizes = selected.value.map { items.indexOf(it) }
     MyChipsFlowRowImpl(
@@ -103,24 +178,29 @@ fun <T> MyChipsMultiRow(
         items = items,
         selection = MyChipsRow.Selection.Multi(selectedIndizes) { selectedIndizes, selectedItems ->
             selected.value = selectedIndizes.map { items[it] }
+            onSelectionChange?.invoke(selectedItems)
         },
         mapper = mapper,
         minSegmentWidth = minSegmentWidth,
         color = color,
+        singleRow = singleRow,
+        showClear = showClear,
         showSelectionInfo = showSelectionInfo
     )
 }
 
 @Composable
 fun <T> MyChipsMultiRow(
-    modifier: Modifier = Modifier,
     items: List<T>,
     selected: List<T>,
-    mapper: (item: T) -> String = { it.toString() },
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     minSegmentWidth: Dp = 40.dp,
     color: Color = Color.Unspecified,
+    singleRow: Boolean = false,
+    showClear: Boolean = true,
     showSelectionInfo: Boolean = true,
-    onSelectionChange: (List<T>) -> Unit
+    onSelectionChange: (List<T>) -> Unit,
 ) {
     val selectedIndizes = selected.map { items.indexOf(it) }
     MyChipsFlowRowImpl(
@@ -132,9 +212,72 @@ fun <T> MyChipsMultiRow(
         mapper = mapper,
         minSegmentWidth = minSegmentWidth,
         color = color,
+        singleRow = singleRow,
+        showClear = showClear,
         showSelectionInfo = showSelectionInfo
     )
 }
+
+@Composable
+fun <T> MyChipsMultiRowIndex(
+    items: List<T>,
+    selectedIndizes: MutableState<List<Int>>,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    minSegmentWidth: Dp = 40.dp,
+    color: Color = Color.Unspecified,
+    singleRow: Boolean = false,
+    showClear: Boolean = true,
+    showSelectionInfo: Boolean = true,
+    onSelectionChange: ((List<T>) -> Unit)? = null,
+) {
+    MyChipsFlowRowImpl(
+        modifier = modifier,
+        items = items,
+        selection = MyChipsRow.Selection.Multi(selectedIndizes.value) { selectedIndizes2, selectedItems ->
+            selectedIndizes.value = selectedIndizes2
+            onSelectionChange?.invoke(selectedItems)
+        },
+        mapper = mapper,
+        minSegmentWidth = minSegmentWidth,
+        color = color,
+        singleRow = singleRow,
+        showClear = showClear,
+        showSelectionInfo = showSelectionInfo
+    )
+}
+
+@Composable
+fun <T> MyChipsMultiRowIndex(
+    items: List<T>,
+    selectedIndizes: List<Int>,
+    onSelectionChange: (List<T>) -> Unit,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    minSegmentWidth: Dp = 40.dp,
+    color: Color = Color.Unspecified,
+    singleRow: Boolean = false,
+    showClear: Boolean = true,
+    showSelectionInfo: Boolean = true,
+) {
+    MyChipsFlowRowImpl(
+        modifier = modifier,
+        items = items,
+        selection = MyChipsRow.Selection.Multi(selectedIndizes) { selectedIndizes2, selectedItems ->
+            onSelectionChange.invoke(selectedItems)
+        },
+        mapper = mapper,
+        minSegmentWidth = minSegmentWidth,
+        color = color,
+        singleRow = singleRow,
+        showClear = showClear,
+        showSelectionInfo = showSelectionInfo
+    )
+}
+
+// --------------------------------
+// Implementation
+// --------------------------------
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -142,10 +285,80 @@ private fun <T> MyChipsFlowRowImpl(
     modifier: Modifier = Modifier,
     items: List<T>,
     selection: MyChipsRow.Selection<T>,
-    mapper: (item: T) -> String,
+    mapper: @Composable (item: T) -> String,
+    minSegmentWidth: Dp,
+    singleRow: Boolean,
+    color: Color,
+    showClear: Boolean,
+    showSelectionInfo: Boolean,
+) {
+    Column(
+        modifier = modifier
+    ) {
+        val selectedIndices: List<Int> = when (selection) {
+            is MyChipsRow.Selection.Multi -> selection.selected
+            is MyChipsRow.Selection.Single -> listOf(selection.selected)
+        }
+
+        if (showSelectionInfo && selection !is MyChipsRow.Selection.Single) {
+            MyLabeledInformationHorizontal(
+                modifier = Modifier.padding(bottom = LocalTheme.current.spacing.small),
+                label = "Selected",
+                info = "${selectedIndices.size}/${items.size}"
+            )
+        }
+        if (singleRow) {
+            MyScrollableRow(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                itemSpacing = LocalTheme.current.spacing.small,
+            ){
+                RowContent(
+                    items,
+                    selection,
+                    selectedIndices,
+                    mapper,
+                    minSegmentWidth,
+                    color,
+                    showClear,
+                    Modifier
+                )
+            }
+        } else {
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small),
+                verticalArrangement = Arrangement.spacedBy(
+                    LocalTheme.current.spacing.small,
+                    Alignment.CenterVertically
+                )
+            ) {
+                RowContent(
+                    items,
+                    selection,
+                    selectedIndices,
+                    mapper,
+                    minSegmentWidth,
+                    color,
+                    showClear,
+                    Modifier.align(Alignment.CenterVertically)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun <T> RowContent(
+    //modifier: Modifier = Modifier,
+    items: List<T>,
+    selection: MyChipsRow.Selection<T>,
+    selectedIndices: List<Int>,
+    mapper: @Composable (item: T) -> String,
     minSegmentWidth: Dp,
     color: Color,
-    showSelectionInfo: Boolean
+    showClear: Boolean,
+    modifierAlignCenterVertically: Modifier
 ) {
     val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()
         ?: MaterialTheme.colorScheme.onSurface.disabled()
@@ -157,88 +370,69 @@ private fun <T> MyChipsFlowRowImpl(
     val colorNotSelected = Color.Unspecified
     val colorNotSelectedText = Color.Unspecified
 
-    val selectedIndices: List<Int> = when (selection) {
-        is MyChipsRow.Selection.Multi -> selection.selected
-        is MyChipsRow.Selection.Single -> selection.selected?.let { listOf(it) } ?: emptyList()
-    }
+
     val onSelectionChange = when (selection) {
         is MyChipsRow.Selection.Multi -> { indices: List<Int> ->
             selection.onSelectionChange?.invoke(indices, indices.map { items[it] })
         }
+
         is MyChipsRow.Selection.Single -> { indices: List<Int> ->
-                selection.onSelectionChange?.invoke(indices.first(), indices.first().let { items[it] })
+            selection.onSelectionChange?.invoke(indices.first(), indices.first().let { items[it] })
         }
     }
 
     val empty = remember(selectedIndices) { derivedStateOf { selectedIndices.isEmpty() } }
 
-    Column(
-        modifier = modifier
-    ) {
-        if (showSelectionInfo && selection !is MyChipsRow.Selection.Single) {
-            MyLabeledInformationHorizontal(
-                modifier = Modifier.padding(bottom = LocalTheme.current.spacing.small),
-                label = "Selected",
-                info = "${selectedIndices.size}/${items.size}"
+    if (showClear && selection !is MyChipsRow.Selection.Single) {
+        val iconSize = 24.dp
+        OutlinedButton(
+            modifier = Modifier.size(iconSize).then(modifierAlignCenterVertically),
+            onClick = {
+                onSelectionChange(emptyList())
+            },
+            colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = Color.Transparent,
+                contentColor = if (empty.value) MaterialTheme.colorScheme.primary.disabled() else MaterialTheme.colorScheme.primary
+            ),
+            contentPadding = PaddingValues(all = 0.dp),
+            enabled = !empty.value
+        ) {
+            Icon(
+                modifier = Modifier.size(iconSize),
+                imageVector = Icons.Default.Clear,
+                contentDescription = null
             )
         }
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small),
-            verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small, Alignment.CenterVertically)
-        ) {
-            if (selection !is MyChipsRow.Selection.Single) {
-                val iconSize = 24.dp
-                OutlinedButton(
-                    modifier = Modifier.size(iconSize).align(Alignment.CenterVertically),
-                    onClick = {
-                        onSelectionChange(emptyList())
-                    },
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = if (empty.value) MaterialTheme.colorScheme.primary.disabled() else MaterialTheme.colorScheme.primary
-                    ),
-                    contentPadding = PaddingValues(all = 0.dp),
-                    enabled = !empty.value
-                ) {
-                    Icon(
-                        modifier = Modifier.size(iconSize),
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = null
-                    )
-                }
-            }
+    }
 
-            items.forEachIndexed { index, item ->
-                Text(
-                    modifier = Modifier
-                        .clip(MaterialTheme.shapes.small)
-                        .border(1.dp, borderColor, MaterialTheme.shapes.small)
-                        .background(if (selectedIndices.contains(index)) colorSelected else colorNotSelected)
-                        .clickable {
+    items.forEachIndexed { index, item ->
+        Text(
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.small)
+                .border(1.dp, borderColor, MaterialTheme.shapes.small)
+                .background(if (selectedIndices.contains(index)) colorSelected else colorNotSelected)
+                .clickable {
 
-                            val selectedNew = selectedIndices.toMutableList()
-                            if (selection is MyChipsRow.Selection.Single) {
-                                selectedNew.clear()
-                                selectedNew.add(index)
-                            } else {
-                                if (selectedIndices.contains(index)) {
-                                    selectedNew.remove(index)
-                                } else {
-                                    selectedNew.add(index)
-                                }
-                            }
-
-                            onSelectionChange(selectedNew)
+                    val selectedNew = selectedIndices.toMutableList()
+                    if (selection is MyChipsRow.Selection.Single) {
+                        selectedNew.clear()
+                        selectedNew.add(index)
+                    } else {
+                        if (selectedIndices.contains(index)) {
+                            selectedNew.remove(index)
+                        } else {
+                            selectedNew.add(index)
                         }
-                        .widthIn(min =  minSegmentWidth)
-                        .padding(LocalTheme.current.padding.small),
-                    text = mapper(item),
-                    maxLines = 1,
-                    color = if (selectedIndices.contains(index)) colorSelectedText else colorNotSelectedText,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
+                    }
+
+                    onSelectionChange(selectedNew)
+                }
+                .widthIn(min = minSegmentWidth)
+                .padding(LocalTheme.current.padding.small),
+            text = mapper(item),
+            maxLines = 1,
+            color = if (selectedIndices.contains(index)) colorSelectedText else colorNotSelectedText,
+            textAlign = TextAlign.Center
+        )
     }
 }

@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Icon
@@ -131,19 +133,19 @@ fun MyExpandableTitle(
     modifier: Modifier = Modifier,
     style: MyExpandableTitle.Style = rememberMyExpandableTitleStyle(),
     expanded: MutableState<Boolean> = remember { mutableStateOf(true) },
-    expandable: Boolean = true,
+    canToggle: Boolean = true,
     info: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
-    MyExpandableTitle(
-        title,
-        modifier,
-        style,
-        expanded.value,
-        expandable,
-        info,
-        { expanded.value = !expanded.value },
-        content
+    MyExpandableTitleImpl(
+        title = title,
+        modifier = modifier,
+        style = style,
+        expanded = expanded.value,
+        canToggle = canToggle,
+        info = info,
+        onToggle = { expanded.value = !expanded.value },
+        content = content
     )
 }
 
@@ -153,7 +155,30 @@ fun MyExpandableTitle(
     modifier: Modifier = Modifier,
     style: MyExpandableTitle.Style = rememberMyExpandableTitleStyle(),
     expanded: Boolean = true,
-    expandable: Boolean = true,
+    canToggle: Boolean = true,
+    info: (@Composable () -> Unit)? = null,
+    onToggle: () -> Unit,
+    content: @Composable () -> Unit,
+) {
+    MyExpandableTitleImpl(
+        title = title,
+        modifier = modifier,
+        style = style,
+        expanded = expanded,
+        canToggle = canToggle,
+        info = info,
+        onToggle = onToggle,
+        content = content
+    )
+}
+
+@Composable
+private fun MyExpandableTitleImpl(
+    title: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    style: MyExpandableTitle.Style = rememberMyExpandableTitleStyle(),
+    expanded: Boolean = true,
+    canToggle: Boolean = true,
     info: (@Composable () -> Unit)? = null,
     onToggle: () -> Unit,
     content: @Composable () -> Unit,
@@ -185,7 +210,7 @@ fun MyExpandableTitle(
                         if (style.borderColor.value != Color.Unspecified) {
                             Modifier
                         } else {
-                            Modifier .clip(style.shape.value)
+                            Modifier.clip(style.shape.value)
                         }
                     )
                     .then(
@@ -193,28 +218,26 @@ fun MyExpandableTitle(
                             Modifier.background(it)
                         } ?: Modifier
                     )
-                    .clickable(expandable) {
+                    .clickable(canToggle) {
                         onToggle()
                     }
                     .padding(
-                        start = when (style.iconPlacement) {
-                            IconPlacement.Left -> 0.dp
-                            IconPlacement.Right,
-                            IconPlacement.Hide,
-                                -> LocalTheme.current.padding.default
-                        },
+                        start = 0.dp,
                         bottom = LocalTheme.current.padding.default,
                         top = LocalTheme.current.padding.default,
-                        end = LocalTheme.current.padding.default
+                        end = 0.dp
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (style.iconPlacement == IconPlacement.Left && (expandable || !style.hideIconIfNotExpandable)) {
+                if (style.iconPlacement == IconPlacement.Left && (canToggle || !style.hideIconIfNotExpandable)) {
                     Icon(rotation, style.getTitleContentColor())
+                } else {
+                    Spacer(modifier = Modifier.width(LocalTheme.current.padding.default))
                 }
 
                 CompositionLocalProvider(
-                    LocalContentColor provides  (style.getTitleContentColor() ?: LocalContentColor.current)
+                    LocalContentColor provides (style.getTitleContentColor()
+                        ?: LocalContentColor.current)
                 ) {
                     Box(modifier = Modifier.weight(1f)) {
                         title()
@@ -224,13 +247,15 @@ fun MyExpandableTitle(
                     }
                 }
 
-                if (style.iconPlacement == IconPlacement.Right && (expandable || !style.hideIconIfNotExpandable)) {
+                if (style.iconPlacement == IconPlacement.Right && (canToggle || !style.hideIconIfNotExpandable)) {
                     Icon(rotation, style.getTitleContentColor())
+                } else {
+                    Spacer(modifier = Modifier.width(LocalTheme.current.padding.default))
                 }
             }
         }
         AnimatedVisibility(
-            visible = expandable && expanded,
+            visible = expanded,
             modifier = Modifier
                 .then(
                     style.getContentContainerColor()?.let {
@@ -239,7 +264,8 @@ fun MyExpandableTitle(
                 )
         ) {
             CompositionLocalProvider(
-                LocalContentColor provides (style.getContentContentColor() ?: LocalContentColor.current)
+                LocalContentColor provides (style.getContentContentColor()
+                    ?: LocalContentColor.current)
             ) {
                 Column(
                     modifier = Modifier.padding(style.contentPadding)
@@ -251,53 +277,7 @@ fun MyExpandableTitle(
         }
     }
 }
-/*
-@Composable
-fun MyExpandableOutlinedTitle(
-    title: String,
-    expanded: MutableState<Boolean> = remember { mutableStateOf(true) },
-    expandable: Boolean = true,
-    hideIconIfNotExpandable: Boolean = true,
-    info: (@Composable () -> Unit)? = null,
-    modifier: Modifier = Modifier,
-    color: Color = Color.Unspecified,
-    background: Color = Color.Unspecified,
-    iconPlacement: IconPlacement = IconPlacement.Left,
-    content: @Composable () -> Unit
-) {
-    MyExpandableOutlinedTitle(
-        title,
-        expanded.value,
-        expandable,
-        hideIconIfNotExpandable,
-        info,
-        { expanded.value = !expanded.value },
-        modifier,
-        color,
-        background,
-        iconPlacement,
-        content
-    )
-}
 
-@Composable
-fun MyExpandableOutlinedTitle(
-    text: String,
-    expanded: Boolean,
-    expandable: Boolean = true,
-    hideIconIfNotExpandable: Boolean = true,
-    info: (@Composable () -> Unit)? = null,
-    onToggle: () -> Unit,
-    modifier: Modifier = Modifier,
-    color: Color = Color.Unspecified,
-    background: Color = Color.Unspecified,
-    iconPlacement: MyExpandableTitle.IconPlacement = MyExpandableTitle.IconPlacement.Left,
-    content: @Composable () -> Unit
-) {
-    OutlinedCard {
-        MyExpandableTitle(text, expanded, expandable, hideIconIfNotExpandable, info, onToggle, modifier, color, background, iconPlacement, content)
-    }
-}*/
 
 @Composable
 private fun Icon(rotation: Float, color: Color?) {

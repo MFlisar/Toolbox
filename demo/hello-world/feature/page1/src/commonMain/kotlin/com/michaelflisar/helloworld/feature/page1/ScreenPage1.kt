@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.helloworld.core.Prefs
 import com.michaelflisar.helloworld.core.resources.Res
 import com.michaelflisar.helloworld.core.resources.page_1
 import com.michaelflisar.parcelize.Parcelize
@@ -36,6 +37,7 @@ object ScreenPage1 : NavScreen() {
     @Composable
     override fun provideMenu(): List<MenuItem> {
         val appState = LocalAppState.current
+
         val actionText = "Action for ${stringResource(title)}"
         return listOf(
             MenuItem.Group(

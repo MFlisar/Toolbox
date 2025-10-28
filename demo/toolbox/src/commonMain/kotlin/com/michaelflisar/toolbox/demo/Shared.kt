@@ -14,9 +14,7 @@ import com.michaelflisar.composethemer.FlatUIThemes
 import com.michaelflisar.composethemer.Material500Themes
 import com.michaelflisar.composethemer.MetroThemes
 import com.michaelflisar.composethemer.themes.DefaultThemes
-import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.ToolboxLogging
-import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppScope
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.Constants
@@ -40,10 +38,7 @@ import com.michaelflisar.toolbox.demo.resources.app_name
 import com.michaelflisar.toolbox.demo.resources.mflisar
 import com.michaelflisar.toolbox.extensions.isLight
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 
 object Shared {
 

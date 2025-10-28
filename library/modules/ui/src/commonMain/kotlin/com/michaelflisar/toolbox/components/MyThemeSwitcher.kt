@@ -20,7 +20,7 @@ fun <T> MyThemeSwitcher(
     iconLight: @Composable () -> Unit = @Composable { Icon(Icons.Default.LightMode, null) },
     iconSystem: @Composable () -> Unit = @Composable { Icon(Icons.Default.PhoneAndroid, null) },
     selected: T,
-    mapper: (item: T) -> String,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     onSelectionChanged: (T) -> Unit

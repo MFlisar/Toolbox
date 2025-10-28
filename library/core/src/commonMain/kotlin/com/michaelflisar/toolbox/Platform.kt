@@ -18,3 +18,5 @@ expect object Platform {
 
     fun openUrl(url: String)
 }
+
+expect fun Platform.getDecimalSeparator(): Char

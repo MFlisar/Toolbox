@@ -13,12 +13,15 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.LocalBackGestureDispatcher
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.key.NativeKeyEvent
@@ -35,10 +38,12 @@ import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberJewelAppState
+import com.michaelflisar.toolbox.app.features.backhandler.JvmBackHandlerUtil
 import com.michaelflisar.toolbox.app.features.dialogs.ErrorDialogProvider
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
+import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.navigation.NavItemSpacer
 import com.michaelflisar.toolbox.app.features.navigationbar.NavigationBar
 import com.michaelflisar.toolbox.app.features.root.Root
@@ -59,6 +64,7 @@ import com.michaelflisar.toolbox.app.jewel.JewelTitleMenu
 import com.michaelflisar.toolbox.app.jewel.toJewelNavigationItems
 import org.jetbrains.jewel.window.DecoratedWindowScope
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ApplicationScope.DesktopApplication(
     // Navigator
@@ -101,6 +107,7 @@ fun ApplicationScope.DesktopApplication(
                 val appState = rememberAppState()
                 AppThemeProvider(theme) {
                     RootLocalProvider(appState, setRootLocals = true) {
+                        JvmBackHandlerUtil.ProvideMouseBackHandler()
                         content(navigator)
                     }
                 }

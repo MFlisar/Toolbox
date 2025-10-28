@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.components.MyInput
 
 @Composable
-fun FormScope.FormTextInput(
+fun FormTextInput(
     title: String,
     value: String,
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -26,7 +26,7 @@ fun FormScope.FormTextInput(
 }
 
 @Composable
-fun FormScope.FormTextInput(
+fun FormTextInput(
     title: String,
     value: MutableState<String>,
     modifier: Modifier = Modifier.fillMaxWidth(),

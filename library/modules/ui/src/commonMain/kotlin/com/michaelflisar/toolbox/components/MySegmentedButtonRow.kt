@@ -13,26 +13,26 @@ import androidx.compose.ui.graphics.Color
 @Suppress("UNCHECKED_CAST")
 @Composable
 fun <T> MySegmentedButtonRow(
-    modifier: Modifier = Modifier,
     items: List<T>,
-    icons: List<@Composable () -> Unit>? = null,
     selected: MutableState<T>,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    icons: List<@Composable () -> Unit>? = null,
     forceSelection: Boolean = true,
-    mapper: (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onSelectionChanged: ((T) -> Unit)? = null
+    onSelectionChanged: ((T) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected.value)
     MySegmentedButtonRowImpl(
-        modifier,
-        texts,
-        icons,
-        selectedIndex,
-        forceSelection,
-        color,
-        onColor
+        modifier = modifier,
+        items = texts,
+        icons = icons,
+        selected = selectedIndex,
+        forceSelection = forceSelection,
+        color = color,
+        onColor = onColor
     ) { index, item ->
         val s = (if (index >= 0) items[index] else null) as T
         selected.value = s
@@ -42,81 +42,89 @@ fun <T> MySegmentedButtonRow(
 
 @Composable
 fun <T> MySegmentedButtonRow(
-    modifier: Modifier = Modifier,
     items: List<T>,
-    icons: List<@Composable () -> Unit>? = null,
     selected: T,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    icons: List<@Composable () -> Unit>? = null,
     forceSelection: Boolean = true,
-    mapper: (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onSelectionChanged: ((T) -> Unit)? = null
+    onSelectionChanged: (T) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected)
     MySegmentedButtonRowImpl(
-        modifier,
-        texts,
-        icons,
-        selectedIndex,
-        forceSelection,
-        color,
-        onColor
+        modifier = modifier,
+        items = texts,
+        icons = icons,
+        selected = selectedIndex,
+        forceSelection = forceSelection,
+        color = color,
+        onColor = onColor
     ) { index, item ->
-        onSelectionChanged?.invoke(items[index])
+        onSelectionChanged.invoke(items[index])
     }
 }
 
-// Sonderfall: Int Daten (index) + String Werte
+@Suppress("UNCHECKED_CAST")
 @Composable
-fun MySegmentedButtonRow(
+fun <T> MySegmentedButtonRowIndex(
+    items: List<T>,
+    selectedIndex: MutableState<Int>,
     modifier: Modifier = Modifier,
-    items: List<String>,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     icons: List<@Composable () -> Unit>? = null,
-    selected: MutableState<Int>,
     forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onSelectionChanged: ((Int) -> Unit)? = null
+    onSelectionChanged: ((Int) -> Unit)? = null,
 ) {
-    val selectedIndex = selected.value
+    val texts = items.map { mapper(it) }
     MySegmentedButtonRowImpl(
-        modifier,
-        items,
-        icons,
-        selectedIndex,
-        forceSelection,
-        color,
-        onColor
+        modifier = modifier,
+        items = texts,
+        icons = icons,
+        selected = selectedIndex.value,
+        forceSelection = forceSelection,
+        color = color,
+        onColor = onColor
     ) { index, item ->
-        selected.value = index
+        selectedIndex.value = index
         onSelectionChanged?.invoke(index)
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 @Composable
-fun MySegmentedButtonRow(
+fun <T> MySegmentedButtonRowIndex(
+    items: List<T>,
+    selectedIndex: Int,
     modifier: Modifier = Modifier,
-    items: List<String>,
-    icons: List<@Composable () -> Unit>?,
-    selected: Int,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    icons: List<@Composable () -> Unit>? = null,
     forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onSelectionChanged: ((Int) -> Unit)? = null
+    onSelectionChanged: (Int) -> Unit,
 ) {
+    val texts = items.map { mapper(it) }
     MySegmentedButtonRowImpl(
-        modifier,
-        items,
-        icons,
-        selected,
-        forceSelection,
-        color,
-        onColor
+        modifier = modifier,
+        items = texts,
+        icons = icons,
+        selected = selectedIndex,
+        forceSelection = forceSelection,
+        color = color,
+        onColor = onColor
     ) { index, item ->
-        onSelectionChanged?.invoke(index)
+        onSelectionChanged.invoke(index)
     }
 }
+
+// --------------------------------
+// Implementation
+// --------------------------------
 
 @Composable
 private fun MySegmentedButtonRowImpl(
@@ -127,7 +135,7 @@ private fun MySegmentedButtonRowImpl(
     forceSelection: Boolean,
     color: Color,
     onColor: Color,
-    onSelectionChange: (index: Int, item: String?) -> Unit
+    onSelectionChange: (index: Int, item: String?) -> Unit,
 ) {
     SingleChoiceSegmentedButtonRow(
         modifier = modifier
@@ -159,13 +167,13 @@ private fun MySegmentedButtonRowImpl(
                 },
                 selected = index == selected,
                 icon = {
-                        SegmentedButtonDefaults.Icon(
-                            active = index == selected,
-                            inactiveContent = icons?.get(index)?.let {
-                                { it() }
-                            }
-                        )
-                   },
+                    SegmentedButtonDefaults.Icon(
+                        active = index == selected,
+                        inactiveContent = icons?.get(index)?.let {
+                            { it() }
+                        }
+                    )
+                },
             ) {
                 Text(item)
             }

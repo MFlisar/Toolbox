@@ -23,14 +23,16 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyMultiDropdown
-import com.michaelflisar.toolbox.components.MyNumericInput
+import com.michaelflisar.toolbox.components.MyNumericInputNullable
 import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.components.MySegmentedControl
+import com.michaelflisar.toolbox.components.MySegmentedControlIndex
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.numbers.NumberUtil
 import kotlin.enums.EnumEntries
 
 abstract class Filter<Item, CellValue> {
@@ -44,12 +46,14 @@ abstract class Filter<Item, CellValue> {
     abstract fun isValid(item: Item, itemToValue: (item: Item) -> CellValue): Boolean
     abstract fun isActive(): Boolean
     abstract fun clear()
+
+    @Composable
     abstract fun info(): String
 
     enum class FilterType(
         val label: String,
         val info: String,
-        val numeric: Boolean = false
+        val numeric: Boolean = false,
     ) {
         Equal("==", "Equal"),
         NotEqual("!=", "Not Equal"),
@@ -72,13 +76,17 @@ abstract class Filter<Item, CellValue> {
 
     @Composable
     fun Render(
-        style: Style
+        style: Style,
     ) {
         when (style) {
             is Style.HeaderPopup -> {
                 MyRow {
                     Icon(Icons.Default.FilterAlt, null)
-                    Text(modifier = Modifier.weight(1f), text = style.text, fontWeight = FontWeight.Bold)
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        text = style.text,
+                        fontWeight = FontWeight.Bold
+                    )
                     header()
                 }
                 Column(
@@ -89,6 +97,7 @@ abstract class Filter<Item, CellValue> {
                     content()
                 }
             }
+
             is Style.ChipPopup -> {
                 MyRow {
                     Icon(Icons.Default.FilterAlt, null)
@@ -128,17 +137,18 @@ abstract class Filter<Item, CellValue> {
                     FilterType.LargerOrEqual,
                     FilterType.Larger,
                     FilterType.SmallerOrEqual,
-                    FilterType.Smaller -> throw RuntimeException("Type not valid!")
+                    FilterType.Smaller,
+                        -> throw RuntimeException("Type not valid!")
                 }
             }
         },
-        initial: String = ""
+        initial: String = "",
     ) : Filter<Item, CellValue>() {
 
         data class State(
             val value: String = "",
             val ignoreCase: Boolean = true,
-            val type: FilterType = FilterType.Contains
+            val type: FilterType = FilterType.Contains,
         )
 
         override val state = mutableStateOf(State(initial))
@@ -150,6 +160,7 @@ abstract class Filter<Item, CellValue> {
             state.value = state.value.copy(value = "")
         }
 
+        @Composable
         override fun info(): String {
             if (!isActive()) {
                 return ""
@@ -164,7 +175,8 @@ abstract class Filter<Item, CellValue> {
                 title = "",
                 items = FilterType.entries.filter { !it.numeric },
                 selected = state.value.type,
-                mapper = { item, dropwdown -> if (dropwdown) item.longLabel else item.label },
+                mapper = { it.label },
+                mapperDropdown = { it.longLabel },
                 onSelectionChanged = {
                     state.value = state.value.copy(type = it)
                 }
@@ -207,6 +219,7 @@ abstract class Filter<Item, CellValue> {
             }
         }
     }
+
 
     class Number<Item, CellValue>(
         val filter: (value: CellValue, filter: State<CellValue>) -> Boolean = { value, filter ->
@@ -274,12 +287,97 @@ abstract class Filter<Item, CellValue> {
                 valid
             }
         },
-        initial: CellValue? = null
+        val instance: CellValue,
+        initial: CellValue? = null,
     ) : Filter<Item, CellValue>() where CellValue : kotlin.Number {
+
+        companion object {
+
+            inline operator fun <Item, reified CellValue> invoke(
+                noinline filter: (value: CellValue, filter: State<CellValue>) -> Boolean = { value, filter ->
+                    if (filter.value == null)
+                        true
+                    else {
+                        val valid: Boolean = when (filter.type) {
+                            FilterType.Equal -> value == filter.value
+                            FilterType.NotEqual -> value != filter.value
+                            FilterType.LargerOrEqual -> {
+                                when (value) {
+                                    is Double -> (value as Double) >= (filter.value as Double)
+                                    is Float -> (value as Float) >= (filter.value as Float)
+                                    is Int -> (value as Int) >= (filter.value as Int)
+                                    is Long -> (value as Long) >= (filter.value as Long)
+                                    is Short -> (value as Short) >= (filter.value as Short)
+                                    is Byte -> (value as Byte) >= (filter.value as Byte)
+                                    else -> throw RuntimeException("Type not handled!")
+                                }
+                            }
+
+                            FilterType.Larger -> {
+                                when (value) {
+                                    is Double -> (value as Double) > (filter.value as Double)
+                                    is Float -> (value as Float) > (filter.value as Float)
+                                    is Int -> (value as Int) > (filter.value as Int)
+                                    is Long -> (value as Long) > (filter.value as Long)
+                                    is Short -> (value as Short) > (filter.value as Short)
+                                    is Byte -> (value as Byte) > (filter.value as Byte)
+                                    else -> throw RuntimeException("Type not handled!")
+                                }
+                            }
+
+                            FilterType.SmallerOrEqual -> {
+                                when (value) {
+                                    is Double -> (value as Double) <= (filter.value as Double)
+                                    is Float -> (value as Float) <= (filter.value as Float)
+                                    is Int -> (value as Int) <= (filter.value as Int)
+                                    is Long -> (value as Long) <= (filter.value as Long)
+                                    is Short -> (value as Short) <= (filter.value as Short)
+                                    is Byte -> (value as Byte) <= (filter.value as Byte)
+                                    else -> throw RuntimeException("Type not handled!")
+                                }
+                            }
+
+                            FilterType.Smaller -> {
+                                when (value) {
+                                    is Double -> (value as Double) < (filter.value as Double)
+                                    is Float -> (value as Float) < (filter.value as Float)
+                                    is Int -> (value as Int) < (filter.value as Int)
+                                    is Long -> (value as Long) < (filter.value as Long)
+                                    is Short -> (value as Short) < (filter.value as Short)
+                                    is Byte -> (value as Byte) < (filter.value as Byte)
+                                    else -> throw RuntimeException("Type not handled!")
+                                }
+                            }
+
+                            FilterType.Contains -> value.toString()
+                                .contains(filter.value.toString())
+
+                            FilterType.ContainsNot -> !value.toString()
+                                .contains(filter.value.toString())
+
+                            FilterType.StartsWith -> value.toString()
+                                .startsWith(filter.value.toString())
+
+                            FilterType.EndsWith -> value.toString()
+                                .endsWith(filter.value.toString())
+
+                        }
+
+                        valid
+                    }
+                },
+                initial: CellValue? = null,
+            ) where CellValue : kotlin.Number = Number<Item, CellValue>(
+                filter = filter,
+                instance = NumberUtil.zero(),
+                initial = initial
+            )
+
+        }
 
         data class State<CellValue>(
             val value: CellValue? = null,
-            val type: FilterType = FilterType.Contains
+            val type: FilterType = FilterType.Contains,
         )
 
         override val state = mutableStateOf(State<CellValue>(initial))
@@ -291,6 +389,7 @@ abstract class Filter<Item, CellValue> {
             state.value = state.value.copy(value = null)
         }
 
+        @Composable
         override fun info(): String {
             if (!isActive()) {
                 return ""
@@ -305,23 +404,21 @@ abstract class Filter<Item, CellValue> {
                 title = "",
                 items = FilterType.entries,
                 selected = state.value.type,
-                mapper = { item, dropwdown -> if (dropwdown) item.longLabel else item.label },
-                onSelectionChanged = {
-                    state.value = state.value.copy(type = it)
-                }
+                mapper = { it.label },
+                mapperDropdown = { it.longLabel },
+                onSelectionChanged = { state.value = state.value.copy(type = it) }
             )
         }
 
         @Composable
         override fun ColumnScope.content() {
             val focusRequester = remember { FocusRequester() }
-            MyNumericInput(
+            MyNumericInputNullable(
                 title = "",
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 value = state.value.value,
-                onValueChanged = {
-                    state.value = state.value.copy(value = it)
-                }
+                instance = instance,
+                onValueChanged = { state.value = state.value.copy(value = it) }
             )
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()
@@ -331,13 +428,13 @@ abstract class Filter<Item, CellValue> {
 
     class List<Item, CellValue>(
         val items: kotlin.collections.List<CellValue>,
-        val mapper: (CellValue) -> String = { it.toString() },
+        val mapper: @Composable (CellValue) -> String = { it.toString() },
         val filter: (value: CellValue, filter: kotlin.collections.List<CellValue>) -> Boolean = { value, filter ->
             filter.isEmpty() || filter.contains(value)
         },
         val multiSelect: Boolean = false,
         val labelAll: String = "ALL",
-        initial: kotlin.collections.List<CellValue> = emptyList()
+        initial: kotlin.collections.List<CellValue> = emptyList(),
     ) : Filter<Item, CellValue>() {
 
         override val state = mutableStateOf(initial)
@@ -349,49 +446,48 @@ abstract class Filter<Item, CellValue> {
             state.value = emptyList()
         }
 
+        @Composable
         override fun info(): String {
             if (!isActive()) {
                 return ""
             }
-            return state.value.joinToString(", ") { mapper(it) }
+            val infos = mutableListOf<String>()
+            for (s in state.value) {
+                infos.add(mapper(s))
+            }
+            return infos.joinToString(", ")
         }
 
         @Composable
         override fun ColumnScope.content() {
             if (multiSelect) {
                 MyMultiDropdown(
-                    title = "",
                     items = items,
-                    selected = state.value,
-                    mapper = mapper,
-                    onSelectionChange = {
-                        state.value = it
-                    }
+                    selected = state,
+                    mapper = mapper
                 )
             } else {
                 val texts = items.map { mapper(it) }
-                MyDropdown(
-                    title = "",
+                MyDropdownIndex(
                     items = listOf(labelAll) + texts,
-                    selectedIndex = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0,
-                    onSelectionChanged = {
-                        state.value =
-                            it.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()
-                    }
-                )
+                    selectedIndex = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0
+                ) {
+                    state.value =
+                        it.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()
+                }
             }
         }
     }
 
     class Enum<Item, CellValue : kotlin.Enum<CellValue>>(
         val items: EnumEntries<CellValue>,
-        val mapper: (CellValue) -> String = { it.name },
+        val mapper: @Composable (CellValue) -> String = { it.name },
         val filter: (value: CellValue, filter: kotlin.collections.List<CellValue>) -> Boolean = { value, filter ->
             filter.isEmpty() || filter.contains(value)
         },
         val multiSelect: Boolean = false,
         val labelAll: String = "ALL",
-        initial: kotlin.collections.List<CellValue> = emptyList()
+        initial: kotlin.collections.List<CellValue> = emptyList(),
     ) : Filter<Item, CellValue>() {
 
         override val state = mutableStateOf(initial)
@@ -403,29 +499,29 @@ abstract class Filter<Item, CellValue> {
             state.value = emptyList()
         }
 
+        @Composable
         override fun info(): String {
             if (!isActive()) {
                 return ""
             }
-            return state.value.joinToString(", ") { mapper(it) }
+            val infos = mutableListOf<String>()
+            for (s in state.value) {
+                infos.add(mapper(s))
+            }
+            return infos.joinToString(", ")
         }
 
         @Composable
         override fun ColumnScope.content() {
             if (multiSelect) {
                 MyMultiDropdown(
-                    title = "",
                     items = items,
-                    selected = state.value,
-                    mapper = mapper,
-                    onSelectionChange = {
-                        state.value = it
-                    }
+                    selected = state,
+                    mapper = mapper
                 )
             } else {
                 val texts = items.map { mapper(it) }
-                MyDropdown(
-                    title = "",
+                MyDropdownIndex(
                     items = listOf(labelAll) + texts,
                     selectedIndex = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0,
                     onSelectionChanged = {
@@ -441,7 +537,7 @@ abstract class Filter<Item, CellValue> {
         val labelAll: String = "ALL",
         val labelChecked: String = "Checked",
         val labelUnchecked: String = "Unchecked",
-        initial: Boolean? = null
+        initial: Boolean? = null,
     ) : Filter<Item, Boolean>() {
         override val state = mutableStateOf<Boolean?>(initial)
         override fun isValid(item: Item, itemToValue: (item: Item) -> Boolean) =
@@ -452,6 +548,7 @@ abstract class Filter<Item, CellValue> {
             state.value = null
         }
 
+        @Composable
         override fun info(): String {
             if (!isActive()) {
                 return ""
@@ -465,7 +562,7 @@ abstract class Filter<Item, CellValue> {
 
         @Composable
         override fun ColumnScope.content() {
-            MySegmentedControl(
+            MySegmentedControlIndex(
                 items = listOf(labelAll, labelChecked, labelUnchecked),
                 selectedIndex = when (state.value) {
                     true -> 1

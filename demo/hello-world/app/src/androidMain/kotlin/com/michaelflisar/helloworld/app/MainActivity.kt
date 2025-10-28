@@ -5,8 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresPermission
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import com.michaelflisar.helloworld.Shared
 import com.michaelflisar.toolbox.ads.AdManagerImpl
 import com.michaelflisar.toolbox.ads.FooterAdsBanner
@@ -16,7 +19,6 @@ import com.michaelflisar.toolbox.app.AndroidApplication
 import com.michaelflisar.toolbox.app.AndroidNavigation
 import com.michaelflisar.toolbox.app.AndroidScaffold
 import com.michaelflisar.toolbox.app.AndroidToolbar
-import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeTransition
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.features.scaffold.rememberNavigationStyleAuto
@@ -58,17 +60,20 @@ class MainActivity : ComponentActivity() {
                             items = Shared.pages.map { it.toNavItem() },
                             alwaysShowLabel = false
                         )
-                    },
-                    footer = {
+                    }
+                ) {
+                    Column {
+                        // Content
+                        Box(modifier = Modifier.weight(1f)) {
+                            AppNavigatorFadeTransition(navigator)
+                        }
+                        // Ads
                         val proVersionManager = ProVersionManager.setup
                         val proState = proVersionManager.proState.collectAsState()
                         val adUnitId =
                             AdManagerImpl.Ids.BANNER_DEFAULT // TODO: mit App spezifischer Banner ID ersetzen
-                        FooterAdsBanner(this, proState, adUnitId)
+                        FooterAdsBanner(this@MainActivity, proState, adUnitId)
                     }
-                ) {
-                    // Content
-                    AppNavigatorFadeTransition(navigator)
                 }
             }
         }

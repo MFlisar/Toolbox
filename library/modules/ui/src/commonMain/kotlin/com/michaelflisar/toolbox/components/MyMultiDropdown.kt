@@ -43,111 +43,115 @@ import com.michaelflisar.toolbox.extensions.disabled
 
 @Composable
 fun <T> MyMultiDropdown(
-    modifier: Modifier = Modifier,
-    title: String,
     items: List<T>,
     selected: MutableState<List<T>>,
-    mapper: (item: T) -> String,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    title: String = "",
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     onSelectionChange: ((List<T>) -> Unit)? = null
 ) {
     val texts = items.map { mapper(it) }
-    val selectedIndizes = selected.value.map { items.indexOf(it) }
+    val selectedIndices = selected.value.map { items.indexOf(it) }
     MyMultiDropdownImpl(
         modifier,
         title,
         texts,
-        selectedIndizes,
+        selectedIndices,
         enabled,
         color,
         backgroundColor
-    ) { selectedIndizes, selectedItems ->
-        selected.value = selectedIndizes.map { items[it] }
+    ) { selectedIndices, selectedItems ->
+        selected.value = selectedIndices.map { items[it] }
         onSelectionChange?.invoke(selected.value)
     }
 }
 
 @Composable
 fun <T> MyMultiDropdown(
-    modifier: Modifier = Modifier,
-    title: String,
     items: List<T>,
     selected: List<T>,
-    mapper: (item: T) -> String,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    title: String = "",
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     onSelectionChange: (List<T>) -> Unit
 ) {
     val texts = items.map { mapper(it) }
-    val selectedIndizes = selected.map { items.indexOf(it) }
+    val selectedIndices = selected.map { items.indexOf(it) }
     MyMultiDropdownImpl(
         modifier,
         title,
         texts,
-        selectedIndizes,
+        selectedIndices,
         enabled,
         color,
         backgroundColor
-    ) { selectedIndizes, selectedItems ->
-        onSelectionChange(selectedIndizes.map { items[it] })
+    ) { selectedIndices, selectedItems ->
+        onSelectionChange(selectedIndices.map { items[it] })
     }
 }
 
 @Composable
-fun MyMultiDropdown(
+fun <T> MyMultiDropdownIndex(
+    items: List<T>,
+    selectedIndices: MutableState<List<Int>>,
     modifier: Modifier = Modifier,
-    title: String,
-    items: List<String>,
-    selected: MutableState<List<String>>,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    title: String = "",
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
-    onSelectionChange: ((List<String>) -> Unit)? = null
+    onSelectionChange: ((List<Int>) -> Unit)? = null
 ) {
-    val texts = items
-    val selectedIndizes = selected.value.map { items.indexOf(it) }
+    val texts = items.map { mapper(it) }
     MyMultiDropdownImpl(
         modifier,
         title,
         texts,
-        selectedIndizes,
+        selectedIndices.value,
         enabled,
         color,
         backgroundColor
-    ) { selectedIndizes, selectedItems ->
-        selected.value = selectedIndizes.map { items[it] }
-        onSelectionChange?.invoke(selected.value)
+    ) { selectedIndices2, selectedItems ->
+        selectedIndices.value = selectedIndices2
+        onSelectionChange?.invoke(selectedIndices2)
     }
 }
 
 @Composable
-fun MyMultiDropdown(
+fun <T> MyMultiDropdownIndex(
+    items: List<T>,
+    selectedIndices: List<Int>,
     modifier: Modifier = Modifier,
-    title: String,
-    items: List<String>,
-    selected: List<String>,
+    mapper: @Composable (item: T) -> String = { it.toString() },
+    title: String = "",
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
-    onSelectionChange: (List<String>) -> Unit
+    onSelectionChange: (List<Int>) -> Unit
 ) {
-    val texts = items
-    val selectedIndizes = selected.map { items.indexOf(it) }
+    val texts = items.map { mapper(it) }
     MyMultiDropdownImpl(
         modifier,
         title,
         texts,
-        selectedIndizes,
+        selectedIndices,
         enabled,
         color,
         backgroundColor
-    ) { selectedIndizes, selectedItems ->
-        onSelectionChange(selectedIndizes.map { items[it] })
+    ) { selectedIndices, selectedItems ->
+        onSelectionChange(selectedIndices)
     }
 }
+
+// --------------------------------
+// Implementation
+// --------------------------------
 
 @Composable
 private fun MyMultiDropdownImpl(

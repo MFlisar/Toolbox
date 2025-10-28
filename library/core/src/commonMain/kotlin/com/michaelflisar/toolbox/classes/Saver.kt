@@ -10,6 +10,13 @@ import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.runtime.toMutableStateMap
 
+fun <T> stateSaverList(): Saver<List<T>, Any> {
+    return listSaverKeepEmpty(
+        save = { it },
+        restore = { it }
+    )
+}
+
 fun <T> saverMutableStateList(): Saver<MutableState<List<T>>, Any> {
     return listSaverKeepEmpty(
         save = { it.value },

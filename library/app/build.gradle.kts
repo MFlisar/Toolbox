@@ -124,6 +124,7 @@ kotlin {
             implementation(libs.compose.material3)
             implementation(libs.compose.material3.adaptive)
             implementation(libs.compose.ui.backhandler)
+            api(libs.compose.lifecycle)
 
             // Compose Icons
             implementation(libs.compose.material.icons.core)

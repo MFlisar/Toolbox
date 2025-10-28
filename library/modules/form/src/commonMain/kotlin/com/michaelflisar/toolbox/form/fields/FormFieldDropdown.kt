@@ -5,6 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.form.FormField
 
 class FormFieldDropdown internal constructor(
@@ -17,7 +18,7 @@ class FormFieldDropdown internal constructor(
 
     @Composable
     override fun render() {
-        MyDropdown(title = "", items = items, selectedIndex = stateValue)
+        MyDropdownIndex(title = "", items = items, selectedIndex = stateValue)
     }
 }
 

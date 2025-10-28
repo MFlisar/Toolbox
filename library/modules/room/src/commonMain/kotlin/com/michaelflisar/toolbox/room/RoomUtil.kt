@@ -18,6 +18,15 @@ object RoomUtil {
         return result
     }
 
+    internal suspend fun <S> runQueryInChunksAndReturnCount(list: List<S>, chunkSize: Int = 999, block: suspend (List<S>) -> Int): Int {
+        var count = 0
+        runQueryInChunks(list, chunkSize) {
+            count += block(it)
+            it
+        }
+        return count
+    }
+
     /**
      * Runs the given block in a transaction (for write operations)
      *

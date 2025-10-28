@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.compose)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gradle.maven.publish.plugin)
@@ -79,12 +80,15 @@ kotlin {
         // ---------------------
 
         val targetsMac = listOf(Target.MACOS)
+        val targetsJava = listOf(Target.ANDROID, Target.WINDOWS)
 
         val macosMain by creating { dependsOn(commonMain.get()) }
         val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
+        val javaMain by creating { dependsOn(commonMain.get()) }
 
         macosMain.setupDependencies(sourceSets, buildTargets, targetsMac)
         featureFileSupportMain.setupDependencies(sourceSets, buildTargets, Target.LIST_FILE_SUPPORT)
+        javaMain.setupDependencies(sourceSets, buildTargets, targetsJava)
 
         // ---------------------
         // dependencies
@@ -111,6 +115,8 @@ kotlin {
             implementation(deps.composedialogs.core)
 
             implementation(deps.filekit.dialogs.compose)
+
+            api(deps.kmp.parcelize)
         }
 
         androidMain.dependencies {

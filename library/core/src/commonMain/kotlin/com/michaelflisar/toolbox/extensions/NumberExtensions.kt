@@ -8,8 +8,20 @@ import kotlin.math.roundToLong
 import kotlin.text.padStart
 import kotlin.text.trimEnd
 
+fun Double.round(commas: Int): Double {
+    require(commas >= 0) { "commas must be non-negative" }
+    val factor = 10.0.pow(commas.toDouble())
+    return (this * factor).roundToLong() / factor
+}
+
+fun Float.round(commas: Int): Float {
+    require(commas >= 0) { "commas must be non-negative" }
+    val factor = 10.0.pow(commas.toDouble())
+    return (this * factor).roundToLong().toFloat() / factor.toFloat()
+}
+
 fun Double.toRoundedString(commas: Int): String {
-    require(commas >= 0) { "decimalPlaces must be non-negative" }
+    require(commas >= 0) { "commas must be non-negative" }
 
     val scale = 10.0.pow(commas.toDouble()).toLong()
     val scaledNumber = (this * scale).roundToLong()
@@ -22,6 +34,10 @@ fun Double.toRoundedString(commas: Int): String {
         val fractionalPartString = fractionalPart.toString().padStart(commas, '0')
         "$integerPart.${fractionalPartString.trimEnd('0')}"
     }
+}
+
+fun Float.toRoundedString(commas: Int): String {
+    return this.toDouble().toRoundedString(commas)
 }
 
 fun Number.prettyNumber(commas: Int): String {

@@ -20,7 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -47,7 +46,7 @@ object MySegmentedControl {
         val color: Color,
         val onColor: Color,
         val borderColor: Color,
-        val buttonContentPadding: PaddingValues
+        val buttonContentPadding: PaddingValues,
     ) {
         private val shapeFirst = shape.copy(topEnd = CornerSize0, bottomEnd = CornerSize0)
         private val shapeLast = shape.copy(topStart = CornerSize0, bottomStart = CornerSize0)
@@ -73,7 +72,7 @@ fun rememberMySegmentedControlStyle(
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     borderColor: Color = color,
-    buttonContentPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+    buttonContentPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
 ) = MySegmentedControl.Style(
     fixedWidth,
     minWidth,
@@ -87,17 +86,23 @@ fun rememberMySegmentedControlStyle(
 @Suppress("UNCHECKED_CAST")
 @Composable
 fun <T> MySegmentedControl(
-    modifier: Modifier = Modifier,
     items: List<T>,
     selected: MutableState<T>,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     forceSelection: Boolean = true,
-    mapper: (item: T) -> String = { it.toString() },
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
-    onSelectionChanged: ((T) -> Unit)? = null
+    onSelectionChanged: ((T) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected.value)
-    MySegmentedControlImpl(modifier, texts, selectedIndex, forceSelection, style) { index ->
+    MySegmentedControlImpl(
+        modifier = modifier,
+        items = texts,
+        selectedIndex = selectedIndex,
+        forceSelection = forceSelection,
+        style = style
+    ) { index ->
         val s = (if (index >= 0) items[index] else null) as T
         selected.value = s
         onSelectionChanged?.invoke(s)
@@ -106,56 +111,77 @@ fun <T> MySegmentedControl(
 
 @Composable
 fun <T> MySegmentedControl(
-    modifier: Modifier = Modifier,
     items: List<T>,
     selected: T,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     forceSelection: Boolean = true,
-    mapper: (item: T) -> String = { it.toString() },
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
-    onSelectionChanged: ((T) -> Unit)? = null
+    onSelectionChanged: (T) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected)
-    MySegmentedControlImpl(modifier, texts, selectedIndex, forceSelection, style) { index ->
-        onSelectionChanged?.invoke(items[index])
+    MySegmentedControlImpl(
+        modifier = modifier,
+        items = texts,
+        selectedIndex = selectedIndex,
+        forceSelection = forceSelection,
+        style = style
+    ) { index ->
+        onSelectionChanged.invoke(items[index])
     }
 }
 
-// Sonderfall: Int Daten (index) + String Werte
+@Suppress("UNCHECKED_CAST")
 @Composable
-fun MySegmentedControl(
-    modifier: Modifier = Modifier,
-    items: List<String>,
+fun <T> MySegmentedControlIndex(
+    items: List<T>,
     selectedIndex: MutableState<Int>,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     forceSelection: Boolean = true,
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
-    onSelectionChanged: ((Int) -> Unit)? = null
+    onSelectionChanged: ((Int) -> Unit)? = null,
 ) {
+    val texts = items.map { mapper(it) }
     MySegmentedControlImpl(
-        modifier,
-        items,
-        selectedIndex.value,
-        forceSelection,
-        style
+        modifier = modifier,
+        items = texts,
+        selectedIndex = selectedIndex.value,
+        forceSelection = forceSelection,
+        style = style
     ) { index ->
         selectedIndex.value = index
         onSelectionChanged?.invoke(index)
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 @Composable
-fun MySegmentedControl(
-    modifier: Modifier = Modifier,
-    items: List<String>,
+fun <T> MySegmentedControlIndex(
+    items: List<T>,
     selectedIndex: Int,
+    modifier: Modifier = Modifier,
+    mapper: @Composable (item: T) -> String = { it.toString() },
     forceSelection: Boolean = true,
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
-    onSelectionChanged: ((Int) -> Unit)? = null
+    onSelectionChanged: (Int) -> Unit,
 ) {
-    MySegmentedControlImpl(modifier, items, selectedIndex, forceSelection, style) { index ->
-        onSelectionChanged?.invoke(index)
+    val texts = items.map { mapper(it) }
+    MySegmentedControlImpl(
+        modifier = modifier,
+        items = texts,
+        selectedIndex = selectedIndex,
+        forceSelection = forceSelection,
+        style = style
+    ) { index ->
+        onSelectionChanged.invoke(index)
     }
 }
+
+// --------------------------------
+// Implementation
+// --------------------------------
 
 @Composable
 private fun MySegmentedControlImpl(
@@ -164,7 +190,7 @@ private fun MySegmentedControlImpl(
     selectedIndex: Int,
     forceSelection: Boolean,
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
-    onSelectionChange: (index: Int) -> Unit
+    onSelectionChange: (index: Int) -> Unit,
 ) {
     Row(
         modifier = modifier,
@@ -192,7 +218,7 @@ private fun Item(
     count: Int,
     forceSelection: Boolean,
     style: MySegmentedControl.Style,
-    onSelectionChange: (index: Int) -> Unit
+    onSelectionChange: (index: Int) -> Unit,
 ) {
     val selectedIndex = remember(selectedIndex) { mutableIntStateOf(selectedIndex) }
     val shapeOfIndex = style.getShape(index, count)
