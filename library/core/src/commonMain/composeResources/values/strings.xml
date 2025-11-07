@@ -1,9 +1,5 @@
 <resources>
 
-	 <!-- Acra -->
-    <string name="crash_dialog_title">App crashed</string>
-    <string name="crash_dialog_text">An unexpected error occurred. Please help me to fix this by sending me the error data by clicking OK.</string>
-
     <!-- Ads -->
     <string name="placeholder_ads">Advertisement</string>
    

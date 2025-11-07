@@ -1,5 +1,12 @@
 package com.michaelflisar.toolbox.app.features.navigation
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
 import cafe.adriel.voyager.core.screen.Screen
@@ -9,6 +16,7 @@ import cafe.adriel.voyager.navigator.NavigatorContent
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.navigator.OnBackPressed
 import cafe.adriel.voyager.transitions.FadeTransition
+import cafe.adriel.voyager.transitions.ScreenTransition
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.michaelflisar.toolbox.app.features.toolbar.selection.ResetSelectionToolbarOnScreenChange
 
@@ -53,5 +61,31 @@ fun AppNavigatorFadeTransition(
     FadeTransition(
         navigator = navigator,
         disposeScreenAfterTransitionEnd = true
+    )
+}
+
+@OptIn(ExperimentalVoyagerApi::class)
+@Composable
+fun AppNavigatorFadeAndScaleTransition(
+    navigator: Navigator,
+) {
+    val animationSpec = //tween<Float>(3000)
+        spring<Float>(stiffness = Spring.StiffnessMediumLow)
+    ScreenTransition(
+        navigator = navigator,
+        disposeScreenAfterTransitionEnd = true,
+        transition = {
+            (
+                    fadeIn(animationSpec = animationSpec) + scaleIn(
+                        initialScale = 0.95f,
+                        animationSpec = animationSpec
+                    )
+                            togetherWith fadeOut(animationSpec = animationSpec) +
+                            scaleOut(
+                                targetScale = 1.05f,
+                                animationSpec = animationSpec
+                            )
+                    )
+        }
     )
 }

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.feature.menu.MenuState
-import com.michaelflisar.toolbox.feature.menu.PopupMenuScope
+import com.michaelflisar.toolbox.feature.menu.MenuScope
 
 sealed interface INavItem
 
@@ -31,7 +31,7 @@ class NavItemPopupMenu(
     val title: String,
     val icon: IconComposable? = null,
     val state: MenuState,
-    val content: @Composable PopupMenuScope.() -> Unit
+    val content: @Composable MenuScope.() -> Unit
 ) : INavItem
 
 object NavItemDivider : INavItem

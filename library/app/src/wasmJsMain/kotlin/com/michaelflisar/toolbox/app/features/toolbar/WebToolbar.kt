@@ -57,7 +57,9 @@ internal fun WebToolbar(
         windowInsets = windowInsets,
         scrollBehavior = scrollBehavior,
         navigationIcon = {
-            ToolbarBackButton(showBackButton, onClick = onBack)
+            if (showBackButton) {
+                ToolbarBackButton(onClick = onBack)
+            }
         },
         actions = {
             Menu(menuItems)

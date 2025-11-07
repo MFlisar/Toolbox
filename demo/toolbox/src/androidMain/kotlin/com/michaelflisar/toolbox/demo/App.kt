@@ -6,8 +6,10 @@ import com.michaelflisar.kotbilling.classes.ProductType
 import com.michaelflisar.kotpreferences.core.value
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
+import com.michaelflisar.toolbox.acra.AcraSetup
 import com.michaelflisar.toolbox.ads.AdManagerImpl
 import com.michaelflisar.toolbox.app.AndroidApplication
+import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppScope
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.classes.AndroidAppSetup
@@ -24,6 +26,7 @@ import com.michaelflisar.toolbox.backup.BackupManagerImpl
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.classes.BackupConfig
 import com.michaelflisar.toolbox.backup.createDefaultBackupContent
+import com.michaelflisar.toolbox.demo.pages.tests.TestPrefs
 import com.michaelflisar.toolbox.extensions.isLight
 import com.michaelflisar.toolbox.features.proversion.ProState
 import com.michaelflisar.toolbox.proversion.AndroidProVersionManager
@@ -31,7 +34,11 @@ import com.michaelflisar.toolbox.utils.AndroidUtil
 
 class App : AndroidApplication() {
 
-    override val appIcon: Int = R.mipmap.ic_launcher
+    val appIcon = R.mipmap.ic_launcher
+    override val acraSetup = AcraSetup(
+        appIcon = appIcon,
+        appName = "Toolbox"
+    )
 
     override fun onAfterCreate() {
 
@@ -66,6 +73,10 @@ class App : AndroidApplication() {
                 )
             )
         )
+
+        // test prefs
+        val storageTest = DataStoreStorage.create(name = "test")
+        App.registerSingleton(TestPrefs(storageTest))
     }
 
     override fun createSetup(): AppSetup {

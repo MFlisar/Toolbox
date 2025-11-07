@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox.app
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +19,6 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.core.app.ComponentActivity
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -34,6 +32,7 @@ import com.michaelflisar.toolbox.app.features.menu.Menu
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
+import com.michaelflisar.toolbox.app.features.navigation.findLocalByScreenOrThrow
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
 import com.michaelflisar.toolbox.app.features.navigationbar.NavigationBar
 import com.michaelflisar.toolbox.app.features.navigationbar.NavigationRail
@@ -104,7 +103,9 @@ fun AndroidScaffold(
             contentWindowInsets = contentWindowInsets
         ) { paddingValues ->
             Row(
-                modifier = Modifier.fillMaxSize().padding(paddingValues)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
             ) {
                 if (navigationStyle.value == NavigationStyle.Left)
                     navigation()
@@ -126,7 +127,7 @@ fun AndroidToolbar(
     background: Color = MaterialTheme.colorScheme.toolbar,
     onBackground: Color = MaterialTheme.colorScheme.onToolbar,
 ) {
-    val navigator = LocalNavigator.currentOrThrow
+    val navigator = LocalNavigator.findLocalByScreenOrThrow
     val currentNavScreen = navigator.lastNavItem
     val toolbarData = currentNavScreen.provideData()
     val showBackButton = navigator.size > 1
@@ -142,8 +143,8 @@ fun AndroidToolbar(
         windowInsets = windowInsets,
         scrollBehavior = scrollBehavior,
         navigationIcon = {
-            ToolbarBackButton(showBackButton) {
-                navigator.pop()
+            if (showBackButton) {
+                ToolbarBackButton() { navigator.pop() }
             }
         },
         actions = {

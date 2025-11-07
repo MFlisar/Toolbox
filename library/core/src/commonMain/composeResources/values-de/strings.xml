@@ -1,9 +1,5 @@
 <resources>
 
-	<!-- acra -->
-    <string name="crash_dialog_title">Anwendung abgestürzt</string>
-    <string name="crash_dialog_text">Es ist ein unerwarteter Fehler aufgetreten. Hilf bitte dabei das Problem zu lösen, indem du mir das Log durch klicken auf OK schickst.</string>
-
     <!-- Ads -->
     <string name="placeholder_ads">Werbung</string>
 

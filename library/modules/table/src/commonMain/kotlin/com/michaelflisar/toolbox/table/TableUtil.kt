@@ -1,8 +1,9 @@
 package com.michaelflisar.toolbox.table
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.layout.SubcomposeLayout
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import com.michaelflisar.toolbox.ComposeUtil
 
 internal object TableUtil {
 
@@ -10,24 +11,12 @@ internal object TableUtil {
     fun <T> MeasureMaxWidth(
         items: List<T>,
         render: @Composable (T) -> Unit,
-        onMeasured: (Dp) -> Unit
+        onMeasured: (Dp) -> Unit,
     ) {
-        SubcomposeLayout { constraints ->
-            var maxWidth = 0
-
-            items.forEach { item ->
-                val placeables = subcompose(item) {
-                    render(item)
-                }.map { it.measure(constraints) }
-
-                val width = placeables.maxOfOrNull { it.width } ?: 0
-                if (width > maxWidth) maxWidth = width
-            }
-
-            // Übergib maxWidth in Dp
-            onMeasured(maxWidth.toDp())
-
-            layout(0, 0) {} // Kein UI sichtbar, nur Messung
-        }
+        val density = LocalDensity.current
+        ComposeUtil.MeasureMaxSize(
+            composables = items.map { item -> { render(item) } },
+            onMeasured = { width, _ -> onMeasured(with(density) { width.toDp() }) }
+        )
     }
 }

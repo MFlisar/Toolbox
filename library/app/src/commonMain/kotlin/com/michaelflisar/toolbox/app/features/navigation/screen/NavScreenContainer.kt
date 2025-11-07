@@ -27,13 +27,13 @@ abstract class NavScreenContainer(
 
     @Transient
     @IgnoredOnParcel
-    internal var navigator: MutableState<Navigator?> = mutableStateOf(null)
+    var navigator: MutableState<Navigator?> = mutableStateOf(null)
+        internal set
 
     @Composable
     override fun provideData(): State<NavScreenData> {
-        //val currentNavItem = navigator.value?.lastNavItem
-        //return currentNavItem?.provideData() ?: rootScreen.provideData()
-        return rootScreen.provideData()
+        val currentNavItem = navigator.value?.lastNavItem
+        return currentNavItem?.provideData() ?: rootScreen.provideData()
     }
 
     @Composable

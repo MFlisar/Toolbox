@@ -24,7 +24,7 @@ object JvmBackHandlerUtil {
 
     private fun registerMouseBackButtonListener(): AWTEventListener {
         val listener = AWTEventListener { event ->
-            if (event is MouseEvent && event.button == 4) {
+            if (event is MouseEvent && event.button == 4 && event.id == MouseEvent.MOUSE_RELEASED) {
                 // BUTTON4 ist meist der "Back"-Button
                 SwingUtilities.invokeLater {
                     val robot = Robot()

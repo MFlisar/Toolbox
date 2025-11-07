@@ -20,6 +20,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -50,7 +51,8 @@ class SelectionToolbarState internal constructor(
     }
 
     fun finishSelectionMode() {
-        println("isActive => finishSelectionMode")
+        //println("isActive => finishSelectionMode")
+        data.value?.clearSelection()
         data.value?.isActive?.value = false
         data.value = null
     }
@@ -148,16 +150,26 @@ fun SelectionToolbar(
     colors: TopAppBarColors = SelectionToolbarDefaults.colorsBackground()
 ) {
     val toolbarState = LocalSelectionToolbarState.current
+
+    // title beim beenden der selection mode merken, damit es beim fade out nicht falsch angezeigt wird
+    val lastTitle = remember { mutableStateOf("") }
+    if (toolbarState.isInSelectionMode) {
+        lastTitle.value = title(toolbarState.selectedCount, toolbarState.totalCount)
+    }
+
     AnimatedVisibility(
         visible = toolbarState.isInSelectionMode,
         enter = fadeIn(),
         exit = fadeOut()
     ) {
+        LaunchedEffect(toolbarState.data.value) {
+            println("SelectionToolbar - data changed: ${toolbarState.data.value}")
+        }
         TopAppBar(
             modifier = modifier,
             title = {
                 Text(
-                    text = title(toolbarState.selectedCount, toolbarState.totalCount),
+                    text = lastTitle.value,
                     style = MaterialTheme.typography.titleLarge,
                 )
             },

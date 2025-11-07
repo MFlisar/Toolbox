@@ -15,9 +15,18 @@ object App {
 
     private val singletons: HashMap<String, Any> = HashMap()
 
-    internal fun init(
-        setup: AppSetup,
+    /**
+     * Initializes the App module with the provided [setup].
+     *
+     * initialises LogManager, ComposeTheme and Changelog renderer
+     */
+    fun init(
+        setup: AppSetup
     ) {
+        // wurde bereits initialisiert => kann passieren, wenn man manuell init aufruft um bspw. den Logger zu nutzen
+        if (containsSingleton(getKey<AppSetup>()))
+            return
+
         registerSingleton(setup)
 
         // logging

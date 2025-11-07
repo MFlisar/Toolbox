@@ -18,11 +18,11 @@ import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.feature.menu.MenuCheckbox
 import com.michaelflisar.toolbox.feature.menu.MenuItem
+import com.michaelflisar.toolbox.feature.menu.MenuScope
 import com.michaelflisar.toolbox.feature.menu.MenuSeparator
 import com.michaelflisar.toolbox.feature.menu.MenuState
 import com.michaelflisar.toolbox.feature.menu.MenuSubMenu
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
-import com.michaelflisar.toolbox.feature.menu.PopupMenuScope
 import com.michaelflisar.toolbox.feature.menu.rememberMenuState
 
 sealed class MenuItem {
@@ -155,7 +155,7 @@ private fun MenuButton(
 }
 
 @Composable
-private fun PopupMenuScope.Menu(menuState: MenuState, items: List<MenuItem>) {
+private fun MenuScope.Menu(menuState: MenuState, items: List<MenuItem>) {
     items.forEach {
         when (it) {
             is MenuItem.Group -> {

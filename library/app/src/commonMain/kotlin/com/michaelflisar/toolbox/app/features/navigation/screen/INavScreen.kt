@@ -10,7 +10,7 @@ import com.michaelflisar.parcelize.Parcelable
 import com.michaelflisar.toolbox.app.features.actions.ActionItem
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.MenuItem
-import com.michaelflisar.toolbox.feature.menu.PopupMenuScope
+import com.michaelflisar.toolbox.feature.menu.MenuScope
 
 interface INavScreen : Screen, Parcelable {
 
@@ -45,7 +45,7 @@ interface INavScreen : Screen, Parcelable {
     fun toNavItem() = toActionItem().toNavItem()
 
     @Composable
-    fun PopupMenuItem(scope: PopupMenuScope) {
+    fun PopupMenuItem(scope: MenuScope) {
         val titleData = provideData()
         val navigator = LocalNavigator.currentOrThrow
         with(scope) {

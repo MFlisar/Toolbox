@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.managers
+package com.michaelflisar.toolbox.acra
 
 import android.app.Application
 import android.content.Context
@@ -9,11 +9,9 @@ import com.michaelflisar.feedbackmanager.FeedbackFile
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.getLatestLogFile
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
-import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.utils.AndroidUtil
 import com.michaelflisar.toolbox.utils.ExceptionUtil
 import com.michaelflisar.toolbox.utils.FileUtil
-import kotlinx.coroutines.runBlocking
 import org.acra.ACRA
 import org.acra.ReportField
 import org.acra.attachment.AcraContentProvider
@@ -24,17 +22,16 @@ import org.acra.config.dialog
 import org.acra.config.mailSender
 import org.acra.data.StringFormat
 import org.acra.ktx.initAcra
+import org.acra.log.error
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.getString
 import java.io.File
 import java.io.IOException
 
 object AcraManager {
 
-    class Setup(
+    internal class Setup(
         val enableDebugNotification: Boolean,
         val appendLogFile: Boolean,
-        val appIcon: Int,
         val appName: StringResource,
         val notificationChannelId: String,
         val notificationId: Int = 9999,
@@ -50,17 +47,15 @@ object AcraManager {
         app: Application,
         fileLoggingSetup: IFileLoggingSetup?,
         setup: Setup,
-        crash_dialog_text: StringResource,
-        crash_dialog_title: StringResource,
+        acraSetup: AcraSetup,
         buildConfigClass: Class<*>,
-        isDebugBuild: Boolean
+        isDebugBuild: Boolean,
     ): Boolean {
         this.fileLoggerSetup = fileLoggingSetup
         if (setup.enableDebugNotification) {
             ACRA.DEV_LOGGING = true
         }
         try {
-            val appName = runBlocking { getString(setup.appName) }
             app.initAcra {
                 this.buildConfigClass = buildConfigClass
                 reportFormat = StringFormat.KEY_VALUE_LIST
@@ -86,9 +81,9 @@ object AcraManager {
                 }
                 dialog {
                     enabled = true
-                    resIcon = setup.appIcon
-                    text = runBlocking { getString(crash_dialog_text) }
-                    title = runBlocking { getString(crash_dialog_title) }
+                    resIcon = acraSetup.appIcon
+                    text = acraSetup.crashDialogText
+                    title = acraSetup.crashDialogTitle
                     positiveButtonText = app.getString(android.R.string.ok)
                     negativeButtonText = app.getString(android.R.string.cancel)
                 }
@@ -97,12 +92,12 @@ object AcraManager {
                     mailTo = setup.mail
                     reportFileName = setup.reportFileName
                     reportAsFile = true
-                    subject = getDefaultSubject(app, appName)
+                    subject = getDefaultSubject(app, acraSetup.appName)
                 }
             }
 
             if (!ACRA.isACRASenderServiceProcess()) {
-                ACRA.errorReporter.putCustomData("AppName", appName)
+                ACRA.errorReporter.putCustomData("AppName", acraSetup.appName)
                 ACRA.errorReporter.putCustomData(
                     "Developer",
                     AndroidUtil.isDeveloper(app, isDebugBuild).toString()
@@ -116,7 +111,7 @@ object AcraManager {
             L.e(e)
             ACRA.init(app)
             if (setup.enableDebugNotification && setup.reportError()) {
-                showErrorNotification(app, e, setup)
+                showErrorNotification(app, e, setup, acraSetup)
                 setup.onErrorReportedCallback?.invoke()
                 ACRA.DEV_LOGGING = false
             }
@@ -124,7 +119,7 @@ object AcraManager {
             L.e(e)
             ACRA.init(app)
             if (setup.enableDebugNotification && setup.reportError()) {
-                showErrorNotification(app, e, setup)
+                showErrorNotification(app, e, setup, acraSetup)
                 setup.onErrorReportedCallback?.invoke()
                 ACRA.DEV_LOGGING = false
             }
@@ -140,6 +135,7 @@ object AcraManager {
         app: Application,
         e: Exception,
         setup: Setup,
+        acraSetup: AcraSetup,
     ) {
         try {
             val content: String? = ExceptionUtil.getStackTrace(e)
@@ -161,7 +157,7 @@ object AcraManager {
                 "Exception Report",
                 "Rare error found",
                 "Please report this error by clicking this notification, thanks",
-                setup.appIcon,
+                acraSetup.appIcon,
                 setup.notificationChannelId,
                 setup.notificationId
             )
@@ -178,12 +174,12 @@ object AcraManager {
                 try {
                     it.toUri()
                 } catch (e: Exception) {
-                    org.acra.log.error(e) { "Failed to parse Uri $it" }
+                    error(e) { "Failed to parse Uri $it" }
                     null
                 }
             }
             val logFileUri = fileLoggerSetup?.getLatestLogFile()?.let {
-                listOf(AcraContentProvider.getUriForFile(context, it))
+                listOf(AcraContentProvider.Companion.getUriForFile(context, it))
             } ?: emptyList()
 
             return uris + logFileUri

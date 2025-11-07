@@ -61,7 +61,7 @@ import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.menu.MenuState
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
-import com.michaelflisar.toolbox.feature.menu.PopupMenuScope
+import com.michaelflisar.toolbox.feature.menu.MenuScope
 
 internal fun List<INavItem>.toJewelNavigationItems(): List<IJewelNavigationItem> {
     return map {
@@ -127,7 +127,7 @@ internal class JewelNavigationPopupMenu(
     val title: String,
     val icon: IconComposable? = null,
     val state: MenuState,
-    val content: @Composable PopupMenuScope.() -> Unit
+    val content: @Composable MenuScope.() -> Unit
 ) : IJewelNavigationItem
 
 internal class JewelNavigationRegion(

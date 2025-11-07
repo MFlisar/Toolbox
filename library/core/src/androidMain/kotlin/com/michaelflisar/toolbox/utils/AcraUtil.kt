@@ -4,7 +4,8 @@ import android.app.Application
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.AppContext
 import com.michaelflisar.toolbox.NotificationUtil
-import com.michaelflisar.toolbox.managers.AcraManager
+import com.michaelflisar.toolbox.acra.AcraManager
+import com.michaelflisar.toolbox.acra.AcraSetup
 import org.jetbrains.compose.resources.StringResource
 
 object AcraUtil {
@@ -20,15 +21,13 @@ object AcraUtil {
 
     fun initAcra(
         app: Application,
-        appIcon: Int,
+        acraSetup: AcraSetup,
         appName: StringResource,
         fileLoggerSetup: IFileLoggingSetup?,
-        crash_dialog_text: StringResource,
-        crash_dialog_title: StringResource,
         reportError: (() -> Boolean) = { true },
         onErrorReportedCallback: (() -> Unit)? = null,
         buildConfigClass: Class<*>,
-        isDebugBuild: Boolean
+        isDebugBuild: Boolean,
     ) {
         NotificationUtil.initChannel(
             AppContext.context(),
@@ -42,7 +41,6 @@ object AcraUtil {
             setup = AcraManager.Setup(
                 enableDebugNotification = isDebugBuild,
                 appendLogFile = true,
-                appIcon = appIcon,
                 appName = appName,
                 notificationChannelId = NOTIFICATION_CHANNEL_ERROR_ID,
                 notificationId = DEFAULT_ERROR_NOTIFICATION_ID,
@@ -50,8 +48,7 @@ object AcraUtil {
                 reportError = reportError,
                 onErrorReportedCallback = onErrorReportedCallback
             ),
-            crash_dialog_text = crash_dialog_text,
-            crash_dialog_title = crash_dialog_title,
+            acraSetup = acraSetup,
             buildConfigClass = buildConfigClass,
             isDebugBuild = isDebugBuild
         )

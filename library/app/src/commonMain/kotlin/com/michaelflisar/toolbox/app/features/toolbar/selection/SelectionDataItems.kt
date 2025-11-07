@@ -7,6 +7,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 
 @Composable
@@ -16,14 +17,19 @@ fun <ID> rememberSelectionDataItems(
     isActive: Boolean = false,
     menuProvider: @Composable (data: SelectionDataItems<ID>) -> Unit
 ): SelectionDataItems<ID> {
-    val data = SelectionDataItems(
-        totalItemCount = rememberSaveable(totalItemCount) { mutableIntStateOf(totalItemCount) },
-        selectedIds = rememberSaveable { mutableStateOf(selectedIds) },
-        isActive = rememberSaveable { mutableStateOf(isActive) },
-        menuProvider = menuProvider
-    )
+    val totalItemCount = rememberSaveable(totalItemCount) { mutableIntStateOf(totalItemCount) }
+    val selectedIds = rememberSaveable { mutableStateOf(selectedIds) }
+    val isActive = rememberSaveable { mutableStateOf(isActive) }
+    val data = remember(totalItemCount, selectedIds, isActive) {
+        SelectionDataItems(
+            totalItemCount = totalItemCount,
+            selectedIds = selectedIds,
+            isActive = isActive,
+            menuProvider = menuProvider
+        )
+    }
     val selectionToolbarState = LocalSelectionToolbarState.current
-    LaunchedEffect(Unit) {
+    LaunchedEffect(data) {
         selectionToolbarState.restoreSelectionMode(data)
     }
     return data
@@ -38,7 +44,7 @@ class SelectionDataItems<ID> internal constructor(
 ) : SelectionData<ID, SelectionDataItems<ID>> {
 
     override val total: Int
-        get() = totalItemCount.value
+        get() = totalItemCount.intValue
 
     override val selected: Int
         get() = selectedIds.value.size
@@ -49,13 +55,13 @@ class SelectionDataItems<ID> internal constructor(
 
     override fun select(id: ID) {
         if (!isSelected(id)) {
-            selectedIds.value = selectedIds.value + id
+            selectedIds.value += id
         }
     }
 
     override fun deselect(id: ID) {
         if (isSelected(id)) {
-            selectedIds.value = selectedIds.value - id
+            selectedIds.value -= id
         }
     }
 

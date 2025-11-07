@@ -183,7 +183,6 @@ private fun MyExpandableTitleImpl(
     onToggle: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    val rotation by animateFloatAsState(if (expanded) (if (style.iconPlacement == IconPlacement.Left) -180f else 180f) else 0f)
     Column(
         modifier = modifier
             .then(
@@ -230,7 +229,7 @@ private fun MyExpandableTitleImpl(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (style.iconPlacement == IconPlacement.Left && (canToggle || !style.hideIconIfNotExpandable)) {
-                    Icon(rotation, style.getTitleContentColor())
+                    MyExpandIcon(expanded, sideIsLeft = true, color = style.getTitleContentColor())
                 } else {
                     Spacer(modifier = Modifier.width(LocalTheme.current.padding.default))
                 }
@@ -248,7 +247,7 @@ private fun MyExpandableTitleImpl(
                 }
 
                 if (style.iconPlacement == IconPlacement.Right && (canToggle || !style.hideIconIfNotExpandable)) {
-                    Icon(rotation, style.getTitleContentColor())
+                    MyExpandIcon(expanded, sideIsLeft = false, color =style.getTitleContentColor())
                 } else {
                     Spacer(modifier = Modifier.width(LocalTheme.current.padding.default))
                 }
@@ -276,16 +275,4 @@ private fun MyExpandableTitleImpl(
             }
         }
     }
-}
-
-
-@Composable
-private fun Icon(rotation: Float, color: Color?) {
-    Icon(
-        modifier = Modifier.rotate(rotation),
-        imageVector = Icons.Default.ArrowDropDown,
-        tint = color?.takeIf { it != Color.Unspecified }
-            ?: LocalContentColor.current,//.copy(alpha = LocalContentAlpha.current),
-        contentDescription = null
-    )
 }

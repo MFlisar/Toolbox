@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.room
 
 import androidx.room.RoomRawQuery
+import androidx.room.Transactor
 
 private fun String.asRawQuery(): RoomRawQuery = RoomRawQuery(this)
 
@@ -30,7 +31,7 @@ object RoomQueryUtil {
         "SELECT * FROM $tableName WHERE $columnId IN (${ids.joinToString(",")})".asRawQuery()
 
     // -------------------
-    // delete
+    // delete - raw queries können nur lesen!
     // -------------------
 
     fun <ID : Number> delete(tableName: String, columnId: String, id: ID) =

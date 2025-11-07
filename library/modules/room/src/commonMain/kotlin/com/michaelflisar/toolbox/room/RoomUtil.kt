@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.room
 
 import androidx.room.RoomDatabase
+import androidx.room.Transactor
 import androidx.room.immediateTransaction
 import androidx.room.useWriterConnection
 
@@ -32,15 +33,29 @@ object RoomUtil {
      *
      * as documented here: https://developer.android.com/kotlin/multiplatform/room#transactions
      */
-    suspend fun<R> runInTransaction(database: RoomDatabase, block: suspend () -> R) : R{
+    suspend fun <R> runInTransaction(database: RoomDatabase, block: suspend (transactor: Transactor) -> R) : R {
         return database.useWriterConnection { transactor ->
             transactor.immediateTransaction {
                 // perform database operations in transaction
-                block()
+                block(transactor)
+            }
+        }
+    }
+
+    // -------------------
+    // Transactor
+    // -------------------
+
+    suspend fun selectChanges(transactor: Transactor) : Int {
+        return transactor.usePrepared("SELECT changes()") {
+            if (it.step()) {
+                it.getLong(0).toInt()
+            } else {
+                0
             }
         }
     }
 
 }
 
-suspend fun <R> RoomDatabase.withTransaction(block: suspend () -> R): R =  RoomUtil.runInTransaction(this, block)
+suspend fun <R> RoomDatabase.withTransaction(block: suspend (transactor: Transactor) -> R): R =  RoomUtil.runInTransaction(this, block)

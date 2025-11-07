@@ -14,6 +14,14 @@ interface SelectionData<ID, Data : SelectionData<ID, Data>> {
     fun toggle(id: ID)
     fun clearSelection()
 
+    fun select(id: ID, selected: Boolean) {
+        if (selected) {
+            select(id)
+        } else {
+            deselect(id)
+        }
+    }
+
     fun deselect(ids: List<ID>) {
         ids.forEach {
             deselect(it)

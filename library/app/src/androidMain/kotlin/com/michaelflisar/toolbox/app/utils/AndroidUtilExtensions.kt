@@ -8,7 +8,7 @@ import com.michaelflisar.toolbox.utils.AndroidUtil
 
 fun AndroidUtil.createFileLogger(
     fileBaseName: String = "log",
-    fileExtension: String = "log",
+    fileExtension: String = "txt",
     filesToKeep: Int = 1,
 ): FileLogger<*> {
     return FileLogger<FileLoggerSetup>(
