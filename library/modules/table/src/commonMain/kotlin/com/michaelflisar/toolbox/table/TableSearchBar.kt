@@ -47,6 +47,7 @@ import com.michaelflisar.toolbox.components.MyFlowRow
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyTooltipBox
+import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 import com.michaelflisar.toolbox.feature.menu.rememberMenuState
@@ -134,7 +135,7 @@ fun <T> TableSearchBar(
                                 tooltip = textResetFilter
                             ) {
                                 MyIconButton(
-                                    icon = Icons.Default.FilterAltOff,
+                                    icon = Icons.Default.FilterAltOff.toIconComposable(),
                                     onClick = {
                                         state.clearFilter(textFilter = false, columnFilters = true)
                                     }

@@ -212,10 +212,8 @@ private fun Page(
                         ) { modifier ->
                             MyIconButton(
                                 modifier = modifier,
-                                icon = value,
-                                onClick = {
-                                    data = data?.minus(item)
-                                }
+                                icon = value.toIconComposable(),
+                                onClick = { data = data?.minus(item) }
                             )
                         }
                     }

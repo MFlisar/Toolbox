@@ -7,13 +7,13 @@ kotbilling =        		"2.0.0"
 kotpreferences =        	"3.0.1"
 lumberjack =                "9.0.0"
 composedebugdrawer =		"2.0.0"
-composedialogs =   		    "3.0.6"
+composedialogs =   		    "3.0.7"
 composechangelog =   		"3.0.0"
 composepreferences =   		"2.0.0"
 composethemer =   			"1.0.2"
 composecolors =             "1.0.1"
 kmp-parcelize =             "1.0.1"
-kmp-library =               "2.2.5" # attention: the version for the settings plugin must be adjusted manually!
+kmp-library =               "2.2.7" # attention: the version for the settings plugin must be adjusted manually!
 toolbox =                   "3.0.2" # für hello world demo
 
 # Google

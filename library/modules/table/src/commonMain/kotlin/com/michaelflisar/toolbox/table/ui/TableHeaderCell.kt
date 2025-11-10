@@ -52,6 +52,7 @@ import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.table.data.TableSort
 import com.michaelflisar.toolbox.table.definitions.Column
 import com.michaelflisar.toolbox.table.definitions.Filter
@@ -356,8 +357,7 @@ private fun HeaderPopup(
                                     MyIconButton(
                                         modifier = iconModifier,
                                         iconPaddingValues = PaddingValues(iconPadding),
-                                        icon = Icons.Default.ArrowDownward,
-                                        iconTint = if (sort.value?.type == TableSort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                        icon = Icons.Default.ArrowDownward.toIconComposable(if (sort.value?.type == TableSort.Type.Desc) MaterialTheme.colorScheme.primary else LocalContentColor.current)
                                     ) {
                                         sort.value?.let { sorts.remove(it) }
                                         sorts.add(TableSort(index, TableSort.Type.Desc))
@@ -369,8 +369,7 @@ private fun HeaderPopup(
                                     MyIconButton(
                                         modifier = iconModifier,
                                         iconPaddingValues = PaddingValues(iconPadding),
-                                        icon = Icons.Default.ArrowUpward,
-                                        iconTint = if (sort.value?.type == TableSort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                        icon = Icons.Default.ArrowUpward.toIconComposable( if (sort.value?.type == TableSort.Type.Asc) MaterialTheme.colorScheme.primary else LocalContentColor.current)
                                     ) {
                                         sort.value?.let { sorts.remove(it) }
                                         sorts.add(TableSort(index, TableSort.Type.Asc))
@@ -380,8 +379,7 @@ private fun HeaderPopup(
                                     enabled = sort.value != null,
                                     modifier = iconModifier,
                                     iconPaddingValues = PaddingValues(iconPadding),
-                                    icon = Icons.Default.Clear,
-                                    iconTint = if (sort.value != null) LocalContentColor.current else LocalContentColor.current.disabled()
+                                    icon = Icons.Default.Clear.toIconComposable(if (sort.value != null) LocalContentColor.current else LocalContentColor.current.disabled())
                                 ) {
                                     sort.value?.let { sorts.remove(it) }
                                 }

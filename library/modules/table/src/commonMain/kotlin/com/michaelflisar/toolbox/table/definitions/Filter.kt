@@ -32,6 +32,7 @@ import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.components.MySegmentedControlIndex
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.numbers.NumberUtil
 import kotlin.enums.EnumEntries
 
@@ -184,8 +185,7 @@ abstract class Filter<Item, CellValue> {
 
             MyTooltipBox("Case Sensitive") {
                 MyIconButton(
-                    icon = Icons.Default.TextFields,
-                    iconTint = if (!state.value.ignoreCase) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground.disabled()
+                    icon = Icons.Default.TextFields.toIconComposable(if (!state.value.ignoreCase) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground.disabled())
                 ) {
                     state.value = state.value.copy(ignoreCase = !state.value.ignoreCase)
                 }

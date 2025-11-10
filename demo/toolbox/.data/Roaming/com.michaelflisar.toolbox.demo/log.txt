@@ -2022,3 +2022,8 @@
 [I] 2025-10-28 13:19:53.922 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
 [I] 2025-10-28 13:19:53.922 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
 [I] 2025-10-28 13:19:53.922 [NavBackHandler.kt:73]: NavBackHandler: enabled = true
+[D] 2025-11-10 12:06:37.622 [UpdateManager.kt:42]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2025-11-10 12:06:37.591 [UpdateManager.kt:28]: lastVersion = 1 => currentVersion = 1 
+[I] 2025-11-10 12:06:39.188 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-11-10 12:06:39.507 [NavBackHandler.kt:73]: NavBackHandler: enabled = false
+[I] 2025-11-10 12:06:40.155 [WindowState.kt:96]: Saving window state: {w=918, h=800, x=845, y=115, placement=Floating}

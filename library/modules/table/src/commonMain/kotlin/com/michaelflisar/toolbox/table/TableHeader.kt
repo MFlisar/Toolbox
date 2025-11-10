@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyTooltipBox
+import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.table.data.TableState
 import com.michaelflisar.toolbox.table.ui.TableRow
 
@@ -71,10 +72,8 @@ fun <T> TableHeader(
                     contentAlignment = Alignment.Center
                 ) {
                     MyIconButton(
-                        icon = Icons.Default.Sort,
-                        onClick = {
-                            state.sorts.clear()
-                        }
+                        icon = Icons.Default.Sort.toIconComposable(),
+                        onClick = { state.sorts.clear() }
                     )
                     val color = LocalContentColor.current
                     Canvas(
