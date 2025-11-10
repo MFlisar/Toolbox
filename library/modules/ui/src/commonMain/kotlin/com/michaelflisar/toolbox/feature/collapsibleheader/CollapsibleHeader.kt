@@ -1,5 +1,9 @@
 package com.michaelflisar.toolbox.feature.collapsibleheader
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.offset
@@ -15,6 +19,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
@@ -24,6 +29,8 @@ import com.michaelflisar.parcelize.IgnoredOnParcel
 import com.michaelflisar.parcelize.Parcelable
 import com.michaelflisar.parcelize.Parcelize
 import kotlin.math.roundToInt
+import kotlin.plus
+import kotlin.text.compareTo
 
 object CollapsibleHeader {
 
@@ -73,9 +80,7 @@ fun CollapsibleHeader(
     stickyHeader: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
-
     val density = LocalDensity.current
-
     val nestedScrollConnection = remember(state.headerHeight.value) {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
@@ -91,8 +96,18 @@ fun CollapsibleHeader(
             }
         }
     }
+
     Box(
         modifier = modifier
+            .scrollable(
+                orientation = Orientation.Vertical,
+                state = rememberScrollableState { delta ->
+                    val newOffset = (state.headerOffset.value.pxFloat + delta).coerceIn(-state.headerHeight.value.pxFloat, 0f)
+                    val consumed = newOffset - state.headerOffset.value.pxFloat
+                    state.headerOffset.value = CollapsibleHeader.Offset(newOffset)
+                    consumed
+                }
+            )
             .nestedScroll(nestedScrollConnection)
             .clipToBounds()
     ) {
@@ -102,9 +117,11 @@ fun CollapsibleHeader(
                 .offset { IntOffset(x = 0, y = state.headerOffset.value.pxInt) }
         ) {
             Box(
-                Modifier.onSizeChanged {
-                    state.headerHeight.value = CollapsibleHeader.Height(it.height)
-                }
+                Modifier
+                    .onSizeChanged {
+                        state.headerHeight.value = CollapsibleHeader.Height(it.height)
+                    }
+
             ) {
                 header()
             }

@@ -133,9 +133,9 @@ fun <T : Number> MyNumberPicker(
 ) {
     val value = parser.correct(value)
 
-    val initialValue = rememberSaveable { value }
-    val stateValue = rememberSaveable { mutableStateOf(value) }
-    var stateText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+    val initialValue = rememberSaveable(value) { value }
+    val stateValue = rememberSaveable(value) { mutableStateOf(value) }
+    var stateText by rememberSaveable(value, stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(parser.formatValue(value)))
     }
 

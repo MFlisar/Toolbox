@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.app.features.toolbar.selection
+package com.michaelflisar.toolbox.feature.selection
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState

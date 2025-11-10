@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 
 import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.extensions.toIconComposable
 
 @Composable
 fun <T> MyMultiDropdown(
@@ -234,7 +235,7 @@ private fun MyMultiDropdownImpl(
                     enabled = selectedItems.size != items.size
                 ) {
                     MyIconButton(
-                        icon = Icons.Default.SelectAll,
+                        icon = Icons.Default.SelectAll.toIconComposable(),
                         enabled = selectedItems.size != items.size
                     ) {
                         onSelectionChange(List(items.size) { index -> index }, items)
@@ -245,7 +246,7 @@ private fun MyMultiDropdownImpl(
                     enabled = selectedItems.isNotEmpty()
                 ) {
                     MyIconButton(
-                        icon = Icons.Default.Clear,
+                        icon = Icons.Default.Clear.toIconComposable(),
                         enabled = selectedItems.isNotEmpty()
                     ) {
                         onSelectionChange(emptyList(), emptyList())

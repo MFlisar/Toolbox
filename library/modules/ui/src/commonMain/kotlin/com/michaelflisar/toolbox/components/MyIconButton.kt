@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.michaelflisar.toolbox.IconComposable
 
 private object MyIconButton {
 
@@ -272,10 +273,9 @@ fun MyFilledTonalIconButton(
 
 @Composable
 fun MyIconButton(
-    icon: ImageVector,
+    icon: IconComposable,
     modifier: Modifier = Modifier,
     iconPaddingValues: PaddingValues = PaddingValues(),
-    iconTint: Color? = null,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
@@ -288,7 +288,6 @@ fun MyIconButton(
         modifier = modifier,
         style = MyIconButtonDefaults.styleDefault(colors = colors),
         iconPaddingValues = iconPaddingValues,
-        iconTint = iconTint,
         enabled = enabled,
         interactionSource = interactionSource,
         onClick = onClick
@@ -297,10 +296,9 @@ fun MyIconButton(
 
 @Composable
 fun MyOutlinedIconButton(
-    icon: ImageVector,
+    icon: IconComposable,
     modifier: Modifier = Modifier,
     iconPaddingValues: PaddingValues = PaddingValues(),
-    iconTint: Color? = null,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
@@ -319,7 +317,6 @@ fun MyOutlinedIconButton(
             border = border
         ),
         iconPaddingValues = iconPaddingValues,
-        iconTint = iconTint,
         enabled = enabled,
         interactionSource = interactionSource,
         onClick = onClick
@@ -328,10 +325,9 @@ fun MyOutlinedIconButton(
 
 @Composable
 fun MyFilledIconButton(
-    icon: ImageVector,
+    icon: IconComposable,
     modifier: Modifier = Modifier,
     iconPaddingValues: PaddingValues = PaddingValues(),
-    iconTint: Color? = null,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
@@ -348,7 +344,6 @@ fun MyFilledIconButton(
             colors = colors
         ),
         iconPaddingValues = iconPaddingValues,
-        iconTint = iconTint,
         enabled = enabled,
         interactionSource = interactionSource,
         onClick = onClick
@@ -357,10 +352,9 @@ fun MyFilledIconButton(
 
 @Composable
 fun MyFilledTonalIconButton(
-    icon: ImageVector,
+    icon: IconComposable,
     modifier: Modifier = Modifier,
     iconPaddingValues: PaddingValues = PaddingValues(),
-    iconTint: Color? = null,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
@@ -377,7 +371,6 @@ fun MyFilledTonalIconButton(
             colors = colors
         ),
         iconPaddingValues = iconPaddingValues,
-        iconTint = iconTint,
         enabled = enabled,
         interactionSource = interactionSource,
         onClick = onClick
@@ -409,11 +402,10 @@ private fun MyIconButton(
 
 @Composable
 private fun MyIconButton(
-    icon: ImageVector,
+    icon: IconComposable,
     modifier: Modifier = Modifier,
     style: MyIconButton.Style = MyIconButtonDefaults.styleDefault(),
     iconPaddingValues: PaddingValues = PaddingValues(),
-    iconTint: Color? = null,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     onClick: () -> Unit,
@@ -424,11 +416,9 @@ private fun MyIconButton(
         enabled = enabled,
         interactionSource = interactionSource
     ) {
-        Icon(
-            modifier = Modifier.padding(iconPaddingValues),
-            imageVector = icon,
-            contentDescription = null,
-            tint = iconTint ?: LocalContentColor.current
+        com.michaelflisar.toolbox.extensions.Icon(
+            icon = icon,
+            modifier = Modifier.padding(iconPaddingValues)
         )
     }
 }

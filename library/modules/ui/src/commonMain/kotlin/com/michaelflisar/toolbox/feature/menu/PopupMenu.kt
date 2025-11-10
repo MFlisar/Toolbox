@@ -3,6 +3,7 @@ package com.michaelflisar.toolbox.feature.menu
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionOnScreen
@@ -37,7 +38,7 @@ fun PopupMenu(
             shape = MaterialTheme.shapes.small
         ) {
             ProvideUpdatedMenuLocals(emptyList(), 0) {
-                with(MenuScopeInstance) {
+                with(remember { MenuScopeInstance() }) {
                     content()
                 }
             }

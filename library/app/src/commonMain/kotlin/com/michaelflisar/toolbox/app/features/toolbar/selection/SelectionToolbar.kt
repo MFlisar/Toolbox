@@ -18,21 +18,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.michaelflisar.toolbox.core.resources.Res
-import com.michaelflisar.toolbox.core.resources.menu_selection_info
-import org.jetbrains.compose.resources.stringResource
+import com.michaelflisar.toolbox.feature.selection.SelectionData
+import com.michaelflisar.toolbox.feature.selection.SelectionDataItems
 
 val LocalSelectionToolbarState = compositionLocalOf { SelectionToolbarState() }
 
 class SelectionToolbarState internal constructor(
-    val data: MutableState<SelectionData<*, *>?> = mutableStateOf(null)
+    val data: MutableState<SelectionData<*, *>?> = mutableStateOf(null),
 ) {
     val isInSelectionMode: Boolean
         get() = data.value?.isActive?.value == true
@@ -89,6 +88,16 @@ object SelectionToolbarDefaults {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
+    fun colorsSurfaceContainerHigh() = TopAppBarDefaults.topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+    )
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
     fun colorsPrimary() = TopAppBarDefaults.topAppBarColors(
         containerColor = MaterialTheme.colorScheme.primary,
         scrolledContainerColor = MaterialTheme.colorScheme.primary,
@@ -106,6 +115,31 @@ object SelectionToolbarDefaults {
         titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
     )
+}
+
+@Composable
+fun <ID: Comparable<ID>> rememberSelectionDataItems(
+    totalItemCount: Int,
+    selectedIds: List<ID> = emptyList(),
+    isActive: Boolean = false,
+    menuProvider: @Composable (data: SelectionDataItems<ID>) -> Unit
+): SelectionDataItems<ID> {
+    val totalItemCount = rememberSaveable(totalItemCount) { mutableIntStateOf(totalItemCount) }
+    val selectedIds = rememberSaveable { mutableStateOf(selectedIds) }
+    val isActive = rememberSaveable { mutableStateOf(isActive) }
+    val data = remember(totalItemCount, selectedIds, isActive) {
+        SelectionDataItems(
+            totalItemCount = totalItemCount,
+            selectedIds = selectedIds,
+            isActive = isActive,
+            menuProvider = menuProvider
+        )
+    }
+    val selectionToolbarState = LocalSelectionToolbarState.current
+    LaunchedEffect(data) {
+        selectionToolbarState.restoreSelectionMode(data)
+    }
+    return data
 }
 
 @Composable
@@ -144,10 +178,8 @@ fun AnimatedSelectionToolbarWrapper(
 @Composable
 fun SelectionToolbar(
     modifier: Modifier = Modifier,
-    title: @Composable (selected: Int, total: Int) -> String = { selected, total ->
-        stringResource(Res.string.menu_selection_info, selected, total)
-    },
-    colors: TopAppBarColors = SelectionToolbarDefaults.colorsBackground()
+    title: @Composable (selected: Int, total: Int) -> String = { selected, total -> "$selected/$total" },
+    colors: TopAppBarColors = SelectionToolbarDefaults.colorsBackground(),
 ) {
     val toolbarState = LocalSelectionToolbarState.current
 

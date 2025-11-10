@@ -1,7 +1,8 @@
 package com.michaelflisar.toolbox.app.features.navigation
 
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -69,21 +70,21 @@ fun AppNavigatorFadeTransition(
 fun AppNavigatorFadeAndScaleTransition(
     navigator: Navigator,
 ) {
-    val animationSpec = //tween<Float>(3000)
-        spring<Float>(stiffness = Spring.StiffnessMediumLow)
+    val animationSpecScale = tween<Float>(durationMillis = 150, delayMillis = 150, easing = LinearEasing)//spring<Float>(stiffness = Spring.StiffnessMediumLow)
+    val animationSpecFade = tween<Float>(durationMillis = 300, easing = FastOutSlowInEasing)//spring<Float>(stiffness = Spring.StiffnessMedium)
     ScreenTransition(
         navigator = navigator,
         disposeScreenAfterTransitionEnd = true,
         transition = {
             (
-                    fadeIn(animationSpec = animationSpec) + scaleIn(
+                    fadeIn(animationSpec = animationSpecFade) + scaleIn(
                         initialScale = 0.95f,
-                        animationSpec = animationSpec
+                        animationSpec = animationSpecScale
                     )
-                            togetherWith fadeOut(animationSpec = animationSpec) +
+                            togetherWith fadeOut(animationSpec = animationSpecFade) +
                             scaleOut(
                                 targetScale = 1.05f,
-                                animationSpec = animationSpec
+                                animationSpec = animationSpecScale
                             )
                     )
         }

@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.app.features.toolbar.selection
+package com.michaelflisar.toolbox.feature.selection
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,33 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 
-@Composable
-fun <ID> rememberSelectionDataItems(
-    totalItemCount: Int,
-    selectedIds: List<ID> = emptyList(),
-    isActive: Boolean = false,
-    menuProvider: @Composable (data: SelectionDataItems<ID>) -> Unit
-): SelectionDataItems<ID> {
-    val totalItemCount = rememberSaveable(totalItemCount) { mutableIntStateOf(totalItemCount) }
-    val selectedIds = rememberSaveable { mutableStateOf(selectedIds) }
-    val isActive = rememberSaveable { mutableStateOf(isActive) }
-    val data = remember(totalItemCount, selectedIds, isActive) {
-        SelectionDataItems(
-            totalItemCount = totalItemCount,
-            selectedIds = selectedIds,
-            isActive = isActive,
-            menuProvider = menuProvider
-        )
-    }
-    val selectionToolbarState = LocalSelectionToolbarState.current
-    LaunchedEffect(data) {
-        selectionToolbarState.restoreSelectionMode(data)
-    }
-    return data
-}
-
 @Stable
-class SelectionDataItems<ID> internal constructor(
+class SelectionDataItems<ID: Comparable<ID>>(
     val totalItemCount: MutableIntState,
     val selectedIds: MutableState<List<ID>>,
     override val isActive: MutableState<Boolean>,
@@ -48,6 +23,9 @@ class SelectionDataItems<ID> internal constructor(
 
     override val selected: Int
         get() = selectedIds.value.size
+
+    val isSomethingSelected: Boolean
+        get() = selected > 0
 
     override fun isSelected(id: ID): Boolean {
         return selectedIds.value.contains(id)

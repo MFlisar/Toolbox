@@ -27,7 +27,7 @@ fun Painter.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
     return this.let {
         @Composable { contentDescription, modifier, tint2 ->
             Icon(
-                this,
+                painter = this,
                 contentDescription = contentDescription,
                 modifier = modifier,
                 tint = tint.takeIf { it != Color.Unspecified } ?: tint2)
@@ -39,7 +39,7 @@ fun DrawableResource.toIconComposable(tint: Color = Color.Unspecified): IconComp
     return this.let {
         @Composable { contentDescription, modifier, tint2 ->
             Icon(
-                painterResource(this),
+                painter = painterResource(this),
                 contentDescription = contentDescription,
                 modifier = modifier,
                 tint = tint.takeIf { it != Color.Unspecified } ?: tint2)

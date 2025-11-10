@@ -53,8 +53,12 @@ import com.michaelflisar.toolbox.extensions.Icon
 
 @LayoutScopeMarker
 @Immutable
-interface MenuScope
-internal object MenuScopeInstance : MenuScope
+interface MenuScope {
+    val hideLabels: Boolean
+}
+internal class MenuScopeInstance(
+    override val hideLabels: Boolean = false
+) : MenuScope
 
 @LayoutScopeMarker
 @Immutable
@@ -157,10 +161,10 @@ fun rememberMenuState(
     data: Any? = null,
 ): MenuState {
     return MenuState(
-        remember { mutableStateOf(show) },
-        remember { mutableStateOf(openedLevels) },
-        remember { mutableStateOf(data) },
-        remember { mutableStateOf(IntOffset.Zero) }
+        show = remember { mutableStateOf(show) },
+        openedLevels = remember { mutableStateOf(openedLevels) },
+        data = remember { mutableStateOf(data) },
+        offset = remember { mutableStateOf(IntOffset.Zero) }
     )
 }
 
@@ -250,9 +254,9 @@ fun MenuScope.MenuItem(
             val state = LocalMenuState.current
             DropdownMenuItem(
                 modifier = Menu.modifier(),
-                text = text,
+                text = if (hideLabels) (@Composable {}) else text,
                 enabled = enabled,
-                leadingIcon = icon?.let { { Icon(it) } },
+                leadingIcon = icon?.let { { Icon(it, modifier = Modifier.size(24.dp)) } },
                 trailingIcon = endIcon,
                 onClick = {
                     onClick()
@@ -335,7 +339,7 @@ fun MenuScope.MenuCheckbox(
                 }
             },
             enabled = enabled,
-            leadingIcon = icon?.let { { Icon(it) } },
+            leadingIcon = icon?.let { { Icon(it, modifier = Modifier.size(24.dp)) } },
             trailingIcon = null,
             onClick = {
                 onCheckChange(!checked)
@@ -447,7 +451,7 @@ fun MenuScope.MenuSubMenu(
                 modifier = Menu.modifier(),
                 text = { Text(text, color = textColor ?: Color.Unspecified) },
                 enabled = enabled,
-                leadingIcon = icon?.let { { Icon(it) } },
+                leadingIcon = icon?.let { { Icon(it, modifier = Modifier.size(24.dp)) } },
                 onClick = {
                     state.open(index.value)
                 },

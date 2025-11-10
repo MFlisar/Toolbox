@@ -17,7 +17,11 @@ enum class Status {
  * A generic class that holds a value with its loading status.
  * @param <T>
 </T> */
-data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
+data class Resource<out T>(
+    val status: Status,
+    val data: T?,
+    val message: String?
+) {
     companion object {
         fun <T> success(data: T?): Resource<T> {
             return Resource(Status.SUCCESS, data, null)
@@ -31,4 +35,12 @@ data class Resource<out T>(val status: Status, val data: T?, val message: String
             return Resource(Status.LOADING, data, null)
         }
     }
+
+    fun isLoaded(): Boolean = status == Status.SUCCESS && data != null
+
+    /**
+     * Returns the data if available, or throws an IllegalStateException otherwise
+     */
+    fun requireData(): T = this.data ?: throw IllegalStateException("Data is not available")
+
 }
