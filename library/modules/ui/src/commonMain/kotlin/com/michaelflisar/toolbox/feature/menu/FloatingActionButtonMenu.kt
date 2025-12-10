@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
@@ -56,9 +55,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ComposeUtil
-import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.extensions.isScrollingUp
 import com.michaelflisar.toolbox.extensions.toSentenceCase
+import com.michaelflisar.toolbox.padding
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -73,7 +72,6 @@ object FloatingActionButtonMenu {
     class Setup(
         val fabSize: Dp,
         val fabIconSize: Dp,
-        val maxExpandedWidth: Dp,
         val shape: Shape,
     )
 
@@ -87,13 +85,11 @@ object FloatingActionButtonMenu {
 fun rememberFloatingActionButtonMenuSetup(
     fabSize: Dp = FloatingActionButtonMenuDefaults.fabSize,
     fabIconSize: Dp = FloatingActionButtonMenuDefaults.fabIconSize,
-    maxExpandedWidth: Dp = FloatingActionButtonMenuDefaults.maxExpandedWidth,
     shape: Shape = FloatingActionButtonDefaults.shape,
 ): FloatingActionButtonMenu.Setup {
     return FloatingActionButtonMenu.Setup(
         fabSize = fabSize,
         fabIconSize = fabIconSize,
-        maxExpandedWidth = maxExpandedWidth,
         shape = shape
     )
 }
@@ -101,7 +97,6 @@ fun rememberFloatingActionButtonMenuSetup(
 object FloatingActionButtonMenuDefaults {
     val fabSize = 56.dp
     val fabIconSize = 24.dp
-    val maxExpandedWidth = 128.dp
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -115,11 +110,12 @@ fun <T : FloatingActionButtonMenu.Item> BoxScope.FloatingActionButtonMenu(
     position: FloatingActionButtonMenu.Position = FloatingActionButtonMenu.Position.BottomEnd,
     setup: FloatingActionButtonMenu.Setup = rememberFloatingActionButtonMenuSetup(),
     hideMenuIfItemsSizeIsOne: Boolean = true,
+    visible: Boolean = true,
     onMenuItemClick: (item: T) -> Unit,
 ) {
     val filteredItems = items.filter { it.supported }
     if (hideMenuIfItemsSizeIsOne && filteredItems.size == 1) {
-        FloatingActionButtonMenuImpl<T>(
+        FloatingActionButtonMenuImpl(
             icon = icon,
             text = text,
             modifier = modifier,
@@ -127,18 +123,20 @@ fun <T : FloatingActionButtonMenu.Item> BoxScope.FloatingActionButtonMenu(
             position = position,
             setup = setup,
             menu = null,
+            visible = visible,
             onFabClick = {
                 onMenuItemClick.invoke(filteredItems.first())
             }
         )
     } else {
-        FloatingActionButtonMenuImpl<FloatingActionButtonMenu.Item>(
+        FloatingActionButtonMenuImpl(
             icon = icon,
             text = text,
             modifier = modifier,
             listState = listState,
             position = position,
             setup = setup,
+            visible = visible,
             menu = {
                 filteredItems
                     .forEach {
@@ -162,9 +160,10 @@ fun BoxScope.FloatingActionButtonMenu(
     listState: LazyListState? = null,
     position: FloatingActionButtonMenu.Position = FloatingActionButtonMenu.Position.BottomEnd,
     setup: FloatingActionButtonMenu.Setup = rememberFloatingActionButtonMenuSetup(),
+    visible: Boolean = true,
     menu: @Composable MenuScope.() -> Unit = { },
 ) {
-    FloatingActionButtonMenuImpl<FloatingActionButtonMenu.Item>(
+    FloatingActionButtonMenuImpl(
         icon = icon,
         text = text,
         modifier = modifier,
@@ -172,7 +171,33 @@ fun BoxScope.FloatingActionButtonMenu(
         position = position,
         setup = setup,
         menu = menu,
+        visible = visible,
         onFabClick = null
+    )
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun BoxScope.FloatingActionButtonMenu(
+    icon: ImageVector,
+    text: String,
+    modifier: Modifier = Modifier,
+    listState: LazyListState? = null,
+    position: FloatingActionButtonMenu.Position = FloatingActionButtonMenu.Position.BottomEnd,
+    setup: FloatingActionButtonMenu.Setup = rememberFloatingActionButtonMenuSetup(),
+    visible: Boolean = true,
+    onFabClick: () -> Unit
+) {
+    FloatingActionButtonMenuImpl(
+        icon = icon,
+        text = text,
+        modifier = modifier,
+        listState = listState,
+        position = position,
+        setup = setup,
+        menu = null,
+        visible = visible,
+        onFabClick = onFabClick
     )
 }
 
@@ -182,7 +207,7 @@ fun BoxScope.FloatingActionButtonMenu(
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun <T : FloatingActionButtonMenu.Item> BoxScope.FloatingActionButtonMenuImpl(
+private fun BoxScope.FloatingActionButtonMenuImpl(
     icon: ImageVector,
     text: String,
     modifier: Modifier = Modifier,
@@ -190,6 +215,7 @@ private fun <T : FloatingActionButtonMenu.Item> BoxScope.FloatingActionButtonMen
     position: FloatingActionButtonMenu.Position = FloatingActionButtonMenu.Position.BottomEnd,
     setup: FloatingActionButtonMenu.Setup = rememberFloatingActionButtonMenuSetup(),
     menu: @Composable (MenuScope.() -> Unit)?,
+    visible: Boolean,
     onFabClick: (() -> Unit)?,
 ) {
     val density = LocalDensity.current
@@ -198,13 +224,13 @@ private fun <T : FloatingActionButtonMenu.Item> BoxScope.FloatingActionButtonMen
         .padding(
             if (position == FloatingActionButtonMenu.Position.BottomStart) {
                 PaddingValues(
-                    bottom = LocalTheme.current.padding.content,
-                    start = LocalTheme.current.padding.content
+                    bottom = MaterialTheme.padding.content,
+                    start = MaterialTheme.padding.content
                 )
             } else {
                 PaddingValues(
-                    bottom = LocalTheme.current.padding.content,
-                    end = LocalTheme.current.padding.content
+                    bottom = MaterialTheme.padding.content,
+                    end = MaterialTheme.padding.content
                 )
             }
         )
@@ -278,7 +304,7 @@ private fun <T : FloatingActionButtonMenu.Item> BoxScope.FloatingActionButtonMen
 
     Column(
         modifier = modifier
-            .widthIn(max = setup.maxExpandedWidth)
+            //.widthIn(max = setup.maxExpandedWidth)
             .width(IntrinsicSize.Min)
             .onSizeChanged { contentWidth.value = it.width }
     ) {
@@ -298,6 +324,7 @@ private fun <T : FloatingActionButtonMenu.Item> BoxScope.FloatingActionButtonMen
         // Fab Button
         FabButton(
             isMenuOpened = isMenuOpened,
+            visible = visible,
             setup = setup,
             currentFabWidth = currentFabWidth,
             icon = icon,
@@ -317,6 +344,7 @@ private fun <T : FloatingActionButtonMenu.Item> BoxScope.FloatingActionButtonMen
 @Composable
 private fun ColumnScope.FabButton(
     isMenuOpened: MutableState<Boolean>,
+    visible: Boolean,
     setup: FloatingActionButtonMenu.Setup,
     currentFabWidth: Dp,
     icon: ImageVector,
@@ -330,38 +358,45 @@ private fun ColumnScope.FabButton(
         easing = EaseIn
     )
 
-    FloatingActionButton(
-        onClick = onClick,
+    AnimatedVisibility(
         modifier = Modifier
-            .height(setup.fabSize)
-            .width(IntrinsicSize.Min)
             .align(Alignment.End),
-        shape = setup.shape
+        visible = visible,
+        enter = fadeIn(),// + expandIn(expandFrom = Alignment.Center),
+        exit = fadeOut()// + shrinkOut(shrinkTowards = Alignment.Center),
     ) {
-        Row(
+        FloatingActionButton(
+            onClick = onClick,
             modifier = Modifier
-                .width(currentFabWidth),
-            verticalAlignment = Alignment.CenterVertically
+                .height(setup.fabSize)
+                .width(IntrinsicSize.Min),
+            shape = setup.shape
         ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.size(setup.fabSize)
+            Row(
+                modifier = Modifier
+                    .width(currentFabWidth),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.size(setup.fabSize)
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+
+                FabText(
+                    setup = setup,
+                    text = text,
+                    animationTextAlpha = animationFabTextAlpha,
+                    isMenuOpened = isMenuOpened.value,
+                    isButtonExpanded = isButtonExpanded.value,
                 )
+
             }
-
-            FabText(
-                setup = setup,
-                text = text,
-                animationTextAlpha = animationFabTextAlpha,
-                isMenuOpened = isMenuOpened.value,
-                isButtonExpanded = isButtonExpanded.value,
-            )
-
         }
     }
 }
@@ -443,8 +478,8 @@ private fun ColumnScope.FabMenu(
         ) {
             val state = rememberMenuState(show = true)
             val setup = rememberMenuSetup()
-            LaunchedEffect(state.isShowing) {
-                if (!state.isShowing) {
+            LaunchedEffect(state.visible) {
+                if (!state.visible) {
                     isMenuOpened.value = false
                 }
             }

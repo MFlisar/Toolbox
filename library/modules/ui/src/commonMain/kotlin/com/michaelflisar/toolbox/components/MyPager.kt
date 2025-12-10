@@ -7,20 +7,22 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.michaelflisar.toolbox.LocalTheme
+import com.michaelflisar.toolbox.padding
+
 import kotlinx.coroutines.launch
 
 object MyPagerDefaults {
 
     @Composable
     fun Tab(text: String) {
-        Text(text = text, modifier = Modifier.padding(LocalTheme.current.padding.default))
+        Text(text = text, modifier = Modifier.padding(MaterialTheme.padding.default))
     }
 
 }
@@ -39,14 +41,12 @@ fun <T> MyPager(
     ) {
         // Tabs
         TabRow(
-            selectedTabIndex = pagerState.currentPage,
-            modifier = Modifier.fillMaxWidth()
+            selectedTabIndex = pagerState.currentPage, modifier = Modifier.fillMaxWidth()
         ) {
             repeat(pages.size) { index ->
                 Tab(
                     selected = pagerState.currentPage == index,
-                    onClick = { scope.launch { pagerState.scrollToPage(index) } }
-                ) {
+                    onClick = { scope.launch { pagerState.scrollToPage(index) } }) {
                     tab(pages[index])
                 }
             }
@@ -54,8 +54,7 @@ fun <T> MyPager(
 
         // Pager
         HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.weight(1f).fillMaxWidth()
+            state = pagerState, modifier = Modifier.weight(1f).fillMaxWidth()
         ) {
             pageContent(it)
         }

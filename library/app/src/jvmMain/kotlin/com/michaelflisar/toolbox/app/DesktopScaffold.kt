@@ -12,8 +12,6 @@ import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -21,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.backhandler.LocalBackGestureDispatcher
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.key.NativeKeyEvent
@@ -43,17 +40,15 @@ import com.michaelflisar.toolbox.app.features.dialogs.ErrorDialogProvider
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
-import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.navigation.NavItemSpacer
+import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
+import com.michaelflisar.toolbox.app.features.navigation.screen.INavScreen
 import com.michaelflisar.toolbox.app.features.navigationbar.NavigationBar
 import com.michaelflisar.toolbox.app.features.root.Root
 import com.michaelflisar.toolbox.app.features.root.RootLocalProvider
 import com.michaelflisar.toolbox.app.features.scaffold.NavigationStyle
 import com.michaelflisar.toolbox.app.features.scaffold.rememberNavigationStyleAuto
 import com.michaelflisar.toolbox.app.features.theme.AppThemeProvider
-import com.michaelflisar.toolbox.app.features.toolbar.DesktopToolbar
-import com.michaelflisar.toolbox.app.features.toolbar.DesktopToolbarProvider
-import com.michaelflisar.toolbox.app.features.toolbar.LocalDesktopToolbarProvider
 import com.michaelflisar.toolbox.app.jewel.JewelApp
 import com.michaelflisar.toolbox.app.jewel.JewelExitHandler
 import com.michaelflisar.toolbox.app.jewel.JewelNavigation
@@ -78,43 +73,45 @@ fun ApplicationScope.DesktopApplication(
     // Content
     content: @Composable DecoratedWindowScope.(navigator: Navigator) -> Unit,
 ) {
-    AppNavigator(
-        screen = screen
-    ) { navigator ->
+    ProvideAppLocals {
+        AppNavigator(
+            screen = screen
+        ) { navigator ->
 
-        val desktopSetup = DesktopAppSetup.get()
+            val desktopSetup = DesktopAppSetup.get()
 
-        // 1) app states
-        val jewelAppState = rememberJewelAppState(desktopSetup.prefs)
+            // 1) app states
+            val jewelAppState = rememberJewelAppState(desktopSetup.prefs)
 
-        // 2) app
-        JewelApp {
+            // 2) app
+            JewelApp {
 
-            JewelRoot(
-                jewelAppState = jewelAppState,
-                appIsClosing = appIsClosing,
-                onClosed = onClosed,
-                onPreviewKeyEvent = onPreviewKeyEvent,
-                onKeyEvent = onKeyEvent,
-            ) {
-                if (desktopSetup.ensureIsFullyOnScreen) {
-                    val window = this.window
-                    val density = LocalDensity.current
-                    LaunchedEffect(density, window) {
-                        jewelAppState.ensureIsFullyOnScreen(density, window)
+                JewelRoot(
+                    jewelAppState = jewelAppState,
+                    appIsClosing = appIsClosing,
+                    onClosed = onClosed,
+                    onPreviewKeyEvent = onPreviewKeyEvent,
+                    onKeyEvent = onKeyEvent,
+                ) {
+                    if (desktopSetup.ensureIsFullyOnScreen) {
+                        val window = this.window
+                        val density = LocalDensity.current
+                        LaunchedEffect(density, window) {
+                            jewelAppState.ensureIsFullyOnScreen(density, window)
+                        }
+                    }
+                    val appState = rememberAppState()
+                    AppThemeProvider(theme) {
+                        RootLocalProvider(appState, setRootLocals = true) {
+                            JvmBackHandlerUtil.ProvideMouseBackHandler()
+                            content(navigator)
+                        }
                     }
                 }
-                val appState = rememberAppState()
-                AppThemeProvider(theme) {
-                    RootLocalProvider(appState, setRootLocals = true) {
-                        JvmBackHandlerUtil.ProvideMouseBackHandler()
-                        content(navigator)
-                    }
-                }
+
+                // Close Action
+                JewelExitHandler(appIsClosing)
             }
-
-            // Close Action
-            JewelExitHandler(appIsClosing)
         }
     }
 }
@@ -131,47 +128,47 @@ fun DecoratedWindowScope.DesktopScaffold(
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
-    contentToolbar: DesktopToolbarProvider = { screen -> DesktopToolbar(screen) },
+    toolbar: @Composable (screen: INavScreen) -> Unit,
     content: @Composable () -> Unit,
 ) {
-    CompositionLocalProvider(
-        LocalDesktopToolbarProvider provides contentToolbar
-    ) {
-        ErrorDialogProvider {
-            val appState = LocalAppState.current
-            Column {
-                titleBar()
-                Root(
-                    appState = appState,
-                    setRootLocals = false
-                ) {
-                    val appState = LocalAppState.current
-                    Column(modifier = Modifier) {
-                        Scaffold(
-                            modifier = Modifier.weight(1f),
-                            topBar = {},
-                            bottomBar = {
-                                if (navigationStyle.value == NavigationStyle.Bottom) {
-                                    navigation()
-                                }
-                            },
-                            snackbarHost = { SnackbarHost(appState.snackbarHostState) },
-                            floatingActionButton = floatingActionButton,
-                            floatingActionButtonPosition = floatingActionButtonPosition,
-                            containerColor = containerColor,
-                            contentColor = contentColor,
-                            contentWindowInsets = contentWindowInsets
-                        ) { paddingValues ->
-                            Row(
-                                modifier = Modifier.fillMaxSize().padding(paddingValues)
-                            ) {
-                                if (navigationStyle.value == NavigationStyle.Left)
-                                    navigation()
+    ErrorDialogProvider {
+        val appState = LocalAppState.current
+        Column {
+            titleBar()
+            Root(
+                appState = appState,
+                setRootLocals = false
+            ) {
+                val appState = LocalAppState.current
+                Column(modifier = Modifier) {
+                    Scaffold(
+                        modifier = Modifier.weight(1f),
+                        topBar = {},
+                        bottomBar = {
+                            if (navigationStyle.value == NavigationStyle.Bottom) {
+                                navigation()
+                            }
+                        },
+                        snackbarHost = { SnackbarHost(appState.snackbarHostState) },
+                        floatingActionButton = floatingActionButton,
+                        floatingActionButtonPosition = floatingActionButtonPosition,
+                        containerColor = containerColor,
+                        contentColor = contentColor,
+                        contentWindowInsets = contentWindowInsets
+                    ) { paddingValues ->
+                        Row(
+                            modifier = Modifier.fillMaxSize().padding(paddingValues)
+                        ) {
+                            if (navigationStyle.value == NavigationStyle.Left)
+                                navigation()
+                            Column {
+                                val navigator = LocalNavigator.currentOrThrow
+                                toolbar(navigator.lastNavItem)
                                 content()
                             }
                         }
-                        statusBar()
                     }
+                    statusBar()
                 }
             }
         }
@@ -239,7 +236,7 @@ fun DesktopStatusBar(
     onHostNameClick: (() -> Unit)? = null,
     foreground: Color = Color.Unspecified,
     background: Color = Color.Unspecified,
-    content: @Composable (() -> Unit)? = null
+    content: @Composable (() -> Unit)? = null,
 ) {
     val statusBarLeft = getDefaultStatusBarItemsLeft(
         showAppVersionLeft,
@@ -285,7 +282,7 @@ fun DesktopStatusBarCustom(
 @Composable
 fun DesktopNavigation(
     navigationStyle: State<NavigationStyle>,
-    items:  @Composable (style: NavigationStyle) -> List<INavItem>,
+    items: @Composable (style: NavigationStyle) -> List<INavItem>,
     additionalItems: @Composable (style: NavigationStyle) -> List<INavItem>,
     modifier: Modifier = Modifier,
     showForSingleItem: Boolean = false,

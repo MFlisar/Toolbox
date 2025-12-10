@@ -22,7 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.LocalTheme
+import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.spacing
+
 
 @Composable
 fun MyCheckChip(
@@ -68,13 +70,13 @@ fun MyCheckChip(
             onCheckedChange(!checked)
         }
         //.widthIn(min = 40.dp)
-        .padding(LocalTheme.current.padding.small)
+        .padding(MaterialTheme.padding.small)
 
     if (icon != null) {
         Row(
             modifier = m,
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small, Alignment.CenterHorizontally)
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small, Alignment.CenterHorizontally)
         ) {
             CompositionLocalProvider(
                 LocalContentColor provides if (checked) colorSelectedText else colorNotSelectedText

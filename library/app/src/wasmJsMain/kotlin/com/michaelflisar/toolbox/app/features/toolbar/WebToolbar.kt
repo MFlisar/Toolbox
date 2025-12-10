@@ -40,7 +40,7 @@ internal fun WebToolbar(
 ) {
     val navigator = LocalNavigator.currentOrThrow
     val currentNavScreen = navigator.lastNavItem
-    val toolbarData = currentNavScreen.provideData()
+    val navData = currentNavScreen.provideData()
 
     TopAppBar(
         modifier = modifier,
@@ -49,7 +49,7 @@ internal fun WebToolbar(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                ToolbarTitle(toolbarData)
+                ToolbarTitle(navData.name)
                 WebInsideToolbarNavigation(navigationItems, showNavigationForSingleItem)
             }
         },

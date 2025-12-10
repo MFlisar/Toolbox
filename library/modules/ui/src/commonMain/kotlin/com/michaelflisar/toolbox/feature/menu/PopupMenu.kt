@@ -16,7 +16,7 @@ fun PopupMenu(
     setup: MenuSetup = rememberMenuSetup(),
     content: @Composable MenuScope.() -> Unit,
 ) {
-    if (!state.isShowing)
+    if (!state.visible)
         return
 
     ProvideMenuLocals(

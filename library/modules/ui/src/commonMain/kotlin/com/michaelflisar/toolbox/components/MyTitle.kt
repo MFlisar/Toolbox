@@ -15,7 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import com.michaelflisar.toolbox.LocalTheme
+import com.michaelflisar.toolbox.spacing
+
 
 @Composable
 fun MyTitle(
@@ -48,7 +49,7 @@ fun MyTitle(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
     ) {
         Row(
             modifier = Modifier
@@ -64,7 +65,7 @@ fun MyTitle(
                 textAlign = textAlign
             )
         }
-        Column(verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)) {
+        Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)) {
             content()
         }
     }

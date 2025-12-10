@@ -35,16 +35,18 @@ import com.michaelflisar.composepreferences.core.PreferenceScreen
 import com.michaelflisar.composepreferences.core.classes.PreferenceSettingsDefaults
 import com.michaelflisar.composepreferences.core.classes.rememberPreferenceState
 import com.michaelflisar.composepreferences.core.styles.ModernStyle
-import com.michaelflisar.composepreferences.core.styles.ModernStyle.Companion.DEFAULT_OUTER_PADDING
 import com.michaelflisar.composepreferences.screen.bool.PreferenceBool
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
+import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
-import com.michaelflisar.toolbox.app.App
+import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
+import com.michaelflisar.toolbox.app.features.backhandlerregistry.RegisterBackHandler
 import com.michaelflisar.toolbox.app.features.feedback.FeedbackManager
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsThemeContent
+import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -54,14 +56,14 @@ internal expect val supportsBuildAndDeviceInfos: Boolean
 internal expect fun DebugDrawerBuildInfos(
     drawerState: DebugDrawerState,
     scope: CoroutineScope,
-    prefs: DebugPrefs
+    prefs: DebugPrefs,
 )
 
 @Composable
 internal expect fun DebugDrawerLumberjack(
     drawerState: DebugDrawerState,
     setup: IFileLoggingSetup,
-    mailReceiver: String
+    mailReceiver: String,
 )
 
 @Composable
@@ -70,7 +72,7 @@ internal expect fun DebugDrawerDeviceInfos(drawerState: DebugDrawerState)
 @Composable
 fun DebugDrawer(
     drawerState: DebugDrawerState,
-    customContent: @Composable () -> Unit = {}
+    customContent: @Composable () -> Unit = {},
 ) {
     val setup = AppSetup.get()
     val scope = rememberCoroutineScope()
@@ -84,6 +86,16 @@ fun DebugDrawer(
                 }
             }
     }
+
+    RegisterBackHandler(
+        canHandle = { drawerState.drawerState.isOpen },
+        handle = {
+            L.logIf(ToolboxLogging.Tag.Navigation)
+                ?.i { "BackHandlerRegistry - DebugDrawer handles back press" }
+            scope.launch { drawerState.drawerState.close() }
+        }
+    )
+
 
     val showRegionInformations by debugPrefs.showRegionInformations.collectAsStateNotNull()
     val showRegionDevice by debugPrefs.showRegionDevice.collectAsStateNotNull()

@@ -59,9 +59,6 @@ abstract class PageScreensList : NavScreen() {
     }
 
     @Composable
-    override fun provideMenu(): List<MenuItem> = emptyList()
-
-    @Composable
     override fun Screen() {
         Page(
             items = items,

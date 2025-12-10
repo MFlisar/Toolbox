@@ -31,7 +31,7 @@ private object MyButton {
     sealed class Style {
 
         @Composable
-        internal abstract fun Button(
+        abstract fun Button(
             onClick: () -> Unit,
             modifier: Modifier = Modifier,
             enabled: Boolean = true,
@@ -39,7 +39,7 @@ private object MyButton {
             content: @Composable RowScope.() -> Unit,
         )
 
-        class Default internal constructor(
+        class Default(
             val shape: Shape,
             val colors: ButtonColors,
             val elevation: ButtonElevation?,
@@ -56,21 +56,21 @@ private object MyButton {
                 content: @Composable RowScope.() -> Unit,
             ) {
                 Button(
-                    onClick,
-                    modifier,
-                    enabled,
-                    shape,
-                    colors,
-                    elevation,
-                    border,
-                    contentPadding,
-                    interactionSource,
-                    content
+                    onClick = onClick,
+                    modifier = modifier,
+                    enabled = enabled,
+                    shape = shape,
+                    colors = colors,
+                    elevation = elevation,
+                    border = border,
+                    contentPadding = contentPadding,
+                    interactionSource = interactionSource,
+                    content = content
                 )
             }
         }
 
-        class Outlined internal constructor(
+        class Outlined constructor(
             val shape: Shape,
             val colors: ButtonColors,
             val elevation: ButtonElevation?,
@@ -86,21 +86,21 @@ private object MyButton {
                 content: @Composable RowScope.() -> Unit,
             ) {
                 OutlinedButton(
-                    onClick,
-                    modifier,
-                    enabled,
-                    shape,
-                    colors,
-                    elevation,
-                    border,
-                    contentPadding,
-                    interactionSource,
-                    content
+                    onClick = onClick,
+                    modifier = modifier,
+                    enabled = enabled,
+                    shape = shape,
+                    colors = colors,
+                    elevation = elevation,
+                    border = border,
+                    contentPadding = contentPadding,
+                    interactionSource = interactionSource,
+                    content = content
                 )
             }
         }
 
-        class Text internal constructor(
+        class Text constructor(
             val shape: Shape,
             val colors: ButtonColors,
             val elevation: ButtonElevation?,
@@ -116,21 +116,21 @@ private object MyButton {
                 content: @Composable RowScope.() -> Unit,
             ) {
                 TextButton(
-                    onClick,
-                    modifier,
-                    enabled,
-                    shape,
-                    colors,
-                    elevation,
-                    border,
-                    contentPadding,
-                    interactionSource,
-                    content
+                    onClick = onClick,
+                    modifier = modifier,
+                    enabled = enabled,
+                    shape = shape,
+                    colors = colors,
+                    elevation = elevation,
+                    border = border,
+                    contentPadding = contentPadding,
+                    interactionSource = interactionSource,
+                    content = content
                 )
             }
         }
 
-        class FilledTonal internal constructor(
+        class FilledTonal constructor(
             val shape: Shape,
             val colors: ButtonColors,
             val elevation: ButtonElevation?,
@@ -146,16 +146,16 @@ private object MyButton {
                 content: @Composable RowScope.() -> Unit,
             ) {
                 FilledTonalButton(
-                    onClick,
-                    modifier,
-                    enabled,
-                    shape,
-                    colors,
-                    elevation,
-                    border,
-                    contentPadding,
-                    interactionSource,
-                    content
+                    onClick = onClick,
+                    modifier = modifier,
+                    enabled = enabled,
+                    shape = shape,
+                    colors = colors,
+                    elevation = elevation,
+                    border = border,
+                    contentPadding = contentPadding,
+                    interactionSource = interactionSource,
+                    content = content
                 )
             }
         }

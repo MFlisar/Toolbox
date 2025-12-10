@@ -15,7 +15,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.michaelflisar.toolbox.LocalTheme
+import com.michaelflisar.toolbox.scrollbar
+
 import com.michaelflisar.toolbox.table.data.TableData
 import com.michaelflisar.toolbox.table.data.TableSort
 import com.michaelflisar.toolbox.table.definitions.Column
@@ -37,7 +38,7 @@ internal fun Header(
                     .height(IntrinsicSize.Min)
                     .background(color = MaterialTheme.colorScheme.surfaceContainerHigh)
                     .horizontalScroll(tableData.scrollState)
-                    .padding(end = LocalTheme.current.scrollbar.size) // für Scrollbar
+                    .padding(end = MaterialTheme.scrollbar.size) // für Scrollbar
             ) {
                 CompositionLocalProvider(
                     LocalContentColor provides MaterialTheme.colorScheme.onSurface

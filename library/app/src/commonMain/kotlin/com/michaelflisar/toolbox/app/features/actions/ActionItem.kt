@@ -22,6 +22,7 @@ import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.toolbox.IconComposable
+import com.michaelflisar.toolbox.app.features.backhandlerregistry.LocalBackHandlerRegistry
 import com.michaelflisar.toolbox.app.features.device.BaseDevice
 import com.michaelflisar.toolbox.app.features.device.CurrentDevice
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
@@ -66,17 +67,17 @@ sealed class ActionItem {
                         )
                     }
                     BaseDevice.Mobile -> {
-                        val navScreen = screen as? NavScreen
-                        val screenCanHandleBackPress = navScreen?.navScreenBackPressHandler?.canHandle()
+                        val backHandlerRegistry = LocalBackHandlerRegistry.current
+                        val screenCanHandleBackPress = backHandlerRegistry.wouldConsumeBackPress(true)
                         DialogDefaults.styleFullscreenDialog(
                             navigationIcon = {
                                 Crossfade(
-                                    targetState = screenCanHandleBackPress == true
+                                    targetState = screenCanHandleBackPress
                                 ) { canHandle ->
                                     if (canHandle) {
                                         IconButton(
                                             onClick = {
-                                                navScreen?.navScreenBackPressHandler?.handle()
+                                                backHandlerRegistry.handleBackPress()
                                             }
                                         ) {
                                             Icon(Icons.AutoMirrored.Filled.ArrowBack, null)

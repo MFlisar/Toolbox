@@ -1,7 +1,6 @@
 package com.michaelflisar.toolbox.demo
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -21,7 +20,6 @@ import com.michaelflisar.toolbox.app.Constants
 import com.michaelflisar.toolbox.app.classes.Developer
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
-import com.michaelflisar.toolbox.app.features.actions.ActionItem
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
@@ -37,7 +35,6 @@ import com.michaelflisar.toolbox.demo.resources.Res
 import com.michaelflisar.toolbox.demo.resources.app_name
 import com.michaelflisar.toolbox.demo.resources.mflisar
 import com.michaelflisar.toolbox.extensions.isLight
-import com.michaelflisar.toolbox.extensions.toIconComposable
 import org.jetbrains.compose.resources.painterResource
 
 object Shared {
@@ -61,7 +58,7 @@ object Shared {
         debugPrefs: DebugPrefs,
         icon: @Composable () -> Painter = { appIcon(LocalContentColor.current.isLight()) },
         isDebugBuild: Boolean,
-        fileLogger: FileLogger<*>?
+        fileLogger: FileLogger<*>?,
     ): AppSetup {
         return AppSetup(
             developer = developer,
@@ -139,26 +136,5 @@ object Shared {
 
         // 2) inits
         ToolboxLogging.enableAll()
-    }
-
-    // -------------------------
-    // Actions
-    // -------------------------
-
-    @Composable
-    fun customStatusBarActions(): List<ActionItem.Action> = listOf(
-        actionTest()
-    )
-
-    @Composable
-    private fun actionTest(): ActionItem.Action {
-        val appState = LocalAppState.current
-        return ActionItem.Action(
-            title = "GLOBAL TEST Action",
-            icon = Icons.Default.ArrowRight.toIconComposable(),
-            action = {
-                appState.showSnackbar("Test clicked")
-            }
-        )
     }
 }

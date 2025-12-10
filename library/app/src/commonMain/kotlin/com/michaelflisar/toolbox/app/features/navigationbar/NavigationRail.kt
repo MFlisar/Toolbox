@@ -84,7 +84,8 @@ internal fun NavigationRail(
 
                 NavItemDivider,
                 is NavItemRegion,
-                is NavItemSpacer -> {
+                is NavItemSpacer,
+                    -> {
                     // ignored
                     L.i { "NavItem of type ${item::class.simpleName} is not supported in NavigationBar (index = $index)" }
                 }

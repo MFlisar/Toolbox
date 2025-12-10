@@ -5,6 +5,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -14,6 +16,8 @@ import com.michaelflisar.composechangelog.classes.rememberChangelogState
 import com.michaelflisar.composedialogs.core.DialogStateNoData
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.toolbox.Platform
+import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
+import com.michaelflisar.toolbox.app.features.toolbar.selection.LocalSelectionToolbarState
 import com.michaelflisar.toolbox.app.platform.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

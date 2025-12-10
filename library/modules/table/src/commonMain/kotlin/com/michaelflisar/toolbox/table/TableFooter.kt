@@ -14,8 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.text.font.FontWeight
-import com.michaelflisar.toolbox.LocalTheme
+
 import com.michaelflisar.toolbox.components.MyTitle
+import com.michaelflisar.toolbox.padding
 import com.michaelflisar.toolbox.table.data.TableState
 import com.michaelflisar.toolbox.table.ui.TableRow
 
@@ -54,7 +55,7 @@ fun <T> TableFooter(
     TableRow(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = LocalTheme.current.padding.default)
+            .padding(horizontal = MaterialTheme.padding.default)
             .animateContentSize(),
         containerColor = colors.containerColor,
         contentColor = colors.contentColor
@@ -62,7 +63,7 @@ fun <T> TableFooter(
         customContent()
         Spacer(modifier = modifier.weight(1f))
         MyTitle(
-            modifier = Modifier.padding(vertical = LocalTheme.current.padding.default),
+            modifier = Modifier.padding(vertical = MaterialTheme.padding.default),
             text = if (countFiltered == countTotal) {
                 "$countTotal"
             } else {

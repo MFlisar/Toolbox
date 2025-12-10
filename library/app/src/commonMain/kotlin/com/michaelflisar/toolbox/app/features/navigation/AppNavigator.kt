@@ -9,6 +9,8 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.backhandler.BackHandler
 import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
@@ -19,27 +21,30 @@ import cafe.adriel.voyager.navigator.OnBackPressed
 import cafe.adriel.voyager.transitions.FadeTransition
 import cafe.adriel.voyager.transitions.ScreenTransition
 import cafe.adriel.voyager.transitions.SlideTransition
+import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.ToolboxLogging
+import com.michaelflisar.toolbox.app.features.backhandlerregistry.LocalBackHandlerRegistry
+import com.michaelflisar.toolbox.app.features.backhandlerregistry.NavigatorBackHandler
 import com.michaelflisar.toolbox.app.features.toolbar.selection.ResetSelectionToolbarOnScreenChange
+import com.michaelflisar.toolbox.logIf
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AppNavigator(
     screen: Screen,
     disposeBehavior: NavigatorDisposeBehavior = NavigatorDisposeBehavior(
         disposeSteps = false
     ),
-    onBackPressed: OnBackPressed = { screen ->
-        // does not work reliable (windows + esc key e.g.) => I use the BackHandler instead
-        false
-    },
     content: NavigatorContent = { CurrentScreen() },
 ) {
     Navigator(
         screen = screen,
         disposeBehavior = disposeBehavior,
-        onBackPressed = onBackPressed
+        onBackPressed = null // wir nutzen unseren eigenen BackHandler weiter unten, der integrierte funktioniert nicht wie gewünscht!
     ) { navigator ->
         ResetSelectionToolbarOnScreenChange()
         content(navigator)
+        NavigatorBackHandler(navigator)
     }
 }
 

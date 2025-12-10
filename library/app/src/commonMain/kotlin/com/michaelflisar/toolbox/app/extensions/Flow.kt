@@ -10,6 +10,6 @@ fun <T> Flow<T>.asStateFlow(scope: CoroutineScope, initial: T): StateFlow<T> {
     return stateIn(
         scope = scope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue =initial
+        initialValue = initial
     )
 }

@@ -25,11 +25,11 @@ import com.michaelflisar.toolbox.app.classes.WasmAppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
 import com.michaelflisar.toolbox.app.features.backhandler.WasmBackHandlerUtil
+import com.michaelflisar.toolbox.app.features.backhandlerregistry.LocalBackHandlerRegistry
 import com.michaelflisar.toolbox.app.features.dialogs.ErrorDialogProvider
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
-import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.root.Root
 import com.michaelflisar.toolbox.app.features.root.RootLocalProvider
 import com.michaelflisar.toolbox.app.features.theme.AppThemeProvider
@@ -44,22 +44,24 @@ fun WasmApplication(
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
-    AppNavigator(
-        screen = screen
-    ) { navigator ->
+    ProvideAppLocals {
+        AppNavigator(
+            screen = screen
+        ) { navigator ->
 
-        // 2) remove loading element
-        document.getElementById(wasmSetup.divLoadingElementId)?.remove()
+            // 2) remove loading element
+            document.getElementById(wasmSetup.divLoadingElementId)?.remove()
 
-        val appState = rememberAppState()
-        AppThemeProvider(theme) {
-            RootLocalProvider(appState, setRootLocals = true) {
-                Root(
-                    appState = appState,
-                    setRootLocals = false
-                ) {
-                    WasmBackHandlerUtil.ProvideMouseBackHandler()
-                    content(navigator)
+            val appState = rememberAppState()
+            AppThemeProvider(theme) {
+                RootLocalProvider(appState, setRootLocals = true) {
+                    Root(
+                        appState = appState,
+                        setRootLocals = false
+                    ) {
+                        WasmBackHandlerUtil.ProvideMouseBackHandler()
+                        content(navigator)
+                    }
                 }
             }
         }
@@ -109,14 +111,14 @@ fun WasmToolbar(
     menuItems: List<MenuItem>,
 ) {
     val navigator = LocalNavigator.currentOrThrow
-    val canNavBackHandlerHandleBackPress = NavBackHandler.canHandleBackPress()
+    val backHandlerRegistry = LocalBackHandlerRegistry.current
     WebToolbar(
         menuItems = menuItems,
         navigationItems = navigationItems,
         showNavigationForSingleItem = false,
-        showBackButton = navigator.canPop,
+        showBackButton = navigator.canPop || backHandlerRegistry.wouldConsumeBackPress(),
         onBack = {
-            if (canNavBackHandlerHandleBackPress) {
+            if (backHandlerRegistry.handleBackPress()) {
                 // --
             } else {
                 navigator.pop()

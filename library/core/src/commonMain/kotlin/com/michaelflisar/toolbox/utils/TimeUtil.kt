@@ -6,8 +6,11 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.daysUntil
+import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
+import kotlin.text.toLong
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -54,31 +57,32 @@ object TimeUtil {
     }
 
     fun getFirstWeekDay() = LocalDateTimeSetup.current.firstDayOfWeek
+    fun getLastWeekDay() = LocalDateTimeSetup.current.lastDayOfWeek
 
     fun isLeapYear(year: Int): Boolean {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
     }
 
-    fun date(year: Int, week: Int, day: DayOfWeek): LocalDate {
-        // Erster Tag des Jahres
-        val jan1 = LocalDate(year, 1, 1)
-        // Wochentag des ersten Tages
-        val jan1DayOfWeek = jan1.dayOfWeek.ordinal
-        val firstDayOfWeek = getSortedWeekDays().first().ordinal
-        // Offset zur ersten Woche
-        val daysOffset = ((firstDayOfWeek - jan1DayOfWeek + 7) % 7)
-        // Erster Tag der ersten Kalenderwoche
-        val firstWeekStart = jan1.plus(daysOffset.toLong(), DateTimeUnit.DAY)
-        // Zieltag berechnen
-        val targetDate = firstWeekStart.plus(
-            ((week - 1) * 7 + (day.ordinal - firstDayOfWeek)).toLong(),
-            DateTimeUnit.DAY
-        )
-        return targetDate
+    fun date(year: Int, week: Int, day: DayOfWeek, firstDayOfWeek: DayOfWeek = LocalDateTimeSetup.current.firstDayOfWeek): LocalDate {
+        val week1Start = startOfWeek1(year, firstDayOfWeek)
+        val firstDayIndex = getSortedWeekDays(firstDayOfWeek).first().ordinal
+        val dayOffset = (day.ordinal - firstDayIndex + 7) % 7
+        return week1Start.plus(((week - 1) * 7 + dayOffset).toLong(), DateTimeUnit.DAY)
     }
 
-    fun weeksOfYear(year: Int): Int {
-        return if (isLeapYear(year)) 53 else 52
+    fun startOfWeek1(year: Int, firstDayOfWeek: DayOfWeek = LocalDateTimeSetup.current.firstDayOfWeek): LocalDate {
+        // Woche 1 ist die Woche, die den 4. Januar enthält
+        val firstDayIndex = getSortedWeekDays(firstDayOfWeek).first().ordinal
+        val jan4 = LocalDate(year, 1, 4)
+        val diff = (jan4.dayOfWeek.ordinal - firstDayIndex + 7) % 7
+        return jan4.minus(diff, DateTimeUnit.DAY)
+    }
+
+    fun weeksOfYear(year: Int, firstDayOfWeek: DayOfWeek = LocalDateTimeSetup.current.firstDayOfWeek): Int {
+        val startThis = startOfWeek1(year, firstDayOfWeek)
+        val startNext = startOfWeek1(year + 1, firstDayOfWeek)
+        val days = startThis.daysUntil(startNext)
+        return days / 7 // 52 oder 53
     }
 
     fun daysOfYear(year: Int): Int {

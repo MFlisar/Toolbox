@@ -5,11 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Pages
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,14 +22,15 @@ import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
 import com.michaelflisar.toolbox.app.features.device.CurrentDevice
+import com.michaelflisar.toolbox.app.features.menu.Menu
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.app.features.toolbar.LocalToolbarMainMenuItems
 import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.localContext
 import com.michaelflisar.toolbox.app.platform.restart
-import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyFlowRow
 import com.michaelflisar.toolbox.components.MyLabeledInformationHorizontal
@@ -45,28 +47,37 @@ object PageHomeScreen : NavScreen() {
 
     @Composable
     override fun provideData() = rememberNavScreenData(
-        title = stringResource(Res.string.page_home),
-        subTitle = null,
+        name = stringResource(Res.string.page_home),
         icon = Icons.Default.Home.toIconComposable()
     )
 
     @Composable
-    override fun provideMenu(): List<MenuItem> {
-        val appState = LocalAppState.current
-        val actionText = "Page Home Action"
-        return listOf(
-            MenuItem.Group(
-                text = stringResource(Res.string.page_home),
-                icon = Icons.Default.Pages.toIconComposable(),
-                items = listOf(
-                    MenuItem.Item(
-                        text = actionText,
-                        icon = Icons.Default.RunCircle.toIconComposable(),
-                    ) {
-                        appState.showSnackbar("$actionText clicked")
-                    }
-                )
-            )
+    override fun Toolbar() {
+        val data = provideData()
+        val mainMenuItems = LocalToolbarMainMenuItems.current
+        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+            title = data.name,
+            endContent = {
+                val appState = LocalAppState.current
+                val actionText = "Page Home Action"
+                val menuItems = remember(mainMenuItems) {
+                    val subItems = listOf(
+                        MenuItem.Item(
+                            text = actionText,
+                            icon = Icons.Default.RunCircle.toIconComposable(),
+                        ) {
+                            appState.showSnackbar("$actionText clicked")
+                        }
+                    )
+                    listOf(
+                        MenuItem.Group(
+                            icon = Icons.Default.MoreVert.toIconComposable(),
+                            items = mainMenuItems.combineWith(subItems)
+                        )
+                    )
+                }
+                Menu(menuItems)
+            },
         )
     }
 
@@ -74,7 +85,6 @@ object PageHomeScreen : NavScreen() {
     override fun Screen() {
         Page()
     }
-
 }
 
 @Composable

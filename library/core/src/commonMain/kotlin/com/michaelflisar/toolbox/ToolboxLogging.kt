@@ -15,8 +15,8 @@ object ToolboxLogging {
 
     private var enabledTags: List<Tag> = emptyList()
 
-    fun enableAll() {
-        enabledTags = Tag.entries.toList()
+    fun enableAll(excluded: List<Tag> = emptyList()) {
+        enabledTags = Tag.entries.toList().filter { it !in excluded}
     }
 
     fun enable(vararg tags: Tag) {

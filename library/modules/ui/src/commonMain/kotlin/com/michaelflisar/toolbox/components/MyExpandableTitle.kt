@@ -33,8 +33,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.LocalTheme
+
 import com.michaelflisar.toolbox.components.MyExpandableTitle.IconPlacement
+import com.michaelflisar.toolbox.padding
 
 object MyExpandableTitle {
     enum class IconPlacement {
@@ -222,8 +223,8 @@ private fun MyExpandableTitleImpl(
                     }
                     .padding(
                         start = 0.dp,
-                        bottom = LocalTheme.current.padding.default,
-                        top = LocalTheme.current.padding.default,
+                        bottom = MaterialTheme.padding.default,
+                        top = MaterialTheme.padding.default,
                         end = 0.dp
                     ),
                 verticalAlignment = Alignment.CenterVertically
@@ -231,7 +232,7 @@ private fun MyExpandableTitleImpl(
                 if (style.iconPlacement == IconPlacement.Left && (canToggle || !style.hideIconIfNotExpandable)) {
                     MyExpandIcon(expanded, sideIsLeft = true, color = style.getTitleContentColor())
                 } else {
-                    Spacer(modifier = Modifier.width(LocalTheme.current.padding.default))
+                    Spacer(modifier = Modifier.width(MaterialTheme.padding.default))
                 }
 
                 CompositionLocalProvider(
@@ -249,7 +250,7 @@ private fun MyExpandableTitleImpl(
                 if (style.iconPlacement == IconPlacement.Right && (canToggle || !style.hideIconIfNotExpandable)) {
                     MyExpandIcon(expanded, sideIsLeft = false, color =style.getTitleContentColor())
                 } else {
-                    Spacer(modifier = Modifier.width(LocalTheme.current.padding.default))
+                    Spacer(modifier = Modifier.width(MaterialTheme.padding.default))
                 }
             }
         }

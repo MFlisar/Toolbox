@@ -3,6 +3,8 @@ package com.michaelflisar.toolbox.demo
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
+import androidx.compose.ui.window.ComposeViewport
+import androidx.compose.ui.window.ComposeViewportConfiguration
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.kotpreferences.storage.keyvalue.LocalStorageKeyValueStorage
@@ -33,9 +35,7 @@ suspend fun main() {
         isDebugBuild = true, // TODO: how to detect in wasm?
         fileLogger = null
     )
-    val wasmSetup = WasmAppSetup(
-        title = "Toolbox"
-    )
+    val wasmSetup = WasmAppSetup()
     WasmApp.init(
         setup = setup
     )
@@ -48,8 +48,10 @@ suspend fun main() {
     Shared.init(PlatformContext.NONE, setup)
 
     // 4) Application
-    CanvasBasedWindow(wasmSetup.title, canvasElementId = wasmSetup.canvasElementId) {
-
+    ComposeViewport(
+        // mit container id geht es nicht --> wäre aber gut, dann würde ein Loader angezeigt werden, aktuell wird der nicht angezeigt...
+        // viewportContainerId = wasmSetup.canvasElementId
+    ) {
         WasmApplication(
             screen = Shared.page1,
             wasmSetup = wasmSetup

@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.michaelflisar.toolbox.LocalTheme
+
 import com.michaelflisar.toolbox.components.MyChip
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyFlowRow
@@ -51,6 +51,8 @@ import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 import com.michaelflisar.toolbox.feature.menu.rememberMenuState
+import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.spacing
 import com.michaelflisar.toolbox.table.data.TableState
 import com.michaelflisar.toolbox.table.definitions.Column
 import com.michaelflisar.toolbox.table.definitions.Filter
@@ -88,15 +90,15 @@ fun <T> TableSearchBar(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                horizontal = LocalTheme.current.padding.default,
-                vertical = LocalTheme.current.padding.default
+                horizontal = MaterialTheme.padding.default,
+                vertical = MaterialTheme.padding.default
             )
             .animateContentSize(),
         containerColor = colors.containerColor,
         contentColor = colors.contentColor,
         shape = shape,
         borderColor = colors.borderColor,
-        horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
     ) {
         MyColumn {
             if (showTextSearch) {
@@ -229,10 +231,10 @@ fun <T> TableSearchBar(
                                             shadowElevation = 8.dp
                                         ) {
                                             Column(
-                                                modifier = Modifier.padding(LocalTheme.current.padding.default)
+                                                modifier = Modifier.padding(MaterialTheme.padding.default)
                                                     .width(popupWidth),
                                                 verticalArrangement = Arrangement.spacedBy(
-                                                    LocalTheme.current.spacing.default
+                                                    MaterialTheme.spacing.default
                                                 )
                                             ) {
                                                 column.filter!!.Render(

@@ -10,13 +10,14 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.scrollbar
 
-import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 actual fun MyScrollableLazyRow(
@@ -31,7 +32,7 @@ actual fun MyScrollableLazyRow(
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = if (overlapScrollbar) 0.dp else LocalTheme.current.scrollbar.paddingForScrollbar),
+                .padding(bottom = if (overlapScrollbar) 0.dp else MaterialTheme.scrollbar.paddingForScrollbar),
             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
             verticalAlignment = verticalAlignment,
             state = state
@@ -39,7 +40,7 @@ actual fun MyScrollableLazyRow(
             content()
         }
         HorizontalScrollbar(
-            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(LocalTheme.current.scrollbar.size),
+            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(MaterialTheme.scrollbar.size),
             adapter = rememberScrollbarAdapter(state)
         )
     }

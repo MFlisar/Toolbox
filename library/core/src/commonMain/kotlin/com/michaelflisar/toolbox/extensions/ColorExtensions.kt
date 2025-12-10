@@ -18,8 +18,19 @@ fun Color.isDark() = luminance() < .5f
 
 fun Color.disabled() = copy(alpha = 0.38f)
 
-fun Color.variant(factor: Float = .8f) = copy(alpha = factor)
+/**
+ * @param factorOnDark sollte etwas höher als factorOnLight sein, da der Unterschied auf dunklem Hintergrund weniger auffällt
+ * @param factorOnLight sollte etwas niedriger als factorOnDark sein, da der Unterschied auf hellem Hintergrund stärker auffällt
+ */
+fun Color.variant(
+    factorOnDark: Float = .2f,
+    factorOnLight: Float = .3f,
+) = darkenOrLighten(factor = if (!isDark()) factorOnDark else factorOnLight)
 
+/**
+ * in material2 war der factor immer .6f, aber in light (also wenn die Farbe selbst dunkel ist) ist diese Änderung etwas zu stark, daher nutzen wir hier unterschiedliche Werte
+ */
+fun Color.secondary() = copy(alpha = if (isDark()) .7f else .6f)
 /*
  * factor... 0.0f = no change, 1.0f = full change
  */

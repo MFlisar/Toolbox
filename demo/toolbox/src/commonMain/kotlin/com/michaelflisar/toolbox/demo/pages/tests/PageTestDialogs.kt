@@ -55,13 +55,9 @@ object PageTestDialogs : NavScreen() {
 
     @Composable
     override fun provideData() = rememberNavScreenData(
-        title = "Dialogs",
-        subTitle = null,
+        name = "Dialogs",
         icon = Icons.Default.Window.toIconComposable()
     )
-
-    @Composable
-    override fun provideMenu(): List<MenuItem> = emptyList()
 
     @Composable
     override fun Screen() {
@@ -200,7 +196,7 @@ private fun Page(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            PageTestDialogs.provideData().value.title,
+            PageTestDialogs.provideData().name,
             style = MaterialTheme.typography.titleMedium
         )
         dialogs.forEach {

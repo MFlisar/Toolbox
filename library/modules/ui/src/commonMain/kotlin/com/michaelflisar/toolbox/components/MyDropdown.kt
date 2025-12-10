@@ -7,8 +7,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -40,10 +40,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.extensions.toSentenceCase
 import com.michaelflisar.toolbox.interfaces.ILabel
 import com.michaelflisar.toolbox.interfaces.ILabelAndShortLabel
+import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.spacing
 
 object MyDropdownDefaults {
 
@@ -99,7 +100,7 @@ object MyDropdownDefaults {
     }
 
     @Composable
-    fun style(): MyDropdown.Style = MyDropdown.Style.Button
+    fun style(): MyDropdown.Style = MyDropdown.Style.Button()
 }
 
 object MyDropdown {
@@ -121,20 +122,25 @@ object MyDropdown {
         val textDropdown: String,
     )
 
-    enum class Style {
-        Button,
-        OutlinedButton,
+    sealed class Style {
+        abstract val padding: PaddingValues
+        data class Button(
+            override val padding: PaddingValues = PaddingValues(all = 8.dp)
+        ) : Style()
+        data class OutlinedButton(
+            override val padding: PaddingValues = PaddingValues(all = 8.dp)
+        ) : Style()
     }
 
-    class SimpleData<T: ILabel>(
+    class SimpleData<T : ILabel>(
         val value: T,
         val values: List<T>,
-        val onValueChanged: (T) -> Unit
+        val onValueChanged: (T) -> Unit,
     ) {
 
         constructor(
             value: MutableState<T>,
-            values: List<T>
+            values: List<T>,
         ) : this(
             value = value.value,
             values = values,
@@ -144,9 +150,9 @@ object MyDropdown {
 }
 
 @Composable
-fun <T: ILabel> MyDropdown(
+fun <T : ILabel> MyDropdown(
     data: MyDropdown.SimpleData<T>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     MyDropdown(
         items = data.values,
@@ -385,7 +391,7 @@ private fun <T> MyDropdownImpl(
     val filteredItems = remember(items) { mutableStateOf(items) }
 
     when (style) {
-        MyDropdown.Style.Button -> {
+        is MyDropdown.Style.Button -> {
             Box(
                 modifier = modifier.clip(MaterialTheme.shapes.small)
                     .border(1.dp, borderColor, MaterialTheme.shapes.small)
@@ -400,7 +406,7 @@ private fun <T> MyDropdownImpl(
                 contentAlignment = Alignment.Center
             ) {
                 MyDropdownContent(
-                    Modifier.fillMaxWidth().padding(8.dp),
+                    Modifier.fillMaxWidth().padding(style.padding),
                     expanded,
                     rotation,
                     title,
@@ -425,7 +431,7 @@ private fun <T> MyDropdownImpl(
             }
         }
 
-        MyDropdown.Style.OutlinedButton -> {
+        is MyDropdown.Style.OutlinedButton -> {
             val colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = borderColor,
             )
@@ -434,7 +440,7 @@ private fun <T> MyDropdownImpl(
             ) {
                 MyOutlinedDecoratedContainer(
                     title = title,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(style.padding),
                     enabled = enabled,
                     placeholder = null,
                     leadingIcon = null,
@@ -552,9 +558,9 @@ private fun <T> MyDropdownDropdown(
                 modifier = Modifier
                     .offset(y = with(LocalDensity.current) { scrollState.value.toDp() })
                     .background(MaterialTheme.colorScheme.surfaceContainer)
-                    .padding(all = LocalTheme.current.padding.default)
+                    .padding(all = MaterialTheme.padding.default)
                     .zIndex(2f),
-                verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small)
+                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
             ) {
                 Text(
                     text = title,

@@ -12,15 +12,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Expand
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.parcelize.Parcelize
-import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItemsContentOnly
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.collapsibleheader.CollapsibleHeader
 
@@ -29,17 +28,22 @@ object PageTestExpandableHeader : NavScreen() {
 
     @Composable
     override fun provideData() = rememberNavScreenData(
-        title = "Expandable Header",
-        subTitle = null,
+        name = "Expandable Header",
         icon = Icons.Default.Expand.toIconComposable()
     )
 
     @Composable
-    override fun provideMenu(): List<MenuItem> = emptyList()
-
-    @Composable
     override fun Screen() {
         Page()
+    }
+
+    @Composable
+    override fun Toolbar() {
+        val data = provideData()
+        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+            title = data.name,
+            endContent = { MainMenuItemsContentOnly() },
+        )
     }
 
 }

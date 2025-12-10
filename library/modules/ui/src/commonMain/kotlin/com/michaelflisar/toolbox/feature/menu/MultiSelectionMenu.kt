@@ -7,11 +7,11 @@ import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.CopyAll
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Deselect
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
@@ -35,19 +35,109 @@ import org.jetbrains.compose.resources.stringResource
 
 object MultiSelectionMenu {
 
+    @Stable
     sealed class Action {
+
+        @Composable
+        abstract fun MenuItem()
+
+        @Composable
+        abstract fun MenuItem(scope: MenuScope)
+
         @Stable
         class Item(
             val icon: IconComposable,
             val text: String,
             val enabled: Boolean = true,
             val onClick: () -> Unit,
-        ) : Action()
+        ) : Action() {
+
+            @Composable
+            override fun MenuItem() {
+                MyTooltipBox(
+                    tooltip = text
+                ) {
+                    MyIconButton(
+                        icon = icon,
+                        enabled = enabled,
+                        onClick = onClick
+                    )
+                }
+            }
+
+            @Composable
+            override fun MenuItem(scope: MenuScope) {
+                with(scope) {
+                    MenuItem(
+                        text = { Text(text) },
+                        icon = icon,
+                        enabled = enabled,
+                        onClick = onClick
+                    )
+                }
+            }
+        }
 
         @Stable
         class Separator(
             val text: String,
-        ) : Action()
+        ) : Action() {
+
+            @Composable
+            override fun MenuItem() {
+                VerticalDivider()
+            }
+
+            @Composable
+            override fun MenuItem(scope: MenuScope) {
+                with(scope) {
+                    MenuSeparator(text = text)
+                }
+            }
+        }
+
+        @Stable
+        class Menu(
+            val icon: IconComposable,
+            val text: String,
+            val enabled: Boolean = true,
+            val subItems: List<Action>,
+        ) : Action() {
+
+            @Composable
+            override fun MenuItem() {
+                val menu = rememberMenuState()
+                MyTooltipBox(
+                    tooltip = text
+                ) {
+                    Box {
+                        MyIconButton(
+                            icon = icon,
+                            enabled = enabled,
+                            onClick = { menu.show() }
+                        )
+                        PopupMenu(
+                            state = menu
+                        ) {
+                            subItems.forEach { it.MenuItem(this) }
+                        }
+                    }
+                }
+            }
+
+            @Composable
+            override fun MenuItem(scope: MenuScope) {
+                with(scope) {
+                    MenuSubMenu(
+                        text = text,
+                        icon = icon,
+                        enabled = enabled
+                    ) {
+                        subItems.forEach { it.MenuItem(this) }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -97,7 +187,7 @@ object MultiSelectionMenuDefaults {
         ) = MultiSelectionMenu.Action.Item(
             text = stringResource(Res.string.menu_invert_selection),
             icon = Icons.Default.SwapHoriz.toIconComposable(),
-            enabled = enabled && selectionData.isSomethingSelected,
+            enabled = enabled,
             onClick = {
                 val currentlySelected = selectionData.selectedIds.value.toSet()
                 selectionData.clearSelection()
@@ -174,47 +264,7 @@ object MultiSelectionMenuDefaults {
 
 @Composable
 fun MultiSelectionMenu(
-    primaryMenu: List<MultiSelectionMenu.Action.Item>,
-    overflowMenu: List<MultiSelectionMenu.Action> = emptyList(),
+    items: List<MultiSelectionMenu.Action>,
 ) {
-    primaryMenu.forEach {
-        MyTooltipBox(
-            tooltip = it.text
-        ) {
-            MyIconButton(
-                icon = it.icon,
-                enabled = it.enabled,
-                onClick = it.onClick
-            )
-        }
-    }
-    if (overflowMenu.isNotEmpty()) {
-        Box {
-            val menu = rememberMenuState()
-            MyIconButton(
-                icon = Icons.Default.MoreVert.toIconComposable(),
-                onClick = { menu.show() }
-            )
-            PopupMenu(
-                state = menu
-            ) {
-                overflowMenu.forEach {
-                    when (it) {
-                        is MultiSelectionMenu.Action.Item -> {
-                            MenuItem(
-                                text = { Text(it.text) },
-                                icon = it.icon,
-                                enabled = it.enabled,
-                                onClick = it.onClick
-                            )
-                        }
-
-                        is MultiSelectionMenu.Action.Separator -> {
-                            MenuSeparator(text = it.text)
-                        }
-                    }
-                }
-            }
-        }
-    }
+    items.forEach { it.MenuItem() }
 }

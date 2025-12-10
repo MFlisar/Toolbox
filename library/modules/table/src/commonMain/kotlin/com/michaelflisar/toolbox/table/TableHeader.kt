@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -21,10 +22,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.LocalTheme
+
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.toIconComposable
+import com.michaelflisar.toolbox.padding
 import com.michaelflisar.toolbox.table.data.TableState
 import com.michaelflisar.toolbox.table.ui.TableRow
 
@@ -55,7 +57,7 @@ fun <T> TableHeader(
         modifier = modifier
             .fillMaxWidth()
             .minimumInteractiveComponentSize()
-            .padding(horizontal = LocalTheme.current.padding.default)
+            .padding(horizontal = MaterialTheme.padding.default)
             .animateContentSize(),
         containerColor = colors.containerColor,
         contentColor = colors.contentColor

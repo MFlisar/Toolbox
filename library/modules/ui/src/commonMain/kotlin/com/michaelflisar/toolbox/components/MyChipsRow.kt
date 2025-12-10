@@ -31,8 +31,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.LocalTheme
+
 import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.spacing
 import com.michaelflisar.toolbox.ui.MyScrollableRow
 
 private object MyChipsRow {
@@ -302,7 +304,7 @@ private fun <T> MyChipsFlowRowImpl(
 
         if (showSelectionInfo && selection !is MyChipsRow.Selection.Single) {
             MyLabeledInformationHorizontal(
-                modifier = Modifier.padding(bottom = LocalTheme.current.spacing.small),
+                modifier = Modifier.padding(bottom = MaterialTheme.spacing.small),
                 label = "Selected",
                 info = "${selectedIndices.size}/${items.size}"
             )
@@ -311,7 +313,7 @@ private fun <T> MyChipsFlowRowImpl(
             MyScrollableRow(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                itemSpacing = LocalTheme.current.spacing.small,
+                itemSpacing = MaterialTheme.spacing.small,
             ){
                 RowContent(
                     items,
@@ -327,9 +329,9 @@ private fun <T> MyChipsFlowRowImpl(
         } else {
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.small),
+                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
                 verticalArrangement = Arrangement.spacedBy(
-                    LocalTheme.current.spacing.small,
+                    MaterialTheme.spacing.small,
                     Alignment.CenterVertically
                 )
             ) {
@@ -428,7 +430,7 @@ private fun <T> RowContent(
                     onSelectionChange(selectedNew)
                 }
                 .widthIn(min = minSegmentWidth)
-                .padding(LocalTheme.current.padding.small),
+                .padding(MaterialTheme.padding.small),
             text = mapper(item),
             maxLines = 1,
             color = if (selectedIndices.contains(index)) colorSelectedText else colorNotSelectedText,

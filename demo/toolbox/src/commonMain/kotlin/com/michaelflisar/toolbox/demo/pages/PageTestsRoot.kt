@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,11 +16,10 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.parcelize.Parcelize
-import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
-import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreenContainer
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItemsContentOnly
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.demo.pages.tests.PageTestDialogs
 import com.michaelflisar.toolbox.demo.pages.tests.PageTestPane
@@ -41,34 +38,22 @@ object PageTestsRootScreen : NavScreen() {
 
     @Composable
     override fun provideData() = rememberNavScreenData(
-        title = "Tests",
-        subTitle = null,
+        name = "Tests",
         icon = Icons.Default.BugReport.toIconComposable()
     )
 
     @Composable
-    override fun provideMenu(): List<MenuItem> {
-        val appState = LocalAppState.current
-        val actionText = "Page Tests Root Action"
-        return listOf(
-            MenuItem.Group(
-                text = "Root Test Actions",
-                icon = Icons.Default.List.toIconComposable(),
-                items = listOf(
-                    MenuItem.Item(
-                        text = actionText,
-                        icon = Icons.Default.RunCircle.toIconComposable(),
-                    ) {
-                        appState.showSnackbar("$actionText clicked")
-                    }
-                )
-            )
-        )
+    override fun Screen() {
+        Page()
     }
 
     @Composable
-    override fun Screen() {
-        Page()
+    override fun Toolbar() {
+        val data = provideData()
+        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+            title = data.name,
+            endContent = { MainMenuItemsContentOnly() },
+        )
     }
 
 }
@@ -108,8 +93,8 @@ private fun TestRow(
             }
             .padding(all = 8.dp)
     ) {
-        val data = test.provideData().value
+        val data = test.provideData()
         data.icon?.let { Icon(it) }
-        Text(data.title)
+        Text(data.name)
     }
 }

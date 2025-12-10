@@ -42,15 +42,11 @@ fun NavigationBar(
             when (item) {
                 is NavItem -> {
                     NavigationBarItem(
-                        icon = {
-                            item.icon?.let { Icon(it, modifier = Modifier.size(24.dp)) }
-                        },
+                        icon = { item.icon?.let { Icon(it, modifier = Modifier.size(24.dp)) } },
                         label = { Text(item.title) },
                         alwaysShowLabel = alwaysShowLabel,
                         selected = navigator.lastItem == item.screen,
-                        onClick = {
-                            navigator.replaceAll(item.screen)
-                        },
+                        onClick = { navigator.replaceAll(item.screen) },
                     )
                 }
 

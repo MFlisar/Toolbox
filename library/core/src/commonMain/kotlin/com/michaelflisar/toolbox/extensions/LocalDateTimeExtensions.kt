@@ -16,6 +16,7 @@ import kotlinx.datetime.number
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import kotlin.text.compareTo
 import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -176,13 +177,16 @@ fun LocalDate.Companion.fromCalendarWeek(
 }
 
 fun LocalDate.calendarWeek(firstDayOfWeek: DayOfWeek = LocalDateTimeSetup.current.firstDayOfWeek): Int {
-    val firstDayOfWeek = TimeUtil.getSortedWeekDays(firstDayOfWeek).first().ordinal
-    val jan1 = LocalDate(this.year, 1, 1)
-    val jan1DayOfWeek = jan1.dayOfWeek.ordinal
-    val daysOffset = ((firstDayOfWeek - jan1DayOfWeek + 7) % 7)
-    val firstWeekStart = jan1.plus(daysOffset.toLong(), DateTimeUnit.DAY)
-    val daysSinceFirstWeek = firstWeekStart.daysUntil(this)
-    return if (daysSinceFirstWeek < 0) 1 else (daysSinceFirstWeek / 7) + 1
+    val week1StartThisYear = TimeUtil.startOfWeek1(this.year, firstDayOfWeek)
+    val week1StartNextYear = TimeUtil.startOfWeek1(this.year + 1, firstDayOfWeek)
+    return when {
+        this < week1StartThisYear -> TimeUtil.weeksOfYear(this.year - 1, firstDayOfWeek)          // letzte KW des Vorjahres
+        this >= week1StartNextYear -> 1                                                 // gehört schon zu KW 1 des Folgejahres
+        else -> {
+            val daysSince = week1StartThisYear.daysUntil(this)
+            (daysSince / 7) + 1
+        }
+    }
 }
 
 @Parcelize
@@ -267,21 +271,23 @@ fun LocalDate.getTimeBetween(other: LocalDate): DatePeriodWithYears {
     val end = if (this > other) this else other
 
     var years = end.year - start.year
-    var monthStart = start.plus(years, DateTimeUnit.YEAR)
-    if (monthStart > end) {
-        years -= 1
-        monthStart = start.plus(years, DateTimeUnit.YEAR)
-    }
+    var months = end.month.number - start.month.number
+    var days = end.day - start.day
 
-    var months = end.month.number - monthStart.month.number
-    if (months < 0) months += 12
-    var dayStart = monthStart.plus(months, DateTimeUnit.MONTH)
-    if (dayStart > end) {
+    // Wenn Tage negativ sind, einen Monat zurück und Tage korrigieren
+    if (days < 0) {
         months -= 1
-        dayStart = monthStart.plus(months, DateTimeUnit.MONTH)
+        val prevMonth = end.minus(1, DateTimeUnit.MONTH)
+        days += prevMonth.endOfMonth().day
     }
 
-    val days = dayStart.daysUntil(end)
+    // Wenn Monate negativ sind, ein Jahr zurück und Monate korrigieren
+    if (months < 0) {
+        years -= 1
+        months += 12
+    }
 
     return DatePeriodWithYears(years, months, days)
 }
+
+

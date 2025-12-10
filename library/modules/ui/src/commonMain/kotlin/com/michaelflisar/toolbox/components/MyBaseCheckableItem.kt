@@ -15,7 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
-import com.michaelflisar.toolbox.LocalTheme
+import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.spacing
+
 
 @Composable
 internal fun MyBaseCheckableItem(
@@ -33,14 +35,14 @@ internal fun MyBaseCheckableItem(
                 if (onCheckedChange != null) {
                     Modifier.clickable { onCheckedChange.invoke(!checked) }
                 } else Modifier)
-            .padding(LocalTheme.current.padding.default)
+            .padding(MaterialTheme.padding.default)
             .width(IntrinsicSize.Max),
-        horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (title != null) {
             Column(
-                modifier = Modifier.weight(1f).padding(end = LocalTheme.current.spacing.default)
+                modifier = Modifier.weight(1f).padding(end = MaterialTheme.spacing.default)
             ) {
                 CompositionLocalProvider(LocalTextStyle provides style) {
                     title()

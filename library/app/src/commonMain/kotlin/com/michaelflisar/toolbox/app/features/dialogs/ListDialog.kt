@@ -20,10 +20,10 @@ import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogButtons
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogState
-import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyLoading
 import com.michaelflisar.toolbox.components.MyRow
+import com.michaelflisar.toolbox.padding
 import com.michaelflisar.toolbox.ui.MyScrollableLazyColumn
 
 @Composable
@@ -96,7 +96,7 @@ fun <T> ListDialog(
                                                 .clip(MaterialTheme.shapes.small)
                                                 .clickable { it.invoke(item) }
                                         } ?: Modifier)
-                                        .padding(horizontal = LocalTheme.current.padding.small)
+                                        .padding(horizontal = MaterialTheme.padding.small)
                                         .minimumInteractiveComponentSize(),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {

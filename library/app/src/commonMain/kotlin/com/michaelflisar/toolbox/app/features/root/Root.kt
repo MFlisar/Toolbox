@@ -19,18 +19,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composechangelog.Changelog
 import com.michaelflisar.composechangelog.statesaver.kotpreferences.ChangelogStateSaverKotPreferences
 import com.michaelflisar.composedebugdrawer.core.DebugDrawer
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
-import com.michaelflisar.toolbox.app.features.navigation.NavBackHandler
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionSetup
 import com.michaelflisar.toolbox.core.resources.Res
@@ -69,7 +66,7 @@ fun Root(
                 },
                 content = {
                     content()
-                    NavBackHandler()
+                    //NavBackHandler()
                     RootDialogs()
                     dialogs()
                 }
@@ -134,6 +131,9 @@ fun RootDialogs() {
 
     val proVersionManager = ProVersionManager.setup
     if (proVersionManager.supported && appState.showProVersionDialog.visible) {
-        (proVersionManager as? ProVersionSetup.Supported)?.manager?.ProVersionDialog(appState.showProVersionDialog, proVersionManager.proVersionInfoText)
+        (proVersionManager as? ProVersionSetup.Supported)?.manager?.ProVersionDialog(
+            appState.showProVersionDialog,
+            proVersionManager.proVersionInfoText
+        )
     }
 }

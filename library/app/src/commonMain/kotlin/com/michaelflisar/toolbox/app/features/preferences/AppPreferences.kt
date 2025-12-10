@@ -22,6 +22,7 @@ import androidx.compose.material.icons.outlined.Mail
 import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.material.icons.outlined.RestartAlt
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -78,7 +79,6 @@ import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.localContext
 import com.michaelflisar.toolbox.app.platform.restart
 import com.michaelflisar.toolbox.backup.BackupManager
-import com.michaelflisar.toolbox.LocalTheme
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_settings
 import com.michaelflisar.toolbox.core.resources.no
@@ -98,6 +98,7 @@ import com.michaelflisar.toolbox.core.resources.settings_open_play_store_details
 import com.michaelflisar.toolbox.core.resources.settings_privacy_policy
 import com.michaelflisar.toolbox.core.resources.settings_privacy_policy_details
 import com.michaelflisar.toolbox.core.resources.yes
+import com.michaelflisar.toolbox.padding
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
@@ -298,7 +299,7 @@ internal fun SettingsContent(
                         ) {
                             Text(
                                 text = if (page == 0) style.labelDefaultPage else style.customPages[page - 1].title,
-                                modifier = Modifier.padding(LocalTheme.current.padding.default)
+                                modifier = Modifier.padding(MaterialTheme.padding.default)
                             )
                         }
                     }

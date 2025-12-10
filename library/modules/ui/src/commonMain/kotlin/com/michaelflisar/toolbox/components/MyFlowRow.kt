@@ -3,16 +3,18 @@ package com.michaelflisar.toolbox.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.FlowRowScope
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.michaelflisar.toolbox.LocalTheme
+import com.michaelflisar.toolbox.spacing
+
 
 @Composable
 fun MyFlowRow(
     modifier: Modifier = Modifier,
-    itemSpacing: Dp = LocalTheme.current.spacing.default,
+    itemSpacing: Dp = MaterialTheme.spacing.default,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     verticalItemAlignment: Alignment.Vertical = Alignment.Top,

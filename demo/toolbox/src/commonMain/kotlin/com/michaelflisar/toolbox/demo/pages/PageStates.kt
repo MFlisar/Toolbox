@@ -22,9 +22,9 @@ import com.michaelflisar.composethemer.themes.ThemeFlatUIOrange
 import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItemsContentOnly
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.demo.resources.Res
@@ -48,14 +48,17 @@ object PageStatesScreen : NavScreen() {
 
     @Composable
     override fun provideData() = rememberNavScreenData(
-        title = stringResource(Res.string.page_states),
-        subTitle = "Sub Title",
+        name = stringResource(Res.string.page_states),
         icon = Icons.Default.Pages.toIconComposable()
     )
 
     @Composable
-    override fun provideMenu(): List<MenuItem> {
-        return emptyList()
+    override fun Toolbar() {
+        val data = provideData()
+        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+            title = data.name,
+            endContent = { MainMenuItemsContentOnly() },
+        )
     }
 
     @Composable

@@ -19,9 +19,9 @@ val Navigator.lastNavItem: INavScreen
  * nutzt den current screen [NavScreenContainer] um den lokalen Navigator zu finden => braucht man nur wenn man außerhalb des contents ist
  * (z.B. in Toolbar)
  */
-val ProvidableCompositionLocal<Navigator?>.findLocalByScreenOrThrow: Navigator
+val Navigator.findLocalByScreenOrThrow: Navigator
     @Composable
-    get() = currentOrThrow.localNavigator
+    get() = localNavigator
 
 private val Navigator.localNavigator: Navigator
     get() {

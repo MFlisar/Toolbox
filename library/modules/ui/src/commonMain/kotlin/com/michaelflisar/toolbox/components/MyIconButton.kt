@@ -279,6 +279,7 @@ fun MyIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
+    shape: Shape = IconButtonDefaults.standardShape,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     // click
     onClick: () -> Unit,
@@ -286,7 +287,7 @@ fun MyIconButton(
     MyIconButton(
         icon = icon,
         modifier = modifier,
-        style = MyIconButtonDefaults.styleDefault(colors = colors),
+        style = MyIconButtonDefaults.styleDefault(shape, colors),
         iconPaddingValues = iconPaddingValues,
         enabled = enabled,
         interactionSource = interactionSource,

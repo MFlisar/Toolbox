@@ -10,18 +10,56 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-val LocalTheme =
-    staticCompositionLocalOf<MyTheme> { throw IllegalStateException("No LocalTheme provided") }
+val MaterialTheme.padding: Padding
+    @Composable
+    get() = LocalTheme.current.padding
 
-@Composable
-fun MyTheme(
-    theme: MyTheme = MyTheme.default(),
-    content: @Composable () -> Unit
+val MaterialTheme.spacing: Spacing
+    @Composable
+    get() = LocalTheme.current.spacing
+
+val MaterialTheme.scrollbar: Scrollbar
+    @Composable
+    get() = LocalTheme.current.scrollbar
+
+val MaterialTheme.minimumInteractiveComponentSize: Dp
+    @Composable
+    get() = LocalTheme.current.minimumInteractiveComponentSize
+
+// --------------
+// Klassen
+// --------------
+
+/**
+ * @param mini mini padding value
+ * @param small small padding value
+ * @param default default padding value
+ * @param content padding value for content areas
+ * @param cardContent padding value between cards and their content
+ */
+@Immutable
+data class Padding(
+    val mini: Dp = 2.dp,
+    val small: Dp = 4.dp,
+    val default: Dp = 8.dp,
+    val content: Dp = 16.dp,
+    val cardContent: Dp = 8.dp,
+)
+
+@Immutable
+data class Spacing(
+    val mini: Dp = 2.dp,
+    val small: Dp = 4.dp,
+    val default: Dp = 8.dp,
+    val large: Dp = 16.dp,
+)
+
+@Immutable
+data class Scrollbar(
+    val size: Dp = 8.dp,
+    val spacing: Dp = 4.dp,
 ) {
-    CompositionLocalProvider(
-        LocalTheme provides theme,
-        content = content
-    )
+    val paddingForScrollbar = size + spacing
 }
 
 @Immutable
@@ -38,7 +76,7 @@ class MyTheme(
         @Composable
         fun default(
             shapes: Shapes = MaterialTheme.shapes,
-            typography: Typography = MaterialTheme.typography
+            typography: Typography = MaterialTheme.typography,
         ) = MyTheme(
             padding = Padding(),
             spacing = Spacing(),
@@ -51,9 +89,10 @@ class MyTheme(
         @Composable
         fun windowsDefault(
             shapes: Shapes = MaterialTheme.shapes,
-            typography: Typography = MaterialTheme.typography
+            typography: Typography = MaterialTheme.typography,
         ) = MyTheme(
             padding = Padding(
+                mini = 2.dp,
                 small = 4.dp,
                 default = 8.dp,
                 content = 8.dp,
@@ -74,36 +113,22 @@ class MyTheme(
             typography = typography,
         )
     }
-
-
 }
 
-/**
- * @param small small padding value
- * @param default default padding value
- * @param content padding value for content areas
- * @param cardContent padding value between cards and their content
- */
-@Immutable
-data class Padding(
-    val small: Dp = 4.dp,
-    val default: Dp = 8.dp,
-    val content: Dp = 16.dp,
-    val cardContent: Dp = 8.dp
-)
+// --------------
+// LocalTheme
+// --------------
 
-@Immutable
-data class Spacing(
-    val mini: Dp = 2.dp,
-    val small: Dp = 4.dp,
-    val default: Dp = 8.dp,
-    val large: Dp = 16.dp
-)
-
-@Immutable
-data class Scrollbar(
-    val size: Dp = 8.dp,
-    val spacing: Dp = 4.dp
+@Composable
+fun MyTheme(
+    theme: MyTheme = MyTheme.default(),
+    content: @Composable () -> Unit,
 ) {
-    val paddingForScrollbar = size + spacing
+    CompositionLocalProvider(
+        LocalTheme provides theme,
+        content = content
+    )
 }
+
+internal val LocalTheme =
+    staticCompositionLocalOf<MyTheme> { throw IllegalStateException("No LocalTheme provided") }

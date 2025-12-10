@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -119,7 +120,7 @@ data class MenuState(
     private val data: MutableState<Any?>,
     internal val offset: MutableState<IntOffset>,
 ) {
-    internal val isShowing: Boolean
+    val visible: Boolean
         get() = show.value
 
     fun show() {
@@ -353,6 +354,7 @@ fun MenuScope.MenuCheckbox(
 fun MenuScope.MenuSeparator(
     text: String = "",
     textColor: Color? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     WrappedItem(
         content = {
@@ -360,11 +362,12 @@ fun MenuScope.MenuSeparator(
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             } else {
                 Text(
-                    modifier = Modifier.padding(all = 8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(all = 8.dp),
                     text = text,
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold,
-                    color = textColor ?: LocalContentColor.current.copy(alpha = .5f)
+                    color = textColor ?: LocalContentColor.current.copy(alpha = .5f),
+                    textAlign = textAlign
                 )
             }
         }

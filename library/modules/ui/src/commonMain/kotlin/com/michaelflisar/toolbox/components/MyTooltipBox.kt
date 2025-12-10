@@ -36,25 +36,24 @@ fun MyTooltipBox(
     enabled: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    if (enabled && tooltip.isNotEmpty()) {
-        TooltipBox(
-            modifier = modifier,
-            positionProvider = rememberMyTooltipBoxPositionProvider(offset),
-            tooltip = {
-                PlainTooltip {
-                    Text(tooltip)
-                }
-            },
-            state = rememberTooltipState()
-        ) {
-            content()
-        }
-    } else {
-        Box(modifier = modifier) {
+    Box(modifier = modifier) {
+        if (enabled && tooltip.isNotEmpty()) {
+            TooltipBox(
+                modifier = Modifier,
+                positionProvider = rememberMyTooltipBoxPositionProvider(offset),
+                tooltip = {
+                    PlainTooltip {
+                        Text(tooltip)
+                    }
+                },
+                state = rememberTooltipState()
+            ) {
+                content()
+            }
+        } else {
             content()
         }
     }
-
 }
 
 /*

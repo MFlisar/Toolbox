@@ -11,7 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.michaelflisar.toolbox.LocalTheme
+import com.michaelflisar.toolbox.spacing
+
 
 @Composable
 fun <T> MyMultiSegmentedButtonRow(
@@ -98,7 +99,7 @@ fun <T> MyMultiSegmentedButtonRowIndex(
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     showSelectionInfo: Boolean = true,
-    onSelectionChange: (List<Int>) -> Unit
+    onSelectionChange: (List<Int>) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     MyMultiSegmentedButtonRowImpl(
@@ -133,7 +134,7 @@ private fun MyMultiSegmentedButtonRowImpl(
     ) {
         if (showSelectionInfo) {
             MyLabeledInformationHorizontal(
-                modifier = Modifier.padding(bottom = LocalTheme.current.spacing.small),
+                modifier = Modifier.padding(bottom = MaterialTheme.spacing.small),
                 label = "Selected",
                 info = "${selected.size}/${items.size}"
             )

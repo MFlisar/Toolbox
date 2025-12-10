@@ -18,7 +18,8 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.LocalTheme
+import com.michaelflisar.toolbox.scrollbar
+
 import com.michaelflisar.toolbox.table.data.ColumnWidth
 import com.michaelflisar.toolbox.table.data.TableClickHandler
 import com.michaelflisar.toolbox.table.data.TableData
@@ -91,7 +92,7 @@ fun <Item> Table(
         val tableData = remember {
             TableData(scrollState, mutableStateOf(definition.columns.map { Dp.Unspecified }))
         }
-        val scrollBarWidth = LocalTheme.current.scrollbar.size
+        val scrollBarWidth = MaterialTheme.scrollbar.size
 
         LaunchedEffect(tableWidth.value, tableData.widths.value.toList()) {
 

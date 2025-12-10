@@ -29,7 +29,8 @@ import com.michaelflisar.toolbox.app.features.navigation.NavItemPopupMenu
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.app.features.scaffold.NavigationStyle
 import com.michaelflisar.toolbox.app.features.scaffold.rememberNavigationStyleAuto
-import com.michaelflisar.toolbox.app.features.toolbar.DesktopToolbar
+import com.michaelflisar.toolbox.app.features.sharedtransition.SharedTransitionLayoutWithLocal
+import com.michaelflisar.toolbox.app.features.toolbar.SharedToolbarContainer
 import com.michaelflisar.toolbox.app.features.toolbar.selection.AnimatedSelectionToolbarWrapper
 import com.michaelflisar.toolbox.app.features.toolbar.selection.SelectionToolbar
 import com.michaelflisar.toolbox.app.utils.createFileLogger
@@ -126,18 +127,20 @@ fun main() {
                         showAdditionalItemsAtBottomIfRail = true,
                     )
                 },
-                contentToolbar = { screen ->
+                toolbar = { screen ->
                     AnimatedSelectionToolbarWrapper(
                         toolbar = {
-                            DesktopToolbar(
-                                screen = screen,
-                                menuItems = emptyList()
-                            )
+                            SharedToolbarContainer {
+                                SharedTransitionLayoutWithLocal(targetState = screen) {
+                                    it.Toolbar()
+                                }
+                            }
                         },
                         selectionToolbar = { SelectionToolbar() }
                     )
                 }
             ) {
+                //AppNavigatorFadeAndScaleTransition(navigator)
                 AppNavigatorFadeTransition(navigator)
             }
         }

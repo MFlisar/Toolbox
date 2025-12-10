@@ -7,12 +7,13 @@ import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.scrollbar
 
-import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 actual fun MyScrollableLazyHorizontalGrid(
@@ -28,9 +29,9 @@ actual fun MyScrollableLazyHorizontalGrid(
         LazyHorizontalGrid(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = if (overlapScrollbar) 0.dp else LocalTheme.current.scrollbar.paddingForScrollbar),
+                .padding(bottom = if (overlapScrollbar) 0.dp else MaterialTheme.scrollbar.paddingForScrollbar),
             rows = gridRows,
-            contentPadding = PaddingValues(LocalTheme.current.scrollbar.paddingForScrollbar),
+            contentPadding = PaddingValues(MaterialTheme.scrollbar.paddingForScrollbar),
             verticalArrangement = verticalArrangement,
             horizontalArrangement = horizontalArrangement,
             state = gridState
@@ -39,7 +40,7 @@ actual fun MyScrollableLazyHorizontalGrid(
         }
 
         HorizontalScrollbar(
-            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(LocalTheme.current.scrollbar.size),
+            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(MaterialTheme.scrollbar.size),
             adapter = rememberScrollbarAdapter(gridState)
         )
     }

@@ -6,10 +6,11 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.michaelflisar.toolbox.padding
 
-import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 actual fun MyScrollableLazyVerticalGrid(
@@ -24,7 +25,7 @@ actual fun MyScrollableLazyVerticalGrid(
     LazyVerticalGrid(
         modifier = modifier,
         columns = gridCells,
-        contentPadding = PaddingValues(LocalTheme.current.padding.default),
+        contentPadding = PaddingValues(MaterialTheme.padding.default),
         verticalArrangement = verticalArrangement,
         horizontalArrangement = horizontalArrangement,
         state = gridState

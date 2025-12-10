@@ -11,13 +11,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.scrollbar
 
-import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 actual fun MyScrollableLazyColumn(
@@ -32,7 +33,7 @@ actual fun MyScrollableLazyColumn(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = if (overlapScrollbar) 0.dp else LocalTheme.current.scrollbar.paddingForScrollbar),
+                .padding(end = if (overlapScrollbar) 0.dp else MaterialTheme.scrollbar.paddingForScrollbar),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
             horizontalAlignment = horizontalAlignment,
             state = state
@@ -40,7 +41,7 @@ actual fun MyScrollableLazyColumn(
             content()
         }
         VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(LocalTheme.current.scrollbar.size),
+            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(MaterialTheme.scrollbar.size),
             adapter = rememberScrollbarAdapter(state)
         )
     }

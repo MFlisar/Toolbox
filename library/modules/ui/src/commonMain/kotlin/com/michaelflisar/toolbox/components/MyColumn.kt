@@ -3,17 +3,18 @@ package com.michaelflisar.toolbox.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import com.michaelflisar.toolbox.spacing
 
-import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 fun MyColumn(
     modifier: Modifier = Modifier,
-    itemSpacing: Dp = LocalTheme.current.spacing.default,
+    itemSpacing: Dp = MaterialTheme.spacing.default,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: @Composable ColumnScope.() -> Unit

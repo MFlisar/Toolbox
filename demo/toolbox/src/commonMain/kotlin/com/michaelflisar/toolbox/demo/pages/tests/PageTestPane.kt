@@ -27,13 +27,9 @@ object PageTestPane : NavScreen() {
 
     @Composable
     override fun provideData() = rememberNavScreenData(
-        title = "Pane",
-        subTitle = null,
+        name = "Pane",
         icon = Icons.Default.ViewSidebar.toIconComposable()
     )
-
-    @Composable
-    override fun provideMenu(): List<MenuItem> = emptyList()
 
     @Composable
     override fun Screen() {

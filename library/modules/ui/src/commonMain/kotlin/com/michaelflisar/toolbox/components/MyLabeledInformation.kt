@@ -16,8 +16,9 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.spacing
 
-import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 fun MyLabeledInformation(
@@ -30,7 +31,7 @@ fun MyLabeledInformation(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
     ) {
         Content(label, info, null, null, color, backgroundColor, backgroundShape)
     }
@@ -46,7 +47,7 @@ fun MyLabeledInformation(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
     ) {
         Content(label, null, null, backgroundColor, backgroundShape, info)
     }
@@ -65,7 +66,7 @@ fun MyLabeledInformationHorizontal(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Content(label, info, labelWidth, infoWidth, color, backgroundColor, backgroundShape)
@@ -84,7 +85,7 @@ fun MyLabeledInformationHorizontal(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Content(label, labelWidth, infoWidth, backgroundColor, backgroundShape, info)
@@ -135,7 +136,7 @@ private fun Content(
     val mod2 = Modifier.then(
         if (backgroundColor != Color.Unspecified) {
             Modifier.background(backgroundColor, backgroundShape ?: RectangleShape)
-                .padding(LocalTheme.current.padding.small)
+                .padding(MaterialTheme.padding.small)
         } else Modifier
     ).then(
         if (infoWidth != null) {

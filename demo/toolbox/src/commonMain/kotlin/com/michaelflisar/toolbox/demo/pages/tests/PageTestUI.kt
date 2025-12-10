@@ -58,13 +58,9 @@ object PageTestUI : NavScreen() {
 
     @Composable
     override fun provideData() = rememberNavScreenData(
-        title = "UI",
-        subTitle = null,
+        name = "UI",
         icon = Icons.Default.Visibility.toIconComposable()
     )
-
-    @Composable
-    override fun provideMenu(): List<MenuItem> = emptyList()
 
     @Composable
     override fun Screen() {

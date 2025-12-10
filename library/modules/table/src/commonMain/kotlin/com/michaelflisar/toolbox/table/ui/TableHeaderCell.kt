@@ -48,11 +48,13 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.michaelflisar.toolbox.LocalTheme
+
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.disabled
 import com.michaelflisar.toolbox.extensions.toIconComposable
+import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.spacing
 import com.michaelflisar.toolbox.table.data.TableSort
 import com.michaelflisar.toolbox.table.definitions.Column
 import com.michaelflisar.toolbox.table.definitions.Filter
@@ -322,24 +324,24 @@ private fun HeaderPopup(
                 shadowElevation = 8.dp
             ) {
                 Column(
-                    modifier = Modifier.padding(LocalTheme.current.padding.default)
+                    modifier = Modifier.padding(MaterialTheme.padding.default)
                         .width(popupWidth),
-                    verticalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default)
+                    verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
                 ) {
                     CompositionLocalProvider(
                         LocalMinimumInteractiveComponentSize provides 0.dp
                     ) {
 
-                        val iconPadding = LocalTheme.current.padding.small
+                        val iconPadding = MaterialTheme.padding.small
                         val iconSize = 24.dp
                         val iconModifier = Modifier.size(iconSize + iconPadding)
                         val contentInsetStart =
-                            iconSize + iconPadding + LocalTheme.current.spacing.default
+                            iconSize + iconPadding + MaterialTheme.spacing.default
 
                         if (sortable) {
                             Row(
                                 modifier = Modifier.heightIn(min = iconSize + iconPadding),
-                                horizontalArrangement = Arrangement.spacedBy(LocalTheme.current.spacing.default),
+                                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Icon(

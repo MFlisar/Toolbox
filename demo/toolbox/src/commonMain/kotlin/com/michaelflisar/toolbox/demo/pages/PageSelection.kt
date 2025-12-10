@@ -17,11 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.parcelize.Parcelize
-import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItemsContentOnly
 import com.michaelflisar.toolbox.app.features.toolbar.selection.LocalSelectionToolbarState
-import com.michaelflisar.toolbox.feature.selection.SelectionDataItems
 import com.michaelflisar.toolbox.app.features.toolbar.selection.SelectionToolbarState
 import com.michaelflisar.toolbox.app.features.toolbar.selection.rememberSelectionDataItems
 import com.michaelflisar.toolbox.components.MyButton
@@ -30,27 +29,30 @@ import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 import com.michaelflisar.toolbox.feature.menu.rememberMenuState
+import com.michaelflisar.toolbox.feature.selection.SelectionDataItems
 
 @Parcelize
 object PageSelectionScreen : NavScreen() {
 
     @Composable
     override fun provideData() = rememberNavScreenData(
-        title = "Selection Test",
-        subTitle = null,
+        name = "Selection Test",
         icon = Icons.Default.SelectAll.toIconComposable()
     )
-
-    @Composable
-    override fun provideMenu(): List<MenuItem> {
-        return emptyList()
-    }
 
     @Composable
     override fun Screen() {
         Page(this)
     }
 
+    @Composable
+    override fun Toolbar() {
+        val data = provideData()
+        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+            title = data.name,
+            endContent = { MainMenuItemsContentOnly() },
+        )
+    }
 }
 
 @Composable
@@ -108,7 +110,7 @@ private fun changeSelection(
     selectionToolbarState: SelectionToolbarState,
     selectionData: SelectionDataItems<Int>,
     add: Boolean,
-    id: Int
+    id: Int,
 ) {
     // update selection data
     if (add) {
@@ -124,7 +126,7 @@ private fun changeSelection(
 
 @Composable
 private fun SelectionMenu(
-    selectionToolbarState: SelectionToolbarState
+    selectionToolbarState: SelectionToolbarState,
 ) {
     val showMenu = rememberMenuState()
     Box(

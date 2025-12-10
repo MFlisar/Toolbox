@@ -47,13 +47,9 @@ object PageTestPreferences : NavScreen() {
 
     @Composable
     override fun provideData() = rememberNavScreenData(
-        title = "Preferences",
-        subTitle = null,
+        name = "Preferences",
         icon = Icons.Default.Settings.toIconComposable()
     )
-
-    @Composable
-    override fun provideMenu(): List<MenuItem> = emptyList()
 
     @Composable
     override fun Screen() {
@@ -81,7 +77,7 @@ private fun Page(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            PageTestPreferences.provideData().value.title,
+            PageTestPreferences.provideData().name,
             style = MaterialTheme.typography.titleMedium
         )
 

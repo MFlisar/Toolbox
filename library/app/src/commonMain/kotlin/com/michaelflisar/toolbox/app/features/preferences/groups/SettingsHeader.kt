@@ -26,7 +26,8 @@ import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.by_name
-import com.michaelflisar.toolbox.extensions.variant
+import com.michaelflisar.toolbox.extensions.secondary
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -91,13 +92,13 @@ fun SettingsHeaderContent(
                 Text(
                     text = "$versionName ($versionCode)",
                     style = MaterialTheme.typography.bodySmall,
-                    color = LocalContentColor.current.variant()
+                    color = LocalContentColor.current.secondary()
                 )
                 Text(
                     text = stringResource(Res.string.by_name, setup.developer.name),
                     style = MaterialTheme.typography.bodySmall,
                     fontStyle = FontStyle.Italic,
-                    color = LocalContentColor.current.variant()
+                    color = LocalContentColor.current.secondary()
                 )
             }
         }

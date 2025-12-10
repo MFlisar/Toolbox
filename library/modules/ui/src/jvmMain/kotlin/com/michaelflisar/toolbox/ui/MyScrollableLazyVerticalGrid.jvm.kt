@@ -7,12 +7,13 @@ import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.scrollbar
 
-import com.michaelflisar.toolbox.LocalTheme
 
 @Composable
 actual fun MyScrollableLazyVerticalGrid(
@@ -28,9 +29,9 @@ actual fun MyScrollableLazyVerticalGrid(
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = if (overlapScrollbar) 0.dp else LocalTheme.current.scrollbar.paddingForScrollbar),
+                .padding(end = if (overlapScrollbar) 0.dp else MaterialTheme.scrollbar.paddingForScrollbar),
             columns = gridCells,
-            contentPadding = PaddingValues(LocalTheme.current.scrollbar.paddingForScrollbar),
+            contentPadding = PaddingValues(MaterialTheme.scrollbar.paddingForScrollbar),
             verticalArrangement = verticalArrangement,
             horizontalArrangement = horizontalArrangement,
             state = gridState
@@ -39,7 +40,7 @@ actual fun MyScrollableLazyVerticalGrid(
         }
 
         VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(LocalTheme.current.scrollbar.size),
+            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(MaterialTheme.scrollbar.size),
             adapter = rememberScrollbarAdapter(gridState)
         )
     }
