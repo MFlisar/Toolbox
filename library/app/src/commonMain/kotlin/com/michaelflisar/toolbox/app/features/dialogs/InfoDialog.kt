@@ -23,8 +23,7 @@ import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.DialogStateWithData
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
-import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.platform.isDarkTheme
+import com.michaelflisar.toolbox.app.platform.isAppInDarkTheme
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.ui.MyScrollableColumn
@@ -55,8 +54,8 @@ object InfoDialog {
 
 @Composable
 fun rememberInfoDialogStyle(
-    colorSuccess: Color = if (Platform.isDarkTheme()) MaterialColor.Green700 else MaterialColor.Green300,
-    colorWarning: Color = if (Platform.isDarkTheme()) MaterialColor.Orange700 else MaterialColor.Orange300,
+    colorSuccess: Color = if (isAppInDarkTheme()) MaterialColor.Green700 else MaterialColor.Green300,
+    colorWarning: Color = if (isAppInDarkTheme()) MaterialColor.Orange700 else MaterialColor.Orange300,
     colorError: Color = MaterialTheme.colorScheme.error
 ) = InfoDialog.StyleData(colorSuccess, colorWarning, colorError)
 

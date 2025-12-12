@@ -210,13 +210,13 @@ kotlin {
         jvmMain.dependencies {
 
             // Jewel
-            api(deps.jewel.int.ui.standalone)
+            implementation(deps.jewel.int.ui.standalone)
             api(deps.jewel.int.ui.decorated.window)
-            api(deps.jewel.foundation)
-            api(deps.jewel.ui)
-            api(deps.jewel.decorated.window)
-            api(deps.intellij.platform.icons)
-            api(deps.skiko)
+            implementation(deps.jewel.foundation)
+            implementation(deps.jewel.ui)
+            implementation(deps.jewel.decorated.window)
+            implementation(deps.intellij.platform.icons)
+            implementation(deps.skiko)
 
             api(deps.htmlconverter)
 

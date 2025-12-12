@@ -7,7 +7,7 @@ import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
 
 @Composable
-actual fun Platform.isDarkTheme(): Boolean {
+internal actual fun Platform.isDarkTheme(): Boolean {
     val theme = AppSetup.get().prefs.theme.collectAsStateNotNull()
     return theme.value.isDark()
 }

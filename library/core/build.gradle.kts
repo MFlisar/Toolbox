@@ -100,6 +100,7 @@ kotlin {
             api(compose.components.resources)
 
             // kotlinx
+            api(kotlinx.coroutines.core)
             implementation(kotlinx.serialization.core)
             implementation(kotlinx.serialization.json)
             implementation(kotlinx.datetime)

@@ -29,7 +29,7 @@ actual fun Platform.UpdateComposeThemeStatusBar(
 }
 
 @Composable
-actual fun Platform.isDarkTheme(): Boolean {
+internal actual fun Platform.isDarkTheme(): Boolean {
     val desktopSetup = DesktopAppSetup.get()
     val theme = desktopSetup.prefs.jewelTheme.collectAsStateNotNull()
     return theme.value.isDark()

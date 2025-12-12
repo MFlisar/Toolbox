@@ -8,16 +8,10 @@ import androidx.compose.runtime.remember
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.kotpreferences.core.interfaces.Storage
-import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
-import com.michaelflisar.kotpreferences.storage.datastore.create
-import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.jewel.JewelBaseTheme
 import com.michaelflisar.toolbox.app.jewel.JewelTheme
-import com.michaelflisar.toolbox.utils.JvmFolderUtil
 
 private fun JewelTheme.toAppBaseTheme(): Preferences.AppBaseTheme {
     return Preferences.AppBaseTheme(

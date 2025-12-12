@@ -33,7 +33,7 @@ fun MyLabeledInformation(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
     ) {
-        Content(label, info, null, null, color, backgroundColor, backgroundShape)
+        InfoContent(label, info, null, null, color, backgroundColor, backgroundShape)
     }
 }
 
@@ -49,7 +49,7 @@ fun MyLabeledInformation(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
     ) {
-        Content(label, null, null, backgroundColor, backgroundShape, info)
+        InfoContent(label, null, null, backgroundColor, backgroundShape, info)
     }
 }
 
@@ -57,19 +57,20 @@ fun MyLabeledInformation(
 fun MyLabeledInformationHorizontal(
     label: String,
     info: String,
+    modifier: Modifier = Modifier,
     labelWidth: Dp? = null,
     infoWidth: Dp? = null,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     backgroundShape: Shape? = null,
-    modifier: Modifier = Modifier
+   endContent: @Composable () -> Unit = {}
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Content(label, info, labelWidth, infoWidth, color, backgroundColor, backgroundShape)
+        InfoContent(label, info, labelWidth, infoWidth, color, backgroundColor, backgroundShape, endContent)
     }
 }
 
@@ -88,12 +89,12 @@ fun MyLabeledInformationHorizontal(
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Content(label, labelWidth, infoWidth, backgroundColor, backgroundShape, info)
+        InfoContent(label, labelWidth, infoWidth, backgroundColor, backgroundShape, info)
     }
 }
 
 @Composable
-private fun Content(
+private fun InfoContent(
     label: String,
     info: String,
     labelWidth: Dp?,
@@ -101,20 +102,24 @@ private fun Content(
     color: Color,
     backgroundColor: Color,
     backgroundShape: Shape?,
+    endContent: @Composable () -> Unit = {}
 ) {
-    Content(label, labelWidth, infoWidth, backgroundColor, backgroundShape) {
-        Text(
-            modifier = it,
-            text = info,
-            style = MaterialTheme.typography.bodyMedium,
-            color = color,
-            //textAlign = TextAlign.End
-        )
+    InfoContent(label, labelWidth, infoWidth, backgroundColor, backgroundShape) {
+        MyRow(modifier = it) {
+            Text(
+                modifier = Modifier,
+                text = info,
+                style = MaterialTheme.typography.bodyMedium,
+                color = color,
+                //textAlign = TextAlign.End
+            )
+            endContent()
+        }
     }
 }
 
 @Composable
-private fun Content(
+private fun InfoContent(
     label: String,
     labelWidth: Dp?,
     infoWidth: Dp?,

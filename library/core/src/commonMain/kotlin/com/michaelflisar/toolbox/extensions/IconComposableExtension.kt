@@ -11,38 +11,41 @@ import com.michaelflisar.toolbox.IconComposable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
-fun ImageVector.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
+fun ImageVector.toIconComposable(tint: Color = Color.Unspecified, disableTint: Boolean = false): IconComposable {
     return this.let {
         @Composable { contentDescription, modifier, tint2 ->
             Icon(
                 imageVector = this,
                 contentDescription = contentDescription,
                 modifier = modifier,
-                tint = tint.takeIf { it != Color.Unspecified } ?: tint2)
+                tint = (tint.takeIf { it != Color.Unspecified } ?: tint2).takeIf { !disableTint } ?: Color.Unspecified
+            )
         }
     }
 }
 
-fun Painter.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
+fun Painter.toIconComposable(tint: Color = Color.Unspecified, disableTint: Boolean = false): IconComposable {
     return this.let {
         @Composable { contentDescription, modifier, tint2 ->
             Icon(
                 painter = this,
                 contentDescription = contentDescription,
                 modifier = modifier,
-                tint = tint.takeIf { it != Color.Unspecified } ?: tint2)
+                tint = (tint.takeIf { it != Color.Unspecified } ?: tint2).takeIf { !disableTint } ?: Color.Unspecified
+            )
         }
     }
 }
 
-fun DrawableResource.toIconComposable(tint: Color = Color.Unspecified): IconComposable {
+fun DrawableResource.toIconComposable(tint: Color = Color.Unspecified, disableTint: Boolean = false): IconComposable {
     return this.let {
         @Composable { contentDescription, modifier, tint2 ->
             Icon(
                 painter = painterResource(this),
                 contentDescription = contentDescription,
                 modifier = modifier,
-                tint = tint.takeIf { it != Color.Unspecified } ?: tint2)
+                tint = (tint.takeIf { it != Color.Unspecified } ?: tint2).takeIf { !disableTint } ?: Color.Unspecified
+            )
         }
     }
 }

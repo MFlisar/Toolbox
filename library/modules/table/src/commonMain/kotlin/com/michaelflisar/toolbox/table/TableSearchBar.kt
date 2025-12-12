@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.table
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -100,12 +101,14 @@ fun <T> TableSearchBar(
         borderColor = colors.borderColor,
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
     ) {
-        MyColumn {
+        MyColumn(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             if (showTextSearch) {
                 MyInput(
                     leadingIcon = { Icon(Icons.Default.Search, null) },
                     placeholder = { Text(textSearch) },
-                    //modifier = Modifier.width(searchWidth),
+                    modifier = Modifier.fillMaxWidth(),
                     value = state.filter,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedTextColor = LocalContentColor.current,

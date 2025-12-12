@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.utils
 
 import com.michaelflisar.composechangelog.runPS
+import java.awt.Desktop
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import java.io.File
@@ -51,4 +52,8 @@ object JvmUtil {
 
     fun userName() = System.getenv("username")
     fun hostName() = InetAddress.getLocalHost().hostName
+
+    fun open(file: File) {
+        Desktop.getDesktop().open(file)
+    }
 }

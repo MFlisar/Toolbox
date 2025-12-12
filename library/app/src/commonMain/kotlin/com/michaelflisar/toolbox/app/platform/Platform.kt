@@ -18,4 +18,7 @@ expect fun Platform.UpdateComposeThemeStatusBar(
 )
 
 @Composable
-expect fun Platform.isDarkTheme(): Boolean
+internal expect fun Platform.isDarkTheme(): Boolean
+
+@Composable
+fun isAppInDarkTheme() = Platform.isDarkTheme()

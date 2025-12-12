@@ -94,7 +94,7 @@ private fun Page(
                 title = "Dropdown",
                 items = listOf("One", "Two", "Three"),
                 selectedIndex = remember { mutableStateOf(0) },
-                style = MyDropdown.Style.OutlinedButton
+                style = MyDropdown.Style.OutlinedButton()
             )
             MyInput(
                 modifier = Modifier.width(128.dp),
