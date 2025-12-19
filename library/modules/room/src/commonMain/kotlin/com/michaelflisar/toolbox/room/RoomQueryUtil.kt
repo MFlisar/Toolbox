@@ -2,6 +2,8 @@ package com.michaelflisar.toolbox.room
 
 import androidx.room.RoomRawQuery
 import androidx.room.Transactor
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.SQLiteStatement
 
 private fun String.asRawQuery(): RoomRawQuery = RoomRawQuery(this)
 
@@ -12,6 +14,16 @@ object RoomQueryUtil {
     // -------------------
 
     fun count(tableName: String) = "SELECT count(*) FROM $tableName".asRawQuery()
+
+    fun <T> select(connection: SQLiteConnection, query: String, mapper: (statement: SQLiteStatement) -> T) : List<T> {
+        val statement = connection.prepare(query)
+        val items = mutableListOf<T>()
+        while (statement.step()) {
+            items.add(mapper(statement))
+        }
+        statement.close()
+        return items
+    }
 
     // -------------------
     // load

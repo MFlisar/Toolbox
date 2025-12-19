@@ -7,11 +7,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -402,11 +407,14 @@ private fun <T> MyDropdownImpl(
                                 expanded.value = !expanded.value
                             }
                         } else Modifier
-                    ),
+                    )
+                    .width(IntrinsicSize.Min),
                 contentAlignment = Alignment.Center
             ) {
                 MyDropdownContent(
-                    Modifier.fillMaxWidth().padding(style.padding),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(style.padding),
                     expanded,
                     rotation,
                     title,
@@ -436,11 +444,13 @@ private fun <T> MyDropdownImpl(
                 focusedBorderColor = borderColor,
             )
             Box(
-                modifier = modifier
+                modifier = modifier.width(IntrinsicSize.Min)
             ) {
                 MyOutlinedDecoratedContainer(
                     title = title,
-                    modifier = Modifier.fillMaxWidth().padding(style.padding),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(style.padding),
                     enabled = enabled,
                     placeholder = null,
                     leadingIcon = null,
@@ -452,7 +462,8 @@ private fun <T> MyDropdownImpl(
                 ) {
                     MyDropdownContent(
                         // TODO: find out why extra padding is necessary + fix it
-                        Modifier.fillMaxWidth()
+                        Modifier
+                            .fillMaxWidth()
                             .then(MyOutlinedDecoratedContainer.MODIFIER_CORRECTION),
                         expanded,
                         rotation,
@@ -506,21 +517,20 @@ private fun <T> MyDropdownContent(
                 }
             }
         }
-        LaunchedEffect(expanded) {
+        LaunchedEffect(expanded.value) {
             if (!expanded.value) {
                 filterText.value = ""
             }
         }
     }
 
-
     Row(
-        modifier = modifier,
+        modifier = modifier.width(IntrinsicSize.Min),
         verticalAlignment = Alignment.CenterVertically
     ) {
         val item = items.find { it.index == selected }
         content(
-            Modifier.weight(1f),
+            Modifier.weight(1f, fill = true),
             item,
             title,
             labelColor,
@@ -548,6 +558,11 @@ private fun <T> MyDropdownDropdown(
     onSelectionChange: (MyDropdown.Item<T>) -> Unit,
 ) {
     val scrollState = rememberScrollState()
+    LaunchedEffect(expanded.value) {
+        if (!expanded.value) {
+            scrollState.scrollTo(0)
+        }
+    }
     DropdownMenu(
         expanded = expanded.value,
         onDismissRequest = { expanded.value = false },
@@ -576,19 +591,40 @@ private fun <T> MyDropdownDropdown(
             }
 
         }
-        filteredItems.value.forEach {
-            DropdownMenuItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .zIndex(1f),
-                text = {
-                    dropdownContent(it, it.index == selected)
-                },
-                onClick = {
-                    onSelectionChange(it)
-                    expanded.value = false
+        /*if (filteredItems.value.size > 50) {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth().heightIn(max = 300.dp)
+            ) {
+                items(filteredItems.value) {
+                    DropdownMenuItem(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .zIndex(1f),
+                        text = {
+                            dropdownContent(it, it.index == selected)
+                        },
+                        onClick = {
+                            onSelectionChange(it)
+                            expanded.value = false
+                        }
+                    )
                 }
-            )
-        }
+            }
+        } else {*/
+            filteredItems.value.forEach {
+                DropdownMenuItem(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .zIndex(1f),
+                    text = {
+                        dropdownContent(it, it.index == selected)
+                    },
+                    onClick = {
+                        onSelectionChange(it)
+                        expanded.value = false
+                    }
+                )
+            }
+        //}
     }
 }

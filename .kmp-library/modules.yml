@@ -119,3 +119,17 @@ modules:
     optional: true
     platforms-info: ""
     dependencies: []
+  - relativePath: library\modules\diff
+    artifact-id: diff
+    group: modules
+    description: diff functions and UI
+    optional: true
+    platforms-info: ""
+    dependencies: []
+  - relativePath: library\modules\excel
+    artifact-id: excel
+    group: modules
+    description: excel functions
+    optional: true
+    platforms-info: ""
+    dependencies: []

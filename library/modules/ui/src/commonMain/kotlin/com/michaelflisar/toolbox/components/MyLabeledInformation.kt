@@ -14,11 +14,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import com.michaelflisar.toolbox.padding
 import com.michaelflisar.toolbox.spacing
 
+object MyLabeledInformationDefaults {
+
+    @Composable
+    fun defaultLabelStyle(): TextStyle {
+        return MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+    }
+
+    @Composable
+    fun defaultInfoStyle(): TextStyle {
+        return MaterialTheme.typography.bodyMedium
+    }
+}
 
 @Composable
 fun MyLabeledInformation(
@@ -27,13 +40,25 @@ fun MyLabeledInformation(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     backgroundShape: Shape? = null,
+    labelStyle: TextStyle = MyLabeledInformationDefaults.defaultLabelStyle(),
+    infoStyle: TextStyle = MyLabeledInformationDefaults.defaultInfoStyle(),
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
     ) {
-        InfoContent(label, info, null, null, color, backgroundColor, backgroundShape)
+        InfoContent(
+            label,
+            info,
+            labelStyle,
+            infoStyle,
+            null,
+            null,
+            color,
+            backgroundColor,
+            backgroundShape
+        )
     }
 }
 
@@ -42,6 +67,7 @@ fun MyLabeledInformation(
     label: String,
     backgroundColor: Color = Color.Unspecified,
     backgroundShape: Shape? = null,
+    labelStyle: TextStyle = MyLabeledInformationDefaults.defaultLabelStyle(),
     modifier: Modifier = Modifier,
     info: @Composable (modifier: Modifier) -> Unit
 ) {
@@ -49,7 +75,7 @@ fun MyLabeledInformation(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
     ) {
-        InfoContent(label, null, null, backgroundColor, backgroundShape, info)
+        InfoContent(label, labelStyle, null, null, backgroundColor, backgroundShape, info)
     }
 }
 
@@ -63,14 +89,27 @@ fun MyLabeledInformationHorizontal(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     backgroundShape: Shape? = null,
-   endContent: @Composable () -> Unit = {}
+    labelStyle: TextStyle = MyLabeledInformationDefaults.defaultLabelStyle(),
+    infoStyle: TextStyle = MyLabeledInformationDefaults.defaultInfoStyle(),
+    endContent: @Composable () -> Unit = {}
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        InfoContent(label, info, labelWidth, infoWidth, color, backgroundColor, backgroundShape, endContent)
+        InfoContent(
+            label,
+            info,
+            labelStyle,
+            infoStyle,
+            labelWidth,
+            infoWidth,
+            color,
+            backgroundColor,
+            backgroundShape,
+            endContent
+        )
     }
 }
 
@@ -81,6 +120,7 @@ fun MyLabeledInformationHorizontal(
     infoWidth: Dp? = null,
     backgroundColor: Color = Color.Unspecified,
     backgroundShape: Shape? = null,
+    labelStyle: TextStyle = MyLabeledInformationDefaults.defaultLabelStyle(),
     modifier: Modifier = Modifier,
     info: @Composable (modifier: Modifier) -> Unit
 ) {
@@ -89,7 +129,15 @@ fun MyLabeledInformationHorizontal(
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        InfoContent(label, labelWidth, infoWidth, backgroundColor, backgroundShape, info)
+        InfoContent(
+            label,
+            labelStyle,
+            labelWidth,
+            infoWidth,
+            backgroundColor,
+            backgroundShape,
+            info
+        )
     }
 }
 
@@ -97,6 +145,8 @@ fun MyLabeledInformationHorizontal(
 private fun InfoContent(
     label: String,
     info: String,
+    labelStyle: TextStyle,
+    infoStyle: TextStyle,
     labelWidth: Dp?,
     infoWidth: Dp?,
     color: Color,
@@ -104,12 +154,12 @@ private fun InfoContent(
     backgroundShape: Shape?,
     endContent: @Composable () -> Unit = {}
 ) {
-    InfoContent(label, labelWidth, infoWidth, backgroundColor, backgroundShape) {
+    InfoContent(label, labelStyle, labelWidth, infoWidth, backgroundColor, backgroundShape) {
         MyRow(modifier = it) {
             Text(
-                modifier = Modifier,
+                modifier = Modifier.weight(1f),
                 text = info,
-                style = MaterialTheme.typography.bodyMedium,
+                style = infoStyle,
                 color = color,
                 //textAlign = TextAlign.End
             )
@@ -121,6 +171,7 @@ private fun InfoContent(
 @Composable
 private fun InfoContent(
     label: String,
+    labelStyle: TextStyle,
     labelWidth: Dp?,
     infoWidth: Dp?,
     backgroundColor: Color,
@@ -135,8 +186,7 @@ private fun InfoContent(
     Text(
         modifier = mod,
         text = label,
-        style = MaterialTheme.typography.bodyMedium,
-        fontWeight = FontWeight.Bold
+        style = labelStyle
     )
     val mod2 = Modifier.then(
         if (backgroundColor != Color.Unspecified) {

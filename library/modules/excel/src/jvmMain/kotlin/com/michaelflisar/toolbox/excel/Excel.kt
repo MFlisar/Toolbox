@@ -1,12 +1,14 @@
 package com.michaelflisar.toolbox.excel
 
-import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.excel.classes.ExcelFoundRow
+import com.michaelflisar.toolbox.excel.classes.ExcelSheet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.util.CellReference
+import org.apache.poi.ss.util.SheetUtil.getCell
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
 import java.io.FileInputStream
@@ -14,29 +16,12 @@ import java.io.FileOutputStream
 
 object Excel {
 
-    class Sheet(
-        val file: File,
-        val sheet: String,
-        val columns: List<String>,
-        val firstDataRow: Int
-    ) {
-        suspend fun read(): List<List<String>>? {
-            val result = try {
-                val data = readRows()
-                L.d { "  - Data (${sheet}) - Werte: ${data.size}" }
-                L.d { "  - Data (${sheet}) - Wert 1 = ${data.firstOrNull()}" }
-                L.d { "  - Data (${sheet}) - Wert N = ${data.lastOrNull()}" }
-                data
-            } catch (e: Exception) {
-                L.e(e)
-                null
-            }
-            return result
-        }
+    fun columnString(index: Int): String {
+        return CellReference.convertNumToColString(index)
+    }
 
-        private suspend fun readRows(): List<List<String>> {
-            return readFile(file, sheet, firstDataRow, columns)
-        }
+    fun columnIndex(column: String): Int {
+        return CellReference.convertColStringToIndex(column)
     }
 
     fun createColumnRangeList(startCol: String, endCol: String): List<String> {
@@ -130,40 +115,72 @@ object Excel {
     }
 
     suspend fun updateExcel(
+        file: File,
+        sheetName: String,
+        update: (sheet: ExcelSheet) -> Boolean
+    ) {
+        updateExcel(
+            file = file.absolutePath,
+            sheetName = sheetName,
+            update = update
+        )
+    }
+
+    suspend fun updateExcel(
         file: String,
         sheetName: String,
-        update: (sheet: org.apache.poi.ss.usermodel.Sheet) -> Unit
+        update: (sheet: ExcelSheet) -> Boolean
     ) {
         withContext(Dispatchers.IO) {
+
             val fis = FileInputStream(file)
             val workbook = XSSFWorkbook(fis)
-
             val sheet = workbook.getSheet(sheetName)
-            update(sheet)
-
+            val updated = update(ExcelSheet(sheet))
             fis.close()
-            val os = FileOutputStream(file)
-            workbook.write(os)
+
+            if (updated) {
+                val os = FileOutputStream(file)
+                workbook.write(os)
+                os.close()
+            }
+
             workbook.close()
         }
     }
 
-    /*
-    fun findRow(sheet: org.apache.poi.ss.usermodel.Sheet, column: Int, value: String, ignoreCase: Boolean = true): RowNumber {
+    fun findRow(
+        sheet: ExcelSheet,
+        column: String,
+        matcher: (cellValue: String) -> Boolean,
+    ): ExcelFoundRow {
+        val sheet = sheet.sheet as org.apache.poi.ss.usermodel.Sheet
         val rows = sheet.lastRowNum
         var r = 0
+        val c = columnIndex(column)
         while (r <= rows) {
-            val cell = getCell(sheet, r, column)
-            val cellValue = readCellValue(cell)
-            if (value.equals(cellValue, ignoreCase = ignoreCase))
-                return RowNumber(r, false)
+            val cell = getCell(sheet, r, c)
+            if (cell != null) {
+                val cellValue = readCellValue(cell)
+                if (matcher(cellValue))
+                    return ExcelFoundRow(r, false)
+            }
             r++
         }
-        return RowNumber(r, true)
+        return ExcelFoundRow(r, true)
     }
 
-    class RowNumber(
-        val row: Int,
-        val new: Boolean
-    )*/
+    fun updateCell(
+        sheet: ExcelSheet,
+        rowIndex: Int,
+        column: String,
+        value: String
+    ) {
+        val sheet = sheet.sheet as org.apache.poi.ss.usermodel.Sheet
+        val c = columnIndex(column)
+        val r = sheet.getRow(rowIndex) ?: sheet.createRow(rowIndex)
+        val cell = r.getCell(c) ?: r.createCell(c)
+        cell.setCellValue(value)
+    }
+
 }

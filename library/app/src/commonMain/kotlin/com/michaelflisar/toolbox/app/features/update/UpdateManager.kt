@@ -7,6 +7,7 @@ import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class UpdateManager(

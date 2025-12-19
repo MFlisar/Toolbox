@@ -4,15 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.michaelflisar.toolbox.table.data.ColumnWidth
 
-@Composable
-fun <Item> rememberTableColumns(
-    columns: List<Column<*, Item>>
-): List<Column<*, Item>> {
-    return remember {
-        columns
-    }
-}
-
 class Column<CellValue, Item>(
     val header: Header,
     val width: ColumnWidth,
