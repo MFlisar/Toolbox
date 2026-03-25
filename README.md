@@ -56,7 +56,7 @@
 >   - `cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi` (3x)
 >   - `kotlin.time.ExperimentalTime` (15x)
 >   - `kotlin.uuid.ExperimentalUuidApi` (2x)
->   - `kotlinx.cinterop.ExperimentalForeignApi` (1x)
+>   - `kotlinx.cinterop.ExperimentalForeignApi` (2x)
 >   - `kotlinx.coroutines.FlowPreview` (1x)
 > - **Experimental**
 >   - `androidx.compose.material3.ExperimentalMaterial3Api` (1x)
@@ -151,7 +151,8 @@ implementation("io.github.mflisar.toolbox:excel:${toolbox}")
 
 # :rocket: Usage
 
-NOT DOCUMENTED
+> !IMPORTANT]
+> NOT DOCUMENTED
 
 # :sparkles: Demo
 
