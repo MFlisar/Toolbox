@@ -1,3 +1,5 @@
 package com.michaelflisar.toolbox
 
-object Toolbox
+object Toolbox {
+    internal const val MAIL = "mflisar.development@gmail.com"
+}

@@ -43,7 +43,7 @@ internal fun JewelApp(
 
     IntUiTheme(
         theme = themeDefinition,
-        styling = ComponentStyling.Companion
+        styling = ComponentStyling
             .default()
             .decoratedWindow(
                 titleBarStyle = when (theme) {

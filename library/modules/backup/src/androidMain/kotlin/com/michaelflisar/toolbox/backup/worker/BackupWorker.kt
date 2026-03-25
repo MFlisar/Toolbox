@@ -7,11 +7,9 @@ import androidx.work.workDataOf
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.backup.R
-import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
 import com.michaelflisar.toolbox.service.BaseWorker
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
-import io.github.vinceglb.filekit.AndroidFile
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.div
 import io.github.vinceglb.filekit.fromBookmarkData

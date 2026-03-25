@@ -8,39 +8,32 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
 import com.michaelflisar.composethemer.defaultScrim
-import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
-import com.michaelflisar.lumberjack.loggers.file.create
-import com.michaelflisar.toolbox.AppContext
+import com.michaelflisar.kmp.platformcontext.PlatformContext
+import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.features.logging.FileLogger
-import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.app.features.toolbar.toolbar
 import com.michaelflisar.toolbox.killApp
 import com.michaelflisar.toolbox.requireActivity
 import com.michaelflisar.toolbox.restartApp
 
-@Composable
-actual fun Platform.localContext() = PlatformContext(LocalContext.current)
-
 actual val Platform.showToast: ((message: String, duration: Int) -> Unit)?
     get() = ::showToast
 
 actual val Platform.restart: ((context: PlatformContext) -> Unit)?
-    get() = { context -> context.androidContext.requireActivity().restartApp() }
+    get() = { context -> context.requireActivity().restartApp() }
 
 actual val Platform.kill: ((context: PlatformContext) -> Unit)?
-    get() = { context -> context.androidContext.requireActivity().killApp() }
+    get() = { context -> context.requireActivity().killApp() }
 
 private fun showToast(
     message: String,
-    duration: Int
+    duration: Int,
 ) {
     Toast.makeText(
-        AppContext.context(),
+        PlatformContextProvider.get(),
         message,
         duration
     ).show()
@@ -49,7 +42,7 @@ private fun showToast(
 @Composable
 actual fun Platform.UpdateComposeThemeStatusBar(
     activity: Any?,
-    composeThemeState: ComposeTheme.State
+    composeThemeState: ComposeTheme.State,
 ) {
 
     val activity = activity as ComponentActivity

@@ -74,9 +74,7 @@ fun ApplicationScope.DesktopApplication(
     content: @Composable DecoratedWindowScope.(navigator: Navigator) -> Unit,
 ) {
     ProvideAppLocals {
-        AppNavigator(
-            screen = screen
-        ) { navigator ->
+
 
             val desktopSetup = DesktopAppSetup.get()
 
@@ -100,11 +98,15 @@ fun ApplicationScope.DesktopApplication(
                             jewelAppState.ensureIsFullyOnScreen(density, window)
                         }
                     }
-                    val appState = rememberAppState()
-                    AppThemeProvider(theme) {
-                        RootLocalProvider(appState, setRootLocals = true) {
-                            JvmBackHandlerUtil.ProvideMouseBackHandler()
-                            content(navigator)
+                    AppNavigator(
+                        screen = screen
+                    ) { navigator ->
+                        val appState = rememberAppState()
+                        AppThemeProvider(theme) {
+                            RootLocalProvider(appState, setRootLocals = true) {
+                                JvmBackHandlerUtil.ProvideMouseBackHandler()
+                                content(navigator)
+                            }
                         }
                     }
                 }
@@ -112,7 +114,6 @@ fun ApplicationScope.DesktopApplication(
                 // Close Action
                 JewelExitHandler(appIsClosing)
             }
-        }
     }
 }
 

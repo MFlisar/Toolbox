@@ -1,7 +1,6 @@
 package com.michaelflisar.toolbox.app.features.backhandlerregistry
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember

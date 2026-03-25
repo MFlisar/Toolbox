@@ -48,7 +48,7 @@ fun <T> saverSnapshotStateList(): Saver<SnapshotStateList<T>, Any> {
 fun <K : Any, T : Any> saverSnapshotStateMap(): Saver<SnapshotStateMap<K, T>, Any> {
     return listSaverKeepEmpty(
         save = { it.toList() },
-        restore = { (it as? List<Pair<K, T>>)?.toMutableStateMap() ?: mutableStateMapOf<K, T>() }
+        restore = { it.toMutableStateMap() }
     )
 }
 

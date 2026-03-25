@@ -1,36 +1,40 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 plugins {
-    // this is necessary to avoid the plugins to be loaded multiple times
-    // in each subproject's classloader
+    // kmp + app/library
+    alias(libs.plugins.jetbrains.kotlin.multiplatform) apply false
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.compose) apply false
-    alias(libs.plugins.compose) apply false
-    alias(libs.plugins.kotlin.multiplatform) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.parcelize) apply false
-    alias(libs.plugins.kotlin.serialization) apply false
+    // org.jetbrains.kotlin
+    alias(libs.plugins.jetbrains.kotlin.android) apply false
+    alias(libs.plugins.jetbrains.kotlin.compose) apply false
+    alias(libs.plugins.jetbrains.kotlin.parcelize) apply false
+    alias(libs.plugins.jetbrains.kotlin.serialization) apply false
+    // org.jetbrains.compose
+    alias(libs.plugins.jetbrains.compose) apply false
+    alias(libs.plugins.jetbrains.compose.hotreload) apply false
+    // docs, publishing, validation
     alias(libs.plugins.dokka) apply false
-    alias(libs.plugins.gradle.maven.publish.plugin) apply false
-    alias(deps.plugins.composechangelog) apply false
-    alias(deps.plugins.kmplibrary.buildplugin) apply false
+    alias(libs.plugins.vanniktech.maven.publish.base) apply false
+    alias(libs.plugins.binary.compatibility.validator) apply false
+    // build tools
+    alias(deps.plugins.kmpdevtools.buildplugin)
+    alias(libs.plugins.buildkonfig) apply false
+    // others
     alias(libs.plugins.launch4j) apply false
 }
 
-// ------------------------
-// Build mkdocs
-// ------------------------
+// ----------------------------
+// Apply custom build file plugin
+// ----------------------------
 
-buildscript {
-    dependencies {
-        classpath(deps.kmplibrary.docs)
-    }
+buildFilePlugin {
+
+    // do not build demo projects in CI
+    excludeDemoFromCI.set(true)
 }
 
-com.michaelflisar.kmplibrary.docs.registerBuildDocsTasks(
-    tasks = tasks,
-    project = project,
-    relativeModulesPath = "library",
-    relativeDemosPath = "demo"
-)
+// TODO: nur vorerst, solange die compose libs noch das alte parcelize nutzen
+allprojects {
+    configurations.configureEach {
+        exclude(group = "io.github.mflisar.parcelize", module = "library")
+    }
+}

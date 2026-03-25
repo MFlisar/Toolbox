@@ -1,29 +1,36 @@
-import com.michaelflisar.kmplibrary.BuildFilePlugin
-import com.michaelflisar.kmplibrary.Target
-import com.michaelflisar.kmplibrary.Targets
-import com.michaelflisar.kmplibrary.setupDependencies
-import org.gradle.kotlin.dsl.project
+import com.michaelflisar.kmpdevtools.BuildFileUtil
+import com.michaelflisar.kmpdevtools.Targets
+import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
+import com.michaelflisar.kmpdevtools.core.Platform
+import com.michaelflisar.kmpdevtools.core.configs.Config
+import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
+    // kmp + app/library
+    alias(libs.plugins.jetbrains.kotlin.multiplatform)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.compose)
+    // org.jetbrains.kotlin
+    alias(libs.plugins.jetbrains.kotlin.compose)
+    alias(libs.plugins.jetbrains.kotlin.parcelize)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+    // org.jetbrains.compose
+    alias(libs.plugins.jetbrains.compose)
+    // docs, publishing, validation
     alias(libs.plugins.dokka)
-    alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.gradle.maven.publish.plugin)
-    alias(deps.plugins.kmplibrary.buildplugin)
+    alias(libs.plugins.vanniktech.maven.publish.base)
+    alias(libs.plugins.binary.compatibility.validator)
+    // build tools
+    alias(deps.plugins.kmpdevtools.buildplugin)
+    // others
+    // ...
 }
 
-// get build file plugin
-val buildFilePlugin = project.plugins.getPlugin(BuildFilePlugin::class.java)
+// ------------------------
+// Setup
+// ------------------------
 
-// -------------------
-// Informations
-// -------------------
-
-val androidNamespace = "com.michaelflisar.toolbox.app"
+val config = Config.read(rootProject)
+val libraryConfig = LibraryConfig.read(rootProject)
 
 val buildTargets = Targets(
     // mobile
@@ -36,9 +43,15 @@ val buildTargets = Targets(
     wasm = true
 )
 
-// -------------------
-// Setup
-// -------------------
+val androidConfig = AndroidLibraryConfig.create(
+    compileSdk = app.versions.compileSdk,
+    minSdk = app.versions.minSdk,
+    enableAndroidResources = false
+)
+
+// ------------------------
+// Kotlin
+// ------------------------
 
 dependencies {
     coreLibraryDesugaring(libs.desugar)
@@ -54,7 +67,10 @@ kotlin {
     // Targets
     //-------------
 
-    buildFilePlugin.setupTargetsLibrary(buildTargets)
+    buildTargets.setupTargetsLibrary(project)
+    android {
+        buildTargets.setupTargetsAndroidLibrary(project, config, libraryConfig, androidConfig, this)
+    }
 
     // -------
     // Sources
@@ -66,9 +82,10 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val targetsBackupSupport = listOf(Target.ANDROID, Target.WINDOWS)
-        val targetsAndroid = listOf(Target.ANDROID)
-        val targetsJvm = listOf(Target.WINDOWS)
+        val targetsBackupSupport = listOf(Platform.ANDROID, Platform.WINDOWS)
+        val targetsAndroid = listOf(Platform.ANDROID)
+        val targetsJvm = listOf(Platform.WINDOWS)
+        val targetsMobile = listOf(Platform.ANDROID, Platform.IOS)
 
         val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
         val featureNoFileSupportMain by creating { dependsOn(commonMain.get()) }
@@ -77,58 +94,46 @@ kotlin {
         val notAndroidMain by creating { dependsOn(commonMain.get()) }
         val notJvmMain by creating { dependsOn(commonMain.get()) }
 
-        featureFileSupportMain.setupDependencies(sourceSets, buildTargets, Target.LIST_FILE_SUPPORT)
-        featureNoFileSupportMain.setupDependencies(
-            sourceSets,
-            buildTargets,
-            Target.LIST_FILE_SUPPORT,
-            targetsNotSupported = true
-        )
+        val mobileMain by creating { dependsOn(commonMain.get()) }
+        val iosMain by creating { dependsOn(commonMain.get()) }
 
-        featureBackupSupportMain.setupDependencies(sourceSets, buildTargets, targetsBackupSupport)
-        featureNoBackupSupportMain.setupDependencies(
-            sourceSets,
-            buildTargets,
-            targetsBackupSupport,
-            targetsNotSupported = true
-        )
+        buildTargets.setupDependencies(featureFileSupportMain, sourceSets, Platform.LIST_FILE_SUPPORT)
+        buildTargets.setupDependencies(featureNoFileSupportMain, sourceSets, Platform.LIST_FILE_SUPPORT, platformsNotSupported = true)
 
-        notAndroidMain.setupDependencies(
-            sourceSets,
-            buildTargets,
-            targetsAndroid,
-            targetsNotSupported = true
-        )
-        notJvmMain.setupDependencies(
-            sourceSets,
-            buildTargets,
-            targetsJvm,
-            targetsNotSupported = true
-        )
+        buildTargets.setupDependencies(featureBackupSupportMain, sourceSets, targetsBackupSupport)
+        buildTargets.setupDependencies(featureNoBackupSupportMain, sourceSets, targetsBackupSupport, platformsNotSupported = true)
+
+        buildTargets.setupDependencies(notAndroidMain, sourceSets, targetsAndroid, platformsNotSupported = true)
+        buildTargets.setupDependencies(notJvmMain, sourceSets, targetsJvm, platformsNotSupported = true)
+
+        buildTargets.setupDependencies(mobileMain, sourceSets, targetsMobile)
+        buildTargets.setupDependencies(iosMain, sourceSets, listOf(Platform.IOS))
+
+        if (buildTargets.macOS) {
+            val macosMain by creating { dependsOn(commonMain.get()) }
+            buildTargets.setupDependencies(macosMain, sourceSets, listOf(Platform.MACOS))
+        }
 
         // ---------------------
         // dependencies
         // ---------------------
 
         commonMain.dependencies {
-
-            // resources
-            implementation(compose.components.resources)
-
-            // kotlinx
-            implementation(kotlinx.serialization.core)
-            implementation(kotlinx.serialization.json)
-            implementation(kotlinx.datetime)
+            
+            // kotlinx         
+            implementation(libs.jetbrains.kotlinx.coroutines.core)
+            implementation(libs.jetbrains.kotlinx.serialization.json)
+            implementation(libs.jetbrains.kotlinx.datetime)
 
             // Compose + AndroidX
-            implementation(libs.compose.material3)
-            implementation(libs.compose.material3.adaptive)
-            implementation(libs.compose.ui.backhandler)
-            api(libs.compose.lifecycle)
+            implementation(libs.jetbrains.compose.material3)
+            implementation(libs.jetbrains.compose.material3.adaptive)
+            implementation(libs.jetbrains.compose.ui.backhandler)
+            api(libs.jetbrains.androidx.lifecycle.runtime.compose)
 
             // Compose Icons
-            implementation(libs.compose.material.icons.core)
-            implementation(libs.compose.material.icons.extended)
+            implementation(libs.jetbrains.compose.material.icons.core)
+            implementation(libs.jetbrains.compose.material.icons.extended)
             implementation(deps.icons.fontawesome)
 
             // Navigation
@@ -144,7 +149,7 @@ kotlin {
 
             // Lumberjack
             api(deps.lumberjack.core)
-            api(deps.lumberjack.implementation.lumberjack)
+            api(deps.lumberjack.implementation)
             api(deps.lumberjack.logger.console)
 
             // KotPreferences
@@ -206,7 +211,6 @@ kotlin {
 
         }
 
-
         jvmMain.dependencies {
 
             // Jewel
@@ -224,6 +228,9 @@ kotlin {
 
         androidMain.dependencies {
 
+            // KMPPlatformContext
+            // implementation(deps.kmp.platformcontext.initializer)
+
             // Compose Debug Drawer
             implementation( deps.composedebugdrawer.infos.build)
             implementation(deps.composedebugdrawer.infos.device )
@@ -236,28 +243,9 @@ kotlin {
 }
 
 // -------------------
-// Configurations
+// Publish
 // -------------------
 
-// android configuration
-android {
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
-
-    buildFilePlugin.setupAndroidLibrary(
-        androidNamespace = androidNamespace,
-        compileSdk = app.versions.compileSdk,
-        minSdk = app.versions.minSdk,
-        buildConfig = false
-    )
-}
-
 // maven publish configuration
-if (buildFilePlugin.checkGradleProperty("publishToMaven") != false)
-    buildFilePlugin.setupMavenPublish()
-
-
-
-
+if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+    BuildFileUtil.setupMavenPublish(project, config, libraryConfig)

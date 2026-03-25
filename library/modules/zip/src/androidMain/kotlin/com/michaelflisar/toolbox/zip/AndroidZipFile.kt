@@ -1,7 +1,7 @@
 package com.michaelflisar.toolbox.zip
 
 import android.net.Uri
-import com.michaelflisar.toolbox.AppContext
+import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -31,7 +31,10 @@ class AndroidZipFile(
         }
     }
 
-    override fun openInputStream() = AppContext.context().contentResolver.openInputStream(uri)
-    override fun openOutputStream() = AppContext.context().contentResolver.openOutputStream(uri)
+    override fun openInputStream() =
+        PlatformContextProvider.get().contentResolver.openInputStream(uri)
+
+    override fun openOutputStream() =
+        PlatformContextProvider.get().contentResolver.openOutputStream(uri)
 
 }

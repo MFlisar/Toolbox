@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 interface BaseAdManager {
 
     @Composable
-    fun rememberConsent(activity: Any?) : Any
+    fun rememberConsent() : Any
 
     fun privacyOptionsRequired(consent: Any) : Boolean
 

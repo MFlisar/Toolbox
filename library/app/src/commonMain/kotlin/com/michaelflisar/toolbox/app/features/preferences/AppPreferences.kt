@@ -75,8 +75,9 @@ import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeader
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeaderButtons
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsProVersionHeader
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
+import com.michaelflisar.toolbox.app.platform.LocalPlatformContext
+import com.michaelflisar.toolbox.app.platform.current
 import com.michaelflisar.toolbox.app.platform.kill
-import com.michaelflisar.toolbox.app.platform.localContext
 import com.michaelflisar.toolbox.app.platform.restart
 import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.core.resources.Res
@@ -106,6 +107,7 @@ import compose.icons.fontawesomeicons.brands.GooglePlay
 import compose.icons.fontawesomeicons.solid.Crown
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import kotlin.collections.emptyList
 
 @Composable
 internal expect fun LumberjackDialog(
@@ -234,6 +236,8 @@ internal fun SettingsContent(
 
     val showLogFile = rememberSaveable { mutableStateOf(false) }
     val showAttachLogFile = rememberDialogState()
+
+    val appName = stringResource(setup.name)
 
     //val backup = remember { setup.backup }
 
@@ -373,15 +377,17 @@ internal fun SettingsContent(
                 is DialogEvent.Button -> {
                     when (it.button) {
                         DialogButtonType.Positive -> FeedbackManager.sendFeedback(
-                            setup.fileLogger.setup,
-                            emptyList(),
-                            true,
+                            appName = appName,
+                            fileLoggerSetup = setup.fileLogger.setup,
+                            attachments = emptyList(),
+                            appendLogFiles = true,
                         )
 
                         DialogButtonType.Negative -> FeedbackManager.sendFeedback(
-                            setup.fileLogger.setup,
-                            emptyList(),
-                            false
+                            appName = appName,
+                            fileLoggerSetup = setup.fileLogger.setup,
+                            attachments = emptyList(),
+                            appendLogFiles = false
                         )
                     }
                 }
@@ -436,6 +442,8 @@ private fun PreferenceGroupScope.RegionAbout(
     val changelogState = appState.changelogState
     val proVersionManager = ProVersionManager.setup
     val adsManager = AdsManager.manager
+
+    val appName = stringResource(setup.name)
 
     val showChangelog = remember { setup.changelogSetup != null }
     val showBackup = remember { BackupManager.manager?.config?.addToPrefs == true }
@@ -503,9 +511,10 @@ private fun PreferenceGroupScope.RegionAbout(
                                         showAttachLogFile.show()
                                     } else {
                                         FeedbackManager.sendFeedback(
-                                            setup.fileLogger.setup,
-                                            emptyList(),
-                                            false
+                                            appName = appName,
+                                            fileLoggerSetup = setup.fileLogger.setup,
+                                            attachments = emptyList(),
+                                            appendLogFiles = false
                                         )
                                     }
                                 },
@@ -662,11 +671,11 @@ private fun PreferenceGroupScope.RegionAbout(
                             }
                         )
 
-                        if (FeedbackManager.supported) {
+                        if (FeedbackManager.supported && FeedbackManager.supportsSendRelevantFile) {
                             PreferenceButton(
                                 onClick = {
                                     scope.launch {
-                                        FeedbackManager.sendRelevantFiles()
+                                        FeedbackManager.sendRelevantFiles(appName)
                                     }
                                 },
                                 title = "Send All App Files As Mail",
@@ -679,7 +688,7 @@ private fun PreferenceGroupScope.RegionAbout(
                 if (adsManager != null && proVersionManager.supported) {
                     PreferenceRegionAdsDeveloper()
                 }
-                val platformContext = Platform.localContext()
+                val context = LocalPlatformContext.current
                 val kill = Platform.kill
                 val restart = Platform.restart
                 if (kill != null || restart != null) {
@@ -689,7 +698,7 @@ private fun PreferenceGroupScope.RegionAbout(
                         if (restart != null) {
                             PreferenceButton(
                                 onClick = {
-                                    restart(platformContext)
+                                    restart(context)
                                 },
                                 title = "Restart App",
                                 icon = {
@@ -703,7 +712,7 @@ private fun PreferenceGroupScope.RegionAbout(
                         if (kill != null) {
                             PreferenceButton(
                                 onClick = {
-                                    kill(platformContext)
+                                    kill(context)
                                 },
                                 title = "Kill App",
                                 icon = {

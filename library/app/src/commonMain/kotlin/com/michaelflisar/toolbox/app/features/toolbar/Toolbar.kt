@@ -14,6 +14,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +30,7 @@ import com.michaelflisar.toolbox.app.features.menu.removeConsecutiveSeparators
 import com.michaelflisar.toolbox.app.features.navigation.findLocalByScreenOrThrow
 import com.michaelflisar.toolbox.extensions.toIconComposable
 
-val LocalToolbarMainMenuItems = staticCompositionLocalOf<MainMenuItems> { MainMenuItems() }
+val LocalToolbarMainMenuItems = staticCompositionLocalOf { MainMenuItems() }
 
 @Stable
 class MainMenuItems(
@@ -59,11 +60,12 @@ class MainMenuItems(
     }
 
     fun getAsOverflowMenuItems(
+        additionalItems: List<MenuItem> = emptyList(),
         dividerAfterProVersion: Boolean = true,
         dividerBeforeSettings: Boolean = true,
     ): List<MenuItem> {
         val items = combineWith(
-            items = emptyList(),
+            items = additionalItems,
             dividerAfterProVersion = dividerAfterProVersion,
             dividerBeforeSettings = dividerBeforeSettings
         )
@@ -79,16 +81,21 @@ class MainMenuItems(
 }
 
 @Composable
-fun MainMenuItemsContentOnly(
+fun MainMenuItems(
+    showInOverflow: Boolean,
+    additionalItems: List<MenuItem> = emptyList(),
     dividerAfterProVersion: Boolean = true,
     dividerBeforeSettings: Boolean = true,
 ) {
     val mainMenuItems = LocalToolbarMainMenuItems.current
-    val items =
-        mainMenuItems.combineWith(emptyList(), dividerAfterProVersion, dividerBeforeSettings)
-    return if (items.isEmpty()) {
-        return
-    } else {
+    val items = remember(additionalItems, mainMenuItems, showInOverflow, dividerAfterProVersion, dividerBeforeSettings) {
+        if (showInOverflow) {
+            mainMenuItems.getAsOverflowMenuItems(additionalItems, dividerAfterProVersion, dividerBeforeSettings)
+        } else {
+            mainMenuItems.combineWith(additionalItems, dividerAfterProVersion, dividerBeforeSettings)
+        }
+    }
+    if (!items.isEmpty()) {
         Menu(items)
     }
 }

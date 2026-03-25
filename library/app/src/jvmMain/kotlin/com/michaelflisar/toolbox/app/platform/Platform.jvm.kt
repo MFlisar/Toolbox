@@ -2,13 +2,10 @@ package com.michaelflisar.toolbox.app.platform
 
 import androidx.compose.runtime.Composable
 import com.michaelflisar.composethemer.ComposeTheme
+import com.michaelflisar.kmp.platformcontext.PlatformContext
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
-import com.michaelflisar.toolbox.app.features.logging.FileLogger
-import com.michaelflisar.toolbox.app.classes.PlatformContext
-import com.michaelflisar.toolbox.app.utils.createFileLogger
 import com.michaelflisar.toolbox.utils.JvmUtil
 
 actual val Platform.restart: ((context: PlatformContext) -> Unit)?

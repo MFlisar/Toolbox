@@ -57,7 +57,7 @@ internal fun JewelRoot(
             content = {
                 CompositionLocalProvider(
                     LocalJewelWindowState provides window,
-                    LocalFileKitDialogSettingsState provides FileKitDialogSettings(window),
+                    LocalFileKitDialogSettingsState provides FileKitDialogSettings(parentWindow = window),
                 ) {
                     content()
                 }

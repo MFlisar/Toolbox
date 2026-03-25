@@ -10,7 +10,7 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
-import com.michaelflisar.toolbox.AppContext
+import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import com.michaelflisar.toolbox.NotificationUtil
 import com.michaelflisar.toolbox.backup.worker.BackupWorker
 import com.michaelflisar.toolbox.service.ServiceSetup
@@ -40,9 +40,13 @@ object BackupServiceUtil {
     )
 
     fun createChannels() {
-        if (!NotificationUtil.channelExists(AppContext.context(), NOTIFICATION_CHANNEL_BACKUP_ID)) {
+        if (!NotificationUtil.channelExists(
+                PlatformContextProvider.get(),
+                NOTIFICATION_CHANNEL_BACKUP_ID
+            )
+        ) {
             NotificationUtil.createChannel(
-                AppContext.context(),
+                PlatformContextProvider.get(),
                 NOTIFICATION_CHANNEL_BACKUP_NAME,
                 NOTIFICATION_CHANNEL_BACKUP_ID,
                 NotificationManagerCompat.IMPORTANCE_MAX
@@ -63,7 +67,7 @@ object BackupServiceUtil {
         inputData: Data,
         needsInternet: Boolean,
         initialDelay: Duration,
-        tag: String?
+        tag: String?,
     ) {
         val workManager = WorkManager.getInstance(context)
         val constraints = Constraints.Builder()
@@ -96,44 +100,44 @@ object BackupServiceUtil {
             .build()
         workManager.enqueue(backupRequest)
     }
-/*
-    fun enqueuePeriodic(
-        context: Context,
-        firstStart: LocalTime,
-        periodicDuration: Duration,
-        inputData: Data,
-        needsInternet: Boolean,
-        tag: String? = null
-    ) {
-        val now = LocalDateTime.now()
-        val delay = if (now.isBefore(firstStart)) {
-            Duration.between(now, target)
-        } else {
-            Duration.between(now, firstStart).plusHours(24)
-        }
+    /*
+        fun enqueuePeriodic(
+            context: Context,
+            firstStart: LocalTime,
+            periodicDuration: Duration,
+            inputData: Data,
+            needsInternet: Boolean,
+            tag: String? = null
+        ) {
+            val now = LocalDateTime.now()
+            val delay = if (now.isBefore(firstStart)) {
+                Duration.between(now, target)
+            } else {
+                Duration.between(now, firstStart).plusHours(24)
+            }
 
-        val workManager = WorkManager.getInstance(context)
-        val constraints = Constraints.Builder()
-            .apply {
-                if (needsInternet) {
-                    setRequiredNetworkType(NetworkType.CONNECTED)
+            val workManager = WorkManager.getInstance(context)
+            val constraints = Constraints.Builder()
+                .apply {
+                    if (needsInternet) {
+                        setRequiredNetworkType(NetworkType.CONNECTED)
+                    }
                 }
-            }
-            .build()
-        val backupRequest = PeriodicWorkRequestBuilder<BackupWorker>(duration)
-            .let {
-                if (tag != null) {
-                    it.addTag(tag)
-                } else {
-                    it
+                .build()
+            val backupRequest = PeriodicWorkRequestBuilder<BackupWorker>(duration)
+                .let {
+                    if (tag != null) {
+                        it.addTag(tag)
+                    } else {
+                        it
+                    }
                 }
-            }
-            .setInitialDelay(delay.toJavaDuration())
-            .setInputData(inputData)
-            .setConstraints(constraints)
-            .build()
-        workManager.enqueue(backupRequest)
-    }*/
+                .setInitialDelay(delay.toJavaDuration())
+                .setInputData(inputData)
+                .setConstraints(constraints)
+                .build()
+            workManager.enqueue(backupRequest)
+        }*/
 
     val SERVICE_BACKUP_SETUP = ServiceSetup(
         channel = CHANNEL,

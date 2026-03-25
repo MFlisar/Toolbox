@@ -4,14 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import com.michaelflisar.feedbackmanager.Feedback
-import com.michaelflisar.feedbackmanager.FeedbackFile
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.getLatestLogFile
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.utils.AndroidUtil
-import com.michaelflisar.toolbox.utils.ExceptionUtil
-import com.michaelflisar.toolbox.utils.FileUtil
 import org.acra.ACRA
 import org.acra.ReportField
 import org.acra.attachment.AcraContentProvider
@@ -23,21 +19,12 @@ import org.acra.config.mailSender
 import org.acra.data.StringFormat
 import org.acra.ktx.initAcra
 import org.acra.log.error
-import org.jetbrains.compose.resources.StringResource
-import java.io.File
-import java.io.IOException
 
 object AcraManager {
 
     internal class Setup(
-        val enableDebugNotification: Boolean,
         val appendLogFile: Boolean,
-        val appName: StringResource,
-        val notificationChannelId: String,
-        val notificationId: Int = 9999,
         val mail: String,
-        val reportError: (() -> Boolean) = { true },
-        val onErrorReportedCallback: (() -> Unit)? = null,
         val reportFileName: String = "acra.txt",
     )
 
@@ -52,9 +39,6 @@ object AcraManager {
         isDebugBuild: Boolean,
     ): Boolean {
         this.fileLoggerSetup = fileLoggingSetup
-        if (setup.enableDebugNotification) {
-            ACRA.DEV_LOGGING = true
-        }
         try {
             app.initAcra {
                 this.buildConfigClass = buildConfigClass
@@ -103,67 +87,19 @@ object AcraManager {
                     AndroidUtil.isDeveloper(app, isDebugBuild).toString()
                 )
             }
-            if (setup.enableDebugNotification) {
-                ACRA.DEV_LOGGING = false
-            }
             return true
         } catch (e: ACRAConfigurationException) {
             L.e(e)
             ACRA.init(app)
-            if (setup.enableDebugNotification && setup.reportError()) {
-                showErrorNotification(app, e, setup, acraSetup)
-                setup.onErrorReportedCallback?.invoke()
-                ACRA.DEV_LOGGING = false
-            }
         } catch (e: NullPointerException) {
             L.e(e)
             ACRA.init(app)
-            if (setup.enableDebugNotification && setup.reportError()) {
-                showErrorNotification(app, e, setup, acraSetup)
-                setup.onErrorReportedCallback?.invoke()
-                ACRA.DEV_LOGGING = false
-            }
         }
         return false
     }
 
     private fun getDefaultSubject(app: Application, appName: String): String {
         return appName + " - Crash Report v" + AndroidUtil.getAppVersionName(app)
-    }
-
-    private fun showErrorNotification(
-        app: Application,
-        e: Exception,
-        setup: Setup,
-        acraSetup: AcraSetup,
-    ) {
-        try {
-            val content: String? = ExceptionUtil.getStackTrace(e)
-            val acraFile = File.createTempFile("acra", ".txt", app.cacheDir)
-            FileUtil.createFile(acraFile, content)
-            Feedback(
-                listOf(setup.mail),
-                String.format(
-                    "ACRA Exception Feedback for %1\$s (v%2\$s)",
-                    setup.appName,
-                    AndroidUtil.getAppVersionName(app)
-                ),
-                attachments = listOfNotNull(
-                    fileLoggerSetup?.getLatestLogFile(),
-                    acraFile
-                ).map { FeedbackFile(it) }
-            ).startNotification(
-                app,
-                "Exception Report",
-                "Rare error found",
-                "Please report this error by clicking this notification, thanks",
-                acraSetup.appIcon,
-                setup.notificationChannelId,
-                setup.notificationId
-            )
-        } catch (e: IOException) {
-            L.e(e)
-        }
     }
 
     fun isACRAProcess() = ACRA.isACRASenderServiceProcess()

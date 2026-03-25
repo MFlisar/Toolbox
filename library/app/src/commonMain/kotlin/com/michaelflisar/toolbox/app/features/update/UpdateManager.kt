@@ -4,10 +4,8 @@ import com.michaelflisar.composedialogs.core.DispatcherIO
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.classes.PlatformContext
 import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class UpdateManager(
@@ -15,13 +13,13 @@ class UpdateManager(
     private val isFirstRun: (lastVersion: Long) -> Boolean = { lastVersion -> lastVersion <= 0L },
 ) {
 
-    fun update(scope: CoroutineScope, context: PlatformContext, setup: AppSetup) {
+    fun update(scope: CoroutineScope, setup: AppSetup) {
         scope.launch(DispatcherIO) {
-            update(context, setup)
+            update(setup)
         }
     }
 
-    suspend fun update(context: PlatformContext, setup: AppSetup) {
+    suspend fun update(setup: AppSetup) {
 
         var lastVersion = setup.prefs.lastAppVersion.read()
         val currentVersion = setup.versionCode
@@ -35,7 +33,7 @@ class UpdateManager(
             L.logIf(ToolboxLogging.Tag.UpdateMananger)?.d { "UPDATES gestartet..." }
             updates
                 .sortedBy { it.version }
-                .forEach { it.execute(context, lastVersion) }
+                .forEach { it.execute(lastVersion) }
             setup.prefs.lastAppVersion.update(currentVersion.toLong())
             L.logIf(ToolboxLogging.Tag.UpdateMananger)?.d { "UPDATES fertig" }
         } else {

@@ -1,7 +1,7 @@
 package com.michaelflisar.toolbox.backup
 
+import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import com.michaelflisar.lumberjack.core.L
-import com.michaelflisar.toolbox.AppContext
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.classes.BackupConfig
 import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
@@ -21,10 +21,10 @@ import kotlin.time.ExperimentalTime
 
 actual class BackupManagerImpl actual constructor(
     actual val config: BackupConfig,
-    actual val  autoBackupConfig: AutoBackupConfig?,
+    actual val autoBackupConfig: AutoBackupConfig?,
 ) {
     actual fun onBackupRestored() {
-        AppContext.context().restartApp()
+        PlatformContextProvider.get().restartApp()
     }
 
     actual suspend fun backup(
@@ -71,7 +71,7 @@ actual class BackupManagerImpl actual constructor(
         }
     }
 
-    actual suspend fun getAutoBackupFileName( ): String {
+    actual suspend fun getAutoBackupFileName(): String {
         val backupFileName = BackupDefaults.getDefaultBackupFileName(
             getString(autoBackupConfig!!.appName),
             config.extension,
@@ -81,9 +81,9 @@ actual class BackupManagerImpl actual constructor(
     }
 
     @OptIn(ExperimentalTime::class)
-    actual fun onSettingsChanged( ) {
+    actual fun onSettingsChanged() {
         BackupServiceUtil.createChannels()
-        BackupWorker.cancelAutoWorker(AppContext.context())
+        BackupWorker.cancelAutoWorker(PlatformContextProvider.get())
         onEnqueueNextAutoBackup()
     }
 
@@ -94,7 +94,7 @@ actual class BackupManagerImpl actual constructor(
         val initialDelay = BackupDefaults.getInitialDay(LocalDateTime.now(), frequency)
         val files = config.backupContent
         BackupWorker.enqueueAutoWorker(
-            context = AppContext.context(),
+            context = PlatformContextProvider.get(),
             files = files,
             backupFolderData = backupFolderData,
             initialDelay = initialDelay

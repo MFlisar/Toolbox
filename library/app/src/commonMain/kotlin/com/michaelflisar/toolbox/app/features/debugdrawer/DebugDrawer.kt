@@ -49,6 +49,7 @@ import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSetti
 import com.michaelflisar.toolbox.logIf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 internal expect val supportsBuildAndDeviceInfos: Boolean
 
@@ -77,6 +78,8 @@ fun DebugDrawer(
     val setup = AppSetup.get()
     val scope = rememberCoroutineScope()
     val debugPrefs = setup.debugPrefs
+
+    val appName = stringResource(setup.name)
 
     LaunchedEffect(Unit) {
         snapshotFlow { drawerState.expandedIds() }
@@ -255,7 +258,7 @@ fun DebugDrawer(
     }
 
     // Daten
-    if (showRegionData && FeedbackManager.supported) {
+    if (showRegionData && FeedbackManager.supported && FeedbackManager.supportsSendRelevantFile) {
         DebugDrawerRegion(
             image = { Icon(Icons.Default.InsertDriveFile, null) },
             label = "Data",
@@ -268,7 +271,7 @@ fun DebugDrawer(
                 label = "Send relevant app files"
             ) {
                 scope.launch {
-                    FeedbackManager.sendRelevantFiles()
+                    FeedbackManager.sendRelevantFiles(appName)
                 }
             }
         }

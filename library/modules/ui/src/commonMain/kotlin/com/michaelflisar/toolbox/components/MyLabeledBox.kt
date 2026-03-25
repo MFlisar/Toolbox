@@ -67,12 +67,11 @@ fun MyLabeledBox(
         val borderCutout = if (label.isNotEmpty()) {
             // we calculate an EXACT border cut out... because it will disable all drawing inside this cutout (e.g. ripple of buttons, ...)
             val left =
-                with(density) { labelHorizontalPadding.toPx() }.toFloat() - extraCutoutPadding
-            val right = with(density) { labelHorizontalPadding.toPx() }
-                .toFloat() + titleSize.width.toFloat() + extraCutoutPadding
+                with(density) { labelHorizontalPadding.toPx() } - extraCutoutPadding
+            val right = with(density) { labelHorizontalPadding.toPx() } + titleSize.width.toFloat() + extraCutoutPadding
             val top = 0f
             val bottom =
-                with(density) { border.width.toPx() }.toFloat() //titleSize.height.toFloat()
+                with(density) { border.width.toPx() } //titleSize.height.toFloat()
             Rect(left, top, right, bottom)
         } else null
 

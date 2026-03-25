@@ -1,0 +1,64 @@
+# Github Library
+github:
+  name: Toolbox
+  release: 2021
+  namespace: com.michaelflisar.toolbox
+  license:
+    name: Apache License 2.0
+    path: blob/main/LICENSE
+
+# Maven
+maven:
+  group-id: io.github.mflisar.toolbox
+  primary-artifact-id: core # used to detect latest release version of the library (dynamically on the published homepage)
+
+# Modules - list of modules [artifact-id, description, path]
+modules:
+  - artifact-id: core
+    description: the core module
+    path: library/core
+  - artifact-id: app
+    description: the base app module
+    path: library/app
+  - artifact-id: ui
+    description: a ui module
+    path: library/modules/ui
+  - artifact-id: zip
+    description: a zip module
+    path: library/modules/zip
+  - artifact-id: csv
+    description: a csv module
+    path: library/modules/csv
+  - artifact-id: backup
+    description: a backup module
+    path: library/modules/backup
+  - artifact-id: service
+    description: a service module
+    path: library/modules/service
+  - artifact-id: form
+    description: a form module
+    path: library/modules/form
+  - artifact-id: powershell
+    description: a powershell module
+    path: library/modules/powershell
+  - artifact-id: table
+    description: a table module
+    path: library/modules/table
+  - artifact-id: room
+    description: provides room database classes
+    path: library/modules/room
+  - artifact-id: ads
+    description: provides ads composables
+    path: library/modules/ads
+  - artifact-id: proversion
+    description: provides proversion checker functions
+    path: library/modules/proversion
+  - artifact-id: diff
+    description: diff functions and UI
+    path: library/modules/diff
+  - artifact-id: excel
+    description: excel functions
+    path: library/modules/excel
+
+# XCFrameworks [name, path, targets (ios, macos)]
+xcframeworks: [ ]

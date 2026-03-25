@@ -1,8 +1,8 @@
 package com.michaelflisar.toolbox.app.utils
 
+import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import com.michaelflisar.lumberjack.loggers.file.create
-import com.michaelflisar.toolbox.AppContext
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.utils.AndroidUtil
 
@@ -13,7 +13,7 @@ fun AndroidUtil.createFileLogger(
 ): FileLogger<*> {
     return FileLogger<FileLoggerSetup>(
         setup = FileLoggerSetup.Daily.create(
-            context = AppContext.context(),
+            context = PlatformContextProvider.get(),
             fileBaseName = fileBaseName,
             fileExtension = fileExtension,
             filesToKeep = filesToKeep

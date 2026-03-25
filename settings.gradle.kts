@@ -1,3 +1,5 @@
+import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+
 dependencyResolutionManagement {
 
     repositories {
@@ -14,12 +16,6 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("app") {
             from(files("gradle/app.versions.toml"))
-        }
-        create("androidx") {
-            from(files("gradle/androidx.versions.toml"))
-        }
-        create("kotlinx") {
-            from(files("gradle/kotlinx.versions.toml"))
         }
         create("deps") {
             from(files("gradle/deps.versions.toml"))
@@ -44,16 +40,21 @@ pluginManagement {
 
 plugins {
     // version catalogue does not work here!
-    // alias(deps.plugins.kmp.gradle.tools.settings.gradle.plugin)
-    id("io.github.mflisar.kmp-library.plugins-settings-gradle") version "2.2.5" //apply false
+    id("io.github.mflisar.kmpdevtools.plugins-settings-gradle") version "7.1.9"
 }
-
-val settingsPlugin = plugins.getPlugin(com.michaelflisar.kmplibrary.SettingsFilePlugin::class.java)
+val settingsPlugin = plugins.getPlugin(com.michaelflisar.kmpdevtools.SettingsFilePlugin::class.java)
 
 // --------------
-// Modules
+// Library
 // --------------
 
+val libraryConfig = LibraryConfig.read(rootProject)
+val libraryId = libraryConfig.libraryId()
+
+// Library Modules
+settingsPlugin.includeModules(libraryId, libraryConfig, includeDokka = true)
+
+/*
 with(settingsPlugin) {
 
     // empty folders
@@ -74,7 +75,7 @@ with(settingsPlugin) {
     includeModule("library\\modules\\proversion", ":toolbox:modules:proversion")
 
     includeModule("library\\app", ":toolbox:app")
-}
+}*/
 
 // --------------
 // App
@@ -82,13 +83,15 @@ with(settingsPlugin) {
 
 if (System.getenv("CI") != "true") {
     // demo app
-    include(":demo:toolbox")
-    // hello world app
-    include(":demo:hello-world:app")
-    include(":demo:hello-world:common")
-    include(":demo:hello-world:common:core")
-    include(":demo:hello-world:common:database")
-    include(":demo:hello-world:feature")
-    include(":demo:hello-world:feature:page1")
-    include(":demo:hello-world:feature:page2")
+    include(":demo:shared")
+    include(":demo:app:android")
+    include(":demo:app:compose")
+//    // hello world app
+//    include(":demo:hello-world:app")
+//    include(":demo:hello-world:common")
+//    include(":demo:hello-world:common:core")
+//    include(":demo:hello-world:common:database")
+//    include(":demo:hello-world:feature")
+//    include(":demo:hello-world:feature:page1")
+//    include(":demo:hello-world:feature:page2")
 }
