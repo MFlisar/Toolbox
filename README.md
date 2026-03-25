@@ -151,7 +151,7 @@ implementation("io.github.mflisar.toolbox:excel:${toolbox}")
 
 # :rocket: Usage
 
-> !IMPORTANT]
+> [!IMPORTANT]
 > NOT DOCUMENTED
 
 # :sparkles: Demo
