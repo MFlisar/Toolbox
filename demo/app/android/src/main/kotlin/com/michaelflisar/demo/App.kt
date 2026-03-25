@@ -1,7 +1,6 @@
 package com.michaelflisar.demo
 
 import androidx.compose.material3.LocalContentColor
-import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import com.michaelflisar.kotbilling.classes.Product
 import com.michaelflisar.kotbilling.classes.ProductType
 import com.michaelflisar.kotpreferences.core.value
@@ -13,7 +12,6 @@ import com.michaelflisar.toolbox.app.AndroidApp
 import com.michaelflisar.toolbox.app.AndroidApplication
 import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppScope
-import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.classes.AndroidAppSetup
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
@@ -72,7 +70,7 @@ class App : AndroidApplication() {
             )
         )
         // nach minimalem init im ACRA Prozess ggf. abbrechen
-        if (isAcraProcess())   {
+        if (isAcraProcess()) {
             return
         }
 

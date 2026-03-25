@@ -27,7 +27,6 @@ plugins {
 // ----------------------------
 
 buildFilePlugin {
-
     // do not build demo projects in CI
     excludeDemoFromCI.set(true)
 }
