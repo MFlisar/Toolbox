@@ -30,7 +30,7 @@ pluginManagement {
         google()
         gradlePluginPortal()
         maven("https://jitpack.io")
-        //mavenLocal()
+        mavenLocal()
     }
 }
 
@@ -40,7 +40,7 @@ pluginManagement {
 
 plugins {
     // version catalogue does not work here!
-    id("io.github.mflisar.kmpdevtools.plugins-settings-gradle") version "7.2.0"
+    id("io.github.mflisar.kmpdevtools.plugins-settings-gradle") version "7.2.2"
 }
 val settingsPlugin = plugins.getPlugin(com.michaelflisar.kmpdevtools.SettingsFilePlugin::class.java)
 
@@ -53,29 +53,6 @@ val libraryId = libraryConfig.libraryId()
 
 // Library Modules
 settingsPlugin.includeModules(libraryId, libraryConfig, includeDokka = true)
-
-/*
-with(settingsPlugin) {
-
-    // empty folders
-    includeModule("library", ":toolbox")
-    includeModule("library\\modules", ":toolbox:modules")
-
-    // modules
-    includeModule("library\\core", ":toolbox:core")
-    includeModule("library\\modules\\table", ":toolbox:modules:table")
-    includeModule("library\\modules\\form", ":toolbox:modules:form")
-    includeModule("library\\modules\\ui", ":toolbox:modules:ui")
-    includeModule("library\\modules\\zip", ":toolbox:modules:zip")
-    includeModule("library\\modules\\backup", ":toolbox:modules:backup")
-    includeModule("library\\modules\\service", ":toolbox:modules:service")
-    includeModule("library\\modules\\csv", ":toolbox:modules:csv")
-    includeModule("library\\modules\\room", ":toolbox:modules:room")
-    includeModule("library\\modules\\ads", ":toolbox:modules:ads")
-    includeModule("library\\modules\\proversion", ":toolbox:modules:proversion")
-
-    includeModule("library\\app", ":toolbox:app")
-}*/
 
 // --------------
 // App

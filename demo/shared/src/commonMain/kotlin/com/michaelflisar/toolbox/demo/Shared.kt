@@ -14,7 +14,6 @@ import com.michaelflisar.composethemer.Material500Themes
 import com.michaelflisar.composethemer.MetroThemes
 import com.michaelflisar.composethemer.themes.DefaultThemes
 import com.michaelflisar.toolbox.ToolboxLogging
-import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppScope
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.Constants
@@ -32,7 +31,6 @@ import com.michaelflisar.toolbox.demo.pages.PageStatesScreen
 import com.michaelflisar.toolbox.demo.pages.PageTestsRootScreenContainer
 import com.michaelflisar.toolbox.demo.pages.tests.PageTestExpandableHeader
 import com.michaelflisar.toolbox.demo.shared.resources.Res
-import com.michaelflisar.toolbox.demo.shared.resources.app_name
 import com.michaelflisar.toolbox.demo.shared.resources.mflisar
 import com.michaelflisar.toolbox.extensions.isLight
 import org.jetbrains.compose.resources.painterResource
@@ -65,7 +63,7 @@ object Shared {
             versionCode = BuildKonfig.versionCode,
             versionName = BuildKonfig.versionName,
             packageName = BuildKonfig.packageName,
-            name = Res.string.app_name,
+            appName = BuildKonfig.appName,
             icon = icon,
             themeSupport = AppSetup.ThemeSupport.full(
                 DefaultThemes.getAllThemes() +

@@ -7,6 +7,8 @@ actual object FeedbackManager {
 
     actual val supported = false // Anhänge gehen auf Windows eigentlich nicht, macht daher keinen Sinn...
 
+    actual val supportsSendRelevantFile = false
+
     actual fun sendFeedback(
         appName: String,
         fileLoggerSetup: IFileLoggingSetup?,

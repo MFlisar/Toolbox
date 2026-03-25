@@ -26,10 +26,7 @@ import com.michaelflisar.toolbox.core.resources.placeholder_ads
 import com.michaelflisar.toolbox.features.proversion.ProState
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(
-    DependsOnGoogleUserMessagingPlatform::class,
-    DependsOnGoogleMobileAds::class
-)
+@OptIn(DependsOnGoogleUserMessagingPlatform::class, DependsOnGoogleMobileAds::class)
 @Composable
 fun FooterAdsBanner(
     proState: State<ProState>,

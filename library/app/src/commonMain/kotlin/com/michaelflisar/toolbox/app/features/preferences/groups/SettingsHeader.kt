@@ -19,7 +19,6 @@ import com.michaelflisar.composepreferences.core.classes.PreferenceSettings
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.core.styles.ModernStyle
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.components.MyColumn
@@ -86,7 +85,7 @@ fun SettingsHeaderContent(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = stringResource(setup.name),
+                    text = setup.appName,
                     style = MaterialTheme.typography.titleLarge
                 )
                 Text(

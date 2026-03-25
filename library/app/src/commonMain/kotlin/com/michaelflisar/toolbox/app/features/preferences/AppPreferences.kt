@@ -237,8 +237,6 @@ internal fun SettingsContent(
     val showLogFile = rememberSaveable { mutableStateOf(false) }
     val showAttachLogFile = rememberDialogState()
 
-    val appName = stringResource(setup.name)
-
     //val backup = remember { setup.backup }
 
     when (style) {
@@ -377,14 +375,14 @@ internal fun SettingsContent(
                 is DialogEvent.Button -> {
                     when (it.button) {
                         DialogButtonType.Positive -> FeedbackManager.sendFeedback(
-                            appName = appName,
+                            appName = setup.appName,
                             fileLoggerSetup = setup.fileLogger.setup,
                             attachments = emptyList(),
                             appendLogFiles = true,
                         )
 
                         DialogButtonType.Negative -> FeedbackManager.sendFeedback(
-                            appName = appName,
+                            appName = setup.appName,
                             fileLoggerSetup = setup.fileLogger.setup,
                             attachments = emptyList(),
                             appendLogFiles = false
@@ -442,8 +440,6 @@ private fun PreferenceGroupScope.RegionAbout(
     val changelogState = appState.changelogState
     val proVersionManager = ProVersionManager.setup
     val adsManager = AdsManager.manager
-
-    val appName = stringResource(setup.name)
 
     val showChangelog = remember { setup.changelogSetup != null }
     val showBackup = remember { BackupManager.manager?.config?.addToPrefs == true }
@@ -511,7 +507,7 @@ private fun PreferenceGroupScope.RegionAbout(
                                         showAttachLogFile.show()
                                     } else {
                                         FeedbackManager.sendFeedback(
-                                            appName = appName,
+                                            appName = setup.appName,
                                             fileLoggerSetup = setup.fileLogger.setup,
                                             attachments = emptyList(),
                                             appendLogFiles = false
@@ -675,7 +671,7 @@ private fun PreferenceGroupScope.RegionAbout(
                             PreferenceButton(
                                 onClick = {
                                     scope.launch {
-                                        FeedbackManager.sendRelevantFiles(appName)
+                                        FeedbackManager.sendRelevantFiles(setup.appName)
                                     }
                                 },
                                 title = "Send All App Files As Mail",

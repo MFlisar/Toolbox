@@ -6,7 +6,6 @@ import com.michaelflisar.kotbilling.classes.ProductType
 import com.michaelflisar.kotpreferences.core.value
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
-import com.michaelflisar.toolbox.acra.AcraSetup
 import com.michaelflisar.toolbox.ads.AdManagerImpl
 import com.michaelflisar.toolbox.app.AndroidApp
 import com.michaelflisar.toolbox.app.AndroidApplication
@@ -26,7 +25,6 @@ import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.classes.BackupConfig
 import com.michaelflisar.toolbox.backup.createDefaultBackupContent
 import com.michaelflisar.toolbox.demo.BuildConfig
-import com.michaelflisar.toolbox.demo.BuildKonfig
 import com.michaelflisar.toolbox.demo.Prefs
 import com.michaelflisar.toolbox.demo.R
 import com.michaelflisar.toolbox.demo.Shared
@@ -64,10 +62,7 @@ class App : AndroidApplication() {
             app = this,
             setup = setup,
             androidSetup = androidSetup,
-            acraSetup = AcraSetup(
-                appIcon = appIcon,
-                appName = BuildKonfig.appName
-            )
+            appIcon = appIcon
         )
         // nach minimalem init im ACRA Prozess ggf. abbrechen
         if (isAcraProcess()) {
@@ -106,7 +101,7 @@ class App : AndroidApplication() {
                     backupContent = BackupDefaults.createDefaultBackupContent()
                 ),
                 autoBackupConfig = AutoBackupConfig(
-                    appName = setup.name,
+                    appName = setup.appName,
                     frequencyData = { setup.prefs.autoBackupFrequency.value },
                     backupPathData = { setup.prefs.backupPathData.value },
                 )

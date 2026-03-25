@@ -33,7 +33,7 @@ val libraryConfig = LibraryConfig.read(rootProject)
 val buildTargets = Targets(
     // mobile
     android = true,
-    iOS = false,
+    iOS = true,
     // desktop
     windows = true,
     macOS = false,

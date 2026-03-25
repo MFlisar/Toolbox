@@ -1,10 +1,9 @@
 package com.michaelflisar.toolbox.backup.classes
 
 import com.michaelflisar.composedialogs.dialogs.frequency.classes.Frequency
-import org.jetbrains.compose.resources.StringResource
 
 class AutoBackupConfig(
-    val appName: StringResource,
+    val appName: String,
     val frequencyData: () -> String,
     val backupPathData: () -> String
 ) {

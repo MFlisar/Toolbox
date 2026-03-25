@@ -10,7 +10,6 @@ import com.michaelflisar.toolbox.app.classes.Developer
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
-import org.jetbrains.compose.resources.StringResource
 
 class AppSetup(
     val developer: Developer = Developer.Author(
@@ -20,7 +19,7 @@ class AppSetup(
     val versionCode: Int,
     val versionName: String,
     val packageName: String,
-    val name: StringResource,
+    val appName: String,
     val icon: @Composable () -> Painter,
     val themeSupport: ThemeSupport,
     val prefs: BasePrefs,

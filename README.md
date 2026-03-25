@@ -3,8 +3,8 @@
 ![Platforms](https://img.shields.io/badge/PLATFORMS-black?style=for-the-badge) ![Android](https://img.shields.io/badge/android-3DDC84?style=for-the-badge) ![iOS](https://img.shields.io/badge/ios-A2AAAD?style=for-the-badge) ![Windows](https://img.shields.io/badge/windows-5382A1?style=for-the-badge) ![WebAssembly](https://img.shields.io/badge/wasm-624DE7?style=for-the-badge)
 
 > [!NOTE]
-> This library is meant for my personal usage.
-> I do use it in production myself though, but have not yet documented it properly.
+> This library currently is for my personal usage only.
+> I do use it in production, but have not yet documented it properly.
 
 # Table of Contents
 
@@ -30,7 +30,7 @@
 | form | ✅ | ✅ | ✅ | ✅ |
 | powershell | ❌ | ❌ | ✅ | ❌ |
 | table | ✅ | ✅ | ✅ | ✅ |
-| room | ✅ | ❌ | ✅ | ❌ |
+| room | ✅ | ✅ | ✅ | ❌ |
 | ads | ✅ | ✅ | ❌ | ❌ |
 | proversion | ✅ | ❌ | ❌ | ❌ |
 | diff | ✅ | ✅ | ✅ | ✅ |
@@ -45,19 +45,21 @@
 | Jetbrains Compose Material3 | `1.9.0` |
 
 > :warning: Following experimental annotations are used:
-> - `kotlinx.cinterop.ExperimentalForeignApi` (1x)
-> - `` (1x)
-> - `cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi` (3x)
-> - `androidx.compose.material3.ExperimentalMaterial3Api` (16x)
-> - `kotlin.time.ExperimentalTime` (15x)
-> - `androidx.compose.foundation.layout.ExperimentalLayoutApi` (1x)
-> - `androidx.compose.ui.ExperimentalComposeUiApi` (10x)
-> - `app.lexilabs.basic.ads.DependsOnGoogleMobileAds` (2x)
-> - `androidx.compose.animation.ExperimentalSharedTransitionApi` (2x)
-> - `androidx.compose.foundation.ExperimentalFoundationApi` (1x)
-> - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (5x)
-> - `kotlinx.coroutines.FlowPreview` (1x)
-> - `kotlin.uuid.ExperimentalUuidApi` (2x)
+> - **OptIn**
+>   - `androidx.compose.animation.ExperimentalSharedTransitionApi` (2x)
+>   - `androidx.compose.foundation.ExperimentalFoundationApi` (1x)
+>   - `androidx.compose.foundation.layout.ExperimentalLayoutApi` (1x)
+>   - `androidx.compose.material3.ExperimentalMaterial3Api` (15x)
+>   - `androidx.compose.ui.ExperimentalComposeUiApi` (10x)
+>   - `app.lexilabs.basic.ads.DependsOnGoogleMobileAds` (3x)
+>   - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (6x)
+>   - `cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi` (3x)
+>   - `kotlin.time.ExperimentalTime` (15x)
+>   - `kotlin.uuid.ExperimentalUuidApi` (2x)
+>   - `kotlinx.cinterop.ExperimentalForeignApi` (1x)
+>   - `kotlinx.coroutines.FlowPreview` (1x)
+> - **Experimental**
+>   - `androidx.compose.material3.ExperimentalMaterial3Api` (1x)
 >
 > I try to use as less experimental features as possible, but in this case the ones above are needed!
 

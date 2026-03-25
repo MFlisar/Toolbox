@@ -13,7 +13,6 @@ import com.michaelflisar.toolbox.app.features.appstate.JewelAppState
 import com.michaelflisar.toolbox.app.features.filekit.LocalFileKitDialogSettingsState
 import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.jewel.window.DecoratedWindow
 import org.jetbrains.jewel.window.DecoratedWindowScope
 import org.jetbrains.jewel.window.defaultDecoratedWindowStyle
@@ -45,7 +44,7 @@ internal fun JewelRoot(
             },
             state = jewelAppState.windowState,
             visible = desktopSetup.visible,
-            title = stringResource(setup.name),
+            title = setup.appName,
             icon = desktopSetup.appIcon(), // icon in windows toolbar
             resizable = desktopSetup.resizable,
             enabled = desktopSetup.enabled,
