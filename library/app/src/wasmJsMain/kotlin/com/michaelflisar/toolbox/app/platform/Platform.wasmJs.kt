@@ -2,9 +2,8 @@ package com.michaelflisar.toolbox.app.platform
 
 import androidx.compose.runtime.Composable
 import com.michaelflisar.composethemer.ComposeTheme
+import com.michaelflisar.kmp.platformcontext.PlatformContext
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.features.logging.FileLogger
-import com.michaelflisar.toolbox.app.classes.PlatformContext
 
 actual val Platform.restart: ((context: PlatformContext) -> Unit)?
     get() = null

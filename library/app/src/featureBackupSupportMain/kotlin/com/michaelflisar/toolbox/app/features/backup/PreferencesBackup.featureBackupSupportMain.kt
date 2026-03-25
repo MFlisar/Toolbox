@@ -33,7 +33,7 @@ import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.filekit.LocalFileKitDialogSettingsState
 import com.michaelflisar.toolbox.backup.BackupDefaults
 import com.michaelflisar.toolbox.backup.BackupManager
-import com.michaelflisar.toolbox.backup.ui.BackupDialog
+import com.michaelflisar.toolbox.backup.BackupDialog
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.settings_create_backup
 import com.michaelflisar.toolbox.core.resources.settings_group_auto_backup

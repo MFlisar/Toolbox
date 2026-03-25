@@ -7,7 +7,10 @@ actual object FeedbackManager {
 
     actual val supported = false
 
+    actual val supportsSendRelevantFile = true
+
     actual fun sendFeedback(
+        appName: String,
         fileLoggerSetup: IFileLoggingSetup?,
         attachments: List<PlatformFile>,
         appendLogFiles: Boolean
@@ -15,7 +18,7 @@ actual object FeedbackManager {
         // --
     }
 
-    actual suspend fun sendRelevantFiles() {
+    actual suspend fun sendRelevantFiles(appName: String) {
         // --
     }
 }

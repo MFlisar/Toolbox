@@ -73,6 +73,7 @@ fun <T> TableHeader(
                 Box(
                     contentAlignment = Alignment.Center
                 ) {
+                    @Suppress("DEPRECATION")
                     MyIconButton(
                         icon = Icons.Default.Sort.toIconComposable(),
                         onClick = { state.sorts.clear() }

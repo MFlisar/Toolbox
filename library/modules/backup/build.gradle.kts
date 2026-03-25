@@ -88,9 +88,11 @@ kotlin {
         val targetsAndroid = listOf(Platform.ANDROID)
 
         val notAndroidMain by creating { dependsOn(commonMain.get()) }
+        val featureBackupSupportMain by creating { dependsOn(commonMain.get()) }
         val featureNoBackupSupportMain by creating { dependsOn(commonMain.get()) }
 
         buildTargets.setupDependencies(notAndroidMain, sourceSets, targetsAndroid, platformsNotSupported = true)
+        buildTargets.setupDependencies(featureBackupSupportMain, sourceSets, targetsBackupSupport)
         buildTargets.setupDependencies(featureNoBackupSupportMain, sourceSets, targetsBackupSupport, platformsNotSupported = true)
 
         // ---------------------
