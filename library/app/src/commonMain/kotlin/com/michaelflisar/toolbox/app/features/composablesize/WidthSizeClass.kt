@@ -3,18 +3,18 @@ package com.michaelflisar.toolbox.app.features.composablesize
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.window.core.layout.WindowWidthSizeClass
+import androidx.window.core.layout.WindowSizeClass
 
 /**
  * prüft ob die Breite
- * nutzt dafür die Breakpoints aus [WindowWidthSizeClass] + fügt small hinzu
+ * nutzt dafür die Breakpoints aus [WindowSizeClass] + fügt small hinzu
  */
 enum class WidthSizeClass(
     val breakpoint: Dp
 )  {
     Small(480.dp),
-    Compact(600.dp),
-    Medium(840.dp),
+    Compact(WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND.dp), // 600
+    Medium(WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND.dp), // 840
     Large(0.dp)
     ;
 

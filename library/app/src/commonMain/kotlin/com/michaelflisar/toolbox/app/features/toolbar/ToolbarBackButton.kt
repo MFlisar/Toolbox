@@ -34,8 +34,9 @@ fun ToolbarBackButton(
                 .size(ToolbarBackButtonDefaults.Size)
                 .clip(shape)
                 .clickable { onClick() },
-            contentAlignment = Alignment.Companion.Center
+            contentAlignment = Alignment.Center
         ) {
+            @Suppress("DEPRECATION")
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = null

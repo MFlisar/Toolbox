@@ -256,6 +256,7 @@ fun DebugDrawer(
 
     // Daten
     if (showRegionData && FeedbackManager.supported && FeedbackManager.supportsSendRelevantFile) {
+        @Suppress("DEPRECATION")
         DebugDrawerRegion(
             image = { Icon(Icons.Default.InsertDriveFile, null) },
             label = "Data",
