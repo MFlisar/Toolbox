@@ -8,14 +8,13 @@ import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.padding
-
 import kotlinx.coroutines.launch
 
 object MyPagerDefaults {
@@ -40,7 +39,7 @@ fun <T> MyPager(
         modifier = modifier
     ) {
         // Tabs
-        TabRow(
+        SecondaryTabRow(
             selectedTabIndex = pagerState.currentPage, modifier = Modifier.fillMaxWidth()
         ) {
             repeat(pages.size) { index ->

@@ -26,11 +26,6 @@ plugins {
 // Apply custom build file plugin
 // ----------------------------
 
-buildFilePlugin {
-    // do not build demo projects in CI
-    excludeDemoFromCI.set(true)
-}
-
 // TODO: nur vorerst, solange die compose libs noch das alte parcelize nutzen
 allprojects {
     configurations.configureEach {

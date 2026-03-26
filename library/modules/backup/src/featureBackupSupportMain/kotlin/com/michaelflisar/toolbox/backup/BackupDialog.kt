@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composedialogs.core.Dialog
+import com.michaelflisar.composedialogs.core.DialogEventType
 import com.michaelflisar.composedialogs.core.DialogStateWithData
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
@@ -141,7 +142,7 @@ fun BackupDialog(
             state = dialogState,
             title = { Text(stringResource(mode.title)) },
             onEvent = {
-                if (it.isPositiveButton && mode == BackupDialog.Mode.Import && state.value is BackupDialog.State.Done) {
+                if (it.type == DialogEventType.ButtonPositive && mode == BackupDialog.Mode.Import && state.value is BackupDialog.State.Done) {
                     backupManager!!.onBackupRestored()
                 }
             }

@@ -5,7 +5,7 @@ kmp-parcelize =             "1.1.0-alpha01"
 kmp-platformcontext =       "1.1.0-alpha03" # TODO
 kmp-mail =                  "0.1.0"
 kotpreferences =        	"4.0.0-alpha02"
-lumberjack =                "10.0.0-alpha02"
+lumberjack =                "10.0.0-alpha03"
 composedebugdrawer =		"2.0.0"
 composedialogs =   		    "3.0.7"
 composechangelog =   		"3.0.0"
@@ -13,7 +13,7 @@ composepreferences =   		"2.0.0"
 composethemer =   			"1.0.2"
 composecolors =             "1.0.1"
 
-kmpdevtools =               "7.2.2" # change via "updateDevToolsVersion" gradle task!
+kmpdevtools =               "7.3.0" # change via "updateDevToolsVersion" gradle task!
 kmp-democomposables =       "1.0.2"
 
 # Google

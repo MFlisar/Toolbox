@@ -4,6 +4,8 @@ import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import com.michaelflisar.kmpdevtools.setupDependencies
+import org.gradle.kotlin.dsl.sourceSets
 
 plugins {
     // kmp + app/library
@@ -83,9 +85,6 @@ kotlin {
         // ---------------------
 
         val targetsBackupSupport = listOf(Platform.ANDROID, Platform.WINDOWS)
-        val targetsAndroid = listOf(Platform.ANDROID)
-        val targetsJvm = listOf(Platform.WINDOWS)
-        val targetsMobile = listOf(Platform.ANDROID, Platform.IOS)
 
         val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
         val featureNoFileSupportMain by creating { dependsOn(commonMain.get()) }
@@ -95,23 +94,33 @@ kotlin {
         val notJvmMain by creating { dependsOn(commonMain.get()) }
 
         val mobileMain by creating { dependsOn(commonMain.get()) }
+        val notMobileMain by creating { dependsOn(commonMain.get()) }
         val iosMain by creating { dependsOn(commonMain.get()) }
 
-        buildTargets.setupDependencies(featureFileSupportMain, sourceSets, Platform.LIST_FILE_SUPPORT)
-        buildTargets.setupDependencies(featureNoFileSupportMain, sourceSets, Platform.LIST_FILE_SUPPORT, platformsNotSupported = true)
+        setupDependencies(buildTargets, sourceSets) {
 
-        buildTargets.setupDependencies(featureBackupSupportMain, sourceSets, targetsBackupSupport)
-        buildTargets.setupDependencies(featureNoBackupSupportMain, sourceSets, targetsBackupSupport, platformsNotSupported = true)
+            Platform.IOS addSourceSet iosMain
 
-        buildTargets.setupDependencies(notAndroidMain, sourceSets, targetsAndroid, platformsNotSupported = true)
-        buildTargets.setupDependencies(notJvmMain, sourceSets, targetsJvm, platformsNotSupported = true)
+            featureFileSupportMain supportedBy Platform.LIST_FILE_SUPPORT
+            featureNoFileSupportMain supportedBy !Platform.LIST_FILE_SUPPORT
 
-        buildTargets.setupDependencies(mobileMain, sourceSets, targetsMobile)
-        buildTargets.setupDependencies(iosMain, sourceSets, listOf(Platform.IOS))
+            featureBackupSupportMain supportedBy targetsBackupSupport
+            featureNoBackupSupportMain supportedBy !targetsBackupSupport
+
+            mobileMain supportedBy Platform.LIST_MOBILE
+            notMobileMain supportedBy !Platform.LIST_MOBILE
+
+            notAndroidMain supportedBy !Platform.ANDROID
+
+            notJvmMain supportedBy !Platform.WINDOWS
+
+        }
 
         if (buildTargets.macOS) {
             val macosMain by creating { dependsOn(commonMain.get()) }
-            buildTargets.setupDependencies(macosMain, sourceSets, listOf(Platform.MACOS))
+            setupDependencies(buildTargets, sourceSets) {
+                macosMain supportedBy Platform.MACOS
+            }
         }
 
         // ---------------------
