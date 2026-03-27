@@ -4,6 +4,7 @@ import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
     // kmp + app/library
@@ -81,8 +82,13 @@ kotlin {
         val javaMain by creating { dependsOn(commonMain.get()) }
         val iosMain by creating { dependsOn(commonMain.get()) }
 
-        buildTargets.setupDependencies(javaMain, sourceSets, targetsJava)
-        buildTargets.setupDependencies(iosMain, sourceSets, listOf(Platform.IOS))
+        setupDependencies(buildTargets, sourceSets) {
+
+            Platform.IOS addSourceSet iosMain
+
+            javaMain supportedBy Platform.LIST_JAVA
+
+        }
 
         // ---------------------
         // dependencies

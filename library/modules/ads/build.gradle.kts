@@ -4,6 +4,7 @@ import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
     // kmp + app/library
@@ -72,11 +73,13 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val targetsAds = listOf(Platform.ANDROID, Platform.IOS)
-
         val adsSupported by creating { dependsOn(commonMain.get()) }
 
-        buildTargets.setupDependencies(adsSupported, sourceSets, targetsAds)
+        setupDependencies(buildTargets, sourceSets) {
+
+            adsSupported supportedBy Platform.LIST_MOBILE
+
+        }
 
         // ---------------------
         // dependencies

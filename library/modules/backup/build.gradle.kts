@@ -4,6 +4,7 @@ import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
     // kmp + app/library
@@ -85,15 +86,18 @@ kotlin {
         // ---------------------
 
         val targetsBackupSupport = listOf(Platform.ANDROID, Platform.WINDOWS)
-        val targetsAndroid = listOf(Platform.ANDROID)
 
         val notAndroidMain by creating { dependsOn(commonMain.get()) }
         val featureBackupSupportMain by creating { dependsOn(commonMain.get()) }
         val featureNoBackupSupportMain by creating { dependsOn(commonMain.get()) }
 
-        buildTargets.setupDependencies(notAndroidMain, sourceSets, targetsAndroid, platformsNotSupported = true)
-        buildTargets.setupDependencies(featureBackupSupportMain, sourceSets, targetsBackupSupport)
-        buildTargets.setupDependencies(featureNoBackupSupportMain, sourceSets, targetsBackupSupport, platformsNotSupported = true)
+        setupDependencies(buildTargets, sourceSets) {
+
+            notAndroidMain supportedBy !Platform.ANDROID
+            featureBackupSupportMain supportedBy targetsBackupSupport
+            featureNoBackupSupportMain supportedBy !targetsBackupSupport
+
+        }
 
         // ---------------------
         // dependencies

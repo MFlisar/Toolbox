@@ -92,7 +92,6 @@ kotlin {
         val featureNoBackupSupportMain by creating { dependsOn(commonMain.get()) }
         val notAndroidMain by creating { dependsOn(commonMain.get()) }
         val notJvmMain by creating { dependsOn(commonMain.get()) }
-
         val mobileMain by creating { dependsOn(commonMain.get()) }
         val notMobileMain by creating { dependsOn(commonMain.get()) }
         val iosMain by creating { dependsOn(commonMain.get()) }
@@ -119,7 +118,7 @@ kotlin {
         if (buildTargets.macOS) {
             val macosMain by creating { dependsOn(commonMain.get()) }
             setupDependencies(buildTargets, sourceSets) {
-                macosMain supportedBy Platform.MACOS
+                Platform.MACOS addSourceSet macosMain
             }
         }
 

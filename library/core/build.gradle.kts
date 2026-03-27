@@ -4,6 +4,7 @@ import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
     // kmp + app/library
@@ -87,24 +88,27 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val targetsMac = listOf(Platform.MACOS)
-        val targetsJava = listOf(Platform.ANDROID, Platform.WINDOWS)
-        val targetsFeedback = listOf(Platform.ANDROID, Platform.IOS)
-
-        val macosMain by creating { dependsOn(commonMain.get()) }
         val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
         val javaMain by creating { dependsOn(commonMain.get()) }
-
         val feedbackSupportedMain by creating { dependsOn(commonMain.get()) }
-
         val iosMain by creating { dependsOn(commonMain.get()) }
 
-        buildTargets.setupDependencies(macosMain, sourceSets, targetsMac)
-        buildTargets.setupDependencies(featureFileSupportMain, sourceSets, Platform.LIST_FILE_SUPPORT)
-        buildTargets.setupDependencies(javaMain, sourceSets, targetsJava)
-        buildTargets.setupDependencies(feedbackSupportedMain, sourceSets, targetsFeedback)
+        setupDependencies(buildTargets, sourceSets) {
 
-        buildTargets.setupDependencies(iosMain, sourceSets, listOf(Platform.IOS))
+            Platform.IOS addSourceSet iosMain
+
+            featureFileSupportMain supportedBy Platform.LIST_FILE_SUPPORT
+            javaMain supportedBy Platform.LIST_JAVA
+            feedbackSupportedMain supportedBy Platform.LIST_MOBILE
+
+        }
+
+        if (buildTargets.macOS) {
+            val macosMain by creating { dependsOn(commonMain.get()) }
+            setupDependencies(buildTargets, sourceSets) {
+                Platform.MACOS addSourceSet macosMain
+            }
+        }
 
         // ---------------------
         // dependencies

@@ -4,6 +4,7 @@ import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
     // kmp + app/library
@@ -77,11 +78,13 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val targetsJvm = listOf(Platform.WINDOWS)
-
         val notJvmMain by creating { dependsOn(commonMain.get()) }
 
-        buildTargets.setupDependencies(notJvmMain, sourceSets, targetsJvm, platformsNotSupported = true)
+        setupDependencies(buildTargets, sourceSets) {
+
+            notJvmMain supportedBy !Platform.WINDOWS
+
+        }
 
         // ---------------------
         // dependencies

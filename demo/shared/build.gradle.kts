@@ -6,6 +6,7 @@ import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.AppConfig
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
     // kmp + app/library
@@ -106,9 +107,14 @@ kotlin {
         val featureNoFileSupportMain by creating { dependsOn(commonMain.get()) }
         val mobileMain by creating { dependsOn(commonMain.get()) }
 
-        buildTargets.setupDependencies(featureFileSupportMain, sourceSets, Platform.LIST_FILE_SUPPORT)
-        buildTargets.setupDependencies(featureNoFileSupportMain, sourceSets, Platform.LIST_FILE_SUPPORT, platformsNotSupported = true)
-        buildTargets.setupDependencies(mobileMain, sourceSets, listOf(Platform.ANDROID, Platform.IOS))
+        setupDependencies(buildTargets, sourceSets) {
+
+            featureFileSupportMain supportedBy Platform.LIST_FILE_SUPPORT
+            featureNoFileSupportMain supportedBy !Platform.LIST_FILE_SUPPORT
+
+            mobileMain supportedBy Platform.LIST_MOBILE
+
+        }
 
         // ---------------------
         // dependencies
