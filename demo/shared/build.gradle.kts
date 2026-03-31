@@ -1,5 +1,4 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
-import com.michaelflisar.kmpdevtools.BuildFileUtil
 import com.michaelflisar.kmpdevtools.Targets
 import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.Platform
@@ -18,9 +17,7 @@ plugins {
     // org.jetbrains.compose
     alias(libs.plugins.jetbrains.compose)
     // docs, publishing, validation
-    alias(libs.plugins.dokka)
-    alias(libs.plugins.vanniktech.maven.publish.base)
-    alias(libs.plugins.binary.compatibility.validator)
+    // --
     // build tools
     alias(deps.plugins.kmpdevtools.buildplugin)
     alias(libs.plugins.buildkonfig)
@@ -187,28 +184,18 @@ kotlin {
 
         }
 
-        jvmMain.dependencies {
-
-            implementation(compose.desktop.currentOs) {
-                exclude(group = "org.jetbrains.compose.material", module = "material")
-            }
-
-        }
-
         androidMain.dependencies {
 
             api(libs.androidx.activity.compose)
             api(libs.jetbrains.compose.material3)
 
-            //implementation(deps.material)
+        }
+
+        mobileMain.dependencies {
 
             // PRO VERSION
             // - 1) ProVersionManager in Application konfigurieren
             api(project(":toolbox:modules:proversion"))
-
-        }
-
-        mobileMain.dependencies {
 
             // ADS:
             // - 1) App ID im Manifest eintragen

@@ -236,6 +236,7 @@ internal fun SettingsContent(
 
     val showLogFile = rememberSaveable { mutableStateOf(false) }
     val showAttachLogFile = rememberDialogState()
+    val showProVersionDialog = rememberDialogState()
 
     //val backup = remember { setup.backup }
 
@@ -255,7 +256,7 @@ internal fun SettingsContent(
                 // Region 0 - Header
                 // --------------------
 
-                RegionHeader(settings, buttons)
+                RegionHeader(settings, buttons, showProVersionDialog)
 
                 // --------------------
                 // Region 1 - Content
@@ -327,7 +328,7 @@ internal fun SettingsContent(
                             state = state,
                             handleBackPress = handleBackPress
                         ) {
-                            RegionHeader(settings, buttons)
+                            RegionHeader(settings, buttons, showProVersionDialog)
                             if (style.addThemeSetting)
                                 PreferenceSettingsTheme(true)
                             RegionLanguage(setup)
@@ -396,15 +397,18 @@ internal fun SettingsContent(
             }
         }
     }
+
+    ProVersionManager.Paywall(showProVersionDialog)
 }
 
 @Composable
 private fun PreferenceGroupScope.RegionHeader(
     settings: PreferenceSettings,
     buttons: List<SettingsHeaderButtons.Button>,
+    showProVersionDialog: DialogStateNoData,
 ) {
     SettingsHeader(settings)
-    SettingsProVersionHeader()
+    SettingsProVersionHeader(showProVersionDialog)
     SettingsHeaderButtons(buttons)
 }
 

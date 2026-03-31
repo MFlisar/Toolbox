@@ -17,13 +17,6 @@
     <string name="menu_cut">Ausschneiden</string>
     <string name="menu_region_selection">Selektion</string>
 
-    <!-- Dialoge -->
-    <string name="dlg_pro_version_title">Pro Version</string>
-    <string name="dlg_pro_version_info">Die Pro Version entfernt jegliche Werbung in dieser App. Willst du dir die Pro Version holen?</string>
-    <string name="dlg_pro_version_info_bought">Gratulation. Du hast dir soeben die Pro Version geholt. Viel Spass damit.</string>
-    <string name="dlg_getting_pro_error_info">Pro Version konnte nicht erworben werden! Probiere es bitte später nochmals oder kontaktiere den Entwickler.\n\nFehler: %1$s</string>
-	<string name="dlg_getting_pro_error_info2">Pro Version konnte nicht erworben werden! Probiere es bitte später nochmals oder kontaktiere den Entwickler.</string>
-   
     <!-- Enums -->
     <string name="theme_system">System</string>
     <string name="theme_dark">Dunkel</string>
@@ -63,6 +56,7 @@
     <string name="settings_feedback_details">Kontaktiere mich via Email und hänge optional die Log Datei dieser App an</string>
     <string name="settings_gdpr_conset">GDPR Einwilligungen</string>
     <string name="settings_gdpr_conset_details">GDPR Einwilligungen zurückziehen</string>
+    <string name="settings_pro_version_pro_version_title">Pro Version</string>
     <string name="settings_pro_version">Version</string>
     <string name="settings_pro_version_is_free">Free Version</string>
     <string name="settings_pro_version_is_free_with_click_info1">Free Version</string>

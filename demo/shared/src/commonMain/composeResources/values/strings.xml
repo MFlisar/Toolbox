@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Toolbox</string>
-
     <!-- pages -->
     <string name="page_home">Home</string>
     <string name="page_states">States</string>

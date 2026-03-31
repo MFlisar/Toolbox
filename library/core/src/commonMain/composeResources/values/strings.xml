@@ -17,13 +17,6 @@
     <string name="menu_cut">Cut</string>
     <string name="menu_region_selection">Selection</string>
 
-    <!-- Dialoge -->
-    <string name="dlg_pro_version_title">Pro Version</string>
-    <string name="dlg_pro_version_info">The Pro Version removes all ads from this app. Do you want to get the pro version?</string>
-    <string name="dlg_pro_version_info_bought">Congratulations. You just got the pro version of this app. Have fun with it.</string>
-    <string name="dlg_getting_pro_error_info">Error getting pro version! Please try again later or contact the developer.\n\nError: %1$s</string>
-	<string name="dlg_getting_pro_error_info2">Error getting pro version! Please try again later or contact the developer.</string>
-
     <!-- Enums -->
     <string name="theme_system">System</string>
     <string name="theme_dark">Dark</string>
@@ -63,6 +56,7 @@
     <string name="settings_feedback_details">Contact me via email and optionally attach this apps log file</string>
     <string name="settings_gdpr_conset">GDPR Consent</string>
     <string name="settings_gdpr_conset_details">Withdraw given GDPR consent</string>
+    <string name="settings_pro_version_pro_version_title">Pro Version</string>
     <string name="settings_pro_version">Version</string>
     <string name="settings_pro_version_is_free">Free Version</string>
     <string name="settings_pro_version_is_free_with_click_info1">Free Version</string>

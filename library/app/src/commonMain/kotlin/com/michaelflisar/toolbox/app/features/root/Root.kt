@@ -29,7 +29,6 @@ import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
-import com.michaelflisar.toolbox.app.features.proversion.ProVersionSetup
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.settings_changelog
 import org.jetbrains.compose.resources.stringResource
@@ -129,11 +128,5 @@ fun RootDialogs() {
         }
     }
 
-    val proVersionManager = ProVersionManager.setup
-    if (proVersionManager.supported && appState.showProVersionDialog.visible) {
-        (proVersionManager as? ProVersionSetup.Supported)?.manager?.ProVersionDialog(
-            appState.showProVersionDialog,
-            proVersionManager.proVersionInfoText
-        )
-    }
+    ProVersionManager.Paywall(appState.showProVersionDialog)
 }

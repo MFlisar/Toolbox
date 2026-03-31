@@ -1,6 +1,6 @@
 package com.michaelflisar.toolbox.app
 
-import com.michaelflisar.composechangelog.DefaultVersionFormatter
+import com.michaelflisar.composechangelog.format.DefaultVersionFormatter
 
 object Constants {
 

@@ -24,7 +24,6 @@ import com.michaelflisar.toolbox.app.features.scaffold.rememberNavigationStyleAu
 import com.michaelflisar.toolbox.app.features.toolbar.SharedToolbarContainer
 import com.michaelflisar.toolbox.app.features.toolbar.selection.AnimatedSelectionToolbarWrapper
 import com.michaelflisar.toolbox.app.features.toolbar.selection.SelectionToolbar
-import com.michaelflisar.toolbox.demo.Shared
 
 class MainActivity : ComponentActivity() {
 

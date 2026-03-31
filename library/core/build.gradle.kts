@@ -116,7 +116,7 @@ kotlin {
 
         commonMain.dependencies {
 
-            // kotlinx
+
             api(libs.jetbrains.kotlinx.coroutines.core)
             implementation(libs.jetbrains.kotlinx.serialization.json)
             implementation(libs.jetbrains.kotlinx.datetime)

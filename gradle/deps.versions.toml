@@ -2,18 +2,18 @@
 
 # mflisar (local snapshot: "LOCAL-SNAPSHOT")
 kmp-parcelize =             "1.1.0-alpha01"
-kmp-platformcontext =       "1.1.0-alpha03" # TODO
+kmp-platformcontext =       "1.1.0-alpha03"
 kmp-mail =                  "0.1.0"
 kotpreferences =        	"4.0.0-alpha02"
 lumberjack =                "10.0.0-alpha03"
-composedebugdrawer =		"2.0.0"
-composedialogs =   		    "3.0.7"
-composechangelog =   		"3.0.0"
-composepreferences =   		"2.0.0"
-composethemer =   			"1.0.2"
+composedebugdrawer =		"3.0.0-alpha01"
+composedialogs =   		    "4.0.0-alpha03"
+composechangelog =   		"4.0.0-alpha01"
+composepreferences =   		"3.0.0-alpha01"
+composethemer =   			"2.0.0-alpha01"
 composecolors =             "1.0.1"
 
-kmpdevtools =               "7.4.1" # change via "updateDevToolsVersion" gradle task!
+kmpdevtools =               "7.5.0" # change via "updateDevToolsVersion" gradle task!
 kmp-democomposables =       "1.0.2"
 
 # Google
@@ -32,6 +32,7 @@ voyager = 				    "1.1.0-beta03"
 composables =               "1.49.6"
 
 # Others
+revenuecat =                "2.10.0+17.52.0"
 stately =                   "2.1.0"
 acra =		        		"5.13.1"
 processphoenix = 			"3.0.0"
@@ -39,7 +40,7 @@ htmlconverter =             "1.1.0"
 filekit =                   "0.13.0"
 accompanist = 			    "0.37.3"
 csv =                       "1.14.1"
-ktor3 =                     "3.4.1"
+ktor3 =                     "3.4.2"
 coil =						"3.4.0"
 coil-transform =			"3.0.0"
 basic-ads =                 "1.1.0"
@@ -83,14 +84,11 @@ composedialogs-dialog-time =               		{ module = "io.github.mflisar.compo
 composedialogs-dialog-date =               		{ module = "io.github.mflisar.composedialogs:dialog-date",      			        version.ref = "composedialogs" }
 composedialogs-dialog-color =              		{ module = "io.github.mflisar.composedialogs:dialog-color",      			        version.ref = "composedialogs" }
 composedialogs-dialog-menu =              		{ module = "io.github.mflisar.composedialogs:dialog-menu",      			        version.ref = "composedialogs" }
-composedialogs-dialog-billing =              	{ module = "io.github.mflisar.composedialogs:dialog-billing",      			        version.ref = "composedialogs" }
 composedialogs-dialog-frequency =              	{ module = "io.github.mflisar.composedialogs:dialog-frequency",      			    version.ref = "composedialogs" }
 composechangelog-core =               			{ module = "io.github.mflisar.composechangelog:core",      			        	    version.ref = "composechangelog" }
 composechangelog-renderer-header =  		    { module = "io.github.mflisar.composechangelog:renderer-header",      		        version.ref = "composechangelog" }
 composechangelog-statesaver-preferences =  		{ module = "io.github.mflisar.composechangelog:statesaver-preferences",      		version.ref = "composechangelog" }
 composechangelog-statesaver-kotpreferences =	{ module = "io.github.mflisar.composechangelog:statesaver-kotpreferences",      	version.ref = "composechangelog" }
-composechangelog-plugin =						{ module = "io.github.mflisar.composechangelog:gradle-plugin",      				version.ref = "composechangelog" }
-composechangelog-shared =						{ module = "io.github.mflisar.composechangelog:gradle-plugin-shared",      		    version.ref = "composechangelog" }
 composepreferences-core =						{ module = "io.github.mflisar.composepreferences:core",      						version.ref = "composepreferences" }
 composepreferences-screen-bool =				{ module = "io.github.mflisar.composepreferences:screen-bool",      				version.ref = "composepreferences" }
 composepreferences-screen-button =				{ module = "io.github.mflisar.composepreferences:screen-button",      				version.ref = "composepreferences" }
@@ -147,6 +145,8 @@ voyager-screenmodel = 		                    { module = "cafe.adriel.voyager:voya
 composables-core =                              { module = "com.composables:core", 		                                	        version.ref = "composables" }
 
 # Others
+revenuecat-kmp-core =                           { module = "com.revenuecat.purchases:purchases-kmp-core", 			                version.ref = "revenuecat" }
+revenuecat-kmp-ui =                             { module = "com.revenuecat.purchases:purchases-kmp-ui", 			                version.ref = "revenuecat" }
 stately =                                       { module = "co.touchlab:stately-concurrency", 		                                version.ref = "stately" }
 acra-core =			                			{ module = "ch.acra:acra-core", 									    			version.ref = "acra" }
 acra-mail =			            			    { module = "ch.acra:acra-mail", 									    			version.ref = "acra" }

@@ -40,7 +40,7 @@ pluginManagement {
 
 plugins {
     // version catalogue does not work here!
-    id("io.github.mflisar.kmpdevtools.plugins-settings-gradle") version "7.4.1"
+    id("io.github.mflisar.kmpdevtools.plugins-settings-gradle") version "7.5.0"
 }
 val settingsPlugin = plugins.getPlugin(com.michaelflisar.kmpdevtools.SettingsFilePlugin::class.java)
 
@@ -59,16 +59,7 @@ settingsPlugin.includeModules(libraryId, libraryConfig, includeDokka = true)
 // --------------
 
 if (System.getenv("CI") != "true") {
-    // demo app
     include(":demo:shared")
     include(":demo:app:android")
     include(":demo:app:compose")
-//    // hello world app
-//    include(":demo:hello-world:app")
-//    include(":demo:hello-world:common")
-//    include(":demo:hello-world:common:core")
-//    include(":demo:hello-world:common:database")
-//    include(":demo:hello-world:feature")
-//    include(":demo:hello-world:feature:page1")
-//    include(":demo:hello-world:feature:page2")
 }

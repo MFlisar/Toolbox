@@ -1,8 +1,7 @@
 package com.michaelflisar.demo
 
 import androidx.compose.material3.LocalContentColor
-import com.michaelflisar.kotbilling.classes.Product
-import com.michaelflisar.kotbilling.classes.ProductType
+import com.michaelflisar.demo.pages.tests.TestPrefs
 import com.michaelflisar.kotpreferences.core.value
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
@@ -25,13 +24,11 @@ import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.classes.BackupConfig
 import com.michaelflisar.toolbox.backup.createDefaultBackupContent
 import com.michaelflisar.toolbox.demo.BuildConfig
-import com.michaelflisar.toolbox.demo.Prefs
 import com.michaelflisar.toolbox.demo.R
-import com.michaelflisar.toolbox.demo.Shared
-import com.michaelflisar.toolbox.demo.pages.tests.TestPrefs
 import com.michaelflisar.toolbox.extensions.isLight
 import com.michaelflisar.toolbox.features.proversion.ProState
-import com.michaelflisar.toolbox.proversion.AndroidProVersionManager
+import com.michaelflisar.toolbox.proversion.Entitlement
+import com.michaelflisar.toolbox.proversion.RevenueCatProVersionManager
 import com.michaelflisar.toolbox.utils.AndroidUtil
 
 class App : AndroidApplication() {
@@ -82,10 +79,12 @@ class App : AndroidApplication() {
 
         // 2) Ads + Pro Version enabled
         AdsManager.init(AdManagerImpl)
+
         ProVersionManager.init(
-            manager = AndroidProVersionManager(
-                scope = AppScope,
-                products = listOf(Product("pro", ProductType.InApp, false)),
+            manager = RevenueCatProVersionManager(
+                appScope = AppScope,
+                apiKey = "test_WDSRgDdXoVItJQYbRGDtmbakBjp", // TEST KEY
+                entitlement = Entitlement("pro-version"),
                 forceIsProInDebug = setup.debugPrefs.forceIsProInDebug,
                 isDebug = BuildConfig.DEBUG,
                 initialState = ProState.Unknown,

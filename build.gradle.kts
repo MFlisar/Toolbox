@@ -21,14 +21,3 @@ plugins {
     // others
     alias(libs.plugins.launch4j) apply false
 }
-
-// ----------------------------
-// Apply custom build file plugin
-// ----------------------------
-
-// TODO: nur vorerst, solange die compose libs noch das alte parcelize nutzen
-allprojects {
-    configurations.configureEach {
-        exclude(group = "io.github.mflisar.parcelize", module = "library")
-    }
-}

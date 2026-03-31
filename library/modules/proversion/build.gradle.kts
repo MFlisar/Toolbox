@@ -4,6 +4,7 @@ import com.michaelflisar.kmpdevtools.configs.library.AndroidLibraryConfig
 import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.core.configs.Config
 import com.michaelflisar.kmpdevtools.core.configs.LibraryConfig
+import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
     // kmp + app/library
@@ -88,7 +89,9 @@ kotlin {
 
             implementation(deps.composedialogs.core)
             implementation(deps.composedialogs.dialog.info)
-            api(deps.composedialogs.dialog.billing)
+
+            implementation(deps.revenuecat.kmp.core)
+            implementation(deps.revenuecat.kmp.ui)
 
             // Library
             api(project(":toolbox:core"))

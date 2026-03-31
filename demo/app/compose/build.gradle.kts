@@ -52,7 +52,7 @@ val androidConfig = AndroidLibraryConfig.createManualNamespace(
 )
 
 val desktopConfig = DesktopAppConfig(
-    mainClass = "com.michaelflisar.toolbox.demo.MainKt",
+    mainClass = "com.michaelflisar.demo.MainKt",
     ico = "icon.ico"
 )
 
@@ -62,7 +62,7 @@ val wasmConfig = WasmAppConfig(
 )
 
 // -------------------
-// Setup
+// Kotlin
 // -------------------
 
 dependencies {
@@ -103,6 +103,14 @@ kotlin {
         commonMain.dependencies {
 
             api(project(":demo:shared"))
+
+        }
+
+        jvmMain.dependencies {
+
+            implementation(compose.desktop.currentOs) {
+                exclude(group = "org.jetbrains.compose.material", module = "material")
+            }
 
         }
     }
