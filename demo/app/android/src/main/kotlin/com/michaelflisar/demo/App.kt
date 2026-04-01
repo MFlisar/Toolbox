@@ -23,12 +23,14 @@ import com.michaelflisar.toolbox.backup.BackupManagerImpl
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.classes.BackupConfig
 import com.michaelflisar.toolbox.backup.createDefaultBackupContent
+import com.michaelflisar.toolbox.core.resources.Res
+import com.michaelflisar.toolbox.core.resources.dlg_pro_version_info
 import com.michaelflisar.toolbox.demo.BuildConfig
 import com.michaelflisar.toolbox.demo.R
 import com.michaelflisar.toolbox.extensions.isLight
 import com.michaelflisar.toolbox.features.proversion.ProState
-import com.michaelflisar.toolbox.proversion.Entitlement
-import com.michaelflisar.toolbox.proversion.RevenueCatProVersionManager
+import com.michaelflisar.toolbox.proversion.OpenIAPProVersionManager
+import com.michaelflisar.toolbox.proversion.Product
 import com.michaelflisar.toolbox.utils.AndroidUtil
 
 class App : AndroidApplication() {
@@ -81,12 +83,23 @@ class App : AndroidApplication() {
         AdsManager.init(AdManagerImpl)
 
         ProVersionManager.init(
-            manager = RevenueCatProVersionManager(
+            //manager = RevenueCatProVersionManager(
+            //    appScope = AppScope,
+            //    apiKey = "test_WDSRgDdXoVItJQYbRGDtmbakBjp", // TEST KEY
+            //    entitlement = Entitlement("pro-version"),
+            //    forceIsProInDebug = setup.debugPrefs.forceIsProInDebug,
+            //    isDebug = BuildConfig.DEBUG,
+            //    initialState = ProState.Unknown,
+            //    log = true
+            //),
+            manager = OpenIAPProVersionManager(
                 appScope = AppScope,
-                apiKey = "test_WDSRgDdXoVItJQYbRGDtmbakBjp", // TEST KEY
-                entitlement = Entitlement("pro-version"),
+                products = Product.ANDROID_TEST_PRODUCTS
+                        //listOf(Product("pro_version"))
+                ,
                 forceIsProInDebug = setup.debugPrefs.forceIsProInDebug,
                 isDebug = BuildConfig.DEBUG,
+                infoTextResource = Res.string.dlg_pro_version_info,
                 initialState = ProState.Unknown,
                 log = true
             ),

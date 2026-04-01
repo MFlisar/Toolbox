@@ -5,12 +5,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.ExperimentalComposeUiApi
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.ToolboxLogging
+import com.michaelflisar.toolbox.app.features.activity.Activity
+import com.michaelflisar.toolbox.app.features.activity.LocalActivity
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.LocalBackHandlerRegistry
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.RegisterBackHandler
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.rememberBackHandlerRegistry
-import com.michaelflisar.toolbox.app.features.menu.MenuItem
-import com.michaelflisar.toolbox.app.features.toolbar.LocalToolbarMainMenuItems
-import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItems
 import com.michaelflisar.toolbox.app.features.toolbar.selection.LocalSelectionToolbarState
 import com.michaelflisar.toolbox.logIf
 
@@ -21,11 +20,13 @@ import com.michaelflisar.toolbox.logIf
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ProvideAppLocals(
+    activity: Activity,
     content: @Composable () -> Unit,
 ) {
     val backHandlerRegistry = rememberBackHandlerRegistry()
     CompositionLocalProvider(
-        LocalBackHandlerRegistry provides backHandlerRegistry
+        LocalBackHandlerRegistry provides backHandlerRegistry,
+        LocalActivity provides activity,
     ) {
         // Level 1: Selection Toolbar
         // Level 2: später registriert sich ggf. auch der Debug Drawer
@@ -38,7 +39,8 @@ fun ProvideAppLocals(
                 handle
             },
             handle = {
-                L.logIf(ToolboxLogging.Tag.Navigation)?.i { "BackHandlerRegistry - SelectionToolbarState handles back press" }
+                L.logIf(ToolboxLogging.Tag.Navigation)
+                    ?.i { "BackHandlerRegistry - SelectionToolbarState handles back press" }
                 selectionToolbarState.clearSelection(finish = true)
             }
         )

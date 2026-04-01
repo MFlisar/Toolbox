@@ -60,7 +60,9 @@ class MainActivity : ComponentActivity() {
                                 }
                                 //AndroidToolbar(AndroidAppDefaults.getMobileMenuItems(Shared.pageSettings))
                             },
-                            selectionToolbar = { SelectionToolbar() }
+                            selectionToolbar = {
+                                SelectionToolbar()
+                            }
                         )
                     },
                     navigationStyle = navigationStyle,

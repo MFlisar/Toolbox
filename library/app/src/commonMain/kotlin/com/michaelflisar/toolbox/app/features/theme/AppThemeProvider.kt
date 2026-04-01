@@ -11,7 +11,6 @@ import com.michaelflisar.toolbox.app.platform.UpdateComposeThemeStatusBar
 @Composable
 internal fun AppThemeProvider(
     theme: MyTheme,
-    activity: Any? = null,
     content: @Composable () -> Unit,
 ) {
     val composeThemeState = Preferences.rememberComposeTheme()
@@ -23,7 +22,7 @@ internal fun AppThemeProvider(
         MyTheme(
             theme = theme
         ) {
-            Platform.UpdateComposeThemeStatusBar(activity, composeThemeState)
+            Platform.UpdateComposeThemeStatusBar()
             content()
         }
     }

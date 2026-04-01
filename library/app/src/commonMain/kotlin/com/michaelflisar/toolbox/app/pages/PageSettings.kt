@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -53,8 +54,14 @@ abstract class PageSettings : NavScreen() {
     @Composable
     override fun Toolbar() {
         val data = provideData()
-        val canGoBack = remember {
+        val canGoBack = remember  {
             derivedStateOf { (preferenceState.value?.currentLevel ?: 0) > 0 }
+        }
+        LaunchedEffect(Unit) {
+            println("Toolbar::LaunchedEffect - canGoBack: ${canGoBack.value} | currentLevel")
+        }
+        LaunchedEffect(preferenceState.value?.currentLevel) {
+            println("Toolbar::PreferenceState currentLevel: ${preferenceState.value?.currentLevel}")
         }
         com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
             title = data.name,
@@ -88,8 +95,13 @@ private fun Page(
                 L.logIf(ToolboxLogging.Tag.Navigation)
                     ?.i { "BackHandlerRegistry - PreferenceState handles back press" }
                 preferenceState.value?.popLast()
-            }
+            },
+            visibleInToolbar = true
         )
         NavigatorBackHandler(navigator)
+
+        LaunchedEffect(preferenceState.value?.currentLevel) {
+            println("Page::PreferenceState currentLevel: ${preferenceState.value?.currentLevel} | navigator = $navigator")
+        }
     }
 }

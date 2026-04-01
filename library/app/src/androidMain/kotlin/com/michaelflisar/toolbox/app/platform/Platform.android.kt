@@ -2,19 +2,17 @@ package com.michaelflisar.toolbox.app.platform
 
 import android.content.res.Configuration
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import com.michaelflisar.composethemer.ComposeTheme
+import com.michaelflisar.composethemer.LocalComposeThemeState
 import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
 import com.michaelflisar.composethemer.defaultScrim
 import com.michaelflisar.kmp.platformcontext.PlatformContext
 import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import com.michaelflisar.toolbox.Platform
-import com.michaelflisar.toolbox.app.features.toolbar.toolbar
+import com.michaelflisar.toolbox.app.features.activity.LocalActivity
 import com.michaelflisar.toolbox.killApp
 import com.michaelflisar.toolbox.requireActivity
 import com.michaelflisar.toolbox.restartApp
@@ -41,17 +39,13 @@ private fun showToast(
 
 @Composable
 actual fun Platform.UpdateComposeThemeStatusBar(
-    activity: Any?,
-    composeThemeState: ComposeTheme.State,
+    statusBarColor: Color,
+    navigationBarColor: Color,
+    isDark: Boolean,
 ) {
-
-    val activity = activity as ComponentActivity
-    val statusBarColor = MaterialTheme.colorScheme.toolbar
-    val navigationBarColor = NavigationBarDefaults.containerColor
-
+    val composeThemeState = LocalComposeThemeState.current
+    val activity = LocalActivity.current
     val landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
-    val isDark = composeThemeState.base.value.isDark()
-
     UpdateEdgeToEdgeDefault(
         activity = activity,
         themeState = composeThemeState,

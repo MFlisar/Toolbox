@@ -17,6 +17,15 @@
     <string name="menu_cut">Ausschneiden</string>
     <string name="menu_region_selection">Selektion</string>
 
+    <!-- Dialoge -->
+    <string name="dlg_pro_version_info">Die Pro Version entfernt jegliche Werbung in dieser App. Willst du dir die Pro Version holen?</string>
+    <string name="dlg_pro_version_info_bought">Gratulation. Du hast dir soeben die Pro Version geholt. Viel Spass damit.</string>
+    <string name="dlg_pro_version_info_already_bought">Du besitzt bereits die Pro Version. Vielen Dank für deine Unterstützung..</string>
+    <string name="dlg_getting_pro_error_info">Pro Version konnte nicht erworben werden! Probiere es bitte später nochmals oder kontaktiere den Entwickler.</string>
+    <string name="dlg_pro_version_restore_purchases">Einkauf wiederherstellen</string>
+    <string name="dlg_pro_version_retry_loading_data">Daten nochmals laden</string>
+    <string name="dlg_pro_version_item_owned">Dieses Produkt wurde bereits gekauft</string>
+
     <!-- Enums -->
     <string name="theme_system">System</string>
     <string name="theme_dark">Dunkel</string>
@@ -33,7 +42,7 @@
     <string name="settings_group_style">Aussehen</string>
     <string name="settings_group_about">Über</string>
     <string name="settings_group_infos">Informations</string>
-	 <string name="settings_group_privacy">Privatsphäre</string>
+    <string name="settings_group_privacy">Privatsphäre</string>
     <string name="settings_group_backup">Sicherungen</string>
     <string name="settings_group_auto_backup">Automatische Sicherungen</string>
     <string name="settings_group_infos_details">Checke App Version, Änderungsprotokoll, …</string>

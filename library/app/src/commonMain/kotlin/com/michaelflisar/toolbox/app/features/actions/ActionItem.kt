@@ -28,6 +28,7 @@ import com.michaelflisar.toolbox.app.features.device.CurrentDevice
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.NavItem
 import com.michaelflisar.toolbox.app.features.navigation.NavItemAction
+import com.michaelflisar.toolbox.app.features.navigation.screen.INavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.toolbar.onToolbar
 import com.michaelflisar.toolbox.app.features.toolbar.toolbar
@@ -114,7 +115,12 @@ sealed class ActionItem {
                     buttons = DialogDefaults.buttonsDisabled()
                 ) {
                     //AppNavigator(screen)
-                    screen.Content()
+                    //Column {
+                    //    if (screen is INavScreen)
+                    //        screen.Toolbar()
+                        screen.Content()
+                    //}
+
                 }
             }
             return MenuItem.Item(

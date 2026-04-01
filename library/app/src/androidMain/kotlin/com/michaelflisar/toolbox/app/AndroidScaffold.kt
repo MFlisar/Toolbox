@@ -15,14 +15,13 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.core.app.ComponentActivity
+import androidx.activity.ComponentActivity
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
 import com.michaelflisar.toolbox.app.features.dialogs.ErrorDialogProvider
-import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.navigation.INavItem
 import com.michaelflisar.toolbox.app.features.navigationbar.NavigationBar
@@ -43,12 +42,12 @@ fun ComponentActivity.AndroidApplication(
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
-    ProvideAppLocals{
+    ProvideAppLocals(this) {
         AppNavigator(
             screen = screen
         ) { navigator ->
             val appState = rememberAppState()
-            AppThemeProvider(theme, this) {
+            AppThemeProvider(theme) {
                 RootLocalProvider(appState, setRootLocals = true) {
                     Root(
                         appState = appState,

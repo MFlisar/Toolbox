@@ -44,7 +44,7 @@ fun WasmApplication(
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
-    ProvideAppLocals {
+    ProvideAppLocals(Unit) {
         AppNavigator(
             screen = screen
         ) { navigator ->

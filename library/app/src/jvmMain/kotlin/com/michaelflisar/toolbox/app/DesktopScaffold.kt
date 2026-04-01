@@ -73,8 +73,7 @@ fun ApplicationScope.DesktopApplication(
     // Content
     content: @Composable DecoratedWindowScope.(navigator: Navigator) -> Unit,
 ) {
-    ProvideAppLocals {
-
+    ProvideAppLocals(Unit) {
 
             val desktopSetup = DesktopAppSetup.get()
 

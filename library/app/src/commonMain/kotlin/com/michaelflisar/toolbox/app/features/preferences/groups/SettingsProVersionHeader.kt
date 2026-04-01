@@ -15,7 +15,6 @@ import com.michaelflisar.composepreferences.core.classes.LocalPreferenceSettings
 import com.michaelflisar.composepreferences.core.composables.PreferenceItemDefaults
 import com.michaelflisar.composepreferences.core.scopes.PreferenceGroupScope
 import com.michaelflisar.composepreferences.screen.button.PreferenceButton
-import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.settings_pro_version
@@ -67,7 +66,7 @@ private fun PreferenceGroupScope.SettingsNotPro(
         onClick = { showProVersionDialog.show() },
         title = stringResource(if (info == null) Res.string.settings_pro_version else Res.string.settings_pro_version_is_free),
         subtitle = info ?: "",
-        enabled = Dependency.State(proState) { it == ProState.No },
+        enabled = Dependency.State(proState) { it != ProState.Yes },
         icon = {
             Icon(
                 modifier = Modifier.size(24.dp),

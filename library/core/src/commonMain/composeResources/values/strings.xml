@@ -17,6 +17,15 @@
     <string name="menu_cut">Cut</string>
     <string name="menu_region_selection">Selection</string>
 
+    <!-- Dialoge -->
+    <string name="dlg_pro_version_info">The Pro Version removes all ads from this app. Do you want to get the pro version?</string>
+    <string name="dlg_pro_version_info_bought">Congratulations. You just got the pro version of this app. Have fun with it.</string>
+    <string name="dlg_pro_version_info_already_bought">You already own the pro version. Thanks for supporting this project.</string>
+    <string name="dlg_getting_pro_error_info">Error getting pro version! Please try again later or contact the developer.</string>
+    <string name="dlg_pro_version_restore_purchases">Restore purchase</string>
+    <string name="dlg_pro_version_retry_loading_data">Retry loading data</string>
+    <string name="dlg_pro_version_item_owned">This item is already owned</string>
+
     <!-- Enums -->
     <string name="theme_system">System</string>
     <string name="theme_dark">Dark</string>

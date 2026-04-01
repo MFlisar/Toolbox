@@ -33,6 +33,7 @@ composables =               "1.49.6"
 
 # Others
 revenuecat =                "2.10.0+17.52.0"
+openiap =                   "1.3.8"
 stately =                   "2.1.0"
 acra =		        		"5.13.1"
 processphoenix = 			"3.0.0"
@@ -147,6 +148,7 @@ composables-core =                              { module = "com.composables:core
 # Others
 revenuecat-kmp-core =                           { module = "com.revenuecat.purchases:purchases-kmp-core", 			                version.ref = "revenuecat" }
 revenuecat-kmp-ui =                             { module = "com.revenuecat.purchases:purchases-kmp-ui", 			                version.ref = "revenuecat" }
+openiap =                                       { module = "io.github.hyochan:kmp-iap", 									        version.ref = "openiap" }
 stately =                                       { module = "co.touchlab:stately-concurrency", 		                                version.ref = "stately" }
 acra-core =			                			{ module = "ch.acra:acra-core", 									    			version.ref = "acra" }
 acra-mail =			            			    { module = "ch.acra:acra-mail", 									    			version.ref = "acra" }

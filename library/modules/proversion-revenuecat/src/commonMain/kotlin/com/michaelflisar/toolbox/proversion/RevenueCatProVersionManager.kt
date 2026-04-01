@@ -58,7 +58,7 @@ class RevenueCatProVersionManager(
             if (isDebug && forceIsProInDebug.read()) {
                 ProState.Yes
             } else {
-                val result = checkProVersionWithRevenueCat()
+                val result = doCheckProVersion()
                 L.logIf { log }?.v { "Pro Version: $result" }
                 result
             }
@@ -68,7 +68,7 @@ class RevenueCatProVersionManager(
         return newIsPro
     }
 
-    suspend fun checkProVersionWithRevenueCat(): ProState =
+    private suspend fun doCheckProVersion(): ProState =
         suspendCancellableCoroutine { continuation ->
             Purchases.sharedInstance.getCustomerInfo(
                 onError = { error ->

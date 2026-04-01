@@ -1,7 +1,6 @@
 package com.michaelflisar.toolbox.app.platform
 
 import androidx.compose.runtime.Composable
-import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kmp.platformcontext.PlatformContext
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.Platform
@@ -16,14 +15,6 @@ actual val Platform.kill: ((context: PlatformContext) -> Unit)?
 
 actual val Platform.showToast: ((message: String, duration: Int) -> Unit)?
     get() = null
-
-@Composable
-actual fun Platform.UpdateComposeThemeStatusBar(
-    activity: Any?,
-    composeThemeState: ComposeTheme.State,
-) {
-    // --
-}
 
 @Composable
 internal actual fun Platform.isDarkTheme(): Boolean {

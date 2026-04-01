@@ -12,15 +12,11 @@ sealed class ProVersionSetup {
     abstract val supported: Boolean
     abstract val proState: StateFlow<ProState>
 
-    abstract suspend fun checkProVersion(): ProState
-
     data object NotSupported : ProVersionSetup() {
         override val supported = false
         private val _proState = MutableStateFlow(ProState.Yes)
         override val proState: StateFlow<ProState>
             get() = _proState
-
-        override suspend fun checkProVersion() = proState.value
     }
 
     data class Supported(
@@ -29,7 +25,6 @@ sealed class ProVersionSetup {
     ) : ProVersionSetup() {
         override val supported = true
         override val proState = manager.proState
-        override suspend fun checkProVersion(): ProState = manager.checkProVersion()
     }
 
 }

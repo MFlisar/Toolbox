@@ -75,23 +75,24 @@ fun AppNavigatorFadeTransition(
 fun AppNavigatorFadeAndScaleTransition(
     navigator: Navigator,
 ) {
-    val animationSpecScale = tween<Float>(durationMillis = 150, delayMillis = 150, easing = LinearEasing)//spring<Float>(stiffness = Spring.StiffnessMediumLow)
-    val animationSpecFade = tween<Float>(durationMillis = 300, easing = FastOutSlowInEasing)//spring<Float>(stiffness = Spring.StiffnessMedium)
+    val fadeSpec = tween<Float>(
+        durationMillis = 220,
+        easing = FastOutSlowInEasing
+    )
+    val enterScaleSpec = tween<Float>(
+        durationMillis = 220,
+        easing = FastOutSlowInEasing
+    )
+
     ScreenTransition(
         navigator = navigator,
         disposeScreenAfterTransitionEnd = true,
         transition = {
-            (
-                    fadeIn(animationSpec = animationSpecFade) + scaleIn(
-                        initialScale = 0.95f,
-                        animationSpec = animationSpecScale
-                    )
-                            togetherWith fadeOut(animationSpec = animationSpecFade) +
-                            scaleOut(
-                                targetScale = 1.05f,
-                                animationSpec = animationSpecScale
-                            )
-                    )
+            (fadeIn(animationSpec = fadeSpec) +
+                    scaleIn(
+                        initialScale = 0.98f,
+                        animationSpec = enterScaleSpec
+                    )) togetherWith fadeOut(animationSpec = fadeSpec)
         }
     )
 }

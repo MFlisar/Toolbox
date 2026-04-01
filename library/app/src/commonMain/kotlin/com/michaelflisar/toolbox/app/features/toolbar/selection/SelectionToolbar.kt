@@ -2,7 +2,6 @@ package com.michaelflisar.toolbox.app.features.toolbar.selection
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.material.icons.Icons
@@ -26,6 +25,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.toolbox.Platform
+import com.michaelflisar.toolbox.app.features.navigation.findLocalByScreenOrThrow
+import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
+import com.michaelflisar.toolbox.app.features.toolbar.SharedToolbarContainer
+import com.michaelflisar.toolbox.app.features.toolbar.toolbar
+import com.michaelflisar.toolbox.app.platform.UpdateComposeThemeStatusBar
 import com.michaelflisar.toolbox.feature.selection.SelectionData
 import com.michaelflisar.toolbox.feature.selection.SelectionDataItems
 
@@ -119,11 +124,11 @@ object SelectionToolbarDefaults {
 }
 
 @Composable
-fun <ID: Comparable<ID>> rememberSelectionDataItems(
+fun <ID : Comparable<ID>> rememberSelectionDataItems(
     totalItemCount: Int,
     selectedIds: List<ID> = emptyList(),
     isActive: Boolean = false,
-    menuProvider: @Composable (data: SelectionDataItems<ID>) -> Unit
+    menuProvider: @Composable (data: SelectionDataItems<ID>) -> Unit,
 ): SelectionDataItems<ID> {
     val totalItemCount = rememberSaveable(totalItemCount) { mutableIntStateOf(totalItemCount) }
     val selectedIds = rememberSaveable { mutableStateOf(selectedIds) }
@@ -159,7 +164,7 @@ fun ResetSelectionToolbarOnScreenChange() {
 @Composable
 fun AnimatedSelectionToolbarWrapper(
     modifier: Modifier = Modifier,
-    toolbar: @Composable () -> Unit,
+    toolbar: @Composable () -> Unit= {},
     selectionToolbar: @Composable () -> Unit,
 ) {
     val selectionToolbarState = LocalSelectionToolbarState.current
@@ -189,6 +194,11 @@ fun SelectionToolbar(
     if (toolbarState.isInSelectionMode) {
         lastTitle.value = title(toolbarState.selectedCount, toolbarState.totalCount)
     }
+
+    // StatusBar anpassen
+    Platform.UpdateComposeThemeStatusBar(
+        statusBarColor = if (toolbarState.isInSelectionMode) colors.containerColor else MaterialTheme.colorScheme.toolbar
+    )
 
     AnimatedVisibility(
         visible = toolbarState.isInSelectionMode,

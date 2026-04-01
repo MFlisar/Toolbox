@@ -13,11 +13,3 @@ actual val Platform.kill: ((context: PlatformContext) -> Unit)?
 
 actual val Platform.showToast: ((message: String, duration: Int) -> Unit)?
     get() = null
-
-@Composable
-actual fun Platform.UpdateComposeThemeStatusBar(
-    activity: Any?,
-    composeThemeState: ComposeTheme.State,
-) {
-    // --
-}
