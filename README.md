@@ -32,7 +32,8 @@
 | table | ✅ | ✅ | ✅ | ✅ |
 | room | ✅ | ✅ | ✅ | ❌ |
 | ads | ✅ | ✅ | ❌ | ❌ |
-| proversion | ✅ | ❌ | ❌ | ❌ |
+| proversion-revenuecat | ✅ | ❌ | ❌ | ❌ |
+| proversion-openiap | ✅ | ✅ | ❌ | ❌ |
 | diff | ✅ | ✅ | ✅ | ✅ |
 | excel | ❌ | ❌ | ✅ | ❌ |
 
@@ -92,7 +93,8 @@ toolbox-powershell = { module = "io.github.mflisar.toolbox:powershell", version.
 toolbox-table = { module = "io.github.mflisar.toolbox:table", version.ref = "toolbox" }
 toolbox-room = { module = "io.github.mflisar.toolbox:room", version.ref = "toolbox" }
 toolbox-ads = { module = "io.github.mflisar.toolbox:ads", version.ref = "toolbox" }
-toolbox-proversion = { module = "io.github.mflisar.toolbox:proversion", version.ref = "toolbox" }
+toolbox-proversion-revenuecat = { module = "io.github.mflisar.toolbox:proversion-revenuecat", version.ref = "toolbox" }
+toolbox-proversion-openiap = { module = "io.github.mflisar.toolbox:proversion-openiap", version.ref = "toolbox" }
 toolbox-diff = { module = "io.github.mflisar.toolbox:diff", version.ref = "toolbox" }
 toolbox-excel = { module = "io.github.mflisar.toolbox:excel", version.ref = "toolbox" }
 ```
@@ -112,7 +114,8 @@ implementation(libs.toolbox.powershell)
 implementation(libs.toolbox.table)
 implementation(libs.toolbox.room)
 implementation(libs.toolbox.ads)
-implementation(libs.toolbox.proversion)
+implementation(libs.toolbox.proversion.revenuecat)
+implementation(libs.toolbox.proversion.openiap)
 implementation(libs.toolbox.diff)
 implementation(libs.toolbox.excel)
 ```
@@ -142,7 +145,8 @@ implementation("io.github.mflisar.toolbox:powershell:${toolbox}")
 implementation("io.github.mflisar.toolbox:table:${toolbox}")
 implementation("io.github.mflisar.toolbox:room:${toolbox}")
 implementation("io.github.mflisar.toolbox:ads:${toolbox}")
-implementation("io.github.mflisar.toolbox:proversion:${toolbox}")
+implementation("io.github.mflisar.toolbox:proversion-revenuecat:${toolbox}")
+implementation("io.github.mflisar.toolbox:proversion-openiap:${toolbox}")
 implementation("io.github.mflisar.toolbox:diff:${toolbox}")
 implementation("io.github.mflisar.toolbox:excel:${toolbox}")
 ```
