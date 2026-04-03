@@ -13,7 +13,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
@@ -28,6 +30,8 @@ import com.michaelflisar.toolbox.app.features.menu.Menu
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.menu.removeConsecutiveSeparators
 import com.michaelflisar.toolbox.app.features.navigation.findLocalByScreenOrThrow
+import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
+import com.michaelflisar.toolbox.app.features.navigation.screen.INavScreen
 import com.michaelflisar.toolbox.extensions.toIconComposable
 
 val LocalToolbarMainMenuItems = staticCompositionLocalOf { MainMenuItems() }
@@ -115,6 +119,7 @@ fun SharedToolbarContainer(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Toolbar(
+    screen: INavScreen,
     title: String,
     modifier: Modifier = Modifier,
     subTitle: String? = null,
@@ -150,7 +155,17 @@ fun Toolbar(
         windowInsets = TopAppBarDefaults.windowInsets,
         scrollBehavior = null,
         navigationIcon = {
-            if (canGoBack || navigator.canPop || backHandlerRegistry.wouldConsumeBackPress(true)) {
+            // canPop nur ändern solange der Screen auch wirklich der aktuelle ist,
+            // damit nicht plötzlich der Back Button verschwindet,
+            // wenn man bspw. zu einem anderen Screen wechselt
+            val canPop = remember { mutableStateOf(navigator.canPop) }
+            LaunchedEffect(navigator.lastNavItem) {
+                if (navigator.lastNavItem == screen) {
+                    canPop.value = navigator.canPop
+                }
+            }
+
+            if (canGoBack || canPop.value || backHandlerRegistry.wouldConsumeBackPress(true)) {
                 ToolbarBackButton(
                     onClick = {
                         if (!backHandlerRegistry.handleBackPress())

@@ -41,6 +41,7 @@ object PageTestExpandableHeader : NavScreen() {
     override fun Toolbar() {
         val data = provideData()
         com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+            screen = this,
             title = data.name,
             endContent = { MainMenuItems(showInOverflow = true) },
         )

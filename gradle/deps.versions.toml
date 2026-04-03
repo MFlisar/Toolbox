@@ -122,8 +122,7 @@ toolbox-powershell =                            { module = "io.github.mflisar.to
 toolbox-table =                                 { module = "io.github.mflisar.toolbox:table",                                       version.ref = "toolbox" }
 toolbox-room =                                  { module = "io.github.mflisar.toolbox:room",                                        version.ref = "toolbox" }
 toolbox-ads =                                   { module = "io.github.mflisar.toolbox:ads",                                         version.ref = "toolbox" }
-toolbox-proversion-revenuecat =                 { module = "io.github.mflisar.toolbox:proversion-revenuecat",                       version.ref = "toolbox" }
-toolbox-proversion-openiap =                    { module = "io.github.mflisar.toolbox:proversion-openiap",                          version.ref = "toolbox" }
+toolbox-proversion =                            { module = "io.github.mflisar.toolbox:proversion",                                  version.ref = "toolbox" }
 toolbox-diff =                                  { module = "io.github.mflisar.toolbox:diff",                                        version.ref = "toolbox" }
 toolbox-excel =                                 { module = "io.github.mflisar.toolbox:excel",                                       version.ref = "toolbox" }
 

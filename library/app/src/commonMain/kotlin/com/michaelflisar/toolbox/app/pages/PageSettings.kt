@@ -64,6 +64,7 @@ abstract class PageSettings : NavScreen() {
             println("Toolbar::PreferenceState currentLevel: ${preferenceState.value?.currentLevel}")
         }
         com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+            screen = this,
             title = data.name,
             canGoBack = canGoBack.value,
             onBack = { preferenceState.value?.popLast() }

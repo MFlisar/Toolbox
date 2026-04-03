@@ -128,7 +128,7 @@ sealed class AppPreferencesStyle {
 
     class Default internal constructor(
         override val addThemeSetting: Boolean,
-        val customContent: @Composable PreferenceGroupScope.() -> Unit,
+        val customContent: @Composable (PreferenceGroupScope.() -> Unit)?,
     ) : AppPreferencesStyle()
 
     class Pager internal constructor(
@@ -149,8 +149,8 @@ object AppPreferencesDefaults {
     @Composable
     fun styleDeviceDefault(
         addThemeSettings: Boolean,
-        customPageName: String,
-        customContent: @Composable PreferenceGroupScope.() -> Unit,
+        customPageName: String? = null,
+        customContent: @Composable (PreferenceGroupScope.() -> Unit)? = null,
     ): AppPreferencesStyle {
         return when (CurrentDevice.base) {
             BaseDevice.Mobile -> styleDefault(
@@ -159,20 +159,24 @@ object AppPreferencesDefaults {
             )
 
             BaseDevice.Desktop,
-            BaseDevice.Web,
-                -> stylePager(
-                addThemeSettings = addThemeSettings,
-                customPages = listOf(
+            BaseDevice.Web-> {
+                val page = customPageName?.let {
+                    if (customContent == null)
+                        throw RuntimeException("customPageName is not null, please provide a non null customContent lambda!")
                     AppPreferencesStyle.Pager.Page(customPageName) { customContent() }
+                }
+                stylePager(
+                    addThemeSettings = addThemeSettings,
+                    customPages = listOfNotNull(page)
                 )
-            )
+            }
         }
     }
 
     @Composable
     fun styleDefault(
         addThemeSettings: Boolean,
-        customContent: @Composable PreferenceGroupScope.() -> Unit,
+        customContent: @Composable (PreferenceGroupScope.() -> Unit)? = null,
     ): AppPreferencesStyle {
         return remember(addThemeSettings, customContent) {
             AppPreferencesStyle.Default(addThemeSettings, customContent)
@@ -264,7 +268,7 @@ internal fun SettingsContent(
 
                 if (style.addThemeSetting)
                     PreferenceSettingsTheme(true)
-                style.customContent(this)
+                style.customContent?.invoke(this)
 
                 // --------------------
                 // Region 2 - Sprache
