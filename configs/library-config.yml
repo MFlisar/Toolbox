@@ -22,6 +22,9 @@ modules:
   - artifact-id: ui
     description: a ui module
     path: library/modules/ui
+  - artifact-id: ui-adaptive
+    description: a adaptive ui module
+    path: library/modules/ui-adaptive
   - artifact-id: zip
     description: a zip module
     path: library/modules/zip

@@ -149,6 +149,7 @@ kotlin {
             // Library
             api(project(":toolbox:core"))
             api(project(":toolbox:modules:ui"))
+            api(project(":toolbox:modules:ui-adaptive"))
             api(project(":toolbox:modules:zip"))
             api(project(":toolbox:modules:backup"))
 

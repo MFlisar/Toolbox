@@ -26,7 +26,7 @@ class MainActivity : AndroidActivity() {
 
     @Composable
     override fun Content() {
-        
+
         // Init function
         AdManagerImpl.init()
 
