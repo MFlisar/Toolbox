@@ -49,9 +49,9 @@ modules:
   - artifact-id: ads
     description: provides ads composables
     path: library/modules/ads
-  - artifact-id: proversion-openiap
+  - artifact-id: proversion
     description: provides proversion checker functions (via openiap)
-    path: library/modules/proversion-openiap
+    path: library/modules/proversion
   - artifact-id: diff
     description: diff functions and UI
     path: library/modules/diff

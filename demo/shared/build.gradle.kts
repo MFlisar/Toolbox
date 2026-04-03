@@ -184,7 +184,7 @@ kotlin {
 
             // PRO VERSION
             // - 1) ProVersionManager in Application konfigurieren
-            api(project(":toolbox:modules:proversion-openiap"))
+            api(project(":toolbox:modules:proversion"))
 
             // ADS:
             // - 1) App ID im Manifest eintragen
