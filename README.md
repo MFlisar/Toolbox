@@ -23,6 +23,7 @@
 | core | ✅ | ✅ | ✅ | ✅ |
 | app | ✅ | ✅ | ✅ | ✅ |
 | ui | ✅ | ✅ | ✅ | ✅ |
+| ui-adaptive | ✅ | ✅ | ✅ | ✅ |
 | zip | ✅ | ✅ | ✅ | ✅ |
 | csv | ✅ | ❌ | ✅ | ❌ |
 | backup | ✅ | ✅ | ✅ | ✅ |
@@ -32,8 +33,7 @@
 | table | ✅ | ✅ | ✅ | ✅ |
 | room | ✅ | ✅ | ✅ | ❌ |
 | ads | ✅ | ✅ | ❌ | ❌ |
-| proversion-revenuecat | ✅ | ❌ | ❌ | ❌ |
-| proversion-openiap | ✅ | ✅ | ❌ | ❌ |
+| proversion | ✅ | ✅ | ❌ | ❌ |
 | diff | ✅ | ✅ | ✅ | ✅ |
 | excel | ❌ | ❌ | ✅ | ❌ |
 
@@ -50,7 +50,7 @@
 >   - `androidx.compose.animation.ExperimentalSharedTransitionApi` (2x)
 >   - `androidx.compose.foundation.ExperimentalFoundationApi` (1x)
 >   - `androidx.compose.foundation.layout.ExperimentalLayoutApi` (1x)
->   - `androidx.compose.material3.ExperimentalMaterial3Api` (15x)
+>   - `androidx.compose.material3.ExperimentalMaterial3Api` (16x)
 >   - `androidx.compose.ui.ExperimentalComposeUiApi` (10x)
 >   - `app.lexilabs.basic.ads.DependsOnGoogleMobileAds` (3x)
 >   - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (6x)
@@ -84,6 +84,7 @@ toolbox = "<LATEST-VERSION>"
 toolbox-core = { module = "io.github.mflisar.toolbox:core", version.ref = "toolbox" }
 toolbox-app = { module = "io.github.mflisar.toolbox:app", version.ref = "toolbox" }
 toolbox-ui = { module = "io.github.mflisar.toolbox:ui", version.ref = "toolbox" }
+toolbox-ui-adaptive = { module = "io.github.mflisar.toolbox:ui-adaptive", version.ref = "toolbox" }
 toolbox-zip = { module = "io.github.mflisar.toolbox:zip", version.ref = "toolbox" }
 toolbox-csv = { module = "io.github.mflisar.toolbox:csv", version.ref = "toolbox" }
 toolbox-backup = { module = "io.github.mflisar.toolbox:backup", version.ref = "toolbox" }
@@ -93,8 +94,7 @@ toolbox-powershell = { module = "io.github.mflisar.toolbox:powershell", version.
 toolbox-table = { module = "io.github.mflisar.toolbox:table", version.ref = "toolbox" }
 toolbox-room = { module = "io.github.mflisar.toolbox:room", version.ref = "toolbox" }
 toolbox-ads = { module = "io.github.mflisar.toolbox:ads", version.ref = "toolbox" }
-toolbox-proversion-revenuecat = { module = "io.github.mflisar.toolbox:proversion-revenuecat", version.ref = "toolbox" }
-toolbox-proversion-openiap = { module = "io.github.mflisar.toolbox:proversion-openiap", version.ref = "toolbox" }
+toolbox-proversion = { module = "io.github.mflisar.toolbox:proversion", version.ref = "toolbox" }
 toolbox-diff = { module = "io.github.mflisar.toolbox:diff", version.ref = "toolbox" }
 toolbox-excel = { module = "io.github.mflisar.toolbox:excel", version.ref = "toolbox" }
 ```
@@ -105,6 +105,7 @@ And then use the definitions in your projects **build.gradle.kts** file like fol
 implementation(libs.toolbox.core)
 implementation(libs.toolbox.app)
 implementation(libs.toolbox.ui)
+implementation(libs.toolbox.ui.adaptive)
 implementation(libs.toolbox.zip)
 implementation(libs.toolbox.csv)
 implementation(libs.toolbox.backup)
@@ -114,8 +115,7 @@ implementation(libs.toolbox.powershell)
 implementation(libs.toolbox.table)
 implementation(libs.toolbox.room)
 implementation(libs.toolbox.ads)
-implementation(libs.toolbox.proversion.revenuecat)
-implementation(libs.toolbox.proversion.openiap)
+implementation(libs.toolbox.proversion)
 implementation(libs.toolbox.diff)
 implementation(libs.toolbox.excel)
 ```
@@ -136,6 +136,7 @@ val toolbox = "<LATEST-VERSION>"
 implementation("io.github.mflisar.toolbox:core:${toolbox}")
 implementation("io.github.mflisar.toolbox:app:${toolbox}")
 implementation("io.github.mflisar.toolbox:ui:${toolbox}")
+implementation("io.github.mflisar.toolbox:ui-adaptive:${toolbox}")
 implementation("io.github.mflisar.toolbox:zip:${toolbox}")
 implementation("io.github.mflisar.toolbox:csv:${toolbox}")
 implementation("io.github.mflisar.toolbox:backup:${toolbox}")
@@ -145,8 +146,7 @@ implementation("io.github.mflisar.toolbox:powershell:${toolbox}")
 implementation("io.github.mflisar.toolbox:table:${toolbox}")
 implementation("io.github.mflisar.toolbox:room:${toolbox}")
 implementation("io.github.mflisar.toolbox:ads:${toolbox}")
-implementation("io.github.mflisar.toolbox:proversion-revenuecat:${toolbox}")
-implementation("io.github.mflisar.toolbox:proversion-openiap:${toolbox}")
+implementation("io.github.mflisar.toolbox:proversion:${toolbox}")
 implementation("io.github.mflisar.toolbox:diff:${toolbox}")
 implementation("io.github.mflisar.toolbox:excel:${toolbox}")
 ```
