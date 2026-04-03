@@ -61,10 +61,12 @@ object Shared {
     ): AppSetup {
         return AppSetup(
             developer = developer,
-            versionCode = BuildKonfig.versionCode,
-            versionName = BuildKonfig.versionName,
-            packageName = BuildKonfig.packageName,
-            appName = BuildKonfig.appName,
+            appData = AppSetup.AppData(
+                versionCode = BuildKonfig.versionCode,
+                versionName = BuildKonfig.versionName,
+                namespace = BuildKonfig.namespace,
+                name = BuildKonfig.appName
+            ),
             icon = icon,
             themeSupport = AppSetup.ThemeSupport.full(
                 DefaultThemes.getAllThemes() +

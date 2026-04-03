@@ -376,14 +376,14 @@ internal fun SettingsContent(
                 is DialogEvent.Button -> {
                     when (it.button) {
                         DialogButtonType.Positive -> FeedbackManager.sendFeedback(
-                            appName = setup.appName,
+                            appName = setup.appData.name,
                             fileLoggerSetup = setup.fileLogger.setup,
                             attachments = emptyList(),
                             appendLogFiles = true,
                         )
 
                         DialogButtonType.Negative -> FeedbackManager.sendFeedback(
-                            appName = setup.appName,
+                            appName = setup.appData.name,
                             fileLoggerSetup = setup.fileLogger.setup,
                             attachments = emptyList(),
                             appendLogFiles = false
@@ -511,7 +511,7 @@ private fun PreferenceGroupScope.RegionAbout(
                                         showAttachLogFile.show()
                                     } else {
                                         FeedbackManager.sendFeedback(
-                                            appName = setup.appName,
+                                            appName = setup.appData.name,
                                             fileLoggerSetup = setup.fileLogger.setup,
                                             attachments = emptyList(),
                                             appendLogFiles = false
@@ -675,7 +675,7 @@ private fun PreferenceGroupScope.RegionAbout(
                             PreferenceButton(
                                 onClick = {
                                     scope.launch {
-                                        FeedbackManager.sendRelevantFiles(setup.appName)
+                                        FeedbackManager.sendRelevantFiles(setup.appData.name)
                                     }
                                 },
                                 title = "Send All App Files As Mail",

@@ -37,7 +37,7 @@ object DesktopAppDefaults {
         val setup = AppSetup.get()
         return listOfNotNull(
             DesktopStatusBarItem.Text(
-                "App Version: ${setup.versionName}",
+                "App Version: ${setup.appData.versionName}",
                 onClick = onAppVersionClick
             ).takeIf { showAppVersionLeft }
         )

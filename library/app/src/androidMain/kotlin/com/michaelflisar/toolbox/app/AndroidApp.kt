@@ -21,7 +21,7 @@ object AndroidApp {
             app = app,
             acraSetup = AcraSetup(
                 appIcon = appIcon,
-                appName = setup.appName
+                appName = setup.appData.name
             ),
             fileLoggerSetup = setup.fileLogger?.setup,
             buildConfigClass = androidSetup.buildConfigClass.java,

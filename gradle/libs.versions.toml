@@ -2,6 +2,7 @@
 
 gradle = 				                "9.1.0"
 kotlin = 				                "2.3.20"
+ksp = 				                    "2.3.6"
 
 # github release (dokka + maven + binary compatibility)
 dokka =                                 "2.2.0"
@@ -35,7 +36,7 @@ jetbrains-kotlinx-serialization = 	    "1.10.0"
 jetbrains-kotlinx-datetime =            "0.7.1"
 jetbrains-kotlinx-io-core =             "0.9.0"
 jetbrains-kotlinx-browser =             "0.5.0"
-jetbrains-kotlinx-atomicfu =            "0.29.0"
+jetbrains-kotlinx-atomicfu =            "0.32.1"
 
 # others
 desugar =                               "2.1.5"
@@ -44,6 +45,8 @@ easylauncher = 					        "6.4.1"
 launch4j =                              "4.0.0"
 
 [plugins]
+
+ksp =                                               { id = "com.google.devtools.ksp",                   version.ref = "ksp" }
 
 # android
 android-application = 			                    { id = "com.android.application", 	                version.ref = "gradle" }
@@ -66,6 +69,9 @@ binary-compatibility-validator =                    { id = "org.jetbrains.kotlin
 # org.jetbrains.compose
 jetbrains-compose =                                 { id = "org.jetbrains.compose",                     version.ref = "jetbrains-compose" }
 jetbrains-compose-hotreload =                       { id = "org.jetbrains.compose.hot-reload",          version.ref = "jetbrains-compose-hot-reload" }
+
+# androidx
+androidx-room =                                     { id = "androidx.room",                             version.ref = "androidx-room" }
 
 # others
 buildkonfig =                                       { id = "com.codingfeline.buildkonfig",              version.ref = "buildkonfig" }

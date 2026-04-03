@@ -1,32 +1,24 @@
 package com.michaelflisar.toolbox.app.features.navigation
 
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.backhandler.BackHandler
 import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.NavigatorContent
 import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
-import cafe.adriel.voyager.navigator.OnBackPressed
 import cafe.adriel.voyager.transitions.FadeTransition
 import cafe.adriel.voyager.transitions.ScreenTransition
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.michaelflisar.lumberjack.core.L
-import com.michaelflisar.toolbox.ToolboxLogging
-import com.michaelflisar.toolbox.app.features.backhandlerregistry.LocalBackHandlerRegistry
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.NavigatorBackHandler
 import com.michaelflisar.toolbox.app.features.toolbar.selection.ResetSelectionToolbarOnScreenChange
-import com.michaelflisar.toolbox.logIf
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

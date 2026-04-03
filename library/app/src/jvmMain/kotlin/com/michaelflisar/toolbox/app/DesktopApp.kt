@@ -11,6 +11,6 @@ object DesktopApp {
     ) {
         App.init(setup)
         App.registerSingleton(desktopSetup)
-        FileKit.init(appId = setup.packageName)
+        FileKit.init(appId = setup.appData.namespace)
     }
 }

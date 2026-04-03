@@ -70,8 +70,8 @@ fun SettingsHeaderContent(
     modifier: Modifier = Modifier,
 ) {
     val setup = AppSetup.get()
-    val versionCode = setup.versionCode
-    val versionName = setup.versionName
+    val versionCode = setup.appData.versionCode
+    val versionName = setup.appData.versionName
     MyColumn(
         modifier = modifier
     ) {
@@ -85,7 +85,7 @@ fun SettingsHeaderContent(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = setup.appName,
+                    text = setup.appData.name,
                     style = MaterialTheme.typography.titleLarge
                 )
                 Text(

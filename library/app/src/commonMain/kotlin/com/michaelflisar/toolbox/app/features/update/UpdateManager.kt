@@ -22,7 +22,7 @@ class UpdateManager(
     suspend fun update(setup: AppSetup) {
 
         var lastVersion = setup.prefs.lastAppVersion.read()
-        val currentVersion = setup.versionCode
+        val currentVersion = setup.appData.versionCode
         L.logIf(ToolboxLogging.Tag.UpdateMananger)
             ?.d { "lastVersion = $lastVersion => currentVersion = $currentVersion " }
         if (isFirstRun(lastVersion)) {

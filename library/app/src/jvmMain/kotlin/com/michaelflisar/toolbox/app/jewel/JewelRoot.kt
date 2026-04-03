@@ -44,7 +44,7 @@ internal fun JewelRoot(
             },
             state = jewelAppState.windowState,
             visible = desktopSetup.visible,
-            title = setup.appName,
+            title = setup.appData.name,
             icon = desktopSetup.appIcon(), // icon in windows toolbar
             resizable = desktopSetup.resizable,
             enabled = desktopSetup.enabled,

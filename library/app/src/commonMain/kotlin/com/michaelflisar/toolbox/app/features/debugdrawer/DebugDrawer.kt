@@ -269,7 +269,7 @@ fun DebugDrawer(
                 label = "Send relevant app files"
             ) {
                 scope.launch {
-                    FeedbackManager.sendRelevantFiles(setup.appName)
+                    FeedbackManager.sendRelevantFiles(setup.appData.name)
                 }
             }
         }

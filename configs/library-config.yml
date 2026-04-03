@@ -2,7 +2,6 @@
 github:
   name: Toolbox
   release: 2021
-  namespace: com.michaelflisar.toolbox
   license:
     name: Apache License 2.0
     path: blob/main/LICENSE
@@ -50,9 +49,6 @@ modules:
   - artifact-id: ads
     description: provides ads composables
     path: library/modules/ads
-  - artifact-id: proversion-revenuecat
-    description: provides proversion checker functions (via revenuecat)
-    path: library/modules/proversion-revenuecat
   - artifact-id: proversion-openiap
     description: provides proversion checker functions (via openiap)
     path: library/modules/proversion-openiap

@@ -92,7 +92,7 @@ fun RootDialogs() {
     LaunchedEffect(Unit) {
         appState.changelogState.checkShouldShowChangelogOnStart(
             stateSaver = changelogStateSaverKotPrefs,
-            versionName = setup.versionName,
+            versionName = setup.appData.versionName,
             versionFormatter = changelogSetup.versionFormatter
         )
     }

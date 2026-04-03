@@ -48,7 +48,7 @@ import org.jetbrains.compose.resources.stringResource
 fun main() {
 
     // 1) Pfade
-    val dataFolder = JvmFolderUtil.getPathForAppData(BuildKonfig.packageName)
+    val dataFolder = JvmFolderUtil.getPathForAppData(BuildKonfig.namespace)
 
     // 2) Storages erstellen
     val storageSettings = DataStoreStorage.create(folder = dataFolder, name = "settings")

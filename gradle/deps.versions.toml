@@ -12,8 +12,9 @@ composechangelog =   		"4.0.0-alpha01"
 composepreferences =   		"3.0.0-alpha01"
 composethemer =   			"2.0.0-alpha01"
 composecolors =             "1.0.1"
+toolbox =                   "4.0.0-alpha03"
 
-kmpdevtools =               "7.5.0" # change via "updateDevToolsVersion" gradle task!
+kmpdevtools =               "7.6.1" # change via "updateDevToolsVersion" gradle task!
 kmp-democomposables =       "1.0.2"
 
 # Google
@@ -110,6 +111,22 @@ composecolors-material =						{ module = "io.github.mflisar.composecolors:materi
 composecolors-x11 =								{ module = "io.github.mflisar.composecolors:x11",      								version.ref = "composecolors" }
 composecolors-material-palette =				{ module = "io.github.mflisar.composecolors:material-palette",      				version.ref = "composecolors" }
 composecolors-x11-palette =						{ module = "io.github.mflisar.composecolors:x11-palette",      						version.ref = "composecolors" }
+toolbox-core =                                  { module = "io.github.mflisar.toolbox:core",                                        version.ref = "toolbox" }
+toolbox-app =                                   { module = "io.github.mflisar.toolbox:app",                                         version.ref = "toolbox" }
+toolbox-ui =                                    { module = "io.github.mflisar.toolbox:ui",                                          version.ref = "toolbox" }
+toolbox-zip =                                   { module = "io.github.mflisar.toolbox:zip",                                         version.ref = "toolbox" }
+toolbox-csv =                                   { module = "io.github.mflisar.toolbox:csv",                                         version.ref = "toolbox" }
+toolbox-backup =                                { module = "io.github.mflisar.toolbox:backup",                                      version.ref = "toolbox" }
+toolbox-service =                               { module = "io.github.mflisar.toolbox:service",                                     version.ref = "toolbox" }
+toolbox-form =                                  { module = "io.github.mflisar.toolbox:form",                                        version.ref = "toolbox" }
+toolbox-powershell =                            { module = "io.github.mflisar.toolbox:powershell",                                  version.ref = "toolbox" }
+toolbox-table =                                 { module = "io.github.mflisar.toolbox:table",                                       version.ref = "toolbox" }
+toolbox-room =                                  { module = "io.github.mflisar.toolbox:room",                                        version.ref = "toolbox" }
+toolbox-ads =                                   { module = "io.github.mflisar.toolbox:ads",                                         version.ref = "toolbox" }
+toolbox-proversion-revenuecat =                 { module = "io.github.mflisar.toolbox:proversion-revenuecat",                       version.ref = "toolbox" }
+toolbox-proversion-openiap =                    { module = "io.github.mflisar.toolbox:proversion-openiap",                          version.ref = "toolbox" }
+toolbox-diff =                                  { module = "io.github.mflisar.toolbox:diff",                                        version.ref = "toolbox" }
+toolbox-excel =                                 { module = "io.github.mflisar.toolbox:excel",                                       version.ref = "toolbox" }
 
 kmp-democomposables =                           { module = "io.github.mflisar.democomposables:library",                             version.ref = "kmp-democomposables" }
 

@@ -16,10 +16,7 @@ class AppSetup(
         Constants.DEVELOPER_NAME,
         Constants.DEVELOPER_EMAIL
     ),
-    val versionCode: Int,
-    val versionName: String,
-    val packageName: String,
-    val appName: String,
+    val appData: AppData,
     val icon: @Composable () -> Painter,
     val themeSupport: ThemeSupport,
     val prefs: BasePrefs,
@@ -29,7 +26,7 @@ class AppSetup(
     val disableLanguagePicker: Boolean,
     val fileLogger: FileLogger<*>?,
     val changelogSetup: Changelog.Setup?,
-    val isDebugBuild: Boolean
+    val isDebugBuild: Boolean,
 ) {
     companion object {
         fun get() = App.requireSingleton<AppSetup>()
@@ -58,5 +55,12 @@ class AppSetup(
         fun supportsTheming() =
             ComposeTheme.getRegisteredThemes().size > 1 || supportDarkLight || supportContrast || supportDynamicColors
     }
+
+    class AppData(
+        val versionCode: Int,
+        val versionName: String,
+        val namespace: String,
+        val name: String,
+    )
 
 }

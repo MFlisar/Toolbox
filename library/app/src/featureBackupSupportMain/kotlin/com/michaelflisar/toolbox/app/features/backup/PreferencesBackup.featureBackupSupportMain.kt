@@ -166,7 +166,7 @@ fun PreferenceGroupScope.PreferencesBackup(
     BackupDialog(
         dialogState = backupDialog,
         exportFileName = BackupDefaults.getDefaultBackupFileName(
-            appName = setup.appName,
+            appName = setup.appData.name,
             extension = backup.config.extension,
             auto = false
         ),

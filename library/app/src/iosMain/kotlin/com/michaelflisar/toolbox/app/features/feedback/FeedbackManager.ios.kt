@@ -22,7 +22,7 @@ actual object FeedbackManager {
         val appSetup = AppSetup.get()
         L.sendFeedback(
             appName = appName,
-            appVersion = appSetup.versionName,
+            appVersion = appSetup.appData.versionName,
             fileLoggingSetup = fileLoggerSetup,
             files = attachments.map {
                 it.nsUrl.toKotlinxPath()

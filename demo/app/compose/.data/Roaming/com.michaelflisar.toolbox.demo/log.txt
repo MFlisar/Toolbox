@@ -112,3 +112,20 @@
 [D] 2026-04-01 10:29:23.063 [UpdateManager.kt:27]: lastVersion = 1 => currentVersion = 1 
 [D] 2026-04-01 10:29:23.099 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
 [I] 2026-04-01 10:29:25.680 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[D] 2026-04-01 15:39:42.775 [UpdateManager.kt:27]: lastVersion = 1 => currentVersion = 1 
+[D] 2026-04-01 15:39:42.806 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-01 15:39:45.660 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[D] 2026-04-01 21:21:59.345 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-01 21:21:59.313 [UpdateManager.kt:27]: lastVersion = 1 => currentVersion = 1 
+[I] 2026-04-01 21:22:02.762 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[D] 2026-04-02 09:17:49.949 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-02 09:17:49.917 [UpdateManager.kt:27]: lastVersion = 1 => currentVersion = 1 
+[I] 2026-04-02 09:17:52.949 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[D] 2026-04-02 14:19:52.876 [UpdateManager.kt:27]: lastVersion = 1 => currentVersion = 1 
+[D] 2026-04-02 14:19:52.912 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-02 14:19:56.031 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[I] 2026-04-02 14:20:00.876 [WindowState.kt:96]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[I] 2026-04-02 14:20:01.922 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[D] 2026-04-02 15:24:27.290 [UpdateManager.kt:27]: lastVersion = 1 => currentVersion = 1 
+[D] 2026-04-02 15:24:27.333 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-02 15:24:31.301 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}

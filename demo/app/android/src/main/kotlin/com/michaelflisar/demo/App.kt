@@ -113,7 +113,7 @@ class App : AndroidApplication() {
                     backupContent = BackupDefaults.createDefaultBackupContent()
                 ),
                 autoBackupConfig = AutoBackupConfig(
-                    appName = setup.appName,
+                    appName = setup.appData.name,
                     frequencyData = { setup.prefs.autoBackupFrequency.value },
                     backupPathData = { setup.prefs.backupPathData.value },
                 )

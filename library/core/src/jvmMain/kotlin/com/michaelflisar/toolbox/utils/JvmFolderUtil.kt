@@ -19,7 +19,7 @@ object JvmFolderUtil {
 
     fun getDesktopPath() = "${System.getProperty("user.home").replace("\\", "/")}/Desktop"
 
-    fun getPathForAppData(packageName: String) = getAppDataPath(AppData.Roaming, packageName)
+    fun getPathForAppData(namespace: String) = getAppDataPath(AppData.Roaming, namespace)
 
     /**
      * C:\Users\<USER>
