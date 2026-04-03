@@ -80,7 +80,7 @@ kotlin {
 
         val styleMaterial3 by creating { dependsOn(commonMain.get()) }
         val styleCupertino by creating { dependsOn(commonMain.get()) }
-        val styleFluent2 by creating { dependsOn(commonMain.get()) }
+        // val styleFluent2 by creating { dependsOn(commonMain.get()) }
 
         setupDependencies(buildTargets, sourceSets) {
 
@@ -88,7 +88,7 @@ kotlin {
 
             styleMaterial3 supportedBy Platform.ANDROID
             styleCupertino supportedBy Platform.IOS
-            styleFluent2 supportedBy Platform.WINDOWS
+            styleCupertino supportedBy Platform.WINDOWS // TODO: implement styleFluent2 and use it; für tests wird dzt. cupertino hier genutzt
             styleMaterial3 supportedBy Platform.WASM
 
         }

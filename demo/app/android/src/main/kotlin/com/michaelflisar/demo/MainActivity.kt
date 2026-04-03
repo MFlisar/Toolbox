@@ -49,7 +49,6 @@ class MainActivity : AndroidActivity() {
                                     it.Toolbar()
                                 }
                             }
-                            //AndroidToolbar(AndroidAppDefaults.getMobileMenuItems(Shared.pageSettings))
                         },
                         selectionToolbar = {
                             SelectionToolbar()

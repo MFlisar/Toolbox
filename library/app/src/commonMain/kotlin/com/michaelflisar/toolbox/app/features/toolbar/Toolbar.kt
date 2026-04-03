@@ -31,6 +31,7 @@ import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.menu.removeConsecutiveSeparators
 import com.michaelflisar.toolbox.app.features.navigation.findLocalByScreenOrThrow
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
+import com.michaelflisar.toolbox.app.features.navigation.navItemContainer
 import com.michaelflisar.toolbox.app.features.navigation.screen.INavScreen
 import com.michaelflisar.toolbox.extensions.toIconComposable
 
@@ -129,6 +130,7 @@ fun Toolbar(
 ) {
     val backHandlerRegistry = LocalBackHandlerRegistry.current
     val navigator = LocalNavigator.currentOrThrow.findLocalByScreenOrThrow
+    val navScreenContainer = LocalNavigator.currentOrThrow.navItemContainer
     TopAppBar(
         modifier = modifier,
         title = {
@@ -161,7 +163,7 @@ fun Toolbar(
             val canPop = remember { mutableStateOf(navigator.canPop) }
             LaunchedEffect(navigator.lastNavItem) {
                 if (navigator.lastNavItem == screen) {
-                    canPop.value = navigator.canPop
+                    canPop.value = navigator.canPop || navScreenContainer?.supportRootBackButton == true
                 }
             }
 

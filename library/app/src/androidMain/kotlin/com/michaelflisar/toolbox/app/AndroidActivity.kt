@@ -15,7 +15,7 @@ abstract class AndroidActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lastIntent.value = this.intent
+        lastIntent.value = intent
 
         // Init function
         AndroidApp.initActivity(this)

@@ -26,6 +26,7 @@ import com.michaelflisar.demo.pages.tests.PageTestPane
 import com.michaelflisar.demo.pages.tests.PageTestPreferences
 import com.michaelflisar.demo.pages.tests.PageTestTable
 import com.michaelflisar.demo.pages.tests.PageTestUI
+import com.michaelflisar.demo.pages.tests.PageTestUIAdaptive
 import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.ui.MyScrollableColumn
@@ -74,7 +75,8 @@ private fun Page(
             PageTestPane,
             PageTestDialogs,
             PageTestPreferences,
-            PageTestUI
+            PageTestUI,
+            PageTestUIAdaptive
         )
         tests.forEach { TestRow(it) }
     }
