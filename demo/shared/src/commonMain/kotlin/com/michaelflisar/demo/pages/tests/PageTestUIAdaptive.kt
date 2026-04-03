@@ -16,9 +16,11 @@ import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.components.MyFlowRow
+import com.michaelflisar.toolbox.components.MyText
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.ui.MyScrollableColumn
-import com.michaelflisar.toolbox.ui.adaptive.AdaptivePrimaryButton
+import com.michaelflisar.toolbox.ui.adaptive.AdaptiveButton
 
 @Parcelize
 object PageTestUIAdaptive : NavScreen() {
@@ -50,12 +52,16 @@ private fun Page(
             .padding(all = 16.dp)
             .fillMaxSize()
     ) {
-        AdaptivePrimaryButton(
-            onClick = {
-                appState.showToast("Primary Button clicked")
+        MyText(text = "Adaptive Buttons")
+        MyFlowRow {
+            AdaptiveButton.Variant.entries.forEach {
+                AdaptiveButton(
+                    variant = it,
+                    onClick = { appState.showToast("${it.name} Button clicked") }
+                ) {
+                    Text("${it.name} Button")
+                }
             }
-        ) {
-            Text("Primary Button")
         }
     }
 }

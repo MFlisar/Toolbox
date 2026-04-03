@@ -131,6 +131,7 @@ fun Toolbar(
     val backHandlerRegistry = LocalBackHandlerRegistry.current
     val navigator = LocalNavigator.currentOrThrow.findLocalByScreenOrThrow
     val navScreenContainer = LocalNavigator.currentOrThrow.navItemContainer
+    val navScreenRootNavigator = navScreenContainer?.rootNavigator
     TopAppBar(
         modifier = modifier,
         title = {
@@ -175,7 +176,13 @@ fun Toolbar(
                             if (canGoBack)
                                 onBack?.invoke()
                             else
-                                navigator.pop()
+                            {
+                                if (navigator.canPop)
+                                    navigator.pop()
+                                else if (navScreenContainer?.supportRootBackButton == true && navScreenRootNavigator != null)
+                                    navScreenRootNavigator.pop()
+                            }
+
                         }
                     }
                 )
