@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import com.michaelflisar.toolbox.ui.adaptive.utils.pressAnimation
 
 actual object AdaptiveButtonDefaults {
 
@@ -60,51 +61,24 @@ actual fun AdaptiveButton(
     interactionSource: MutableInteractionSource?,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val cs = MaterialTheme.colorScheme
-
     @Suppress("NAME_SHADOWING")
     val interactionSource = interactionSource ?: remember { MutableInteractionSource() }
 
     // iOS Farben
     val background = when (variant) {
-        AdaptiveButton.Variant.Prominent -> cs.primary
+        AdaptiveButton.Variant.Prominent -> MaterialTheme.colorScheme.primary
         else -> Color.Transparent
     }
 
     val foreground = when (variant) {
-        AdaptiveButton.Variant.Prominent -> cs.onPrimary
-        AdaptiveButton.Variant.Dangerous -> cs.error
-        else -> cs.primary
+        AdaptiveButton.Variant.Prominent -> MaterialTheme.colorScheme.onPrimary
+        AdaptiveButton.Variant.Dangerous -> MaterialTheme.colorScheme.error
+        else -> MaterialTheme.colorScheme.primary
     }
-
-    val pressed by interactionSource.collectIsPressedAsState()
-
-    LaunchedEffect(pressed) {
-        println("Pressed: $pressed")
-    }
-
-    val scale by animateFloatAsState(
-        targetValue = if (pressed) 0.97f else 1f,
-        animationSpec = spring(
-            stiffness = Spring.StiffnessMediumLow,
-            dampingRatio = Spring.DampingRatioMediumBouncy
-        ),
-        label = "pressScale"
-    )
-
-    val alpha by animateFloatAsState(
-        targetValue = if (pressed) 0.85f else 1f,
-        animationSpec = tween(durationMillis = 120),
-        label = "pressAlpha"
-    )
 
     Box(
         modifier = modifier
-            .graphicsLayer {
-                this.alpha = alpha
-                this.scaleX = scale
-                this.scaleY = scale
-            }
+            .pressAnimation(interactionSource)
             .clip(shape)
             .background(background)
             .clickable(

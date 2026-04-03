@@ -131,7 +131,7 @@ fun Toolbar(
     val backHandlerRegistry = LocalBackHandlerRegistry.current
     val navigator = LocalNavigator.currentOrThrow.findLocalByScreenOrThrow
     val navScreenContainer = LocalNavigator.currentOrThrow.navItemContainer
-    val navScreenRootNavigator = navScreenContainer?.rootNavigator
+    val navScreenRootNavigator = navScreenContainer?.rootNavigator?.value
     TopAppBar(
         modifier = modifier,
         title = {
@@ -162,7 +162,7 @@ fun Toolbar(
             // damit nicht plötzlich der Back Button verschwindet,
             // wenn man bspw. zu einem anderen Screen wechselt
             val canPop = remember { mutableStateOf(navigator.canPop) }
-            LaunchedEffect(navigator.lastNavItem) {
+            LaunchedEffect(navigator.lastNavItem, navScreenContainer) {
                 if (navigator.lastNavItem == screen) {
                     canPop.value = navigator.canPop || navScreenContainer?.supportRootBackButton == true
                 }

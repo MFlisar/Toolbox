@@ -32,7 +32,8 @@ abstract class NavScreenContainer(
 
     @Transient
     @IgnoredOnParcel
-    internal lateinit var rootNavigator: Navigator
+    var rootNavigator: MutableState<Navigator?> = mutableStateOf(null)
+        internal set
 
     @Transient
     @IgnoredOnParcel
@@ -68,7 +69,13 @@ abstract class NavScreenContainer(
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
-        rootNavigator = LocalNavigator.currentOrThrow
+        val rootNavigator = LocalNavigator.currentOrThrow
+        DisposableEffect(rootNavigator) {
+            this@NavScreenContainer.rootNavigator.value = rootNavigator
+            onDispose {
+                this@NavScreenContainer.rootNavigator.value = null
+            }
+        }
         AppNavigator(
             screen = rootScreen
         ) { navigator ->
