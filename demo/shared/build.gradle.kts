@@ -17,6 +17,7 @@ plugins {
     // docs, publishing, validation
     // --
     // build tools
+    alias(deps.plugins.kmpicon.plugin)
     alias(deps.plugins.kmpdevtools.buildplugin)
     alias(libs.plugins.buildkonfig)
     // others
@@ -46,6 +47,18 @@ val androidConfig = AndroidLibraryConfig.createFromPath(
     minSdk = app.versions.minSdk,
     enableAndroidResources = true
 )
+
+kmpIcon {
+
+    setup {
+        sourceModule = "demo/app/android" // default: app/app/android"
+        sourceFile = "src/main/ic_launcher-playstore.png"
+    }
+
+    generateCommonIcon {
+        file = "src/commonMain/composeResources/drawable/icon.png"
+    }
+}
 
 // ------------------------
 // Kotlin

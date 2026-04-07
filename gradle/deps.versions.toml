@@ -7,14 +7,15 @@ kmp-mail =                  "0.1.0"
 kotpreferences =        	"4.0.0-alpha02"
 lumberjack =                "10.0.0-alpha03"
 composedebugdrawer =		"3.0.0-alpha01"
-composedialogs =   		    "4.0.0-alpha03"
+composedialogs =   		    "4.0.0-alpha04"
 composechangelog =   		"4.0.0-alpha01"
 composepreferences =   		"3.0.0-alpha01"
 composethemer =   			"2.0.0-alpha01"
 composecolors =             "1.0.1"
 toolbox =                   "4.0.0-alpha03"
 
-kmpdevtools =               "7.6.1" # change via "updateDevToolsVersion" gradle task!
+kmpicon-plugin =            "0.0.1"
+kmpdevtools =               "7.8.0" # change via "updateDevToolsVersion" gradle task!
 kmp-democomposables =       "1.0.2"
 
 # Google
@@ -51,6 +52,7 @@ poi =                       "5.5.1"
 
 # mflisar
 kmpdevtools-buildplugin =           { id = "io.github.mflisar.kmpdevtools.plugins-build-gradle",        version.ref = "kmpdevtools" }
+kmpicon-plugin =                    { id = "io.github.mflisar.kmpicon.plugin",                          version.ref = "kmpicon-plugin" }
 
 [libraries]
 

@@ -32,7 +32,7 @@ import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.update.UpdateManager
 import com.michaelflisar.toolbox.demo.BuildKonfig
 import com.michaelflisar.toolbox.demo.shared.resources.Res
-import com.michaelflisar.toolbox.demo.shared.resources.mflisar
+import com.michaelflisar.toolbox.demo.shared.resources.icon
 import com.michaelflisar.toolbox.extensions.isLight
 import org.jetbrains.compose.resources.painterResource
 
@@ -103,7 +103,7 @@ object Shared {
 
     @Composable
     fun appIcon(light: Boolean): Painter {
-        return painterResource(Res.drawable.mflisar)
+        return painterResource(Res.drawable.icon)
     }
 
     // --------------------

@@ -1,6 +1,11 @@
 package com.michaelflisar.toolbox.app.features.actions
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.animate
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,11 +15,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
@@ -51,6 +62,7 @@ sealed class ActionItem {
             )
         }
 
+        @OptIn(ExperimentalMaterial3Api::class)
         @Composable
         fun toMenuItem(
             hideIconInDialog: Boolean = true,
@@ -70,7 +82,27 @@ sealed class ActionItem {
                     BaseDevice.Mobile -> {
                         val backHandlerRegistry = LocalBackHandlerRegistry.current
                         val screenCanHandleBackPress = backHandlerRegistry.wouldConsumeBackPress(true)
+
+                        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
+                            canScroll = { !screenCanHandleBackPress}
+                        )
+                        val isNearerToExpanded = remember(scrollBehavior) {
+                            derivedStateOf { scrollBehavior.state.collapsedFraction < .5f }
+                        }
+                        LaunchedEffect(screenCanHandleBackPress) {
+                            if (screenCanHandleBackPress) {
+                                animate(
+                                    initialValue = scrollBehavior.state.heightOffset,
+                                    targetValue = scrollBehavior.state.heightOffsetLimit,
+                                    animationSpec = tween(300)
+                                ) { value, _ ->
+                                    scrollBehavior.state.heightOffset = value
+                                }
+                                //scrollBehavior.state.heightOffset = scrollBehavior.state.heightOffsetLimit
+                            }
+                        }
                         DialogDefaults.styleFullscreenDialog(
+                            toolbarScrollBehaviour = scrollBehavior,
                             navigationIcon = {
                                 Crossfade(
                                     targetState = screenCanHandleBackPress
@@ -84,23 +116,29 @@ sealed class ActionItem {
                                             Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
                                         }
                                     } else {
-                                        IconButton(
-                                            onClick = {
-                                                state.dismiss()
-                                            }
+                                        AnimatedVisibility(
+                                            visible = !isNearerToExpanded.value,
+                                            enter = fadeIn(),
+                                            exit = fadeOut()
                                         ) {
-                                            Icon(Icons.Default.Close, null)
+                                            IconButton(
+                                                onClick = {
+                                                    state.dismiss()
+                                                }
+                                            ) {
+                                                Icon(Icons.Default.Close, null)
+                                            }
                                         }
                                     }
                                 }
                             },
-                            darkStatusBar = MaterialTheme.colorScheme.toolbar.isDark(),
                             toolbarColor = MaterialTheme.colorScheme.toolbar,
+                            toolbarColorExpanded = MaterialTheme.colorScheme.background,
+                            toolbarContentColor = MaterialTheme.colorScheme.onToolbar,
+                            toolbarContentColorExpanded = MaterialTheme.colorScheme.onBackground,
                             toolbarActionColor = MaterialTheme.colorScheme.onToolbar,
-                            //containerColor = MaterialTheme.colorScheme.toolbar,
+                            toolbarActionColorExpanded = MaterialTheme.colorScheme.onBackground,
                             iconColor = MaterialTheme.colorScheme.onToolbar,
-                            titleColor = MaterialTheme.colorScheme.onToolbar,
-                            //contentColor = MaterialTheme.colorScheme.onToolbar
                             applyContentPadding = false
                         )
                     }

@@ -16,6 +16,7 @@ plugins {
     // docs, publishing, validation
     // --
     // build tools
+    alias(deps.plugins.kmpicon.plugin)
     alias(deps.plugins.kmpdevtools.buildplugin)
     // others
     alias(libs.plugins.launch4j)
@@ -54,6 +55,19 @@ val wasmConfig = WasmAppConfig(
     moduleName = "demo",
     outputFileName = "demo.js"
 )
+
+kmpIcon {
+
+    setup {
+        sourceModule = "demo/app/android" // default: app/app/android"
+        sourceFile = "src/main/ic_launcher-playstore.png"
+    }
+
+    generateIco {
+        file = "icon.ico"
+    }
+
+}
 
 // -------------------
 // Kotlin
