@@ -26,7 +26,7 @@
     [ ] Pages sollten immer fill size haben => ist jetzt so, sollte man das forcieren?
     [ ] Preferene Screen
         [x] Android: Back Arrow in Toolbar
-        [ ] Expandable Header wie früher in SwissArmy
+        [x] Expandable Header wie früher in SwissArmy
         [ ] Breadcrumbs anzeigen?
         [x] Option um Custom Pages in Android zu deaktivieren und direkt in Custom Content einzubetten? (Pager sieht dort nicht gut aus)
     [ ] Auto Backup geht noch nicht
@@ -38,7 +38,6 @@
 -------------------------------------
 
     [ ] Texte in backup (zip?, service?)
-    [ ] https://github.com/RevenueCat/purchases-kmp => SPÄTER! KotBilling reicht dzt einmal aus!
     [ ] Dialoge ohne composable unstyled
 
     [ ] Java App Restart testen => kann nur funktionieren wenn man die App als exe erstellt
@@ -51,7 +50,7 @@
 
 
 
-Full screen Dialoge könnten im root sein  und in toolbar + content aufgeteilt werden für eine schöne Animation? Oder sie könnten die toolbar der App benutzen? Sinnvoll? Bottomsheet ist eigentlich auch ok
+Full screen Dialoge könnten im root sein und in toolbar + content aufgeteilt werden für eine schöne Animation? Oder sie könnten die toolbar der App benutzen? Sinnvoll? Bottomsheet ist eigentlich auch ok
 Anderes menu icon????
 Test Page für alle UI Tests für meine Libraries (Dialoge, Preferences, ...)
 MyScroll* Sachen sollten parameter scrollbar haben und sollten im Demo benutzt werden
