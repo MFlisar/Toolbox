@@ -82,6 +82,7 @@ launch4j =                                          { id = "edu.sc.seis.launch4j
 
 # kotlin
 jetbrains-kotlin-test = 			                { module = "org.jetbrains.kotlin:kotlin-test",                          version.ref = "kotlin" }
+jetbrains-kotlin-parcelize-runtime =                { module = "org.jetbrains.kotlin:kotlin-parcelize-runtime",             version.ref = "kotlin" }
 
 # org.jetbrains.compose
 jetbrains-compose-runtime =                         { module = "org.jetbrains.compose.runtime:runtime",                     version.ref = "jetbrains-compose" }
@@ -100,6 +101,7 @@ jetbrains-compose-material-icons-extended = 	    { module = "org.jetbrains.compo
 # org.jetbrains.androidx
 jetbrains-androidx-lifecycle-runtime =              { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-ktx",    version.ref = "jetbrains-androidx-lifecycle" }
 jetbrains-androidx-lifecycle-runtime-compose =      { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose",version.ref = "jetbrains-androidx-lifecycle" }
+jetbrains-androidx-lifecycle-viewmodel-compose =    { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose",  version.ref = "jetbrains-androidx-lifecycle" }
 
 # androidx
 androidx-core =                                     { module = "androidx.core:core-ktx",                                    version.ref = "androidx-core" }

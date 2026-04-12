@@ -17,7 +17,7 @@ plugins {
     alias(libs.plugins.vanniktech.maven.publish.base)
     alias(libs.plugins.binary.compatibility.validator)
     // build tools
-    alias(deps.plugins.kmpdevtools.buildplugin)
+    alias(mflisar.plugins.kmpdevtools.buildplugin)
     // others
     // ...
 }
@@ -85,10 +85,10 @@ kotlin {
             implementation(libs.jetbrains.compose.material.icons.core)
             implementation(libs.jetbrains.compose.material.icons.extended)
 
-            implementation(deps.kotpreferences.core)
+            implementation(mflisar.kotpreferences.core)
 
-            implementation(deps.composedialogs.core)
-            implementation(deps.composedialogs.dialog.info)
+            implementation(mflisar.composedialogs.core)
+            implementation(mflisar.composedialogs.dialog.info)
 
             implementation(deps.openiap)
 

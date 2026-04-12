@@ -17,7 +17,7 @@ plugins {
     alias(libs.plugins.vanniktech.maven.publish.base)
     alias(libs.plugins.binary.compatibility.validator)
     // build tools
-    alias(deps.plugins.kmpdevtools.buildplugin)
+    alias(mflisar.plugins.kmpdevtools.buildplugin)
     // others
     // ...
 }
@@ -93,8 +93,8 @@ kotlin {
             api(project(":toolbox:modules:ui"))
 
             // TODO: dialogs for mac...
-            api(deps.composedialogs.core)
-            api(deps.composedialogs.dialog.info)
+            api(mflisar.composedialogs.core)
+            api(mflisar.composedialogs.dialog.info)
 
         }
     }

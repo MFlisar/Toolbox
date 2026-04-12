@@ -17,7 +17,7 @@ plugins {
     alias(libs.plugins.vanniktech.maven.publish.base)
     alias(libs.plugins.binary.compatibility.validator)
     // build tools
-    alias(deps.plugins.kmpdevtools.buildplugin)
+    alias(mflisar.plugins.kmpdevtools.buildplugin)
     // others
     // ...
 }
@@ -77,7 +77,7 @@ kotlin {
 
         val javaMain by creating { dependsOn(commonMain.get()) }
 
-        setupDependencies(buildTargets, sourceSets) {
+        setupDependencies(module, buildTargets, sourceSets) {
 
             javaMain supportedBy Platform.LIST_JAVA
 
@@ -95,7 +95,7 @@ kotlin {
 
             implementation(project(":toolbox:core"))
 
-            api(deps.lumberjack.core)
+            api(mflisar.lumberjack.core)
 
         }
     }

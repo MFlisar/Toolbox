@@ -37,8 +37,8 @@ import org.jetbrains.compose.resources.stringResource
  * the main app composable
  *
  * @param appState the app state to use, which is provided via composition local
+ * @param setRootLocals whether to set the root locals (app state, debug drawer state), should only be false if you want to provide them yourself
  * @param dialogs to show, which are rendered inside the root composable
- * @param debugDrawer the content of the debug drawer
  * @param content the main content of the app
  */
 @Composable

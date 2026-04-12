@@ -4,12 +4,17 @@ import androidx.compose.runtime.Composable
 import com.michaelflisar.composedialogs.core.DialogStateNoData
 import com.michaelflisar.toolbox.app.features.actions.ActionItem
 import com.michaelflisar.toolbox.features.proversion.BaseAppProVersionManager
+import com.michaelflisar.toolbox.features.proversion.ProState
+import kotlinx.coroutines.flow.StateFlow
 
 object ProVersionManager {
 
     private var _setup: ProVersionSetup = ProVersionSetup.NotSupported
     val setup: ProVersionSetup
         get() = _setup
+
+    val proState: StateFlow<ProState>
+        get() = setup.proState
 
     fun init(
         manager: BaseAppProVersionManager,

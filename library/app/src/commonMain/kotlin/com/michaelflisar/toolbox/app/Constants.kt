@@ -8,5 +8,8 @@ object Constants {
     const val DEVELOPER_EMAIL = "mflisar.development@gmail.com"
 
     const val CHANGELOG_PATH = "files/changelog.xml"
-    val CHANGELOG_FORMATTER = DefaultVersionFormatter(DefaultVersionFormatter.Format.MajorMinorPatchCandidate)
+
+    // wird auch in kmp-devtools standardmäßig benutzt, muss daher nirgendwo manuell übergeben werden
+    // dieses Format ist auch windows kompatibel!
+    val CHANGELOG_FORMATTER = DefaultVersionFormatter(DefaultVersionFormatter.Format.MajorMinorPatch)
 }

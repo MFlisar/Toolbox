@@ -19,7 +19,7 @@ plugins {
     alias(libs.plugins.vanniktech.maven.publish.base)
     alias(libs.plugins.binary.compatibility.validator)
     // build tools
-    alias(deps.plugins.kmpdevtools.buildplugin)
+    alias(mflisar.plugins.kmpdevtools.buildplugin)
     // others
     // ...
 }
@@ -93,7 +93,7 @@ kotlin {
         val notMobileMain by creating { dependsOn(commonMain.get()) }
         val iosMain by creating { dependsOn(commonMain.get()) }
 
-        setupDependencies(buildTargets, sourceSets) {
+        setupDependencies(module, buildTargets, sourceSets) {
 
             Platform.IOS addSourceSet iosMain
 
@@ -114,7 +114,7 @@ kotlin {
 
         if (buildTargets.macOS) {
             val macosMain by creating { dependsOn(commonMain.get()) }
-            setupDependencies(buildTargets, sourceSets) {
+            setupDependencies(module, buildTargets, sourceSets) {
                 Platform.MACOS addSourceSet macosMain
             }
         }
@@ -154,43 +154,43 @@ kotlin {
             api(project(":toolbox:modules:backup"))
 
             // Lumberjack
-            api(deps.lumberjack.core)
-            api(deps.lumberjack.implementation)
-            api(deps.lumberjack.logger.console)
+            api(mflisar.lumberjack.core)
+            api(mflisar.lumberjack.implementation)
+            api(mflisar.lumberjack.logger.console)
 
             // KotPreferences
-            api(deps.kotpreferences.core)
-            api(deps.kotpreferences.extension.compose)
+            api(mflisar.kotpreferences.core)
+            api(mflisar.kotpreferences.extension.compose)
 
             // Compose Debug Drawer
-            api(deps.composedebugdrawer.core)
-            implementation(deps.composedebugdrawer.plugin.kotpreferences)
+            api(mflisar.composedebugdrawer.core)
+            implementation(mflisar.composedebugdrawer.plugin.kotpreferences)
 
             // Compose Changelog
-            api(deps.composechangelog.core)
-            implementation(deps.composechangelog.renderer.header)
-            implementation(deps.composechangelog.statesaver.kotpreferences)
+            api(mflisar.composechangelog.core)
+            implementation(mflisar.composechangelog.renderer.header)
+            implementation(mflisar.composechangelog.statesaver.kotpreferences)
 
             // Compose Dialogs
-            api(deps.composedialogs.core)
-            implementation(deps.composedialogs.dialog.info)
-            implementation(deps.composedialogs.dialog.time)
-            implementation(deps.composedialogs.dialog.frequency)
+            api(mflisar.composedialogs.core)
+            implementation(mflisar.composedialogs.dialog.info)
+            implementation(mflisar.composedialogs.dialog.time)
+            implementation(mflisar.composedialogs.dialog.frequency)
 
             // Compose Preferences
-            api(deps.composepreferences.core)
-            implementation(deps.composepreferences.screen.bool)
-            implementation(deps.composepreferences.screen.list)
-            implementation(deps.composepreferences.screen.button)
-            implementation(deps.composepreferences.kotpreferences)
+            api(mflisar.composepreferences.core)
+            implementation(mflisar.composepreferences.screen.bool)
+            implementation(mflisar.composepreferences.screen.list)
+            implementation(mflisar.composepreferences.screen.button)
+            implementation(mflisar.composepreferences.kotpreferences)
 
             // Compose Colors
-            implementation(deps.composecolors.material)
+            implementation(mflisar.composecolors.material)
 
             // Theming
-            api(deps.composethemer.core)
-            implementation(deps.composethemer.modules.picker)
-            implementation(deps.composethemer.modules.defaultpicker)
+            api(mflisar.composethemer.core)
+            implementation(mflisar.composethemer.modules.picker)
+            implementation(mflisar.composethemer.modules.defaultpicker)
 
             implementation(deps.filekit.dialogs.compose)
 
@@ -199,21 +199,21 @@ kotlin {
         featureFileSupportMain.dependencies {
 
             // Lumberjack
-            api(deps.lumberjack.logger.file)
-            implementation(deps.lumberjack.extension.composeviewer)
+            api(mflisar.lumberjack.logger.file)
+            implementation(mflisar.lumberjack.extension.composeviewer)
 
             // KotPreferences
-            api(deps.kotpreferences.storage.datastore)
+            api(mflisar.kotpreferences.storage.datastore)
 
             // Compose Debug Drawer
-            implementation(deps.composedebugdrawer.plugin.lumberjack )
+            implementation(mflisar.composedebugdrawer.plugin.lumberjack )
 
         }
 
         featureNoFileSupportMain.dependencies {
 
             // KotPreferences
-            api(deps.kotpreferences.storage.keyvalue)
+            api(mflisar.kotpreferences.storage.keyvalue)
 
         }
 
@@ -238,8 +238,8 @@ kotlin {
             // implementation(deps.kmp.platformcontext.initializer)
 
             // Compose Debug Drawer
-            implementation( deps.composedebugdrawer.infos.build)
-            implementation(deps.composedebugdrawer.infos.device )
+            implementation( mflisar.composedebugdrawer.infos.build)
+            implementation(mflisar.composedebugdrawer.infos.device )
 
         }
 

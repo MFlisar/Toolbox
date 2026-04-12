@@ -6,8 +6,8 @@ import androidx.core.app.NotificationCompat
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.michaelflisar.toolbox.backup.BackupManager
-import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
 import com.michaelflisar.toolbox.backup.R
+import com.michaelflisar.toolbox.backup.internal.BackupServiceUtil
 import com.michaelflisar.toolbox.service.BaseWorker
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
 import io.github.vinceglb.filekit.PlatformFile
@@ -15,7 +15,7 @@ import kotlin.time.Duration.Companion.seconds
 
 class RestoreWorker internal constructor(
     context: Context,
-    workerParams: WorkerParameters
+    workerParams: WorkerParameters,
 ) : BaseWorker<Throwable?>(context, workerParams) {
 
     companion object {
@@ -31,7 +31,13 @@ class RestoreWorker internal constructor(
         )
 
         fun enqueueWorker(context: Context, files: List<JavaZipFileContent>, backupUri: Uri) {
-            BackupServiceUtil.enqueue(context, data(files, backupUri), false, 0.seconds, DEFAULT_MANUAL_TAG)
+            BackupServiceUtil.enqueue(
+                context,
+                data(files, backupUri),
+                false,
+                0.seconds,
+                DEFAULT_MANUAL_TAG
+            )
         }
 
     }
@@ -39,7 +45,7 @@ class RestoreWorker internal constructor(
     override val foreground = true
     override val setup = BackupServiceUtil.SERVICE_RESTORE_SETUP
 
-    override fun onInitNotification(builder: NotificationCompat.Builder) {
+    override suspend fun onInitNotification(builder: NotificationCompat.Builder) {
         val title = "App Restore"
         val info = "Restoring app..."
         builder
@@ -53,7 +59,7 @@ class RestoreWorker internal constructor(
     override suspend fun onPrepareKeptNotification(result: Throwable?) {
         val title = "App Restore"
         val info = if (result == null) "Done" else "Failed: ${result.message}"
-        builder
+        getBuilder()
             .setContentTitle(title)
             .setContentText(info)
     }
@@ -62,7 +68,8 @@ class RestoreWorker internal constructor(
 
         val manager = BackupManager.manager!!
 
-        val files = inputData.getStringArray(KEY_FILES)!!.map { BackupServiceUtil.JSON.decodeFromString<JavaZipFileContent>(it) }
+        val files = inputData.getStringArray(KEY_FILES)!!
+            .map { BackupServiceUtil.JSON.decodeFromString<JavaZipFileContent>(it) }
         val backupUri = Uri.parse(inputData.getString(KEY_BACKUP_URI))
         return manager.restore(files, PlatformFile(backupUri))
     }

@@ -24,4 +24,9 @@ actual object Platform {
     actual fun openUrl(url: String) {
         Desktop.getDesktop().browse(URI(url))
     }
+
+    actual fun setClipboardText(text: String, label: String) {
+        val selection = java.awt.datatransfer.StringSelection(text)
+        java.awt.Toolkit.getDefaultToolkit().systemClipboard.setContents(selection, selection)
+    }
 }

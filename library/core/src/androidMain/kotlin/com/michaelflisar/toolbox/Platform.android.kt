@@ -1,6 +1,9 @@
 package com.michaelflisar.toolbox
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.ui.Modifier
 import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,5 +31,11 @@ actual object Platform {
 
     actual fun openUrl(url: String) {
         IntentUtil.openUrl(PlatformContextProvider.get(), url)
+    }
+
+    actual fun setClipboardText(text: String, label: String) {
+        val context = PlatformContextProvider.get()
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText(label, text))
     }
 }

@@ -19,3 +19,7 @@ readme:
     group-by-folder: true
     excluded-folders: []
     excluded-images: []
+
+# Settings
+# settings:
+#   log-dependencies: true

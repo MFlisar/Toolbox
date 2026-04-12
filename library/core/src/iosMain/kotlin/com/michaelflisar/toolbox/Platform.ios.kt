@@ -10,6 +10,7 @@ import platform.Foundation.NSNumberFormatter
 import platform.Foundation.NSURL
 import platform.Foundation.currentLocale
 import platform.UIKit.UIApplication
+import platform.UIKit.UIPasteboard
 
 actual object Platform {
 
@@ -27,6 +28,10 @@ actual object Platform {
         if (nsUrl != null) {
             UIApplication.sharedApplication.openURL(nsUrl)
         }
+    }
+
+    actual fun setClipboardText(text: String, label: String) {
+        UIPasteboard.generalPasteboard.string = text
     }
 }
 

@@ -7,7 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.ads.AdManagerImpl
-import com.michaelflisar.toolbox.ads.FooterAdsBanner
+import com.michaelflisar.toolbox.ads.AdsBanner
+import com.michaelflisar.toolbox.ads.AdsBannerNonProVersion
 import com.michaelflisar.toolbox.app.AndroidActivity
 import com.michaelflisar.toolbox.app.AndroidAppDefaults
 import com.michaelflisar.toolbox.app.AndroidApplication
@@ -21,6 +22,7 @@ import com.michaelflisar.toolbox.app.features.scaffold.rememberNavigationStyleAu
 import com.michaelflisar.toolbox.app.features.toolbar.SharedToolbarContainer
 import com.michaelflisar.toolbox.app.features.toolbar.selection.AnimatedSelectionToolbarWrapper
 import com.michaelflisar.toolbox.app.features.toolbar.selection.SelectionToolbar
+import com.michaelflisar.toolbox.features.proversion.ProState
 
 class MainActivity : AndroidActivity() {
 
@@ -75,7 +77,10 @@ class MainActivity : AndroidActivity() {
                     val proState = proVersionManager.proState.collectAsState()
                     val adUnitId =
                         AdManagerImpl.Ids.BANNER_DEFAULT // TODO: mit App spezifischer Banner ID ersetzen
-                    FooterAdsBanner(proState, adUnitId)
+                    AdsBannerNonProVersion(
+                        proState = proState,
+                        adUnitId = adUnitId
+                    )
                 }
             }
         }

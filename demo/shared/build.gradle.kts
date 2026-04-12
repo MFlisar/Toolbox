@@ -17,8 +17,8 @@ plugins {
     // docs, publishing, validation
     // --
     // build tools
-    alias(deps.plugins.kmpicon.plugin)
-    alias(deps.plugins.kmpdevtools.buildplugin)
+    alias(mflisar.plugins.kmpicon.plugin)
+    alias(mflisar.plugins.kmpdevtools.buildplugin)
     alias(libs.plugins.buildkonfig)
     // others
     // ...
@@ -106,7 +106,7 @@ kotlin {
         val featureNoFileSupportMain by creating { dependsOn(commonMain.get()) }
         val mobileMain by creating { dependsOn(commonMain.get()) }
 
-        setupDependencies(buildTargets, sourceSets) {
+        setupDependencies(module, buildTargets, sourceSets) {
 
             featureFileSupportMain supportedBy Platform.LIST_FILE_SUPPORT
             featureNoFileSupportMain supportedBy !Platform.LIST_FILE_SUPPORT
@@ -139,50 +139,50 @@ kotlin {
             // ------------------------
 
             // KotPreferences
-            api(deps.kotpreferences.core)
-            api(deps.kotpreferences.extension.compose)
+            api(mflisar.kotpreferences.core)
+            api(mflisar.kotpreferences.extension.compose)
 
             // Compose Dialogs
-            api(deps.composedialogs.core)
-            api(deps.composedialogs.dialog.color)
-            api(deps.composedialogs.dialog.date)
-            api(deps.composedialogs.dialog.time)
-            api(deps.composedialogs.dialog.info)
-            api(deps.composedialogs.dialog.progress)
-            api(deps.composedialogs.dialog.input)
-            api(deps.composedialogs.dialog.number)
-            api(deps.composedialogs.dialog.list)
-            api(deps.composedialogs.dialog.menu)
-            api(deps.composedialogs.dialog.frequency)
+            api(mflisar.composedialogs.core)
+            api(mflisar.composedialogs.dialog.color)
+            api(mflisar.composedialogs.dialog.date)
+            api(mflisar.composedialogs.dialog.time)
+            api(mflisar.composedialogs.dialog.info)
+            api(mflisar.composedialogs.dialog.progress)
+            api(mflisar.composedialogs.dialog.input)
+            api(mflisar.composedialogs.dialog.number)
+            api(mflisar.composedialogs.dialog.list)
+            api(mflisar.composedialogs.dialog.menu)
+            api(mflisar.composedialogs.dialog.frequency)
 
             // Compose Preferences
-            api(deps.composepreferences.core)
-            api(deps.composepreferences.screen.bool)
-            api(deps.composepreferences.screen.button)
-            api(deps.composepreferences.screen.input)
-            api(deps.composepreferences.screen.color)
-            api(deps.composepreferences.screen.date)
-            api(deps.composepreferences.screen.time)
-            api(deps.composepreferences.screen.list)
-            api(deps.composepreferences.screen.number)
-            api(deps.composepreferences.kotpreferences)
+            api(mflisar.composepreferences.core)
+            api(mflisar.composepreferences.screen.bool)
+            api(mflisar.composepreferences.screen.button)
+            api(mflisar.composepreferences.screen.input)
+            api(mflisar.composepreferences.screen.color)
+            api(mflisar.composepreferences.screen.date)
+            api(mflisar.composepreferences.screen.time)
+            api(mflisar.composepreferences.screen.list)
+            api(mflisar.composepreferences.screen.number)
+            api(mflisar.composepreferences.kotpreferences)
 
             // Compose Themer
-            api(deps.composethemer.themes.flatui)
-            api(deps.composethemer.themes.metro)
-            api(deps.composethemer.themes.material500)
+            api(mflisar.composethemer.themes.flatui)
+            api(mflisar.composethemer.themes.metro)
+            api(mflisar.composethemer.themes.material500)
 
         }
 
         featureFileSupportMain.dependencies {
 
-            api(deps.kotpreferences.storage.datastore)
+            api(mflisar.kotpreferences.storage.datastore)
 
         }
 
         featureNoFileSupportMain.dependencies {
 
-            api(deps.kotpreferences.storage.keyvalue)
+            api(mflisar.kotpreferences.storage.keyvalue)
 
         }
 

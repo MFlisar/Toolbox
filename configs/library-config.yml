@@ -11,7 +11,7 @@ maven:
   group-id: io.github.mflisar.toolbox
   primary-artifact-id: core # used to detect latest release version of the library (dynamically on the published homepage)
 
-# Modules - list of modules [artifact-id, description, path]
+# Modules - list of modules [artifact-id, description, path, (plugin)]
 modules:
   - artifact-id: core
     description: the core module
@@ -61,6 +61,9 @@ modules:
   - artifact-id: excel
     description: excel functions
     path: library/modules/excel
+  - artifact-id: coil
+    description: a coil module
+    path: library/modules/coil
 
 # XCFrameworks [name, path, targets (ios, macos)]
 xcframeworks: [ ]

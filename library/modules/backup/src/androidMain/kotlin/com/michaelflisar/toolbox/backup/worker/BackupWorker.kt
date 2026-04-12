@@ -17,7 +17,7 @@ import kotlin.time.Duration
 
 class BackupWorker internal constructor(
     context: Context,
-    workerParams: WorkerParameters
+    workerParams: WorkerParameters,
 ) : BaseWorker<Throwable?>(context, workerParams) {
 
     companion object {
@@ -31,7 +31,7 @@ class BackupWorker internal constructor(
 
         private fun data(
             files: List<JavaZipFileContent>,
-            backupFolderData: ByteArray
+            backupFolderData: ByteArray,
         ) = workDataOf(
             KEY_FILES to files.map { BackupServiceUtil.JSON.encodeToString(it) }.toTypedArray(),
             KEY_BACKUP_FOLDER_DATA to backupFolderData
@@ -41,7 +41,7 @@ class BackupWorker internal constructor(
             context: Context,
             files: List<JavaZipFileContent>,
             backupFolderData: ByteArray,
-            initialDelay: Duration
+            initialDelay: Duration,
         ) {
             BackupServiceUtil.enqueue(
                 context = context,
@@ -64,7 +64,7 @@ class BackupWorker internal constructor(
     override val foreground = true
     override val setup = BackupServiceUtil.SERVICE_BACKUP_SETUP
 
-    override fun onInitNotification(builder: NotificationCompat.Builder) {
+    override suspend fun onInitNotification(builder: NotificationCompat.Builder) {
         val title = "App Backup"
         val info = "Backing up app..."
         builder
@@ -79,7 +79,7 @@ class BackupWorker internal constructor(
     override suspend fun onPrepareKeptNotification(result: Throwable?) {
         val title = "App Backup"
         val info = if (result == null) "Done" else "Failed: ${result.message}"
-        builder
+        getBuilder()
             .setContentTitle(title)
             .setContentText(info)
     }

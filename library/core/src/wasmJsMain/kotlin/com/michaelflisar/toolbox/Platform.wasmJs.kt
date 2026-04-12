@@ -20,6 +20,11 @@ actual object Platform {
     actual fun openUrl(url: String) {
         window.open(url, "_blank")
     }
+
+    @OptIn(ExperimentalWasmJsInterop::class)
+    actual fun setClipboardText(text: String, label: String) {
+        window.navigator.clipboard.writeText(text)
+    }
 }
 
 actual fun Platform.getDecimalSeparator(): Char {

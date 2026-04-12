@@ -24,16 +24,34 @@ import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.placeholder_ads
 import com.michaelflisar.toolbox.features.proversion.ProState
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(DependsOnGoogleUserMessagingPlatform::class, DependsOnGoogleMobileAds::class)
 @Composable
-fun FooterAdsBanner(
+fun AdsBannerNonProVersion(
     proState: State<ProState>,
     adUnitId: String,
     modifier: Modifier = Modifier,
+    placeHolderResource: StringResource = Res.string.placeholder_ads,
 ) {
-    if (proState.value == ProState.No) {
+    AdsBanner(
+        visible = proState.value == ProState.No,
+        adUnitId = adUnitId,
+        modifier = modifier,
+        placeHolderResource = placeHolderResource,
+    )
+}
+
+@OptIn(DependsOnGoogleUserMessagingPlatform::class, DependsOnGoogleMobileAds::class)
+@Composable
+fun AdsBanner(
+    adUnitId: String,
+    modifier: Modifier = Modifier,
+    visible: Boolean = true,
+    placeHolderResource: StringResource = Res.string.placeholder_ads,
+) {
+    if (visible) {
         val consent by rememberConsent()
         ConsentPopup(consent)
         LaunchedEffect(consent.canRequestAds) {
@@ -56,10 +74,10 @@ fun FooterAdsBanner(
                 if (bannerAd.state == AdState.READY) {
                     BannerAd(bannerAd)
                 } else {
-                    ShowAdPlaceholder(adSize)
+                    ShowAdPlaceholder(adSize, placeHolderResource)
                 }
             } else {
-                ShowAdPlaceholder(adSize)
+                ShowAdPlaceholder(adSize, placeHolderResource)
             }
         }
     }
@@ -67,7 +85,10 @@ fun FooterAdsBanner(
 
 @OptIn(DependsOnGoogleMobileAds::class)
 @Composable
-private fun ShowAdPlaceholder(adSize: AdSize) {
+private fun ShowAdPlaceholder(
+    adSize: AdSize,
+    placeHolderResource: StringResource,
+) {
     val width = with(LocalDensity.current) { adSize.width.toDp() }
     val height = with(LocalDensity.current) { adSize.height.toDp() }
     Box(
@@ -81,7 +102,7 @@ private fun ShowAdPlaceholder(adSize: AdSize) {
             modifier = Modifier.size(width, height),
             contentAlignment = Alignment.Center
         ) {
-            Text(stringResource(Res.string.placeholder_ads))
+            Text(stringResource(placeHolderResource))
         }
     }
 }

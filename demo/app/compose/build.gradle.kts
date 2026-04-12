@@ -16,8 +16,8 @@ plugins {
     // docs, publishing, validation
     // --
     // build tools
-    alias(deps.plugins.kmpicon.plugin)
-    alias(deps.plugins.kmpdevtools.buildplugin)
+    alias(mflisar.plugins.kmpicon.plugin)
+    alias(mflisar.plugins.kmpdevtools.buildplugin)
     // others
     alias(libs.plugins.launch4j)
 }

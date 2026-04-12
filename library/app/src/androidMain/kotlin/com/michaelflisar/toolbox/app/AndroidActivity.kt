@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 
 abstract class AndroidActivity : ComponentActivity() {
 
-    private val lastIntent = mutableStateOf(Intent())
+    private val lastIntent = mutableStateOf<Intent?>(null)
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {

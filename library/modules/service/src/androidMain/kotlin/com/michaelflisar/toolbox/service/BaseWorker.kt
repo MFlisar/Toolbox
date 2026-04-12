@@ -12,23 +12,22 @@ import androidx.work.WorkerParameters
 
 abstract class BaseWorker<Data>(
     context: Context,
-    params: WorkerParameters
+    params: WorkerParameters,
 ) : CoroutineWorker(context, params) {
 
     private var _builder: NotificationCompat.Builder? = null
-    protected val builder: NotificationCompat.Builder
-        @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-        get() {
-            if (_builder == null) {
-                createNotification(::onInitNotification, false)
-            }
-            return _builder!!
+
+    protected suspend fun getBuilder(): NotificationCompat.Builder {
+        if (_builder == null) {
+            createNotification(::onInitNotification)
         }
+        return _builder!!
+    }
 
     abstract val setup: ServiceSetup
     abstract val foreground: Boolean
 
-    abstract fun onInitNotification(builder: NotificationCompat.Builder)
+    abstract suspend fun onInitNotification(builder: NotificationCompat.Builder)
     abstract suspend fun onPrepareKeptNotification(result: Data)
 
     abstract suspend fun run(): Data
@@ -37,7 +36,8 @@ abstract class BaseWorker<Data>(
     final override suspend fun doWork(): Result {
         if (cancelWork())
             return Result.success()
-        createNotification(::onInitNotification, true)
+        createNotification(::onInitNotification)
+        showNotification()
         if (foreground)
             setForeground(getForegroundInfo())
         val result = run()
@@ -52,9 +52,9 @@ abstract class BaseWorker<Data>(
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ForegroundInfo(setup.notificationId, builder.build(), setup.type)
+            ForegroundInfo(setup.notificationId, getBuilder().build(), setup.type)
         } else {
-            ForegroundInfo(setup.notificationId, builder.build())
+            ForegroundInfo(setup.notificationId, getBuilder().build())
         }
     }
 
@@ -67,36 +67,34 @@ abstract class BaseWorker<Data>(
     }
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    protected fun updateNotification() {
+    protected suspend fun updateNotification() {
         showNotification()
     }
 
-    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    private fun createNotification(block: NotificationCompat.Builder.() -> Unit, show: Boolean) {
+    private suspend fun createNotification(
+        block: suspend NotificationCompat.Builder.() -> Unit,
+    ) {
         if (_builder == null) {
             _builder = NotificationCompat.Builder(applicationContext, setup.channel.id)
-                .apply(block)
+                .also { block(it) }
                 .apply {
                     setOnlyAlertOnce(true)
                     setOngoing(true)
                 }
         }
-        if (show) {
-            showNotification()
-        }
     }
 
-    private fun prepareFinalNotification() {
-        builder.apply {
+    private suspend fun prepareFinalNotification() {
+        getBuilder().apply {
             setOngoing(false)
             setProgress(0, 0, false)
         }
     }
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    private fun showNotification() {
+    private suspend fun showNotification() {
         NotificationManagerCompat.from(applicationContext)
-            .notify(setup.notificationId, builder.build())
+            .notify(setup.notificationId, getBuilder().build())
     }
 
     protected fun removeNotification() {
@@ -104,8 +102,8 @@ abstract class BaseWorker<Data>(
     }
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    protected open fun showKeptNotification(result: Data) {
+    protected open suspend fun showKeptNotification(result: Data) {
         NotificationManagerCompat.from(applicationContext)
-            .notify(setup.keptNotificationId!!, builder.build())
+            .notify(setup.keptNotificationId!!, getBuilder().build())
     }
 }

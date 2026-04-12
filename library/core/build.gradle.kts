@@ -19,7 +19,7 @@ plugins {
     alias(libs.plugins.vanniktech.maven.publish.base)
     alias(libs.plugins.binary.compatibility.validator)
     // build tools
-    alias(deps.plugins.kmpdevtools.buildplugin)
+    alias(mflisar.plugins.kmpdevtools.buildplugin)
     // others
     // ...
 }
@@ -91,7 +91,7 @@ kotlin {
         val feedbackSupportedMain by creating { dependsOn(commonMain.get()) }
         val iosMain by creating { dependsOn(commonMain.get()) }
 
-        setupDependencies(buildTargets, sourceSets) {
+        setupDependencies(module, buildTargets, sourceSets) {
 
             Platform.IOS addSourceSet iosMain
 
@@ -103,7 +103,7 @@ kotlin {
 
         if (buildTargets.macOS) {
             val macosMain by creating { dependsOn(commonMain.get()) }
-            setupDependencies(buildTargets, sourceSets) {
+            setupDependencies(module, buildTargets, sourceSets) {
                 Platform.MACOS addSourceSet macosMain
             }
         }
@@ -126,18 +126,18 @@ kotlin {
             implementation(libs.jetbrains.compose.material.icons.extended)
 
             // KMPPlatformContext
-            api(deps.kmp.platformcontext.core)
+            api(mflisar.kmp.platformcontext.core)
 
             // Lumberjack
-            api(deps.lumberjack.core)
+            api(mflisar.lumberjack.core)
 
             // Compose Changelog
-            implementation(deps.composechangelog.core)
-            implementation(deps.composedialogs.core)
+            implementation(mflisar.composechangelog.core)
+            implementation(mflisar.composedialogs.core)
 
             implementation(deps.filekit.dialogs.compose)
 
-            api(deps.kmp.parcelize)
+            api(mflisar.kmp.parcelize)
         }
 
         androidMain.dependencies {
@@ -154,8 +154,8 @@ kotlin {
         }
 
         feedbackSupportedMain.dependencies {
-            implementation(deps.kmp.mail)
-            implementation(deps.lumberjack.extension.feedback)
+            implementation(mflisar.kmp.mail)
+            implementation(mflisar.lumberjack.extension.feedback)
         }
     }
 }
