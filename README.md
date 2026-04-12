@@ -18,24 +18,25 @@
 
 # :computer: Supported Platforms
 
-| Module | android | iOS | windows | wasm |
-|---|---|---|---|---|
-| core | ✅ | ✅ | ✅ | ✅ |
-| app | ✅ | ✅ | ✅ | ✅ |
-| ui | ✅ | ✅ | ✅ | ✅ |
-| ui-adaptive | ✅ | ✅ | ✅ | ✅ |
-| zip | ✅ | ✅ | ✅ | ✅ |
-| csv | ✅ | ❌ | ✅ | ❌ |
-| backup | ✅ | ✅ | ✅ | ✅ |
-| service | ✅ | ❌ | ❌ | ❌ |
-| form | ✅ | ✅ | ✅ | ✅ |
-| powershell | ❌ | ❌ | ✅ | ❌ |
-| table | ✅ | ✅ | ✅ | ✅ |
-| room | ✅ | ✅ | ✅ | ❌ |
-| ads | ✅ | ✅ | ❌ | ❌ |
-| proversion | ✅ | ✅ | ❌ | ❌ |
-| diff | ✅ | ✅ | ✅ | ✅ |
-| excel | ❌ | ❌ | ✅ | ❌ |
+| Module | android | iOS | windows | wasm | Notes |
+|---|---|---|---|---|---|
+| core | ✅ | ✅ | ✅ | ✅ | the core module |
+| app | ✅ | ✅ | ✅ | ✅ | the base app module |
+| ui | ✅ | ✅ | ✅ | ✅ | a ui module |
+| ui-adaptive | ✅ | ✅ | ✅ | ✅ | a adaptive ui module |
+| zip | ✅ | ✅ | ✅ | ✅ | a zip module |
+| csv | ✅ | ❌ | ✅ | ❌ | a csv module |
+| backup | ✅ | ✅ | ✅ | ✅ | a backup module |
+| service | ✅ | ❌ | ❌ | ❌ | a service module |
+| form | ✅ | ✅ | ✅ | ✅ | a form module |
+| powershell | ❌ | ❌ | ✅ | ❌ | a powershell module |
+| table | ✅ | ✅ | ✅ | ✅ | a table module |
+| room | ✅ | ✅ | ✅ | ❌ | provides room database classes |
+| ads | ✅ | ✅ | ❌ | ❌ | provides ads composables |
+| proversion | ✅ | ✅ | ❌ | ❌ | provides proversion checker functions (via openiap) |
+| diff | ✅ | ✅ | ✅ | ✅ | diff functions and UI |
+| excel | ❌ | ❌ | ✅ | ❌ | excel functions |
+| coil | ✅ | ✅ | ✅ | ✅ | a coil module |
 
 # :arrow_right: Versions
 
@@ -52,9 +53,10 @@
 >   - `androidx.compose.foundation.layout.ExperimentalLayoutApi` (1x)
 >   - `androidx.compose.material3.ExperimentalMaterial3Api` (18x)
 >   - `androidx.compose.ui.ExperimentalComposeUiApi` (10x)
->   - `app.lexilabs.basic.ads.DependsOnGoogleMobileAds` (3x)
->   - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (6x)
+>   - `app.lexilabs.basic.ads.DependsOnGoogleMobileAds` (4x)
+>   - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (7x)
 >   - `cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi` (3x)
+>   - `ExperimentalWasmJsInterop` (1x)
 >   - `kotlin.time.ExperimentalTime` (15x)
 >   - `kotlin.uuid.ExperimentalUuidApi` (2x)
 >   - `kotlinx.cinterop.ExperimentalForeignApi` (2x)
@@ -97,6 +99,7 @@ toolbox-ads = { module = "io.github.mflisar.toolbox:ads", version.ref = "toolbox
 toolbox-proversion = { module = "io.github.mflisar.toolbox:proversion", version.ref = "toolbox" }
 toolbox-diff = { module = "io.github.mflisar.toolbox:diff", version.ref = "toolbox" }
 toolbox-excel = { module = "io.github.mflisar.toolbox:excel", version.ref = "toolbox" }
+toolbox-coil = { module = "io.github.mflisar.toolbox:coil", version.ref = "toolbox" }
 ```
 
 And then use the definitions in your projects **build.gradle.kts** file like following:
@@ -118,6 +121,7 @@ implementation(libs.toolbox.ads)
 implementation(libs.toolbox.proversion)
 implementation(libs.toolbox.diff)
 implementation(libs.toolbox.excel)
+implementation(libs.toolbox.coil)
 ```
 
 </details>
@@ -149,6 +153,7 @@ implementation("io.github.mflisar.toolbox:ads:${toolbox}")
 implementation("io.github.mflisar.toolbox:proversion:${toolbox}")
 implementation("io.github.mflisar.toolbox:diff:${toolbox}")
 implementation("io.github.mflisar.toolbox:excel:${toolbox}")
+implementation("io.github.mflisar.toolbox:coil:${toolbox}")
 ```
 
 </details>
