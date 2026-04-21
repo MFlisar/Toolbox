@@ -27,11 +27,11 @@ object CoilManager {
      * @builder components for custom fetchers (e.g. for platform specific data types)
      */
     @Composable
-    fun init(
+    fun Init(
         isDebug: Boolean,
-        advancedLogging: Boolean,
+        advancedLogging: Boolean = false,
         mayExist: (data: Any?) -> Boolean = { true },
-        components: ComponentRegistry.Builder.() -> Unit,
+        components: ComponentRegistry.Builder.() -> Unit = {},
     ) {
         mayExistsFunction = mayExist
         setSingletonImageLoaderFactory { context ->

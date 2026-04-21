@@ -10,7 +10,7 @@ import androidx.compose.ui.backhandler.BackHandler
 import cafe.adriel.voyager.navigator.Navigator
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.ToolboxLogging
-import com.michaelflisar.toolbox.logIf
+import com.michaelflisar.toolbox.info
 
 val LocalBackHandlerRegistry =
     staticCompositionLocalOf<BackHandlerRegistry> { error("No BackHandlerRegistry provided") }
@@ -18,7 +18,7 @@ val LocalBackHandlerRegistry =
 class BackHandler(
     val canHandle: () -> Boolean,
     val handle: () -> Unit,
-    val visibleInToolbar: Boolean
+    val visibleInToolbar: Boolean,
 )
 
 class BackHandlerRegistry {
@@ -41,7 +41,8 @@ class BackHandlerRegistry {
     }
 
     fun wouldConsumeBackPress(checkIfVisibleInToolbar: Boolean = false): Boolean {
-        return handlers.asReversed().any { it.canHandle() && (!checkIfVisibleInToolbar || it.visibleInToolbar) }
+        return handlers.asReversed()
+            .any { it.canHandle() && (!checkIfVisibleInToolbar || it.visibleInToolbar) }
     }
 }
 
@@ -60,11 +61,12 @@ fun RegisterBackHandler(
     key: Any? = Unit,
     canHandle: () -> Boolean,
     handle: () -> Unit,
-    visibleInToolbar: Boolean= false
+    visibleInToolbar: Boolean = false,
 ) {
     val backHandlerRegistry = LocalBackHandlerRegistry.current
     DisposableEffect(key) {
-        val unregister = backHandlerRegistry.register(BackHandler(canHandle, handle, visibleInToolbar))
+        val unregister =
+            backHandlerRegistry.register(BackHandler(canHandle, handle, visibleInToolbar))
         onDispose { unregister() }
     }
 }
@@ -76,15 +78,16 @@ fun RegisterBackHandler(
  */
 @Composable
 fun RegisterBackHandler(
-    key1: Any ?,
+    key1: Any?,
     key2: Any?,
     canHandle: () -> Boolean,
     handle: () -> Unit,
-    visibleInToolbar: Boolean= false
+    visibleInToolbar: Boolean = false,
 ) {
     val backHandlerRegistry = LocalBackHandlerRegistry.current
     DisposableEffect(key1, key2) {
-        val unregister = backHandlerRegistry.register(BackHandler(canHandle, handle, visibleInToolbar))
+        val unregister =
+            backHandlerRegistry.register(BackHandler(canHandle, handle, visibleInToolbar))
         onDispose { unregister() }
     }
 }
@@ -97,10 +100,10 @@ fun NavigatorBackHandler(
     val backHandlerRegistry = LocalBackHandlerRegistry.current
     BackHandler(enabled = backHandlerRegistry.wouldConsumeBackPress() || navigator.canPop) {
         if (backHandlerRegistry.handleBackPress()) {
-            L.logIf(ToolboxLogging.Tag.Navigation)?.i { "AppNavigator::BackHandler handled by BackHandlerRegistry" }
+            L.info(ToolboxLogging.Tag.Navigation) { "AppNavigator::BackHandler handled by BackHandlerRegistry" }
             return@BackHandler
         }
-        L.logIf(ToolboxLogging.Tag.Navigation)?.i { "AppNavigator::BackHandler forwarded to navigator.pop()" }
+        L.info(ToolboxLogging.Tag.Navigation) { "AppNavigator::BackHandler forwarded to navigator.pop()" }
         navigator.pop()
     }
 }

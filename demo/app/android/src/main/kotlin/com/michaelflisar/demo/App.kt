@@ -5,11 +5,13 @@ import com.michaelflisar.demo.pages.tests.TestPrefs
 import com.michaelflisar.kotpreferences.core.value
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
-import com.michaelflisar.toolbox.ads.AdManagerImpl
+import com.michaelflisar.toolbox.ads.AdManager
+import com.michaelflisar.toolbox.ads.DEFAULT_IMPL
 import com.michaelflisar.toolbox.app.AndroidApp
 import com.michaelflisar.toolbox.app.AndroidApplication
 import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppScope
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.classes.AndroidAppSetup
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
@@ -35,7 +37,7 @@ import com.michaelflisar.toolbox.utils.AndroidUtil
 
 class App : AndroidApplication() {
 
-    override fun init() {
+    override fun initEssential(): AppSetup {
 
         val appIcon = R.mipmap.ic_launcher
 
@@ -57,16 +59,19 @@ class App : AndroidApplication() {
         val androidSetup = AndroidAppSetup(
             buildConfigClass = BuildConfig::class
         )
+
+        // 3) App initialisieren
         AndroidApp.init(
             app = this,
             setup = setup,
             androidSetup = androidSetup,
             appIcon = appIcon
         )
-        // nach minimalem init im ACRA Prozess ggf. abbrechen
-        if (isAcraProcess()) {
-            return
-        }
+
+        return setup
+    }
+
+    override fun initFull(setup: AppSetup) {
 
         // 4) App Data ggf. updaten
         Shared.init(setup)
@@ -80,22 +85,13 @@ class App : AndroidApplication() {
         App.registerSingleton(TestPrefs(storageTest))
 
         // 2) Ads + Pro Version enabled
-        AdsManager.init(AdManagerImpl)
+        AdsManager.init(AdManager.DEFAULT_IMPL)
 
         ProVersionManager.init(
-            //manager = RevenueCatProVersionManager(
-            //    appScope = AppScope,
-            //    apiKey = "test_WDSRgDdXoVItJQYbRGDtmbakBjp", // TEST KEY
-            //    entitlement = Entitlement("pro-version"),
-            //    forceIsProInDebug = setup.debugPrefs.forceIsProInDebug,
-            //    isDebug = BuildConfig.DEBUG,
-            //    initialState = ProState.Unknown,
-            //    log = true
-            //),
             manager = OpenIAPProVersionManager(
                 appScope = AppScope,
                 products = Product.ANDROID_TEST_PRODUCTS
-                        //listOf(Product("pro_version"))
+                //listOf(Product("pro_version"))
                 ,
                 forceIsProInDebug = setup.debugPrefs.forceIsProInDebug,
                 isDebug = BuildConfig.DEBUG,
@@ -103,7 +99,7 @@ class App : AndroidApplication() {
                 initialState = ProState.Unknown,
                 log = true
             ),
-            action = ProVersionAppDefaults.actionItem()
+            action = { ProVersionAppDefaults.actionItem() }
         )
 
         // 3) Backup Support

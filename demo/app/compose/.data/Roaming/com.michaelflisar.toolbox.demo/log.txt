@@ -254,3 +254,360 @@
 [D] 2026-04-11 16:48:05.087 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
 [D] 2026-04-11 16:48:05.113 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
 [I] 2026-04-11 16:48:08.704 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=501, y=148, placement=Floating}
+[D] 2026-04-15 09:56:19.924 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 09:56:19.889 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 09:56:22.704 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=501, y=148, placement=Floating}
+[I] 2026-04-15 09:56:25.165 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=2434, y=66, placement=Floating}
+[I] 2026-04-15 09:56:25.688 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=2434, y=66, placement=Floating}
+[D] 2026-04-15 12:55:02.263 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 12:55:02.229 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 12:55:05.629 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=2434, y=66, placement=Floating}
+[I] 2026-04-15 12:55:09.506 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=875, y=91, placement=Floating}
+[I] 2026-04-15 12:55:10.022 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=875, y=91, placement=Floating}
+[D] 2026-04-15 12:56:18.292 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 12:56:18.261 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 12:56:20.664 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=875, y=91, placement=Floating}
+[D] 2026-04-15 12:57:32.397 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 12:57:32.430 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 12:57:35.304 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=875, y=91, placement=Floating}
+[D] 2026-04-15 12:58:07.878 [PageSelection.kt:119]: add 0 | selected: 1
+[D] 2026-04-15 12:58:08.034 [PageSelection.kt:119]: add 1 | selected: 2
+[D] 2026-04-15 12:58:08.206 [PageSelection.kt:119]: add 2 | selected: 3
+[D] 2026-04-15 12:58:08.365 [PageSelection.kt:119]: add 3 | selected: 4
+[D] 2026-04-15 12:58:08.515 [PageSelection.kt:119]: add 4 | selected: 5
+[D] 2026-04-15 13:22:56.207 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 13:22:56.168 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 13:22:59.008 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=875, y=91, placement=Floating}
+[D] 2026-04-15 13:23:58.555 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 13:23:58.519 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 13:24:01.175 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=875, y=91, placement=Floating}
+[I] 2026-04-15 13:24:03.337 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:24:03.865 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:24:15.955 [WindowState.kt:96]: Saving window state: {w=1111, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:24:18.227 [WindowState.kt:96]: Saving window state: {w=949, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:24:18.743 [WindowState.kt:96]: Saving window state: {w=949, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:24:32.248 [WindowState.kt:96]: Saving window state: {w=458, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:24:32.969 [WindowState.kt:96]: Saving window state: {w=487, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:24:33.489 [WindowState.kt:96]: Saving window state: {w=487, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:24:41.434 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:24:41.947 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 13:33:31.481 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 13:33:31.451 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 13:33:34.104 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 13:42:25.461 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 13:42:25.522 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 13:42:28.409 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 13:44:56.441 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 13:44:56.413 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 13:44:59.022 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 13:47:06.165 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 13:47:06.133 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 13:47:08.961 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 13:48:05.245 [BackHandlerRegistry.kt:103]: AppNavigator::BackHandler forwarded to navigator.pop()
+[I] 2026-04-15 13:48:07.598 [BackHandlerRegistry.kt:103]: AppNavigator::BackHandler forwarded to navigator.pop()
+[I] 2026-04-15 13:48:28.265 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[I] 2026-04-15 13:48:28.266 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[I] 2026-04-15 13:48:30.529 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[I] 2026-04-15 13:48:30.530 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[I] 2026-04-15 13:48:32.913 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[I] 2026-04-15 13:48:32.914 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[I] 2026-04-15 13:48:42.586 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[I] 2026-04-15 13:48:42.586 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[I] 2026-04-15 13:48:45.471 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[I] 2026-04-15 13:48:45.472 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[I] 2026-04-15 13:48:48.952 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[I] 2026-04-15 13:48:48.952 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[I] 2026-04-15 13:48:52.080 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[I] 2026-04-15 13:48:52.080 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[I] 2026-04-15 13:48:55.828 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[I] 2026-04-15 13:48:55.829 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[I] 2026-04-15 13:49:01.094 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[I] 2026-04-15 13:49:01.094 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[D] 2026-04-15 13:50:24.390 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 13:50:24.420 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 13:50:27.063 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 13:51:42.580 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 13:51:42.606 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 13:51:45.126 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 13:53:47.063 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 13:53:47.090 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 13:53:49.619 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 13:56:35.659 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 13:56:35.628 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 13:56:38.331 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 13:58:00.390 [PageSelection.kt:119]: add 0 | selected: 1
+[D] 2026-04-15 13:58:00.569 [PageSelection.kt:119]: add 1 | selected: 2
+[D] 2026-04-15 13:58:00.726 [PageSelection.kt:119]: add 2 | selected: 3
+[D] 2026-04-15 13:58:00.883 [PageSelection.kt:119]: add 3 | selected: 4
+[D] 2026-04-15 13:58:01.184 [PageSelection.kt:119]: add 4 | selected: 5
+[D] 2026-04-15 13:58:01.363 [PageSelection.kt:119]: add 5 | selected: 6
+[D] 2026-04-15 13:58:04.761 [PageSelection.kt:119]: add 0 | selected: 1
+[D] 2026-04-15 13:58:04.925 [PageSelection.kt:119]: add 1 | selected: 2
+[D] 2026-04-15 13:58:05.076 [PageSelection.kt:119]: add 2 | selected: 3
+[D] 2026-04-15 13:58:05.227 [PageSelection.kt:119]: add 3 | selected: 4
+[D] 2026-04-15 13:58:56.003 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 13:58:56.036 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 13:58:58.926 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 13:59:09.299 [PageSelection.kt:119]: add 0 | selected: 1
+[D] 2026-04-15 13:59:09.495 [PageSelection.kt:119]: add 1 | selected: 2
+[D] 2026-04-15 13:59:09.651 [PageSelection.kt:119]: add 2 | selected: 3
+[D] 2026-04-15 14:15:40.691 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 14:15:40.662 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 14:15:43.399 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:15:58.657 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 14:15:58.686 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 14:16:01.267 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:16:41.661 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 14:16:41.623 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 14:16:44.281 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:16:48.427 [PageSelection.kt:119]: add 0 | selected: 1
+[I] 2026-04-15 14:16:55.574 [BackHandlerRegistry.kt:103]: AppNavigator::BackHandler forwarded to navigator.pop()
+[D] 2026-04-15 14:17:23.673 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 14:17:23.701 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 14:17:26.290 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:19:38.178 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 14:19:38.151 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 14:19:40.585 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:25:17.542 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 14:25:17.574 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 14:25:20.293 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:25:22.657 [PageSelection.kt:119]: add 0 | selected: 1
+[D] 2026-04-15 14:25:22.829 [PageSelection.kt:119]: add 1 | selected: 2
+[D] 2026-04-15 14:25:22.981 [PageSelection.kt:119]: add 2 | selected: 3
+[D] 2026-04-15 14:25:23.148 [PageSelection.kt:119]: add 3 | selected: 4
+[D] 2026-04-15 14:26:25.416 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 14:26:25.389 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 14:26:28.121 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:27:06.441 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 14:27:06.413 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 14:27:09.114 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:28:18.399 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 14:28:18.368 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 14:28:21.005 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:28:52.130 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 14:28:52.101 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 14:28:54.609 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:30:01.145 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 14:30:01.179 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 14:30:03.825 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:30:42.940 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-15 14:30:42.973 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-15 14:30:45.768 [WindowState.kt:96]: Saving window state: {w=909, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 14:31:03.187 [WindowState.kt:96]: Saving window state: {w=871, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 14:31:03.701 [WindowState.kt:96]: Saving window state: {w=871, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 14:31:06.012 [WindowState.kt:96]: Saving window state: {w=553, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 14:31:06.527 [WindowState.kt:96]: Saving window state: {w=553, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 14:31:08.086 [WindowState.kt:96]: Saving window state: {w=821, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 14:31:08.599 [WindowState.kt:96]: Saving window state: {w=821, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-15 14:31:33.799 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-15 14:31:33.770 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-15 14:31:36.344 [WindowState.kt:96]: Saving window state: {w=821, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 14:31:41.364 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-15 14:31:41.891 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 09:01:27.437 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-16 09:01:27.467 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-16 09:01:30.195 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 09:01:37.798 [PageSelection.kt:135]: add 0 | selected: [0]
+[D] 2026-04-16 09:01:38.413 [PageSelection.kt:135]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:01:38.704 [PageSelection.kt:135]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:01:38.999 [PageSelection.kt:135]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 09:01:39.215 [PageSelection.kt:135]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-16 09:01:40.355 [PageSelection.kt:135]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[D] 2026-04-16 09:01:40.939 [PageSelection.kt:135]: add 6 | selected: [0, 1, 2, 3, 4, 5, 6]
+[D] 2026-04-16 09:01:44.075 [PageSelection.kt:135]: add 0 | selected: [0]
+[D] 2026-04-16 09:01:44.254 [PageSelection.kt:135]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:01:44.419 [PageSelection.kt:135]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:01:44.577 [PageSelection.kt:135]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 09:01:47.402 [PageSelection.kt:135]: add 0 | selected: [0]
+[D] 2026-04-16 09:01:47.590 [PageSelection.kt:135]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:01:47.741 [PageSelection.kt:135]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:01:47.905 [PageSelection.kt:135]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 09:01:48.063 [PageSelection.kt:135]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-16 09:01:48.183 [PageSelection.kt:135]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[D] 2026-04-16 09:01:48.370 [PageSelection.kt:135]: add 6 | selected: [0, 1, 2, 3, 4, 5, 6]
+[D] 2026-04-16 09:02:04.493 [PageSelection.kt:135]: add 0 | selected: [0]
+[D] 2026-04-16 09:02:04.658 [PageSelection.kt:135]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:02:04.839 [PageSelection.kt:135]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:03:25.937 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-16 09:03:25.909 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-16 09:03:28.567 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 09:03:35.473 [PageSelection.kt:138]: add 0 | selected: [0]
+[D] 2026-04-16 09:03:39.198 [PageSelection.kt:138]: add 0 | selected: [0]
+[D] 2026-04-16 09:03:39.379 [PageSelection.kt:138]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:03:39.528 [PageSelection.kt:138]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:03:39.677 [PageSelection.kt:138]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 09:03:39.836 [PageSelection.kt:138]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-16 09:03:39.977 [PageSelection.kt:138]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[D] 2026-04-16 09:03:45.227 [PageSelection.kt:138]: add 0 | selected: [0]
+[D] 2026-04-16 09:03:45.392 [PageSelection.kt:138]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:03:45.549 [PageSelection.kt:138]: add 2 | selected: [0, 1, 2]
+[I] 2026-04-16 09:03:52.150 [PageSettings.kt:98]: BackHandlerRegistry - PreferenceState handles back press
+[D] 2026-04-16 09:03:55.441 [PageSelection.kt:138]: add 0 | selected: [0]
+[D] 2026-04-16 09:03:55.612 [PageSelection.kt:138]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:03:55.801 [PageSelection.kt:138]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:03:57.877 [PageSelection.kt:138]: add 0 | selected: [0]
+[D] 2026-04-16 09:03:58.057 [PageSelection.kt:138]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:03:58.230 [PageSelection.kt:138]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:04:14.960 [PageSelection.kt:138]: add 0 | selected: [0]
+[D] 2026-04-16 09:04:15.126 [PageSelection.kt:138]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:04:15.291 [PageSelection.kt:138]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:04:15.463 [PageSelection.kt:138]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 09:05:24.202 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-16 09:05:24.169 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-16 09:05:26.669 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 09:07:13.736 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-16 09:07:13.701 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-16 09:07:16.253 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 09:09:22.555 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-16 09:09:22.518 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-16 09:09:25.265 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 09:10:19.172 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-16 09:10:19.145 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-16 09:10:21.881 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 09:10:26.880 [PageSelection.kt:136]: add 0 | selected: [0]
+[D] 2026-04-16 09:10:27.044 [PageSelection.kt:136]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:10:27.210 [PageSelection.kt:136]: add 2 | selected: [0, 1, 2]
+[I] 2026-04-16 09:10:27.974 [SelectionToolbar.kt:121]: BackHandlerRegistry - SelectionToolbarState handles back press
+[I] 2026-04-16 09:10:27.975 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[D] 2026-04-16 09:10:28.948 [PageSelection.kt:136]: add 0 | selected: [0]
+[D] 2026-04-16 09:10:29.106 [PageSelection.kt:136]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:10:29.256 [PageSelection.kt:136]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:10:29.413 [PageSelection.kt:136]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 09:10:29.568 [PageSelection.kt:136]: add 4 | selected: [0, 1, 2, 3, 4]
+[I] 2026-04-16 09:10:30.659 [SelectionToolbar.kt:121]: BackHandlerRegistry - SelectionToolbarState handles back press
+[I] 2026-04-16 09:10:30.660 [BackHandlerRegistry.kt:100]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[D] 2026-04-16 09:10:31.408 [PageSelection.kt:136]: add 0 | selected: [0]
+[D] 2026-04-16 09:10:31.573 [PageSelection.kt:136]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:10:31.732 [PageSelection.kt:136]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:10:31.889 [PageSelection.kt:136]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 09:10:32.039 [PageSelection.kt:136]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-16 09:15:10.672 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-16 09:15:10.643 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-16 09:15:13.390 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 09:15:16.472 [PageSelection.kt:148]: add 0 | selected: [0]
+[D] 2026-04-16 09:15:16.822 [PageSelection.kt:148]: add 1 | selected: [0, 1]
+[D] 2026-04-16 09:15:17.009 [PageSelection.kt:148]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 09:15:17.168 [PageSelection.kt:148]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 09:15:17.323 [PageSelection.kt:148]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-16 09:15:17.474 [PageSelection.kt:148]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[D] 2026-04-16 09:15:17.631 [PageSelection.kt:148]: add 6 | selected: [0, 1, 2, 3, 4, 5, 6]
+[D] 2026-04-16 10:03:02.873 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-16 10:03:02.904 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-16 10:03:05.555 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 10:03:25.496 [PageSelection.kt:148]: add 0 | selected: [0]
+[D] 2026-04-16 10:03:25.675 [PageSelection.kt:148]: add 1 | selected: [0, 1]
+[D] 2026-04-16 10:03:25.840 [PageSelection.kt:148]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 10:03:26.019 [PageSelection.kt:148]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 10:03:26.192 [PageSelection.kt:148]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-16 10:06:04.964 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-16 10:06:04.991 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-16 10:06:07.521 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 10:06:16.259 [PageSelection.kt:147]: add 0 | selected: [0]
+[D] 2026-04-16 10:06:17.256 [PageSelection.kt:147]: add 1 | selected: [0, 1]
+[D] 2026-04-16 10:06:17.405 [PageSelection.kt:147]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 10:06:17.548 [PageSelection.kt:147]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 10:06:29.354 [PageSelection.kt:147]: add 7 | selected: [1, 2, 3, 4, 5, 6, 10, 7]
+[D] 2026-04-16 10:06:29.540 [PageSelection.kt:147]: add 8 | selected: [1, 2, 3, 4, 5, 6, 10, 7, 8]
+[D] 2026-04-16 10:06:53.540 [PageSelection.kt:147]: add 0 | selected: [0]
+[D] 2026-04-16 10:06:53.720 [PageSelection.kt:147]: add 1 | selected: [0, 1]
+[D] 2026-04-16 10:06:53.923 [PageSelection.kt:147]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 10:07:00.462 [PageSelection.kt:147]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 10:07:00.634 [PageSelection.kt:147]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-16 10:07:00.822 [PageSelection.kt:147]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[D] 2026-04-16 10:07:04.581 [PageSelection.kt:147]: add 0 | selected: [0]
+[D] 2026-04-16 10:07:04.745 [PageSelection.kt:147]: add 1 | selected: [0, 1]
+[D] 2026-04-16 10:07:04.902 [PageSelection.kt:147]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 10:07:05.059 [PageSelection.kt:147]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 10:07:05.224 [PageSelection.kt:147]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-16 10:07:05.375 [PageSelection.kt:147]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[D] 2026-04-16 10:07:05.532 [PageSelection.kt:147]: add 6 | selected: [0, 1, 2, 3, 4, 5, 6]
+[D] 2026-04-16 10:07:05.698 [PageSelection.kt:147]: add 7 | selected: [0, 1, 2, 3, 4, 5, 6, 7]
+[D] 2026-04-16 10:07:05.864 [PageSelection.kt:147]: add 8 | selected: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+[D] 2026-04-16 10:07:06.020 [PageSelection.kt:147]: add 9 | selected: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[D] 2026-04-16 10:52:43.546 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-16 10:52:43.513 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-16 10:52:47.049 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 10:53:34.461 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-16 10:53:34.495 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-16 10:53:37.275 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 10:53:39.992 [PageSelection.kt:145]: add 0 | selected: [0]
+[D] 2026-04-16 10:53:40.762 [PageSelection.kt:145]: add 1 | selected: [0, 1]
+[D] 2026-04-16 10:53:40.957 [PageSelection.kt:145]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 10:53:41.122 [PageSelection.kt:145]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 10:53:41.272 [PageSelection.kt:145]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-16 10:53:41.430 [PageSelection.kt:145]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[D] 2026-04-16 10:53:41.578 [PageSelection.kt:145]: add 6 | selected: [0, 1, 2, 3, 4, 5, 6]
+[D] 2026-04-16 10:53:41.714 [PageSelection.kt:145]: add 7 | selected: [0, 1, 2, 3, 4, 5, 6, 7]
+[D] 2026-04-16 10:53:41.880 [PageSelection.kt:145]: add 8 | selected: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+[D] 2026-04-16 10:53:42.284 [PageSelection.kt:145]: add 9 | selected: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[D] 2026-04-16 10:53:49.071 [PageSelection.kt:145]: add 0 | selected: [0]
+[D] 2026-04-16 10:53:49.236 [PageSelection.kt:145]: add 1 | selected: [0, 1]
+[D] 2026-04-16 10:53:49.401 [PageSelection.kt:145]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 10:55:27.435 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-16 10:55:27.406 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-16 10:55:29.998 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-16 10:55:31.528 [PageSelection.kt:145]: add 0 | selected: [0]
+[D] 2026-04-16 10:55:31.962 [PageSelection.kt:145]: add 1 | selected: [0, 1]
+[D] 2026-04-16 10:55:32.165 [PageSelection.kt:145]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-16 10:55:32.345 [PageSelection.kt:145]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-16 10:55:40.347 [PageSelection.kt:145]: add 8 | selected: [1, 2, 3, 4, 5, 6, 7, 10, 8]
+[D] 2026-04-16 10:55:40.677 [PageSelection.kt:145]: add 9 | selected: [1, 2, 3, 4, 5, 6, 7, 10, 8, 9]
+[D] 2026-04-16 10:55:43.714 [PageSelection.kt:145]: add 0 | selected: [0]
+[D] 2026-04-16 10:55:44.367 [PageSelection.kt:145]: add 1 | selected: [0, 1]
+[D] 2026-04-20 08:25:19.942 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-20 08:25:19.986 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-20 08:25:23.557 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-20 08:42:38.851 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-20 08:42:38.883 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-20 08:42:41.514 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-20 09:25:20.394 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-20 09:25:20.437 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-20 09:25:23.488 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[D] 2026-04-20 13:20:25.819 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-20 13:20:25.859 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-20 13:20:29.216 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=659, y=124, placement=Floating}
+[I] 2026-04-20 13:20:33.815 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=2242, y=104, placement=Floating}
+[I] 2026-04-20 13:20:34.347 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=2242, y=104, placement=Floating}
+[D] 2026-04-20 13:20:39.588 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:20:40.711 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-04-20 13:20:43.749 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:20:44.131 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-04-20 13:20:45.941 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:20:46.577 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[I] 2026-04-20 13:20:48.160 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=908, y=151, placement=Floating}
+[I] 2026-04-20 13:20:48.679 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=908, y=151, placement=Floating}
+[D] 2026-04-20 13:20:58.208 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:20:59.010 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-04-20 13:21:39.271 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-20 13:21:39.318 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-20 13:21:42.695 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=908, y=151, placement=Floating}
+[D] 2026-04-20 13:21:44.377 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:21:48.132 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:21:52.259 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:21:52.854 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-04-20 13:21:53.615 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-20 13:21:53.976 [PageSelection.kt:150]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-20 13:21:54.169 [PageSelection.kt:150]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-20 13:21:54.312 [PageSelection.kt:150]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[D] 2026-04-20 13:22:35.259 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-20 13:22:35.288 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-20 13:22:37.955 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=908, y=151, placement=Floating}
+[D] 2026-04-20 13:22:39.821 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:22:40.884 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-04-20 13:22:41.128 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-20 13:22:41.312 [PageSelection.kt:150]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-20 13:22:41.470 [PageSelection.kt:150]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-20 13:22:43.269 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:22:43.622 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-04-20 13:22:43.802 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-20 13:22:43.998 [PageSelection.kt:150]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-04-20 13:22:44.157 [PageSelection.kt:150]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-04-20 13:22:51.581 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-04-20 13:22:51.752 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-04-20 13:22:51.998 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-04-20 15:47:52.960 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-04-20 15:47:52.990 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-04-20 15:47:55.639 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=908, y=151, placement=Floating}
+[D] 2026-04-20 16:16:24.601 [UpdateManager.kt:41]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-04-20 16:16:24.561 [UpdateManager.kt:27]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-04-20 16:16:29.156 [WindowState.kt:96]: Saving window state: {w=839, h=800, x=908, y=151, placement=Floating}

@@ -46,7 +46,7 @@ import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.RegisterBackHandler
 import com.michaelflisar.toolbox.app.features.feedback.FeedbackManager
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsThemeContent
-import com.michaelflisar.toolbox.logIf
+import com.michaelflisar.toolbox.info
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -90,8 +90,7 @@ fun DebugDrawer(
     RegisterBackHandler(
         canHandle = { drawerState.drawerState.isOpen },
         handle = {
-            L.logIf(ToolboxLogging.Tag.Navigation)
-                ?.i { "BackHandlerRegistry - DebugDrawer handles back press" }
+            L.info(ToolboxLogging.Tag.Navigation) { "BackHandlerRegistry - DebugDrawer handles back press" }
             scope.launch { drawerState.drawerState.close() }
         }
     )

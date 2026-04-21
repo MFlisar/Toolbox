@@ -63,7 +63,7 @@ abstract class NavScreenContainer(
     override fun Toolbar()
     {
         val currentNavItem = navigator.value?.lastNavItem
-        currentNavItem?.Toolbar()
+        currentNavItem?.Toolbar() ?: rootScreen.Toolbar()
     }
 
     @OptIn(ExperimentalComposeUiApi::class)

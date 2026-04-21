@@ -1,27 +1,20 @@
 package com.michaelflisar.demo
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.michaelflisar.toolbox.ads.AdManagerImpl
+import com.michaelflisar.toolbox.ads.AdManager
 import com.michaelflisar.toolbox.ads.AdsBanner
-import com.michaelflisar.toolbox.ads.AdsBannerNonProVersion
+import com.michaelflisar.toolbox.ads.BANNER_DEFAULT
 import com.michaelflisar.toolbox.app.AndroidActivity
-import com.michaelflisar.toolbox.app.AndroidAppDefaults
 import com.michaelflisar.toolbox.app.AndroidApplication
-import com.michaelflisar.toolbox.app.AndroidNavigation
-import com.michaelflisar.toolbox.app.AndroidScaffold
+import com.michaelflisar.toolbox.app.AndroidContainer
+import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeAndScaleTransition
-import com.michaelflisar.toolbox.app.features.navigation.findLocalByScreenOrThrow
-import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
+import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorTransitionPlatformStyle
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
-import com.michaelflisar.toolbox.app.features.scaffold.rememberNavigationStyleAuto
-import com.michaelflisar.toolbox.app.features.toolbar.SharedToolbarContainer
-import com.michaelflisar.toolbox.app.features.toolbar.selection.AnimatedSelectionToolbarWrapper
-import com.michaelflisar.toolbox.app.features.toolbar.selection.SelectionToolbar
 import com.michaelflisar.toolbox.features.proversion.ProState
 
 class MainActivity : AndroidActivity() {
@@ -30,57 +23,36 @@ class MainActivity : AndroidActivity() {
     override fun Content() {
 
         // Init function
-        AdManagerImpl.init()
+        Shared.Init()
 
         AndroidApplication(
             screen = Shared.page1
         ) { navigator ->
+
             // theme + root (drawer state, app state) are available now
 
             // Scaffold
-            val navigationStyle = rememberNavigationStyleAuto()
-            AndroidScaffold(
-                mainMenuItems = AndroidAppDefaults.getMobileMenuItems(Shared.pageSettings),
-                toolbar = {
-                    AnimatedSelectionToolbarWrapper(
-                        toolbar = {
-                            val localNavigator = navigator.findLocalByScreenOrThrow
-                            val screen = localNavigator.lastNavItem
-                            SharedToolbarContainer {
-                                Crossfade(screen) {
-                                    it.Toolbar()
-                                }
-                            }
-                        },
-                        selectionToolbar = {
-                            SelectionToolbar()
+            AndroidContainer {
+                Shared.Content(
+                    navigator
+                ) {
+                    Column {
+                        // Content
+                        Box(modifier = Modifier.weight(1f)) {
+                            AppNavigatorTransitionPlatformStyle(navigator)
+                            // AppNavigatorFadeAndScaleTransition(navigator)
+                            //AppNavigatorFadeTransition(navigator)
                         }
-                    )
-                },
-                navigationStyle = navigationStyle,
-                navigation = {
-                    AndroidNavigation(
-                        navigationStyle = navigationStyle,
-                        items = Shared.pages.map { it.toNavItem() },
-                        alwaysShowLabel = false
-                    )
-                }
-            ) {
-                Column {
-                    // Content
-                    Box(modifier = Modifier.weight(1f)) {
-                        AppNavigatorFadeAndScaleTransition(navigator)
-                        //AppNavigatorFadeTransition(navigator)
+                        // Ads
+                        val proState = ProVersionManager.proState.collectAsState()
+                        val adUnitId =
+                            AdManager.BANNER_DEFAULT // TODO: mit App spezifischer Banner ID ersetzen
+                        AdsBanner(
+                            adManager = AdsManager.manager,
+                            adUnitId = adUnitId,
+                            visible = proState.value == ProState.No
+                        )
                     }
-                    // Ads
-                    val proVersionManager = ProVersionManager.setup
-                    val proState = proVersionManager.proState.collectAsState()
-                    val adUnitId =
-                        AdManagerImpl.Ids.BANNER_DEFAULT // TODO: mit App spezifischer Banner ID ersetzen
-                    AdsBannerNonProVersion(
-                        proState = proState,
-                        adUnitId = adUnitId
-                    )
                 }
             }
         }

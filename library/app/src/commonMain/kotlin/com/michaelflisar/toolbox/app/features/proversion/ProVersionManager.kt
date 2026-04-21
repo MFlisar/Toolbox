@@ -2,7 +2,7 @@ package com.michaelflisar.toolbox.app.features.proversion
 
 import androidx.compose.runtime.Composable
 import com.michaelflisar.composedialogs.core.DialogStateNoData
-import com.michaelflisar.toolbox.app.features.actions.ActionItem
+import com.michaelflisar.toolbox.app.features.actions.IBaseAction
 import com.michaelflisar.toolbox.features.proversion.BaseAppProVersionManager
 import com.michaelflisar.toolbox.features.proversion.ProState
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +18,7 @@ object ProVersionManager {
 
     fun init(
         manager: BaseAppProVersionManager,
-        action: @Composable () -> ActionItem.Action,
+        action: @Composable () -> IBaseAction,
     ) {
         _setup = ProVersionSetup.Supported(manager, action)
         manager.configure()

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.IconComposable
+import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
 
 /**
  * WICHTIG: data class nutzen, wegen android restore - ohne hashCode geht das bspw. nicht!
@@ -35,7 +36,7 @@ abstract class NavScreen(
     @Composable
     override fun Toolbar() {
         val data = provideData()
-        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+        PageToolbar(
             screen = this,
             title = data.name,
         )

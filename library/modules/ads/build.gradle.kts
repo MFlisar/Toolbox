@@ -33,10 +33,10 @@ val buildTargets = Targets(
     android = true,
     iOS = true,
     // desktop
-    windows = false,
-    macOS = false,
+    windows = true,
+    macOS = false, // because of compose unstyled dialogs
     // web
-    wasm = false
+    wasm = true
 )
 
 val androidConfig = AndroidLibraryConfig.create(
@@ -72,10 +72,12 @@ kotlin {
         // ---------------------
 
         val adsSupported by creating { dependsOn(commonMain.get()) }
+        val adsNotSupported by creating { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
 
             adsSupported supportedBy Platform.LIST_MOBILE
+            adsNotSupported supportedBy !Platform.LIST_MOBILE
 
         }
 
@@ -89,9 +91,6 @@ kotlin {
             implementation(libs.jetbrains.compose.runtime)
             implementation(libs.jetbrains.compose.material3)
 
-            // ads
-            implementation(deps.basic.ads)
-
             // Library
             api(project(":toolbox:core"))
 
@@ -101,6 +100,11 @@ kotlin {
             // ads
             implementation(deps.google.ads)
             implementation(deps.google.ump)
+        }
+
+        adsSupported.dependencies {
+            // ads
+            implementation(deps.basic.ads)
         }
     }
 }

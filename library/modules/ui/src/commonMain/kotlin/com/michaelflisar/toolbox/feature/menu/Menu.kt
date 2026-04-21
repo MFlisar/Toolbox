@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.Icon
+import kotlin.comparisons.then
 
 @LayoutScopeMarker
 @Immutable
@@ -376,26 +377,38 @@ fun MenuScope.MenuSeparator(
 
 @Composable
 fun MenuScope.MenuIconRow(
-    enabled: Boolean = true,
+    //enabled: Boolean = true,
     content: @Composable MenuIconRowScope.() -> Unit,
 ) {
     WrappedItem(
         content = {
-            DropdownMenuItem(
-                modifier = Menu.modifier(padding = false),
-                text = {
-                    Row(
-                        modifier = Modifier.height(IntrinsicSize.Min),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        MenuIconRowScopeInstance(this).content()
-                    }
-                },
-                enabled = enabled,
-                leadingIcon = null,
-                trailingIcon = null,
-                onClick = {}
-            )
+            Box(
+                modifier = Menu
+                    .modifier(padding = true, clip = false)
+                    .fillMaxWidth()
+            ) {
+                Row(
+                    modifier = Modifier.height(IntrinsicSize.Min),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    MenuIconRowScopeInstance(this).content()
+                }
+            }
+            //DropdownMenuItem(
+            //    modifier = Menu.modifier(padding = false),
+            //    text = {
+            //        Row(
+            //            modifier = Modifier.height(IntrinsicSize.Min),
+            //            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            //        ) {
+            //            MenuIconRowScopeInstance(this).content()
+            //        }
+            //    },
+            //    enabled = enabled,
+            //    leadingIcon = null,
+            //    trailingIcon = null,
+            //    onClick = {}
+            //)
         }
     )
 }

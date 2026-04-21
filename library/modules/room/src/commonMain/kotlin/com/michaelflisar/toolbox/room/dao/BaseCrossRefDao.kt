@@ -5,8 +5,11 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.RawQuery
+import androidx.room.RoomDatabase
 import androidx.room.RoomRawQuery
 import androidx.room.Transaction
+import androidx.room.execSQL
+import com.michaelflisar.toolbox.room.RoomQueryUtil
 import com.michaelflisar.toolbox.room.RoomUtil
 
 @Dao
@@ -106,6 +109,8 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
         return count
     }
 
+    suspend fun deleteAll() = rawInt(RoomQueryUtil.deleteAll(tableName))
+
     // -----------------
     // INSERT / UPDATE
     // -----------------
@@ -125,5 +130,8 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
 
     @RawQuery
     abstract suspend fun rawQueryListIDs(query: RoomRawQuery): Int
+
+    @RawQuery
+    abstract suspend fun rawInt(query: RoomRawQuery): Int
 
 }

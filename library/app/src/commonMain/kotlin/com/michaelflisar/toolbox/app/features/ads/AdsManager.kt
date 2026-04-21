@@ -8,7 +8,7 @@ object AdsManager {
     val manager: BaseAdManager?
         get() = _manager
 
-    fun init(manager: BaseAdManager) {
+    fun init(manager: BaseAdManager?) {
         _manager = manager
     }
 }

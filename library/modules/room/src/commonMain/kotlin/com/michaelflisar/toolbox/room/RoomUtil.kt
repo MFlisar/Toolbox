@@ -8,7 +8,7 @@ import androidx.room.useWriterConnection
 
 object RoomUtil {
 
-    val DEFAULT_DB_FILE = "data.db"
+    const val DEFAULT_DB_FILE = "data.db"
 
     suspend fun <S, T> runQueryInChunks(list: List<S>, chunkSize: Int = 999, block: suspend (List<S>) -> List<T>): List<T> {
         val chunks = list.chunked(chunkSize)

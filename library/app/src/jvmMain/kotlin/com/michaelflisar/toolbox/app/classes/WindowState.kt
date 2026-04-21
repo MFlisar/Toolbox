@@ -16,10 +16,9 @@ import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.kotpreferences.core.SettingsConverter
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.ToolboxLogging
-import com.michaelflisar.toolbox.app.DesktopApp
-import com.michaelflisar.toolbox.app.utils.WindowUtil
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
-import com.michaelflisar.toolbox.logIf
+import com.michaelflisar.toolbox.app.utils.WindowUtil
+import com.michaelflisar.toolbox.info
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
@@ -87,19 +86,19 @@ fun rememberJewelWindowState(
     val scope = rememberCoroutineScope()
 
     val windowState by prefs.windowState.collectAsStateNotNull()
-    val state = remember(windowState) {  windowState.toWindowState() }
+    val state = remember(windowState) { windowState.toWindowState() }
 
     snapshotFlow { DesktopWindowState(state) }
         .distinctUntilChanged()
         .debounce(500)
         .onEach {
-            L.logIf(ToolboxLogging.Tag.Window)?.i { "Saving window state: $it" }
+            L.info(ToolboxLogging.Tag.Window) { "Saving window state: $it" }
             withContext(Dispatchers.IO) {
                 try {
                     prefs.windowState.update(it)
                 } catch (e: AccessDeniedException) {
                     // ignore - comes from androidx datastore...
-                    L.logIf(ToolboxLogging.Tag.None)?.i(e)
+                    L.info(ToolboxLogging.Tag.None, t = e)
                 }
             }
         }
@@ -114,7 +113,7 @@ data class DesktopWindowState(
     val windowHeight: Int = 800,
     val windowX: Int = 0,
     val windowY: Int = 0,
-    val windowPlacement: WindowPlacement = WindowPlacement.Floating
+    val windowPlacement: WindowPlacement = WindowPlacement.Floating,
 ) {
     constructor(windowState: WindowState) : this(
         windowWidth = windowState.size.width.value.toInt(),

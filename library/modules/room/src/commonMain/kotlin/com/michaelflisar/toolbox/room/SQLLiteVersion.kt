@@ -1,5 +1,7 @@
 package com.michaelflisar.toolbox.room
 
+import androidx.sqlite.SQLiteConnection
+
 class SQLLiteVersion(
     private val major: Int,
     private val minor: Int,
@@ -16,6 +18,12 @@ class SQLLiteVersion(
         suspend fun load(dao: SQLLiteVersionDao): SQLLiteVersion {
             val version = dao.getSQLiteVersion()
             return create(version)
+        }
+
+        fun load(connection: SQLiteConnection): SQLLiteVersion {
+            val query = "SELECT sqlite_version()"
+            val result = RoomQueryUtil.executeQuery<String>(connection, query)
+            return create(result)
         }
 
         fun create(version: String): SQLLiteVersion {

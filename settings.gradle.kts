@@ -12,6 +12,7 @@ dependencyResolutionManagement    {
         // jewel + skiko
         maven("https://www.jetbrains.com/intellij-repository/releases")
         maven("https://packages.jetbrains.team/maven/p/ij/intellij-dependencies/")
+        mavenLocal()
     }
 
     versionCatalogs {

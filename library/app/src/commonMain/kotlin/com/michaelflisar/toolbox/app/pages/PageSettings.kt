@@ -24,10 +24,11 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
 import com.michaelflisar.toolbox.app.features.preferences.AppPreferences
 import com.michaelflisar.toolbox.app.features.preferences.AppPreferencesStyle
+import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_settings
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.logIf
+import com.michaelflisar.toolbox.info
 import org.jetbrains.compose.resources.stringResource
 import kotlin.jvm.Transient
 
@@ -54,7 +55,7 @@ abstract class PageSettings : NavScreen() {
     @Composable
     override fun Toolbar() {
         val data = provideData()
-        val canGoBack = remember  {
+        val canGoBack = remember {
             derivedStateOf { (preferenceState.value?.currentLevel ?: 0) > 0 }
         }
         LaunchedEffect(Unit) {
@@ -63,7 +64,7 @@ abstract class PageSettings : NavScreen() {
         LaunchedEffect(preferenceState.value?.currentLevel) {
             println("Toolbar::PreferenceState currentLevel: ${preferenceState.value?.currentLevel}")
         }
-        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+        PageToolbar(
             screen = this,
             title = data.name,
             canGoBack = canGoBack.value,
@@ -93,8 +94,7 @@ private fun Page(
         RegisterBackHandler(
             canHandle = { (preferenceState.value?.currentLevel ?: 0) > 0 },
             handle = {
-                L.logIf(ToolboxLogging.Tag.Navigation)
-                    ?.i { "BackHandlerRegistry - PreferenceState handles back press" }
+                L.info(ToolboxLogging.Tag.Navigation) { "BackHandlerRegistry - PreferenceState handles back press" }
                 preferenceState.value?.popLast()
             },
             visibleInToolbar = true

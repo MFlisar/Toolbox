@@ -9,16 +9,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.kotpreferences.core.interfaces.Storage
-import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.features.device.CurrentDevice
+import com.michaelflisar.toolbox.app.features.device.Current
+import com.michaelflisar.toolbox.app.features.device.Device
 
 private fun ComposeTheme.BaseTheme.toAppBaseTheme(): Preferences.AppBaseTheme {
     return Preferences.AppBaseTheme(
         text = this.name,
         icon = when (this) {
-            ComposeTheme.BaseTheme.System -> CurrentDevice.icon
+            ComposeTheme.BaseTheme.System -> Device.Current.icon
             ComposeTheme.BaseTheme.Dark -> Icons.Default.DarkMode
             ComposeTheme.BaseTheme.Light -> Icons.Default.LightMode
         },

@@ -5,12 +5,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,14 +19,15 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
-import com.michaelflisar.toolbox.app.features.device.CurrentDevice
-import com.michaelflisar.toolbox.app.features.menu.Menu
+import com.michaelflisar.toolbox.app.features.device.Current
+import com.michaelflisar.toolbox.app.features.device.Device
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.app.features.toolbar.LocalToolbarMainMenuItems
-import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItems
+import com.michaelflisar.toolbox.app.features.scaffold.LocalPlatformStyle
+import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
+import com.michaelflisar.toolbox.app.features.toolbar.composables.ToolbarMainMenuItems
 import com.michaelflisar.toolbox.app.platform.LocalPlatformContext
 import com.michaelflisar.toolbox.app.platform.current
 import com.michaelflisar.toolbox.app.platform.kill
@@ -56,13 +55,13 @@ object PageHomeScreen : NavScreen() {
     @Composable
     override fun Toolbar() {
         val data = provideData()
-        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+        PageToolbar(
             screen = this,
             title = data.name,
             endContent = {
                 val appState = LocalAppState.current
                 val actionText = "Page Home Action"
-                MainMenuItems(
+                ToolbarMainMenuItems(
                     showInOverflow = true,
                     additionalItems = listOf(
                         MenuItem.Item(
@@ -111,7 +110,13 @@ private fun Page(
             label = "Device",
             labelWidth = labelWidth
         ) {
-            Text("${CurrentDevice.base}::${CurrentDevice.name}")
+            Text("${Device.Current.base}::${Device.Current.name}")
+        }
+        MyLabeledInformationHorizontal(
+            label = "Platform Style",
+            labelWidth = labelWidth
+        ) {
+            Text(LocalPlatformStyle.current.name)
         }
 
         val context = LocalPlatformContext.current

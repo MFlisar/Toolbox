@@ -2,23 +2,19 @@ package com.michaelflisar.toolbox.ads
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import app.lexilabs.basic.ads.AdUnitId
+import androidx.compose.ui.Modifier
 import app.lexilabs.basic.ads.BasicAds
 import app.lexilabs.basic.ads.Consent
 import app.lexilabs.basic.ads.DependsOnGoogleMobileAds
 import app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform
 import com.michaelflisar.toolbox.features.ads.BaseAdManager
+import org.jetbrains.compose.resources.StringResource
 
-object AdManagerImpl : BaseAdManager {
-
-    object Ids {
-        val BANNER_DEFAULT = AdUnitId.BANNER_DEFAULT
-    }
-
+internal object AdManagerImpl : BaseAdManager {
 
     @OptIn(DependsOnGoogleMobileAds::class)
     @Composable
-    fun init() {
+    override fun Init() {
         // initialize ads
         BasicAds.Initialize()
     }
@@ -51,4 +47,20 @@ object AdManagerImpl : BaseAdManager {
     @OptIn(DependsOnGoogleUserMessagingPlatform::class)
     @Suppress("UNCHECKED_CAST")
     private fun Any.asConsent() = this as MutableState<Consent>
+
+    @Composable
+    override fun AdsBanner(
+        adUnitId: String,
+        modifier: Modifier,
+        visible: Boolean,
+        placeholderResource: StringResource,
+    ) {
+        AdsBannerImpl(
+            adUnitId = adUnitId,
+            modifier = modifier,
+            visible = visible,
+            placeholderResource = placeholderResource
+        )
+
+    }
 }

@@ -24,7 +24,8 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItems
+import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
+import com.michaelflisar.toolbox.app.features.toolbar.composables.ToolbarMainMenuItems
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.demo.shared.resources.Res
@@ -55,18 +56,17 @@ object PageStatesScreen : NavScreen() {
     @Composable
     override fun Toolbar() {
         val data = provideData()
-        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+        PageToolbar(
             screen = this,
             title = data.name,
-            endContent = { MainMenuItems(showInOverflow = true) },
+            endContent = { ToolbarMainMenuItems(showInOverflow = true) },
         )
     }
 
     @Composable
     override fun Screen() {
         val navigator = LocalNavigator.currentOrThrow
-        val navigatorScreenModel =
-            navigator.rememberNavigatorScreenModel { PageStatesScreenModel() }
+        val navigatorScreenModel = navigator.rememberNavigatorScreenModel { PageStatesScreenModel() }
         val screenModel = rememberScreenModel { PageStatesScreenModel() }
         Page(navigatorScreenModel, screenModel)
     }

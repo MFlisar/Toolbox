@@ -19,7 +19,8 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItems
+import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
+import com.michaelflisar.toolbox.app.features.toolbar.composables.ToolbarMainMenuItems
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.collapsibleheader.CollapsibleHeader
 
@@ -40,10 +41,10 @@ object PageTestExpandableHeader : NavScreen() {
     @Composable
     override fun Toolbar() {
         val data = provideData()
-        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+        PageToolbar(
             screen = this,
             title = data.name,
-            endContent = { MainMenuItems(showInOverflow = true) },
+            endContent = { ToolbarMainMenuItems(showInOverflow = true) },
         )
     }
 

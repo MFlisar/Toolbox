@@ -1,8 +1,6 @@
 package com.michaelflisar.toolbox.room.dao
 
-import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Ignore
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.RawQuery
@@ -10,7 +8,6 @@ import androidx.room.RoomDatabase
 import androidx.room.RoomRawQuery
 import androidx.room.Transaction
 import androidx.room.execSQL
-import com.michaelflisar.toolbox.numbers.NumberUtil
 import com.michaelflisar.toolbox.room.RoomQueryUtil
 import com.michaelflisar.toolbox.room.RoomUtil
 import com.michaelflisar.toolbox.room.interfaces.IRoomEntity
@@ -40,10 +37,29 @@ interface IBaseDao<ID : Number, Entity : IRoomEntity<ID, Entity>> {
     // flows ("private")
     // -----------------
 
+    /**
+     * flow + raw query: functions must be annotated like following:
+     *
+     * @RawQuery(observedEntities = [Entity::class])
+     */
+    @RawQuery
     fun _flowList(query: RoomRawQuery): Flow<List<Entity>>
+
+    /**
+     * flow + raw query: functions must be annotated like following:
+     *
+     * @RawQuery(observedEntities = [Entity::class])
+     */
+    @RawQuery
     fun _flowInt(query: RoomRawQuery): Flow<Int>
+
+    /**
+     * flow + raw query: functions must be annotated like following:
+     *
+     * @RawQuery(observedEntities = [Entity::class])
+     */
+    @RawQuery
     fun _flowItem(query: RoomRawQuery): Flow<Entity>
-    // fun _flowItemOrNull(query: RoomRawQuery): Flow<T?>
 
     // ---------------
     // Flows
@@ -113,6 +129,8 @@ interface IBaseDao<ID : Number, Entity : IRoomEntity<ID, Entity>> {
         }
     }
 
+    suspend fun deleteAll() = rawInt(RoomQueryUtil.deleteAll(tableName))
+
     // -----------------
     // INSERT / UPDATE
     // -----------------
@@ -132,7 +150,8 @@ interface IBaseDao<ID : Number, Entity : IRoomEntity<ID, Entity>> {
         }
     }
 
-    suspend fun insertOrUpdate(item: Entity): Entity = item.copyWithId(convertId(_insertOrUpdate(item)))
+    suspend fun insertOrUpdate(item: Entity): Entity =
+        item.copyWithId(convertId(_insertOrUpdate(item)))
 
     // -----------------
     // RAW

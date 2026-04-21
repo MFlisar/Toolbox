@@ -8,10 +8,6 @@ import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.core.app.NotificationManagerCompat
 import com.michaelflisar.lumberjack.core.L
-import kotlin.collections.find
-import kotlin.collections.indices
-import kotlin.let
-import kotlin.ranges.reversed
 
 object NotificationUtil {
 
@@ -31,7 +27,7 @@ object NotificationUtil {
                 for (i in channels.indices.reversed()) {
                     notificationManager.deleteNotificationChannel(channels[i].id)
                 }
-                L.logIf(ToolboxLogging.Tag.None)?.v { "Notification channels cleaned" }
+                L.info(ToolboxLogging.Tag.None) { "Notification channels cleaned" }
             } catch (e: Exception) {
                 L.e(e)
             }
@@ -71,8 +67,8 @@ object NotificationUtil {
         importance: Int,
         sound: Boolean = true,
         vibrate: Boolean = true,
-        lights: Boolean = true
-    ) : Boolean {
+        lights: Boolean = true,
+    ): Boolean {
         return if (supportsChannels()) {
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -94,7 +90,7 @@ object NotificationUtil {
         importance: Int = NotificationManagerCompat.IMPORTANCE_HIGH,
         sound: Boolean = true,
         vibrate: Boolean = true,
-        lights: Boolean = true
+        lights: Boolean = true,
     ): Boolean {
         return if (!channelExists(context, channelId)) {
             createChannel(context, channelName, channelId, importance, sound, vibrate, lights)

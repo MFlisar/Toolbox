@@ -1,8 +1,9 @@
 package com.michaelflisar.toolbox.app.features.proversion
 
 import androidx.compose.runtime.Composable
-import com.michaelflisar.toolbox.app.features.actions.ActionItem
+import com.michaelflisar.toolbox.app.features.actions.IBaseAction
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
+import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_go_pro
 import com.michaelflisar.toolbox.drawables.Crown
@@ -11,14 +12,13 @@ import org.jetbrains.compose.resources.stringResource
 
 object ProVersionAppDefaults {
 
-    fun actionItem() = @Composable {
+    @Composable
+    fun actionItem(): IBaseAction {
         val appState = LocalAppState.current
-        ActionItem.Action(
-            title = stringResource(Res.string.menu_go_pro),
+        return MenuItem.Item(
+            text = stringResource(Res.string.menu_go_pro),
             icon = Crown.toIconComposable(),
-            action = {
-                appState.showProVersionDialog.show()
-            }
+            onClick = { appState.showProVersionDialog.show() }
         )
     }
 

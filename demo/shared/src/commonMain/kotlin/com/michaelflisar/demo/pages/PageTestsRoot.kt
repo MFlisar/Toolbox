@@ -19,7 +19,6 @@ import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreenContainer
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItems
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.demo.pages.tests.PageTestDialogs
 import com.michaelflisar.demo.pages.tests.PageTestPane
@@ -27,6 +26,8 @@ import com.michaelflisar.demo.pages.tests.PageTestPreferences
 import com.michaelflisar.demo.pages.tests.PageTestTable
 import com.michaelflisar.demo.pages.tests.PageTestUI
 import com.michaelflisar.demo.pages.tests.PageTestUIAdaptive
+import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
+import com.michaelflisar.toolbox.app.features.toolbar.composables.ToolbarMainMenuItems
 import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.ui.MyScrollableColumn
@@ -51,10 +52,10 @@ object PageTestsRootScreen : NavScreen() {
     @Composable
     override fun Toolbar() {
         val data = provideData()
-        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
+        PageToolbar(
             screen = this,
             title = data.name,
-            endContent = { MainMenuItems(showInOverflow = true) },
+            endContent = { ToolbarMainMenuItems(showInOverflow = true) },
         )
     }
 

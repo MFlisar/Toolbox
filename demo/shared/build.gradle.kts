@@ -73,10 +73,6 @@ compose.resources {
     publicResClass = true
 }
 
-dependencies {
-    coreLibraryDesugaring(libs.desugar)
-}
-
 kotlin {
 
     compilerOptions {
@@ -209,4 +205,8 @@ kotlin {
 
         }
     }
+}
+
+dependencies {
+    coreLibraryDesugaring(libs.desugar)
 }

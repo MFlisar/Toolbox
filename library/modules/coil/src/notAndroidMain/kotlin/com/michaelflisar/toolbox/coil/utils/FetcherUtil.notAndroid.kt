@@ -11,7 +11,7 @@ actual fun FetcherUtil.getBitmap(result: FetchResult): Bitmap {
     return when (result) {
         is ImageFetchResult -> result.image.toBitmap()
         is SourceFetchResult -> {
-            val bytes = result.source.source().readByteString().toByteArray()
+            val bytes = result.source.source().readByteArray()
             decodeBitmap(bytes)
         }
     }

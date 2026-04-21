@@ -2,9 +2,8 @@ package com.michaelflisar.toolbox.service.classes
 
 import androidx.work.PeriodicWorkRequest
 import com.michaelflisar.lumberjack.core.L
-import com.michaelflisar.toolbox.Toolbox
 import com.michaelflisar.toolbox.ToolboxLogging
-import com.michaelflisar.toolbox.logIf
+import com.michaelflisar.toolbox.debug
 import com.michaelflisar.toolbox.utils.TimeUtil
 import java.util.Calendar
 
@@ -21,7 +20,7 @@ sealed class WorkerFrequency {
     data class Week(
         private val dayOfWeek: Int = Calendar.SUNDAY,
         private val hour: Int = 8,
-        private val minute: Int = 0
+        private val minute: Int = 0,
     ) : WorkerFrequency() {
         override val durationInMillis = 1000L * 60L * 60L * 24L * 7L
         override fun getNextUpdateTime(): Calendar {
@@ -37,7 +36,7 @@ sealed class WorkerFrequency {
 
     data class Day(
         private val hour: Int = 8,
-        private val minute: Int = 0
+        private val minute: Int = 0,
     ) : WorkerFrequency() {
         override val durationInMillis = 1000L * 60L * 60L * 24L
         override fun getNextUpdateTime(): Calendar {
@@ -51,8 +50,8 @@ sealed class WorkerFrequency {
     }
 
     data class Hour(
-        private val firstHour:Int  = 0,
-        private val everyXHour: Int = 1
+        private val firstHour: Int = 0,
+        private val everyXHour: Int = 1,
     ) : WorkerFrequency() {
         override val durationInMillis = 1000L * 60L * 60L * everyXHour
         override fun getNextUpdateTime(): Calendar {
@@ -82,7 +81,7 @@ sealed class WorkerFrequency {
         val now = Calendar.getInstance()
         val nextAlarm = getNextUpdateTime()
 
-        L.logIf(ToolboxLogging.Tag.None)?.d { "Alarm [frequency = $this | factor = $factor]: ${nextAlarm.time.toLocaleString()} (${now.time.toLocaleString()})" }
+        L.debug(ToolboxLogging.Tag.None) { "Alarm [frequency = $this | factor = $factor]: ${nextAlarm.time.toLocaleString()} (${now.time.toLocaleString()})" }
 
         var counter = 0
         while (nextAlarm.timeInMillis - now.timeInMillis <= MIN_TIME_IN_FUTURE) {
@@ -94,7 +93,7 @@ sealed class WorkerFrequency {
             }
         }
 
-        L.logIf(ToolboxLogging.Tag.None)?.d { "Alarm wird registriert: ${nextAlarm.time.toLocaleString()}" }
+        L.debug(ToolboxLogging.Tag.None) { "Alarm wird registriert: ${nextAlarm.time.toLocaleString()}" }
 
         return AlarmData(
             (nextAlarm.timeInMillis - Calendar.getInstance().timeInMillis).coerceAtLeast(0L),
@@ -106,10 +105,14 @@ sealed class WorkerFrequency {
     data class AlarmData(
         val initialDelayInMillis: Long,
         val nextTime: Calendar,
-        val frequencyInMillis: Long
+        val frequencyInMillis: Long,
     ) {
         val info: String
             @Suppress("DEPRECATION")
-            get() = "nextTime = ${nextTime.time.toLocaleString()} | frequency = ${TimeUtil.getTimeString(frequencyInMillis)} | initialDelay = ${TimeUtil.getTimeString(initialDelayInMillis)}"
+            get() = "nextTime = ${nextTime.time.toLocaleString()} | frequency = ${
+                TimeUtil.getTimeString(
+                    frequencyInMillis
+                )
+            } | initialDelay = ${TimeUtil.getTimeString(initialDelayInMillis)}"
     }
 }

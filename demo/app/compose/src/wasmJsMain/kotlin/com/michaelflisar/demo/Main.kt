@@ -3,19 +3,15 @@ package com.michaelflisar.demo
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.demo.pages.tests.TestPrefs
 import com.michaelflisar.kotpreferences.storage.keyvalue.LocalStorageKeyValueStorage
 import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.WasmApp
-import com.michaelflisar.toolbox.app.WasmAppDefaults
 import com.michaelflisar.toolbox.app.WasmApplication
-import com.michaelflisar.toolbox.app.WasmScaffold
-import com.michaelflisar.toolbox.app.WasmToolbar
+import com.michaelflisar.toolbox.app.WasmContainer
 import com.michaelflisar.toolbox.app.classes.WasmAppSetup
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
-import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorFadeTransition
-import com.michaelflisar.demo.pages.tests.TestPrefs
+import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorTransitionPlatformStyle
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 suspend fun main() {
@@ -48,24 +44,20 @@ suspend fun main() {
         // mit container id geht es nicht --> wäre aber gut, dann würde ein Loader angezeigt werden, aktuell wird der nicht angezeigt...
         // viewportContainerId = wasmSetup.canvasElementId
     ) {
+        Shared.Init()
+
         WasmApplication(
             screen = Shared.page1,
             wasmSetup = wasmSetup
         ) { navigator ->
 
             // theme + root (drawer state, app state) are available
-            val navigator = LocalNavigator.currentOrThrow
-            WasmScaffold(
-                topBar = {
-                    WasmToolbar(
-                        navigationItems = Shared.pages.map { it.toNavItem() },
-                        menuItems = WasmAppDefaults.getWebMenuItems(
-                            pageSettings = Shared.pageSettings
-                        )
-                    )
-                },
-            ) {
-                AppNavigatorFadeTransition(navigator)
+            WasmContainer {
+                Shared.Content(
+                    navigator
+                ) {
+                    AppNavigatorTransitionPlatformStyle(navigator)
+                }
             }
         }
     }

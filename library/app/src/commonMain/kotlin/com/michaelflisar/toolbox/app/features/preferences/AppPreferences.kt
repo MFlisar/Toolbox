@@ -68,14 +68,17 @@ import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.backup.ContentPreferencesAsSubPreference
 import com.michaelflisar.toolbox.app.features.device.BaseDevice
-import com.michaelflisar.toolbox.app.features.device.CurrentDevice
+import com.michaelflisar.toolbox.app.features.device.Current
+import com.michaelflisar.toolbox.app.features.device.Device
 import com.michaelflisar.toolbox.app.features.feedback.FeedbackManager
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeader
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeaderButtons
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsProVersionHeader
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
+import com.michaelflisar.toolbox.app.features.scaffold.LocalPlatformStyle
 import com.michaelflisar.toolbox.app.platform.LocalPlatformContext
+import com.michaelflisar.toolbox.app.platform.ResolvedPlatformStyle
 import com.michaelflisar.toolbox.app.platform.current
 import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.restart
@@ -152,14 +155,15 @@ object AppPreferencesDefaults {
         customPageName: String? = null,
         customContent: @Composable (PreferenceGroupScope.() -> Unit)? = null,
     ): AppPreferencesStyle {
-        return when (CurrentDevice.base) {
-            BaseDevice.Mobile -> styleDefault(
+        val platformStyle = LocalPlatformStyle.current
+        return when (platformStyle) {
+            ResolvedPlatformStyle.Mobile -> styleDefault(
                 addThemeSettings = addThemeSettings,
                 customContent = customContent
             )
 
-            BaseDevice.Desktop,
-            BaseDevice.Web-> {
+            ResolvedPlatformStyle.Desktop,
+            ResolvedPlatformStyle.Web-> {
                 val page = customPageName?.let {
                     if (customContent == null)
                         throw RuntimeException("customPageName is not null, please provide a non null customContent lambda!")

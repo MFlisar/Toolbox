@@ -1,12 +1,14 @@
 package com.michaelflisar.toolbox.feature.menu
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.CopyAll
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Deselect
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.components.MyIconButton
@@ -25,12 +28,13 @@ import com.michaelflisar.toolbox.core.resources.menu_delete
 import com.michaelflisar.toolbox.core.resources.menu_deselect_all
 import com.michaelflisar.toolbox.core.resources.menu_duplicate
 import com.michaelflisar.toolbox.core.resources.menu_invert_selection
+import com.michaelflisar.toolbox.core.resources.menu_more
 import com.michaelflisar.toolbox.core.resources.menu_move
 import com.michaelflisar.toolbox.core.resources.menu_region_selection
 import com.michaelflisar.toolbox.core.resources.menu_select_all
 import com.michaelflisar.toolbox.drawables.Move
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.feature.selection.SelectionDataItems
+import com.michaelflisar.toolbox.feature.selection.SelectionState
 import org.jetbrains.compose.resources.stringResource
 
 object MultiSelectionMenu {
@@ -39,7 +43,7 @@ object MultiSelectionMenu {
     sealed class Action {
 
         @Composable
-        abstract fun MenuItem()
+        abstract fun IconButton()
 
         @Composable
         abstract fun MenuItem(scope: MenuScope)
@@ -53,7 +57,7 @@ object MultiSelectionMenu {
         ) : Action() {
 
             @Composable
-            override fun MenuItem() {
+            override fun IconButton() {
                 MyTooltipBox(
                     tooltip = text
                 ) {
@@ -84,7 +88,7 @@ object MultiSelectionMenu {
         ) : Action() {
 
             @Composable
-            override fun MenuItem() {
+            override fun IconButton() {
                 VerticalDivider()
             }
 
@@ -105,7 +109,7 @@ object MultiSelectionMenu {
         ) : Action() {
 
             @Composable
-            override fun MenuItem() {
+            override fun IconButton() {
                 val menu = rememberMenuState()
                 MyTooltipBox(
                     tooltip = text
@@ -139,132 +143,149 @@ object MultiSelectionMenu {
             }
         }
     }
-}
-
-object MultiSelectionMenuDefaults {
 
     object Actions {
 
         @Composable
-        fun regionDivider() = MultiSelectionMenu.Action.Separator(
+        fun regionDivider() = Action.Separator(
             text = ""
         )
 
         @Composable
-        fun regionSelection() = MultiSelectionMenu.Action.Separator(
+        fun regionSelection() = Action.Separator(
             text = stringResource(Res.string.menu_region_selection)
         )
 
         @Composable
         fun <ID : Comparable<ID>> selectAll(
-            allIds: List<ID>,
-            selectionData: SelectionDataItems<ID>,
+            selection: SelectionState<ID>,
             enabled: Boolean = true,
-        ) = MultiSelectionMenu.Action.Item(
+        ) = Action.Item(
             text = stringResource(Res.string.menu_select_all),
             icon = Icons.Default.SelectAll.toIconComposable(),
-            enabled = enabled && selectionData.selectedIds.value.sorted() != allIds.sorted(),
-            onClick = { selectionData.select(allIds) }
+            enabled = enabled && !selection.isAllSelected,
+            onClick = { selection.selectAll() }
         )
 
         @Composable
         fun <ID : Comparable<ID>> deselectAll(
-            selectionData: SelectionDataItems<ID>,
+            selection: SelectionState<ID>,
             enabled: Boolean = true,
-        ) = MultiSelectionMenu.Action.Item(
+        ) = Action.Item(
             text = stringResource(Res.string.menu_deselect_all),
             icon = Icons.Default.Deselect.toIconComposable(),
-            enabled = enabled && selectionData.isSomethingSelected,
-            onClick = { selectionData.clearSelection() }
+            enabled = enabled && selection.isSomethingSelected,
+            onClick = { selection.clear() }
         )
 
 
         @Composable
         fun <ID : Comparable<ID>> invertSelection(
-            allIds: List<ID>,
-            selectionData: SelectionDataItems<ID>,
+            allIds: Collection<ID>,
+            selection: SelectionState<ID>,
             enabled: Boolean = true,
-        ) = MultiSelectionMenu.Action.Item(
+        ) = Action.Item(
             text = stringResource(Res.string.menu_invert_selection),
             icon = Icons.Default.SwapHoriz.toIconComposable(),
             enabled = enabled,
             onClick = {
-                val currentlySelected = selectionData.selectedIds.value.toSet()
-                selectionData.clearSelection()
-                selectionData.select(allIds.filter { it !in currentlySelected })
+                val currentlySelected = selection.selected.toSet()
+                selection.clear()
+                selection.set(allIds.filter { it !in currentlySelected })
             }
         )
 
         @Composable
         fun <ID : Comparable<ID>> delete(
-            selectionData: SelectionDataItems<ID>,
+            selection: SelectionState<ID>,
             enabled: Boolean = true,
             onClick: () -> Unit,
-        ) = MultiSelectionMenu.Action.Item(
+        ) = Action.Item(
             text = stringResource(Res.string.menu_delete),
             icon = Icons.Default.Delete.toIconComposable(
-                if (enabled && selectionData.isSomethingSelected)
+                if (enabled && selection.isSomethingSelected)
                     MaterialTheme.colorScheme.error
                 else
                     Color.Unspecified
             ),
-            enabled = enabled && selectionData.isSomethingSelected,
+            enabled = enabled && selection.isSomethingSelected,
             onClick = onClick
         )
 
         @Composable
         fun <ID : Comparable<ID>> move(
-            selectionData: SelectionDataItems<ID>,
+            selection: SelectionState<ID>,
             enabled: Boolean = true,
             onClick: () -> Unit,
-        ) = MultiSelectionMenu.Action.Item(
+        ) = Action.Item(
             text = stringResource(Res.string.menu_move),
             icon = Move.toIconComposable(),
-            enabled = enabled && selectionData.isSomethingSelected,
+            enabled = enabled && selection.isSomethingSelected,
             onClick = onClick
         )
 
         @Composable
         fun <ID : Comparable<ID>> copy(
-            selectionData: SelectionDataItems<ID>,
+            selection: SelectionState<ID>,
             enabled: Boolean = true,
             onClick: () -> Unit,
-        ) = MultiSelectionMenu.Action.Item(
+        ) = Action.Item(
             text = stringResource(Res.string.menu_copy),
             icon = Icons.Default.CopyAll.toIconComposable(),
-            enabled = enabled && selectionData.isSomethingSelected,
+            enabled = enabled && selection.isSomethingSelected,
             onClick = onClick
         )
 
         @Composable
         fun <ID : Comparable<ID>> duplicate(
-            selectionData: SelectionDataItems<ID>,
+            selection: SelectionState<ID>,
             enabled: Boolean = true,
             onClick: () -> Unit,
-        ) = MultiSelectionMenu.Action.Item(
+        ) = Action.Item(
             text = stringResource(Res.string.menu_duplicate),
             icon = Icons.Default.ContentCopy.toIconComposable(),
-            enabled = enabled && selectionData.isSomethingSelected,
+            enabled = enabled && selection.isSomethingSelected,
             onClick = onClick
         )
 
         @Composable
         fun <ID : Comparable<ID>> cut(
-            selectionData: SelectionDataItems<ID>,
+            selection: SelectionState<ID>,
             enabled: Boolean = true,
             onClick: () -> Unit,
-        ) = MultiSelectionMenu.Action.Item(
+        ) = Action.Item(
             text = stringResource(Res.string.menu_cut),
             icon = Icons.Default.ContentCut.toIconComposable(),
-            enabled = enabled && selectionData.isSomethingSelected,
+            enabled = enabled && selection.isSomethingSelected,
             onClick = onClick
         )
     }
 }
 
 @Composable
-fun MultiSelectionMenu(
-    items: List<MultiSelectionMenu.Action>,
+fun RowScope.MultiSelectionMenu(
+    items: List<MultiSelectionMenu.Action> = emptyList(),
+    overflowItems: List<MultiSelectionMenu.Action> = emptyList(),
 ) {
-    items.forEach { it.MenuItem() }
+    items.forEach { it.IconButton() }
+    if (overflowItems.isNotEmpty()) {
+        val showMenu = rememberMenuState()
+        MyTooltipBox(
+            tooltip = stringResource(Res.string.menu_more)
+        ) {
+            Box(
+                modifier = Modifier,
+            ) {
+                MyIconButton(
+                    icon = Icons.Default.MoreVert.toIconComposable(),
+                    onClick = { showMenu.show() }
+                )
+                PopupMenu(
+                    state = showMenu
+                ) {
+                    overflowItems.forEach { it.MenuItem(this) }
+                }
+            }
+        }
+    }
 }

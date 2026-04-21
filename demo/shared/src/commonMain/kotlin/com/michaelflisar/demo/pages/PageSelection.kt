@@ -1,35 +1,47 @@
 package com.michaelflisar.demo.pages
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.SelectAll
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.rememberScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.parcelize.Parcelize
+import com.michaelflisar.toolbox.app.extensions.asStateFlow
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.app.features.toolbar.MainMenuItems
-import com.michaelflisar.toolbox.app.features.toolbar.selection.LocalSelectionToolbarState
-import com.michaelflisar.toolbox.app.features.toolbar.selection.SelectionToolbarState
-import com.michaelflisar.toolbox.app.features.toolbar.selection.rememberSelectionDataItems
+import com.michaelflisar.toolbox.app.features.toolbar.AnimatedSelectionToolbarWrapper
+import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
+import com.michaelflisar.toolbox.app.features.toolbar.SelectionToolbar
+import com.michaelflisar.toolbox.app.features.toolbar.composables.ToolbarMainMenuItems
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.feature.menu.MenuItem
-import com.michaelflisar.toolbox.feature.menu.PopupMenu
-import com.michaelflisar.toolbox.feature.menu.rememberMenuState
-import com.michaelflisar.toolbox.feature.selection.SelectionDataItems
+import com.michaelflisar.toolbox.feature.menu.MultiSelectionMenu
+import com.michaelflisar.toolbox.feature.selection.SelectionState
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOf
+
+class PageSelectionScreenModel : ScreenModel {
+
+    val idsFlow: StateFlow<Set<Int>> = flowOf((1..10).toSet())
+        .asStateFlow(screenModelScope, emptySet())
+
+    val selection = SelectionState<Int>(idsFlow, screenModelScope)
+
+    // Optional
+    override fun onDispose() {
+        // ...
+    }
+}
 
 @Parcelize
 object PageSelectionScreen : NavScreen() {
@@ -42,16 +54,46 @@ object PageSelectionScreen : NavScreen() {
 
     @Composable
     override fun Screen() {
-        Page(this)
+        val screenModel = rememberScreenModel { PageSelectionScreenModel() }
+        Page(this, screenModel)
     }
 
     @Composable
     override fun Toolbar() {
         val data = provideData()
-        com.michaelflisar.toolbox.app.features.toolbar.Toolbar(
-            screen = this,
-            title = data.name,
-            endContent = { MainMenuItems(showInOverflow = true) },
+        val screenModel = rememberScreenModel { PageSelectionScreenModel() }
+
+        val selection = screenModel.selection
+
+        AnimatedSelectionToolbarWrapper(
+            selection = selection,
+            toolbar = {
+                PageToolbar(
+                    screen = this@PageSelectionScreen,
+                    title = data.name,
+                    endContent = { ToolbarMainMenuItems(showInOverflow = true) },
+                )
+            },
+            selectionToolbar = {
+                SelectionToolbar(
+                    selection = screenModel.selection,
+                    style = SelectionToolbar.Style.Floating(
+                        shape = MaterialTheme.shapes.medium,
+                        padding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+                    )
+                ) {
+                    MultiSelectionMenu(
+                        items = listOf(),
+                        overflowItems = listOf(
+                            MultiSelectionMenu.Actions.selectAll(selection),
+                            MultiSelectionMenu.Actions.deselectAll(selection),
+                            MultiSelectionMenu.Actions.delete(selection) {
+                                selection.clearAndClose()
+                            }
+                        )
+                    )
+                }
+            }
         )
     }
 }
@@ -59,6 +101,7 @@ object PageSelectionScreen : NavScreen() {
 @Composable
 private fun Page(
     screen: NavScreen,
+    screenModel: PageSelectionScreenModel,
     paddingValues: PaddingValues = PaddingValues(0.dp),
 ) {
     MyColumn(
@@ -67,40 +110,29 @@ private fun Page(
             .padding(all = 16.dp)
             .fillMaxSize()
     ) {
-        val totalCount = 10
-        val selectionToolbarState = LocalSelectionToolbarState.current
-
-        val selectionData = rememberSelectionDataItems<Int>(
-            totalItemCount = totalCount
-        ) {
-            SelectionMenu(selectionToolbarState)
-        }
-
-        Text("Counter: ${selectionToolbarState.selectedCount}")
+        Text("Counter: ${screenModel.selection.selectedCount}")
 
         MyButton(
             onClick = {
                 changeSelection(
-                    selectionToolbarState,
-                    selectionData,
-                    true,
-                    selectionToolbarState.selectedCount
+                    selection = screenModel.selection,
+                    add = true,
+                    id = screenModel.selection.selectedCount
                 )
             },
-            enabled = selectionToolbarState.selectedCount < totalCount
+            enabled = !screenModel.selection.isAllSelected
         ) {
             Text("Increment counter")
         }
         MyButton(
             onClick = {
                 changeSelection(
-                    selectionToolbarState,
-                    selectionData,
-                    false,
-                    selectionToolbarState.selectedCount - 1
+                    selection = screenModel.selection,
+                    add = false,
+                    id = screenModel.selection.selectedCount - 1
                 )
             },
-            enabled = selectionToolbarState.selectedCount > 0
+            enabled = screenModel.selection.isSomethingSelected
         ) {
             Text("Decrement counter")
         }
@@ -108,53 +140,18 @@ private fun Page(
 }
 
 private fun changeSelection(
-    selectionToolbarState: SelectionToolbarState,
-    selectionData: SelectionDataItems<Int>,
+    selection: SelectionState<Int>,
     add: Boolean,
     id: Int,
 ) {
     // update selection data
     if (add) {
-        selectionData.select(id)
-        L.d { "add $id | selected: ${selectionData.selected}" }
+        selection.select(id)
+        L.d { "add $id | selected: ${selection.selected}" }
     } else {
-        selectionData.deselect(id)
+        selection.deselect(id)
     }
 
     // show selection toolbar if not already shown
-    selectionToolbarState.ensureSelectionMode(selectionData)
-}
-
-@Composable
-private fun SelectionMenu(
-    selectionToolbarState: SelectionToolbarState,
-) {
-    val showMenu = rememberMenuState()
-    Box(
-        modifier = Modifier,
-    ) {
-        IconButton(
-            onClick = {
-                showMenu.show()
-            },
-        ) {
-            Icon(
-                imageVector = Icons.Default.MoreVert,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground,
-            )
-        }
-        PopupMenu(
-            state = showMenu
-        ) {
-            MenuItem(
-                text = { Text("Delete") },
-                icon = Icons.Default.Delete.toIconComposable(),
-                onClick = {
-                    // ...
-                    selectionToolbarState.clearSelection(finish = true)
-                }
-            )
-        }
-    }
+    selection.show()
 }

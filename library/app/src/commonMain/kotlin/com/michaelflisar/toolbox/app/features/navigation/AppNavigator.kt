@@ -18,7 +18,8 @@ import cafe.adriel.voyager.transitions.FadeTransition
 import cafe.adriel.voyager.transitions.ScreenTransition
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.NavigatorBackHandler
-import com.michaelflisar.toolbox.app.features.toolbar.selection.ResetSelectionToolbarOnScreenChange
+import com.michaelflisar.toolbox.app.features.scaffold.LocalPlatformStyle
+import com.michaelflisar.toolbox.app.platform.ResolvedPlatformStyle
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -34,9 +35,22 @@ fun AppNavigator(
         disposeBehavior = disposeBehavior,
         onBackPressed = null // wir nutzen unseren eigenen BackHandler weiter unten, der integrierte funktioniert nicht wie gewünscht!
     ) { navigator ->
-        ResetSelectionToolbarOnScreenChange()
+        //ResetSelectionToolbarOnScreenChange()
         content(navigator)
         NavigatorBackHandler(navigator)
+    }
+}
+
+@OptIn(ExperimentalVoyagerApi::class)
+@Composable
+fun AppNavigatorTransitionPlatformStyle(
+    navigator: Navigator,
+) {
+    val platformStyle = LocalPlatformStyle.current
+    when (platformStyle) {
+        ResolvedPlatformStyle.Mobile ->  AppNavigatorFadeAndScaleTransition(navigator)
+        ResolvedPlatformStyle.Desktop -> AppNavigatorFadeTransition(navigator)
+        ResolvedPlatformStyle.Web -> AppNavigatorFadeTransition(navigator)
     }
 }
 

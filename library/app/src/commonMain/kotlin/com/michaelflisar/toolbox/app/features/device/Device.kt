@@ -6,7 +6,7 @@ import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.PhoneIphone
 import androidx.compose.ui.graphics.vector.ImageVector
 
-expect val CurrentDevice: Device
+expect val Device.Companion.Current: Device
 
 enum class BaseDevice {
     Desktop,
@@ -24,4 +24,6 @@ enum class Device(
     MacOS(BaseDevice.Desktop, Icons.Default.Computer),
     Linux(BaseDevice.Desktop, Icons.Default.Computer),
     WASM(BaseDevice.Web, Icons.Default.Computer)
+    ;
+    companion object
 }

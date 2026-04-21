@@ -13,6 +13,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
+import com.michaelflisar.toolbox.app.features.actions.IBaseAction
+import com.michaelflisar.toolbox.app.features.navigation.INavItem
+import com.michaelflisar.toolbox.app.features.navigation.NavItemAction
+import com.michaelflisar.toolbox.app.features.navigation.NavItemRegion
 import com.michaelflisar.toolbox.components.MyCheckbox
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.extensions.Icon
@@ -32,7 +36,32 @@ sealed class MenuItem {
         val icon: IconComposable? = null,
         val keyboardShortcut: Set<String> = emptySet(),
         val onClick: () -> Unit,
-    ) : MenuItem()
+    ) : MenuItem(), IBaseAction {
+
+        @Composable
+        override fun toMenuItem(): MenuItem = this
+
+        @Composable
+        override fun toNavItem(): INavItem {
+            return NavItemAction(
+                title = text,
+                icon = icon,
+                action = onClick
+            )
+        }
+
+        @Composable
+        override fun PopupMenuItem(scope: MenuScope) {
+            with(scope) {
+                MenuItem(
+                    text = { Text(text) },
+                    icon = icon
+                ) {
+                    onClick()
+                }
+            }
+        }
+    }
 
     class Checkbox(
         val text: String,
@@ -49,12 +78,28 @@ sealed class MenuItem {
 
     class Separator(
         val text: String = "",
-    ) : MenuItem()
+    ) : MenuItem(), IBaseAction {
+
+        @Composable
+        override fun toMenuItem(): MenuItem = this
+
+        @Composable
+        override fun toNavItem(): INavItem {
+            return NavItemRegion(title = text)
+        }
+
+        @Composable
+        override fun PopupMenuItem(scope: MenuScope) {
+            with(scope) {
+                MenuSeparator(text = text)
+            }
+        }
+    }
 }
 
 @Composable
 fun Menu(
-    items: List<MenuItem>
+    items: List<MenuItem>,
 ) {
     if (items.isEmpty()) {
         return
@@ -110,7 +155,7 @@ private fun MenuButton(
     text: String,
     icon: IconComposable?,
     onClick: () -> Unit,
-    content: @Composable (() -> Unit) = { }
+    content: @Composable (() -> Unit) = { },
 ) {
     Box {
         if (icon != null) {
