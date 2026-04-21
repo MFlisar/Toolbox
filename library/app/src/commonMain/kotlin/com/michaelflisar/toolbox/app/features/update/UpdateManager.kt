@@ -23,20 +23,20 @@ class UpdateManager(
 
         var lastVersion = setup.prefs.lastAppVersion.read()
         val currentVersion = setup.appData.versionCode
-        L.debug(ToolboxLogging.Tag.UpdateMananger) { "lastVersion = $lastVersion => currentVersion = $currentVersion " }
+        L.debug(ToolboxLogging.Tag.UpdateManager) { "lastVersion = $lastVersion => currentVersion = $currentVersion " }
         if (isFirstRun(lastVersion)) {
-            L.debug(ToolboxLogging.Tag.UpdateMananger) { "UPDATE SKIPPED - FIRST RUN!" }
+            L.debug(ToolboxLogging.Tag.UpdateManager) { "UPDATE SKIPPED - FIRST RUN!" }
             lastVersion = currentVersion.toLong()
             setup.prefs.lastAppVersion.update(lastVersion)
         } else if (lastVersion < currentVersion) {
-            L.debug(ToolboxLogging.Tag.UpdateMananger) { "UPDATES gestartet..." }
+            L.debug(ToolboxLogging.Tag.UpdateManager) { "UPDATES gestartet..." }
             updates
                 .sortedBy { it.version }
                 .forEach { it.execute(lastVersion) }
             setup.prefs.lastAppVersion.update(currentVersion.toLong())
-            L.debug(ToolboxLogging.Tag.UpdateMananger) { "UPDATES fertig" }
+            L.debug(ToolboxLogging.Tag.UpdateManager) { "UPDATES fertig" }
         } else {
-            L.debug(ToolboxLogging.Tag.UpdateMananger) { "UPDATE SKIPPED weil lastVersion bereits up-to-date ist!" }
+            L.debug(ToolboxLogging.Tag.UpdateManager) { "UPDATE SKIPPED weil lastVersion bereits up-to-date ist!" }
         }
 
     }

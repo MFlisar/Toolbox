@@ -41,7 +41,7 @@ fun CoilImage(
             modifier = modifier,
         )
     } else {
-        L.info(ToolboxLogging.Tag.Coil) { "data is ${data::class} => showing AsyncImage" }
+        L.info(ToolboxLogging.Tag.Coil) { "data is ${data::class.simpleName ?: data::class} => showing AsyncImage" }
         AsyncImage(
             model = data,
             contentDescription = null,
@@ -105,7 +105,7 @@ fun CoilMultiImage(
 private fun onState(state: AsyncImagePainter.State) {
     if (state is AsyncImagePainter.State.Error) {
         L.error(
-            ToolboxLogging.Tag.CoilError,
+            ToolboxLogging.Tag.Coil,
             t = state.result.throwable
         ) { "Error loading image | message: ${state.result.throwable.message}" }
     }

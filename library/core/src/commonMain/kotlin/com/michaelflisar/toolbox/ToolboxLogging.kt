@@ -10,10 +10,9 @@ object ToolboxLogging {
         Service,
         Navigation,
         AppUpdate,
-        UpdateMananger,
+        UpdateManager,
         Window,
-        Coil,
-        CoilError
+        Coil
     }
 
     private var enabledTags: Map<Tag, Level> = HashMap()
@@ -30,35 +29,64 @@ object ToolboxLogging {
 
     internal fun isEnabled(tag: Tag, level: Level): Boolean {
         val enabledLevel = enabledTags[tag] ?: return false
-        return enabledLevel <= level
+        return enabledLevel.order <= level.order
     }
 }
 
+private const val callStackCorrection = 3
+
+private fun L.log(
+    level: Level,
+    tag: ToolboxLogging.Tag,
+    force: Boolean = false,
+    t: Throwable? = null,
+    message: (() -> String)?,
+) {
+    logIf { !force && ToolboxLogging.isEnabled(tag, level) }
+        ?.tag(tag.name)
+        ?.callStackCorrection(callStackCorrection)
+        ?.let {
+            if (t == null) {
+                if (message != null)
+                    it.log(level, message)
+                else
+                    // passiert nie, wenn t == null!
+                    throw RuntimeException("ToolboxLogging: No message provided for log call with tag $tag and level $level")
+            } else {
+                if (message != null)
+                    it.log(level, t, message)
+                else
+                    it.log(level, t)
+            }
+        }
+}
+
 fun L.info(tag: ToolboxLogging.Tag, force: Boolean = false, message: () -> String) =
-    logIf { !force && ToolboxLogging.isEnabled(tag, Level.INFO) }?.tag(tag.name)?.i(message)
+    log(Level.INFO, tag, force, message = message)
 
 fun L.info(
     tag: ToolboxLogging.Tag,
     force: Boolean = false,
     t: Throwable,
     message: (() -> String)? = null,
-) =
-    logIf { !force && ToolboxLogging.isEnabled(tag, Level.INFO) }?.tag(tag.name)?.let {
-        if (message != null) it.i(t, message) else it.i(t)
-    }
+) = log(Level.INFO, tag, force, t, message ?: { "" })
 
 fun L.debug(tag: ToolboxLogging.Tag, force: Boolean = false, message: () -> String) =
-    logIf { !force && ToolboxLogging.isEnabled(tag, Level.DEBUG) }?.tag(tag.name)?.d(message)
+    log(Level.DEBUG, tag, force, message = message)
+
+fun L.debug(
+    tag: ToolboxLogging.Tag,
+    force: Boolean = false,
+    t: Throwable,
+    message: (() -> String)? = null,
+) = log(Level.DEBUG, tag, force, t, message ?: { "" })
 
 fun L.error(tag: ToolboxLogging.Tag, force: Boolean = false, message: () -> String) =
-    logIf { !force && ToolboxLogging.isEnabled(tag, Level.ERROR) }?.tag(tag.name)?.e(message)
+    log(Level.ERROR, tag, force, message = message)
 
 fun L.error(
     tag: ToolboxLogging.Tag,
     force: Boolean = false,
     t: Throwable,
     message: (() -> String)? = null,
-) =
-    logIf { !force && ToolboxLogging.isEnabled(tag, Level.ERROR) }?.tag(tag.name)?.let {
-        if (message != null) it.e(t, message) else it.e(t)
-    }
+) = log(Level.ERROR, tag, force, t, message ?: { "" })

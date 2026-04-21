@@ -98,7 +98,7 @@ fun rememberJewelWindowState(
                     prefs.windowState.update(it)
                 } catch (e: AccessDeniedException) {
                     // ignore - comes from androidx datastore...
-                    L.info(ToolboxLogging.Tag.None, t = e)
+                    L.info(ToolboxLogging.Tag.Window, t = e)
                 }
             }
         }
