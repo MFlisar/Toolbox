@@ -22,7 +22,7 @@ import com.michaelflisar.toolbox.app.features.theme.AppThemeProvider
 import com.michaelflisar.toolbox.app.jewel.JewelApp
 import com.michaelflisar.toolbox.app.jewel.JewelExitHandler
 import com.michaelflisar.toolbox.app.jewel.JewelRoot
-import org.jetbrains.jewel.window.DecoratedWindowScope
+import com.michaelflisar.toolbox.app.jewel.LocalJewelDecoratedWindowScope
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -36,7 +36,7 @@ fun ApplicationScope.DesktopApplication(
     onKeyEvent: (NativeKeyEvent) -> Boolean = { false },
     appIsClosing: MutableState<Boolean> = remember { mutableStateOf(false) },
     // Content
-    content: @Composable DecoratedWindowScope.(navigator: Navigator) -> Unit,
+    content: @Composable (navigator: Navigator) -> Unit,
 ) {
     ProvideAppLocals(Unit) {
 
@@ -56,7 +56,7 @@ fun ApplicationScope.DesktopApplication(
                 onKeyEvent = onKeyEvent,
             ) {
                 if (desktopSetup.ensureIsFullyOnScreen) {
-                    val window = this.window
+                    val window = LocalJewelDecoratedWindowScope.current.window
                     val density = LocalDensity.current
                     LaunchedEffect(density, window) {
                         jewelAppState.ensureIsFullyOnScreen(density, window)

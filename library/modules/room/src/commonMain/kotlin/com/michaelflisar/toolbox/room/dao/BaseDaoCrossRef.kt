@@ -5,23 +5,23 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.RawQuery
-import androidx.room.RoomDatabase
 import androidx.room.RoomRawQuery
 import androidx.room.Transaction
-import androidx.room.execSQL
 import com.michaelflisar.toolbox.room.RoomQueryUtil
 import com.michaelflisar.toolbox.room.RoomUtil
 
 @Dao
-abstract class BaseCrossRefDao<ID : Number, T : Any>(
+abstract class BaseDaoCrossRef<ID : Number, T : Any>(
     val tableName: String,
     val columnLeftId: String,
     val columnRightId: String,
 ) {
 
-    private fun queryLeft(id: ID) = RoomRawQuery("SELECT * FROM $tableName where $columnLeftId = $id")
+    private fun queryLeft(id: ID) =
+        RoomRawQuery("SELECT * FROM $tableName where $columnLeftId = $id")
 
-    private fun queryRight(id: ID) = RoomRawQuery("SELECT * FROM $tableName where $columnRightId = $id")
+    private fun queryRight(id: ID) =
+        RoomRawQuery("SELECT * FROM $tableName where $columnRightId = $id")
 
     private fun queryDelete(left: ID, right: ID) =
         RoomRawQuery("DELETE FROM $tableName where $columnLeftId = $left and $columnRightId = $right")
@@ -32,31 +32,34 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
     private fun queryDeleteRight(ids: List<ID>) =
         RoomRawQuery("DELETE FROM $tableName where $columnRightId IN (${ids.joinToString(",")})")
 
-    private fun queryAllLeft(ids: List<ID>) = RoomRawQuery("SELECT * FROM $tableName where $columnLeftId IN (${ids.joinToString(",")})")
-    private fun queryAllRight(ids: List<ID>) = RoomRawQuery("SELECT * FROM $tableName where $columnRightId IN (${ids.joinToString(",")})")
+    private fun queryAllLeft(ids: List<ID>) =
+        RoomRawQuery("SELECT * FROM $tableName where $columnLeftId IN (${ids.joinToString(",")})")
+
+    private fun queryAllRight(ids: List<ID>) =
+        RoomRawQuery("SELECT * FROM $tableName where $columnRightId IN (${ids.joinToString(",")})")
 
 
     // -----------------
     // GET
     // -----------------
 
-    suspend fun getAllLeft(id: ID) = rawQueryList(queryLeft(id))
+    suspend fun getAllLeft(id: ID) = _rawQueryList(queryLeft(id))
 
-    suspend fun getAllRight(id: ID) = rawQueryList(queryRight(id))
+    suspend fun getAllRight(id: ID) = _rawQueryList(queryRight(id))
 
-    suspend fun getAllLeft(ids: List<ID>) : List<T> {
+    suspend fun getAllLeft(ids: List<ID>): List<T> {
         val items = ArrayList<T>()
         RoomUtil.runQueryInChunks(ids) {
-            items += rawQueryList(queryAllLeft(it))
+            items += _rawQueryList(queryAllLeft(it))
             it
         }
         return items
     }
 
-    suspend fun getAllRight(ids: List<ID>) : List<T> {
+    suspend fun getAllRight(ids: List<ID>): List<T> {
         val items = ArrayList<T>()
         RoomUtil.runQueryInChunks(ids) {
-            items += rawQueryList(queryAllRight(it))
+            items += _rawQueryList(queryAllRight(it))
             it
         }
         return items
@@ -66,7 +69,7 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
     // delete / insertOrUpdate
     // -------------------------
 
-    suspend fun _deleteLeftIds(ids: List<ID>) = rawQueryListIDs(queryDeleteLeft(ids))
+    suspend fun _deleteLeftIds(ids: List<ID>) = _rawQueryListIDs(queryDeleteLeft(ids))
 
     @Transaction
     open suspend fun deleteLeftIds(ids: List<ID>): Int {
@@ -78,7 +81,7 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
         return count
     }
 
-    suspend fun _deleteRightIds(ids: List<ID>) = rawQueryListIDs(queryDeleteRight(ids))
+    suspend fun _deleteRightIds(ids: List<ID>) = _rawQueryListIDs(queryDeleteRight(ids))
 
     @Transaction
     open suspend fun deleteRightIds(ids: List<ID>): Int {
@@ -91,7 +94,7 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
     }
 
     suspend fun deleteLeftRight(leftId: ID, rightId: ID) =
-        rawQueryListIDs(queryDelete(leftId, rightId))
+        _rawQueryListIDs(queryDelete(leftId, rightId))
 
     @Delete
     abstract suspend fun _delete(items: List<T>): Int
@@ -109,16 +112,16 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
         return count
     }
 
-    suspend fun deleteAll() = rawInt(RoomQueryUtil.deleteAll(tableName))
+    suspend fun deleteAll() = _rawInt(RoomQueryUtil.deleteAll(tableName))
 
     // -----------------
     // INSERT / UPDATE
     // -----------------
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     abstract suspend fun insertOrUpdate(items: List<T>): List<Long>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     abstract suspend fun insertOrUpdate(item: T): Long
 
     // -----------------
@@ -126,12 +129,12 @@ abstract class BaseCrossRefDao<ID : Number, T : Any>(
     // -----------------
 
     @RawQuery
-    abstract suspend fun rawQueryList(query: RoomRawQuery): List<T>
+    abstract suspend fun _rawQueryList(query: RoomRawQuery): List<T>
 
     @RawQuery
-    abstract suspend fun rawQueryListIDs(query: RoomRawQuery): Int
+    abstract suspend fun _rawQueryListIDs(query: RoomRawQuery): Int
 
     @RawQuery
-    abstract suspend fun rawInt(query: RoomRawQuery): Int
+    abstract suspend fun _rawInt(query: RoomRawQuery): Int
 
 }

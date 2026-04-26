@@ -33,7 +33,7 @@ object ToolboxLogging {
     }
 }
 
-private const val callStackCorrection = 3
+private const val callStackCorrection = 4
 
 private fun L.log(
     level: Level,

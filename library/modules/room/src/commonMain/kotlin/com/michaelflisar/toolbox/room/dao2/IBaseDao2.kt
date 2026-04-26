@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.room.dao
+package com.michaelflisar.toolbox.room.dao2
 
 import androidx.room.Delete
 import androidx.room.Insert
@@ -13,7 +13,8 @@ import com.michaelflisar.toolbox.room.RoomUtil
 import com.michaelflisar.toolbox.room.interfaces.IRoomEntity
 import kotlinx.coroutines.flow.Flow
 
-interface IBaseDao<ID : Number, Entity : IRoomEntity<ID, Entity>> {
+@Deprecated("")
+interface IBaseDao2<ID : Number, Entity : IRoomEntity<ID, Entity>> {
 
     val classIDInstance: ID
     val tableName: String

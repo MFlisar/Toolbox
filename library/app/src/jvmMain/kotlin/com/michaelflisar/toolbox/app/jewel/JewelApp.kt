@@ -3,7 +3,6 @@ package com.michaelflisar.toolbox.app.jewel
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
 import org.jetbrains.jewel.intui.standalone.theme.createDefaultTextStyle

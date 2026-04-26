@@ -7,11 +7,10 @@ import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.dialogs.ErrorDialogProvider
 import com.michaelflisar.toolbox.app.features.root.Root
-import org.jetbrains.jewel.window.DecoratedWindowScope
 
 @Composable
-fun DecoratedWindowScope.DesktopContainer(
-    titleBar: @Composable DecoratedWindowScope.() -> Unit = {},
+fun DesktopContainer(
+    titleBar: @Composable () -> Unit = {},
     statusBar: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {

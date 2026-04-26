@@ -22,7 +22,7 @@ import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.menu.removeConsecutiveSeparators
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionSetup
-import com.michaelflisar.toolbox.app.jewel.LocalJewelWindowState
+import com.michaelflisar.toolbox.app.jewel.LocalJewelDecoratedWindowScope
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.features.proversion.ProState
 import com.michaelflisar.toolbox.utils.JvmUtil
@@ -78,7 +78,7 @@ object DesktopAppDefaults {
     ): List<MenuItem> {
 
         val jewelAppState = LocalJewelAppState.current
-        val windowState = LocalJewelWindowState.current
+        val jewelDecoratedWindowScope = LocalJewelDecoratedWindowScope.current
         val density = LocalDensity.current
 
         val scope = rememberCoroutineScope()
@@ -97,7 +97,12 @@ object DesktopAppDefaults {
                     labelResetWindowPosition,
                     Icons.Default.Clear.toIconComposable()
                 ) {
-                    scope.launch { jewelAppState.windowState.resetWindowPosition(density, windowState) }
+                    scope.launch {
+                        jewelAppState.windowState.resetWindowPosition(
+                            density = density,
+                            window = jewelDecoratedWindowScope.window
+                        )
+                    }
                 }
             }
         )

@@ -5,7 +5,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.jewel.JewelTitleBar
 import com.michaelflisar.toolbox.app.jewel.JewelTitleMenu
-import org.jetbrains.jewel.window.DecoratedWindowScope
 
 class DesktopTitleBarSetup(
     val showAlwaysOnTop: Boolean = true,
@@ -19,7 +18,7 @@ class DesktopTitleAction(
 )
 
 @Composable
-fun DecoratedWindowScope.DesktopTitleBar(
+fun DesktopTitleBar(
     setup: DesktopTitleBarSetup = DesktopTitleBarSetup(
         showAlwaysOnTop = true,
         showThemeSelector = true

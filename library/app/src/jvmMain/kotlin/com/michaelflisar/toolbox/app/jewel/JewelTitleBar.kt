@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -19,8 +18,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.app.App
-import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.DesktopTitleAction
 import com.michaelflisar.toolbox.app.DesktopTitleBarSetup
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
@@ -33,13 +30,12 @@ import org.jetbrains.jewel.ui.component.Icon
 import org.jetbrains.jewel.ui.component.IconButton
 import org.jetbrains.jewel.ui.component.Text
 import org.jetbrains.jewel.ui.component.Tooltip
-import org.jetbrains.jewel.window.DecoratedWindowScope
 import org.jetbrains.jewel.window.TitleBar
 import org.jetbrains.jewel.window.defaultTitleBarStyle
 import org.jetbrains.jewel.window.newFullscreenControls
 
 @Composable
-internal fun DecoratedWindowScope.JewelTitleBar(
+internal fun JewelTitleBar(
     setup: DesktopTitleBarSetup,
     iconItems: List<DesktopTitleAction>,
     menubar: @Composable () -> Unit = {},
@@ -53,39 +49,42 @@ internal fun DecoratedWindowScope.JewelTitleBar(
 
     val icon = DesktopAppSetup.get().titleBarIcon(foreground.isLight())
 
-    TitleBar(Modifier.newFullscreenControls()) {
-        Row(
-            modifier = Modifier.align(Alignment.Start),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            TitleAppIcon(icon)
-            menubar()
-        }
-        Text(title)
-        Row(
-            Modifier.align(Alignment.End)
-        ) {
-            iconItems.forEach { item ->
-                TitleIconButton(item.imageVector, item.title, onClick = item.onClick)
+    with(LocalJewelDecoratedWindowScope.current) {
+        TitleBar(Modifier.newFullscreenControls()) {
+            Row(
+                modifier = Modifier.align(Alignment.Start),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TitleAppIcon(icon)
+                menubar()
             }
-            if (setup.showThemeSelector) {
-                val nextTheme = JewelTheme.entries[(theme.ordinal + 1) % JewelTheme.entries.size]
-                val text = nextTheme.switchLabel
-                TitleIconButton(theme.imageVector, text) {
-                    scope.launch(Dispatchers.IO) {
-                        prefs.jewelTheme.update(nextTheme)
+            Text(title)
+            Row(
+                Modifier.align(Alignment.End)
+            ) {
+                iconItems.forEach { item ->
+                    TitleIconButton(item.imageVector, item.title, onClick = item.onClick)
+                }
+                if (setup.showThemeSelector) {
+                    val nextTheme =
+                        JewelTheme.entries[(theme.ordinal + 1) % JewelTheme.entries.size]
+                    val text = nextTheme.switchLabel
+                    TitleIconButton(theme.imageVector, text) {
+                        scope.launch(Dispatchers.IO) {
+                            prefs.jewelTheme.update(nextTheme)
+                        }
                     }
                 }
-            }
-            if (setup.showAlwaysOnTop) {
-                val alwaysOnTop = prefs.alwaysOnTop.collectAsStateNotNull()
-                TitleIconButton(
-                    rememberVectorPainter(Keep),
-                    "Always On Top",
-                    if (alwaysOnTop.value) foreground else foreground.disabled()
-                ) {
-                    scope.launch(Dispatchers.IO) {
-                        prefs.alwaysOnTop.update(!alwaysOnTop.value)
+                if (setup.showAlwaysOnTop) {
+                    val alwaysOnTop = prefs.alwaysOnTop.collectAsStateNotNull()
+                    TitleIconButton(
+                        rememberVectorPainter(Keep),
+                        "Always On Top",
+                        if (alwaysOnTop.value) foreground else foreground.disabled()
+                    ) {
+                        scope.launch(Dispatchers.IO) {
+                            prefs.alwaysOnTop.update(!alwaysOnTop.value)
+                        }
                     }
                 }
             }

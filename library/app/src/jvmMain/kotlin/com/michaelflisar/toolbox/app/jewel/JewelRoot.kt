@@ -5,6 +5,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.input.key.NativeKeyEvent
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.app.AppSetup
@@ -17,6 +18,9 @@ import org.jetbrains.jewel.window.DecoratedWindow
 import org.jetbrains.jewel.window.DecoratedWindowScope
 import org.jetbrains.jewel.window.defaultDecoratedWindowStyle
 
+internal val LocalJewelDecoratedWindowScope =
+    staticCompositionLocalOf<DecoratedWindowScope> { throw RuntimeException("JewelWindowState not initialised!") }
+
 @Composable
 internal fun JewelRoot(
     jewelAppState: JewelAppState,
@@ -24,7 +28,7 @@ internal fun JewelRoot(
     onClosed: (suspend () -> Unit)?,
     onPreviewKeyEvent: (NativeKeyEvent) -> Boolean,
     onKeyEvent: (NativeKeyEvent) -> Boolean,
-    content: @Composable DecoratedWindowScope.() -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val setup = AppSetup.get()
     val desktopSetup = DesktopAppSetup.get()
@@ -55,12 +59,11 @@ internal fun JewelRoot(
             style = org.jetbrains.jewel.foundation.theme.JewelTheme.defaultDecoratedWindowStyle,
             content = {
                 CompositionLocalProvider(
-                    LocalJewelWindowState provides window,
+                    LocalJewelDecoratedWindowScope provides this,
                     LocalFileKitDialogSettingsState provides FileKitDialogSettings(parentWindow = window),
                 ) {
                     content()
                 }
-
             }
         )
     }

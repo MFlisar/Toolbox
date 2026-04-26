@@ -1,7 +1,7 @@
 [versions]
 
-gradle = 				                "9.1.1"
-kotlin = 				                "2.3.20"
+gradle = 				                "9.2.0"
+kotlin = 				                "2.3.21"
 ksp = 				                    "2.3.6"
 
 # github release (dokka + maven + binary compatibility)
@@ -32,7 +32,7 @@ androidx-lifecycle = 	                "2.10.0"
 
 # org.jetbrains.kotlinx
 jetbrains-kotlinx-coroutines =          "1.10.2"
-jetbrains-kotlinx-serialization = 	    "1.10.0"
+jetbrains-kotlinx-serialization = 	    "1.11.0"
 jetbrains-kotlinx-datetime =            "0.7.1"
 jetbrains-kotlinx-io-core =             "0.9.0"
 jetbrains-kotlinx-browser =             "0.5.0"
@@ -40,7 +40,7 @@ jetbrains-kotlinx-atomicfu =            "0.32.1"
 
 # others
 desugar =                               "2.1.5"
-buildkonfig =                           "0.17.1"
+buildkonfig =                           "0.18.0"
 easylauncher = 					        "6.4.1"
 launch4j =                              "4.0.0"
 

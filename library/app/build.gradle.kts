@@ -217,21 +217,6 @@ kotlin {
 
         }
 
-        jvmMain.dependencies {
-
-            // Jewel
-            implementation(deps.jewel.int.ui.standalone)
-            api(deps.jewel.int.ui.decorated.window)
-            implementation(deps.jewel.foundation)
-            implementation(deps.jewel.ui)
-            implementation(deps.jewel.decorated.window)
-            implementation(deps.intellij.platform.icons)
-            implementation(deps.skiko)
-
-            api(deps.htmlconverter)
-
-        }
-
         androidMain.dependencies {
 
             // KMPPlatformContext
@@ -240,6 +225,26 @@ kotlin {
             // Compose Debug Drawer
             implementation( mflisar.composedebugdrawer.infos.build)
             implementation(mflisar.composedebugdrawer.infos.device )
+
+        }
+
+        jvmMain.dependencies {
+
+            // application
+            api(compose.desktop.currentOs) {
+                exclude(group = "org.jetbrains.compose.material", module = "material")
+            }
+
+            // Jewel
+            implementation(deps.jewel.int.ui.standalone)
+            implementation(deps.jewel.int.ui.decorated.window)
+            implementation(deps.jewel.foundation)
+            implementation(deps.jewel.ui)
+            implementation(deps.jewel.decorated.window)
+            implementation(deps.intellij.platform.icons)
+            implementation(deps.skiko)
+
+            //implementation(deps.htmlconverter)
 
         }
 
