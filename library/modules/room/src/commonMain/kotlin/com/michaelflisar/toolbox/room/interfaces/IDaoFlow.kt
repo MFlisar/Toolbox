@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * optionales common interface
  */
-interface IBaseDaoFlow<ID : Number, Entity : IRoomEntity<ID, Entity>> {
+interface IDaoFlow<ID : Number, Entity : IRoomEntity<ID, Entity>> {
 
     fun flowCount(): Flow<Int>
 
