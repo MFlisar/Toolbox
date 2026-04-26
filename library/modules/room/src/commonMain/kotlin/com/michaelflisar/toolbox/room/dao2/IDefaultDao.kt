@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.room.todo
+package com.michaelflisar.toolbox.room.dao2
 
 import com.michaelflisar.toolbox.room.interfaces.IIDProvider
 import com.michaelflisar.toolbox.room.interfaces.IRoomEntity

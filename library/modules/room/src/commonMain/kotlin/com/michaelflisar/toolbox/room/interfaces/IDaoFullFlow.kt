@@ -1,11 +1,11 @@
-package com.michaelflisar.toolbox.room.dao
+package com.michaelflisar.toolbox.room.interfaces
 
 import kotlinx.coroutines.flow.Flow
 
 /**
  * optionales common interface
  */
-interface IBaseDaoFullFlow<FullEntity> {
+interface IDaoFullFlow<FullEntity> {
 
     fun flowAllFull(): Flow<List<FullEntity>>
 

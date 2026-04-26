@@ -42,7 +42,7 @@
 
 | Dependency | Version |
 |---|---|
-| Kotlin | `2.3.21` |
+| Kotlin | `2.3.20` |
 | Jetbrains Compose | `1.10.3` |
 | Jetbrains Compose Material3 | `1.9.0` |
 

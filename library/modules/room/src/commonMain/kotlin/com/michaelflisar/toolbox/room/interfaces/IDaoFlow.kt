@@ -1,6 +1,5 @@
-package com.michaelflisar.toolbox.room.dao
+package com.michaelflisar.toolbox.room.interfaces
 
-import com.michaelflisar.toolbox.room.interfaces.IRoomEntity
 import kotlinx.coroutines.flow.Flow
 
 /**

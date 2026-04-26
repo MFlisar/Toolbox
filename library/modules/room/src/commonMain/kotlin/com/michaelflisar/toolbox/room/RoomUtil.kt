@@ -9,8 +9,9 @@ import androidx.room.useWriterConnection
 object RoomUtil {
 
     const val DEFAULT_DB_FILE = "data.db"
+    const val CHUNK_SIZE = 999
 
-    suspend fun <S, T> runQueryInChunks(list: List<S>, chunkSize: Int = 999, block: suspend (List<S>) -> List<T>): List<T> {
+    suspend fun <S, T> runQueryInChunks(list: List<S>, chunkSize: Int = CHUNK_SIZE, block: suspend (List<S>) -> List<T>): List<T> {
         val chunks = list.chunked(chunkSize)
         val result = ArrayList<T>()
         for (chunk in chunks) {
@@ -19,7 +20,7 @@ object RoomUtil {
         return result
     }
 
-    internal suspend fun <S> runQueryInChunksAndReturnCount(list: List<S>, chunkSize: Int = 999, block: suspend (List<S>) -> Int): Int {
+    internal suspend fun <S> runQueryInChunksAndReturnCount(list: List<S>, chunkSize: Int = CHUNK_SIZE, block: suspend (List<S>) -> Int): Int {
         var count = 0
         runQueryInChunks(list, chunkSize) {
             count += block(it)
