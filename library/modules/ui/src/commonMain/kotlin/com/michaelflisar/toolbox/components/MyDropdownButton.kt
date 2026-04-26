@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.ButtonColors
@@ -32,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.padding
 import com.michaelflisar.toolbox.spacing
 
 
@@ -71,7 +69,9 @@ object MyDropdownButton {
                                     text = {
                                         Row(
                                             verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+                                            horizontalArrangement = Arrangement.spacedBy(
+                                                MaterialTheme.spacing.small
+                                            )
                                         ) {
                                             item.icon?.let {
                                                 Icon(
@@ -153,7 +153,6 @@ fun MyDropdownButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    // style
     shape: Shape = ButtonDefaults.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
@@ -167,11 +166,7 @@ fun MyDropdownButton(
         modifier = modifier,
         enabled = enabled,
         interactionSource = interactionSource,
-        shape = shape,
-        colors = colors,
-        elevation = elevation,
-        border = border,
-        contentPadding = contentPadding,
+        style = MyButtonDefaults.styleDefault(shape, colors, elevation, border, contentPadding),
         content = content
     )
 }
@@ -184,7 +179,6 @@ fun MyDropdownButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    // style
     shape: Shape = ButtonDefaults.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
@@ -198,11 +192,58 @@ fun MyDropdownButton(
         modifier = modifier,
         enabled = enabled,
         interactionSource = interactionSource,
-        shape = shape,
-        colors = colors,
-        elevation = elevation,
-        border = border,
-        contentPadding = contentPadding,
+        style = MyButtonDefaults.styleDefault(shape, colors, elevation, border, contentPadding),
+        content = content
+    )
+}
+
+@Composable
+fun MyDropdownOutlinedButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // button style
+    shape: Shape = ButtonDefaults.outlinedShape,
+    colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
+    elevation: ButtonElevation? = null,
+    border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = enabled),
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    // content
+    content: @Composable RowScope.() -> Unit,
+) {
+    MyDropdownButton(
+        type = MyDropdownButtonDefaults.typeClick(onClick),
+        modifier = modifier,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        style = MyButtonDefaults.styleOutlined(shape, colors, elevation, border, contentPadding),
+        content = content
+    )
+}
+
+@Composable
+fun MyDropdownOutlinedButton(
+    items: List<MyDropdownButton.Entry>,
+    expanded: MutableState<Boolean> = remember { mutableStateOf(false) },
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource? = null,
+    // button style
+    shape: Shape = ButtonDefaults.outlinedShape,
+    colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
+    elevation: ButtonElevation? = null,
+    border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = enabled),
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    // content
+    content: @Composable RowScope.() -> Unit,
+) {
+    MyDropdownButton(
+        type = MyDropdownButtonDefaults.typeDropdown(items, expanded),
+        modifier = modifier,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        style = MyButtonDefaults.styleOutlined(shape, colors, elevation, border, contentPadding),
         content = content
     )
 }
@@ -218,43 +259,54 @@ private fun MyDropdownButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    // style
-    shape: Shape = ButtonDefaults.shape,
-    colors: ButtonColors = ButtonDefaults.buttonColors(),
-    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
-    border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    style: MyButton.Style,
     // content
     content: @Composable RowScope.() -> Unit,
+) {
+    ButtonWrapper(
+        type = type,
+        button = {
+            MyButton(
+                onClick = type::onClick,
+                style = style,
+                modifier = modifier,
+                enabled = enabled,
+                interactionSource = interactionSource
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    content()
+                    EndIcon(type)
+                }
+            }
+        }
+    )
+}
+
+@Composable
+private fun EndIcon(
+    type: MyDropdownButton.Type,
 ) {
     val rotation: Float = when (type) {
         is MyDropdownButton.Type.Click -> 0f
         is MyDropdownButton.Type.Dropdown -> animateFloatAsState(if (type.expanded.value) 180f else 0f).value
     }
+    Icon(
+        modifier = Modifier.rotate(rotation),
+        imageVector = Icons.Default.ArrowDropDown,
+        contentDescription = null
+    )
+}
+
+@Composable
+private fun ButtonWrapper(
+    type: MyDropdownButton.Type,
+    button: @Composable () -> Unit,
+) {
     Box {
-        MyButton(
-            modifier = modifier,
-            enabled = enabled,
-            onClick = type::onClick,
-            interactionSource = interactionSource,
-            shape = shape,
-            colors = colors,
-            elevation = elevation,
-            border = border,
-            contentPadding = contentPadding
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                content()
-                Icon(
-                    modifier = Modifier.rotate(rotation),
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = null
-                )
-            }
-        }
+        button()
         when (type) {
             is MyDropdownButton.Type.Click -> {
                 // -
@@ -264,4 +316,3 @@ private fun MyDropdownButton(
         }
     }
 }
-

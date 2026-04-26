@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
-private object MyButton {
+internal object MyButton {
 
     sealed class Style {
 
@@ -162,7 +162,7 @@ private object MyButton {
     }
 }
 
-private object MyButtonDefaults {
+internal object MyButtonDefaults {
 
     @Composable
     fun styleDefault(
@@ -442,7 +442,7 @@ fun MyFilledTonalButton(
 // -------------------------
 
 @Composable
-private fun MyButton(
+internal fun MyButton(
     onClick: () -> Unit,
     modifier: Modifier,
     style: MyButton.Style,
