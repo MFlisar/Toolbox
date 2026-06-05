@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogButtons
 import com.michaelflisar.composedialogs.core.DialogDefaults
@@ -28,7 +29,7 @@ import com.michaelflisar.toolbox.ui.MyScrollableLazyColumn
 
 @Composable
 fun <T> ListDialog(
-    state: DialogState,
+    state: BaseDialogState,
     title: String,
     items: List<T>?,
     onFilter: (item: T, filter: String) -> Boolean,

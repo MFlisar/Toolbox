@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogEventType
-import com.michaelflisar.composedialogs.core.DialogStateWithData
+import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 import com.michaelflisar.toolbox.Platform
@@ -88,7 +88,7 @@ object BackupDialog {
 
 @Composable
 fun BackupDialog(
-    dialogState: DialogStateWithData<BackupDialog.Mode>,
+    dialogState: DialogState<BackupDialog.Mode>,
     exportFileName: BackupFileName,
     files: List<ZipFileContent>,
     backupManager: BackupManagerImpl?,
@@ -191,7 +191,7 @@ fun BackupDialog(
 
 @Composable
 fun DialogBackupActivityNotFound(
-    dialogState: DialogStateWithData<BackupDialog.ActivityNotFoundError>,
+    dialogState: DialogState<BackupDialog.ActivityNotFoundError>,
 ) {
     val data = dialogState.requireData()
     val title = when (data) {

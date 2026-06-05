@@ -16,9 +16,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.composedialogs.core.DialogState
-import com.michaelflisar.composedialogs.core.DialogStateNoData
 import com.michaelflisar.composedialogs.core.rememberDialogState
+import com.michaelflisar.composedialogs.core.show
 import com.michaelflisar.composedialogs.dialogs.color.DialogColor
 import com.michaelflisar.composedialogs.dialogs.color.rememberDialogColor
 import com.michaelflisar.composedialogs.dialogs.date.DialogDate
@@ -213,7 +214,7 @@ private fun Page(
 @Composable
 private fun rememberDialogTest(
     name: String,
-    dialog: @Composable (name: String, state: DialogState) -> Unit,
+    dialog: @Composable (name: String, state: BaseDialogState) -> Unit,
 ) = DialogTest(
     name = name,
     state = rememberDialogState(),
@@ -222,8 +223,8 @@ private fun rememberDialogTest(
 
 private class DialogTest(
     val name: String,
-    val state: DialogStateNoData,
-    val dialog: @Composable (name: String, state: DialogState) -> Unit,
+    val state: DialogState<Boolean>,
+    val dialog: @Composable (name: String, state: BaseDialogState) -> Unit,
 ) {
     @Composable
     fun Render() {

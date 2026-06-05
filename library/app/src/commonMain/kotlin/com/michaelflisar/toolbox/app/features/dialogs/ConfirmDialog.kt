@@ -12,7 +12,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ConfirmDialog(
-    state: DialogState,
+    state: BaseDialogState,
     title: String,
     onConfirm: suspend () -> Unit = {},
     onCancel: suspend () -> Unit = {},

@@ -21,10 +21,12 @@ import androidx.compose.runtime.remember
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.rememberDialogState
+import com.michaelflisar.composedialogs.core.show
 import com.michaelflisar.parcelize.Parcelable
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.LocalBackHandlerRegistry
 import com.michaelflisar.toolbox.app.features.device.BaseDevice
@@ -108,7 +110,7 @@ interface INavScreen : Screen, Parcelable {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun ShowAsDialog(
-        state: DialogState,
+        state: BaseDialogState,
         hideIconInDialog: Boolean,
         expandableHeaderOnMobile: Boolean,
     ) {

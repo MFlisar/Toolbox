@@ -21,6 +21,7 @@ import com.michaelflisar.demo.pages.PageSettingsScreen
 import com.michaelflisar.demo.pages.PageStatesScreen
 import com.michaelflisar.demo.pages.PageTestsRootScreenContainer
 import com.michaelflisar.demo.pages.tests.PageTestExpandableHeader
+import com.michaelflisar.demo.pages.tests.PageTestLazyColumn
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.AppScope
 import com.michaelflisar.toolbox.app.AppSetup
@@ -55,8 +56,9 @@ object Shared {
     val page3 = PageTestsRootScreenContainer
     val page4 = PageTestExpandableHeader
     val page5 = PageSelectionScreen
+    val page6 = PageTestLazyColumn
 
-    val mainPages = listOf(page1, page2, page3, page4, page5)
+    val mainPages = listOf(page1, page2, page3, page4, page5, page6)
 
     // --------------------
     // Setup

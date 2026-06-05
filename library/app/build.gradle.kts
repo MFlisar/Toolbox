@@ -231,7 +231,7 @@ kotlin {
         jvmMain.dependencies {
 
             // application
-            api(compose.desktop.currentOs) {
+            implementation(compose.desktop.currentOs) {
                 exclude(group = "org.jetbrains.compose.material", module = "material")
             }
 

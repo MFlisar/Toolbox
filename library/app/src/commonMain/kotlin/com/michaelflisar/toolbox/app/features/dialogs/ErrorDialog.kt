@@ -11,18 +11,19 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.composedialogs.core.ComposeDialogStyle
 import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogButtons
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogEvent
 import com.michaelflisar.composedialogs.core.DialogOptions
-import com.michaelflisar.composedialogs.core.DialogStateWithData
+import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.defaultDialogStyle
 import com.michaelflisar.composedialogs.core.rememberDialogState
 
 val LocalErrorDialogState =
-    compositionLocalOf<DialogStateWithData<ErrorDialogState>> { throw RuntimeException("ErrorDialogState not initialised!") }
+    compositionLocalOf<DialogState<ErrorDialogState>> { throw RuntimeException("ErrorDialogState not initialised!") }
 
 @Stable
 class ErrorDialogState internal constructor(
@@ -32,13 +33,13 @@ class ErrorDialogState internal constructor(
 )
 
 @Composable
-fun rememberErrorDialogState(): DialogStateWithData<ErrorDialogState> {
+fun rememberErrorDialogState(): DialogState<ErrorDialogState> {
     return rememberDialogState(null)
 }
 
 @Composable
 fun ErrorDialogProvider(
-    state: DialogStateWithData<ErrorDialogState> = rememberErrorDialogState(),
+    state: DialogState<ErrorDialogState> = rememberErrorDialogState(),
     showDialog: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -54,7 +55,7 @@ fun ErrorDialogProvider(
 
 @Composable
 fun ErrorDialog(
-    state: DialogStateWithData<ErrorDialogState> = LocalErrorDialogState.current,
+    state: DialogState<ErrorDialogState> = LocalErrorDialogState.current,
     icon: (@Composable () -> Unit)? = null,//{ Icon(Icons.Default.Error, null, tint = MaterialTheme.colorScheme.error) },
     style: ComposeDialogStyle = DialogDefaults.defaultDialogStyle(),
     buttons: DialogButtons = DialogDefaults.buttons(),
@@ -82,7 +83,7 @@ fun ErrorDialog(
     }
 }
 
-fun DialogStateWithData<ErrorDialogState>.show(
+fun DialogState<ErrorDialogState>.show(
     title: String,
     message: String,
     exception: Exception? = null
@@ -96,7 +97,7 @@ fun DialogStateWithData<ErrorDialogState>.show(
     )
 }
 
-fun DialogStateWithData<ErrorDialogState>.show(
+fun DialogState<ErrorDialogState>.show(
     exception: Exception
 ) {
     show(

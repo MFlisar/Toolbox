@@ -1,7 +1,7 @@
 package com.michaelflisar.toolbox.app.features.proversion
 
 import androidx.compose.runtime.Composable
-import com.michaelflisar.composedialogs.core.DialogStateNoData
+import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.toolbox.app.features.actions.IBaseAction
 import com.michaelflisar.toolbox.features.proversion.BaseAppProVersionManager
 import com.michaelflisar.toolbox.features.proversion.ProState
@@ -25,7 +25,7 @@ object ProVersionManager {
     }
 
     @Composable
-    fun Paywall(showProVersionDialog: DialogStateNoData) {
+    fun Paywall(showProVersionDialog: BaseDialogState) {
         if (setup.supported && showProVersionDialog.visible)
             (setup as? ProVersionSetup.Supported)?.manager?.PaywallScreen(showProVersionDialog)
     }

@@ -1,33 +1,33 @@
 [versions]
 
 # Google
-google-ads =	                "25.2.0"
+google-ads =	                "25.3.0"
 google-ump =	                "4.0.0"
 google-guava =					"33.6.0-android"
 
 # Windows UI
-jewel =                         "0.35.0-261.23567.138"
+jewel =                         "0.35.0-261.23567.198" # 0.37 uses already java 25
 intellij-platform =             "251.23774.444"
 skiko =                         "0.9.2"
 
 # Compose
 compose-icons = 		        "1.1.1"
 voyager = 				        "1.1.0-beta03"
-composables =                   "1.49.6"
+#composables =                   "1.49.6"
 
 # Others
-openiap =                       "2.2.1"
+openiap =                       "2.3.1"
 stately =                       "2.1.0"
 acra =		        		    "5.13.1"
 processphoenix = 			    "3.0.0"
-htmlconverter =                 "1.1.0"
-filekit =                       "0.13.0"
+htmlconverter =                 "1.1.1"
+filekit =                       "0.14.1"
 accompanist = 			        "0.37.3"
 csv =                           "1.14.1"
-ktor =                          "3.4.3"
+ktor =                          "3.5.0"
 coil =						    "3.4.0"
 coil-transform =			    "3.0.0"
-basic-ads =                     "1.1.0"
+basic-ads =                     "1.1.1"
 poi =                           "5.5.1"
 
 [plugins]
@@ -66,7 +66,7 @@ voyager-bottomsheet = 		                    { module = "cafe.adriel.voyager:voya
 voyager-tabs = 				                    { module = "cafe.adriel.voyager:voyager-tab-navigator", 					        version.ref = "voyager" }
 voyager-transitions = 		                    { module = "cafe.adriel.voyager:voyager-transitions", 						        version.ref = "voyager" }
 voyager-screenmodel = 		                    { module = "cafe.adriel.voyager:voyager-screenmodel", 						        version.ref = "voyager" }
-composables-core =                              { module = "com.composables:core", 		                                	        version.ref = "composables" }
+#composables-core =                              { module = "com.composables:core", 		                                	        version.ref = "composables" }
 
 # Others
 openiap =                                       { module = "io.github.hyochan:kmp-iap", 									        version.ref = "openiap" }

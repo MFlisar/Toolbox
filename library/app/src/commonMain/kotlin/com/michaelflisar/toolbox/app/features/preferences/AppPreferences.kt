@@ -38,12 +38,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.composedialogs.core.DialogButton
 import com.michaelflisar.composedialogs.core.DialogButtonType
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogEvent
-import com.michaelflisar.composedialogs.core.DialogStateNoData
+import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.rememberDialogState
+import com.michaelflisar.composedialogs.core.show
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 import com.michaelflisar.composepreferences.core.PreferenceScreen
 import com.michaelflisar.composepreferences.core.PreferenceSection
@@ -413,7 +415,7 @@ internal fun SettingsContent(
 private fun PreferenceGroupScope.RegionHeader(
     settings: PreferenceSettings,
     buttons: List<SettingsHeaderButtons.Button>,
-    showProVersionDialog: DialogStateNoData,
+    showProVersionDialog: DialogState<Boolean>,
 ) {
     SettingsHeader(settings)
     SettingsProVersionHeader(showProVersionDialog)
@@ -443,7 +445,7 @@ private fun PreferenceGroupScope.RegionLanguage(
 private fun PreferenceGroupScope.RegionAbout(
     setup: AppSetup,
     showLogFile: MutableState<Boolean>,
-    showAttachLogFile: DialogStateNoData,
+    showAttachLogFile: DialogState<Boolean>,
 ) {
 
     val scope = rememberCoroutineScope()

@@ -1,7 +1,7 @@
 package com.michaelflisar.toolbox.features.proversion
 
 import androidx.compose.runtime.Composable
-import com.michaelflisar.composedialogs.core.DialogStateNoData
+import com.michaelflisar.composedialogs.core.BaseDialogState
 import kotlinx.coroutines.flow.StateFlow
 
 interface BaseAppProVersionManager {
@@ -12,5 +12,5 @@ interface BaseAppProVersionManager {
     suspend fun checkProVersion(): ProState
 
     @Composable
-    fun PaywallScreen(dialogState: DialogStateNoData)
+    fun PaywallScreen(dialogState: BaseDialogState)
 }

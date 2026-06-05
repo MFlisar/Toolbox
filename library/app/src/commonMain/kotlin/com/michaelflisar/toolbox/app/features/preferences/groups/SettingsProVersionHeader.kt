@@ -8,7 +8,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.composedialogs.core.DialogStateNoData
+import com.michaelflisar.composedialogs.core.BaseDialogState
+import com.michaelflisar.composedialogs.core.DialogState
+import com.michaelflisar.composedialogs.core.show
 import com.michaelflisar.composepreferences.core.PreferenceInfo
 import com.michaelflisar.composepreferences.core.classes.Dependency
 import com.michaelflisar.composepreferences.core.classes.LocalPreferenceSettings
@@ -29,7 +31,7 @@ import compose.icons.fontawesomeicons.solid.Crown
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun PreferenceGroupScope.SettingsProVersionHeader(showProVersionDialog: DialogStateNoData) {
+fun PreferenceGroupScope.SettingsProVersionHeader(showProVersionDialog: DialogState<Boolean>) {
 
     val proVersionManager = ProVersionManager.setup
     val proState = proVersionManager.proState.collectAsState()
@@ -58,7 +60,7 @@ fun PreferenceGroupScope.SettingsProVersionHeader(showProVersionDialog: DialogSt
 
 @Composable
 private fun PreferenceGroupScope.SettingsNotPro(
-    showProVersionDialog: DialogStateNoData,
+    showProVersionDialog: DialogState<Boolean>,
     proState: State<ProState>,
     info: String?,
 ) {

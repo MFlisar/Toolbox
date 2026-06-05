@@ -17,11 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composecolors.material.MaterialColor
+import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogButtons
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogState
-import com.michaelflisar.composedialogs.core.DialogStateWithData
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 import com.michaelflisar.toolbox.app.platform.isAppInDarkTheme
 import com.michaelflisar.toolbox.components.MyColumn
@@ -61,7 +61,7 @@ fun rememberInfoDialogStyle(
 
 @Composable
 fun InfoDialog(
-    state: DialogState,
+    state: BaseDialogState,
     title: String,
     info: String,
     buttons: DialogButtons = DialogDefaults.buttons(),
@@ -73,7 +73,7 @@ fun InfoDialog(
 
 @Composable
 fun InfoDialog(
-    state: DialogStateWithData<InfoDialog.Data>,
+    state: DialogState<InfoDialog.Data>,
     styleData: InfoDialog.StyleData = rememberInfoDialogStyle(),
     showIcon: Boolean = true,
     buttons: DialogButtons = DialogDefaults.buttons(),
