@@ -10,6 +10,7 @@ import com.michaelflisar.demo.pages.tests.TestPrefs
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
 import com.michaelflisar.toolbox.app.App
+import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.DesktopAppDefaults
 import com.michaelflisar.toolbox.app.DesktopApplication
@@ -21,6 +22,7 @@ import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.dialogs.LocalErrorDialogState
 import com.michaelflisar.toolbox.app.features.dialogs.show
+import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggerSetup
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorTransitionPlatformStyle
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
@@ -46,7 +48,10 @@ fun main() {
         prefs = Prefs(storageSettings),
         debugPrefs = DebugPrefs(storageDebug),
         isDebugBuild = JvmUtil.isDebug(),
-        fileLogger = JvmUtil.createFileLogger(folder = dataFolder)
+        fileLogger = JvmUtil.createFileLogger(folder = dataFolder),
+        consoleLoggerSetup = ConsoleLoggerSetup(
+            fixLogTag = "TB",
+        ),
     )
     val desktopSetup = DesktopAppSetup(
         prefs = DesktopPrefs(storageWindows),

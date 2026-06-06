@@ -7,6 +7,8 @@ import com.michaelflisar.lumberjack.implementation.plant
 import com.michaelflisar.lumberjack.loggers.console.ConsoleLogger
 import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
+import kotlin.Boolean
+import kotlin.String
 
 object LogManager {
 
@@ -18,7 +20,9 @@ object LogManager {
         } else {
             L.enable(minLogLevel = Level.DEBUG)
         }
-        L.plant(ConsoleLogger())
+        if (setup.consoleLoggerSetup != null) {
+            L.plant(ConsoleLogger(fixTag = setup.consoleLoggerSetup.fixLogTag))
+        }
         setup.fileLogger?.createLogger()?.let { L.plant(it) }
     }
 }

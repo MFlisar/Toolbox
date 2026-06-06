@@ -25,6 +25,7 @@ import com.michaelflisar.demo.pages.tests.PageTestLazyColumn
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.AppScope
 import com.michaelflisar.toolbox.app.AppSetup
+import com.michaelflisar.toolbox.app.AppSetup.ConsoleLoggerSetup
 import com.michaelflisar.toolbox.app.Constants
 import com.michaelflisar.toolbox.app.classes.Developer
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
@@ -76,6 +77,7 @@ object Shared {
         icon: @Composable () -> Painter = { appIcon(LocalContentColor.current.isLight()) },
         isDebugBuild: Boolean,
         fileLogger: FileLogger<*>?,
+        consoleLoggerSetup: ConsoleLoggerSetup?,
     ): AppSetup {
         return AppSetup(
             developer = Developer.MFLISAR,
@@ -110,6 +112,7 @@ object Shared {
             },
             privacyPolicyLink = "https://mflisar.github.io/android/flash-launcher/privacy-policy/",
             fileLogger = fileLogger,
+            consoleLoggerSetup = consoleLoggerSetup,
             disableLanguagePicker = false,
             changelogSetup = ChangelogDefaults.setup(
                 logFileReader = { Res.readBytes(Constants.CHANGELOG_PATH) },
