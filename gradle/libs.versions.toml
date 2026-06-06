@@ -20,7 +20,7 @@ jetbrains-compose-hot-reload =          "1.1.1"
 jetbrains-androidx-lifecycle =          "2.10.0"
 
 # androidx
-androidx-core =                         "1.19.0"
+androidx-core =                         "1.18.0" # 1.19.0 needs compile sdk 37 (which is still in beta)
 androidx-activity =                     "1.13.0"
 androidx-startup =                      "1.2.0"
 androidx-datastore-preferences =        "1.2.1"

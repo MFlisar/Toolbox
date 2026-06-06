@@ -20,8 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.composedialogs.core.Dialog
-import com.michaelflisar.composedialogs.core.DialogStateNoData
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 import com.michaelflisar.kotpreferences.core.interfaces.StorageSetting
 import com.michaelflisar.lumberjack.core.L
@@ -37,8 +37,6 @@ import com.michaelflisar.toolbox.features.proversion.BaseAppProVersionManager
 import com.michaelflisar.toolbox.features.proversion.ProState
 import com.michaelflisar.toolbox.proversion.classes.FullProduct
 import com.michaelflisar.toolbox.proversion.classes.OpenIAPManager
-import io.github.hyochan.kmpiap.KmpIAP
-import io.github.hyochan.kmpiap.KmpInAppPurchase
 import io.github.hyochan.kmpiap.Purchase
 import io.github.hyochan.kmpiap.kmpIapInstance
 import kotlinx.coroutines.CoroutineScope
@@ -98,7 +96,7 @@ class OpenIAPProVersionManager(
 
     @Composable
     override fun PaywallScreen(
-        dialogState: DialogStateNoData,
+        dialogState: BaseDialogState,
     ) {
         val proState = proState.collectAsState()
         if (proState.value == ProState.Yes) {
