@@ -38,14 +38,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.composedialogs.core.DialogButton
 import com.michaelflisar.composedialogs.core.DialogButtonType
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogEvent
-import com.michaelflisar.composedialogs.core.DialogState
+import com.michaelflisar.composedialogs.core.DialogStateNoData
 import com.michaelflisar.composedialogs.core.rememberDialogState
-import com.michaelflisar.composedialogs.core.show
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 import com.michaelflisar.composepreferences.core.PreferenceScreen
 import com.michaelflisar.composepreferences.core.PreferenceSection
@@ -69,9 +67,6 @@ import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.backup.ContentPreferencesAsSubPreference
-import com.michaelflisar.toolbox.app.features.device.BaseDevice
-import com.michaelflisar.toolbox.app.features.device.Current
-import com.michaelflisar.toolbox.app.features.device.Device
 import com.michaelflisar.toolbox.app.features.feedback.FeedbackManager
 import com.michaelflisar.toolbox.app.features.preferences.groups.PreferenceSettingsTheme
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeader
@@ -112,7 +107,6 @@ import compose.icons.fontawesomeicons.brands.GooglePlay
 import compose.icons.fontawesomeicons.solid.Crown
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import kotlin.collections.emptyList
 
 @Composable
 internal expect fun LumberjackDialog(
@@ -165,7 +159,8 @@ object AppPreferencesDefaults {
             )
 
             ResolvedPlatformStyle.Desktop,
-            ResolvedPlatformStyle.Web-> {
+            ResolvedPlatformStyle.Web,
+                -> {
                 val page = customPageName?.let {
                     if (customContent == null)
                         throw RuntimeException("customPageName is not null, please provide a non null customContent lambda!")
@@ -415,7 +410,7 @@ internal fun SettingsContent(
 private fun PreferenceGroupScope.RegionHeader(
     settings: PreferenceSettings,
     buttons: List<SettingsHeaderButtons.Button>,
-    showProVersionDialog: DialogState<Boolean>,
+    showProVersionDialog: DialogStateNoData,
 ) {
     SettingsHeader(settings)
     SettingsProVersionHeader(showProVersionDialog)
@@ -445,7 +440,7 @@ private fun PreferenceGroupScope.RegionLanguage(
 private fun PreferenceGroupScope.RegionAbout(
     setup: AppSetup,
     showLogFile: MutableState<Boolean>,
-    showAttachLogFile: DialogState<Boolean>,
+    showAttachLogFile: DialogStateNoData,
 ) {
 
     val scope = rememberCoroutineScope()

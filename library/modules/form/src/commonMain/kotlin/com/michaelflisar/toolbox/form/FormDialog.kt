@@ -6,7 +6,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.unit.Dp
 import com.michaelflisar.composedialogs.core.BaseDialogState
-import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogButton
 import com.michaelflisar.composedialogs.core.DialogButtonType
@@ -15,7 +14,6 @@ import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.DialogEvent
 import com.michaelflisar.composedialogs.core.DialogEventType
 import com.michaelflisar.composedialogs.core.rememberDialogState
-import com.michaelflisar.composedialogs.core.show
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 
 object FormDialog {
@@ -26,7 +24,7 @@ object FormDialog {
         val confirmDeleteTitle: (name: String) -> String = { "Delete $it" },
         val confirmDeleteText: (name: String) -> String = { "Do you really want to delete this $it?" },
         val confirmDeleteYes: String = "Yes",
-        val confirmDeleteNo: String = "Cancel"
+        val confirmDeleteNo: String = "Cancel",
     )
 }
 
@@ -41,7 +39,7 @@ fun FormDialog(
     confirmDelete: Boolean = true,
     texts: FormDialog.Text = FormDialog.Text(),
     // dialog
-    icon: (@Composable () -> Unit)? = null
+    icon: (@Composable () -> Unit)? = null,
 ) {
     val showConfirmDelete = rememberDialogState()
 

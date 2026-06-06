@@ -637,3 +637,32 @@
 [D] 2026-06-05 23:25:37.065 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
 [D] 2026-06-05 23:25:37.240 [PageSelection.kt:150]: add 3 | selected: [0, 1, 2, 3]
 [D] 2026-06-05 23:25:37.406 [PageSelection.kt:150]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-06-06 09:54:59.085 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-06-06 09:54:59.065 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[I] 2026-06-06 09:55:03.172 [WindowState.kt:95]: Saving window state: {w=839, h=800, x=908, y=151, placement=Floating}
+[D] 2026-06-06 09:55:11.975 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-06-06 09:55:12.123 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-06-06 09:55:12.254 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-06-06 09:56:18.367 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='5', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='5', selection=TextRange(0, 0), composition=null)
+[D] 2026-06-06 09:56:18.954 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='5', selection=TextRange(1, 0), composition=null) | stateText = TextFieldValue(text='5', selection=TextRange(1, 1), composition=null)
+[D] 2026-06-06 09:56:19.821 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='1', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='5', selection=TextRange(1, 0), composition=null)
+[D] 2026-06-06 09:56:20.122 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='51', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='1', selection=TextRange(0, 0), composition=null)
+[D] 2026-06-06 09:56:21.553 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='1', selection=TextRange(0, 0), composition=null) | stateText = TextFieldValue(text='51', selection=TextRange(1, 1), composition=null)
+[D] 2026-06-06 09:56:22.654 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='11', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='1', selection=TextRange(0, 0), composition=null)
+[D] 2026-06-06 09:56:23.510 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='151', selection=TextRange(2, 2), composition=null) | stateText = TextFieldValue(text='11', selection=TextRange(1, 1), composition=null)
+[D] 2026-06-06 09:56:24.523 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='15', selection=TextRange(2, 2), composition=null) | stateText = TextFieldValue(text='151', selection=TextRange(2, 2), composition=null)
+[D] 2026-06-06 09:56:25.261 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='1', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='15', selection=TextRange(2, 2), composition=null)
+[D] 2026-06-06 09:56:25.481 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='', selection=TextRange(0, 0), composition=null) | stateText = TextFieldValue(text='1', selection=TextRange(1, 1), composition=null)
+[D] 2026-06-06 09:56:26.548 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='1', selection=TextRange(1, 1), composition=null) | stateText = TextFieldValue(text='', selection=TextRange(0, 0), composition=null)
+[D] 2026-06-06 09:56:26.756 [MyNumberPicker.kt:260]: onValueChange: TextFieldValue(text='10', selection=TextRange(2, 2), composition=null) | stateText = TextFieldValue(text='1', selection=TextRange(1, 1), composition=null)
+[D] 2026-06-06 09:56:55.215 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-06-06 09:56:55.382 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-06-06 09:56:55.531 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-06-06 09:56:57.516 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-06-06 09:56:57.656 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-06-06 09:56:57.849 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-06-06 09:56:59.555 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-06-06 09:56:59.712 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-06-06 09:56:59.880 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-06-06 09:57:09.758 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-06-06 09:57:09.941 [PageSelection.kt:150]: add 1 | selected: [0, 1]

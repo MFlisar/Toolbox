@@ -17,9 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composedialogs.core.BaseDialogState
-import com.michaelflisar.composedialogs.core.DialogState
+import com.michaelflisar.composedialogs.core.DialogStateNoData
 import com.michaelflisar.composedialogs.core.rememberDialogState
-import com.michaelflisar.composedialogs.core.show
 import com.michaelflisar.composedialogs.dialogs.color.DialogColor
 import com.michaelflisar.composedialogs.dialogs.color.rememberDialogColor
 import com.michaelflisar.composedialogs.dialogs.date.DialogDate
@@ -37,7 +36,6 @@ import com.michaelflisar.composedialogs.dialogs.progress.DialogProgress
 import com.michaelflisar.composedialogs.dialogs.time.DialogTime
 import com.michaelflisar.composedialogs.dialogs.time.rememberDialogTime
 import com.michaelflisar.parcelize.Parcelize
-import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
 import com.michaelflisar.toolbox.extensions.toIconComposable
@@ -179,7 +177,7 @@ private fun Page(
                     val number = field3.value
                     val bool = field4.value
                     val list = field5.value
-                    println("text: $text, number: $number, bool: $bool, list: $list" )
+                    println("text: $text, number: $number, bool: $bool, list: $list")
                 },
                 onDelete = {
 
@@ -223,7 +221,7 @@ private fun rememberDialogTest(
 
 private class DialogTest(
     val name: String,
-    val state: DialogState<Boolean>,
+    val state: DialogStateNoData,
     val dialog: @Composable (name: String, state: BaseDialogState) -> Unit,
 ) {
     @Composable
