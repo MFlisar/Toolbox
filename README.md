@@ -175,4 +175,6 @@ Check out the [API documentation](https://MFlisar.github.io/Toolbox/).
 
 You can find more of my multiplatform libraries that work well together [here](https://mflisar.github.io/Libraries/).
 
+# :twisted_rightwards_arrows: Compatibility
+
 When combining my libraries, you can find compatibility information [here](https://mflisar.github.io/Libraries/compatibilities/).
