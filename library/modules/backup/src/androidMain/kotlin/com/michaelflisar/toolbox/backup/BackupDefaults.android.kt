@@ -1,12 +1,12 @@
 package com.michaelflisar.toolbox.backup
 
-import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
+import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
 
 actual fun BackupDefaults.createDefaultBackupContent(): List<ZipFileContent> {
     return listOf(
         JavaZipFileContent.Folder(
-            folder = PlatformContextProvider.get().filesDir,
+            folder = PlatformApplicationContext.filesDir,
             zipPath = "files",
             exclude = { relativePath ->
                 // FILES
@@ -20,7 +20,7 @@ actual fun BackupDefaults.createDefaultBackupContent(): List<ZipFileContent> {
             }
         ),
         JavaZipFileContent.Folder(
-            folder = PlatformContextProvider.get().getDatabasePath("unused").parentFile!!,
+            folder = PlatformApplicationContext.getDatabasePath("unused").parentFile!!,
             zipPath = "database",
             exclude = { relativePath ->
                 relativePath.contains("google") ||

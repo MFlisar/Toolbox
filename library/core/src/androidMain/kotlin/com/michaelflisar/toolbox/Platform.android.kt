@@ -5,7 +5,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.ui.Modifier
-import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
+import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -16,13 +16,13 @@ actual object Platform {
     actual val openLanguagePicker: (() -> Unit)?
         @SuppressLint("DiscouragedApi")
         get() = if (IntentUtil.supportsLanguagePicker()) {
-            { IntentUtil.openLanguagePicker(PlatformContextProvider.get()) }
+            { IntentUtil.openLanguagePicker(PlatformApplicationContext) }
         } else {
             null
         }
 
     actual val openMarket: (() -> Unit)? = {
-        IntentUtil.openMarket(PlatformContextProvider.get())
+        IntentUtil.openMarket(PlatformApplicationContext)
     }
 
     actual fun Modifier.cursor(): Modifier {
@@ -30,11 +30,11 @@ actual object Platform {
     }
 
     actual fun openUrl(url: String) {
-        IntentUtil.openUrl(PlatformContextProvider.get(), url)
+        IntentUtil.openUrl(PlatformApplicationContext, url)
     }
 
     actual fun setClipboardText(text: String, label: String) {
-        val context = PlatformContextProvider.get()
+        val context = PlatformApplicationContext
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.setPrimaryClip(ClipData.newPlainText(label, text))
     }

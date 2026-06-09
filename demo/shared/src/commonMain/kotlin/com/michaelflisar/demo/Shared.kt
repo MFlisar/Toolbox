@@ -25,13 +25,13 @@ import com.michaelflisar.demo.pages.tests.PageTestLazyColumn
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.AppScope
 import com.michaelflisar.toolbox.app.AppSetup
-import com.michaelflisar.toolbox.app.AppSetup.ConsoleLoggerSetup
 import com.michaelflisar.toolbox.app.Constants
 import com.michaelflisar.toolbox.app.classes.Developer
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
+import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggerSetup
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.scaffold.CommonScaffold
@@ -76,8 +76,7 @@ object Shared {
         debugPrefs: DebugPrefs,
         icon: @Composable () -> Painter = { appIcon(LocalContentColor.current.isLight()) },
         isDebugBuild: Boolean,
-        fileLogger: FileLogger<*>?,
-        consoleLoggerSetup: ConsoleLoggerSetup?,
+        fileLogger: FileLogger<*>?
     ): AppSetup {
         return AppSetup(
             developer = Developer.MFLISAR,
@@ -112,7 +111,9 @@ object Shared {
             },
             privacyPolicyLink = "https://mflisar.github.io/android/flash-launcher/privacy-policy/",
             fileLogger = fileLogger,
-            consoleLoggerSetup = consoleLoggerSetup,
+            consoleLoggerSetup = ConsoleLoggerSetup(
+                fixLogTag = "TB"
+            ),
             disableLanguagePicker = false,
             changelogSetup = ChangelogDefaults.setup(
                 logFileReader = { Res.readBytes(Constants.CHANGELOG_PATH) },

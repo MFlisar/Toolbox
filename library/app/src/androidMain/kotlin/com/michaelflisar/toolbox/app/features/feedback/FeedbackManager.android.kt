@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.app.features.feedback
 
 import androidx.core.net.toFile
+import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.lumberjack.core.getAllExistingLogFiles
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
@@ -11,8 +12,6 @@ import com.michaelflisar.toolbox.zip.JavaZipManager
 import com.michaelflisar.toolbox.zip.zipToCache
 import io.github.vinceglb.filekit.AndroidFile
 import io.github.vinceglb.filekit.PlatformFile
-import kotlinx.io.files.Path
-import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import io.github.vinceglb.filekit.utils.toKotlinxPath
 
 actual object FeedbackManager {
@@ -44,7 +43,7 @@ actual object FeedbackManager {
     }
 
     actual suspend fun sendRelevantFiles(appName: String) {
-        val context = PlatformContextProvider.get()
+        val context = PlatformApplicationContext
         val fileLoggerSetup = AppSetup.get().fileLogger?.setup
         val folderDatabase = context.getDatabasePath("data.db").parentFile
         val file1: JavaZipFileContent? = folderDatabase?.let { JavaZipFileContent.Folder(it, "database") }

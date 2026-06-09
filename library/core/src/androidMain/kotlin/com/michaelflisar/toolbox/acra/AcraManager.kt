@@ -99,7 +99,7 @@ object AcraManager {
     }
 
     private fun getDefaultSubject(app: Application, appName: String): String {
-        return appName + " - Crash Report v" + AndroidUtil.getAppVersionName(app)
+        return appName + " v" + AndroidUtil.getAppVersionName(app) + " - Crash Report"
     }
 
     fun isACRAProcess() = ACRA.isACRASenderServiceProcess()

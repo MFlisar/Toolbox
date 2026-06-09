@@ -1,6 +1,6 @@
 package com.michaelflisar.toolbox.backup
 
-import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
+import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.classes.BackupConfig
@@ -23,7 +23,7 @@ actual class BackupManagerImpl actual constructor(
     actual val autoBackupConfig: AutoBackupConfig?,
 ) {
     actual fun onBackupRestored() {
-        PlatformContextProvider.get().restartApp()
+        PlatformApplicationContext.restartApp()
     }
 
     actual suspend fun backup(
@@ -82,7 +82,7 @@ actual class BackupManagerImpl actual constructor(
     @OptIn(ExperimentalTime::class)
     actual fun onSettingsChanged() {
         BackupServiceUtil.createChannels()
-        BackupWorker.cancelAutoWorker(PlatformContextProvider.get())
+        BackupWorker.cancelAutoWorker(PlatformApplicationContext)
         onEnqueueNextAutoBackup()
     }
 
@@ -93,7 +93,7 @@ actual class BackupManagerImpl actual constructor(
         val initialDelay = BackupDefaults.getInitialDay(LocalDateTime.now(), frequency)
         val files = config.backupContent
         BackupWorker.enqueueAutoWorker(
-            context = PlatformContextProvider.get(),
+            context = PlatformApplicationContext,
             files = files,
             backupFolderData = backupFolderData,
             initialDelay = initialDelay

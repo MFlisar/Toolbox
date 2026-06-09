@@ -5,10 +5,7 @@ import com.michaelflisar.lumberjack.core.classes.Level
 import com.michaelflisar.lumberjack.implementation.LumberjackLogger
 import com.michaelflisar.lumberjack.implementation.plant
 import com.michaelflisar.lumberjack.loggers.console.ConsoleLogger
-import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
-import kotlin.Boolean
-import kotlin.String
 
 object LogManager {
 
@@ -21,7 +18,15 @@ object LogManager {
             L.enable(minLogLevel = Level.DEBUG)
         }
         if (setup.consoleLoggerSetup != null) {
-            L.plant(ConsoleLogger(fixTag = setup.consoleLoggerSetup.fixLogTag))
+            L.plant(
+                implementation = ConsoleLogger(
+                    tagTransformer = { tag ->
+                        if (setup.consoleLoggerSetup.fixLogTag != null) {
+                            setup.consoleLoggerSetup.fixLogTag + (tag?.let { " $it" } ?: "")
+                        } else tag
+                    }
+                )
+            )
         }
         setup.fileLogger?.createLogger()?.let { L.plant(it) }
     }

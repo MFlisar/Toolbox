@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
 import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppSetup
@@ -28,8 +29,6 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScree
 import com.michaelflisar.toolbox.app.features.scaffold.LocalPlatformStyle
 import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
 import com.michaelflisar.toolbox.app.features.toolbar.composables.ToolbarMainMenuItems
-import com.michaelflisar.toolbox.app.platform.LocalPlatformContext
-import com.michaelflisar.toolbox.app.platform.current
 import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.restart
 import com.michaelflisar.toolbox.components.MyColumn
@@ -119,7 +118,7 @@ private fun Page(
             Text(LocalPlatformStyle.current.name)
         }
 
-        val context = LocalPlatformContext.current
+        val context = PlatformApplicationContext
         MyTitle(
             "Test Actions",
             style = MaterialTheme.typography.titleMedium,

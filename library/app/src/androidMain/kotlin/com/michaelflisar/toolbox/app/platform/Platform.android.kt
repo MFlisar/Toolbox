@@ -9,8 +9,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.michaelflisar.composethemer.LocalComposeThemeState
 import com.michaelflisar.composethemer.UpdateEdgeToEdgeDefault
 import com.michaelflisar.composethemer.defaultScrim
+import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
 import com.michaelflisar.kmp.platformcontext.PlatformContext
-import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.features.activity.LocalActivity
 import com.michaelflisar.toolbox.killApp
@@ -31,7 +31,7 @@ private fun showToast(
     duration: Int,
 ) {
     Toast.makeText(
-        PlatformContextProvider.get(),
+        PlatformApplicationContext,
         message,
         duration
     ).show()

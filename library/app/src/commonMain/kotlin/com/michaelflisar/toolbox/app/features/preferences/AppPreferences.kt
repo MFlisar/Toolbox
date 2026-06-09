@@ -58,6 +58,7 @@ import com.michaelflisar.composepreferences.core.styles.ModernStyle
 import com.michaelflisar.composepreferences.kotpreferences.asDependency
 import com.michaelflisar.composepreferences.screen.bool.PreferenceBool
 import com.michaelflisar.composepreferences.screen.button.PreferenceButton
+import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.lumberjack.core.L
@@ -74,9 +75,7 @@ import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsHeaderB
 import com.michaelflisar.toolbox.app.features.preferences.groups.SettingsProVersionHeader
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.features.scaffold.LocalPlatformStyle
-import com.michaelflisar.toolbox.app.platform.LocalPlatformContext
 import com.michaelflisar.toolbox.app.platform.ResolvedPlatformStyle
-import com.michaelflisar.toolbox.app.platform.current
 import com.michaelflisar.toolbox.app.platform.kill
 import com.michaelflisar.toolbox.app.platform.restart
 import com.michaelflisar.toolbox.backup.BackupManager
@@ -693,7 +692,7 @@ private fun PreferenceGroupScope.RegionAbout(
                 if (adsManager != null && proVersionManager.supported) {
                     PreferenceRegionAdsDeveloper()
                 }
-                val context = LocalPlatformContext.current
+                val context = PlatformApplicationContext
                 val kill = Platform.kill
                 val restart = Platform.restart
                 if (kill != null || restart != null) {

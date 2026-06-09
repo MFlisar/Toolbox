@@ -10,7 +10,7 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
-import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
+import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
 import com.michaelflisar.toolbox.NotificationUtil
 import com.michaelflisar.toolbox.backup.worker.BackupWorker
 import com.michaelflisar.toolbox.service.ServiceSetup
@@ -41,12 +41,12 @@ object BackupServiceUtil {
 
     fun createChannels() {
         if (!NotificationUtil.channelExists(
-                PlatformContextProvider.get(),
+                PlatformApplicationContext,
                 NOTIFICATION_CHANNEL_BACKUP_ID
             )
         ) {
             NotificationUtil.createChannel(
-                PlatformContextProvider.get(),
+                PlatformApplicationContext,
                 NOTIFICATION_CHANNEL_BACKUP_NAME,
                 NOTIFICATION_CHANNEL_BACKUP_ID,
                 NotificationManagerCompat.IMPORTANCE_MAX

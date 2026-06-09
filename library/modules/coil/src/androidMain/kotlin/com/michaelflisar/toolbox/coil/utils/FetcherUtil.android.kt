@@ -7,11 +7,11 @@ import coil3.asDrawable
 import coil3.fetch.FetchResult
 import coil3.fetch.ImageFetchResult
 import coil3.fetch.SourceFetchResult
-import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
+import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
 
 actual fun FetcherUtil.getBitmap(result: FetchResult): Bitmap {
     return when (result) {
-        is ImageFetchResult -> result.image.asDrawable(PlatformContextProvider.get().resources)
+        is ImageFetchResult -> result.image.asDrawable(PlatformApplicationContext.resources)
             .toBitmap()
 
         is SourceFetchResult -> BitmapFactory.decodeStream(result.source.source().inputStream())

@@ -161,7 +161,10 @@ fun BackupDialog(
                             when (mode) {
                                 BackupDialog.Mode.Export -> {
                                     try {
-                                        createFilePicker.launch(exportFileName.nameWithoutExtension, exportFileName.extension)
+                                        createFilePicker.launch(
+                                            suggestedName = exportFileName.nameWithoutExtension,
+                                            defaultExtension = exportFileName.extension
+                                        )
                                     } catch (_: ActivityNotFoundException) {
                                         dialogActivityNotFound.show(BackupDialog.ActivityNotFoundError.Create)
                                     }

@@ -1,26 +1,26 @@
 [versions]
 
 # general (local snapshot: "LOCAL-SNAPSHOT")
-kmp-parcelize =             "1.1.0-alpha01"
-kmp-platformcontext =       "1.1.0-alpha03"
-kmp-mail =                  "0.1.0"
+kmp-parcelize =             "2.0.0"
+kmp-platformcontext =       "2.0.2"
+kmp-mail =                  "1.0.0"
 cachefileprovider =         "1.0.0"
-kotpreferences =        	"4.0.0-alpha02"
-lumberjack =                "10.0.0-alpha04"
-composedebugdrawer =		"3.0.0-alpha01"
-composedialogs =   		    "4.0.0-alpha09"
-composechangelog =   		"4.0.0-alpha02"
-composepreferences =   		"3.0.0-alpha04"
-composethemer =   			"2.0.0-alpha01"
-composecolors =             "1.0.1"
-toolbox =                   "4.0.0-alpha16"
+kotpreferences =        	"4.0.0"
+lumberjack =                "10.0.0"
+composedebugdrawer =		"3.0.0"
+composedialogs =   		    "4.0.0"
+composechangelog =   		"4.0.0"
+composepreferences =   		"3.0.0"
+composethemer =   			"2.0.0"
+composecolors =             "2.0.0"
+toolbox =                   "4.0.0-alpha17"
 
 # plugins only
-kmpicon-plugin =            "0.0.1"
-kmpdevtools =               "7.9.6" # use the "devTools" task to change the version
+kmpicon =                   "1.0.0"
+kmpdevtools =               "8.0.0" # use the "devTools" task to change the version
 
 # demos
-democomposables =           "1.0.2"
+democomposables =           "1.0.5"
 
 [plugins]
 
@@ -29,7 +29,7 @@ changelog-gradleplugin =            { id = "io.github.mflisar.composechangelog.g
 
 # plugins only
 kmpdevtools-buildplugin =           { id = "io.github.mflisar.kmpdevtools.plugins-build-gradle",        version.ref = "kmpdevtools" }
-kmpicon-plugin =                    { id = "io.github.mflisar.kmpicon.plugin",                          version.ref = "kmpicon-plugin" }
+kmpicon-plugin =                    { id = "io.github.mflisar.kmpicon.plugin",                          version.ref = "kmpicon" }
 
 [libraries]
 

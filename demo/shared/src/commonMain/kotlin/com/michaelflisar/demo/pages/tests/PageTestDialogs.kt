@@ -29,6 +29,7 @@ import com.michaelflisar.composedialogs.dialogs.frequency.rememberDialogFrequenc
 import com.michaelflisar.composedialogs.dialogs.info.DialogInfo
 import com.michaelflisar.composedialogs.dialogs.input.DialogInput
 import com.michaelflisar.composedialogs.dialogs.list.DialogList
+import com.michaelflisar.composedialogs.dialogs.list.DialogListDefaults
 import com.michaelflisar.composedialogs.dialogs.menu.DialogMenu
 import com.michaelflisar.composedialogs.dialogs.number.DialogNumberPicker
 import com.michaelflisar.composedialogs.dialogs.number.NumberPickerSetup
@@ -120,13 +121,13 @@ private fun Page(
             DialogList(
                 state = state,
                 items = items,
-                itemIdProvider = { items.indexOf(it) },
+                key = { items.indexOf(it) },
                 selectionMode = DialogList.SelectionMode.SingleSelect(
                     selected = selected,
                     selectOnRadioButtonClickOnly = false
                 ),
-                itemContents = DialogList.ItemDefaultContent(
-                    text = { it }
+                content = DialogListDefaults.itemContent(
+                    text = { Text(it) }
                 ),
                 title = { Text(name) }
             )
