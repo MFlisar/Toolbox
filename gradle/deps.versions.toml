@@ -8,7 +8,7 @@ google-guava =					"33.6.0-android"
 # Windows UI
 jewel =                         "0.35.0-261.23567.198" # 0.37 uses already java 25
 intellij-platform =             "251.23774.444"
-skiko =                         "0.9.2"
+#skiko =                         "0.9.2"
 
 # Compose
 compose-icons = 		        "1.1.1"
@@ -44,11 +44,11 @@ google-guava =			     					{ module = "com.google.guava:guava", 												vers
 # Windows UI
 jewel-int-ui-standalone =                       { module = "org.jetbrains.jewel:jewel-int-ui-standalone",                           version.ref = "jewel" }
 jewel-int-ui-decorated-window =                 { module = "org.jetbrains.jewel:jewel-int-ui-decorated-window",                     version.ref = "jewel" }
-jewel-foundation =                              { module = "org.jetbrains.jewel:jewel-foundation",                                  version.ref = "jewel" }
-jewel-decorated-window =                        { module = "org.jetbrains.jewel:jewel-decorated-window",                            version.ref = "jewel" }
-jewel-ui =                                      { module = "org.jetbrains.jewel:jewel-ui",                                          version.ref = "jewel" }
+#jewel-foundation =                              { module = "org.jetbrains.jewel:jewel-foundation",                                  version.ref = "jewel" }
+#jewel-decorated-window =                        { module = "org.jetbrains.jewel:jewel-decorated-window",                            version.ref = "jewel" }
+#jewel-ui =                                      { module = "org.jetbrains.jewel:jewel-ui",                                          version.ref = "jewel" }
 intellij-platform-icons =                       { module = "com.jetbrains.intellij.platform:icons",                                 version.ref = "intellij-platform" }
-skiko =                                         { module = "org.jetbrains.skiko:skiko-awt-runtime-all",                             version.ref = "skiko" }
+#skiko =                                         { module = "org.jetbrains.skiko:skiko-awt-runtime-all",                             version.ref = "skiko" }
 
 # Compose
 icons-cssgg = 					                { module = "br.com.devsrsouza.compose.icons:css-gg", 						        version.ref = "compose-icons" }

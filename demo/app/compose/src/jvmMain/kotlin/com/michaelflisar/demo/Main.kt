@@ -49,9 +49,6 @@ fun main() {
         debugPrefs = DebugPrefs(storageDebug),
         isDebugBuild = JvmUtil.isDebug(),
         fileLogger = JvmUtil.createFileLogger(folder = dataFolder),
-        consoleLoggerSetup = ConsoleLoggerSetup(
-            fixLogTag = "TB",
-        ),
     )
     val desktopSetup = DesktopAppSetup(
         prefs = DesktopPrefs(storageWindows),

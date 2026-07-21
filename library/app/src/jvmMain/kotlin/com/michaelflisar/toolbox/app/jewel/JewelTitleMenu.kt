@@ -125,7 +125,7 @@ private fun TitleMenuItem(
     ) {
         if (icon != null) {
             Icon(
-                icon,
+                icon = icon,
                 modifier = Modifier.size(24.dp).padding(4.dp),
                 tint = foreground
             )

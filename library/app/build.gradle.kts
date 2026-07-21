@@ -238,11 +238,11 @@ kotlin {
             // Jewel
             implementation(deps.jewel.int.ui.standalone)
             implementation(deps.jewel.int.ui.decorated.window)
-            implementation(deps.jewel.foundation)
-            implementation(deps.jewel.ui)
-            implementation(deps.jewel.decorated.window)
+            //implementation(deps.jewel.foundation)
+            //implementation(deps.jewel.ui)
+            //implementation(deps.jewel.decorated.window)
             implementation(deps.intellij.platform.icons)
-            implementation(deps.skiko)
+            //implementation(deps.skiko)
 
             //implementation(deps.htmlconverter)
 
