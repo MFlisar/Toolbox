@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.app.classes
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,6 +30,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.nio.file.AccessDeniedException
+import kotlin.time.Duration.Companion.milliseconds
 
 suspend fun WindowState.resetAll(density: Density, window: ComposeWindow) {
     reset(density, window, true, true, true)
@@ -83,27 +85,25 @@ fun rememberJewelWindowState(
     prefs: DesktopPrefs,
 ): WindowState {
 
-    val scope = rememberCoroutineScope()
-
     val windowState by prefs.windowState.collectAsStateNotNull()
     val state = remember(windowState) { windowState.toWindowState() }
 
-    snapshotFlow { DesktopWindowState(state) }
-        .distinctUntilChanged()
-        .debounce(500)
-        .onEach {
-            L.info(ToolboxLogging.Tag.Window) { "Saving window state: $it" }
-            withContext(Dispatchers.IO) {
-                try {
-                    prefs.windowState.update(it)
-                } catch (e: AccessDeniedException) {
-                    // ignore - comes from androidx datastore...
-                    L.info(ToolboxLogging.Tag.Window, t = e)
+    LaunchedEffect(state) {
+        snapshotFlow { DesktopWindowState(state) }
+            .distinctUntilChanged()
+            .debounce(500.milliseconds)
+            .collect {
+                L.info(ToolboxLogging.Tag.Window) { "Saving window state: $it" }
+                withContext(Dispatchers.IO) {
+                    try {
+                        prefs.windowState.update(it)
+                    } catch (e: AccessDeniedException) {
+                        // ignore - comes from androidx datastore...
+                        L.info(ToolboxLogging.Tag.Window, t = e)
+                    }
                 }
             }
-        }
-        .launchIn(scope)
-
+    }
     return state
 }
 

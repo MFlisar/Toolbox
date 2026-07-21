@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.utils
 
 import java.io.File
+import javax.swing.filechooser.FileSystemView
 
 enum class AppData {
     /**
@@ -17,7 +18,7 @@ object JvmFolderUtil {
 
     fun getApplicationPath() = System.getProperty("user.dir")
 
-    fun getDesktopPath() = "${System.getProperty("user.home").replace("\\", "/")}/Desktop"
+    fun getDesktopPath() = FileSystemView.getFileSystemView().homeDirectory.absolutePath
 
     fun getPathForAppData(namespace: String) = getAppDataPath(AppData.Roaming, namespace)
 

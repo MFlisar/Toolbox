@@ -6,7 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.input.key.NativeKeyEvent
+import androidx.compose.ui.input.key.KeyEvent
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
@@ -26,8 +26,8 @@ internal fun JewelRoot(
     jewelAppState: JewelAppState,
     appIsClosing: MutableState<Boolean>,
     onClosed: (suspend () -> Unit)?,
-    onPreviewKeyEvent: (NativeKeyEvent) -> Boolean,
-    onKeyEvent: (NativeKeyEvent) -> Boolean,
+    onPreviewKeyEvent: (KeyEvent) -> Boolean,
+    onKeyEvent: (KeyEvent) -> Boolean,
     content: @Composable () -> Unit,
 ) {
     val setup = AppSetup.get()

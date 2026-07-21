@@ -14,6 +14,17 @@ object JvmUtil {
         return File(JvmUtil::class.java.protectionDomain.codeSource.location.toURI()).absolutePath
     }
 
+    fun getUserDataRoot(appFolderName: String, createIfMissing: Boolean = true): File {
+        val folder = if (isDebug()) {
+            File(JvmFolderUtil.getApplicationPath(), "app-data")
+        } else {
+            File(JvmFolderUtil.getAppDataPath(AppData.Local, appFolderName)).also { it.mkdirs() }
+        }
+        if (createIfMissing && !folder.exists())
+            folder.mkdirs()
+        return folder
+    }
+
     //return Changelog.getAppVersionName().takeIf { it != "<UNKNOWN>" } == null
     fun getAppVersion(): String? {
         val exePath = getEXEPath()
@@ -23,7 +34,16 @@ object JvmUtil {
     }
 
     fun isDebug(): Boolean {
-        return getAppVersion() == null
+        // gibt ohne fat jar immer einen jar Pfad zurück
+        val exe = getEXEPath()
+        // workaround: wenn exe im .gradle Ordner ist, dann sind wir im debug modus
+        val gradlePath = File(JvmFolderUtil.getUserHomePath(), ".gradle")
+        //println("exe: $exe")
+        //println("gradle: $gradlePath")
+        if (exe.startsWith(gradlePath.absolutePath)) {
+            return true
+        }
+        return false
     }
 
     fun restartApp() {

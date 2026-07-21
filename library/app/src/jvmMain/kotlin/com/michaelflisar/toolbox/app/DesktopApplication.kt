@@ -6,7 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.input.key.NativeKeyEvent
+import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.window.ApplicationScope
 import cafe.adriel.voyager.core.screen.Screen
@@ -32,8 +32,8 @@ fun ApplicationScope.DesktopApplication(
     theme: MyTheme = MyTheme.windowsDefault(),
     // JVM specific
     onClosed: (suspend () -> Unit)? = null,
-    onPreviewKeyEvent: (NativeKeyEvent) -> Boolean = { false },
-    onKeyEvent: (NativeKeyEvent) -> Boolean = { false },
+    onPreviewKeyEvent: (KeyEvent) -> Boolean = { false },
+    onKeyEvent: (KeyEvent) -> Boolean = { false },
     appIsClosing: MutableState<Boolean> = remember { mutableStateOf(false) },
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
