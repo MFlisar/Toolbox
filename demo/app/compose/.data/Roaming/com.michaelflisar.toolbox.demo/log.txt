@@ -704,3 +704,9 @@
 [I] 2026-07-21 10:33:09.214 [WindowState.kt:95]: Saving window state: {w=1024, h=800, x=908, y=151, placement=Floating}
 [I] 2026-07-21 10:33:13.668 [WindowState.kt:95]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
 [I] 2026-07-21 10:33:14.200 [WindowState.kt:95]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[D] 2026-07-22 16:06:04.046 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-22 16:06:04.081 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-22 16:06:06.936 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[D] 2026-07-22 16:06:42.173 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-22 16:06:42.203 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-22 16:06:45.035 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}

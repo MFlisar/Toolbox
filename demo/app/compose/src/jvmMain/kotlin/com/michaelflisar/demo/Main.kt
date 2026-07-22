@@ -4,8 +4,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.application
+import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.demo.pages.tests.TestPrefs
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
@@ -20,6 +22,7 @@ import com.michaelflisar.toolbox.app.DesktopTitleBar
 import com.michaelflisar.toolbox.app.DesktopTitleMenu
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
+import com.michaelflisar.toolbox.app.features.dialogs.JvmAppInfoDialog
 import com.michaelflisar.toolbox.app.features.dialogs.LocalErrorDialogState
 import com.michaelflisar.toolbox.app.features.dialogs.show
 import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggerSetup
@@ -27,16 +30,27 @@ import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorTransitionPlatformStyle
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.app.utils.createFileLogger
+import com.michaelflisar.toolbox.app.utils.runApp
 import com.michaelflisar.toolbox.demo.BuildKonfig
 import com.michaelflisar.toolbox.extensions.toIconComposable
+import com.michaelflisar.toolbox.utils.JvmAppMeta
 import com.michaelflisar.toolbox.utils.JvmFolderUtil
 import com.michaelflisar.toolbox.utils.JvmUtil
 
-@OptIn(ExperimentalMaterial3Api::class)
 fun main() {
+    JvmUtil.runApp {
+        app()
+    }
+}
+
+class SomeClassFromApp
+
+private fun app() {
+
+    val appMeta = JvmAppMeta.detect(cls = SomeClassFromApp::class.java)
 
     // 1) Pfade
-    val dataFolder = JvmFolderUtil.getPathForAppData(BuildKonfig.namespace)
+    val dataFolder = JvmFolderUtil.getPathForAppData(appMeta, BuildKonfig.namespace)
 
     // 2) Storages erstellen
     val storageSettings = DataStoreStorage.create(folder = dataFolder, name = "settings")
@@ -47,7 +61,7 @@ fun main() {
     val setup = Shared.createBaseAppSetup(
         prefs = Prefs(storageSettings),
         debugPrefs = DebugPrefs(storageDebug),
-        isDebugBuild = JvmUtil.isDebug(),
+        isDebugBuild = appMeta.isDebug,
         fileLogger = JvmUtil.createFileLogger(folder = dataFolder),
     )
     val desktopSetup = DesktopAppSetup(
@@ -78,6 +92,8 @@ fun main() {
 
             // theme + root (drawer state, app state) are available now
 
+            val dialogAppInfo = rememberDialogState()
+
             DesktopContainer(
                 titleBar = {
                     DesktopTitleBar {
@@ -87,7 +103,9 @@ fun main() {
                     }
                 },
                 statusBar = {
-                    DesktopStatusBar()
+                    DesktopStatusBar(
+                        onAppVersionClick = { dialogAppInfo.show() }
+                    )
                 },
                 content = {
                     // Scaffold
@@ -97,6 +115,14 @@ fun main() {
                         AppNavigatorTransitionPlatformStyle(navigator)
                     }
                 }
+            )
+
+            JvmAppInfoDialog(
+                state = dialogAppInfo,
+                appMeta = appMeta,
+                appData = AppSetup.get().appData,
+                developer = AppSetup.get().developer,
+                title = { Text("About") }
             )
         }
     }

@@ -230,10 +230,10 @@ kotlin {
 
         jvmMain.dependencies {
 
-            // application
-            implementation(compose.desktop.currentOs) {
-                exclude(group = "org.jetbrains.compose.material", module = "material")
-            }
+            // application => do not add => on maven this adds all supported platforms as dependencies, which is not what we want, to the -jvm artifacts!
+            //implementation(compose.desktop.currentOs) {
+            //    exclude(group = "org.jetbrains.compose.material", module = "material")
+            //}
 
             // Jewel
             implementation(deps.jewel.int.ui.standalone)

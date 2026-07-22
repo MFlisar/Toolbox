@@ -16,11 +16,11 @@ enum class AppData {
 
 object JvmFolderUtil {
 
-    fun getApplicationPath() = System.getProperty("user.dir")
+    fun getUserDirPath() = System.getProperty("user.dir")
 
     fun getDesktopPath() = FileSystemView.getFileSystemView().homeDirectory.absolutePath
 
-    fun getPathForAppData(namespace: String) = getAppDataPath(AppData.Roaming, namespace)
+    fun getPathForAppData(meta: JvmAppMeta, namespace: String) = getAppDataPath(meta, AppData.Roaming, namespace)
 
     /**
      * C:\Users\<USER>
@@ -33,9 +33,9 @@ object JvmFolderUtil {
      *
      * in debug builds it creates a .data folder in the project root folder and places the data there
      */
-    fun getAppDataPath(type: AppData, subFolder: String? = null): String {
-        return if (JvmUtil.isDebug()) {
-            val root = getApplicationPath()
+    fun getAppDataPath(meta: JvmAppMeta, type: AppData, subFolder: String? = null): String {
+        return if (meta.isDebug) {
+            val root = getUserDirPath()
             val folder = type.name
             if (subFolder == null) "$root/.data/$folder" else "$root/.data/$folder/$subFolder".also {
                 val file = File(it)

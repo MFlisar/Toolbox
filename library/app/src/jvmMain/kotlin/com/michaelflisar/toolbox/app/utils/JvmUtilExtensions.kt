@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.app.utils
 
 import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import com.michaelflisar.lumberjack.loggers.file.create
+import com.michaelflisar.toolbox.app.features.dialogs.JvmCrashDialog
 import com.michaelflisar.toolbox.app.features.logging.FileLogger
 import com.michaelflisar.toolbox.utils.JvmUtil
 import java.io.File
@@ -22,4 +23,18 @@ fun JvmUtil.createFileLogger(file: String): FileLogger<*> {
         ),
         logger = { com.michaelflisar.lumberjack.loggers.file.FileLogger(it) }
     )
+}
+
+fun JvmUtil.runApp(
+    title: String = "Exception",
+    block: () -> Unit
+) {
+    try {
+        block()
+    } catch (e: Throwable) {
+        JvmCrashDialog.showExceptionDialog(
+            title = title,
+            throwable = e
+        )
+    }
 }

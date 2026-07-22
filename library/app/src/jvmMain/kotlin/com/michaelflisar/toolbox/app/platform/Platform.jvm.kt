@@ -8,7 +8,7 @@ import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.utils.JvmUtil
 
 actual val Platform.restart: ((context: PlatformContext) -> Unit)?
-    get() = { JvmUtil.restartApp() }
+    get() = null //{ JvmUtil.restartApp() }
 
 actual val Platform.kill: ((context: PlatformContext) -> Unit)?
     get() = { JvmUtil.killApp() }

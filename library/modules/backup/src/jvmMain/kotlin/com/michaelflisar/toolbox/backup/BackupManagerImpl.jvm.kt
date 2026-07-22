@@ -19,7 +19,7 @@ actual class BackupManagerImpl actual constructor(
     actual fun onBackupRestored() {
         // TODO
         // app neu starten oder alle Daten neu laden...
-        JvmUtil.restartApp()
+        //JvmUtil.restartApp()
     }
 
     actual suspend fun backup(
