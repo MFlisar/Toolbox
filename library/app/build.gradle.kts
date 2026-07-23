@@ -155,7 +155,6 @@ kotlin {
 
             // Lumberjack
             api(mflisar.lumberjack.core)
-            api(mflisar.lumberjack.implementation)
             api(mflisar.lumberjack.logger.console)
 
             // KotPreferences

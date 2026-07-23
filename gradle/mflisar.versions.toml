@@ -6,18 +6,18 @@ kmp-platformcontext =       "2.0.2"
 kmp-mail =                  "1.0.0"
 cachefileprovider =         "1.0.0"
 kotpreferences =        	"4.0.0"
-lumberjack =                "10.0.0"
+lumberjack =                "12.0.0"
 composedebugdrawer =		"3.0.0"
 composedialogs =   		    "4.0.0"
 composechangelog =   		"4.0.0"
 composepreferences =   		"3.0.0"
 composethemer =   			"2.0.0"
 composecolors =             "2.0.0"
-toolbox =                   "4.0.0"
+toolbox =                   "4.0.2"
 
 # plugins only
 kmpicon =                   "1.0.0"
-kmpdevtools =               "8.0.1" # use the "devTools" task to change the version
+kmpdevtools =               "8.0.2" # use the "devTools" task to change the version
 
 # demos
 democomposables =           "1.0.5"
@@ -45,7 +45,6 @@ kotpreferences-storage-keyvalue =     			{ module = "io.github.mflisar.kotprefer
 kotpreferences-encryption-aes =     			{ module = "io.github.mflisar.kotpreferences:encryption-aes",      					version.ref = "kotpreferences" }
 kotpreferences-extension-compose =     		    { module = "io.github.mflisar.kotpreferences:extension-compose",      				version.ref = "kotpreferences" }
 lumberjack-core =			        			{ module = "io.github.mflisar.lumberjack:core", 									version.ref = "lumberjack" }
-lumberjack-implementation =			            { module = "io.github.mflisar.lumberjack:implementation", 				            version.ref = "lumberjack" }
 lumberjack-logger-console =			        	{ module = "io.github.mflisar.lumberjack:logger-console", 	            			version.ref = "lumberjack" }
 lumberjack-logger-file =			        	{ module = "io.github.mflisar.lumberjack:logger-file", 	            				version.ref = "lumberjack" }
 lumberjack-extension-composeviewer =	    	{ module = "io.github.mflisar.lumberjack:extension-composeviewer", 					version.ref = "lumberjack" }

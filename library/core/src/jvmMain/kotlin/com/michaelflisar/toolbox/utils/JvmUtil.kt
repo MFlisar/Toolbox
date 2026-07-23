@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox.utils
 
-import com.michaelflisar.composechangelog.runPS
 import java.awt.Desktop
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
@@ -9,18 +8,6 @@ import java.net.InetAddress
 import kotlin.system.exitProcess
 
 object JvmUtil {
-
-    //fun getEXEPath(): String {
-    //    return File(JvmUtil::class.java.protectionDomain.codeSource.location.toURI()).absolutePath
-    //}
-
-    //fun restartApp(meta: JvmAppMeta) {
-    //    // Restart the application by executing the same command that started it
-    //    val exePath = meta.file.absolutePath
-    //    runPS("Start-Process -FilePath '${exePath}'")
-    //    // Exit the current process
-    //    exitProcess(0)
-    //}
 
     fun killApp() {
         exitProcess(0)

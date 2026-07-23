@@ -1,7 +1,9 @@
 package com.michaelflisar.toolbox.utils
 
+import androidx.compose.runtime.Stable
 import java.io.File
 
+@Stable
 sealed class JvmAppMeta {
 
     enum class Type(
@@ -25,6 +27,7 @@ sealed class JvmAppMeta {
         }
     }
 
+    @Stable
     data class Jar(
         val jarFile: File,
         override val isDebug: Boolean
@@ -33,6 +36,7 @@ sealed class JvmAppMeta {
         override val file = jarFile
     }
 
+    @Stable
     data class Exe(
         val exeFile: File,
         override val isDebug: Boolean

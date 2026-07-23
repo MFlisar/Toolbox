@@ -1,7 +1,9 @@
 package com.michaelflisar.toolbox.app.classes
 
+import androidx.compose.runtime.Stable
 import com.michaelflisar.toolbox.app.Constants
 
+@Stable
 sealed class Developer {
 
     companion object {
@@ -11,7 +13,10 @@ sealed class Developer {
     abstract val name: String
     abstract val email: String
 
+    @Stable
     class Author(override val name: String, override val email: String) : Developer()
+
+    @Stable
     class Company(override val name: String, override val email: String) : Developer()
 
 }

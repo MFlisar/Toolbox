@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.app
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.painter.Painter
 import com.michaelflisar.composechangelog.Changelog
 import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
@@ -58,6 +59,7 @@ class AppSetup(
             ComposeTheme.getRegisteredThemes().size > 1 || supportDarkLight || supportContrast || supportDynamicColors
     }
 
+    @Stable
     class AppData(
         val versionCode: Int,
         val versionName: String,

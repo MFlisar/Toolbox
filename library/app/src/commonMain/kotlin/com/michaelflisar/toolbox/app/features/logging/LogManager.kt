@@ -11,7 +11,6 @@ object LogManager {
 
     fun init() {
         val setup = AppSetup.get()
-        L.init(LumberjackLogger)
         if (setup.isDebugBuild) {
             L.enable(minLogLevel = Level.VERBOSE)
         } else {
