@@ -3,11 +3,8 @@ package com.michaelflisar.toolbox.app.features.logging
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.lumberjack.implementation.interfaces.ILumberjackLogger
 
-class FileLogger<Setup: IFileLoggingSetup>(
-    val setup: Setup,
-    val logger: (setup: Setup) -> ILumberjackLogger
-) {
-    fun createLogger(): ILumberjackLogger {
-        return logger(setup)
-    }
+actual fun <Setup : IFileLoggingSetup> LogManager.createFileLogger(
+    setup: Setup,
+): ILumberjackLogger {
+    throw NotImplementedError("File logging is not supported on this platform")
 }

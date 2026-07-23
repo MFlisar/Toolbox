@@ -15,7 +15,7 @@ actual object FeedbackManager {
 
     actual fun sendFeedback(
         appName: String,
-        fileLoggerSetup: IFileLoggingSetup?,
+        fileLoggingSetup: IFileLoggingSetup?,
         attachments: List<PlatformFile>,
         appendLogFiles: Boolean,
     ) {
@@ -23,7 +23,7 @@ actual object FeedbackManager {
         L.sendFeedback(
             appName = appName,
             appVersion = appSetup.appData.versionName,
-            fileLoggingSetup = fileLoggerSetup,
+            fileLoggingSetup = fileLoggingSetup,
             files = attachments.map {
                 it.nsUrl.toKotlinxPath()
             },

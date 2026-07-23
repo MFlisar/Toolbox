@@ -28,7 +28,7 @@ object AcraManager {
         val reportFileName: String = "acra.txt",
     )
 
-    private var fileLoggerSetup: IFileLoggingSetup? = null
+    private var fileLoggingSetup: IFileLoggingSetup? = null
 
     internal fun init(
         app: Application,
@@ -38,7 +38,7 @@ object AcraManager {
         buildConfigClass: Class<*>,
         isDebugBuild: Boolean,
     ): Boolean {
-        this.fileLoggerSetup = fileLoggingSetup
+        this.fileLoggingSetup = fileLoggingSetup
         try {
             app.initAcra {
                 this.buildConfigClass = buildConfigClass
@@ -114,7 +114,7 @@ object AcraManager {
                     null
                 }
             }
-            val logFileUri = fileLoggerSetup?.getLatestLogFile()?.let {
+            val logFileUri = fileLoggingSetup?.getLatestLogFile()?.let {
                 listOf(AcraContentProvider.Companion.getUriForFile(context, it))
             } ?: emptyList()
 

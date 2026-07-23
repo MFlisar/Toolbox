@@ -22,6 +22,7 @@ import com.michaelflisar.demo.pages.PageStatesScreen
 import com.michaelflisar.demo.pages.PageTestsRootScreenContainer
 import com.michaelflisar.demo.pages.tests.PageTestExpandableHeader
 import com.michaelflisar.demo.pages.tests.PageTestLazyColumn
+import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.AppScope
 import com.michaelflisar.toolbox.app.AppSetup
@@ -31,8 +32,7 @@ import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.DebugDrawer
-import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggerSetup
-import com.michaelflisar.toolbox.app.features.logging.FileLogger
+import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggingSetup
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.scaffold.CommonScaffold
 import com.michaelflisar.toolbox.app.features.scaffold.NavigationData
@@ -76,7 +76,7 @@ object Shared {
         debugPrefs: DebugPrefs,
         icon: @Composable () -> Painter = { appIcon(LocalContentColor.current.isLight()) },
         isDebugBuild: Boolean,
-        fileLogger: FileLogger<*>?
+        fileLoggingSetup: IFileLoggingSetup?
     ): AppSetup {
         return AppSetup(
             developer = Developer.MFLISAR,
@@ -110,8 +110,8 @@ object Shared {
                 }
             },
             privacyPolicyLink = "https://mflisar.github.io/android/flash-launcher/privacy-policy/",
-            fileLogger = fileLogger,
-            consoleLoggerSetup = ConsoleLoggerSetup(
+            fileLoggingSetup = fileLoggingSetup,
+            consoleLoggingSetup = ConsoleLoggingSetup(
                 fixLogTag = "TB"
             ),
             disableLanguagePicker = false,

@@ -9,7 +9,7 @@ expect object FeedbackManager {
 
     val supportsSendRelevantFile: Boolean
 
-    fun sendFeedback(appName: String, fileLoggerSetup: IFileLoggingSetup?, attachments: List<PlatformFile>, appendLogFiles: Boolean)
+    fun sendFeedback(appName: String, fileLoggingSetup: IFileLoggingSetup?, attachments: List<PlatformFile>, appendLogFiles: Boolean)
 
     suspend fun sendRelevantFiles(appName: String)
 }

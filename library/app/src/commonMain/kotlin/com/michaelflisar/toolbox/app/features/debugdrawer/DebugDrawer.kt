@@ -242,13 +242,13 @@ fun DebugDrawer(
     customContent()
 
     // Logging
-    val fileLogger = setup.fileLogger
-    if (showRegionLogging && fileLogger != null && setup.developer.email.isNotEmpty()) {
+    val fileLoggingSetup = setup.fileLoggingSetup
+    if (showRegionLogging && fileLoggingSetup != null && setup.developer.email.isNotEmpty()) {
         // TODO: funktioniert das auf platformen != android? intern wird nämlich feedback genutzt!!!
         // + setup sollte nullable sein
         DebugDrawerLumberjack(
             drawerState = drawerState,
-            setup = fileLogger.setup,
+            setup = fileLoggingSetup,
             mailReceiver = setup.developer.email
         )
     }
@@ -302,7 +302,7 @@ private fun DialogSettings(state: BaseDialogState) {
                 debugPrefs.showRegionInformations.takeIf { supportsBuildAndDeviceInfos },
                 debugPrefs.showRegionDevice.takeIf { supportsBuildAndDeviceInfos },
                 debugPrefs.showRegionThemes,
-                debugPrefs.showRegionLogging.takeIf { setup.fileLogger != null },
+                debugPrefs.showRegionLogging.takeIf { setup.fileLoggingSetup != null },
                 debugPrefs.showRegionData
             ).forEach {
                 PreferenceBool(

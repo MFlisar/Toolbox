@@ -3,7 +3,6 @@ package com.michaelflisar.demo
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.application
@@ -11,6 +10,7 @@ import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.demo.pages.tests.TestPrefs
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
+import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.DesktopApp
@@ -25,11 +25,9 @@ import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.dialogs.JvmAppInfoDialog
 import com.michaelflisar.toolbox.app.features.dialogs.LocalErrorDialogState
 import com.michaelflisar.toolbox.app.features.dialogs.show
-import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggerSetup
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorTransitionPlatformStyle
 import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
-import com.michaelflisar.toolbox.app.utils.createFileLogger
 import com.michaelflisar.toolbox.app.utils.runApp
 import com.michaelflisar.toolbox.demo.BuildKonfig
 import com.michaelflisar.toolbox.extensions.toIconComposable
@@ -62,7 +60,7 @@ private fun app() {
         prefs = Prefs(storageSettings),
         debugPrefs = DebugPrefs(storageDebug),
         isDebugBuild = appMeta.isDebug,
-        fileLogger = JvmUtil.createFileLogger(folder = dataFolder),
+        fileLoggingSetup = FileLoggerSetup.SingleFile()
     )
     val desktopSetup = DesktopAppSetup(
         prefs = DesktopPrefs(storageWindows),

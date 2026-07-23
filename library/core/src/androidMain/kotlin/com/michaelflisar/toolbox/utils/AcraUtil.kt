@@ -11,13 +11,13 @@ object AcraUtil {
     fun initAcra(
         app: Application,
         acraSetup: AcraSetup,
-        fileLoggerSetup: IFileLoggingSetup?,
+        fileLoggingSetup: IFileLoggingSetup?,
         buildConfigClass: Class<*>,
         isDebugBuild: Boolean,
     ) {
         AcraManager.init(
             app = app,
-            fileLoggingSetup = fileLoggerSetup,
+            fileLoggingSetup = fileLoggingSetup,
             setup = AcraManager.Setup(
                 appendLogFile = true,
                 mail = Toolbox.MAIL,

@@ -7,10 +7,10 @@ import com.michaelflisar.composechangelog.Changelog
 import com.michaelflisar.composedebugdrawer.core.DebugDrawerState
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.composethemer.themes.DefaultThemes
+import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
 import com.michaelflisar.toolbox.app.classes.Developer
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
-import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggerSetup
-import com.michaelflisar.toolbox.app.features.logging.FileLogger
+import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggingSetup
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 
 class AppSetup(
@@ -26,8 +26,8 @@ class AppSetup(
     val debugDrawer: (@Composable (drawerState: DebugDrawerState) -> Unit)?,
     val privacyPolicyLink: String,
     val disableLanguagePicker: Boolean,
-    val fileLogger: FileLogger<*>?,
-    val consoleLoggerSetup: ConsoleLoggerSetup?,
+    val fileLoggingSetup: IFileLoggingSetup?,
+    val consoleLoggingSetup: ConsoleLoggingSetup?,
     val changelogSetup: Changelog.Setup?,
     val isDebugBuild: Boolean,
 ) {

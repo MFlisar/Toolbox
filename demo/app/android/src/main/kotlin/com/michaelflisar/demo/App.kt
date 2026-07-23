@@ -5,6 +5,7 @@ import com.michaelflisar.demo.pages.tests.TestPrefs
 import com.michaelflisar.kotpreferences.core.value
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
+import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import com.michaelflisar.toolbox.ads.AdManager
 import com.michaelflisar.toolbox.ads.DEFAULT_IMPL
 import com.michaelflisar.toolbox.app.AndroidApp
@@ -18,7 +19,6 @@ import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionAppDefaults
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.utils.AndroidAppIconUtil
-import com.michaelflisar.toolbox.app.utils.createFileLogger
 import com.michaelflisar.toolbox.backup.BackupDefaults
 import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.backup.BackupManagerImpl
@@ -54,8 +54,7 @@ class App : AndroidApplication() {
                     ?: Shared.appIcon(LocalContentColor.current.isLight())
             },
             isDebugBuild = BuildConfig.DEBUG,
-            fileLogger = AndroidUtil.createFileLogger()
-
+            fileLoggingSetup = FileLoggerSetup.Daily()
         )
         val androidSetup = AndroidAppSetup(
             buildConfigClass = BuildConfig::class

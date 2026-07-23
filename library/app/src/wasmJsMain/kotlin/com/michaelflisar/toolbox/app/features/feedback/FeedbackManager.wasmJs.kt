@@ -11,7 +11,7 @@ actual object FeedbackManager {
 
     actual fun sendFeedback(
         appName: String,
-        fileLoggerSetup: IFileLoggingSetup?,
+        fileLoggingSetup: IFileLoggingSetup?,
         attachments: List<PlatformFile>,
         appendLogFiles: Boolean
     ) {

@@ -23,7 +23,7 @@ object AndroidApp {
                 appIcon = appIcon,
                 appName = setup.appData.name
             ),
-            fileLoggerSetup = setup.fileLogger?.setup,
+            fileLoggingSetup = setup.fileLogger?.setup,
             buildConfigClass = androidSetup.buildConfigClass.java,
             isDebugBuild = setup.isDebugBuild
         )

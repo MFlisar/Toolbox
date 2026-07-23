@@ -354,15 +354,15 @@ internal fun SettingsContent(
         }
     }
 
-    if (showLogFile.value && setup.fileLogger != null) {
+    if (showLogFile.value && setup.fileLoggingSetup != null) {
         LumberjackDialog(
             visible = showLogFile,
             title = "Log",
-            setup = setup.fileLogger.setup
+            setup = setup.fileLoggingSetup
         )
     }
 
-    if (FeedbackManager.supported && setup.fileLogger != null && showAttachLogFile.visible) {
+    if (FeedbackManager.supported && setup.fileLoggingSetup != null && showAttachLogFile.visible) {
         DialogInfo(
             state = showAttachLogFile,
             icon = { Icon(Icons.Outlined.Mail, contentDescription = null) },
@@ -381,14 +381,14 @@ internal fun SettingsContent(
                     when (it.button) {
                         DialogButtonType.Positive -> FeedbackManager.sendFeedback(
                             appName = setup.appData.name,
-                            fileLoggerSetup = setup.fileLogger.setup,
+                            fileLoggingSetup = setup.fileLoggingSetup,
                             attachments = emptyList(),
                             appendLogFiles = true,
                         )
 
                         DialogButtonType.Negative -> FeedbackManager.sendFeedback(
                             appName = setup.appData.name,
-                            fileLoggerSetup = setup.fileLogger.setup,
+                            fileLoggingSetup = setup.fileLoggingSetup,
                             attachments = emptyList(),
                             appendLogFiles = false
                         )
@@ -451,7 +451,7 @@ private fun PreferenceGroupScope.RegionAbout(
 
     val showChangelog = remember { setup.changelogSetup != null }
     val showBackup = remember { BackupManager.manager?.config?.addToPrefs == true }
-    val showFeedback = remember { FeedbackManager.supported && setup.fileLogger != null }
+    val showFeedback = remember { FeedbackManager.supported && setup.fileLoggingSetup != null }
     val showPrivacy =
         remember { setup.privacyPolicyLink.isNotEmpty() || proVersionManager.supported }
     val showDeveloper by debugPrefs.showDeveloperSettings.collectAsStateNotNull()
@@ -492,7 +492,7 @@ private fun PreferenceGroupScope.RegionAbout(
             // Region 3.3 - Sonstiges
             // --------------------
 
-            if ((FeedbackManager.supported && setup.fileLogger != null) || Platform.openMarket != null) {
+            if ((FeedbackManager.supported && setup.fileLoggingSetup != null) || Platform.openMarket != null) {
                 PreferenceSubScreen(
                     title = stringResource(Res.string.settings_group_others),
                     subtitle = stringResource(Res.string.settings_group_others_details),
@@ -508,7 +508,7 @@ private fun PreferenceGroupScope.RegionAbout(
                     PreferenceSection(
                         title = stringResource(Res.string.settings_group_others)
                     ) {
-                        if (FeedbackManager.supported && setup.fileLogger != null) {
+                        if (FeedbackManager.supported && setup.fileLoggingSetup != null) {
                             PreferenceButton(
                                 onClick = {
                                     if (L.isEnabled()) {
@@ -516,7 +516,7 @@ private fun PreferenceGroupScope.RegionAbout(
                                     } else {
                                         FeedbackManager.sendFeedback(
                                             appName = setup.appData.name,
-                                            fileLoggerSetup = setup.fileLogger.setup,
+                                            fileLoggingSetup = setup.fileLoggingSetup,
                                             attachments = emptyList(),
                                             appendLogFiles = false
                                         )
@@ -660,7 +660,7 @@ private fun PreferenceGroupScope.RegionAbout(
                     }
                 }
 
-                if (setup.fileLogger != null) {
+                if (setup.fileLoggingSetup != null) {
                     PreferenceSection(
                         title = "Debugging"
                     ) {

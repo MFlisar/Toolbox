@@ -1,5 +1,5 @@
 package com.michaelflisar.toolbox.app.features.logging
 
-class ConsoleLoggerSetup(
+class ConsoleLoggingSetup(
     val fixLogTag: String?
 )
