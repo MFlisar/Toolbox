@@ -21,7 +21,9 @@
 | Module | android | iOS | windows | wasm | Notes |
 |---|---|---|---|---|---|
 | core | ✅ | ✅ | ✅ | ✅ | the core module |
-| app | ✅ | ✅ | ✅ | ✅ | the base app module |
+| app-shared | ✅ | ✅ | ✅ | ✅ | the common base app module |
+| app-jre | ❌ | ❌ | ✅ | ❌ | the base app module (for plain jre, no jbr dependencies) |
+| app-jbr | ❌ | ❌ | ✅ | ❌ | the base app module (for jbr) |
 | ui | ✅ | ✅ | ✅ | ✅ | a ui module |
 | ui-adaptive | ✅ | ✅ | ✅ | ✅ | a adaptive ui module |
 | zip | ✅ | ✅ | ✅ | ✅ | a zip module |
@@ -52,7 +54,7 @@
 >   - `androidx.compose.foundation.ExperimentalFoundationApi` (1x)
 >   - `androidx.compose.foundation.layout.ExperimentalLayoutApi` (1x)
 >   - `androidx.compose.material3.ExperimentalMaterial3Api` (18x)
->   - `androidx.compose.ui.ExperimentalComposeUiApi` (10x)
+>   - `androidx.compose.ui.ExperimentalComposeUiApi` (11x)
 >   - `app.lexilabs.basic.ads.DependsOnGoogleMobileAds` (3x)
 >   - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (6x)
 >   - `cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi` (4x)
@@ -84,7 +86,9 @@ toolbox = "<LATEST-VERSION>"
 [libraries]
 
 toolbox-core = { module = "io.github.mflisar.toolbox:core", version.ref = "toolbox" }
-toolbox-app = { module = "io.github.mflisar.toolbox:app", version.ref = "toolbox" }
+toolbox-app-shared = { module = "io.github.mflisar.toolbox:app-shared", version.ref = "toolbox" }
+toolbox-app-jre = { module = "io.github.mflisar.toolbox:app-jre", version.ref = "toolbox" }
+toolbox-app-jbr = { module = "io.github.mflisar.toolbox:app-jbr", version.ref = "toolbox" }
 toolbox-ui = { module = "io.github.mflisar.toolbox:ui", version.ref = "toolbox" }
 toolbox-ui-adaptive = { module = "io.github.mflisar.toolbox:ui-adaptive", version.ref = "toolbox" }
 toolbox-zip = { module = "io.github.mflisar.toolbox:zip", version.ref = "toolbox" }
@@ -106,7 +110,9 @@ And then use the definitions in your projects **build.gradle.kts** file like fol
 
 ```java
 implementation(libs.toolbox.core)
-implementation(libs.toolbox.app)
+implementation(libs.toolbox.app.shared)
+implementation(libs.toolbox.app.jre)
+implementation(libs.toolbox.app.jbr)
 implementation(libs.toolbox.ui)
 implementation(libs.toolbox.ui.adaptive)
 implementation(libs.toolbox.zip)
@@ -138,7 +144,9 @@ Simply add the dependencies inside your **build.gradle.kts** file.
 val toolbox = "<LATEST-VERSION>"
 
 implementation("io.github.mflisar.toolbox:core:${toolbox}")
-implementation("io.github.mflisar.toolbox:app:${toolbox}")
+implementation("io.github.mflisar.toolbox:app-shared:${toolbox}")
+implementation("io.github.mflisar.toolbox:app-jre:${toolbox}")
+implementation("io.github.mflisar.toolbox:app-jbr:${toolbox}")
 implementation("io.github.mflisar.toolbox:ui:${toolbox}")
 implementation("io.github.mflisar.toolbox:ui-adaptive:${toolbox}")
 implementation("io.github.mflisar.toolbox:zip:${toolbox}")
