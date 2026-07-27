@@ -32,6 +32,15 @@ import org.jetbrains.jewel.ui.component.Text
 import org.jetbrains.jewel.ui.component.separator
 import org.jetbrains.jewel.window.defaultTitleBarStyle
 
+private fun MenuItem.KeyboardShortcut.toJewelKeyBindings(): Set<String> =
+    setOfNotNull(
+        "Ctrl".takeIf { ctrl },
+        "Shift".takeIf { shift },
+        "Alt".takeIf { alt },
+        "Meta".takeIf { system },
+        key.toString(),
+    )
+
 @Composable
 internal fun JewelTitleMenu(
     items: List<MenuItem>,
@@ -187,7 +196,7 @@ private fun MenuScope.titleMenuContent(item: MenuItem, contentColor: Color) {
             selectableItem(
                 selected = false,
                 onClick = item.onClick,
-                keybinding = item.keyboardShortcut
+                keybinding = item.keyboardShortcut?.toJewelKeyBindings()
             ) {
                 TitleMenuItem(item.text, item.icon, TitleMenuItem.Action(false))
             }
@@ -199,7 +208,7 @@ private fun MenuScope.titleMenuContent(item: MenuItem, contentColor: Color) {
                 onClick = {
                     item.checked.value = !item.checked.value
                 },
-                keybinding = item.keyboardShortcut
+                keybinding = item.keyboardShortcut?.toJewelKeyBindings()
             ) {
                 TitleMenuItem(
                     item.text,

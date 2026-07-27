@@ -18,7 +18,7 @@ import com.michaelflisar.toolbox.feature.menu.MenuSeparator
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 import com.michaelflisar.toolbox.feature.menu.rememberMenuState
 
-fun MenuItem.KeyboardShortcut.toComposeKeyShortcut(): KeyShortcut =
+private fun MenuItem.KeyboardShortcut.toComposeKeyShortcut(): KeyShortcut =
     KeyShortcut(
         key = key,
         ctrl = ctrl,
