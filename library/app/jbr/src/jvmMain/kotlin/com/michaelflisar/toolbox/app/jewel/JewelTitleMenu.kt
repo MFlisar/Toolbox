@@ -55,6 +55,7 @@ internal fun JewelTitleMenu(
                 is MenuItem.Group -> {
                     val popup = remember { mutableStateOf(false) }
                     ActionButton(
+                        enabled = it.enabled,
                         modifier = Modifier.height(30.dp),
                         onClick = { popup.value = true }
                     ) {
@@ -78,6 +79,7 @@ internal fun JewelTitleMenu(
 
                 is MenuItem.Item -> {
                     ActionButton(
+                        enabled = it.enabled,
                         modifier = Modifier.height(30.dp),
                         onClick = it.onClick
                     ) {
@@ -92,6 +94,7 @@ internal fun JewelTitleMenu(
 
                 is MenuItem.Checkbox -> {
                     ActionButton(
+                        enabled = it.enabled,
                         modifier = Modifier.height(30.dp),
                         onClick = {
                             it.checked.value = !it.checked.value
@@ -182,6 +185,7 @@ private fun MenuScope.titleMenuContent(item: MenuItem, contentColor: Color) {
 
         is MenuItem.Group -> {
             submenu(
+                enabled = item.enabled,
                 submenu = {
                     item.items.forEach {
                         titleMenuContent(it, contentColor)
@@ -194,6 +198,7 @@ private fun MenuScope.titleMenuContent(item: MenuItem, contentColor: Color) {
 
         is MenuItem.Item -> {
             selectableItem(
+                enabled = item.enabled,
                 selected = false,
                 onClick = item.onClick,
                 keybinding = item.keyboardShortcut?.toJewelKeyBindings()
@@ -204,6 +209,7 @@ private fun MenuScope.titleMenuContent(item: MenuItem, contentColor: Color) {
 
         is MenuItem.Checkbox -> {
             selectableItem(
+                enabled = item.enabled,
                 selected = false,
                 onClick = {
                     item.checked.value = !item.checked.value
