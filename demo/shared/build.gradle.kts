@@ -126,7 +126,7 @@ kotlin {
 
             // modules
             api(project(":toolbox:core"))
-            api(project(":toolbox:app"))
+            api(project(":toolbox:app:shared"))
             api(project(":toolbox:modules:table"))
             api(project(":toolbox:modules:form"))
 
@@ -167,6 +167,14 @@ kotlin {
             api(mflisar.composethemer.themes.flatui)
             api(mflisar.composethemer.themes.metro)
             api(mflisar.composethemer.themes.material500)
+
+        }
+
+        jvmMain.dependencies {
+
+            // modules
+            //api(project(":toolbox:app:jbr"))
+            api(project(":toolbox:app:jre"))
 
         }
 

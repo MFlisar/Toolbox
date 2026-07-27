@@ -17,9 +17,9 @@ import com.michaelflisar.toolbox.app.DesktopApp
 import com.michaelflisar.toolbox.app.DesktopAppDefaults
 import com.michaelflisar.toolbox.app.DesktopApplication
 import com.michaelflisar.toolbox.app.DesktopContainer
+import com.michaelflisar.toolbox.app.DesktopMenuBar
+import com.michaelflisar.toolbox.app.DesktopPrefs
 import com.michaelflisar.toolbox.app.DesktopStatusBar
-import com.michaelflisar.toolbox.app.DesktopTitleBar
-import com.michaelflisar.toolbox.app.DesktopTitleMenu
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.debug.DebugPrefs
 import com.michaelflisar.toolbox.app.features.dialogs.JvmAppInfoDialog
@@ -27,7 +27,6 @@ import com.michaelflisar.toolbox.app.features.dialogs.LocalErrorDialogState
 import com.michaelflisar.toolbox.app.features.dialogs.show
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorTransitionPlatformStyle
-import com.michaelflisar.toolbox.app.features.preferences.DesktopPrefs
 import com.michaelflisar.toolbox.app.utils.runApp
 import com.michaelflisar.toolbox.demo.BuildKonfig
 import com.michaelflisar.toolbox.extensions.toIconComposable
@@ -65,7 +64,9 @@ private fun app() {
     val desktopSetup = DesktopAppSetup(
         prefs = DesktopPrefs(storageWindows),
         titleBarIcon = { light -> Shared.appIcon(light = light) }, // icon in title bar
-        appIcon = { Shared.appIcon(light = true) }  // icon in windows toolbar
+        appIcon = { Shared.appIcon(light = true) },  // icon in windows toolbar
+        // immer mit Standard Einstellungen starten!
+        rememberWindowState = false
     )
     DesktopApp.init(
         setup = setup,
@@ -93,12 +94,10 @@ private fun app() {
             val dialogAppInfo = rememberDialogState()
 
             DesktopContainer(
-                titleBar = {
-                    DesktopTitleBar {
-                        DesktopTitleMenu(
-                            items = provideMenuItems()
-                        )
-                    }
+                menuBar = {
+                    DesktopMenuBar(
+                        items = provideMenuItems()
+                    )
                 },
                 statusBar = {
                     DesktopStatusBar(
@@ -131,39 +130,40 @@ private fun provideMenuItems(): List<MenuItem> {
     val errorDialogState = LocalErrorDialogState.current
     return DesktopAppDefaults.getDesktopMenuItems(
         customActions = listOf(
-            MenuItem.Group(
-                text = "Test",
-                icon = Icons.Default.Folder.toIconComposable(),
+            MenuItem.group(
+                text = "Test First Level Group",
+                icon = Icons.Default.Folder,
                 items = listOf(
-                    MenuItem.Item(
+                    MenuItem.item(
                         "Error Dialog Test",
-                        Icons.Default.Error.toIconComposable()
+                        Icons.Default.Error,
+                        mnemonic = 'E'
                     ) {
                         errorDialogState.show("Test Error", "This is a test error message")
                     },
-                    MenuItem.Separator(text = "Group 1"),
-                    MenuItem.Item(
+                    MenuItem.separator(text = "Group 1"),
+                    MenuItem.item(
                         "Action 1",
-                        Icons.Default.Folder.toIconComposable()
+                        Icons.Default.Folder
                     ) {
                         // ...
                     },
-                    MenuItem.Item(
+                    MenuItem.item(
                         "Action 2",
-                        Icons.Default.Folder.toIconComposable()
+                        Icons.Default.Folder
                     ) {
                         // ...
                     },
-                    MenuItem.Separator(text = "Group 2"),
-                    MenuItem.Item(
+                    MenuItem.separator(text = "Group 2"),
+                    MenuItem.item(
                         "Action 3",
-                        Icons.Default.Folder.toIconComposable()
+                        Icons.Default.Folder
                     ) {
                         // ...
                     },
-                    MenuItem.Item(
+                    MenuItem.item(
                         "Action 4",
-                        Icons.Default.Folder.toIconComposable()
+                        Icons.Default.Folder
                     ) {
                         // ...
                     },

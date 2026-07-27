@@ -63,9 +63,9 @@ object PageHomeScreen : NavScreen() {
                 ToolbarMainMenuItems(
                     showInOverflow = true,
                     additionalItems = listOf(
-                        MenuItem.Item(
+                        MenuItem.item(
                             text = actionText,
-                            icon = Icons.Default.RunCircle.toIconComposable(),
+                            icon = Icons.Default.RunCircle,
                         ) {
                             appState.showSnackbar("$actionText clicked")
                         }

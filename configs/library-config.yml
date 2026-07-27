@@ -16,9 +16,15 @@ modules:
   - artifact-id: core
     description: the core module
     path: library/core
-  - artifact-id: app
-    description: the base app module
-    path: library/app
+  - artifact-id: app-shared
+    description: the common base app module
+    path: library/app/shared
+  - artifact-id: app-jre
+    description: the base app module (for plain jre, no jbr dependencies)
+    path: library/app/jre
+  - artifact-id: app-jbr
+    description: the base app module (for jbr)
+    path: library/app/jbr
   - artifact-id: ui
     description: a ui module
     path: library/modules/ui

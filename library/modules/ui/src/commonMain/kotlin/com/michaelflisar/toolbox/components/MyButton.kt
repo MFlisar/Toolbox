@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.IconComposable
 
 internal object MyButton {
 
@@ -317,7 +318,7 @@ fun MyFilledTonalButton(
 fun MyButton(
     // icon + text
     text: String,
-    icon: ImageVector? = null,
+    icon: IconComposable? = null,
     iconRotation: Float = 0f,
     iconTint: Color? = null,
     // button
@@ -348,7 +349,7 @@ fun MyButton(
 fun MyOutlinedButton(
     // icon + text
     text: String,
-    icon: ImageVector? = null,
+    icon: IconComposable? = null,
     iconRotation: Float = 0f,
     iconTint: Color? = null,
     // button
@@ -379,7 +380,7 @@ fun MyOutlinedButton(
 fun MyTextButton(
     // icon + text
     text: String,
-    icon: ImageVector? = null,
+    icon: IconComposable? = null,
     iconRotation: Float = 0f,
     iconTint: Color? = null,
     // button
@@ -410,7 +411,7 @@ fun MyTextButton(
 fun MyFilledTonalButton(
     // icon + text
     text: String,
-    icon: ImageVector? = null,
+    icon: IconComposable? = null,
     iconRotation: Float = 0f,
     iconTint: Color? = null,
     // button
@@ -463,7 +464,7 @@ internal fun MyButton(
 @Composable
 private fun MyButtonContent(
     text: String,
-    icon: ImageVector?,
+    icon: IconComposable?,
     iconRotation: Float,
     iconTint: Color?
 ) {
@@ -471,8 +472,8 @@ private fun MyButtonContent(
         Text(text)
     } else {
         if (text.isEmpty()) {
-            Icon(
-                imageVector = icon,
+            com.michaelflisar.toolbox.extensions.Icon(
+                icon = icon,
                 contentDescription = null,
                 modifier = Modifier.size(24.dp).rotate(iconRotation),
                 tint = iconTint ?: LocalContentColor.current
@@ -482,8 +483,8 @@ private fun MyButtonContent(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = icon,
+                com.michaelflisar.toolbox.extensions.Icon(
+                    icon = icon,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp).rotate(iconRotation),
                     tint = iconTint ?: LocalContentColor.current
