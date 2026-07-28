@@ -16,6 +16,8 @@ class DesktopAppSetup(
     val swingCompatMode: Boolean = false,
     val ensureIsFullyOnScreen: Boolean = false,
     val rememberWindowState: Boolean = true,
+    val minimumVisibleWidthPercentOnWindowRestore: Float = 1f,
+    val minimumVisibleHeightPercentOnWindowRestore: Float = 1f,
 ) {
     companion object {
         fun get() = App.requireSingleton<DesktopAppSetup>()

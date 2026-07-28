@@ -29,7 +29,7 @@ internal val LocalDecoratedWindowScope =
 internal fun JewelRoot(
     desktopAppState: DesktopAppState,
     appIsClosing: MutableState<Boolean>,
-    onClosed: (suspend () -> Unit)?,
+    onCloseRequest: (() -> Unit)?,
     onPreviewKeyEvent: (KeyEvent) -> Boolean,
     onKeyEvent: (KeyEvent) -> Boolean,
     content: @Composable () -> Unit,
@@ -37,7 +37,6 @@ internal fun JewelRoot(
     val setup = AppSetup.get()
     val desktopSetup = DesktopAppSetup.get()
 
-    val scope = rememberCoroutineScope()
     val alwaysOnTop by desktopSetup.prefs.alwaysOnTop.collectAsStateNotNull()
 
     DesktopLocalProvider(
@@ -45,9 +44,9 @@ internal fun JewelRoot(
     ) {
         DecoratedWindow(
             onCloseRequest = {
-                scope.launch {
-                    onClosed?.invoke()
+                if (!appIsClosing.value) {
                     appIsClosing.value = true
+                    onCloseRequest?.invoke()
                 }
             },
             state = desktopAppState.windowState,

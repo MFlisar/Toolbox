@@ -34,7 +34,7 @@ fun ApplicationScope.DesktopApplication(
     screen: Screen,
     theme: MyTheme = MyTheme.windowsDefault(),
     // JVM specific
-    onClosed: (suspend () -> Unit)? = null,
+    onCloseRequest: (() -> Unit)? = null,
     onPreviewKeyEvent: (KeyEvent) -> Boolean = { false },
     onKeyEvent: (KeyEvent) -> Boolean = { false },
     appIsClosing: MutableState<Boolean> = remember { mutableStateOf(false) },
@@ -68,7 +68,7 @@ fun ApplicationScope.DesktopApplication(
             JewelRoot(
                 desktopAppState = jewelAppState,
                 appIsClosing = appIsClosing,
-                onClosed = onClosed,
+                onCloseRequest = onCloseRequest,
                 onPreviewKeyEvent = onPreviewKeyEvent,
                 onKeyEvent = onKeyEvent,
             ) {

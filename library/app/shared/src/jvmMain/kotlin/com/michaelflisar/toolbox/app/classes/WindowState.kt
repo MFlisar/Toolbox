@@ -2,7 +2,6 @@ package com.michaelflisar.toolbox.app.classes
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -13,8 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
-import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.kotpreferences.core.SettingsConverter
+import com.michaelflisar.kotpreferences.core.value
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.features.preferences.BaseDesktopPrefs
@@ -27,7 +26,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import java.awt.GraphicsEnvironment
+import java.awt.Rectangle
 import java.nio.file.AccessDeniedException
+import kotlin.math.min
 import kotlin.time.Duration.Companion.milliseconds
 
 fun WindowState.resetAll(density: Density, window: ComposeWindow) {
@@ -56,8 +58,6 @@ fun WindowState.reset(
         val (x, y) = WindowUtil.calcCenteredPosition(window)
         this.position = WindowPosition(with(density) { x.toDp() }, with(density) { y.toDp() })
     }
-
-    //prefs.windowState.update(JewelWindowState(this))
 }
 
 fun WindowState.resetWindowSize() {
@@ -66,7 +66,6 @@ fun WindowState.resetWindowSize() {
         prefs.windowState.defaultValue.windowWidth.dp,
         prefs.windowState.defaultValue.windowHeight.dp,
     )
-    //prefs.windowState.update(JewelWindowState(this))
 }
 
 fun WindowState.resetWindowPosition(density: Density, window: ComposeWindow) = reset(
@@ -77,26 +76,37 @@ fun WindowState.resetWindowPosition(density: Density, window: ComposeWindow) = r
     position = true
 )
 
+private val screenBounds: List<Rectangle>
+    get() = GraphicsEnvironment
+        .getLocalGraphicsEnvironment()
+        .screenDevices
+        .map { it.defaultConfiguration.bounds }
+
 @OptIn(FlowPreview::class)
 @Composable
 fun rememberDesktopWindowState(
     prefs: BaseDesktopPrefs,
 ): WindowState {
 
-    if (!DesktopAppSetup.get().rememberWindowState) {
+    val desktopSetup = DesktopAppSetup.get()
+    if (!desktopSetup.rememberWindowState) {
         return remember {
-            WindowState(
-                size = DpSize(
-                    DesktopWindowState.DEFAULT_WIDTH.dp,
-                    DesktopWindowState.DEFAULT_HEIGHT.dp
-                ),
-                position = WindowPosition.Aligned(Alignment.Center)
-            )
+            getDefaultWindowState()
         }
     }
 
-    val windowState by prefs.windowState.collectAsStateNotNull()
-    val state = remember(windowState) { windowState.toWindowState() }
+    val state = remember {
+        // reads blocking, but we need this here instantly!
+        val restored = prefs.windowState.value
+        if (restored.isWindowPositionVisible(
+                desktopSetup.minimumVisibleWidthPercentOnWindowRestore,
+                desktopSetup.minimumVisibleHeightPercentOnWindowRestore
+            )
+        )
+            restored.toWindowState()
+        else
+            getDefaultWindowState()
+    }
 
     LaunchedEffect(state) {
         snapshotFlow { DesktopWindowState(state) }
@@ -117,6 +127,29 @@ fun rememberDesktopWindowState(
     return state
 }
 
+fun getDefaultWindowState(): WindowState {
+
+    val maxWidth = screenBounds.maxOfOrNull { it.width }
+        ?: DesktopWindowState.DEFAULT_WIDTH
+
+    val maxHeight = screenBounds.maxOfOrNull { it.height }
+        ?: DesktopWindowState.DEFAULT_HEIGHT
+
+    return WindowState(
+        size = DpSize(
+            min(
+                DesktopWindowState.DEFAULT_WIDTH,
+                maxWidth
+            ).dp,
+            min(
+                DesktopWindowState.DEFAULT_HEIGHT,
+                maxHeight
+            ).dp
+        ),
+        position = WindowPosition.Aligned(Alignment.Center)
+    )
+}
+
 @Serializable
 data class DesktopWindowState(
     val windowWidth: Int = DEFAULT_WIDTH,
@@ -126,8 +159,8 @@ data class DesktopWindowState(
     val windowPlacement: WindowPlacement = WindowPlacement.Floating,
 ) {
     companion object {
-        val DEFAULT_WIDTH = 1024
-        val DEFAULT_HEIGHT = 800
+        const val DEFAULT_WIDTH = 1024
+        const val DEFAULT_HEIGHT = 800
     }
 
     constructor(windowState: WindowState) : this(
@@ -137,6 +170,50 @@ data class DesktopWindowState(
         windowY = windowState.position.y.value.toInt(),
         windowPlacement = windowState.placement
     )
+
+    fun isWindowPositionVisible(
+        minVisibleWidthPercent: Float = 0.5f,
+        minVisibleHeightPercent: Float = 0.5f,
+    ): Boolean {
+
+        if (windowPlacement == WindowPlacement.Maximized) {
+            return true
+        }
+
+        if (windowWidth <= 0 || windowHeight <= 0) {
+            return false
+        }
+
+        val windowBounds = Rectangle(
+            windowX,
+            windowY,
+            windowWidth,
+            windowHeight
+        )
+
+        val visibleWidth = screenBounds.sumOf { screen ->
+            maxOf(
+                0,
+                screen.intersection(windowBounds).width
+            )
+        }
+
+        val visibleHeight = screenBounds.sumOf { screen ->
+            maxOf(
+                0,
+                screen.intersection(windowBounds).height
+            )
+        }
+
+        val visibleWidthRatio =
+            visibleWidth.toFloat() / windowWidth
+
+        val visibleHeightRatio =
+            visibleHeight.toFloat() / windowHeight
+
+        return visibleWidthRatio >= minVisibleWidthPercent &&
+                visibleHeightRatio >= minVisibleHeightPercent
+    }
 
     fun toWindowState(): WindowState {
         return WindowState(

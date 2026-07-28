@@ -716,3 +716,96 @@
 [D] 2026-07-23 20:32:16.994 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
 [D] 2026-07-23 20:32:17.028 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
 [I] 2026-07-23 20:32:20.264 [WindowState.kt:96]: Saving window state: {w=1024, h=800, x=448, y=140, placement=Floating}
+[D] 2026-07-27 13:47:13.353 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-27 13:47:13.394 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-07-27 13:52:16.034 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-27 13:52:16.078 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-07-27 13:52:41.018 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-27 13:52:41.053 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-27 13:52:44.122 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=2368, y=140, placement=Floating}
+[D] 2026-07-27 13:53:46.773 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-27 13:53:46.805 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-27 13:53:49.535 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=2368, y=140, placement=Floating}
+[D] 2026-07-28 08:27:17.945 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:27:17.980 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:27:20.557 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=2368, y=140, placement=Floating}
+[D] 2026-07-28 08:31:50.627 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:31:50.678 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:31:53.707 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=2368, y=140, placement=Floating}
+[I] 2026-07-28 08:32:15.692 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=484, y=115, placement=Floating}
+[I] 2026-07-28 08:32:16.213 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=484, y=115, placement=Floating}
+[D] 2026-07-28 08:32:28.957 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:32:28.986 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:32:31.743 [WindowState.kt:106]: Saving window state: {w=1024, h=800, x=484, y=115, placement=Floating}
+[D] 2026-07-28 08:41:42.064 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:41:42.094 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:41:44.662 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=484, y=115, placement=Floating}
+[I] 2026-07-28 08:41:46.833 [WindowState.kt:112]: Saving window state: {w=974, h=523, x=2873, y=0, placement=Floating}
+[I] 2026-07-28 08:41:47.393 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2368, y=116, placement=Floating}
+[I] 2026-07-28 08:41:49.342 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=3168, y=188, placement=Floating}
+[I] 2026-07-28 08:41:49.878 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2368, y=116, placement=Floating}
+[I] 2026-07-28 08:41:50.413 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2368, y=116, placement=Floating}
+[I] 2026-07-28 08:41:52.049 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2964, y=266, placement=Floating}
+[I] 2026-07-28 08:41:52.578 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2368, y=116, placement=Floating}
+[I] 2026-07-28 08:41:53.092 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2368, y=116, placement=Floating}
+[I] 2026-07-28 08:41:53.842 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2090, y=132, placement=Floating}
+[I] 2026-07-28 08:41:54.762 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2960, y=156, placement=Floating}
+[I] 2026-07-28 08:41:55.292 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2368, y=116, placement=Floating}
+[I] 2026-07-28 08:41:55.822 [WindowState.kt:112]: Saving window state: {w=1024, h=800, x=2368, y=116, placement=Floating}
+[D] 2026-07-28 08:47:14.690 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:47:14.723 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:47:17.282 [WindowState.kt:123]: Saving window state: {w=1024, h=800, x=2368, y=116, placement=Floating}
+[I] 2026-07-28 08:48:02.055 [WindowState.kt:123]: Saving window state: {w=1024, h=800, x=1180, y=174, placement=Floating}
+[I] 2026-07-28 08:48:02.961 [WindowState.kt:123]: Saving window state: {w=1024, h=800, x=3176, y=131, placement=Floating}
+[I] 2026-07-28 08:48:05.138 [WindowState.kt:123]: Saving window state: {w=1024, h=800, x=176, y=182, placement=Floating}
+[I] 2026-07-28 08:48:06.124 [WindowState.kt:123]: Saving window state: {w=1024, h=800, x=-1439, y=305, placement=Floating}
+[I] 2026-07-28 08:48:07.687 [WindowState.kt:123]: Saving window state: {w=1024, h=800, x=-2232, y=205, placement=Floating}
+[D] 2026-07-28 08:48:12.542 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:48:12.577 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:48:15.284 [WindowState.kt:123]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[I] 2026-07-28 08:48:16.991 [WindowState.kt:123]: Saving window state: {w=1024, h=800, x=2571, y=102, placement=Floating}
+[D] 2026-07-28 08:51:16.066 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:51:16.097 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:51:18.668 [WindowState.kt:120]: Saving window state: {w=1024, h=800, x=2571, y=102, placement=Floating}
+[I] 2026-07-28 08:51:20.159 [WindowState.kt:120]: Saving window state: {w=1024, h=800, x=355, y=7, placement=Floating}
+[I] 2026-07-28 08:51:22.081 [WindowState.kt:120]: Saving window state: {w=1024, h=952, x=355, y=7, placement=Floating}
+[I] 2026-07-28 08:51:25.545 [WindowState.kt:120]: Saving window state: {w=1024, h=800, x=355, y=7, placement=Floating}
+[I] 2026-07-28 08:51:26.936 [WindowState.kt:120]: Saving window state: {w=1024, h=800, x=2504, y=86, placement=Floating}
+[I] 2026-07-28 08:51:28.198 [WindowState.kt:120]: Saving window state: {w=1024, h=800, x=3110, y=82, placement=Floating}
+[D] 2026-07-28 08:51:39.558 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:51:39.590 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:51:42.472 [WindowState.kt:120]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[I] 2026-07-28 08:51:48.945 [WindowState.kt:120]: Saving window state: {w=1024, h=800, x=2279, y=131, placement=Floating}
+[D] 2026-07-28 08:51:53.592 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:51:53.631 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:51:56.332 [WindowState.kt:120]: Saving window state: {w=1024, h=800, x=2279, y=131, placement=Floating}
+[D] 2026-07-28 08:55:46.273 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:55:46.321 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:55:48.942 [WindowState.kt:124]: Saving window state: {w=1024, h=800, x=2279, y=131, placement=Floating}
+[I] 2026-07-28 08:55:59.124 [WindowState.kt:124]: Saving window state: {w=1024, h=800, x=-2157, y=111, placement=Floating}
+[D] 2026-07-28 08:56:05.061 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:56:05.094 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:56:07.733 [WindowState.kt:124]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[D] 2026-07-28 08:56:22.464 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:56:22.496 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:56:24.966 [WindowState.kt:124]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[I] 2026-07-28 08:56:29.792 [WindowState.kt:124]: Saving window state: {w=1024, h=800, x=-2314, y=73, placement=Floating}
+[D] 2026-07-28 08:56:36.971 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:56:37.002 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:56:39.551 [WindowState.kt:124]: Saving window state: {w=1024, h=800, x=-2314, y=73, placement=Floating}
+[I] 2026-07-28 08:56:43.428 [WindowState.kt:124]: Saving window state: {w=1024, h=800, x=-2652, y=89, placement=Floating}
+[D] 2026-07-28 08:56:48.078 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 08:56:48.107 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 08:56:50.526 [WindowState.kt:124]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[D] 2026-07-28 09:08:20.676 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 09:08:20.709 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 09:08:23.521 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[I] 2026-07-28 09:08:25.580 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=-2163, y=190, placement=Floating}
+[D] 2026-07-28 09:08:30.957 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 09:08:30.999 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 09:08:33.860 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=-2163, y=190, placement=Floating}
+[I] 2026-07-28 09:08:35.241 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=-2545, y=154, placement=Floating}
+[D] 2026-07-28 09:08:39.671 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-07-28 09:08:39.720 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-07-28 09:08:42.643 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[I] 2026-07-28 09:09:20.567 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press

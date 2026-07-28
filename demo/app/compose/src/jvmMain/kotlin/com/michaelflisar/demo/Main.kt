@@ -59,14 +59,18 @@ private fun app() {
         prefs = Prefs(storageSettings),
         debugPrefs = DebugPrefs(storageDebug),
         isDebugBuild = appMeta.isDebug,
-        fileLoggingSetup = FileLoggerSetup.SingleFile()
+        fileLoggingSetup = FileLoggerSetup.SingleFile(
+            folder = dataFolder
+        )
     )
     val desktopSetup = DesktopAppSetup(
         prefs = DesktopPrefs(storageWindows),
         titleBarIcon = { light -> Shared.appIcon(light = light) }, // icon in title bar
         appIcon = { Shared.appIcon(light = true) },  // icon in windows toolbar
         // immer mit Standard Einstellungen starten!
-        rememberWindowState = false
+        //rememberWindowState = false,
+        minimumVisibleWidthPercentOnWindowRestore = .5f,
+        minimumVisibleHeightPercentOnWindowRestore = .5f
     )
     DesktopApp.init(
         setup = setup,

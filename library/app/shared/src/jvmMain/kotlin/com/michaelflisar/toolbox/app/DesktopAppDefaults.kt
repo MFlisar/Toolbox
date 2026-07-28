@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.awt.ComposeWindow
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.IconComposable
@@ -68,8 +69,8 @@ object DesktopAppDefaults {
         menuLabel: String = "App",
         menuWindowLabel: String = "Window",
         menuDevLabel: String = "Dev",
-        menuIcon: IconComposable? = Icons.Default.Apps.toIconComposable(),
-        menuDevIcon: IconComposable? = Icons.Default.BugReport.toIconComposable(),
+        menuIcon: ImageVector? = Icons.Default.Apps,
+        menuDevIcon: ImageVector? = Icons.Default.BugReport,
         labelResetWindowSize: String = "Reset Window Size",
         labelResetWindowPosition: String = "Reset Window Position",
         labelOpenDebugDrawer: String = "Open Debug Drawer",
@@ -148,7 +149,7 @@ object DesktopAppDefaults {
         val subItems = listOfNotNull(
             itemsProVersion,
             customActions,
-            MenuItem.Separator().let { listOf(it) },
+            listOf(MenuItem.Separator()),
             MenuItem.group(
                 text = menuWindowLabel,
                 icon = Icons.Default.WebAsset,
