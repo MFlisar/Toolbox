@@ -7,7 +7,7 @@ kmp-mail =                  "1.0.0"
 cachefileprovider =         "1.0.0"
 kotpreferences =        	"4.0.0"
 lumberjack =                "12.0.0"
-composedebugdrawer =		"3.0.0"
+composedebugdrawer =		"4.0.0"
 composedialogs =   		    "4.0.0"
 composechangelog =   		"4.0.0"
 composepreferences =   		"3.0.0"
@@ -17,7 +17,7 @@ toolbox =                   "4.0.2"
 
 # plugins only
 kmpicon =                   "1.0.0"
-kmpdevtools =               "8.0.2" # use the "devTools" task to change the version
+kmpdevtools =               "8.0.4" # use the "devTools" task to change the version
 
 # demos
 democomposables =           "1.0.5"

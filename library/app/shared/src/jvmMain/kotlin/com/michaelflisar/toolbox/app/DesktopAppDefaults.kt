@@ -11,11 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.resetWindowPosition
 import com.michaelflisar.toolbox.app.classes.resetWindowSize
@@ -25,9 +23,8 @@ import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.menu.removeConsecutiveSeparators
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionSetup
-import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.features.proversion.ProState
-import com.michaelflisar.toolbox.utils.JvmUtil
+import com.michaelflisar.toolbox.utils.JvmInfo
 import kotlinx.coroutines.launch
 
 object DesktopAppDefaults {
@@ -54,12 +51,18 @@ object DesktopAppDefaults {
         onHostNameClick: (() -> Unit)? = null,
     ): List<DesktopStatusBarItem> {
         return listOfNotNull(
-            DesktopStatusBarItem.Text(JvmUtil.javaVersion(), onClick = onJavaVersionClick)
-                .takeIf { showJavaVersionRight },
-            DesktopStatusBarItem.Text(JvmUtil.userName(), onClick = onUserNameClick)
-                .takeIf { showUserNameRight },
-            DesktopStatusBarItem.Text(JvmUtil.hostName(), onClick = onHostNameClick)
-                .takeIf { showHostNameRight }
+            DesktopStatusBarItem.Text(
+                text = JvmInfo.JavaVersion.value,
+                onClick = onJavaVersionClick
+            ).takeIf { showJavaVersionRight },
+            DesktopStatusBarItem.Text(
+                text = JvmInfo.UserName.value,
+                onClick = onUserNameClick
+            ).takeIf { showUserNameRight },
+            DesktopStatusBarItem.Text(
+                text = JvmInfo.HostName.value,
+                onClick = onHostNameClick
+            ).takeIf { showHostNameRight }
         )
     }
 

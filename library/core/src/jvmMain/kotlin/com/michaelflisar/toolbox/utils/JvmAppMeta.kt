@@ -7,7 +7,7 @@ import java.io.File
 sealed class JvmAppMeta {
 
     enum class Type(
-        val info: String
+        val info: String,
     ) {
         DebugExe("Debug Exe"),
         ReleaseExe("Release Exe"),
@@ -30,7 +30,7 @@ sealed class JvmAppMeta {
     @Stable
     data class Jar(
         val jarFile: File,
-        override val isDebug: Boolean
+        override val isDebug: Boolean,
     ) : JvmAppMeta() {
         override val isExe = false
         override val file = jarFile
@@ -39,7 +39,7 @@ sealed class JvmAppMeta {
     @Stable
     data class Exe(
         val exeFile: File,
-        override val isDebug: Boolean
+        override val isDebug: Boolean,
     ) : JvmAppMeta() {
         override val isExe = true
         override val file = exeFile
@@ -49,46 +49,34 @@ sealed class JvmAppMeta {
 
         fun detect(
             cls: Class<*>,
-            isReleaseDistributable: (path: String) -> Boolean = {
-                Regex(""".*/build/compose/binaries/.+-release/.*""").matches(it)
-            },
-            isDebug: (path: String) -> Boolean = {
-                Regex(""".*/build/compose/binaries/.*""").matches(it)
-            }
+            debug: Boolean,
+            exe: Boolean,
         ): JvmAppMeta {
-            val source = File(
-                cls.protectionDomain.codeSource.location.toURI()
-            )
+            val source = File(cls.protectionDomain.codeSource.location.toURI())
+            return detect(source, debug, exe)
+        }
 
-            val path = source.invariantSeparatorsPath
-
-            val isReleaseDistributable = isReleaseDistributable(path)
-            val isDebugDistributable = isDebug(path)
-            val isExe = source.extension.equals("exe", ignoreCase = true)
-
+        fun detect(
+            sourceFile: File,
+            debug: Boolean,
+            exe: Boolean,
+        ): JvmAppMeta {
             return when {
-
-                isExe ->
+                exe ->
                     Exe(
-                        exeFile = source,
+                        exeFile = sourceFile,
                         isDebug = false
                     )
 
-                isReleaseDistributable ->
+                !debug ->
                     Jar(
-                        jarFile = source,
+                        jarFile = sourceFile,
                         isDebug = false
-                    )
-
-                isDebugDistributable ->
-                    Jar(
-                        jarFile = source,
-                        isDebug = true
                     )
 
                 else ->
                     Jar(
-                        jarFile = source,
+                        jarFile = sourceFile,
                         isDebug = true
                     )
             }

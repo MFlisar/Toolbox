@@ -1,5 +1,6 @@
 package com.michaelflisar.toolbox.app.features.dialogs
 
+import com.michaelflisar.toolbox.utils.JvmInfo
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.FlowLayout
@@ -28,44 +29,23 @@ object JvmCrashDialog {
     const val MIN_WIDTH = 800
     const val MIN_HEIGHT = 600
 
+    fun getDefaultInfos()= JvmInfo.all()
+
     fun showExceptionDialog(
         title: String,
         throwable: Throwable,
+        infos: List<JvmInfo> = getDefaultInfos(),
     ) {
         val infoPanel = JPanel(GridBagLayout())
-
-        var row = 0
-
-        addRow(
-            infoPanel,
-            row++,
-            "Java Home:",
-            System.getProperty("java.home")
-        )
-
-        addRow(
-            infoPanel,
-            row++,
-            "Java Runtime:",
-            "${System.getProperty("java.runtime.name")} ${System.getProperty("java.runtime.version")}"
-        )
-
-        addRow(
-            infoPanel,
-            row++,
-            "Java Vendor:",
-            System.getProperty("java.vendor")
-        )
-
-        addRow(
-            infoPanel,
-            row++,
-            "Working Directory:",
-            System.getProperty("user.dir")
-        )
-
-        addFillRow(infoPanel, row++)
-
+        infos.forEachIndexed { row, info ->
+            addRow(
+                infoPanel,
+                row,
+                "${info.label}:",
+                info.value
+            )
+        }
+        addFillRow(infoPanel, infos.size)
 
         val stacktraceArea = JTextArea(
             throwable.stackTraceToString()

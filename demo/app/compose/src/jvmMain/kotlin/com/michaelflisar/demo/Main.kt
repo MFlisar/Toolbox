@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.window.application
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.demo.pages.tests.TestPrefs
@@ -33,6 +34,8 @@ import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.utils.JvmAppMeta
 import com.michaelflisar.toolbox.utils.JvmFolderUtil
 import com.michaelflisar.toolbox.utils.JvmUtil
+import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
 
 fun main() {
     JvmUtil.runApp {
@@ -44,7 +47,11 @@ class SomeClassFromApp
 
 private fun app() {
 
-    val appMeta = JvmAppMeta.detect(cls = SomeClassFromApp::class.java)
+    val appMeta = JvmAppMeta.detect(
+        cls = SomeClassFromApp::class.java,
+        debug = BuildKonfig.DEBUG,
+        exe = BuildKonfig.EXE
+    )
 
     // 1) Pfade
     val dataFolder = JvmFolderUtil.getPathForAppData(appMeta, BuildKonfig.namespace)
@@ -132,6 +139,8 @@ private fun app() {
 @Composable
 private fun provideMenuItems(): List<MenuItem> {
     val errorDialogState = LocalErrorDialogState.current
+
+    val testScope = rememberCoroutineScope()
     return DesktopAppDefaults.getDesktopMenuItems(
         customActions = listOf(
             MenuItem.group(
@@ -144,6 +153,16 @@ private fun provideMenuItems(): List<MenuItem> {
                         mnemonic = 'E'
                     ) {
                         errorDialogState.show("Test Error", "This is a test error message")
+                    },
+                    MenuItem.item(
+                        "Crash Test",
+                        Icons.Default.Error,
+                        mnemonic = 'C'
+                    ) {
+                        // swing thread does not crash the app, so we need to throw the exception in a separate thread
+                        testScope.launch {
+                            throw RuntimeException("This is a test crash")
+                        }
                     },
                     MenuItem.separator(text = "Group 1"),
                     MenuItem.item(

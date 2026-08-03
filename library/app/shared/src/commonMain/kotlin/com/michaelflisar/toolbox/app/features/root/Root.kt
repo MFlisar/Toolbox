@@ -23,11 +23,15 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.composechangelog.Changelog
 import com.michaelflisar.composechangelog.statesaver.kotpreferences.ChangelogStateSaverKotPreferences
 import com.michaelflisar.composedebugdrawer.core.DebugDrawer
+import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.debugdrawer.LocalDebugDrawerState
+import com.michaelflisar.toolbox.app.features.device.BaseDevice
+import com.michaelflisar.toolbox.app.features.device.Current
+import com.michaelflisar.toolbox.app.features.device.Device
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.settings_changelog
@@ -80,10 +84,8 @@ fun RootDialogs() {
 
     val appState = LocalAppState.current
     val setup = AppSetup.get()
-    val changelogSetup = setup.changelogSetup
-    if (changelogSetup == null) {
-        return // no changelog setup, so we don't show anything
-    }
+    val changelogSetup =
+        setup.changelogSetup ?: return // no changelog setup, so we don't show anything
 
     val changelogStateSaverKotPrefs = remember {
         ChangelogStateSaverKotPreferences(setup.prefs.lastShownVersionForChangelog)
@@ -98,32 +100,46 @@ fun RootDialogs() {
     }
 
     if (appState.changelogState.visible) {
-        ModalBottomSheet(
-            onDismissRequest = {
-                appState.changelogState.hide()
-            },
-            sheetState = rememberModalBottomSheetState(
-                skipPartiallyExpanded = true
-            )
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(
-                        horizontal = 8.dp,
-                        vertical = 16.dp
+        if (Device.Current.base == BaseDevice.Desktop) {
+            com.michaelflisar.composedialogs.core.Dialog(
+                state = rememberDialogState(visible = true),
+                title = { Text(stringResource(Res.string.settings_changelog)) },
+                content = {
+                    Changelog(
+                        appState.changelogState,
+                        changelogSetup,
+                        Modifier.fillMaxWidth()
                     )
+                },
+                onEvent = {
+                    if (it.dismissed)
+                        appState.changelogState.hide()
+                }
+            )
+        } else {
+            ModalBottomSheet(
+                onDismissRequest = { appState.changelogState.hide() },
+                sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
             ) {
-                Text(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = stringResource(Res.string.settings_changelog),
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Changelog(
-                    appState.changelogState,
-                    changelogSetup,
-                    Modifier.fillMaxWidth()
-                )
+                Column(
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 8.dp,
+                            vertical = 16.dp
+                        )
+                ) {
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        text = stringResource(Res.string.settings_changelog),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Changelog(
+                        appState.changelogState,
+                        changelogSetup,
+                        Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }

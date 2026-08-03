@@ -19,15 +19,6 @@ object JvmUtil {
         clipboard.setContents(selection, selection)
     }
 
-    fun javaVersion(versionOnly: Boolean = false) = System.getProperty("java.version").let {
-        if (versionOnly) {
-            it
-        } else "Java $it"
-    }
-
-    fun userName() = System.getenv("username")
-    fun hostName() = InetAddress.getLocalHost().hostName
-
     fun open(file: File) {
         Desktop.getDesktop().open(file)
     }

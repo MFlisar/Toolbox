@@ -123,8 +123,14 @@ compose.desktop {
     }
 }
 
+// THIN exe
+BuildFileUtil.registerLaunch4JThinExeTask(
+    appModuleConfig = module,
+    desktopAppConfig = desktopConfig
+)
+
 // FAT exe
-BuildFileUtil.registerLaunch4JTask(
+BuildFileUtil.registerLaunch4JFatExeTask(
     appModuleConfig = module,
     desktopAppConfig = desktopConfig
 )

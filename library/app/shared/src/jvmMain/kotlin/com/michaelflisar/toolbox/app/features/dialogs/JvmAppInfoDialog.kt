@@ -1,12 +1,8 @@
 package com.michaelflisar.toolbox.app.features.dialogs
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +21,9 @@ import com.michaelflisar.composedialogs.core.defaultDialogStyle
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.classes.Developer
 import com.michaelflisar.toolbox.components.MyLabeledInformationHorizontal
+import com.michaelflisar.toolbox.ui.MyScrollableColumn
 import com.michaelflisar.toolbox.utils.JvmAppMeta
+import com.michaelflisar.toolbox.utils.JvmInfo
 
 @Composable
 fun JvmAppInfoDialog(
@@ -51,11 +49,9 @@ fun JvmAppInfoDialog(
             options = options,
             onEvent = onEvent
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+            MyScrollableColumn(
+                modifier = Modifier.padding(top = 8.dp),
+                itemSpacing = 8.dp
             ) {
                 val labelWidth = 200.dp
 
@@ -105,27 +101,14 @@ fun JvmAppInfoDialog(
 
                 // 4) Environment
                 Header("Environment")
-                MyLabeledInformationHorizontal(
-                    label = "Java Home",
-                    labelWidth = labelWidth,
-                    info = System.getProperty("java.home")
-                )
-                MyLabeledInformationHorizontal(
-                    label = "Java Runtime",
-                    labelWidth = labelWidth,
-                    info = "${System.getProperty("java.runtime.name")} | ${System.getProperty("java.runtime.version")}"
-                )
-                MyLabeledInformationHorizontal(
-                    label = "Java Vendor",
-                    labelWidth = labelWidth,
-                    info = System.getProperty("java.vendor")
-                )
-                MyLabeledInformationHorizontal(
-                    label = "Working Directory",
-                    labelWidth = labelWidth,
-                    info = System.getProperty("user.dir")
-                )
-
+                val infos = JvmInfo.all()
+                infos.forEach {
+                    MyLabeledInformationHorizontal(
+                        label = it.label,
+                        labelWidth = labelWidth,
+                        info = it.value
+                    )
+                }
             }
         }
     }

@@ -4,6 +4,8 @@ import com.michaelflisar.kmpdevtools.core.Platform
 import com.michaelflisar.kmpdevtools.configs.*
 import com.michaelflisar.kmpdevtools.setupDependencies
 import com.michaelflisar.kmpdevtools.setupBuildKonfig
+import com.michaelflisar.kmpdevtools.isDebug
+import com.michaelflisar.kmpdevtools.isExe
 
 plugins {
     // kmp + app/library
@@ -65,7 +67,11 @@ kmpIcon {
 // ------------------------
 
 buildkonfig {
-    setupBuildKonfig(module.appConfig)
+    setupBuildKonfig(
+        appConfig = module.appConfig,
+        isDebug = isDebug(project),
+        isExe = isExe(project),
+    )
 }
 
 compose.resources {
