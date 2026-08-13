@@ -16,7 +16,6 @@ import androidx.compose.ui.window.LocalWindowExceptionHandlerFactory
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import com.michaelflisar.toolbox.MyTheme
-import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.DesktopExitHandler
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
@@ -25,10 +24,8 @@ import com.michaelflisar.toolbox.app.features.backhandler.JvmBackHandlerUtil
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.root.RootLocalProvider
 import com.michaelflisar.toolbox.app.features.theme.AppThemeProvider
-import com.michaelflisar.toolbox.app.features.theme.ThemeSetup
 import com.michaelflisar.toolbox.app.j.JApp
 import com.michaelflisar.toolbox.app.j.JRoot
-import com.michaelflisar.toolbox.app.platform.UpdateComposeThemeStatusBar
 import com.michaelflisar.toolbox.app.utils.createWindowExceptionHandlerFactory
 import com.michaelflisar.toolbox.utils.JvmUtil
 
