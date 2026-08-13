@@ -11,7 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 
 abstract class AndroidActivity : ComponentActivity() {
 
-    private val lastIntent = mutableStateOf<Intent?>(null)
+    val lastIntent = mutableStateOf<Intent?>(null)
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +25,8 @@ abstract class AndroidActivity : ComponentActivity() {
         setContent {
             Content()
         }
+
+        onIntent(intent)
     }
 
     @Composable
@@ -33,5 +35,8 @@ abstract class AndroidActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         lastIntent.value = intent
+        onIntent(intent)
     }
+
+    open fun onIntent(intent: Intent) {}
 }
