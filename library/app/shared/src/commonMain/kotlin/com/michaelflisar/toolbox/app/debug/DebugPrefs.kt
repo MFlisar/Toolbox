@@ -14,10 +14,6 @@ class DebugPrefs(storage: Storage) : SettingsModel(storage) {
     val forceIsProInDebug by boolPref(false)
     val showDebugDrawer by boolPref(false)
 
-    val showDebugOverlay by boolPref(true)
-    val visualDebug by boolPref(false)
-    val advancedLogs by boolPref(false)
-
     // DebugDrawer
     val debugDrawerExpandedIds by stringSetPref(emptySet())
     val showRegionInformations by boolPref(true)

@@ -26,14 +26,13 @@ import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogDefaults
 import com.michaelflisar.composedialogs.core.rememberDialogState
 import com.michaelflisar.parcelize.Parcelable
+import com.michaelflisar.toolbox.app.LocalAppTheme
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.LocalBackHandlerRegistry
 import com.michaelflisar.toolbox.app.features.device.BaseDevice
 import com.michaelflisar.toolbox.app.features.device.Current
 import com.michaelflisar.toolbox.app.features.device.Device
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.NavItem
-import com.michaelflisar.toolbox.app.features.toolbar.onToolbar
-import com.michaelflisar.toolbox.app.features.toolbar.toolbar
 import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.feature.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.MenuScope
@@ -194,13 +193,13 @@ interface INavScreen : Screen, Parcelable {
                                 }
                             }
                         },
-                        toolbarColor = MaterialTheme.colorScheme.toolbar,
+                        toolbarColor = LocalAppTheme.current.toolbarColor,
                         toolbarColorExpanded = MaterialTheme.colorScheme.background,
-                        toolbarContentColor = MaterialTheme.colorScheme.onToolbar,
+                        toolbarContentColor = LocalAppTheme.current.onToolbarColor,
                         toolbarContentColorExpanded = MaterialTheme.colorScheme.onBackground,
-                        toolbarActionColor = MaterialTheme.colorScheme.onToolbar,
+                        toolbarActionColor = LocalAppTheme.current.onToolbarColor,
                         toolbarActionColorExpanded = MaterialTheme.colorScheme.onBackground,
-                        iconColor = MaterialTheme.colorScheme.onToolbar,
+                        iconColor = LocalAppTheme.current.onToolbarColor,
                         applyContentPadding = false
                     )
                 }

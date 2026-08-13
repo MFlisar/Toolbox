@@ -4,16 +4,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.toolbox.MyTheme
-import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppSetup
+import com.michaelflisar.toolbox.app.AppTheme
+import com.michaelflisar.toolbox.app.LocalAppTheme
+import com.michaelflisar.toolbox.app.LocalComposeTheme
 import com.michaelflisar.toolbox.app.features.device.Current
 import com.michaelflisar.toolbox.app.features.device.Device
-import com.michaelflisar.toolbox.app.platform.UpdateComposeThemeStatusBar
 
 interface IThemeSetup {
 
@@ -89,19 +91,24 @@ object ThemeSetup {
 @Composable
 fun AppThemeProvider(
     theme: MyTheme,
+    composeTheme: ComposeTheme.State,
+    appThemeProvider: @Composable () -> AppTheme,
     content: @Composable () -> Unit,
 ) {
-    val composeThemeState = ThemeSetup.get().rememberComposeThemeDefault()
     ComposeTheme(
-        state = composeThemeState,
+        state = composeTheme,
         shapes = theme.shapes,
         typography = theme.typography
     ) {
-        MyTheme(
-            theme = theme
+        AppTheme(
+            composeTheme = composeTheme,
+            appThemeProvider = appThemeProvider
         ) {
-            Platform.UpdateComposeThemeStatusBar()
-            content()
+            MyTheme(
+                theme = theme
+            ) {
+                content()
+            }
         }
     }
 }

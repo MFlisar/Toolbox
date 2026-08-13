@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.Dp
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.ToolboxLogging
+import com.michaelflisar.toolbox.app.LocalAppTheme
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.RegisterBackHandler
 import com.michaelflisar.toolbox.app.platform.UpdateComposeThemeStatusBar
 import com.michaelflisar.toolbox.feature.selection.SelectionState
@@ -148,7 +149,9 @@ fun SelectionToolbar(
         SelectionToolbar.Style.Default -> {
             // StatusBar anpassen
             Platform.UpdateComposeThemeStatusBar(
-                statusBarColor = if (selection.visible) colors.containerColor else MaterialTheme.colorScheme.toolbar
+                statusBarColor = if (selection.visible) colors.containerColor else LocalAppTheme.current.toolbarColor,
+                navigationBarColor = LocalAppTheme.current.navigationBarColor,
+                isDark = LocalAppTheme.current.isDark
             )
             // TopAppBar
             AnimatedVisibility(

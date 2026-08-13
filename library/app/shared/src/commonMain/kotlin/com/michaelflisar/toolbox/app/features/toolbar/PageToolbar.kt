@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.toolbox.app.LocalAppTheme
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.LocalBackHandlerRegistry
 import com.michaelflisar.toolbox.app.features.navigation.findLocalByScreenOrThrow
 import com.michaelflisar.toolbox.app.features.navigation.lastNavItem
@@ -104,11 +105,11 @@ fun PageToolbar(
             endContent()
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = if (applyBackgroundColor) MaterialTheme.colorScheme.toolbar else Color.Transparent,
-            scrolledContainerColor = if (applyBackgroundColor) MaterialTheme.colorScheme.toolbar else Color.Transparent,
-            titleContentColor = MaterialTheme.colorScheme.onToolbar,
-            navigationIconContentColor = MaterialTheme.colorScheme.onToolbar,
-            actionIconContentColor = MaterialTheme.colorScheme.onToolbar,
+            containerColor = if (applyBackgroundColor) LocalAppTheme.current.toolbarColor else Color.Transparent,
+            scrolledContainerColor = if (applyBackgroundColor) LocalAppTheme.current.toolbarColor else Color.Transparent,
+            titleContentColor = LocalAppTheme.current.onToolbarColor,
+            navigationIconContentColor = LocalAppTheme.current.onToolbarColor,
+            actionIconContentColor = LocalAppTheme.current.onToolbarColor,
         )
     )
 }

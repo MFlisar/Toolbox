@@ -25,7 +25,7 @@ suspend fun main() {
         prefs = Prefs(storageSettings),
         debugPrefs = DebugPrefs(storageDebug),
         isDebugBuild = true, // TODO: how to detect in wasm?
-        fileLogger = null
+        fileLoggingSetup = null
     )
     val wasmSetup = WasmAppSetup()
     WasmApp.init(

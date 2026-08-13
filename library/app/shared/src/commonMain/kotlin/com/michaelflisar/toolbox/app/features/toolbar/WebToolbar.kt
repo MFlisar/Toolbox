@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.michaelflisar.toolbox.app.LocalAppTheme
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.LocalBackHandlerRegistry
 import com.michaelflisar.toolbox.app.features.menu.Menu
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
@@ -61,8 +62,8 @@ private fun WebToolbar(
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     // stellt sicher dass Prefs.toolbarStyle genutzt wird!
-    background: Color = MaterialTheme.colorScheme.toolbar,
-    onBackground: Color = MaterialTheme.colorScheme.onToolbar
+    background: Color = LocalAppTheme.current.toolbarColor,
+    onBackground: Color = LocalAppTheme.current.onToolbarColor
 ) {
     val navigator = LocalNavigator.currentOrThrow
     val currentNavScreen = navigator.lastNavItem

@@ -604,31 +604,6 @@ private fun PreferenceGroupScope.RegionAbout(
                 PreferenceSection(
                     title = "Developer Settings"
                 ) {
-                    PreferenceBool(
-                        value = debugPrefs.showDebugOverlay.asMutableStateNotNull(),
-                        style = PreferenceBool.Style.Checkbox,
-                        title = "Debug Overlay",
-                        icon = {
-                            Icon(
-                                Icons.Outlined.BugReport,
-                                contentDescription = null
-                            )
-                        }
-                    )
-                    PreferenceBool(
-                        value = debugPrefs.visualDebug.asMutableStateNotNull(),
-                        style = PreferenceBool.Style.Checkbox,
-                        title = "Visual Debug",
-                        icon = { Icon(Icons.Outlined.BugReport, contentDescription = null) }
-                    )
-
-                    PreferenceBool(
-                        value = debugPrefs.advancedLogs.asMutableStateNotNull(),
-                        style = PreferenceBool.Style.Checkbox,
-                        title = "Advanced Logs",
-                        icon = { Icon(Icons.Default.Description, contentDescription = null) }
-                    )
-
                     if (setup.debugDrawer != null) {
                         PreferenceBool(
                             value = debugPrefs.showDebugDrawer.asMutableStateNotNull(),

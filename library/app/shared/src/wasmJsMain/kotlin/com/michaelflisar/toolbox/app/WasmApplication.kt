@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import com.michaelflisar.toolbox.MyTheme
+import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.classes.WasmAppSetup
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
 import com.michaelflisar.toolbox.app.features.backhandler.WasmBackHandlerUtil
@@ -11,6 +12,8 @@ import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.root.Root
 import com.michaelflisar.toolbox.app.features.root.RootLocalProvider
 import com.michaelflisar.toolbox.app.features.theme.AppThemeProvider
+import com.michaelflisar.toolbox.app.features.theme.ThemeSetup
+import com.michaelflisar.toolbox.app.platform.UpdateComposeThemeStatusBar
 import kotlinx.browser.document
 
 @Composable
@@ -30,7 +33,12 @@ fun WasmApplication(
             document.getElementById(wasmSetup.divLoadingElementId)?.remove()
 
             val appState = rememberAppState()
-            AppThemeProvider(theme) {
+            val composeTheme = rememberComposeTheme()
+            AppThemeProvider(
+                theme = theme,
+                composeTheme = composeTheme,
+                appThemeProvider = { rememberAppTheme() },
+            ) {
                 RootLocalProvider(appState, setRootLocals = true) {
                     Root(
                         appState = appState,

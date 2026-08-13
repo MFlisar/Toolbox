@@ -15,6 +15,7 @@ import androidx.compose.ui.window.LocalWindowExceptionHandlerFactory
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import com.michaelflisar.toolbox.MyTheme
+import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.DesktopExitHandler
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
@@ -27,6 +28,7 @@ import com.michaelflisar.toolbox.app.features.theme.ThemeSetup
 import com.michaelflisar.toolbox.app.internal.JRBThemeSetup
 import com.michaelflisar.toolbox.app.jewel.JewelApp
 import com.michaelflisar.toolbox.app.jewel.JewelRoot
+import com.michaelflisar.toolbox.app.platform.UpdateComposeThemeStatusBar
 import com.michaelflisar.toolbox.app.utils.createWindowExceptionHandlerFactory
 import com.michaelflisar.toolbox.utils.JvmUtil
 import org.jetbrains.jewel.window.defaultTitleBarStyle
@@ -90,7 +92,12 @@ fun ApplicationScope.DesktopApplication(
                         screen = screen
                     ) { navigator ->
                         val appState = rememberAppState()
-                        AppThemeProvider(theme) {
+                        val composeThemeState = ThemeSetup.get().rememberComposeThemeDefault()
+                        AppThemeProvider(
+                            theme = theme,
+                            composeThemeState = composeThemeState,
+                            updateStatusBar = { Platform.UpdateComposeThemeStatusBar() }
+                        ) {
                             RootLocalProvider(appState, setRootLocals = true) {
                                 JvmBackHandlerUtil.ProvideMouseBackHandler()
                                 content(navigator)

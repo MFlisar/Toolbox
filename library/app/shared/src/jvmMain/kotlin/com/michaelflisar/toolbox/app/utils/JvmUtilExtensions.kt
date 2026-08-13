@@ -11,9 +11,7 @@ import kotlin.system.exitProcess
 @OptIn(ExperimentalComposeUiApi::class)
 fun JvmUtil.createWindowExceptionHandlerFactory() =
     WindowExceptionHandlerFactory { window ->
-        println("WINDOW HANDLER FACTORY")
         WindowExceptionHandler { exception ->
-            println("WINDOW HANDLER")
             JvmCrashDialog.showExceptionDialog(
                 title = "Exception",
                 throwable = exception,

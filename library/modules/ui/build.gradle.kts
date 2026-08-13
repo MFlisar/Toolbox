@@ -7,7 +7,7 @@ import com.michaelflisar.kmpdevtools.setupDependencies
 plugins {
     // kmp + app/library
     alias(libs.plugins.jetbrains.kotlin.multiplatform)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.library.kmp)
     // org.jetbrains.kotlin
     alias(libs.plugins.jetbrains.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.parcelize)

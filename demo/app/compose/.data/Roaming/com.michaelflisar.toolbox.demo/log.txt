@@ -945,3 +945,55 @@
 [D] 2026-08-03 11:07:41.483 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
 [D] 2026-08-03 11:07:41.517 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
 [I] 2026-08-03 11:07:44.162 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[D] 2026-08-13 09:48:25.028 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-08-13 09:48:25.065 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-08-13 09:48:27.813 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[D] 2026-08-13 09:51:46.695 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-08-13 09:51:46.725 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-08-13 09:51:49.304 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[I] 2026-08-13 09:52:43.794 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[D] 2026-08-13 09:54:06.675 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-08-13 09:54:06.824 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-08-13 09:54:06.989 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-08-13 09:54:07.155 [PageSelection.kt:150]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-08-13 09:54:07.327 [PageSelection.kt:150]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-08-13 09:54:18.509 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-08-13 09:54:18.682 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-08-13 09:54:18.847 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-08-13 09:54:19.004 [PageSelection.kt:150]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-08-13 09:54:19.169 [PageSelection.kt:150]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-08-13 09:54:19.334 [PageSelection.kt:150]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[D] 2026-08-13 09:56:54.577 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-08-13 09:56:54.613 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-08-13 09:56:57.221 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[D] 2026-08-13 10:00:17.430 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-08-13 10:00:17.461 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-08-13 10:00:20.039 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[I] 2026-08-13 10:00:27.975 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[D] 2026-08-13 10:09:13.611 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-08-13 10:09:13.646 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-08-13 10:09:15.701 [WindowState.kt:116]: Saving window state: {w=136, h=39, x=448, y=116, placement=Floating}
+[D] 2026-08-13 10:10:57.327 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-08-13 10:10:57.362 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-08-13 10:11:00.260 [WindowState.kt:116]: Saving window state: {w=136, h=39, x=448, y=116, placement=Floating}
+[I] 2026-08-13 10:11:12.611 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[I] 2026-08-13 10:11:13.987 [WindowState.kt:116]: Saving window state: {w=136, h=39, x=448, y=116, placement=Floating}
+[I] 2026-08-13 10:11:15.237 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[I] 2026-08-13 10:11:19.030 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=-8, y=-8, placement=Maximized}
+[I] 2026-08-13 10:11:24.931 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=-8, y=16, placement=Maximized}
+[I] 2026-08-13 10:11:26.747 [WindowState.kt:116]: Saving window state: {w=136, h=39, x=448, y=116, placement=Floating}
+[I] 2026-08-13 10:11:28.777 [WindowState.kt:116]: Saving window state: {w=136, h=329, x=448, y=116, placement=Floating}
+[I] 2026-08-13 10:11:29.999 [WindowState.kt:116]: Saving window state: {w=363, h=329, x=448, y=116, placement=Floating}
+[I] 2026-08-13 10:11:33.231 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=448, y=116, placement=Floating}
+[I] 2026-08-13 10:11:34.939 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=582, y=139, placement=Floating}
+[I] 2026-08-13 10:11:56.670 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[D] 2026-08-13 10:11:59.893 [PageSelection.kt:150]: add 0 | selected: [0]
+[D] 2026-08-13 10:12:00.072 [PageSelection.kt:150]: add 1 | selected: [0, 1]
+[D] 2026-08-13 10:12:00.223 [PageSelection.kt:150]: add 2 | selected: [0, 1, 2]
+[D] 2026-08-13 10:12:00.395 [PageSelection.kt:150]: add 3 | selected: [0, 1, 2, 3]
+[D] 2026-08-13 10:12:00.553 [PageSelection.kt:150]: add 4 | selected: [0, 1, 2, 3, 4]
+[D] 2026-08-13 10:12:00.688 [PageSelection.kt:150]: add 5 | selected: [0, 1, 2, 3, 4, 5]
+[I] 2026-08-13 10:12:07.678 [PageSettings.kt:97]: BackHandlerRegistry - PreferenceState handles back press
+[D] 2026-08-13 10:14:41.126 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-08-13 10:14:41.160 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-08-13 10:14:43.886 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=582, y=139, placement=Floating}

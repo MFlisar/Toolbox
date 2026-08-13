@@ -30,7 +30,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.IconComposable
-import com.michaelflisar.toolbox.app.features.toolbar.onToolbar
+import com.michaelflisar.toolbox.app.LocalAppTheme
 import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 
@@ -136,7 +136,7 @@ private fun ToolbarButton(
                         //fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal
                     )
                 }
-                val color by animateColorAsState(if (selected) MaterialTheme.colorScheme.onToolbar else Color.Transparent)
+                val color by animateColorAsState(if (selected) LocalAppTheme.current.onToolbarColor else Color.Transparent)
                 Spacer(
                     modifier = Modifier.width(width.value).height(1.dp)
                         .background(color)

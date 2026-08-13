@@ -50,7 +50,8 @@ ksp =                                               { id = "com.google.devtools.
 
 # android
 android-application = 			                    { id = "com.android.application", 	                version.ref = "gradle" }
-android-library = 			                        { id = "com.android.kotlin.multiplatform.library", 	version.ref = "gradle" }
+android-library = 			                        { id = "com.android.library", 	                    version.ref = "gradle" }
+android-library-kmp = 			                    { id = "com.android.kotlin.multiplatform.library", 	version.ref = "gradle" }
 
 # org.jetbrains.kotlin
 jetbrains-kotlin-android = 				            { id = "org.jetbrains.kotlin.android", 			    version.ref = "kotlin" }
