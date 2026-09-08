@@ -16,6 +16,7 @@ import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
 import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.acra.AcraManager
+import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigator
 import com.michaelflisar.toolbox.app.features.root.Root
@@ -64,6 +65,7 @@ fun ComponentActivity.AndroidApplication(
     composeTheme: ComposeTheme.State = rememberComposeTheme(),
     appThemeProvider: @Composable () -> AppTheme = { rememberAppTheme() },
     theme: MyTheme = MyTheme.default(),
+    appState: AppState = rememberAppState(),
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
@@ -71,7 +73,6 @@ fun ComponentActivity.AndroidApplication(
         AppNavigator(
             screen = screen
         ) { navigator ->
-            val appState = rememberAppState()
             AppThemeProvider(
                 theme = theme,
                 composeTheme = composeTheme,

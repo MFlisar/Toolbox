@@ -1,9 +1,9 @@
 [versions]
 
 # Google
-google-ads =	                "25.3.0"
+google-ads =	                "25.4.0"
 google-ump =	                "4.0.0"
-google-guava =					"33.6.0-android"
+google-guava =					"33.7.1-android"
 
 # Windows UI
 jewel =                         "0.35.0-261.23567.198" # 0.37 uses already java 25
@@ -12,22 +12,22 @@ intellij-platform =             "251.23774.444"
 
 # Compose
 compose-icons = 		        "1.1.1"
-voyager = 				        "1.1.0-beta03"
+voyager = 				        "2.2.21-1.10.3"
 #composables =                   "1.49.6"
 
 # Others
-openiap =                       "2.3.1"
+openiap =                       "3.5.0"
 stately =                       "2.1.0"
 acra =		        		    "5.13.1"
 processphoenix = 			    "3.0.0"
 htmlconverter =                 "1.1.1"
-filekit =                       "0.14.1"
+filekit =                       "0.16.0"
 accompanist = 			        "0.37.3"
 csv =                           "1.14.1"
-ktor =                          "3.5.0"
-coil =						    "3.4.0"
+ktor =                          "3.5.2"
+coil =						    "3.6.2"
 coil-transform =			    "3.0.0"
-basic-ads =                     "1.1.1"
+basic-ads =                     "1.2.1"
 poi =                           "5.5.1"
 
 [plugins]
@@ -69,7 +69,10 @@ voyager-screenmodel = 		                    { module = "cafe.adriel.voyager:voya
 #composables-core =                              { module = "com.composables:core", 		                                	        version.ref = "composables" }
 
 # Others
-openiap =                                       { module = "io.github.hyochan:kmp-iap", 									        version.ref = "openiap" }
+openiap =                                       { module = "io.github.hyochan:kmp-iap", 								            version.ref = "openiap" }
+openiap-android =                               { module = "io.github.hyochan:kmp-iap-android-play", 								version.ref = "openiap" }
+openiap-iosarm64 =                              { module = "io.github.hyochan:kmp-iap-iosarm64", 								    version.ref = "openiap" }
+openiap-iossimulatorarm64 =                     { module = "io.github.hyochan:kmp-iap-iossimulatorarm64", 						    version.ref = "openiap" }
 stately =                                       { module = "co.touchlab:stately-concurrency", 		                                version.ref = "stately" }
 acra-core =			                			{ module = "ch.acra:acra-core", 									    			version.ref = "acra" }
 acra-mail =			            			    { module = "ch.acra:acra-mail", 									    			version.ref = "acra" }

@@ -90,11 +90,28 @@ kotlin {
             implementation(mflisar.composedialogs.core)
             implementation(mflisar.composedialogs.dialog.info)
 
-            implementation(deps.openiap)
+            //implementation("io.github.hyochan:kmp-iap:3.5.0")
+            //implementation(deps.openiap)
 
             // Library
             api(project(":toolbox:core"))
 
+        }
+
+        androidMain.dependencies {
+            // we must select an implementation on android only (amazon, google play, ...)
+            //implementation("io.github.hyochan:kmp-iap-android-play:3.5.0")
+            implementation(deps.openiap.android)
+        }
+
+        iosArm64Main.dependencies {
+            //implementation("io.github.hyochan:kmp-iap-iosarm64:3.5.0")
+            //implementation(deps.openiap.iosarm64)
+        }
+
+        iosSimulatorArm64Main.dependencies {
+            //implementation("io.github.hyochan:kmp-iap-iossimulatorarm64:3.5.0")
+            //implementation(deps.openiap.iossimulatorarm64)
         }
     }
 }
