@@ -997,3 +997,9 @@
 [D] 2026-08-13 10:14:41.126 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
 [D] 2026-08-13 10:14:41.160 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
 [I] 2026-08-13 10:14:43.886 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=582, y=139, placement=Floating}
+[D] 2026-09-08 15:17:30.639 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-09-08 15:17:30.673 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-09-08 15:17:33.918 [WindowState.kt:116]: Saving window state: {w=1024, h=800, x=582, y=139, placement=Floating}
+[I] 2026-09-08 15:17:45.609 [DebugDrawer.kt:93]: BackHandlerRegistry - DebugDrawer handles back press
+[I] 2026-09-08 15:17:45.609 [BackHandlerRegistry.kt:103]: AppNavigator::BackHandler handled by BackHandlerRegistry
+[I] 2026-09-08 15:17:50.870 [BackHandlerRegistry.kt:106]: AppNavigator::BackHandler forwarded to navigator.pop()
