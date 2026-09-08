@@ -5,7 +5,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.input.key.KeyEvent
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.app.AppSetup
@@ -14,8 +13,8 @@ import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.DesktopLocalProvider
 import com.michaelflisar.toolbox.app.features.appstate.DesktopAppState
 import com.michaelflisar.toolbox.app.features.filekit.LocalFileKitDialogSettingsState
+import io.github.vinceglb.filekit.dialogs.FileKitDialogParent
 import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
-import kotlinx.coroutines.launch
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.window.DecoratedWindow
 import org.jetbrains.jewel.window.DecoratedWindowScope
@@ -64,7 +63,7 @@ internal fun JewelRoot(
                 CompositionLocalProvider(
                     LocalDecoratedWindowScope provides this,
                     LocalComposeWindow provides this.window,
-                    LocalFileKitDialogSettingsState provides FileKitDialogSettings(parentWindow = window),
+                    LocalFileKitDialogSettingsState provides FileKitDialogSettings(parent = FileKitDialogParent.awt(window)),
                 ) {
                     content()
                 }

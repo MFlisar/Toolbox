@@ -5,8 +5,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.window.FrameWindowScope
 import androidx.compose.ui.window.Window
@@ -19,7 +17,6 @@ import com.michaelflisar.toolbox.app.features.appstate.DesktopAppState
 import com.michaelflisar.toolbox.app.features.filekit.LocalFileKitDialogSettingsState
 import io.github.vinceglb.filekit.dialogs.FileKitDialogParent
 import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
-import kotlinx.coroutines.launch
 
 internal val LocalFrameWindowScope =
     compositionLocalOf<FrameWindowScope> { throw RuntimeException("FrameWindowScope not initialised!") }
