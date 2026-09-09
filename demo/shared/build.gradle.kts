@@ -92,6 +92,12 @@ kotlin {
     buildTargets.setupTargetsLibrary(module)
     android {
         buildTargets.setupTargetsAndroidLibrary(module, androidConfig, this)
+
+        //localDependencySelection {
+        //    productFlavorDimension("platform") {
+        //        selectFrom.set(listOf("play"))
+        //    }
+        //}
     }
 
     // -------

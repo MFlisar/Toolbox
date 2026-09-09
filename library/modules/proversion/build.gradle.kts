@@ -59,6 +59,12 @@ kotlin {
     buildTargets.setupTargetsLibrary(module)
     android {
         buildTargets.setupTargetsAndroidLibrary(module, androidConfig, this)
+
+        //localDependencySelection {
+        //    productFlavorDimension("platform") {
+        //        selectFrom.set(listOf("play"))
+        //    }
+        //}
     }
 
     // -------
@@ -90,14 +96,19 @@ kotlin {
             implementation(mflisar.composedialogs.core)
             implementation(mflisar.composedialogs.dialog.info)
 
-            //implementation("io.github.hyochan:kmp-iap:3.5.0")
+            implementation("io.github.hyochan:kmp-iap:3.5.0") {
+                attributes {
+                    attribute(
+                        Attribute.of("platform", String::class.java), "play")
+                }
+            }
             //implementation(deps.openiap)
 
             // Library
             api(project(":toolbox:core"))
 
         }
-
+/*
         androidMain.dependencies {
             // we must select an implementation on android only (amazon, google play, ...)
             //implementation("io.github.hyochan:kmp-iap-android-play:3.5.0")
@@ -113,6 +124,7 @@ kotlin {
             //implementation("io.github.hyochan:kmp-iap-iossimulatorarm64:3.5.0")
             implementation(deps.openiap.iossimulatorarm64)
         }
+ */
     }
 }
 

@@ -1,46 +1,46 @@
 [versions]
 
-gradle = 				                "9.2.1"
-kotlin = 				                "2.4.0"
+gradle = 				                "9.4.0"
+kotlin = 				                "2.4.20"
 ksp = 				                    "2.3.6"
 
 # github release (dokka + maven + binary compatibility)
 dokka =                                 "2.2.0"
-vanniktech-maven-publish =              "0.36.0"
-binary-compatibility-validator =        "0.18.1"
+vanniktech-maven-publish =              "0.37.0"
+binary-compatibility-validator =        "0.18.2"
 
 # org.jetbrains.compose
-jetbrains-compose =                     "1.11.1"
+jetbrains-compose =                     "1.12.0"
 jetbrains-compose-material3 =           "1.9.0"
 jetbrains-compose-material3-adaptive =  "1.2.0"
 jetbrains-compose-icons =               "1.7.3"
-jetbrains-compose-hot-reload =          "1.1.1"
+jetbrains-compose-hot-reload =          "1.2.0"
 
 # org.jetbrains.androidx
-jetbrains-androidx-lifecycle =          "2.10.0"
+jetbrains-androidx-lifecycle =          "2.11.0"
 
 # androidx
-androidx-core =                         "1.18.0" # 1.19.0 needs compile sdk 37 (which is still in beta)
+androidx-core =                         "1.19.0"
 androidx-activity =                     "1.13.0"
 androidx-startup =                      "1.2.0"
 androidx-datastore-preferences =        "1.2.1"
 androidx-browser =                      "1.10.0"
 androidx-work =          		        "2.11.2"
 androidx-room =      			        "2.8.4"
-androidx-sqlite =      			        "2.6.2"
-androidx-lifecycle = 	                "2.10.0"
+androidx-sqlite =      			        "2.7.0"
+androidx-lifecycle = 	                "2.11.0"
 
 # org.jetbrains.kotlinx
 jetbrains-kotlinx-coroutines =          "1.11.0"
 jetbrains-kotlinx-serialization = 	    "1.11.0"
 jetbrains-kotlinx-datetime =            "0.8.0"
-jetbrains-kotlinx-io-core =             "0.9.0"
+jetbrains-kotlinx-io-core =             "0.9.1"
 jetbrains-kotlinx-browser =             "0.5.0"
 jetbrains-kotlinx-atomicfu =            "0.33.0"
 
 # others
 desugar =                               "2.1.5"
-buildkonfig =                           "0.21.2"
+buildkonfig =                           "0.22.0"
 easylauncher = 					        "6.4.1"
 launch4j =                              "4.0.0"
 

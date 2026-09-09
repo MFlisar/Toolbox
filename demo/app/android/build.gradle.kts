@@ -47,6 +47,10 @@ android {
         checkDebugKeyStoreProperty = true,
         setupBuildTypesDebugAndRelease = true
     )
+
+    //defaultConfig {
+    //    missingDimensionStrategy("platform", "play")
+    //}
 }
 
 dependencies {

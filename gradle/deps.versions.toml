@@ -16,7 +16,7 @@ voyager = 				        "2.2.21-1.10.3"
 #composables =                   "1.49.6"
 
 # Others
-openiap =                       "3.5.0"
+openiap =                       "3.5.0" # geht ab 2.4.0 nicht mehr in common main
 stately =                       "2.1.0"
 acra =		        		    "5.13.1"
 processphoenix = 			    "3.0.0"
