@@ -50,6 +50,8 @@ val androidConfig = AndroidLibraryConfig.create(
 // Kotlin
 // ------------------------
 
+val KMP_IAP_VERSION = "3.5.0"
+
 kotlin {
 
     //-------------
@@ -97,7 +99,7 @@ kotlin {
             implementation(mflisar.composedialogs.dialog.info)
 
             commonMain.dependencies {
-                implementation("io.github.hyochan:kmp-iap:3.5.0") {
+                implementation("io.github.hyochan:kmp-iap:${KMP_IAP_VERSION}") {
                     attributes {
                         attribute(
                             Attribute.of(
@@ -114,6 +116,10 @@ kotlin {
             // Library
             api(project(":toolbox:core"))
 
+        }
+
+        androidMain.dependencies {
+            implementation("io.github.hyochan.openiap:openiap-google:${KMP_IAP_VERSION}")
         }
 /*
         androidMain.dependencies {
