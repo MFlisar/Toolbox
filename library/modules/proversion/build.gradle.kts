@@ -96,10 +96,17 @@ kotlin {
             implementation(mflisar.composedialogs.core)
             implementation(mflisar.composedialogs.dialog.info)
 
-            implementation("io.github.hyochan:kmp-iap:3.5.0") {
-                attributes {
-                    attribute(
-                        Attribute.of("platform", String::class.java), "play")
+            commonMain.dependencies {
+                implementation("io.github.hyochan:kmp-iap:3.5.0") {
+                    attributes {
+                        attribute(
+                            Attribute.of(
+                                "com.android.build.api.attributes.ProductFlavor:platform",
+                                String::class.java
+                            ),
+                            "play"
+                        )
+                    }
                 }
             }
             //implementation(deps.openiap)
