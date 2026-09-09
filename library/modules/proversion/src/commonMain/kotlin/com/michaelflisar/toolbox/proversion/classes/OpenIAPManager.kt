@@ -43,8 +43,6 @@ internal class OpenIAPManager(
             // Initialize IAP connection
             kmpIAP.initConnection()
 
-            kmpIAP.ena
-
             // Produkte laden
             refreshData()
 
