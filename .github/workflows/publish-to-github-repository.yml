@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   publish:
-    uses: MFlisar/kmp-devtools/.github/workflows/publish-to-github-repository.yml@8.4.1
+    uses: MFlisar/kmp-devtools/.github/workflows/publish-to-github-repository.yml@8.4.2
 
     with:
       version: ${{ inputs.version || github.event.release.tag_name }}
