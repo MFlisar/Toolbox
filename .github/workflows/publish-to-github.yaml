@@ -3,13 +3,28 @@ name: Publish Module to GitHub
 on:
   workflow_dispatch:
     inputs:
-      artifact:
-        description: Artifact to publish
-        type: choice
+      modulePath:
+        description: Module path
         required: true
+        type: choice
         options:
-          - form
-          - task-viewer
+          - library/core
+          - library/modules/ui
+          - library/modules/ui-adaptive
+          - library/modules/zip
+          - library/modules/csv
+          - library/modules/backup
+          - library/modules/service
+          - library/modules/form
+          - library/modules/powershell
+          - library/modules/table
+          - library/modules/room
+          - library/modules/ads
+          - library/modules/proversion
+          - library/modules/diff
+          - library/modules/excel
+          - library/modules/coil
+          - library/modules/task-viewer
 
       version:
         description: Version
@@ -41,30 +56,55 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      - name: Compute paths
+        id: module
+        run: |
+          MODULE_PATH="${{ inputs.modulePath }}"
+
+          MODULE_NAME=$(basename "$MODULE_PATH")
+          GRADLE_PATH=":${MODULE_PATH//\//:}"
+
+          # library/core -> library
+          LIBRARY_FOLDER=$(echo "$MODULE_PATH" | cut -d/ -f1)
+
+          # library -> toolbox
+          case "$LIBRARY_FOLDER" in
+            library)
+              REPOSITORY_NAME="toolbox"
+              MAVEN_FOLDER="Toolbox"
+              ;;
+            *)
+              echo "Unknown library folder: $LIBRARY_FOLDER"
+              exit 1
+              ;;
+          esac
+
+          echo "module_name=$MODULE_NAME" >> $GITHUB_OUTPUT
+          echo "gradle_path=$GRADLE_PATH" >> $GITHUB_OUTPUT
+          echo "repository_name=$REPOSITORY_NAME" >> $GITHUB_OUTPUT
+          echo "maven_folder=$MAVEN_FOLDER" >> $GITHUB_OUTPUT
+
       - name: Check version does not exist
         run: |
-          if [ -d "mavenRepo/Toolbox/io/github/mflisar/toolbox/${{ inputs.artifact }}/${{ inputs.version }}" ]; then
+          if [ -d "mavenRepo/${{ steps.module.outputs.maven_folder }}/io/github/mflisar/${{ steps.module.outputs.repository_name }}/${{ steps.module.outputs.module_name }}/${{ inputs.version }}" ]; then
             echo "Version already exists"
             exit 1
           fi
 
       - name: Publish
         run: |
-          ./gradlew :toolbox:modules:${{ inputs.artifact }}:publishAllPublicationsToLocalMavenRepoRepository
+          ./gradlew \
+            ${{ steps.module.outputs.gradle_path }}:publishAllPublicationsToLocalMavenRepoRepository
         env:
           VERSION: ${{ inputs.version }}
 
-      - name: Inspect task-viewer build
-        run: |
-          find toolbox/modules/task-viewer/build -type f | head -200
-
       - name: Copy artifacts
         run: |
-          mkdir -p mavenRepo/Toolbox
+          mkdir -p mavenRepo/${{ steps.module.outputs.maven_folder }}
 
           cp -R \
-            toolbox/modules/${{ inputs.artifact }}/build/maven-repo/* \
-            mavenRepo/Toolbox/
+            ${{ inputs.modulePath }}/build/maven-repo/* \
+            mavenRepo/${{ steps.module.outputs.maven_folder }}/
 
       - name: Commit and Push
         run: |
@@ -80,5 +120,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Publish ${{ inputs.artifact }} ${{ inputs.version }}"
+          git commit -m "Publish ${{ steps.module.outputs.module_name }} ${{ inputs.version }}"
           git push
