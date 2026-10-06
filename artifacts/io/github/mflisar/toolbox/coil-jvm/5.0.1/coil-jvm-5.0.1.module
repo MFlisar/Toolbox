@@ -1,0 +1,144 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../coil/5.0.1/coil-5.0.1.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "coil",
+    "version": "5.0.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.coil-kt.coil3",
+          "module": "coil-core",
+          "version": {
+            "requires": "3.6.2"
+          }
+        },
+        {
+          "group": "io.coil-kt.coil3",
+          "module": "coil-compose",
+          "version": {
+            "requires": "3.6.2"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "5.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coil-jvm.jar",
+          "url": "coil-jvm-5.0.1.jar",
+          "size": 47364,
+          "sha512": "82d4b58bad08755f8bd3dbeae91b8b7c96cce53816d6e1fb0b4bbe4abe1c9d192bfce7d14d172bccda01d3308ff162fa44a2ddfeed3d84e28d74450d4ead072d",
+          "sha256": "f59c7059b3333c33ae2bc41adc7ab75a9bd97c1193209185b649174b4668cce0",
+          "sha1": "10ba6441b55b6c5a9076a60676e175202baaf05d",
+          "md5": "1d756884ea179386cab8157dd7d765a6"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.coil-kt.coil3",
+          "module": "coil-core",
+          "version": {
+            "requires": "3.6.2"
+          }
+        },
+        {
+          "group": "io.coil-kt.coil3",
+          "module": "coil-compose",
+          "version": {
+            "requires": "3.6.2"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "5.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coil-jvm.jar",
+          "url": "coil-jvm-5.0.1.jar",
+          "size": 47364,
+          "sha512": "82d4b58bad08755f8bd3dbeae91b8b7c96cce53816d6e1fb0b4bbe4abe1c9d192bfce7d14d172bccda01d3308ff162fa44a2ddfeed3d84e28d74450d4ead072d",
+          "sha256": "f59c7059b3333c33ae2bc41adc7ab75a9bd97c1193209185b649174b4668cce0",
+          "sha1": "10ba6441b55b6c5a9076a60676e175202baaf05d",
+          "md5": "1d756884ea179386cab8157dd7d765a6"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "coil-jvm-sources.jar",
+          "url": "coil-jvm-5.0.1-sources.jar",
+          "size": 8323,
+          "sha512": "38d7b64dc1f489bed17f2f3f86f14ff94916f84258132670f48f7aefd578709b832e0c5c01b8790846d3d97bb8dc418a5fb1a30d0c8438cfa96a4faf65536d26",
+          "sha256": "1629baa8ec230e65d6a05d4f24a8eb0fec2e99ed247813a40ce1172d369d2164",
+          "sha1": "81efcc244f1af3e35f0a848dcde96c590edd93a5",
+          "md5": "4899fd1655fbed3369e73336f868a8d8"
+        }
+      ]
+    }
+  ]
+}

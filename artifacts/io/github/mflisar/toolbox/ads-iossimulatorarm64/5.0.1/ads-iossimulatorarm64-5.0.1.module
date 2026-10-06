@@ -1,0 +1,218 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../ads/5.0.1/ads-5.0.1.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "ads",
+    "version": "5.0.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "5.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "app.lexilabs.basic",
+          "module": "basic-ads",
+          "version": {
+            "requires": "1.2.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ads-iosSimulatorArm64Main.klib",
+          "url": "ads-iossimulatorarm64-5.0.1.klib",
+          "size": 25386,
+          "sha512": "3a45986cd7d297e5ed91b35529176aabf9932345d1c48c56bc66423376ebfcabd1172faeeaef2c93fd4c48fb228a4b43e4f4b58689ed955da61d6dfc88eb6865",
+          "sha256": "27dfd5220d66be6e16191aa6e5525fd83c488b607f34b38d703563cb54694e62",
+          "sha1": "4b65ced8b59f9c94a974d9d305c24b7af8c98eff",
+          "md5": "20c63782c887b92c33c138c0292e2100"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "files": [
+        {
+          "name": "ads-iossimulatorarm64-sources.jar",
+          "url": "ads-iossimulatorarm64-5.0.1-sources.jar",
+          "size": 4591,
+          "sha512": "04222230ec681454e41551b45270d531230e36071ed2024c97099a3970ca9a4b5ab5517c83b014a0b61d565d0a78cddb57bdbad12532af02d34d14d4d953f30e",
+          "sha256": "e4c43adc7f29b489f81a304a5c4280cd81feb8a67e2ac2bb361fdd5f45f2338a",
+          "sha1": "275b22e4d0e3d60c24f79603da063d2b828af2d8",
+          "md5": "f4a980b041037a83ebadb2f1d23fb900"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "5.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "app.lexilabs.basic",
+          "module": "basic-ads",
+          "version": {
+            "requires": "1.2.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ads.kotlin_resources.zip",
+          "url": "ads-iossimulatorarm64-5.0.1-kotlin_resources.kotlin_resources.zip",
+          "size": 342,
+          "sha512": "8f64177846b95a179d7f4df3f8091e79397dd01f550127be930781f645a19c757a6b205ef196019edf1da215c9cff296694c31de26238e648771eadce71222a1",
+          "sha256": "ed86045e7f8dcba971dc15aa4df317501e3edef2d5edd30dfcacdca8194f5d8c",
+          "sha1": "8978d1094535936e78946a2ee7a5c5ce23278380",
+          "md5": "2f64c4e3427a35e31c995216a1379568"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "5.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "app.lexilabs.basic",
+          "module": "basic-ads",
+          "version": {
+            "requires": "1.2.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ads-iossimulatorarm64-metadata.jar",
+          "url": "ads-iossimulatorarm64-5.0.1-metadata.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}
