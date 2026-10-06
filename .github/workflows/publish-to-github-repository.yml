@@ -20,5 +20,5 @@ jobs:
     uses: MFlisar/kmp-devtools/.github/workflows/publish-to-github-repository.yml@8.5.0
 
     with:
-      version: ${{ inputs.version }}
+      version: ${{ inputs.version || github.event.release.tag_name }}
       artifactsBranch: published-artifacts
