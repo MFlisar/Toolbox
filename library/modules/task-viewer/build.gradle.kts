@@ -116,7 +116,7 @@ kotlin {
 // task name: publishAllPublicationsToLocalMavenRepoRepository
 setupLocalMavenPublish(
     libraryModuleConfig = module,
-    version = "0.0.1"
+    version = System.getenv("VERSION") ?: "LOCAL-SNAPSHOT"
 )
 
 fun setupLocalMavenPublish(

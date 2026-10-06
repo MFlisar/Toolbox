@@ -4,12 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       artifact:
-        description: Artifact
-        required: true
+        description: Artifact to publish
         type: choice
+        required: true
         options:
           - form
           - task-viewer
+
+      version:
+        description: Version
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -22,6 +27,13 @@ jobs:
       - name: Checkout Library
         uses: actions/checkout@v4
 
+      - name: Checkout MavenRepo
+        uses: actions/checkout@v4
+        with:
+          repository: MFlisar/MavenRepo
+          token: ${{ secrets.MFLISAR_MAVEN_REPO_TOKEN }}
+          path: mavenRepo
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -29,16 +41,22 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      - name: Check version does not exist
+        run: |
+          if [ -d "mavenRepo/Toolbox/io/github/mflisar/toolbox/${{ inputs.artifact }}/${{ inputs.version }}" ]; then
+            echo "Version already exists"
+            exit 1
+          fi
+
       - name: Publish
         run: |
           ./gradlew :toolbox:modules:${{ inputs.artifact }}:publishAllPublicationsToLocalMavenRepoRepository
+        env:
+          VERSION: ${{ inputs.version }}
 
-      - name: Checkout MavenRepo
-        uses: actions/checkout@v4
-        with:
-          repository: MFlisar/MavenRepo
-          token: ${{ secrets.MFLISAR_MAVEN_REPO_TOKEN }}
-          path: mavenRepo
+      - name: Inspect task-viewer build
+        run: |
+          find toolbox/modules/task-viewer/build -type f | head -200
 
       - name: Copy artifacts
         run: |
@@ -52,8 +70,8 @@ jobs:
         run: |
           cd mavenRepo
 
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
           git add .
 
@@ -62,5 +80,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Publish ${{ inputs.artifact }}"
+          git commit -m "Publish ${{ inputs.artifact }} ${{ inputs.version }}"
           git push
