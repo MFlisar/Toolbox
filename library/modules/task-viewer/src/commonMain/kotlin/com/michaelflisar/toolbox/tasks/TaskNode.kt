@@ -1,5 +1,7 @@
 package com.michaelflisar.toolbox.tasks
 
+import kotlin.time.Clock
+
 data class TaskNode(
     val id: String,
     val title: String,
@@ -8,6 +10,8 @@ data class TaskNode(
     val children: List<TaskNode> = emptyList(),
     val messages: List<TaskMessage> = emptyList(),
     val expanded: Boolean = true,
+    val startedAt: Long = Clock.System.now().toEpochMilliseconds(),
+    val finishedAt: Long? = null,
 ) {
     val isFinished: Boolean
         get() = status != TaskStatus.Running
@@ -23,5 +27,8 @@ data class TaskNode(
 
     val totalEntries: Int
         get() = 1 + messages.size + children.sumOf { it.totalEntries }
+
+    val durationMs: Long
+        get() = (finishedAt ?: Clock.System.now().toEpochMilliseconds()) - startedAt
 }
 

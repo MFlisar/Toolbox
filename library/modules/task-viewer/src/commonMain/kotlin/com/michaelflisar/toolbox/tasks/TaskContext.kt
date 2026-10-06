@@ -1,5 +1,6 @@
 package com.michaelflisar.toolbox.tasks
 
+import kotlin.time.Clock
 import kotlin.uuid.Uuid
 
 class TaskContext internal constructor(
@@ -64,29 +65,19 @@ class TaskContext internal constructor(
         )
     }
 
-    private fun endWithSuccess(
-        collapseIfLeaf: Boolean = true,
-    ) {
-        reporter.updateTask(taskId) {
-            copy(
-                status = TaskStatus.Success,
-                expanded = if (collapseIfLeaf && children.isEmpty()) {
-                    false
-                } else {
-                    expanded
-                }
-            )
-        }
-    }
-
     private fun endWithState(
-        status: TaskStatus.Finished,
+        status: TaskStatus,
         collapseIfLeaf: Boolean = true,
     ) {
         reporter.updateTask(taskId) {
             copy(
                 status = status,
                 expanded = when {
+                    status is TaskStatus.Success -> if (collapseIfLeaf && children.isEmpty()) {
+                        false
+                    } else {
+                        expanded
+                    }
                     status is TaskStatus.Error -> reporter.config.autoExpandError
                     status is TaskStatus.Warning -> reporter.config.autoExpandWarning
                     collapseIfLeaf && children.isEmpty() -> false
@@ -96,7 +87,8 @@ class TaskContext internal constructor(
                     is TaskStatus.Error -> status.exception.message ?: "Task failed with error"
                     is TaskStatus.Warning -> status.message ?: "Task finished with warning"
                     else -> subtitle
-                }
+                },
+                finishedAt = Clock.System.now().toEpochMilliseconds(),
             )
         }
     }
@@ -106,7 +98,7 @@ class TaskContext internal constructor(
     ) {
         try {
             block()
-            endWithSuccess()
+            endWithState(TaskStatus.Success)
         } catch (e: TaskAbort.Warning) {
             endWithState(TaskStatus.Warning(e.message))
         } catch (e: TaskAbort.Error) {

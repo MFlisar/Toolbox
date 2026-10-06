@@ -10,7 +10,8 @@ import kotlinx.datetime.daysUntil
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
-import kotlin.text.toLong
+import kotlin.math.pow
+import kotlin.math.roundToInt
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -20,11 +21,27 @@ object TimeUtil {
     fun parseMillis(millis: Long): LocalDateTime =
         Instant.fromEpochMilliseconds(millis).toLocalDateTime(TimeZone.currentSystemDefault())
 
-    fun getTimeString(millis: Long): String {
+    /**
+     * @param millis The time in milliseconds
+     * @param subMinuteFractionDigits The number of fraction digits to show for times below 1 minute
+     */
+    fun getTimeString(
+        millis: Long,
+        subMinuteFractionDigits: Int = 0,
+    ): String {
+
+        if (millis < 60_000 && subMinuteFractionDigits > 0) {
+            val factor = 10.0.pow(subMinuteFractionDigits)
+            val value = (millis * factor / 1000.0).roundToInt() / factor
+
+            return value.toString() + "s"
+        }
 
         val totalSeconds = millis / 1000L
 
-        //val duration = millis.toDuration(DurationUnit.MILLISECONDS)
+        if (totalSeconds == 0L) {
+            return "0s"
+        }
 
         val seconds = totalSeconds % 60L
         val minutes = (totalSeconds / 60L) % 60L
@@ -35,6 +52,7 @@ object TimeUtil {
         val units = listOf("d", "h", "m", "s")
 
         val info = ArrayList<String>()
+
         for (i in parts.indices) {
             if (parts[i] != 0L && info.isEmpty()) {
                 info += parts[i].toString() + units[i]

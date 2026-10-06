@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyTextButton
 import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.utils.TimeUtil
 
 private val EXPAND_ICON_SIZE = 18.dp
 private val STATUS_ICON_SIZE = 18.dp
@@ -63,6 +64,7 @@ data class TaskViewerConfig(
     val colorWarning: Color,
     val colorError: Color,
     val autoScrollToBottom: Boolean,
+    val showTaskTimes: Boolean
 )
 
 @Composable
@@ -71,13 +73,15 @@ fun rememberTaskViewerConfig(
     colorWarning: Color = Color(0xFFFFC107),
     colorError: Color = Color(0xFFF44336),
     autoScrollToBottom: Boolean = true,
+    showTaskTimes: Boolean = true
 ): TaskViewerConfig {
-    return remember(colorSuccess, colorWarning, colorError) {
+    return remember(colorSuccess, colorWarning, colorError, autoScrollToBottom, showTaskTimes) {
         TaskViewerConfig(
             colorSuccess = colorSuccess,
             colorWarning = colorWarning,
             colorError = colorError,
-            autoScrollToBottom = autoScrollToBottom
+            autoScrollToBottom = autoScrollToBottom,
+            showTaskTimes = showTaskTimes
         )
     }
 }
@@ -243,6 +247,18 @@ private fun TaskItem(
                     }
                 }
 
+                Spacer(Modifier.width(ICON_SPACING))
+
+                if (viewerConfig.showTaskTimes) {
+                    Text(
+                        text = TimeUtil.getTimeString(
+                            task.durationMs,
+                            subMinuteFractionDigits = if (task.isFinished) 1 else 0
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = LocalContentColor.current.copy(alpha = .6f)
+                    )
+                }
             }
         }
 
