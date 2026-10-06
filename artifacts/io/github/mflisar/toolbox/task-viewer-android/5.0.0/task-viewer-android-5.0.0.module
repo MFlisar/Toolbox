@@ -1,0 +1,179 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../task-viewer/5.0.0/task-viewer-5.0.0.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "task-viewer",
+    "version": "5.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "5.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "5.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-info",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "task-viewer.aar",
+          "url": "task-viewer-android-5.0.0.aar",
+          "size": 69454,
+          "sha512": "31a040b5512c76bd55a0d31e82c02675de75db7956f40c53495189760e80fa85a5e795f3def3b0e529a8fc1c174e386a3cab128f1ef84761cf7d2600b67c86e4",
+          "sha256": "43cc18042271a63901f07a4a21fd13aec9a530317ba94e13a2e974bfc210d8fa",
+          "sha1": "768a856282bf9e99688e1e2ee7c94584218dd627",
+          "md5": "75fc6242cc7409102e3a051e1c76d0f4"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "5.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "5.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-info",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "task-viewer.aar",
+          "url": "task-viewer-android-5.0.0.aar",
+          "size": 69454,
+          "sha512": "31a040b5512c76bd55a0d31e82c02675de75db7956f40c53495189760e80fa85a5e795f3def3b0e529a8fc1c174e386a3cab128f1ef84761cf7d2600b67c86e4",
+          "sha256": "43cc18042271a63901f07a4a21fd13aec9a530317ba94e13a2e974bfc210d8fa",
+          "sha1": "768a856282bf9e99688e1e2ee7c94584218dd627",
+          "md5": "75fc6242cc7409102e3a051e1c76d0f4"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "task-viewer-android-sources.jar",
+          "url": "task-viewer-android-5.0.0-sources.jar",
+          "size": 6631,
+          "sha512": "e37e3132c61c22141f17923f6c21097bf2d0023f70dda5d77a205625e28cda6ba12f4e0eb4fcddc8b1fbd4799726d4d6357cd3918077358492712a7ed19a7fd1",
+          "sha256": "4951a73b751f31100acce2a3eb3cde785bf4e9e427d2e357c38271ee46d4b209",
+          "sha1": "30966c6c3fec53e973f720b1ab5ba6ceb681f424",
+          "md5": "22a72a162b280e719bb256c04e8fcab9"
+        }
+      ]
+    }
+  ]
+}
