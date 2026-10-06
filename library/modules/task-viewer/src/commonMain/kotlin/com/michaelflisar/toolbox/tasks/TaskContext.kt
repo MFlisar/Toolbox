@@ -25,7 +25,7 @@ class TaskContext internal constructor(
         }
     }
 
-    fun addStep(
+    fun addInfo(
         text: String,
         type: TaskMessage.Type = TaskMessage.Type.Info,
     ) {
@@ -91,6 +91,11 @@ class TaskContext internal constructor(
                     status is TaskStatus.Warning -> reporter.config.autoExpandWarning
                     collapseIfLeaf && children.isEmpty() -> false
                     else -> expanded
+                },
+                subtitle = when (status) {
+                    is TaskStatus.Error -> status.exception.message ?: "Task failed with error"
+                    is TaskStatus.Warning -> status.message ?: "Task finished with warning"
+                    else -> subtitle
                 }
             )
         }

@@ -79,14 +79,14 @@ private suspend fun runTest(
             runSubTask("Copy Files") {
                 repeat(30) {
                     setStatus("${it + 1}/30 files")
-                    addStep("Copied file_${it + 1}.dat")
+                    addInfo("Copied file_${it + 1}.dat")
                     pause()
                 }
             }
 
             runSubTask("Move Files") {
                 repeat(20) {
-                    addStep("Moved document_${it + 1}.pdf")
+                    addInfo("Moved document_${it + 1}.pdf")
                     pause()
                 }
             }
@@ -99,7 +99,7 @@ private suspend fun runTest(
                     "SERVER04" to true,
                     "SERVER05" to false
                 ).forEach { (server, online) ->
-                    addStep(
+                    addInfo(
                         if (online) {
                             "$server is online"
                         } else {
@@ -113,15 +113,15 @@ private suspend fun runTest(
             runSubTask("Create ZIP") {
                 repeat(20) {
                     setStatus("${it + 1}/20 files")
-                    addStep("Added file_${it + 1}.dat to deployment.zip")
+                    addInfo("Added file_${it + 1}.dat to deployment.zip")
                     pause()
                 }
             }
 
             runSubTask("Transfer ZIP") {
-                addStep("deployment.zip -> \\\\SERVER01\\Deploy")
+                addInfo("deployment.zip -> \\\\SERVER01\\Deploy")
                 pause()
-                addStep("Transfer completed")
+                addInfo("Transfer completed")
                 pause()
             }
 
@@ -129,14 +129,14 @@ private suspend fun runTest(
                 runSubTask("Extract Sub ZIP 1") {
                     repeat(20) {
                         setStatus("${it + 1}/20 files")
-                        addStep("Extracted file_${it + 1}.dat")
+                        addInfo("Extracted file_${it + 1}.dat")
                         pause()
                     }
                 }
                 runSubTask("Extract Sub ZIP 2") {
                     repeat(20) {
                         setStatus("${it + 1}/20 files")
-                        addStep("Extracted file_${it + 1}.dat")
+                        addInfo("Extracted file_${it + 1}.dat")
                         pause()
                     }
                 }
@@ -144,15 +144,15 @@ private suspend fun runTest(
 
             runSubTask("Delete ZIP") {
 
-                addStep("Deleting deployment.zip")
+                addInfo("Deleting deployment.zip")
                 pause()
-                addStep("deployment.zip removed")
+                addInfo("deployment.zip removed")
                 pause()
                 throwWarning("Test warning")
             }
 
             runSubTask("Error Example") {
-                addStep("Doing something")
+                addInfo("Doing something")
                 pause()
                 throwError("Something went wrong")
             }
