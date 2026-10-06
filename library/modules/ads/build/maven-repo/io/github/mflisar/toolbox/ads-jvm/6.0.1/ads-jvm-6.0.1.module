@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../ads/6.0.1/ads-6.0.1.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "ads",
+    "version": "6.0.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ads-jvm.jar",
+          "url": "ads-jvm-6.0.1.jar",
+          "size": 5548,
+          "sha512": "f8c521784335753b4b2f3cb91b84ac74ac65e7db71e37409876e0a058c5a59ef02be3b047d683b8693ce608b5c7a3e5383ef4f7a1f1916679a9c662f0621df29",
+          "sha256": "0a05ec98308c5929acfe92fee63d4204aff6f751dd3c8b7851a7c58c12ea114e",
+          "sha1": "4e1d31d897366ec1d92b384fb7cebb33bb61bced",
+          "md5": "53d4832002c6f7975a866c509903b33a"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ads-jvm.jar",
+          "url": "ads-jvm-6.0.1.jar",
+          "size": 5548,
+          "sha512": "f8c521784335753b4b2f3cb91b84ac74ac65e7db71e37409876e0a058c5a59ef02be3b047d683b8693ce608b5c7a3e5383ef4f7a1f1916679a9c662f0621df29",
+          "sha256": "0a05ec98308c5929acfe92fee63d4204aff6f751dd3c8b7851a7c58c12ea114e",
+          "sha1": "4e1d31d897366ec1d92b384fb7cebb33bb61bced",
+          "md5": "53d4832002c6f7975a866c509903b33a"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "ads-jvm-sources.jar",
+          "url": "ads-jvm-6.0.1-sources.jar",
+          "size": 2732,
+          "sha512": "b67e32c1686da70bc64a325d45b77759aa45f28d0a4fe434014ed3f6bfc1188fe236480a707018e82b9b8976c9f34ad78af54a0bf12545d997cedfb17d698f8d",
+          "sha256": "c6efc89364a9462b8dd0dcd5f829dae6a3d7eeab9f1d16836104e31439f2966d",
+          "sha1": "c3269cf9ec3ca428e1f122e10ebb355196fee385",
+          "md5": "38aba56b1166db038abbbeb4682afcc3"
+        }
+      ]
+    }
+  ]
+}
