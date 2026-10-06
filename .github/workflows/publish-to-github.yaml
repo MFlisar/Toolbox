@@ -29,21 +29,24 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: Publish to local repository
+      - name: Publish
         run: |
-          ./gradlew publishAllPublicationsToLocalMavenRepoRepository
+          ./gradlew :toolbox:modules:${{ inputs.artifact }}:publishAllPublicationsToLocalMavenRepoRepository
 
       - name: Checkout MavenRepo
         uses: actions/checkout@v4
         with:
           repository: MFlisar/MavenRepo
-          token: ${{ secrets.MAVEN_REPO_TOKEN }}
+          token: ${{ secrets.MFLISAR_MAVEN_REPO_TOKEN }}
           path: mavenRepo
 
       - name: Copy artifacts
         run: |
           mkdir -p mavenRepo/Toolbox
-          cp -R library/modules/${{ inputs.artifact }}/build/maven-repo/* mavenRepo/Toolbox/
+
+          cp -R \
+            toolbox/modules/${{ inputs.artifact }}/build/maven-repo/* \
+            mavenRepo/Toolbox/
 
       - name: Commit and Push
         run: |
