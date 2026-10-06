@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +17,6 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScree
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.tasks.TaskReporter
-import com.michaelflisar.toolbox.tasks.TaskResult
 import com.michaelflisar.toolbox.tasks.TaskViewerContainer
 import com.michaelflisar.toolbox.tasks.rememberTaskReporter
 import kotlinx.coroutines.Dispatchers
@@ -76,26 +74,24 @@ private suspend fun runTest(
 
     withContext(Dispatchers.PlatformIO) {
 
-        reporter.runTask("Deploy Test System") { deployment ->
+        reporter.runTask("Deploy Test System") {
 
-            deployment.runSubTask("Copy Files") { copy ->
+            runSubTask("Copy Files") {
                 repeat(30) {
-                    copy.setSubtitle("${it + 1}/30 files")
-                    copy.reportStep("Copied file_${it + 1}.dat")
+                    setStatus("${it + 1}/30 files")
+                    addStep("Copied file_${it + 1}.dat")
                     pause()
                 }
-                TaskResult.Success
             }
 
-            deployment.runSubTask("Move Files") { move ->
+            runSubTask("Move Files") {
                 repeat(20) {
-                    move.reportStep("Moved document_${it + 1}.pdf")
+                    addStep("Moved document_${it + 1}.pdf")
                     pause()
                 }
-                TaskResult.Success
             }
 
-            deployment.runSubTask("Check Online Users") { users ->
+            runSubTask("Check Online Users") {
                 listOf(
                     "SERVER01" to true,
                     "SERVER02" to true,
@@ -103,7 +99,7 @@ private suspend fun runTest(
                     "SERVER04" to true,
                     "SERVER05" to false
                 ).forEach { (server, online) ->
-                    users.reportStep(
+                    addStep(
                         if (online) {
                             "$server is online"
                         } else {
@@ -112,51 +108,54 @@ private suspend fun runTest(
                     )
                     pause()
                 }
-                TaskResult.Success
             }
 
-            deployment.runSubTask("Create ZIP") { createZip ->
+            runSubTask("Create ZIP") {
                 repeat(20) {
-                    createZip.setSubtitle("${it + 1}/20 files")
-                    createZip.reportStep("Added file_${it + 1}.dat to deployment.zip")
+                    setStatus("${it + 1}/20 files")
+                    addStep("Added file_${it + 1}.dat to deployment.zip")
                     pause()
                 }
-                TaskResult.Success
             }
 
-            deployment.runSubTask("Transfer ZIP") { copyZip ->
-                copyZip.reportStep("deployment.zip -> \\\\SERVER01\\Deploy")
+            runSubTask("Transfer ZIP") {
+                addStep("deployment.zip -> \\\\SERVER01\\Deploy")
                 pause()
-                copyZip.reportStep("Transfer completed")
+                addStep("Transfer completed")
                 pause()
-                TaskResult.Success
             }
 
-            deployment.runSubTask("Extract ZIP") { extractZip ->
-                repeat(20) {
-                    extractZip.setSubtitle("${it + 1}/20 files")
-                    extractZip.reportStep("Extracted file_${it + 1}.dat")
-                    pause()
+            runSubTask("Extract ZIP") {
+                runSubTask("Extract Sub ZIP 1") {
+                    repeat(20) {
+                        setStatus("${it + 1}/20 files")
+                        addStep("Extracted file_${it + 1}.dat")
+                        pause()
+                    }
                 }
-                TaskResult.Success
+                runSubTask("Extract Sub ZIP 2") {
+                    repeat(20) {
+                        setStatus("${it + 1}/20 files")
+                        addStep("Extracted file_${it + 1}.dat")
+                        pause()
+                    }
+                }
             }
 
-            deployment.runSubTask("Delete ZIP") { deleteZip ->
+            runSubTask("Delete ZIP") {
 
-                deleteZip.reportStep("Deleting deployment.zip")
+                addStep("Deleting deployment.zip")
                 pause()
-                deleteZip.reportStep("deployment.zip removed")
+                addStep("deployment.zip removed")
                 pause()
-                TaskResult.Success
+                throwWarning("Test warning")
             }
 
-            deployment.runSubTask("Error Example") { errorTask ->
-                errorTask.reportStep("Doing something")
+            runSubTask("Error Example") {
+                addStep("Doing something")
                 pause()
-                TaskResult.Error("Something went wrong")
+                throwError("Something went wrong")
             }
-
-            TaskResult.Success
         }
     }
 }

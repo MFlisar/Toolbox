@@ -6,33 +6,43 @@ class TaskContext internal constructor(
     private val reporter: TaskReporter,
     private val taskId: String,
 ) {
-    suspend fun runSubTask(
-        title: String,
-        block: suspend (TaskContext) -> TaskResult,
-    ) {
-        val task = beginSubTask(title)
-        try {
-            val result = block(task)
-            when (result) {
-                is TaskResult.Success -> task.endWithSuccess()
-                is TaskResult.Warning -> task.endWithWarning()
-                is TaskResult.Error -> task.endWithError(result.message)
-            }
-        } catch (e: Exception) {
-            task.endWithError(e.message ?: "Unknown Error", e)
-        }
-    }
+    fun throwWarning(message: String? = null): Nothing =
+        throw TaskAbort.Warning(message)
 
-    fun reportStep(
-        text: String,
-        type: MessageType = MessageType.Info,
+    fun throwError(exception: Exception): Nothing =
+        throw TaskAbort.Error(exception)
+
+    fun throwError(message: String): Nothing =
+        throw TaskAbort.Error(Exception(message))
+
+    fun setStatus(
+        text: String?,
     ) {
         reporter.updateTask(taskId) {
-            copy(messages = messages + Message(text, type))
+            copy(
+                subtitle = text
+            )
         }
     }
 
-    internal fun beginSubTask(
+    fun addStep(
+        text: String,
+        type: TaskMessage.Type = TaskMessage.Type.Info,
+    ) {
+        reporter.updateTask(taskId) {
+            copy(messages = messages + TaskMessage(text, type))
+        }
+    }
+
+    suspend fun runSubTask(
+        title: String,
+        block: suspend TaskContext.() -> Unit,
+    ) {
+        val task = beginSubTask(title)
+        task.runTaskInternal(block = block)
+    }
+
+    private fun beginSubTask(
         title: String,
     ): TaskContext {
 
@@ -54,12 +64,12 @@ class TaskContext internal constructor(
         )
     }
 
-    internal fun endWithSuccess(
+    private fun endWithSuccess(
         collapseIfLeaf: Boolean = true,
     ) {
         reporter.updateTask(taskId) {
             copy(
-                status = Status.Success,
+                status = TaskStatus.Success,
                 expanded = if (collapseIfLeaf && children.isEmpty()) {
                     false
                 } else {
@@ -69,49 +79,35 @@ class TaskContext internal constructor(
         }
     }
 
-    internal fun endWithWarning(
+    private fun endWithState(
+        status: TaskStatus.Finished,
         collapseIfLeaf: Boolean = true,
     ) {
         reporter.updateTask(taskId) {
             copy(
-                status = Status.Warning,
-                expanded = if (collapseIfLeaf && children.isEmpty()) {
-                    false
-                } else {
-                    expanded
+                status = status,
+                expanded = when {
+                    status is TaskStatus.Error -> reporter.config.autoExpandError
+                    status is TaskStatus.Warning -> reporter.config.autoExpandWarning
+                    collapseIfLeaf && children.isEmpty() -> false
+                    else -> expanded
                 }
             )
         }
     }
 
-    internal fun endWithError(
-        message: String,
-        exception: Exception? = null,
-        collapseIfLeaf: Boolean = false,
+    internal suspend fun runTaskInternal(
+        block: suspend TaskContext.() -> Unit,
     ) {
-        reporter.updateTask(taskId) {
-            copy(
-                status = Status.Error(message, exception),
-                expanded = if (collapseIfLeaf && children.isEmpty()) {
-                    false
-                } else {
-                    expanded
-                },
-                messages = messages + Message(
-                    text = message,
-                    type = MessageType.Error
-                )
-            )
-        }
-    }
-
-    fun setSubtitle(
-        text: String?,
-    ) {
-        reporter.updateTask(taskId) {
-            copy(
-                subtitle = text
-            )
+        try {
+            block()
+            endWithSuccess()
+        } catch (e: TaskAbort.Warning) {
+            endWithState(TaskStatus.Warning(e.message))
+        } catch (e: TaskAbort.Error) {
+            endWithState(TaskStatus.Error(e.exception))
+        } catch (e: Exception) {
+            endWithState(TaskStatus.Error(e))
         }
     }
 }

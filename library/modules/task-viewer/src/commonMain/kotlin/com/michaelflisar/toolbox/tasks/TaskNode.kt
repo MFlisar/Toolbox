@@ -4,16 +4,16 @@ data class TaskNode(
     val id: String,
     val title: String,
     val subtitle: String? = null,
-    val status: Status = Status.Running,
+    val status: TaskStatus = TaskStatus.Running,
     val children: List<TaskNode> = emptyList(),
-    val messages: List<Message> = emptyList(),
+    val messages: List<TaskMessage> = emptyList(),
     val expanded: Boolean = true,
 ) {
     val isFinished: Boolean
-        get() = status != Status.Running
+        get() = status != TaskStatus.Running
 
     val isFailed: Boolean
-        get() = status is Status.Error
+        get() = status is TaskStatus.Error
 
     val hasChildren: Boolean
         get() = children.isNotEmpty()
@@ -25,30 +25,3 @@ data class TaskNode(
         get() = 1 + messages.size + children.sumOf { it.totalEntries }
 }
 
-sealed interface Status {
-    data object Running : Status
-    data object Success : Status
-    data object Warning : Status
-    data class Error(val message: String, val exception: Exception?) : Status
-}
-
-data class Message(
-    val text: String,
-    val type: MessageType = MessageType.Info,
-)
-
-enum class MessageType {
-    Info,
-    Warning,
-    Error
-}
-
-sealed interface TaskResult {
-
-    data object Success : TaskResult
-    data object Warning : TaskResult
-
-    data class Error(
-        val message: String,
-    ) : TaskResult
-}

@@ -22,6 +22,9 @@ class TaskReporter(
          * Nur ein Pfad gleichzeitig offen.
          */
         val expandSinglePathOnly: Boolean = false,
+
+        val autoExpandWarning: Boolean = false,
+        val autoExpandError: Boolean = true
     )
 
     val hasRunningTasks by derivedStateOf {
@@ -43,22 +46,13 @@ class TaskReporter(
     suspend fun runTask(
         title: String,
         clearBeforeStart: Boolean = true,
-        block: suspend (TaskContext) -> TaskResult,
+        block: suspend TaskContext.() -> Unit,
     ) {
         if (clearBeforeStart) {
             reset()
         }
         val task = beginTask(title)
-        try {
-            val result = block(task)
-            when (result) {
-                is TaskResult.Success -> task.endWithSuccess()
-                is TaskResult.Warning -> task.endWithWarning()
-                is TaskResult.Error -> task.endWithError(result.message)
-            }
-        } catch (e: Exception) {
-            task.endWithError(e.message ?: "Unknown Error", e)
-        }
+        task.runTaskInternal(block = block)
     }
 
     private fun beginTask(
@@ -224,7 +218,7 @@ fun rememberTaskReporter(
 
 private fun List<TaskNode>.anyRunning(): Boolean {
     return any { task ->
-        task.status == Status.Running ||
+        task.status == TaskStatus.Running ||
                 task.children.anyRunning()
     }
 }

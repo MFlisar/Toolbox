@@ -1,15 +1,36 @@
 package com.michaelflisar.toolbox.tasks
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -18,21 +39,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.MattColors
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyTextButton
 import com.michaelflisar.toolbox.spacing
 
 private val EXPAND_ICON_SIZE = 18.dp
-private val STATUS_ICON_SIZE = 16.dp
-private val TREE_INDENT = 20.dp
+private val STATUS_ICON_SIZE = 18.dp
+private val TASK_INDENT_PER_LEVEL = EXPAND_ICON_SIZE
+private val ICON_SPACING = 8.dp
+private val TASK_HORIZONTAL_PADDING = 12.dp
+private val TASK_VERTICAL_PADDING = 8.dp
+private val MESSAGE_BULLET_WIDTH = 12.dp
+private val MESSAGE_INDENT =
+    TASK_HORIZONTAL_PADDING +
+            EXPAND_ICON_SIZE +
+            ICON_SPACING +
+            STATUS_ICON_SIZE +
+            ICON_SPACING
 
 @Stable
 data class TaskViewerConfig(
     val colorSuccess: Color,
     val colorWarning: Color,
     val colorError: Color,
-    val autoScrollToBottom: Boolean
+    val autoScrollToBottom: Boolean,
 )
 
 @Composable
@@ -40,7 +70,7 @@ fun rememberTaskViewerConfig(
     colorSuccess: Color = Color(0xFF4CAF50),
     colorWarning: Color = Color(0xFFFFC107),
     colorError: Color = Color(0xFFF44336),
-    autoScrollToBottom: Boolean = true
+    autoScrollToBottom: Boolean = true,
 ): TaskViewerConfig {
     return remember(colorSuccess, colorWarning, colorError) {
         TaskViewerConfig(
@@ -159,7 +189,9 @@ private fun TaskItem(
     val expandable = task.hasMessages || task.hasChildren
     val expanded = task.expanded
 
-    Column {
+    Column(
+        modifier = Modifier.padding(start = if (level == 0) 0.dp else (TASK_INDENT_PER_LEVEL + ICON_SPACING))
+    ) {
         TaskItemContainer(
             task = task,
             config = config,
@@ -167,17 +199,12 @@ private fun TaskItem(
         ) {
             Row(
                 modifier = Modifier.padding(
-                    horizontal = 12.dp,
-                    vertical = 8.dp
+                    horizontal = TASK_HORIZONTAL_PADDING,
+                    vertical = TASK_VERTICAL_PADDING
                 ),
                 verticalAlignment = Alignment.CenterVertically
             )
             {
-
-                Spacer(
-                    modifier = Modifier.width(TREE_INDENT * level)
-                )
-
                 Box(
                     modifier = Modifier.size(EXPAND_ICON_SIZE),
                     contentAlignment = Alignment.Center
@@ -194,11 +221,11 @@ private fun TaskItem(
                     }
                 }
 
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(ICON_SPACING))
 
                 StatusIcon(viewerConfig, task.status)
 
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(ICON_SPACING))
 
                 Column(
                     modifier = Modifier.weight(1f),
@@ -225,49 +252,29 @@ private fun TaskItem(
             exit = shrinkVertically()
         ) {
 
-            Row {
+            Column(
+                modifier = Modifier.padding(vertical = MaterialTheme.spacing.default),
+                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+            ) {
 
-                Spacer(
-                    modifier = Modifier.width(
-                        TREE_INDENT * level + 21.dp
+                task.messages.forEach { message ->
+                    MessageItem(
+                        modifier = Modifier.padding(
+                            start = MESSAGE_INDENT
+                        ),
+                        config = viewerConfig,
+                        message = message
                     )
-                )
+                }
 
-                Box(
-                    modifier = Modifier
-                        .width(1.dp)
-                        .fillMaxHeight()
-                        .background(
-                            MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f)
-                        )
-                )
-
-                Column(
-                    modifier = Modifier
-                        .padding(start = 12.dp)
-                        .padding(vertical = MaterialTheme.spacing.default)
-                        .weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
-                ) {
-
-                    task.messages.forEach { message ->
-
-                        MessageItem(
-                            config = viewerConfig,
-                            message = message
-                        )
-                    }
-
-                    task.children.forEach { child ->
-
-                        TaskItem(
-                            task = child,
-                            level = level + 1,
-                            viewerConfig = viewerConfig,
-                            config = config,
-                            onToggleExpanded = onToggleExpanded
-                        )
-                    }
+                task.children.forEach { child ->
+                    TaskItem(
+                        task = child,
+                        level = level + 1,
+                        viewerConfig = viewerConfig,
+                        config = config,
+                        onToggleExpanded = onToggleExpanded
+                    )
                 }
             }
         }
@@ -311,7 +318,7 @@ private fun TaskItemContainer(
             }
         },
         border = when (task.status) {
-            Status.Running -> BorderStroke(
+            TaskStatus.Running -> BorderStroke(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
             )
@@ -330,18 +337,18 @@ private fun TaskItemContainer(
 @Composable
 private fun StatusIcon(
     config: TaskViewerConfig,
-    status: Status,
+    status: TaskStatus,
 ) {
     when (status) {
 
-        Status.Running -> {
+        TaskStatus.Running -> {
             CircularProgressIndicator(
                 modifier = Modifier.size(STATUS_ICON_SIZE),
                 strokeWidth = 2.dp
             )
         }
 
-        is Status.Success -> {
+        is TaskStatus.Success -> {
             Icon(
                 modifier = Modifier.size(STATUS_ICON_SIZE),
                 imageVector = Icons.Default.CheckCircle,
@@ -350,7 +357,7 @@ private fun StatusIcon(
             )
         }
 
-        is Status.Warning -> {
+        is TaskStatus.Warning -> {
             Icon(
                 modifier = Modifier.size(STATUS_ICON_SIZE),
                 imageVector = Icons.Default.Warning,
@@ -359,7 +366,7 @@ private fun StatusIcon(
             )
         }
 
-        is Status.Error -> {
+        is TaskStatus.Error -> {
             Icon(
                 modifier = Modifier.size(STATUS_ICON_SIZE),
                 imageVector = Icons.Default.Error,
@@ -372,24 +379,25 @@ private fun StatusIcon(
 
 @Composable
 private fun MessageItem(
+    modifier: Modifier,
     config: TaskViewerConfig,
-    message: Message,
+    message: TaskMessage,
 ) {
     val color = when (message.type) {
-        MessageType.Info -> LocalContentColor.current
-        MessageType.Warning -> config.colorWarning
-        MessageType.Error -> config.colorError
+        TaskMessage.Type.Info -> LocalContentColor.current
+        TaskMessage.Type.Warning -> config.colorWarning
+        TaskMessage.Type.Error -> config.colorError
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Top
     ) {
         Text(
             text = "•",
             color = color,
             style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.width(12.dp)
+            modifier = Modifier.width(MESSAGE_BULLET_WIDTH)
         )
 
         Text(
