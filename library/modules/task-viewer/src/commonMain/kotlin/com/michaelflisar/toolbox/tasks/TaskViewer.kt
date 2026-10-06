@@ -34,6 +34,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,6 +45,9 @@ import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyTextButton
 import com.michaelflisar.toolbox.spacing
 import com.michaelflisar.toolbox.utils.TimeUtil
+import kotlinx.coroutines.delay
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.milliseconds
 
 private val EXPAND_ICON_SIZE = 18.dp
 private val STATUS_ICON_SIZE = 18.dp
@@ -64,7 +69,9 @@ data class TaskViewerConfig(
     val colorWarning: Color,
     val colorError: Color,
     val autoScrollToBottom: Boolean,
-    val showTaskTimes: Boolean
+    val showTaskTimes: Boolean,
+    val groupSummaryFormatter: (TaskPlanSummary) -> String,
+    val timeFormatter: (isFinished: Boolean, millis: Long) -> String
 )
 
 @Composable
@@ -73,15 +80,50 @@ fun rememberTaskViewerConfig(
     colorWarning: Color = Color(0xFFFFC107),
     colorError: Color = Color(0xFFF44336),
     autoScrollToBottom: Boolean = true,
-    showTaskTimes: Boolean = true
+    showTaskTimes: Boolean = true,
+    groupSummaryFormatter: (TaskPlanSummary) -> String = { summary ->
+        buildString {
+            if (summary.running > 0) {
+                append("Running")
+            }
+            if (summary.success > 0) {
+                if (isNotEmpty()) append(", ")
+                append("${summary.success} successful")
+            }
+            if (summary.warnings > 0) {
+                if (isNotEmpty()) append(", ")
+                append("${summary.warnings} warning")
+            }
+            if (summary.errors > 0) {
+                if (isNotEmpty()) append(", ")
+                append("${summary.errors} error")
+            }
+        }
+    },
+    timeFormatter: (isFinished: Boolean, millis: Long) -> String = { isFinished, millis ->
+        TimeUtil.getTimeString(
+            millis = millis,
+            secondFractionDigits = if (isFinished && millis < 60_000L) { 1 } else { 0 },
+        )
+    }
 ): TaskViewerConfig {
-    return remember(colorSuccess, colorWarning, colorError, autoScrollToBottom, showTaskTimes) {
+    return remember(
+        colorSuccess,
+        colorWarning,
+        colorError,
+        autoScrollToBottom,
+        showTaskTimes,
+        groupSummaryFormatter,
+        timeFormatter
+    ) {
         TaskViewerConfig(
             colorSuccess = colorSuccess,
             colorWarning = colorWarning,
             colorError = colorError,
             autoScrollToBottom = autoScrollToBottom,
-            showTaskTimes = showTaskTimes
+            showTaskTimes = showTaskTimes,
+            groupSummaryFormatter = groupSummaryFormatter,
+            timeFormatter = timeFormatter
         )
     }
 }
@@ -93,15 +135,25 @@ fun TaskViewer(
     scrollable: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
+    LaunchedEffect(reporter.hasRunningTasks) {
+        while (reporter.hasRunningTasks) {
+            delay(1000.milliseconds)
+            reporter.tick()
+        }
+    }
+
     if (scrollable) {
+
         val state = rememberLazyListState()
 
         if (config.autoScrollToBottom) {
-            val totalEntries = reporter.tasks.sumOf { it.totalEntries }
+
+            val totalEntries = reporter.runtime.size
+
             LaunchedEffect(totalEntries) {
-                if (reporter.tasks.isNotEmpty()) {
+                if (totalEntries > 0) {
                     state.animateScrollToItem(
-                        index = reporter.tasks.lastIndex,
+                        index = reporter.plan.children.lastIndex,
                         scrollOffset = Int.MAX_VALUE
                     )
                 }
@@ -111,14 +163,18 @@ fun TaskViewer(
         LazyColumn(
             modifier = modifier,
             state = state,
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+            verticalArrangement = Arrangement.spacedBy(
+                MaterialTheme.spacing.small
+            )
         ) {
             items(
-                items = reporter.tasks,
+                items = reporter.plan.children,
                 key = { it.id }
-            ) { task ->
+            ) { node ->
+
                 TaskItem(
-                    task = task,
+                    node = node,
+                    reporter = reporter,
                     level = 0,
                     viewerConfig = config,
                     config = reporter.config,
@@ -127,13 +183,19 @@ fun TaskViewer(
             }
         }
     } else {
+
         Column(
             modifier = modifier.animateContentSize(),
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+            verticalArrangement = Arrangement.spacedBy(
+                MaterialTheme.spacing.small
+            )
         ) {
-            reporter.tasks.forEach { task ->
+
+            reporter.plan.children.forEach { node ->
+
                 TaskItem(
-                    task = task,
+                    node = node,
+                    reporter = reporter,
                     level = 0,
                     viewerConfig = config,
                     config = reporter.config,
@@ -156,22 +218,44 @@ fun TaskViewerContainer(
     Column(
         modifier = modifier
     ) {
-        AnimatedVisibility(!reporter.hasRunningTasks && !reporter.hasFinishedTasks) {
+
+        AnimatedVisibility(
+            !reporter.hasRunningTasks &&
+                    !reporter.hasFinishedTasks
+        ) {
             content()
         }
-        AnimatedVisibility(reporter.hasRunningTasks || reporter.hasFinishedTasks) {
+
+        AnimatedVisibility(
+            reporter.hasRunningTasks ||
+                    reporter.hasFinishedTasks
+        ) {
+
             MyColumn(
                 modifier = Modifier.fillMaxWidth()
             ) {
+
                 TaskViewer(
                     reporter = reporter,
                     config = config,
-                    modifier = if (scrollable) Modifier.weight(1f) else Modifier,
-                    scrollable = scrollable
+                    modifier =
+                        if (scrollable) {
+                            Modifier.weight(1f)
+                        } else {
+                            Modifier
+                        },
+                    scrollable = scrollable,
                 )
-                if (reporter.hasFinishedTasks && !reporter.hasRunningTasks) {
+
+                if (
+                    reporter.hasFinishedTasks &&
+                    !reporter.hasRunningTasks
+                ) {
+
                     MyTextButton(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        modifier = Modifier.align(
+                            Alignment.CenterHorizontally
+                        ),
                         text = reset
                     ) {
                         reporter.reset()
@@ -184,31 +268,208 @@ fun TaskViewerContainer(
 
 @Composable
 private fun TaskItem(
-    task: TaskNode,
+    node: TaskPlanExecutable,
+    reporter: TaskReporter,
     level: Int,
     viewerConfig: TaskViewerConfig,
     config: TaskReporter.Config,
     onToggleExpanded: (String) -> Unit,
 ) {
-    val expandable = task.hasMessages || task.hasChildren
-    val expanded = task.expanded
+    when (node) {
+
+        is TaskPlanTask -> {
+            TaskItemTask(
+                task = node,
+                reporter = reporter,
+                level = level,
+                viewerConfig = viewerConfig,
+                config = config,
+                onToggleExpanded = onToggleExpanded,
+            )
+        }
+
+        is TaskPlanGroup -> {
+            TaskItemGroup(
+                group = node,
+                reporter = reporter,
+                level = level,
+                viewerConfig = viewerConfig,
+                config = config,
+                onToggleExpanded = onToggleExpanded,
+            )
+        }
+    }
+}
+
+@Composable
+private fun TaskItemTask(
+    task: TaskPlanTask,
+    reporter: TaskReporter,
+    level: Int,
+    viewerConfig: TaskViewerConfig,
+    config: TaskReporter.Config,
+    onToggleExpanded: (String) -> Unit,
+) {
+    val runtime = reporter.runtime[task.id] as? TaskReporter.TaskRuntimeTask ?: return
+    val expandable = runtime.messages.isNotEmpty()
+    val expanded = runtime.expanded
 
     Column(
-        modifier = Modifier.padding(start = if (level == 0) 0.dp else (TASK_INDENT_PER_LEVEL + ICON_SPACING))
+        modifier = Modifier.padding(
+            start = if (level == 0) {
+                0.dp
+            } else {
+                TASK_INDENT_PER_LEVEL + ICON_SPACING
+            }
+        )
+    ) {
+
+        TaskItemContainer(
+            expanded = expanded,
+            expandable = expandable,
+            running = runtime.status == TaskStatus.Running,
+            config = config,
+            onToggleExpanded = { onToggleExpanded(task.id) }
+        ) {
+            Row(
+                modifier = Modifier.padding(
+                    horizontal = TASK_HORIZONTAL_PADDING,
+                    vertical = TASK_VERTICAL_PADDING,
+                ),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+
+                Box(
+                    modifier = Modifier.size(EXPAND_ICON_SIZE),
+                    contentAlignment = Alignment.Center,
+                ) {
+
+                    if (expandable) {
+                        Icon(
+                            modifier = Modifier.size(EXPAND_ICON_SIZE),
+                            imageVector =
+                                if (expanded) {
+                                    Icons.Default.ExpandMore
+                                } else {
+                                    Icons.Default.ChevronRight
+                                },
+                            contentDescription = null,
+                        )
+                    }
+                }
+
+                Spacer(Modifier.width(ICON_SPACING))
+
+                StatusIcon(
+                    config = viewerConfig,
+                    status = runtime.status,
+                )
+
+                Spacer(Modifier.width(ICON_SPACING))
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                ) {
+
+                    Text(
+                        text = task.title,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+
+                    runtime.subtitle?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = LocalContentColor.current.copy(alpha = .8f),
+                        )
+                    }
+                }
+
+                if (viewerConfig.showTaskTimes) {
+
+                    Spacer(Modifier.width(ICON_SPACING))
+
+                    val millis = runtime.durationMs(reporter.nowMs)
+                    Text(
+                        text = viewerConfig.timeFormatter(
+                            runtime.isFinished,
+                            millis,
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = LocalContentColor.current.copy(alpha = .6f),
+                    )
+                }
+            }
+        }
+
+        AnimatedVisibility(
+            visible = expanded && expandable,
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+        ) {
+
+            Column(
+                modifier = Modifier.padding(
+                    vertical = MaterialTheme.spacing.default,
+                ),
+                verticalArrangement = Arrangement.spacedBy(
+                    MaterialTheme.spacing.small,
+                ),
+            ) {
+
+                runtime.messages.forEach { message ->
+
+                    MessageItem(
+                        modifier = Modifier.padding(
+                            start = MESSAGE_INDENT,
+                        ),
+                        config = viewerConfig,
+                        message = message,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun TaskItemGroup(
+    group: TaskPlanGroup,
+    reporter: TaskReporter,
+    level: Int,
+    viewerConfig: TaskViewerConfig,
+    config: TaskReporter.Config,
+    onToggleExpanded: (String) -> Unit,
+) {
+    val runtime = reporter.runtime[group.id] ?: return
+    val expandable = group.children.isNotEmpty()
+    val expanded = runtime.expanded
+
+    Column(
+        modifier = Modifier.padding(
+            start = if (level == 0) {
+                0.dp
+            } else {
+                TASK_INDENT_PER_LEVEL + ICON_SPACING
+            }
+        )
     ) {
         TaskItemContainer(
-            task = task,
+            expanded = expanded,
+            expandable = expandable,
+            running = false,
             config = config,
-            onToggleExpanded = onToggleExpanded
+            onToggleExpanded = { onToggleExpanded(group.id) }
         ) {
+
             Row(
                 modifier = Modifier.padding(
                     horizontal = TASK_HORIZONTAL_PADDING,
                     vertical = TASK_VERTICAL_PADDING
                 ),
                 verticalAlignment = Alignment.CenterVertically
-            )
-            {
+            ) {
+
                 Box(
                     modifier = Modifier.size(EXPAND_ICON_SIZE),
                     contentAlignment = Alignment.Center
@@ -225,40 +486,47 @@ private fun TaskItem(
                     }
                 }
 
+                val summary = remember(
+                    group,
+                    reporter.runtime,
+                ) {
+                    reporter.getSummary(group)
+                }
+                val status = summary.toStatus()
+
                 Spacer(Modifier.width(ICON_SPACING))
 
-                StatusIcon(viewerConfig, task.status)
+                StatusIcon(
+                    config = viewerConfig,
+                    status = status
+                )
 
                 Spacer(Modifier.width(ICON_SPACING))
 
                 Column(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        text = task.title,
+                        text = group.title,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    if (task.subtitle != null) {
+                    val summary = viewerConfig.groupSummaryFormatter(summary).takeIf { it.isNotEmpty() }
+                    summary?.let {
                         Text(
-                            text = task.subtitle,
+                            text = it,
                             style = MaterialTheme.typography.bodySmall,
-                            color = LocalContentColor.current.copy(alpha = .8f)
+                            color = LocalContentColor.current.copy(alpha = .7f)
                         )
                     }
                 }
 
                 Spacer(Modifier.width(ICON_SPACING))
 
-                if (viewerConfig.showTaskTimes) {
-                    Text(
-                        text = TimeUtil.getTimeString(
-                            task.durationMs,
-                            subMinuteFractionDigits = if (task.isFinished) 1 else 0
-                        ),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = LocalContentColor.current.copy(alpha = .6f)
-                    )
-                }
+                Text(
+                    text = viewerConfig.timeFormatter(runtime.isFinished, runtime.durationMs(reporter.nowMs)),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = LocalContentColor.current.copy(alpha = .6f)
+                )
             }
         }
 
@@ -269,27 +537,22 @@ private fun TaskItem(
         ) {
 
             Column(
-                modifier = Modifier.padding(vertical = MaterialTheme.spacing.default),
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+                modifier = Modifier.padding(
+                    vertical = MaterialTheme.spacing.default
+                ),
+                verticalArrangement = Arrangement.spacedBy(
+                    MaterialTheme.spacing.small
+                )
             ) {
 
-                task.messages.forEach { message ->
-                    MessageItem(
-                        modifier = Modifier.padding(
-                            start = MESSAGE_INDENT
-                        ),
-                        config = viewerConfig,
-                        message = message
-                    )
-                }
-
-                task.children.forEach { child ->
+                group.children.forEach { child ->
                     TaskItem(
-                        task = child,
+                        node = child,
+                        reporter = reporter,
                         level = level + 1,
                         viewerConfig = viewerConfig,
                         config = config,
-                        onToggleExpanded = onToggleExpanded
+                        onToggleExpanded = onToggleExpanded,
                     )
                 }
             }
@@ -299,16 +562,15 @@ private fun TaskItem(
 
 @Composable
 private fun TaskItemContainer(
-    task: TaskNode,
+    expanded: Boolean,
+    expandable: Boolean,
+    running: Boolean,
     config: TaskReporter.Config,
-    onToggleExpanded: (String) -> Unit,
+    onToggleExpanded: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-
-    val expandable = task.hasMessages || task.hasChildren
-    val expanded = task.expanded
-
     val highlighted = config.expandSinglePathOnly && expanded
+
     val color = animateColorAsState(
         targetValue =
             if (highlighted) {
@@ -317,6 +579,7 @@ private fun TaskItemContainer(
                 MaterialTheme.colorScheme.background
             }
     )
+
     val onColor = animateColorAsState(
         targetValue =
             if (highlighted) {
@@ -330,21 +593,21 @@ private fun TaskItemContainer(
         modifier = Modifier.fillMaxWidth(),
         onClick = {
             if (expandable) {
-                onToggleExpanded(task.id)
+                onToggleExpanded()
             }
         },
-        border = when (task.status) {
-            TaskStatus.Running -> BorderStroke(
+        border = if (running) {
+            BorderStroke(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
             )
-
-            else -> null
+        } else {
+            null
         },
         colors = CardDefaults.cardColors(
             containerColor = color.value,
             contentColor = onColor.value
-        ),
+        )
     ) {
         content()
     }

@@ -21,48 +21,77 @@ object TimeUtil {
     fun parseMillis(millis: Long): LocalDateTime =
         Instant.fromEpochMilliseconds(millis).toLocalDateTime(TimeZone.currentSystemDefault())
 
-    /**
-     * @param millis The time in milliseconds
-     * @param subMinuteFractionDigits The number of fraction digits to show for times below 1 minute
-     */
     fun getTimeString(
         millis: Long,
-        subMinuteFractionDigits: Int = 0,
+        secondFractionDigits: Int = 0,
     ): String {
 
-        if (millis < 60_000 && subMinuteFractionDigits > 0) {
-            val factor = 10.0.pow(subMinuteFractionDigits)
-            val value = (millis * factor / 1000.0).roundToInt() / factor
-
-            return value.toString() + "s"
-        }
-
         val totalSeconds = millis / 1000L
-
-        if (totalSeconds == 0L) {
-            return "0s"
-        }
 
         val seconds = totalSeconds % 60L
         val minutes = (totalSeconds / 60L) % 60L
         val hours = (totalSeconds / 60L / 60L) % 24L
         val days = totalSeconds / 60L / 60L / 24L
 
-        val parts = listOf(days, hours, minutes, seconds)
-        val units = listOf("d", "h", "m", "s")
+        val parts = ArrayList<String>()
 
-        val info = ArrayList<String>()
+        if (days > 0) {
+            parts += "${days}d"
+        }
 
-        for (i in parts.indices) {
-            if (parts[i] != 0L && info.isEmpty()) {
-                info += parts[i].toString() + units[i]
-            } else if (info.isNotEmpty()) {
-                val padded = parts[i].toString().padStart(2, '0')
-                info += padded + units[i]
+        if (parts.isNotEmpty() || hours > 0) {
+            parts += "${hours}h"
+        }
+
+        if (parts.isNotEmpty() || minutes > 0) {
+            parts += if (parts.isEmpty()) {
+                "${minutes}m"
+            } else {
+                "${minutes.toString().padStart(2, '0')}m"
             }
         }
 
-        return info.joinToString(" ")
+        val secondsText =
+            if (secondFractionDigits > 0) {
+
+                val secondsWithFraction =
+                    (millis % 60_000) / 1000.0
+
+                val factor = 10.0.pow(secondFractionDigits)
+                val rounded =
+                    (secondsWithFraction * factor).roundToInt() / factor
+
+                val text = rounded
+                    .toString()
+                    .removeSuffix(".0")
+
+                val formatted =
+                    if (parts.isEmpty()) {
+                        text
+                    } else {
+                        text.padStart(
+                            2 + 1 + secondFractionDigits,
+                            '0'
+                        )
+                    }
+
+                "${formatted}s"
+
+            } else {
+
+                val value =
+                    if (parts.isEmpty()) {
+                        seconds.toString()
+                    } else {
+                        seconds.toString().padStart(2, '0')
+                    }
+
+                "${value}s"
+            }
+
+        parts += secondsText
+
+        return parts.joinToString(" ")
     }
 
     fun getSortedWeekDays(firstDayOfWeek: DayOfWeek = LocalDateTimeSetup.current.firstDayOfWeek): List<DayOfWeek> {
