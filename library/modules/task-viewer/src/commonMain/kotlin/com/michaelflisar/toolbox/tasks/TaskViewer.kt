@@ -1,8 +1,8 @@
 package com.michaelflisar.toolbox.tasks
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
@@ -34,19 +34,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyTextButton
+import com.michaelflisar.toolbox.extensions.isDark
 import com.michaelflisar.toolbox.spacing
 import com.michaelflisar.toolbox.utils.TimeUtil
 import kotlinx.coroutines.delay
-import kotlin.time.Clock
 import kotlin.time.Duration.Companion.milliseconds
 
 private val EXPAND_ICON_SIZE = 18.dp
@@ -65,20 +65,18 @@ private val MESSAGE_INDENT =
 
 @Stable
 data class TaskViewerConfig(
-    val colorSuccess: Color,
-    val colorWarning: Color,
-    val colorError: Color,
+    val containerColor: Color,
+    val contentColor: Color,
     val autoScrollToBottom: Boolean,
     val showTaskTimes: Boolean,
     val groupSummaryFormatter: (TaskPlanSummary) -> String,
-    val timeFormatter: (isFinished: Boolean, millis: Long) -> String
+    val timeFormatter: (isFinished: Boolean, millis: Long) -> String,
 )
 
 @Composable
 fun rememberTaskViewerConfig(
-    colorSuccess: Color = Color(0xFF4CAF50),
-    colorWarning: Color = Color(0xFFFFC107),
-    colorError: Color = Color(0xFFF44336),
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     autoScrollToBottom: Boolean = true,
     showTaskTimes: Boolean = true,
     groupSummaryFormatter: (TaskPlanSummary) -> String = { summary ->
@@ -103,23 +101,25 @@ fun rememberTaskViewerConfig(
     timeFormatter: (isFinished: Boolean, millis: Long) -> String = { isFinished, millis ->
         TimeUtil.getTimeString(
             millis = millis,
-            secondFractionDigits = if (isFinished && millis < 60_000L) { 1 } else { 0 },
+            secondFractionDigits = if (isFinished && millis < 60_000L) {
+                1
+            } else {
+                0
+            },
         )
-    }
+    },
 ): TaskViewerConfig {
     return remember(
-        colorSuccess,
-        colorWarning,
-        colorError,
+        containerColor,
+        contentColor,
         autoScrollToBottom,
         showTaskTimes,
         groupSummaryFormatter,
         timeFormatter
     ) {
         TaskViewerConfig(
-            colorSuccess = colorSuccess,
-            colorWarning = colorWarning,
-            colorError = colorError,
+            containerColor = containerColor,
+            contentColor = contentColor,
             autoScrollToBottom = autoScrollToBottom,
             showTaskTimes = showTaskTimes,
             groupSummaryFormatter = groupSummaryFormatter,
@@ -329,6 +329,7 @@ private fun TaskItemTask(
             expandable = expandable,
             running = runtime.status == TaskStatus.Running,
             config = config,
+            viewerConfig = viewerConfig,
             onToggleExpanded = { onToggleExpanded(task.id) }
         ) {
             Row(
@@ -343,16 +344,13 @@ private fun TaskItemTask(
                     modifier = Modifier.size(EXPAND_ICON_SIZE),
                     contentAlignment = Alignment.Center,
                 ) {
-
                     if (expandable) {
+                        val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
                         Icon(
-                            modifier = Modifier.size(EXPAND_ICON_SIZE),
-                            imageVector =
-                                if (expanded) {
-                                    Icons.Default.ExpandMore
-                                } else {
-                                    Icons.Default.ChevronRight
-                                },
+                            modifier = Modifier
+                                .size(EXPAND_ICON_SIZE)
+                                .graphicsLayer { rotationZ = rotation },
+                            imageVector = Icons.Default.ChevronRight,
                             contentDescription = null,
                         )
                     }
@@ -361,8 +359,8 @@ private fun TaskItemTask(
                 Spacer(Modifier.width(ICON_SPACING))
 
                 StatusIcon(
-                    config = viewerConfig,
                     status = runtime.status,
+                    viewerConfig = viewerConfig
                 )
 
                 Spacer(Modifier.width(ICON_SPACING))
@@ -423,7 +421,6 @@ private fun TaskItemTask(
                         modifier = Modifier.padding(
                             start = MESSAGE_INDENT,
                         ),
-                        config = viewerConfig,
                         message = message,
                     )
                 }
@@ -459,6 +456,7 @@ private fun TaskItemGroup(
             expandable = expandable,
             running = false,
             config = config,
+            viewerConfig = viewerConfig,
             onToggleExpanded = { onToggleExpanded(group.id) }
         ) {
 
@@ -497,8 +495,8 @@ private fun TaskItemGroup(
                 Spacer(Modifier.width(ICON_SPACING))
 
                 StatusIcon(
-                    config = viewerConfig,
-                    status = status
+                    status = status,
+                    viewerConfig = viewerConfig
                 )
 
                 Spacer(Modifier.width(ICON_SPACING))
@@ -510,7 +508,8 @@ private fun TaskItemGroup(
                         text = group.title,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    val summary = viewerConfig.groupSummaryFormatter(summary).takeIf { it.isNotEmpty() }
+                    val summary =
+                        viewerConfig.groupSummaryFormatter(summary).takeIf { it.isNotEmpty() }
                     summary?.let {
                         Text(
                             text = it,
@@ -523,7 +522,10 @@ private fun TaskItemGroup(
                 Spacer(Modifier.width(ICON_SPACING))
 
                 Text(
-                    text = viewerConfig.timeFormatter(runtime.isFinished, runtime.durationMs(reporter.nowMs)),
+                    text = viewerConfig.timeFormatter(
+                        runtime.isFinished,
+                        runtime.durationMs(reporter.nowMs)
+                    ),
                     style = MaterialTheme.typography.bodySmall,
                     color = LocalContentColor.current.copy(alpha = .6f)
                 )
@@ -566,28 +568,29 @@ private fun TaskItemContainer(
     expandable: Boolean,
     running: Boolean,
     config: TaskReporter.Config,
+    viewerConfig: TaskViewerConfig,
     onToggleExpanded: () -> Unit,
     content: @Composable () -> Unit,
 ) {
+    /*
     val highlighted = config.expandSinglePathOnly && expanded
-
-    val color = animateColorAsState(
-        targetValue =
-            if (highlighted) {
-                MaterialTheme.colorScheme.primaryContainer
-            } else {
-                MaterialTheme.colorScheme.background
-            }
+    val borderColor by animateColorAsState(
+        targetValue = when {
+            highlighted -> MaterialTheme.colorScheme.primary
+            running -> MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
+            else -> Color.Transparent
+        }
     )
+    val borderWidth by animateDpAsState(
+        targetValue = when {
+            highlighted -> 2.dp
+            running -> 1.dp
+            else -> 0.dp
+        }
+    )*/
 
-    val onColor = animateColorAsState(
-        targetValue =
-            if (highlighted) {
-                MaterialTheme.colorScheme.onPrimaryContainer
-            } else {
-                MaterialTheme.colorScheme.onBackground
-            }
-    )
+    val borderColor = Color.Transparent
+    val borderWidth = 0.dp
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -596,17 +599,19 @@ private fun TaskItemContainer(
                 onToggleExpanded()
             }
         },
-        border = if (running) {
+        border = if (
+            borderWidth > 0.dp
+        ) {
             BorderStroke(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
+                width = borderWidth,
+                color = borderColor
             )
         } else {
             null
         },
         colors = CardDefaults.cardColors(
-            containerColor = color.value,
-            contentColor = onColor.value
+            containerColor = viewerConfig.containerColor,
+            contentColor = viewerConfig.contentColor
         )
     ) {
         content()
@@ -615,15 +620,17 @@ private fun TaskItemContainer(
 
 @Composable
 private fun StatusIcon(
-    config: TaskViewerConfig,
     status: TaskStatus,
+    viewerConfig: TaskViewerConfig,
 ) {
     when (status) {
 
         TaskStatus.Running -> {
             CircularProgressIndicator(
                 modifier = Modifier.size(STATUS_ICON_SIZE),
-                strokeWidth = 2.dp
+                strokeWidth = 2.dp,
+                color = LocalContentColor.current,
+                trackColor = LocalContentColor.current.copy(alpha = 0.2f)
             )
         }
 
@@ -632,7 +639,7 @@ private fun StatusIcon(
                 modifier = Modifier.size(STATUS_ICON_SIZE),
                 imageVector = Icons.Default.CheckCircle,
                 contentDescription = null,
-                tint = config.colorSuccess
+                tint = colorSuccess(viewerConfig.containerColor)
             )
         }
 
@@ -641,7 +648,7 @@ private fun StatusIcon(
                 modifier = Modifier.size(STATUS_ICON_SIZE),
                 imageVector = Icons.Default.Warning,
                 contentDescription = null,
-                tint = config.colorWarning
+                tint = colorWarning(viewerConfig.containerColor)
             )
         }
 
@@ -650,7 +657,7 @@ private fun StatusIcon(
                 modifier = Modifier.size(STATUS_ICON_SIZE),
                 imageVector = Icons.Default.Error,
                 contentDescription = null,
-                tint = config.colorError
+                tint = colorError(viewerConfig.containerColor)
             )
         }
     }
@@ -659,13 +666,12 @@ private fun StatusIcon(
 @Composable
 private fun MessageItem(
     modifier: Modifier,
-    config: TaskViewerConfig,
     message: TaskMessage,
 ) {
     val color = when (message.type) {
         TaskMessage.Type.Info -> LocalContentColor.current
-        TaskMessage.Type.Warning -> config.colorWarning
-        TaskMessage.Type.Error -> config.colorError
+        TaskMessage.Type.Warning -> colorWarning()
+        TaskMessage.Type.Error -> colorError()
     }
 
     Row(
@@ -686,4 +692,31 @@ private fun MessageItem(
             style = MaterialTheme.typography.bodySmall
         )
     }
+}
+
+@Composable
+fun colorWarning(
+    background: Color = MaterialTheme.colorScheme.background,
+) = if (background.isDark()) {
+    Color(0xFFFFB74D) // Orange 300
+} else {
+    Color(0xFFF57C00) // Orange 700
+}
+
+@Composable
+fun colorError(
+    background: Color = MaterialTheme.colorScheme.background,
+) = if (background.isDark()) {
+    Color(0xFFE57373) // Red 300
+} else {
+    Color(0xFFD32F2F) // Red 700
+}
+
+@Composable
+fun colorSuccess(
+    background: Color = MaterialTheme.colorScheme.background,
+) = if (background.isDark()) {
+    Color(0xFF81C784) // Green 300
+} else {
+    Color(0xFF388E3C) // Green 700
 }

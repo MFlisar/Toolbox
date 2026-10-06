@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Task
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.kmp.platformcontext.PlatformIO
 import com.michaelflisar.parcelize.Parcelize
@@ -56,13 +58,15 @@ private fun Page() {
     val reporterConfig = rememberTaskReporterConfig(
         autoExpandNewTasks = true,
         expandRunningTasks = true,
-        expandSinglePathOnly = false
+        expandSinglePathOnly = true
     )
     val reporter = rememberTaskReporter(
         plan = plan,
         config = reporterConfig
     )
     val viewerConfig = rememberTaskViewerConfig(
+        //containerColor = MaterialTheme.colorScheme.primaryContainer, // MaterialTheme.colorScheme.surfaceContainerHighest,
+        //contentColor =  MaterialTheme.colorScheme.onPrimaryContainer, // MaterialTheme.colorScheme.onSurface,
         autoScrollToBottom = false,
         showTaskTimes = true
     )
