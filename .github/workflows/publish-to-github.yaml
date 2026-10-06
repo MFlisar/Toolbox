@@ -6,7 +6,28 @@ on:
       artifactId:
         description: Artifact ID
         required: true
-        type: string
+        type: choice
+        options:
+          - core
+          - app-shared
+          - app-jre
+          - app-jbr
+          - ui
+          - ui-adaptive
+          - zip
+          - csv
+          - backup
+          - service
+          - form
+          - powershell
+          - table
+          - room
+          - ads
+          - proversion
+          - diff
+          - excel
+          - coil
+          - task-viewer
 
       version:
         description: Version
@@ -15,6 +36,29 @@ on:
 
 permissions:
   contents: write
+
+env:
+  MODULE_CONFIG: |
+    core|library/core|:toolbox:core
+    app-shared|library/app/shared|:toolbox:app:shared
+    app-jre|library/app/jre|:toolbox:app:jre
+    app-jbr|library/app/jbr|:toolbox:app:jbr
+    ui|library/modules/ui|:toolbox:modules:ui
+    ui-adaptive|library/modules/ui-adaptive|:toolbox:modules:ui-adaptive
+    zip|library/modules/zip|:toolbox:modules:zip
+    csv|library/modules/csv|:toolbox:modules:csv
+    backup|library/modules/backup|:toolbox:modules:backup
+    service|library/modules/service|:toolbox:modules:service
+    form|library/modules/form|:toolbox:modules:form
+    powershell|library/modules/powershell|:toolbox:modules:powershell
+    table|library/modules/table|:toolbox:modules:table
+    room|library/modules/room|:toolbox:modules:room
+    ads|library/modules/ads|:toolbox:modules:ads
+    proversion|library/modules/proversion|:toolbox:modules:proversion
+    diff|library/modules/diff|:toolbox:modules:diff
+    excel|library/modules/excel|:toolbox:modules:excel
+    coil|library/modules/coil|:toolbox:modules:coil
+    task-viewer|library/modules/task-viewer|:toolbox:modules:task-viewer
 
 jobs:
   publish:
@@ -38,53 +82,25 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: Install yq
-        run: |
-          brew install yq
-
       - name: Resolve module
         id: module
         run: |
-          ARTIFACT_ID="${{ inputs.artifactId }}"
+          LINE=$(echo "$MODULE_CONFIG" | grep "^${{ inputs.artifactId }}|")
 
-          MODULE_PATH=$(yq -r \
-            '.modules[] | select(."artifact-id" == "'"$ARTIFACT_ID"'") | .path' \
-            configs/library-config.yaml)
-
-          if [ -z "$MODULE_PATH" ] || [ "$MODULE_PATH" = "null" ]; then
-            echo "Unknown artifact-id: $ARTIFACT_ID"
+          if [ -z "$LINE" ]; then
+            echo "Unknown artifact: ${{ inputs.artifactId }}"
             exit 1
           fi
 
-          MODULE_NAME=$(basename "$MODULE_PATH")
-
-          if [ "$MODULE_PATH" = "library/core" ]; then
-            GRADLE_PATH=":toolbox:core"
-          elif [[ "$MODULE_PATH" == library/modules/* ]]; then
-            GRADLE_PATH=":toolbox:modules:$MODULE_NAME"
-          elif [[ "$MODULE_PATH" == library/app/shared ]]; then
-            GRADLE_PATH=":toolbox:app:shared"
-          elif [[ "$MODULE_PATH" == library/app/jre ]]; then
-            GRADLE_PATH=":toolbox:app:jre"
-          elif [[ "$MODULE_PATH" == library/app/jbr ]]; then
-            GRADLE_PATH=":toolbox:app:jbr"
-          else
-            echo "Cannot determine gradle path for $MODULE_PATH"
-            exit 1
-          fi
-
-          REPOSITORY_NAME=$(yq -r '.github.name' configs/library-config.yaml | tr '[:upper:]' '[:lower:]')
-          MAVEN_FOLDER=$(yq -r '.github.name' configs/library-config.yaml)
+          MODULE_PATH=$(echo "$LINE" | cut -d'|' -f2)
+          GRADLE_PATH=$(echo "$LINE" | cut -d'|' -f3)
 
           echo "module_path=$MODULE_PATH" >> $GITHUB_OUTPUT
-          echo "module_name=$MODULE_NAME" >> $GITHUB_OUTPUT
           echo "gradle_path=$GRADLE_PATH" >> $GITHUB_OUTPUT
-          echo "repository_name=$REPOSITORY_NAME" >> $GITHUB_OUTPUT
-          echo "maven_folder=$MAVEN_FOLDER" >> $GITHUB_OUTPUT
 
       - name: Check version does not exist
         run: |
-          if [ -d "mavenRepo/${{ steps.module.outputs.maven_folder }}/io/github/mflisar/${{ steps.module.outputs.repository_name }}/${{ inputs.artifactId }}/${{ inputs.version }}" ]; then
+          if [ -d "mavenRepo/Toolbox/io/github/mflisar/toolbox/${{ inputs.artifactId }}/${{ inputs.version }}" ]; then
             echo "Version already exists"
             exit 1
           fi
@@ -98,15 +114,17 @@ jobs:
 
       - name: Verify publication output
         run: |
-          find "${{ steps.module.outputs.module_path }}/build" -type d -name maven-repo
+          find "${{ steps.module.outputs.module_path }}/build" \
+            -type d \
+            -name maven-repo
 
       - name: Copy artifacts
         run: |
-          mkdir -p "mavenRepo/${{ steps.module.outputs.maven_folder }}"
+          mkdir -p mavenRepo/Toolbox
 
           cp -R \
             "${{ steps.module.outputs.module_path }}/build/maven-repo/"* \
-            "mavenRepo/${{ steps.module.outputs.maven_folder }}/"
+            mavenRepo/Toolbox/
 
       - name: Commit and Push
         run: |
