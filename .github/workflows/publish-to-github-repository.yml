@@ -12,6 +12,9 @@ on:
     types:
       - published
 
+permissions:
+  contents: write
+
 jobs:
   publish:
     uses: MFlisar/kmp-devtools/.github/workflows/publish-to-github-repository.yml@8.4.1

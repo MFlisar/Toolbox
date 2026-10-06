@@ -3,6 +3,8 @@
 name: devtools-on-release
 
 # Disabled - replaced by publish-to-github-repository
+on:
+    workflow_dispatch
 # on:
 #   release:
 #     types: [published]
