@@ -19,6 +19,7 @@ import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.tasks.TaskReporter
 import com.michaelflisar.toolbox.tasks.TaskViewerContainer
 import com.michaelflisar.toolbox.tasks.rememberTaskReporter
+import com.michaelflisar.toolbox.tasks.rememberTaskViewerConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -46,9 +47,11 @@ private fun Page() {
 
     val scope = rememberCoroutineScope()
     val reporter = rememberTaskReporter()
+    val config = rememberTaskViewerConfig()
 
     TaskViewerContainer(
         reporter = reporter,
+        config = config,
         modifier = Modifier.fillMaxSize().padding(all = 8.dp)
     ) {
         MyButton(
