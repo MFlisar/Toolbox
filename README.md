@@ -39,6 +39,7 @@
 | diff | ✅ | ✅ | ✅ | ✅ | diff functions and UI |
 | excel | ❌ | ❌ | ✅ | ❌ | excel functions |
 | coil | ✅ | ✅ | ✅ | ✅ | a coil module |
+| task-viewer | ✅ | ✅ | ✅ | ✅ | a task viewer module |
 
 # :arrow_right: Versions
 
@@ -104,6 +105,7 @@ toolbox-proversion = { module = "io.github.mflisar.toolbox:proversion", version.
 toolbox-diff = { module = "io.github.mflisar.toolbox:diff", version.ref = "toolbox" }
 toolbox-excel = { module = "io.github.mflisar.toolbox:excel", version.ref = "toolbox" }
 toolbox-coil = { module = "io.github.mflisar.toolbox:coil", version.ref = "toolbox" }
+toolbox-task-viewer = { module = "io.github.mflisar.toolbox:task-viewer", version.ref = "toolbox" }
 ```
 
 And then use the definitions in your projects **build.gradle.kts** file like following:
@@ -128,6 +130,7 @@ implementation(libs.toolbox.proversion)
 implementation(libs.toolbox.diff)
 implementation(libs.toolbox.excel)
 implementation(libs.toolbox.coil)
+implementation(libs.toolbox.task.viewer)
 ```
 
 </details>
@@ -162,6 +165,7 @@ implementation("io.github.mflisar.toolbox:proversion:${toolbox}")
 implementation("io.github.mflisar.toolbox:diff:${toolbox}")
 implementation("io.github.mflisar.toolbox:excel:${toolbox}")
 implementation("io.github.mflisar.toolbox:coil:${toolbox}")
+implementation("io.github.mflisar.toolbox:task-viewer:${toolbox}")
 ```
 
 </details>
