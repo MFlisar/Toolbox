@@ -86,10 +86,10 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
-        val javaMain by creating { dependsOn(commonMain.get()) }
-        val feedbackSupportedMain by creating { dependsOn(commonMain.get()) }
-        val iosMain by creating { dependsOn(commonMain.get()) }
+        val featureFileSupportMain = create("featureFileSupportMain") { dependsOn(commonMain.get()) }
+        val javaMain = create("javaMain") { dependsOn(commonMain.get()) }
+        val feedbackSupportedMain = create("feedbackSupportedMain") { dependsOn(commonMain.get()) }
+        val iosMain = create("iosMain") { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
 
@@ -102,7 +102,7 @@ kotlin {
         }
 
         if (buildTargets.macOS) {
-            val macosMain by creating { dependsOn(commonMain.get()) }
+            val macosMain = create("macosMain") { dependsOn(commonMain.get()) }
             setupDependencies(module, buildTargets, sourceSets) {
                 Platform.MACOS addSourceSet macosMain
             }
@@ -165,5 +165,10 @@ kotlin {
 // -------------------
 
 // maven publish configuration
+// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+//    BuildFileUtil.setupMavenPublish(module)
+
+// local publish configuration
+// task name: publishAllPublicationsToGitHubRepository
 if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupMavenPublish(module)
+    BuildFileUtil.setupLocalMavenPublish(module)

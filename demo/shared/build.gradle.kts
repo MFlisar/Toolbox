@@ -110,9 +110,9 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
-        val featureNoFileSupportMain by creating { dependsOn(commonMain.get()) }
-        val mobileMain by creating { dependsOn(commonMain.get()) }
+        val featureFileSupportMain = create("featureFileSupportMain") { dependsOn(commonMain.get()) }
+        val featureNoFileSupportMain = create("featureNoFileSupportMain") { dependsOn(commonMain.get()) }
+        val mobileMain = create("mobileMain") { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
 
@@ -141,6 +141,7 @@ kotlin {
             api(project(":toolbox:app:shared"))
             api(project(":toolbox:modules:table"))
             api(project(":toolbox:modules:form"))
+            api(project(":toolbox:modules:task-viewer"))
 
             // ------------------------
             // tests

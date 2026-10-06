@@ -83,15 +83,15 @@ kotlin {
 
         val targetsBackupSupport = listOf(Platform.ANDROID, Platform.WINDOWS)
 
-        val featureFileSupportMain by creating { dependsOn(commonMain.get()) }
-        val featureNoFileSupportMain by creating { dependsOn(commonMain.get()) }
-        val featureBackupSupportMain by creating { dependsOn(commonMain.get()) }
-        val featureNoBackupSupportMain by creating { dependsOn(commonMain.get()) }
-        val notAndroidMain by creating { dependsOn(commonMain.get()) }
-        val notJvmMain by creating { dependsOn(commonMain.get()) }
-        val mobileMain by creating { dependsOn(commonMain.get()) }
-        val notMobileMain by creating { dependsOn(commonMain.get()) }
-        val iosMain by creating { dependsOn(commonMain.get()) }
+        val featureFileSupportMain = create("featureFileSupportMain") { dependsOn(commonMain.get()) }
+        val featureNoFileSupportMain = create("featureNoFileSupportMain") { dependsOn(commonMain.get()) }
+        val featureBackupSupportMain = create("featureBackupSupportMain") { dependsOn(commonMain.get()) }
+        val featureNoBackupSupportMain = create("featureNoBackupSupportMain") { dependsOn(commonMain.get()) }
+        val notAndroidMain = create("notAndroidMain") { dependsOn(commonMain.get()) }
+        val notJvmMain = create("notJvmMain") { dependsOn(commonMain.get()) }
+        val mobileMain = create("mobileMain") { dependsOn(commonMain.get()) }
+        val notMobileMain = create("notMobileMain") { dependsOn(commonMain.get()) }
+        val iosMain = create("iosMain") { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
 
@@ -246,5 +246,10 @@ kotlin {
 // -------------------
 
 // maven publish configuration
+// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+//    BuildFileUtil.setupMavenPublish(module)
+
+// local publish configuration
+// task name: publishAllPublicationsToGitHubRepository
 if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupMavenPublish(module)
+    BuildFileUtil.setupLocalMavenPublish(module)

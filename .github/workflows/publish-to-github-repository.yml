@@ -1,0 +1,21 @@
+name: Publish to GitHub Repository
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version
+        required: true
+        type: string
+
+  release:
+    types:
+      - published
+
+jobs:
+  publish:
+    uses: MFlisar/kmp-devtools/.github/workflows/publish-to-github-repository.yml@8.4.1
+
+    with:
+      version: ${{ inputs.version || github.event.release.tag_name }}
+      artifactsPath: artifacts

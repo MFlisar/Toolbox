@@ -71,8 +71,8 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val adsSupported by creating { dependsOn(commonMain.get()) }
-        val adsNotSupported by creating { dependsOn(commonMain.get()) }
+        val adsSupported = create("adsSupported") { dependsOn(commonMain.get()) }
+        val adsNotSupported = create("adsNotSupported") { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
 
@@ -114,5 +114,10 @@ kotlin {
 // -------------------
 
 // maven publish configuration
+// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+//    BuildFileUtil.setupMavenPublish(module)
+
+// local publish configuration
+// task name: publishAllPublicationsToGitHubRepository
 if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupMavenPublish(module)
+    BuildFileUtil.setupLocalMavenPublish(module)

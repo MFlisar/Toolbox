@@ -76,7 +76,7 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val notAndroidMain by creating { dependsOn(commonMain.get()) }
+        val notAndroidMain = create("notAndroidMain") { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
 
@@ -105,5 +105,10 @@ kotlin {
 // -------------------
 
 // maven publish configuration
+// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+//    BuildFileUtil.setupMavenPublish(module)
+
+// local publish configuration
+// task name: publishAllPublicationsToGitHubRepository
 if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupMavenPublish(module)
+    BuildFileUtil.setupLocalMavenPublish(module)

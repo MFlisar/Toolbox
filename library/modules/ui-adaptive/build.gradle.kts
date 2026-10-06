@@ -76,10 +76,10 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val iosMain by creating { dependsOn(commonMain.get()) }
+        val iosMain = create("iosMain") { dependsOn(commonMain.get()) }
 
-        val styleMaterial3 by creating { dependsOn(commonMain.get()) }
-        val styleCupertino by creating { dependsOn(commonMain.get()) }
+        val styleMaterial3 = create("styleMaterial3") { dependsOn(commonMain.get()) }
+        val styleCupertino = create("styleCupertino") { dependsOn(commonMain.get()) }
         // val styleFluent2 by creating { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
@@ -118,5 +118,10 @@ kotlin {
 // -------------------
 
 // maven publish configuration
+// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+//    BuildFileUtil.setupMavenPublish(module)
+
+// local publish configuration
+// task name: publishAllPublicationsToGitHubRepository
 if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupMavenPublish(module)
+    BuildFileUtil.setupLocalMavenPublish(module)

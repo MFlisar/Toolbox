@@ -85,9 +85,9 @@ kotlin {
 
         val targetsBackupSupport = listOf(Platform.ANDROID, Platform.WINDOWS)
 
-        val notAndroidMain by creating { dependsOn(commonMain.get()) }
-        val featureBackupSupportMain by creating { dependsOn(commonMain.get()) }
-        val featureNoBackupSupportMain by creating { dependsOn(commonMain.get()) }
+        val notAndroidMain = create("notAndroidMain") { dependsOn(commonMain.get()) }
+        val featureBackupSupportMain = create("featureBackupSupportMain") { dependsOn(commonMain.get()) }
+        val featureNoBackupSupportMain = create("featureNoBackupSupportMain") { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
 
@@ -149,5 +149,10 @@ kotlin {
 // -------------------
 
 // maven publish configuration
+// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+//    BuildFileUtil.setupMavenPublish(module)
+
+// local publish configuration
+// task name: publishAllPublicationsToGitHubRepository
 if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupMavenPublish(module)
+    BuildFileUtil.setupLocalMavenPublish(module)

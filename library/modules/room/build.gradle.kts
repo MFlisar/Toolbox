@@ -74,9 +74,9 @@ kotlin {
         // ---------------------
         // custom source sets
         // ---------------------
-        
-        val javaMain by creating { dependsOn(commonMain.get()) }
-        val iosMain by creating { dependsOn(commonMain.get()) }
+
+        val javaMain = create("javaMain") { dependsOn(commonMain.get()) }
+        val iosMain = create("iosMain") { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
 
@@ -109,5 +109,10 @@ kotlin {
 // -------------------
 
 // maven publish configuration
+// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+//    BuildFileUtil.setupMavenPublish(module)
+
+// local publish configuration
+// task name: publishAllPublicationsToGitHubRepository
 if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupMavenPublish(module)
+    BuildFileUtil.setupLocalMavenPublish(module)

@@ -2,9 +2,10 @@
 # Link: https://github.com/MFlisar/kmp-devtools/
 name: devtools-on-release
 
-on:
-  release:
-    types: [published]
+# Disabled - replaced by publish-to-github-repository
+# on:
+#   release:
+#     types: [published]
 
 permissions:
   contents: write
@@ -14,5 +15,5 @@ permissions:
 jobs:
 
   kmp-devtools-on-release:
-    uses: MFlisar/kmp-devtools/.github/workflows/kmp-devtools-on-release.yml@8.0.4
+    uses: MFlisar/kmp-devtools/.github/workflows/kmp-devtools-on-release.yml@8.4.1
     secrets: inherit

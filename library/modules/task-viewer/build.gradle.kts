@@ -109,89 +109,10 @@ kotlin {
 // -------------------
 
 // maven publish configuration
-//if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
 //    BuildFileUtil.setupMavenPublish(module)
 
-// local publish configuration => diese kann dann auf github per workflow hochgeladen werden
-// task name: publishAllPublicationsToLocalMavenRepoRepository
-setupLocalMavenPublish(
-    libraryModuleConfig = module,
-    version = System.getenv("VERSION") ?: "LOCAL-SNAPSHOT"
-)
-
-fun setupLocalMavenPublish(
-    libraryModuleConfig: LibraryModuleConfig.Library,
-    platform: com.vanniktech.maven.publish.Platform = KotlinMultiplatform(
-        javadocJar = JavadocJar.Dokka("dokkaGenerateHtml"),
-        sourcesJar = SourcesJar.Sources()
-    ),
-    version: String,
-) {
-    val module = libraryModuleConfig.libraryConfig.getModuleForProject(
-        libraryModuleConfig.project.rootDir,
-        libraryModuleConfig.project.projectDir
-    )
-
-    libraryModuleConfig.project.extensions.configure(MavenPublishBaseExtension::class.java) {
-        configure(platform)
-
-        coordinates(
-            groupId = libraryModuleConfig.libraryConfig.maven.groupId,
-            artifactId = module.artifactId,
-            version = version
-        )
-
-        pom {
-            name.set(libraryModuleConfig.libraryConfig.library.name)
-            description.set(module.libraryDescription(libraryModuleConfig.libraryConfig))
-            inceptionYear.set(libraryModuleConfig.libraryConfig.library.release.toString())
-            url.set(
-                libraryModuleConfig.libraryConfig.library.getRepoLink(
-                    libraryModuleConfig.config.developer
-                )
-            )
-
-            licenses {
-                license {
-                    name.set(libraryModuleConfig.libraryConfig.library.license.name)
-                    url.set(
-                        libraryModuleConfig.libraryConfig.library.license.getLink(
-                            libraryModuleConfig.config.developer,
-                            libraryModuleConfig.libraryConfig.library
-                        )
-                    )
-                }
-            }
-
-            developers {
-                developer {
-                    id.set(libraryModuleConfig.config.developer.mavenId)
-                    name.set(libraryModuleConfig.config.developer.name)
-                    email.set(libraryModuleConfig.config.developer.mail)
-                }
-            }
-
-            scm {
-                url.set(
-                    libraryModuleConfig.libraryConfig.library.getRepoLink(
-                        libraryModuleConfig.config.developer
-                    )
-                )
-            }
-        }
-    }
-
-    libraryModuleConfig.project.extensions.configure(PublishingExtension::class.java) {
-        repositories {
-            maven {
-                name = "LocalMavenRepo"
-
-                url = libraryModuleConfig.project.layout.buildDirectory
-                    .dir("maven-repo")
-                    .get()
-                    .asFile
-                    .toURI()
-            }
-        }
-    }
-}
+// local publish configuration
+// task name: publishAllPublicationsToGitHubRepository
+if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
+    BuildFileUtil.setupLocalMavenPublish(module)
