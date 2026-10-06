@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>BaseDaoFull</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+        <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+</head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+            <a class="library-name--link" href="../../../index.html" tabindex="1">
+                    room
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true"
+                        data-filter=":toolbox:modules:room/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":toolbox:modules:room/commonMain"
+                                       data-filter=":toolbox:modules:room/commonMain"/>
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize": 280, "minSize": 200, "maxSize": 400}'>
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    room
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="room::com.michaelflisar.toolbox.room.dao/BaseDaoFull///PointingToDeclaration//-1971245280">
+  <div class="breadcrumbs"><a href="../../../index.html">room</a><span class="delimiter">/</span><a href="../index.html">com.michaelflisar.toolbox.room.dao</a><span class="delimiter">/</span><span class="current">BaseDaoFull</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Base</span><wbr></wbr><span>Dao</span><wbr></wbr><span><span>Full</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">BaseDaoFull</a><span class="token operator">&lt;</span><a href="index.html">ID</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-number/index.html">Number</a><span class="token punctuation">, </span><a href="index.html">Entity</a><span class="token operator"> : </span><a href="../../com.michaelflisar.toolbox.room.interfaces/-i-room-entity/index.html">IRoomEntity</a><span class="token operator">&lt;</span><a href="index.html">ID</a><span class="token punctuation">, </span><a href="index.html">Entity</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><a href="index.html">FullEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../-dao-i-d/index.html">DaoID</a><span class="token operator">&lt;</span><a href="index.html">ID</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">tableName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">columnId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">sortAll<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="../-base-dao/index.html">BaseDao</a><span class="token operator">&lt;</span><a href="index.html">ID</a><span class="token punctuation">, </span><a href="index.html">Entity</a><span class="token operator">&gt; </span>, <a href="../../com.michaelflisar.toolbox.room.interfaces/-i-dao-full/index.html">IDaoFull</a><span class="token operator">&lt;</span><a href="index.html">ID</a><span class="token punctuation">, </span><a href="index.html">Entity</a><span class="token punctuation">, </span><a href="index.html">FullEntity</a><span class="token operator">&gt; </span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="tableheader">Constructors</h2>
+        <div class="table"><a data-name="-1834133070%2FConstructors%2F-1971245280" anchor-label="BaseDaoFull" id="-1834133070%2FConstructors%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-base-dao-full.html"><span>Base</span><wbr></wbr><span>Dao</span><wbr></wbr><span><span>Full</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1834133070%2FConstructors%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../-dao-i-d/index.html">DaoID</a><span class="token operator">&lt;</span><a href="index.html">ID</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">tableName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">columnId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">sortAll<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="-993454436%2FProperties%2F-1971245280" anchor-label="columnId" id="-993454436%2FProperties%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/column-id.html"><span>column</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-993454436%2FProperties%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-base-dao/column-id.html">columnId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1021099054%2FProperties%2F-1971245280" anchor-label="id" id="-1021099054%2FProperties%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/id.html"><span><span>id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1021099054%2FProperties%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-base-dao/id.html">id</a><span class="token operator">: </span><a href="../-dao-i-d/index.html">DaoID</a><span class="token operator">&lt;</span><a href="index.html">ID</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1701455062%2FProperties%2F-1971245280" anchor-label="sortAll" id="-1701455062%2FProperties%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/sort-all.html"><span>sort</span><wbr></wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1701455062%2FProperties%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-base-dao/sort-all.html">sortAll</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1625233516%2FProperties%2F-1971245280" anchor-label="tableName" id="-1625233516%2FProperties%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/table-name.html"><span>table</span><wbr></wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1625233516%2FProperties%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-base-dao/table-name.html">tableName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="-1833559746%2FFunctions%2F-1971245280" anchor-label="_delete" id="-1833559746%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao-internal/_delete.html"><span>_</span><wbr></wbr><span>delete</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1833559746%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao-internal/_delete.html"><span class="token function">_delete</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">items<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">Entity</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="769755600%2FFunctions%2F-1971245280" anchor-label="_insertOrUpdate" id="769755600%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao-internal/_insert-or-update.html"><span>_</span><wbr></wbr><span>insert</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Update</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="769755600%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao-internal/_insert-or-update.html"><span class="token function">_insertOrUpdate</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">item<span class="token operator">: </span><a href="index.html">Entity</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a></div><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao-internal/_insert-or-update.html"><span class="token function">_insertOrUpdate</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">items<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">Entity</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="996909377%2FFunctions%2F-1971245280" anchor-label="_rawInt" id="996909377%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao-internal/_raw-int.html"><span>_</span><wbr></wbr><span>rawInt</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="996909377%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao-internal/_raw-int.html"><span class="token function">_rawInt</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">query<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/room/RoomRawQuery.html">RoomRawQuery</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-990259419%2FFunctions%2F-1971245280" anchor-label="_rawItem" id="-990259419%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao-internal/_raw-item.html"><span>_</span><wbr></wbr><span>rawItem</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-990259419%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao-internal/_raw-item.html"><span class="token function">_rawItem</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">query<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/room/RoomRawQuery.html">RoomRawQuery</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Entity</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="998748155%2FFunctions%2F-1971245280" anchor-label="_rawItemOrNull" id="998748155%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao-internal/_raw-item-or-null.html"><span>_</span><wbr></wbr><span>raw</span><wbr></wbr><span>Item</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="998748155%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao-internal/_raw-item-or-null.html"><span class="token function">_rawItemOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">query<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/room/RoomRawQuery.html">RoomRawQuery</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Entity</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="468341690%2FFunctions%2F-1971245280" anchor-label="_rawList" id="468341690%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao-internal/_raw-list.html"><span>_</span><wbr></wbr><span>rawList</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="468341690%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao-internal/_raw-list.html"><span class="token function">_rawList</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">query<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/room/RoomRawQuery.html">RoomRawQuery</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">Entity</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="179017406%2FFunctions%2F-1971245280" anchor-label="count" id="179017406%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/count.html"><span><span>count</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="179017406%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/count.html"><span class="token function">count</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="527451636%2FFunctions%2F-1971245280" anchor-label="delete" id="527451636%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/delete.html"><span><span>delete</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="527451636%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/delete.html"><span class="token function">delete</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">item<span class="token operator">: </span><a href="index.html">Entity</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/delete.html"><span class="token function">delete</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">items<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">Entity</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-36472393%2FFunctions%2F-1971245280" anchor-label="deleteAll" id="-36472393%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/delete-all.html"><span>delete</span><wbr></wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-36472393%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/delete-all.html"><span class="token function">deleteAll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1075784053%2FFunctions%2F-1971245280" anchor-label="deleteById" id="1075784053%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/delete-by-id.html"><span>delete</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1075784053%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/delete-by-id.html"><span class="token function">deleteById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">database<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/room/RoomDatabase.html">RoomDatabase</a><span class="token punctuation">, </span></span><span class="parameter ">id<span class="token operator">: </span><a href="index.html">ID</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="349107634%2FFunctions%2F-1971245280" anchor-label="deleteByIds" id="349107634%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/delete-by-ids.html"><span>delete</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Ids</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="349107634%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/delete-by-ids.html"><span class="token function">deleteByIds</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">database<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/room/RoomDatabase.html">RoomDatabase</a><span class="token punctuation">, </span></span><span class="parameter ">ids<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">ID</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1042700993%2FFunctions%2F-1971245280" anchor-label="load" id="1042700993%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/load.html"><span><span>load</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1042700993%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/load.html"><span class="token function">load</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="index.html">ID</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Entity</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1087270514%2FFunctions%2F-1971245280" anchor-label="loadAll" id="1087270514%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/load-all.html"><span>load</span><wbr></wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1087270514%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/load-all.html"><span class="token function">loadAll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">Entity</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="469323098%2FFunctions%2F-1971245280" anchor-label="loadAllFull" id="469323098%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../com.michaelflisar.toolbox.room.interfaces/-i-dao-full/load-all-full.html"><span>load</span><wbr></wbr><span>All</span><wbr></wbr><span><span>Full</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="469323098%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../com.michaelflisar.toolbox.room.interfaces/-i-dao-full/load-all-full.html"><span class="token function">loadAllFull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">FullEntity</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-761481049%2FFunctions%2F-1971245280" anchor-label="loadFull" id="-761481049%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../com.michaelflisar.toolbox.room.interfaces/-i-dao-full/load-full.html"><span>load</span><wbr></wbr><span><span>Full</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-761481049%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../com.michaelflisar.toolbox.room.interfaces/-i-dao-full/load-full.html"><span class="token function">loadFull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="index.html">ID</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">FullEntity</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-782572048%2FFunctions%2F-1971245280" anchor-label="persist" id="-782572048%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/persist.html"><span><span>persist</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-782572048%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/persist.html"><span class="token function">persist</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">item<span class="token operator">: </span><a href="index.html">Entity</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Entity</a></div><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/persist.html"><span class="token function">persist</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">items<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">Entity</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">Entity</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1387047676%2FFunctions%2F-1971245280" anchor-label="tryLoad" id="1387047676%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-base-dao/try-load.html"><span>try</span><wbr></wbr><span><span>Load</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1387047676%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-base-dao/try-load.html"><span class="token function">tryLoad</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="index.html">ID</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Entity</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1457612308%2FFunctions%2F-1971245280" anchor-label="tryLoadFull" id="1457612308%2FFunctions%2F-1971245280" data-filterable-set=":toolbox:modules:room/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:room/commonMain" data-filterable-set=":toolbox:modules:room/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../com.michaelflisar.toolbox.room.interfaces/-i-dao-full/try-load-full.html"><span>try</span><wbr></wbr><span>Load</span><wbr></wbr><span><span>Full</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1457612308%2FFunctions%2F-1971245280"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:room/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../com.michaelflisar.toolbox.room.interfaces/-i-dao-full/try-load-full.html"><span class="token function">tryLoadFull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="index.html">ID</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">FullEntity</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

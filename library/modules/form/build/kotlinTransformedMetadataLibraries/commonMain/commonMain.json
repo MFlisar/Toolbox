@@ -1,0 +1,632 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/commonMain",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:ui",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui/build/classes/kotlin/metadata/commonMain",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composedialogs",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composedialogs",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.composedialogs-core-4.0.0-commonMain-jQD2IA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composedialogs",
+        "name": "dialog-info"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composedialogs",
+        "name": "dialog-info"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.composedialogs-dialog-info-4.0.0-commonMain-bUcBEw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlin-kotlin-stdlib-2.4.20-commonMain-MgaIfA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.material3-material3-1.9.0-commonMain-PrP0Cw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material",
+        "name": "material-icons-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material",
+        "name": "material-icons-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.material-material-icons-core-1.7.3-commonMain-OY6u5w.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material",
+        "name": "material-icons-extended"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material",
+        "name": "material-icons-extended"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.material-material-icons-extended-1.7.3-commonMain-m2wuDA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-commonMain-BviMwQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.components-components-resources-1.12.0-commonMain-x-IbKw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.kmpplatformcontext-core-2.0.2-commonMain-3aQvHA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.lumberjack-core-12.0.0-commonMain-z2D0-g.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.kmpparcelize-library-2.0.0-commonMain--DAVPA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-1.12.0-skikoMain-Sk_5Qg.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-1.12.0-commonMain-Sk_5Qg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.animation-animation-core-1.12.0-commonMain-xP1nQg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.foundation-foundation-1.12.0-skikoMain-KKcjrg.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.foundation-foundation-1.12.0-commonMain-KKcjrg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.foundation-foundation-layout-1.12.0-skikoMain-oGCHmw.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.foundation-foundation-layout-1.12.0-commonMain-oGCHmw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material",
+        "name": "material-ripple"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material",
+        "name": "material-ripple"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.material-material-ripple-1.9.1-commonMain-tnX3iQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.runtime",
+        "name": "runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.runtime",
+        "name": "runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.runtime-runtime-1.12.0-redirectCommonMain-0kAnuA.klib",
+    "sourceSetName": "redirectCommonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-graphics-1.12.0-skikoMain-NJjUFQ.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-graphics-1.12.0-commonMain-NJjUFQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-text-1.12.0-skikoMain-RE5row.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-text-1.12.0-commonMain-RE5row.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-util-1.12.0-commonMain-AxoCsw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.annotation",
+        "name": "annotation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.annotation",
+        "name": "annotation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/androidx.annotation-annotation-1.10.0-commonMain-a1LVfQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/androidx.savedstate-savedstate-compose-1.4.0-commonMain-YfHBdg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.runtime",
+        "name": "runtime-saveable"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.runtime",
+        "name": "runtime-saveable"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.runtime-runtime-saveable-1.12.0-redirectCommonMain-u_fd4g.klib",
+    "sourceSetName": "redirectCommonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-geometry"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-geometry"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-geometry-1.12.0-commonMain-rpW4HQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-unit-1.12.0-nonAndroidMain-TncRGg.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.ui-ui-unit-1.12.0-commonMain-TncRGg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.animation-animation-1.12.0-nonAndroidMain-EH498g.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.animation-animation-1.12.0-commonMain-EH498g.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/androidx.compose.runtime-runtime-1.12.0-commonMain-uGrQsQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/androidx.savedstate-savedstate-1.4.0-nonAndroidMain-JkDvJw.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/androidx.savedstate-savedstate-1.4.0-commonMain-JkDvJw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime-saveable"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime-saveable"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/androidx.compose.runtime-runtime-saveable-1.12.0-commonMain-z_Dmcw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime-annotation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime-annotation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/androidx.compose.runtime-runtime-annotation-1.12.0-commonMain--pqPZA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-common"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-common"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/androidx.lifecycle-lifecycle-common-2.11.0-commonMain-5YDLUQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/form/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-serialization-core-1.11.0-commonMain-POu6Pw.klib",
+    "sourceSetName": "commonMain"
+  }
+]

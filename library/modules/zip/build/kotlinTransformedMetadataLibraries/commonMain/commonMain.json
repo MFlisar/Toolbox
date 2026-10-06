@@ -1,0 +1,152 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/zip/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-io-core-0.9.1-commonMain-LSdToQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/zip/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.lumberjack-core-12.0.0-commonMain-z2D0-g.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/zip/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlin-kotlin-stdlib-2.4.20-commonMain-MgaIfA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/zip/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-commonMain-BviMwQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/zip/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-serialization-core-1.11.0-commonMain-POu6Pw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/commonMain",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/zip/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-io-bytestring-0.9.1-commonMain-ypuSdQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/zip/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.kmpparcelize-library-2.0.0-commonMain--DAVPA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/zip/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.components-components-resources-1.12.0-commonMain-x-IbKw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/zip/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.kmpplatformcontext-core-2.0.2-commonMain-3aQvHA.klib",
+    "sourceSetName": "commonMain"
+  }
+]

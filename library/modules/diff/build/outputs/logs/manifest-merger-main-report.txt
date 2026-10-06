@@ -1,0 +1,13 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/diff/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest7138790216853974644.xml:2:13-83
+INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/diff/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest7138790216853974644.xml:2:13-83
+	package
+		INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/diff/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest7138790216853974644.xml
+	xmlns:android
+		ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/diff/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest7138790216853974644.xml:2:23-81
+uses-sdk
+INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/diff/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest7138790216853974644.xml reason: use-sdk injection requested
+INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/diff/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest7138790216853974644.xml
+	android:minSdkVersion
+		INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/diff/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest7138790216853974644.xml

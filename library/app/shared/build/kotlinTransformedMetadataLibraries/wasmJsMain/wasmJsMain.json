@@ -1,0 +1,17 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "ui-adaptive"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:ui-adaptive",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/classes/kotlin/metadata/styleMaterial3",
+    "sourceSetName": "styleMaterial3"
+  }
+]

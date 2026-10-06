@@ -1,0 +1,1 @@
+sourceset_dependencies='{":toolbox:app:jre/commonMain":[],":toolbox:app:jre/jvmMain":[":toolbox:app:jre/commonMain"]}'

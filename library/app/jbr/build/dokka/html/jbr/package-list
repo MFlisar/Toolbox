@@ -1,0 +1,52 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.michaelflisar.toolbox.app.internal////PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/index.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/AppBaseTheme///PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-app-base-theme/index.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/AppBaseTheme/AppBaseTheme/#kotlin.String#androidx.compose.ui.graphics.vector.ImageVector#kotlin.Any/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-app-base-theme/-app-base-theme.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/AppBaseTheme/data/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-app-base-theme/data.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/AppBaseTheme/icon/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-app-base-theme/icon.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/AppBaseTheme/text/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-app-base-theme/text.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/JRBThemeSetup///PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-j-r-b-theme-setup/index.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/JRBThemeSetup/baseThemes/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-j-r-b-theme-setup/base-themes.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/JRBThemeSetup/collectBaseTheme/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-j-r-b-theme-setup/collect-base-theme.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/JRBThemeSetup/getIcon/#kotlin.Any/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-j-r-b-theme-setup/get-icon.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/JRBThemeSetup/getText/#kotlin.Any/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-j-r-b-theme-setup/get-text.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/JRBThemeSetup/isDarkTheme/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-j-r-b-theme-setup/is-dark-theme.html
+$dokka.location:com.michaelflisar.toolbox.app.internal/JRBThemeSetup/rememberComposeThemeDefault/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.internal/-j-r-b-theme-setup/remember-compose-theme-default.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel////PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/index.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme.Companion///PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/-companion/index.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme.Companion/fromSystemTheme/#org.jetbrains.skiko.SystemTheme/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/-companion/from-system-theme.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme.Dark///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/-dark/index.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme.Light///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/-light/index.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme.LightWithLightHeader///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/-light-with-light-header/index.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme.System///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/-system/index.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme///PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/index.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme/entries/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/entries.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme/imageVector/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/image-vector.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme/isDark/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/is-dark.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme/isLightHeader/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/is-light-header.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme/label/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/label.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme/select/#TypeParam(bounds=[kotlin.Any?])#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/select.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme/switchLabel/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/switch-label.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme/valueOf/#kotlin.String/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/value-of.html
+$dokka.location:com.michaelflisar.toolbox.app.jewel/JewelTheme/values/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app.jewel/-jewel-theme/values.html
+$dokka.location:com.michaelflisar.toolbox.app////PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/index.html
+$dokka.location:com.michaelflisar.toolbox.app//DesktopApplication/androidx.compose.ui.window.ApplicationScope#cafe.adriel.voyager.core.screen.Screen#com.michaelflisar.toolbox.MyTheme#kotlin.Function0[kotlin.Unit]?#kotlin.Function1[androidx.compose.ui.input.key.KeyEvent,kotlin.Boolean]#kotlin.Function1[androidx.compose.ui.input.key.KeyEvent,kotlin.Boolean]#androidx.compose.runtime.MutableState[kotlin.Boolean]#kotlin.Function1[cafe.adriel.voyager.navigator.Navigator,kotlin.Unit]/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-application.html
+$dokka.location:com.michaelflisar.toolbox.app//DesktopMenuBar/#kotlin.collections.List[com.michaelflisar.toolbox.app.features.menu.MenuItem]#com.michaelflisar.toolbox.app.DesktopTitleBar.Setup#kotlin.collections.List[com.michaelflisar.toolbox.app.DesktopTitleBar.TitleAction]/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-menu-bar.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopPrefs.Companion///PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-prefs/-companion/index.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopPrefs///PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-prefs/index.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopPrefs/DesktopPrefs/#com.michaelflisar.kotpreferences.core.interfaces.Storage/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-prefs/-desktop-prefs.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopPrefs/jewelTheme/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-prefs/jewel-theme.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar.Setup///PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/-setup/index.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar.Setup/Setup/#kotlin.Boolean#kotlin.Boolean/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/-setup/-setup.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar.Setup/showAlwaysOnTop/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/-setup/show-always-on-top.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar.Setup/showThemeSelector/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/-setup/show-theme-selector.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar.TitleAction///PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/-title-action/index.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar.TitleAction/TitleAction/#kotlin.String#androidx.compose.ui.graphics.vector.ImageVector#kotlin.Function0[kotlin.Unit]/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/-title-action/-title-action.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar.TitleAction/imageVector/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/-title-action/image-vector.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar.TitleAction/onClick/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/-title-action/on-click.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar.TitleAction/title/#/PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/-title-action/title.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopTitleBar///PointingToDeclaration/jbr/com.michaelflisar.toolbox.app/-desktop-title-bar/index.html
+com.michaelflisar.toolbox.app
+com.michaelflisar.toolbox.app.internal
+com.michaelflisar.toolbox.app.jewel

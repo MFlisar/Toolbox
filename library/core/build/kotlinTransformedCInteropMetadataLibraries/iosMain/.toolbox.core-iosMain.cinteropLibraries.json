@@ -1,0 +1,47 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/kotlinTransformedCInteropMetadataLibraries/iosMain/org.jetbrains.kotlinx-atomicfu-0.28.0-iosMain-cinterop/org.jetbrains.kotlinx_atomicfu-cinterop-interop-NDYgJg.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-uikit"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-uikit"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/kotlinTransformedCInteropMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-uikit-1.12.0-iosMain-cinterop/org.jetbrains.compose.ui_ui-uikit-cinterop-utils-kEWvMw.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/kotlinTransformedCInteropMetadataLibraries/iosMain/org.jetbrains.skiko-skiko-0.150.1-iosMain-cinterop/org.jetbrains.skiko_skiko-cinterop-uikit-jIV0nA.klib",
+    "sourceSetName": "iosMain"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "locationBySourceSetName": {
+    "commonMain": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/commonMain",
+    "featureFileSupportMain": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/featureFileSupportMain",
+    "feedbackSupportedMain": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/feedbackSupportedMain",
+    "iosMain": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/iosMain/klib/core_iosMain",
+    "javaMain": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/javaMain"
+  }
+}

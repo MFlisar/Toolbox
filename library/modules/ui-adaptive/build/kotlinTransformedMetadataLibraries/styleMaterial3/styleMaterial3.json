@@ -1,0 +1,257 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:ui",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui/build/classes/kotlin/metadata/notJvmMain",
+    "sourceSetName": "notJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.animation-animation-core-1.12.0-webMain-xP1nQg.klib",
+    "sourceSetName": "webMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.animation-animation-core-1.12.0-nonJvmMain-xP1nQg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.foundation-foundation-1.12.0-webMain-KKcjrg.klib",
+    "sourceSetName": "webMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.foundation-foundation-1.12.0-nonJvmMain-KKcjrg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.foundation-foundation-layout-1.12.0-nonJvmMain-oGCHmw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.ui-ui-graphics-1.12.0-webMain-NJjUFQ.klib",
+    "sourceSetName": "webMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.ui-ui-graphics-1.12.0-nonJvmMain-NJjUFQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.ui-ui-text-1.12.0-webMain-RE5row.klib",
+    "sourceSetName": "webMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.ui-ui-text-1.12.0-nonJvmMain-RE5row.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.ui-ui-util-1.12.0-webMain-AxoCsw.klib",
+    "sourceSetName": "webMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.ui-ui-util-1.12.0-nonJvmMain-AxoCsw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.ui-ui-1.12.0-webMain-Sk_5Qg.klib",
+    "sourceSetName": "webMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.ui-ui-1.12.0-nonJvmMain-Sk_5Qg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.ui-ui-unit-1.12.0-nonJvmMain-TncRGg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/org.jetbrains.compose.animation-animation-1.12.0-nonJvmMain-EH498g.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleMaterial3/androidx.lifecycle-lifecycle-runtime-2.11.0-webMain-u4l1lg.klib",
+    "sourceSetName": "webMain"
+  }
+]

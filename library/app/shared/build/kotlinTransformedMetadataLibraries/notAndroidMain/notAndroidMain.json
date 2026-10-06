@@ -1,0 +1,242 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "cafe.adriel.voyager",
+        "name": "voyager-navigator"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "cafe.adriel.voyager",
+        "name": "voyager-navigator"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/cafe.adriel.voyager-voyager-navigator-2.2.21-1.10.3-nonAndroidMain-4sZV8A.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "backup"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:backup",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/backup/build/classes/kotlin/metadata/notAndroidMain",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/io.github.mflisar.composechangelog-core-4.0.0-notAndroidMain-G1b4cA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composethemer",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composethemer",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/io.github.mflisar.composethemer-core-2.0.0-notAndroidMain-zrZTaA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/org.jetbrains.compose.material3-material3-1.9.0-skikoMain-PrP0Cw.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3.adaptive",
+        "name": "adaptive"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3.adaptive",
+        "name": "adaptive"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/org.jetbrains.compose.material3.adaptive-adaptive-1.2.0-nonAndroidMain-kZFiqw.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-backhandler"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-backhandler"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/org.jetbrains.compose.ui-ui-backhandler-1.12.0-jbMain-3hHFJQ.klib",
+    "sourceSetName": "jbMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-nonAndroidMain-v3O-MA.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/org.jetbrains.compose.components-components-resources-1.12.0-skikoMain-x-IbKw.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/io.github.mflisar.kmpplatformcontext-core-2.0.2-notAndroidMain-3aQvHA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/io.github.mflisar.kmpparcelize-library-2.0.0-notAndroidMain--DAVPA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material",
+        "name": "material-ripple"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material",
+        "name": "material-ripple"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/org.jetbrains.compose.material-material-ripple-1.9.1-nonAndroidMain-tnX3iQ.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/androidx.compose.runtime-runtime-1.12.0-nonAndroidMain-uGrQsQ.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/androidx.savedstate-savedstate-compose-1.4.0-nonAndroidMain-YfHBdg.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/org.jetbrains.skiko-skiko-0.150.1-commonMain-WLtCvA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/notAndroidMain/androidx.savedstate-savedstate-1.4.0-nonAndroidMain-JkDvJw.klib",
+    "sourceSetName": "nonAndroidMain"
+  }
+]

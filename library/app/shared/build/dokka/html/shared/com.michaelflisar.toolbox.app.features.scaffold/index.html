@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>com.michaelflisar.toolbox.app.features.scaffold</title>
+    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
+        <script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer="defer"></script>
+</head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+            <a class="library-name--link" href="../../index.html" tabindex="1">
+                    shared
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true"
+                        data-filter=":toolbox:app:shared/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":toolbox:app:shared/commonMain"
+                                       data-filter=":toolbox:app:shared/commonMain"/>
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize": 280, "minSize": 200, "maxSize": 400}'>
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    shared
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageIds="shared::com.michaelflisar.toolbox.app.features.scaffold////PointingToDeclaration//-459569648">
+  <div class="breadcrumbs"><a href="../../index.html">shared</a><span class="delimiter">/</span><span class="current">com.michaelflisar.toolbox.app.features.scaffold</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button><button class="section-tab" data-togglable="PROPERTY,EXTENSION_PROPERTY">Properties</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="-847909427%2FClasslikes%2F-459569648" anchor-label="CommonScaffold" id="-847909427%2FClasslikes%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-common-scaffold/index.html"><span>Common</span><wbr></wbr><span><span>Scaffold</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-847909427%2FClasslikes%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-common-scaffold/index.html">CommonScaffold</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1569025936%2FClasslikes%2F-459569648" anchor-label="NavigationData" id="1569025936%2FClasslikes%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-navigation-data/index.html"><span>Navigation</span><wbr></wbr><span><span>Data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1569025936%2FClasslikes%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-navigation-data/index.html">NavigationData</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>pageSettings<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.pages/-page-settings/index.html">PageSettings</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>mainPages<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../com.michaelflisar.toolbox.app.features.navigation.screen/-i-nav-screen/index.html">INavScreen</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>additionalActionItems<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../com.michaelflisar.toolbox.app.features.actions/-i-base-action/index.html">IBaseAction</a><span class="token operator">&gt;</span><span class="token operator"> = </span>emptyList()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>showLabels<span class="token operator">: </span><span class="token punctuation">(</span>style<span class="token operator">: </span><a href="-navigation-style/index.html">NavigationStyle</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span>{ _ -&gt; true }<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>showForSingleItem<span class="token operator">: </span><span class="token punctuation">(</span>style<span class="token operator">: </span><a href="-navigation-style/index.html">NavigationStyle</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span>{ _ -&gt; false }</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2047677687%2FClasslikes%2F-459569648" anchor-label="NavigationStyle" id="2047677687%2FClasslikes%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-navigation-style/index.html"><span>Navigation</span><wbr></wbr><span><span>Style</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2047677687%2FClasslikes%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-navigation-style/index.html">NavigationStyle</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-navigation-style/index.html">NavigationStyle</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="1772476062%2FProperties%2F-459569648" anchor-label="LocalPlatformStyle" id="1772476062%2FProperties%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-local-platform-style.html"><span>Local</span><wbr></wbr><span>Platform</span><wbr></wbr><span><span>Style</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1772476062%2FProperties%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="-local-platform-style.html">LocalPlatformStyle</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/ProvidableCompositionLocal.html">ProvidableCompositionLocal</a><span class="token operator">&lt;</span><a href="../com.michaelflisar.toolbox.app.platform/-resolved-platform-style/index.html">ResolvedPlatformStyle</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="-750376420%2FFunctions%2F-459569648" anchor-label="CommonBottomBar" id="-750376420%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-common-bottom-bar.html"><span>Common</span><wbr></wbr><span>Bottom</span><wbr></wbr><span><span>Bar</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-750376420%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="-common-bottom-bar.html"><span class="token function">CommonBottomBar</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">modifier<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier.html">Modifier</a><span class="token operator"> = </span>Modifier</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1581678986%2FFunctions%2F-459569648" anchor-label="CommonScaffold" id="-1581678986%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-common-scaffold.html"><span>Common</span><wbr></wbr><span><span>Scaffold</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1581678986%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="-common-scaffold.html"><span class="token function">CommonScaffold</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">navigator<span class="token operator">: </span><span data-unresolved-link="cafe.adriel.voyager.navigator/Navigator///PointingToDeclaration/">Navigator</span><span class="token punctuation">, </span></span><span class="parameter ">navigationData<span class="token operator">: </span><a href="-navigation-data/index.html">NavigationData</a><span class="token punctuation">, </span></span><span class="parameter ">modifier<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier.html">Modifier</a><span class="token operator"> = </span>Modifier<span class="token punctuation">, </span></span><span class="parameter ">stylePreference<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.platform/-platform-style-preference/index.html">PlatformStylePreference</a><span class="token operator"> = </span>PlatformStylePreference.Auto<span class="token punctuation">, </span></span><span class="parameter ">navigationStyle<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/State.html">State</a><span class="token operator">&lt;</span><a href="-navigation-style/index.html">NavigationStyle</a><span class="token operator">&gt;</span><span class="token operator"> = </span>rememberNavigationStyleAuto()<span class="token punctuation">, </span></span><span class="parameter ">platformSpecifics<span class="token operator">: </span><a href="-common-scaffold/-platform-specifics/index.html">CommonScaffold.PlatformSpecifics</a><span class="token operator"> = </span>rememberPlatformScaffoldSpecifics()<span class="token punctuation">, </span></span><span class="parameter ">topBar<span class="token operator">: </span><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a> </span><span class="token punctuation">(</span>screen<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.features.navigation.screen/-i-nav-screen/index.html">INavScreen</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ screen -&gt;
+        CommonTopBar(screen)
+    }<span class="token punctuation">, </span></span><span class="parameter ">bottomBar<span class="token operator">: </span><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a> </span><span class="token punctuation">(</span>navigationStyle<span class="token operator">: </span><a href="-navigation-style/index.html">NavigationStyle</a><span class="token punctuation">, </span>screen<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.features.navigation.screen/-i-nav-screen/index.html">INavScreen</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ navigationStyle, screen -&gt;
+        if (navigationStyle == NavigationStyle.Bottom) {
+            CommonBottomBar()
+        }
+    }<span class="token punctuation">, </span></span><span class="parameter ">sideBar<span class="token operator">: </span><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a> </span><span class="token punctuation">(</span>navigationStyle<span class="token operator">: </span><a href="-navigation-style/index.html">NavigationStyle</a><span class="token punctuation">, </span>screen<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.features.navigation.screen/-i-nav-screen/index.html">INavScreen</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ navigationStyle, screen -&gt;
+        if (navigationStyle == NavigationStyle.Left) {
+            CommonSideBar()
+        }
+    }<span class="token punctuation">, </span></span><span class="parameter ">floatingActionButton<span class="token operator">: </span><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a> </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}<span class="token punctuation">, </span></span><span class="parameter ">floatingActionButtonPosition<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/material3/FabPosition.html">FabPosition</a><span class="token operator"> = </span>FabPosition.End<span class="token punctuation">, </span></span><span class="parameter ">containerColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token operator"> = </span>MaterialTheme.colorScheme.background<span class="token punctuation">, </span></span><span class="parameter ">contentColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Color.html">Color</a><span class="token operator"> = </span>contentColorFor(containerColor)<span class="token punctuation">, </span></span><span class="parameter ">contentWindowInsets<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/WindowInsets.html">WindowInsets</a><span class="token operator"> = </span>ScaffoldDefaults.contentWindowInsets<span class="token punctuation">, </span></span><span class="parameter ">content<span class="token operator">: </span><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a> </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{
+        AppNavigatorTransitionPlatformStyle(navigator)
+    }</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-515855608%2FFunctions%2F-459569648" anchor-label="CommonSideBar" id="-515855608%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-common-side-bar.html"><span>Common</span><wbr></wbr><span>Side</span><wbr></wbr><span><span>Bar</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-515855608%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="-common-side-bar.html"><span class="token function">CommonSideBar</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">modifier<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/Modifier.html">Modifier</a><span class="token operator"> = </span>Modifier</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-406799530%2FFunctions%2F-459569648" anchor-label="CommonTopBar" id="-406799530%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-common-top-bar.html"><span>Common</span><wbr></wbr><span>Top</span><wbr></wbr><span><span>Bar</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-406799530%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="-common-top-bar.html"><span class="token function">CommonTopBar</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">screen<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.features.navigation.screen/-i-nav-screen/index.html">INavScreen</a><span class="token punctuation">, </span></span><span class="parameter ">content<span class="token operator">: </span><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a> </span><span class="token punctuation">(</span>screen<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.features.navigation.screen/-i-nav-screen/index.html">INavScreen</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ it.Toolbar() }</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1045725014%2FFunctions%2F-459569648" anchor-label="rememberNavigationStyleAuto" id="-1045725014%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remember-navigation-style-auto.html"><span>remember</span><wbr></wbr><span>Navigation</span><wbr></wbr><span>Style</span><wbr></wbr><span><span>Auto</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1045725014%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="remember-navigation-style-auto.html"><span class="token function">rememberNavigationStyleAuto</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/State.html">State</a><span class="token operator">&lt;</span><a href="-navigation-style/index.html">NavigationStyle</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1482363775%2FFunctions%2F-459569648" anchor-label="rememberPlatformScaffoldSpecifics" id="1482363775%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remember-platform-scaffold-specifics.html"><span>remember</span><wbr></wbr><span>Platform</span><wbr></wbr><span>Scaffold</span><wbr></wbr><span><span>Specifics</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1482363775%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="remember-platform-scaffold-specifics.html"><span class="token function">rememberPlatformScaffoldSpecifics</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">mobile<span class="token operator">: </span><a href="-common-scaffold/-platform-specifics/-mobile/index.html">CommonScaffold.PlatformSpecifics.Mobile</a><span class="token operator"> = </span>rememberPlatformScaffoldSpecificsMobile()<span class="token punctuation">, </span></span><span class="parameter ">desktop<span class="token operator">: </span><a href="-common-scaffold/-platform-specifics/-desktop/index.html">CommonScaffold.PlatformSpecifics.Desktop</a><span class="token operator"> = </span>rememberPlatformScaffoldSpecificsDesktop()<span class="token punctuation">, </span></span><span class="parameter ">web<span class="token operator">: </span><a href="-common-scaffold/-platform-specifics/-web/index.html">CommonScaffold.PlatformSpecifics.Web</a><span class="token operator"> = </span>rememberPlatformScaffoldSpecificsWeb()</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-common-scaffold/-platform-specifics/index.html">CommonScaffold.PlatformSpecifics</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1576403739%2FFunctions%2F-459569648" anchor-label="rememberPlatformScaffoldSpecificsDesktop" id="-1576403739%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remember-platform-scaffold-specifics-desktop.html"><span>remember</span><wbr></wbr><span>Platform</span><wbr></wbr><span>Scaffold</span><wbr></wbr><span>Specifics</span><wbr></wbr><span><span>Desktop</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1576403739%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="remember-platform-scaffold-specifics-desktop.html"><span class="token function">rememberPlatformScaffoldSpecificsDesktop</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">isRailExpandable<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter ">isRailExpanded<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">&gt;</span><span class="token operator"> = </span>remember { mutableStateOf(false) }<span class="token punctuation">, </span></span><span class="parameter ">showAdditionalItemsAtBottomIfRail<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-common-scaffold/-platform-specifics/-desktop/index.html">CommonScaffold.PlatformSpecifics.Desktop</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="258864508%2FFunctions%2F-459569648" anchor-label="rememberPlatformScaffoldSpecificsMobile" id="258864508%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remember-platform-scaffold-specifics-mobile.html"><span>remember</span><wbr></wbr><span>Platform</span><wbr></wbr><span>Scaffold</span><wbr></wbr><span>Specifics</span><wbr></wbr><span><span>Mobile</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="258864508%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="remember-platform-scaffold-specifics-mobile.html"><span class="token function">rememberPlatformScaffoldSpecificsMobile</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-common-scaffold/-platform-specifics/-mobile/index.html">CommonScaffold.PlatformSpecifics.Mobile</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="585868205%2FFunctions%2F-459569648" anchor-label="rememberPlatformScaffoldSpecificsWeb" id="585868205%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remember-platform-scaffold-specifics-web.html"><span>remember</span><wbr></wbr><span>Platform</span><wbr></wbr><span>Scaffold</span><wbr></wbr><span>Specifics</span><wbr></wbr><span><span>Web</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="585868205%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="remember-platform-scaffold-specifics-web.html"><span class="token function">rememberPlatformScaffoldSpecificsWeb</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">disableBottomAndSideBar<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-common-scaffold/-platform-specifics/-web/index.html">CommonScaffold.PlatformSpecifics.Web</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

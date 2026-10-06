@@ -1,0 +1,11 @@
+abi_version=2.4.0
+builtins_platform=WASM
+compiler_version=2.4.20
+ir_signature_versions=1,2
+jsOutputName=Toolbox-toolbox-modules-ads
+language_features=+AllowAnyAsAnActualTypeForExpectInterface +JsAllowImplementingFunctionInterface +MultiPlatformProjects
+metadata_version=2.4.0
+serializedIrFileFingerprints=2l493a7wbfwm0.bv33enfp3cly 3ajbnjk3jc5z.1zm3l4la55yl4 23gtphjy5smbi.1oy1c2w8rwybw
+serializedKlibFingerprint=17y0h1tgb2drx.2bzdnka6q0fmz
+unique_name=Toolbox.toolbox.modules\:ads
+wasm_targets=wasm-js

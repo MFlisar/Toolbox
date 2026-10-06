@@ -1,0 +1,8 @@
+{
+  "locationBySourceSetName": {
+    "commonMain": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/classes/kotlin/metadata/commonMain",
+    "iosMain": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/classes/kotlin/metadata/iosMain/klib/ui-adaptive_iosMain",
+    "styleCupertino": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/classes/kotlin/metadata/styleCupertino",
+    "styleMaterial3": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/classes/kotlin/metadata/styleMaterial3"
+  }
+}

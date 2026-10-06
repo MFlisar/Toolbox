@@ -1,0 +1,11 @@
+abi_version=2.4.0
+builtins_platform=WASM
+compiler_version=2.4.20
+ir_signature_versions=1,2
+jsOutputName=Toolbox-toolbox-modules-backup
+language_features=+AllowAnyAsAnActualTypeForExpectInterface +JsAllowImplementingFunctionInterface +MultiPlatformProjects
+metadata_version=2.4.0
+serializedIrFileFingerprints=2qi2rvsklvyv5.1tmhxcapuzlms a2fwhrvk7goy.hqswnzlkniei 3kwrl7gda1hb4.xyh443pavwi1 ydrc3imocn7r.qj5cug5r0p3v 20g4v7drjhsia.dje25sq12nni 5h4spqqjund9.afzmw3o1d09e 1p80ch06hb2gc.2jaj0tbsb34ug 3p5jy3dk1nl6s.322j3bjagj2jn 2qo7329kil1yh.3t31ped9wkhm 11jx1moxh9kpy.3jt40wmsdtqgv 2csxcnp852zbk.35nw3pddrygjr
+serializedKlibFingerprint=2i8xg11ongt20.3iiy1h5uzlqi0
+unique_name=Toolbox.toolbox.modules\:backup
+wasm_targets=wasm-js

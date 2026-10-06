@@ -1,0 +1,380 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.mflisar.toolbox",
+    "module": "ads",
+    "version": "6.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ads-metadata.jar",
+          "url": "ads-6.0.0.jar",
+          "size": 7677,
+          "sha512": "489f423d331e43f8be079c06e8e140d6b28f06b6399a020506dfac378342a4e39ebb4890188ff8f1eb90ef2421c7a721d13474a46541fe1cdbfac6e25997e186",
+          "sha256": "dc482ff1443740a6e57287773314fb54d6081f12f083ecb1bc091b010927fe88",
+          "sha1": "3aaec5d15e3fb77846bd56d652b80f70075ee46e",
+          "md5": "dd371691d2e8223f2221d88dfa2c4061"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "ads-kotlin-sources.jar",
+          "url": "ads-6.0.0-sources.jar",
+          "size": 5640,
+          "sha512": "e3fadd3c0756edc9396d16501acb337cbf5d905ffd7301650e20f509f69378117e51a54f55ae6a8930c5188ff551f8c0080196f70ce57c4c994e0b10a1f206fe",
+          "sha256": "fcef421438df6da963f7971aa63f8fa72ab65a2a614e86549d0cf45841c909d0",
+          "sha1": "ea1bf68729df5c3f1f0f2088f27ad73727ad21c0",
+          "md5": "48f03b65e1d641a45eda5e64a2168ea1"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../ads-android/6.0.0/ads-android-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-android",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../ads-android/6.0.0/ads-android-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-android",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../ads-android/6.0.0/ads-android-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-android",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ads-iosarm64/6.0.0/ads-iosarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-iosarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ads-iosarm64/6.0.0/ads-iosarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-iosarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ads-iosarm64/6.0.0/ads-iosarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-iosarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ads-iosarm64/6.0.0/ads-iosarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-iosarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ads-iossimulatorarm64/6.0.0/ads-iossimulatorarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-iossimulatorarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ads-iossimulatorarm64/6.0.0/ads-iossimulatorarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-iossimulatorarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ads-iossimulatorarm64/6.0.0/ads-iossimulatorarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-iossimulatorarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ads-iossimulatorarm64/6.0.0/ads-iossimulatorarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-iossimulatorarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../ads-jvm/6.0.0/ads-jvm-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-jvm",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../ads-jvm/6.0.0/ads-jvm-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-jvm",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../ads-jvm/6.0.0/ads-jvm-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-jvm",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "wasmJsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../ads-wasm-js/6.0.0/ads-wasm-js-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-wasm-js",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "wasmJsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../ads-wasm-js/6.0.0/ads-wasm-js-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-wasm-js",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "wasmJsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../ads-wasm-js/6.0.0/ads-wasm-js-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-wasm-js",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "wasmJsResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresourcesjs",
+        "org.gradle.usage": "kotlin-multiplatformresourcesjs",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../ads-wasm-js/6.0.0/ads-wasm-js-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ads-wasm-js",
+        "version": "6.0.0"
+      }
+    }
+  ]
+}

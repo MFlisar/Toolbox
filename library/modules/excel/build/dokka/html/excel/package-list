@@ -1,0 +1,30 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.michaelflisar.toolbox.excel.classes////PointingToDeclaration/excel/com.michaelflisar.toolbox.excel.classes/index.html
+$dokka.location:com.michaelflisar.toolbox.excel.classes/ExcelFoundRow///PointingToDeclaration/excel/com.michaelflisar.toolbox.excel.classes/-excel-found-row/index.html
+$dokka.location:com.michaelflisar.toolbox.excel.classes/ExcelFoundRow/ExcelFoundRow/#kotlin.Int#kotlin.Boolean/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel.classes/-excel-found-row/-excel-found-row.html
+$dokka.location:com.michaelflisar.toolbox.excel.classes/ExcelFoundRow/index/#/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel.classes/-excel-found-row/--index--.html
+$dokka.location:com.michaelflisar.toolbox.excel.classes/ExcelFoundRow/new/#/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel.classes/-excel-found-row/new.html
+$dokka.location:com.michaelflisar.toolbox.excel.classes/ExcelSheet///PointingToDeclaration/excel/com.michaelflisar.toolbox.excel.classes/-excel-sheet/index.html
+$dokka.location:com.michaelflisar.toolbox.excel.classes/ExcelSheet/ExcelSheet/#kotlin.Any/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel.classes/-excel-sheet/-excel-sheet.html
+$dokka.location:com.michaelflisar.toolbox.excel.classes/ExcelSheet/sheet/#/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel.classes/-excel-sheet/sheet.html
+$dokka.location:com.michaelflisar.toolbox.excel////PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/index.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel///PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/index.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel/columnIndex/#kotlin.String/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/column-index.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel/columnString/#kotlin.Int/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/column-string.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel/createColumnRangeList/#kotlin.String#kotlin.String/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/create-column-range-list.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel/findRow/#com.michaelflisar.toolbox.excel.classes.ExcelSheet#kotlin.String#kotlin.Function1[kotlin.String,kotlin.Boolean]/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/find-row.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel/readFile/#java.io.File#kotlin.String#kotlin.Int#kotlin.collections.List[kotlin.String]/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/read-file.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel/readLine/#kotlin.String#kotlin.String#kotlin.Int#kotlin.Boolean#kotlin.collections.List[kotlin.String]/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/read-line.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel/updateCell/#com.michaelflisar.toolbox.excel.classes.ExcelSheet#kotlin.Int#kotlin.String#kotlin.String/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/update-cell.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel/updateExcel/#java.io.File#kotlin.String#kotlin.Function1[com.michaelflisar.toolbox.excel.classes.ExcelSheet,kotlin.Boolean]/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/update-excel.html
+$dokka.location:com.michaelflisar.toolbox.excel/Excel/updateExcel/#kotlin.String#kotlin.String#kotlin.Function1[com.michaelflisar.toolbox.excel.classes.ExcelSheet,kotlin.Boolean]/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel/update-excel.html
+$dokka.location:com.michaelflisar.toolbox.excel/ExcelSheet///PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel-sheet/index.html
+$dokka.location:com.michaelflisar.toolbox.excel/ExcelSheet/ExcelSheet/#java.io.File#kotlin.String#kotlin.collections.List[kotlin.String]#kotlin.Int/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel-sheet/-excel-sheet.html
+$dokka.location:com.michaelflisar.toolbox.excel/ExcelSheet/columns/#/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel-sheet/columns.html
+$dokka.location:com.michaelflisar.toolbox.excel/ExcelSheet/file/#/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel-sheet/file.html
+$dokka.location:com.michaelflisar.toolbox.excel/ExcelSheet/firstDataRow/#/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel-sheet/first-data-row.html
+$dokka.location:com.michaelflisar.toolbox.excel/ExcelSheet/read/#kotlin.Boolean/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel-sheet/read.html
+$dokka.location:com.michaelflisar.toolbox.excel/ExcelSheet/sheet/#/PointingToDeclaration/excel/com.michaelflisar.toolbox.excel/-excel-sheet/sheet.html
+com.michaelflisar.toolbox.excel
+com.michaelflisar.toolbox.excel.classes

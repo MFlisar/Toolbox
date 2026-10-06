@@ -1,0 +1,8 @@
+{
+  "locationBySourceSetName": {
+    "commonMain": "/Users/runner/work/Toolbox/Toolbox/library/modules/backup/build/classes/kotlin/metadata/commonMain",
+    "featureBackupSupportMain": "/Users/runner/work/Toolbox/Toolbox/library/modules/backup/build/classes/kotlin/metadata/featureBackupSupportMain",
+    "featureNoBackupSupportMain": "/Users/runner/work/Toolbox/Toolbox/library/modules/backup/build/classes/kotlin/metadata/featureNoBackupSupportMain",
+    "notAndroidMain": "/Users/runner/work/Toolbox/Toolbox/library/modules/backup/build/classes/kotlin/metadata/notAndroidMain"
+  }
+}

@@ -1,0 +1,15 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.michaelflisar.toolbox.csv////PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/index.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSV///PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v/index.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSV/readFile/#java.io.File#kotlin.Int#kotlin.Boolean#kotlin.Boolean#kotlin.Boolean#kotlin.Char#java.nio.charset.Charset#kotlin.Function1[kotlin.collections.List[kotlin.String],TypeParam(bounds=[kotlin.Any?])?]/PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v/read-file.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSV/writeFile/#java.io.File#com.michaelflisar.toolbox.csv.CSVManager[TypeParam(bounds=[kotlin.Any?])]#kotlin.collections.List[TypeParam(bounds=[kotlin.Any?])]#kotlin.Char#java.nio.charset.Charset/PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v/write-file.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSV/writeFile/#java.io.File#kotlin.collections.List[kotlin.String]#kotlin.collections.List[TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),kotlin.collections.List[kotlin.String]]#kotlin.Char#java.nio.charset.Charset/PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v/write-file.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSVManager///PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v-manager/index.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSVManager/CSVManager/#kotlin.String#kotlin.String#kotlin.collections.List[kotlin.String]/PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v-manager/-c-s-v-manager.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSVManager/create/#kotlin.collections.List[kotlin.String]/PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v-manager/create.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSVManager/headers/#/PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v-manager/headers.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSVManager/singleTableName/#/PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v-manager/single-table-name.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSVManager/tableName/#/PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v-manager/table-name.html
+$dokka.location:com.michaelflisar.toolbox.csv/CSVManager/toList/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/csv/com.michaelflisar.toolbox.csv/-c-s-v-manager/to-list.html
+com.michaelflisar.toolbox.csv

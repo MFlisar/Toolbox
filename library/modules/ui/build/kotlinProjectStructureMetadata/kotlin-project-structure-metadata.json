@@ -1,0 +1,94 @@
+{
+  "projectStructure": {
+    "formatVersion": "0.3.3",
+    "isPublishedAsRoot": "true",
+    "variants": [
+      {
+        "name": "androidApiElements",
+        "sourceSet": [
+          "notJvmMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "androidRuntimeElements",
+        "sourceSet": [
+          "notJvmMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "iosArm64ApiElements",
+        "sourceSet": [
+          "notJvmMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "iosSimulatorArm64ApiElements",
+        "sourceSet": [
+          "notJvmMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jvmApiElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jvmRuntimeElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      },
+      {
+        "name": "wasmJsApiElements",
+        "sourceSet": [
+          "notJvmMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "wasmJsRuntimeElements",
+        "sourceSet": [
+          "notJvmMain",
+          "commonMain"
+        ]
+      }
+    ],
+    "sourceSets": [
+      {
+        "name": "commonMain",
+        "dependsOn": [],
+        "moduleDependency": [
+          "io.github.mflisar.toolbox:core",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "org.jetbrains.compose.ui:ui-backhandler",
+          "io.github.mflisar.kmpparcelize:library"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "notJvmMain",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "io.github.mflisar.toolbox:core",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "org.jetbrains.compose.ui:ui-backhandler",
+          "io.github.mflisar.kmpparcelize:library"
+        ],
+        "binaryLayout": "klib"
+      }
+    ]
+  }
+}

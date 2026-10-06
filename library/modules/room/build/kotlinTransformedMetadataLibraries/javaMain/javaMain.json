@@ -1,0 +1,17 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/javaMain",
+    "sourceSetName": "javaMain"
+  }
+]

@@ -1,0 +1,40 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="com.michaelflisar.toolbox.service" >
+5
+6    <uses-sdk android:minSdkVersion="24" />
+6-->INJECTED
+6-->INJECTED
+7
+8    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+8-->/Users/runner/work/Toolbox/Toolbox/library/modules/service/src/androidMain/AndroidManifest.xml:5:5-77
+8-->/Users/runner/work/Toolbox/Toolbox/library/modules/service/src/androidMain/AndroidManifest.xml:5:22-74
+9    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+9-->/Users/runner/work/Toolbox/Toolbox/library/modules/service/src/androidMain/AndroidManifest.xml:6:5-77
+9-->/Users/runner/work/Toolbox/Toolbox/library/modules/service/src/androidMain/AndroidManifest.xml:6:22-74
+10
+11    <!-- muss mit foregroundServiceType definiert werden! daher nun in App selbst zu definieren! -->
+12    <!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/> -->
+13    <application>
+13-->/Users/runner/work/Toolbox/Toolbox/library/modules/service/src/androidMain/AndroidManifest.xml:11:5-28:19
+14
+15        <!-- muss mit foregroundServiceType definiert werden! daher nun in App selbst zu definieren! -->
+16        <!--
+17        <service
+18            android:name=".ForegroundWorkerService"
+19            android:foregroundServiceType="dataSync" />
+20        -->
+21
+22
+23        <!-- muss mit foregroundServiceType definiert werden! daher nun in App selbst zu definieren! -->
+24        <!--
+25            <service
+26            android:name="androidx.work.impl.foreground.SystemForegroundService"
+27            android:foregroundServiceType="dataSync"
+28            tools:node="merge" />
+29        -->
+30
+31    </application>
+32
+33</manifest>

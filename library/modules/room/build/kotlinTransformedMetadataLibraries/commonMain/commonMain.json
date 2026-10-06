@@ -1,0 +1,257 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.room",
+        "name": "room-runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.room",
+        "name": "room-runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/androidx.room-room-runtime-2.8.4-commonMain-oKhOvw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/featureFileSupportMain",
+    "sourceSetName": "featureFileSupportMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/commonMain",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlin-kotlin-stdlib-2.4.20-commonMain-MgaIfA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.annotation",
+        "name": "annotation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.annotation",
+        "name": "annotation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/androidx.annotation-annotation-1.10.0-commonMain-a1LVfQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.collection",
+        "name": "collection"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.collection",
+        "name": "collection"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/androidx.collection-collection-1.5.0-commonMain-j7f1lg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.room",
+        "name": "room-common"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.room",
+        "name": "room-common"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/androidx.room-room-common-2.8.4-commonMain-FV9dPA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.sqlite",
+        "name": "sqlite"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.sqlite",
+        "name": "sqlite"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/androidx.sqlite-sqlite-2.6.2-commonMain-Y3bhRQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-concurrentMain-BviMwQ.klib",
+    "sourceSetName": "concurrentMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-commonMain-BviMwQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.components-components-resources-1.12.0-blockingMain-x-IbKw.klib",
+    "sourceSetName": "blockingMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.compose.components-components-resources-1.12.0-commonMain-x-IbKw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.kmpplatformcontext-core-2.0.2-notWasmMain-3aQvHA.klib",
+    "sourceSetName": "notWasmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.kmpplatformcontext-core-2.0.2-commonMain-3aQvHA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.lumberjack-core-12.0.0-featureIO-z2D0-g.klib",
+    "sourceSetName": "featureIO"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.lumberjack-core-12.0.0-commonMain-z2D0-g.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/room/build/kotlinTransformedMetadataLibraries/commonMain/io.github.mflisar.kmpparcelize-library-2.0.0-commonMain--DAVPA.klib",
+    "sourceSetName": "commonMain"
+  }
+]

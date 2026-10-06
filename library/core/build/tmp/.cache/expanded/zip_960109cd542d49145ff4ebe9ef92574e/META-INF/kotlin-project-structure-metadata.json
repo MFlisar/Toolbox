@@ -1,0 +1,129 @@
+{
+  "projectStructure": {
+    "formatVersion": "0.3.3",
+    "isPublishedAsRoot": "true",
+    "variants": [
+      {
+        "name": "androidApiElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      },
+      {
+        "name": "androidRuntimeElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      },
+      {
+        "name": "iosArm64ApiElements",
+        "sourceSet": [
+          "iosMain",
+          "commonMain",
+          "notAndroidMain"
+        ]
+      },
+      {
+        "name": "iosSimulatorArm64ApiElements",
+        "sourceSet": [
+          "iosMain",
+          "commonMain",
+          "notAndroidMain"
+        ]
+      },
+      {
+        "name": "jvmApiElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jvmRuntimeElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "macosArm64ApiElements",
+        "sourceSet": [
+          "commonMain",
+          "notAndroidMain"
+        ]
+      },
+      {
+        "name": "wasmJsApiElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "wasmJsRuntimeElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain"
+        ]
+      }
+    ],
+    "sourceSets": [
+      {
+        "name": "commonMain",
+        "dependsOn": [],
+        "moduleDependency": [
+          "io.github.mflisar.kmpparcelize:library",
+          "io.github.mflisar.composechangelog:shared",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "org.jetbrains.compose.components:components-resources",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.kmpplatformcontext:core"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "iosMain",
+        "dependsOn": [
+          "commonMain",
+          "notAndroidMain"
+        ],
+        "moduleDependency": [
+          "io.github.mflisar.kmpparcelize:library",
+          "io.github.mflisar.composechangelog:shared",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "org.jetbrains.compose.components:components-resources",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.kmpplatformcontext:core",
+          "be.digitalia.compose.htmlconverter:htmlconverter"
+        ],
+        "sourceSetCInteropMetadataDirectory": "iosMain-cinterop",
+        "binaryLayout": "klib",
+        "hostSpecific": "true"
+      },
+      {
+        "name": "notAndroidMain",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "io.github.mflisar.kmpparcelize:library",
+          "io.github.mflisar.composechangelog:shared",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "org.jetbrains.compose.components:components-resources",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.kmpplatformcontext:core",
+          "be.digitalia.compose.htmlconverter:htmlconverter"
+        ],
+        "binaryLayout": "klib"
+      }
+    ]
+  }
+}

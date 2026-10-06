@@ -1,0 +1,2 @@
+
+$<Toolbox.toolbox.app:shared_iosMain>:-com.michaelflisar.toolbox.app.features.device:/com.michaelflisar.toolbox.app.features.feedback:&com.michaelflisar.toolbox.app.platform

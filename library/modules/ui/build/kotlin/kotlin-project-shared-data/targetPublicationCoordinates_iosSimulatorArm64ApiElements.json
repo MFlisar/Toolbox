@@ -1,0 +1,12 @@
+{
+  "rootPublicationCoordinates": {
+    "group": "io.github.mflisar.toolbox",
+    "artifactId": "ui",
+    "version": "6.0.0"
+  },
+  "targetPublicationCoordinates": {
+    "group": "io.github.mflisar.toolbox",
+    "artifactId": "ui-iossimulatorarm64",
+    "version": "6.0.0"
+  }
+}

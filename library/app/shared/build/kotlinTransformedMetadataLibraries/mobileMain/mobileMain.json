@@ -1,0 +1,557 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/feedbackSupportedMain",
+    "sourceSetName": "feedbackSupportedMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/featureFileSupportMain",
+    "sourceSetName": "featureFileSupportMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:ui",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui/build/classes/kotlin/metadata/notJvmMain",
+    "sourceSetName": "notJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/io.github.mflisar.lumberjack-core-12.0.0-featureIO-z2D0-g.klib",
+    "sourceSetName": "featureIO"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kotpreferences",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kotpreferences",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/io.github.mflisar.kotpreferences-core-4.0.0-featureIO-_h8iMg.klib",
+    "sourceSetName": "featureIO"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kotpreferences",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kotpreferences",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/io.github.mflisar.kotpreferences-core-4.0.0-featureBlocking-_h8iMg.klib",
+    "sourceSetName": "featureBlocking"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-concurrentMain-BviMwQ.klib",
+    "sourceSetName": "concurrentMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-mobileMain-v3O-MA.klib",
+    "sourceSetName": "mobileMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-nonWebMain-v3O-MA.klib",
+    "sourceSetName": "nonWebMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.animation-animation-1.12.0-nonJvmMain-EH498g.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.components-components-resources-1.12.0-blockingMain-x-IbKw.klib",
+    "sourceSetName": "blockingMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/io.github.mflisar.kmpplatformcontext-core-2.0.2-notWasmMain-3aQvHA.klib",
+    "sourceSetName": "notWasmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-1.12.0-iosMain-GxwC2w.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-1.12.0-nativeMain-GxwC2w.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-1.12.0-nonJvmMain-Sk_5Qg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.animation-animation-core-1.12.0-appleMain-s0Trdg.klib",
+    "sourceSetName": "appleMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.animation-animation-core-1.12.0-nonJvmMain-xP1nQg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.foundation-foundation-1.12.0-iosMain-VhWCjA.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.foundation-foundation-1.12.0-nativeMain-VhWCjA.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.foundation-foundation-1.12.0-nonJvmMain-KKcjrg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.foundation-foundation-layout-1.12.0-nonJvmMain-oGCHmw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-graphics-1.12.0-nativeMain-HqRYvw.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-graphics-1.12.0-skikoExcludingWebMain-NJjUFQ.klib",
+    "sourceSetName": "skikoExcludingWebMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-graphics-1.12.0-nonJvmMain-NJjUFQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-text-1.12.0-iosMain-D1iqUw.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-text-1.12.0-darwinMain-D1iqUw.klib",
+    "sourceSetName": "darwinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-text-1.12.0-nativeMain-D1iqUw.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-text-1.12.0-nonJvmMain-RE5row.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-util-1.12.0-iosMain--YjENA.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-util-1.12.0-nonJvmMain-AxoCsw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/io.github.vinceglb-filekit-dialogs-0.16.0-mobileMain-OxRF9g.klib",
+    "sourceSetName": "mobileMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/io.github.vinceglb-filekit-dialogs-0.16.0-nonWebMain-OxRF9g.klib",
+    "sourceSetName": "nonWebMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.collection",
+        "name": "collection"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.collection",
+        "name": "collection"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/androidx.collection-collection-1.5.0-commonMain-j7f1lg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/androidx.lifecycle-lifecycle-viewmodel-savedstate-2.11.0-commonMain-W6e6nQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/org.jetbrains.compose.ui-ui-unit-1.12.0-nonJvmMain-TncRGg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/io.github.vinceglb-filekit-core-0.16.0-nonWebMain-3_8kWw.klib",
+    "sourceSetName": "nonWebMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/mobileMain/androidx.lifecycle-lifecycle-viewmodel-2.11.0-commonMain-Qjv5zA.klib",
+    "sourceSetName": "commonMain"
+  }
+]

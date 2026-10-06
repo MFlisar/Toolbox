@@ -1,0 +1,13 @@
+{
+  "name": "Kotlin-DateTime-library-kotlinx-datetime-wasm-js",
+  "version": "0.7.1",
+  "main": "Kotlin-DateTime-library-kotlinx-datetime-wasm-js.mjs",
+  "types": "Kotlin-DateTime-library-kotlinx-datetime-wasm-js.d.ts",
+  "devDependencies": {},
+  "dependencies": {
+    "@js-joda/core": "3.2.0"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

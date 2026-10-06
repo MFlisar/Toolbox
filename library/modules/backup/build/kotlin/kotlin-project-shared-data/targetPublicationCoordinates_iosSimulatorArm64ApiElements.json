@@ -1,0 +1,12 @@
+{
+  "rootPublicationCoordinates": {
+    "group": "io.github.mflisar.toolbox",
+    "artifactId": "backup",
+    "version": "6.0.0"
+  },
+  "targetPublicationCoordinates": {
+    "group": "io.github.mflisar.toolbox",
+    "artifactId": "backup-iossimulatorarm64",
+    "version": "6.0.0"
+  }
+}

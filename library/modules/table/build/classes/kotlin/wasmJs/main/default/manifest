@@ -1,0 +1,11 @@
+abi_version=2.4.0
+builtins_platform=WASM
+compiler_version=2.4.20
+ir_signature_versions=1,2
+jsOutputName=Toolbox-toolbox-modules-table
+language_features=+AllowAnyAsAnActualTypeForExpectInterface +JsAllowImplementingFunctionInterface +MultiPlatformProjects
+metadata_version=2.4.0
+serializedIrFileFingerprints=27nmxe1olah4y.38hkelayl17qo 2txcqu7vlaas.3jyrue284joz1 23ccs9lw2x0ap.3qbpfjrxv6v0l i33an21cy8lc.22b6t8mrmz7rq 2t7i7zetcaewy.2f2grq2dec0ua fnsgjlt7ea6f.34qjf4fasp41j 1nd31973bh2jw.1vvpzl4ypiqm6 1ebfb0ruowkl5.2uigntyyd1ybl 2a8ujt5ydz7uh.1ak5a7ba1jq0v 3nibqpbsl45nf.3t0m4u7nwqwnp 2uwfqc1qsxhhr.3bor00z1pdg87 3vhpkq8hprp9x.1ztnyjxuld15 1tcnb938rregp.35iz9uwpssy6v 2rmmanrgah5cg.3mhsng4lasl0k 1m5itbseri1rs.2qb9uu2p5yp1s 2oj9rieuwtzje.auyl745h3lxp 2txg6hbaiklxq.20ldcsdy4jiip 2wg0rr3hg5jew.3n3vevkuc9w9g 1danlg2srxab2.1e31i92r9eqox 2hw9p29ivl3hx.154gcwx14813u 3biro0wy19hol.1936nkd832bjs
+serializedKlibFingerprint=1508q7tn7c7u4.320ekf9u0ecla
+unique_name=Toolbox.toolbox.modules\:table
+wasm_targets=wasm-js

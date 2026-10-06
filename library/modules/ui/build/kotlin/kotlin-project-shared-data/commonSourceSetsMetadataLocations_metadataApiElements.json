@@ -1,0 +1,6 @@
+{
+  "locationBySourceSetName": {
+    "commonMain": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui/build/classes/kotlin/metadata/commonMain",
+    "notJvmMain": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui/build/classes/kotlin/metadata/notJvmMain"
+  }
+}

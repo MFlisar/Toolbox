@@ -1,0 +1,1922 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/iosMain/klib/core_iosMain",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/feedbackSupportedMain",
+    "sourceSetName": "feedbackSupportedMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.material3-material3-1.9.0-darwinMain-ZkaPNQ.klib",
+    "sourceSetName": "darwinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.material3-material3-1.9.0-nativeMain-ZkaPNQ.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.material3-material3-1.9.0-nonJvmMain-PrP0Cw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:ui",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui/build/classes/kotlin/metadata/notJvmMain",
+    "sourceSetName": "notJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-nativeDarwinMain-_rPXvA.klib",
+    "sourceSetName": "nativeDarwinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-nativeMain-BviMwQ.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.components-components-resources-1.12.0-iosMain-4n6I0w.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.components-components-resources-1.12.0-nativeMain-4n6I0w.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.lumberjack-core-12.0.0-nativeMain-ngyx6Q.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-json"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-json"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-serialization-json-1.11.0-nativeMain-1M5Mww.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-json"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-json"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-serialization-json-1.11.0-commonMain-1M5Mww.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-datetime-0.8.0-darwinMain-HeEIcg.klib",
+    "sourceSetName": "darwinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-datetime-0.8.0-tzdbOnFilesystemMain-gspK2g.klib",
+    "sourceSetName": "tzdbOnFilesystemMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-datetime-0.8.0-tzfileMain-gspK2g.klib",
+    "sourceSetName": "tzfileMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-datetime-0.8.0-commonKotlinMain-gspK2g.klib",
+    "sourceSetName": "commonKotlinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-datetime-0.8.0-commonMain-gspK2g.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.composechangelog-core-4.0.0-iosMain--0A_cg.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.composechangelog-core-4.0.0-notAndroidMain-G1b4cA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.composechangelog-core-4.0.0-commonMain-G1b4cA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composedialogs",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composedialogs",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.composedialogs-core-4.0.0-nativeMain-_r3lDQ.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composedialogs",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composedialogs",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.composedialogs-core-4.0.0-commonMain-jQD2IA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-iosMain-M3cGCw.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-mobileMain-v3O-MA.klib",
+    "sourceSetName": "mobileMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-jvmAndNativeMain-v3O-MA.klib",
+    "sourceSetName": "jvmAndNativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-nonAndroidMain-v3O-MA.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-nonWebMain-v3O-MA.klib",
+    "sourceSetName": "nonWebMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-commonMain-v3O-MA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpmail",
+        "name": "library"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpmail",
+        "name": "library"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.kmpmail-library-1.0.0-iosMain-Uo5IYA.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpmail",
+        "name": "library"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpmail",
+        "name": "library"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.kmpmail-library-1.0.0-commonMain-egNTJA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.lumberjack",
+        "name": "extension-feedback"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.lumberjack",
+        "name": "extension-feedback"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.lumberjack-extension-feedback-12.0.0-commonMain-KIkv5A.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.animation-animation-core-1.12.0-appleMain-s0Trdg.klib",
+    "sourceSetName": "appleMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.animation-animation-core-1.12.0-nonJvmMain-xP1nQg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.annotation-internal",
+        "name": "annotation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.annotation-internal",
+        "name": "annotation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.annotation-internal-annotation-1.10.0-commonMain-jG1XTg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.collection-internal",
+        "name": "collection"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.collection-internal",
+        "name": "collection"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.collection-internal-collection-1.10.0-commonMain-PdmhIQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.foundation-foundation-1.12.0-iosMain-VhWCjA.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.foundation-foundation-1.12.0-nativeMain-VhWCjA.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.foundation-foundation-1.12.0-nonJvmMain-KKcjrg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.foundation-foundation-layout-1.12.0-nonJvmMain-oGCHmw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-graphics-1.12.0-nativeMain-HqRYvw.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-graphics-1.12.0-nonJvmMain-NJjUFQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-text-1.12.0-iosMain-D1iqUw.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-text-1.12.0-darwinMain-D1iqUw.klib",
+    "sourceSetName": "darwinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-text-1.12.0-nativeMain-D1iqUw.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-text-1.12.0-nonJvmMain-RE5row.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-util-1.12.0-iosMain--YjENA.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-util-1.12.0-nonJvmMain-AxoCsw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-atomicfu-0.28.0-appleMain-NDYgJg.klib",
+    "sourceSetName": "appleMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-atomicfu-0.28.0-nativeUnixLikeMain-UmPgNA.klib",
+    "sourceSetName": "nativeUnixLikeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-atomicfu-0.28.0-nativeMain-UmPgNA.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-atomicfu-0.28.0-concurrentMain-UmPgNA.klib",
+    "sourceSetName": "concurrentMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-atomicfu-0.28.0-commonMain-UmPgNA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-1.12.0-iosMain-GxwC2w.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-1.12.0-nativeMain-GxwC2w.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-1.12.0-nonJvmMain-Sk_5Qg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-unit-1.12.0-nonJvmMain-TncRGg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.annotation",
+        "name": "annotation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.annotation",
+        "name": "annotation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.annotation-annotation-1.10.0-nonJvmMain-a1LVfQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.androidx.navigationevent",
+        "name": "navigationevent-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.androidx.navigationevent",
+        "name": "navigationevent-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.androidx.navigationevent-navigationevent-compose-1.1.0-commonMain-jN0Ktw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-io-core-0.9.1-appleMain-Kako3A.klib",
+    "sourceSetName": "appleMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-io-core-0.9.1-nativeNonAndroidMain-LSdToQ.klib",
+    "sourceSetName": "nativeNonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-io-core-0.9.1-nativeMain-LSdToQ.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-io-core-0.9.1-commonMain-LSdToQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "co.touchlab",
+        "name": "stately-concurrency"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "co.touchlab",
+        "name": "stately-concurrency"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/co.touchlab-stately-concurrency-2.1.0-appleMain-oa7GPg.klib",
+    "sourceSetName": "appleMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "co.touchlab",
+        "name": "stately-concurrency"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "co.touchlab",
+        "name": "stately-concurrency"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/co.touchlab-stately-concurrency-2.1.0-nativeMain-t1ZQYw.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "co.touchlab",
+        "name": "stately-concurrency"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "co.touchlab",
+        "name": "stately-concurrency"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/co.touchlab-stately-concurrency-2.1.0-commonMain-t1ZQYw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-serialization-core-1.11.0-nativeMain-POu6Pw.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composechangelog",
+        "name": "shared"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composechangelog",
+        "name": "shared"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.mflisar.composechangelog-shared-4.0.0-commonMain--J0r6w.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "be.digitalia.compose.htmlconverter",
+        "name": "htmlconverter"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "be.digitalia.compose.htmlconverter",
+        "name": "htmlconverter"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/be.digitalia.compose.htmlconverter-htmlconverter-1.1.1-commonMain-8-Cp0w.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "com.composables",
+        "name": "composeunstyled-dialog"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "com.composables",
+        "name": "composeunstyled-dialog"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/com.composables-composeunstyled-dialog-2.5.0-commonMain-Xn5oZw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "com.composables",
+        "name": "composeunstyled-modal"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "com.composables",
+        "name": "composeunstyled-modal"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/com.composables-composeunstyled-modal-2.5.0-nonAndroidMain-Kf8BQQ.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "com.composables",
+        "name": "composeunstyled-modal"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "com.composables",
+        "name": "composeunstyled-modal"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/com.composables-composeunstyled-modal-2.5.0-commonMain-Kf8BQQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "com.composables",
+        "name": "composeunstyled-modal-bottom-sheet"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "com.composables",
+        "name": "composeunstyled-modal-bottom-sheet"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/com.composables-composeunstyled-modal-bottom-sheet-2.5.0-commonMain-iAwCNg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-0.16.0-iosMain-5jRSgg.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-0.16.0-mobileMain-OxRF9g.klib",
+    "sourceSetName": "mobileMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-0.16.0-appleMain-5jRSgg.klib",
+    "sourceSetName": "appleMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-0.16.0-nonWebMain-OxRF9g.klib",
+    "sourceSetName": "nonWebMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-dialogs-0.16.0-commonMain-OxRF9g.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.collection",
+        "name": "collection"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.collection",
+        "name": "collection"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.collection-collection-1.5.0-darwinMain-1oCDtg.klib",
+    "sourceSetName": "darwinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.collection",
+        "name": "collection"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.collection",
+        "name": "collection"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.collection-collection-1.5.0-unixMain-j7f1lg.klib",
+    "sourceSetName": "unixMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.collection",
+        "name": "collection"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.collection",
+        "name": "collection"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.collection-collection-1.5.0-nativeMain-j7f1lg.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.collection",
+        "name": "collection"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.collection",
+        "name": "collection"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.collection-collection-1.5.0-nonJvmMain-j7f1lg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.collection",
+        "name": "collection"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.collection",
+        "name": "collection"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.collection-collection-1.5.0-commonMain-j7f1lg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.animation-animation-1.12.0-nonJvmMain-EH498g.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-uikit"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-uikit"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.compose.ui-ui-uikit-1.12.0-iosMain-kEWvMw.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.skiko-skiko-0.150.1-iosMain-jIV0nA.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.skiko-skiko-0.150.1-uikitMain-jIV0nA.klib",
+    "sourceSetName": "uikitMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.skiko-skiko-0.150.1-darwinMain-jIV0nA.klib",
+    "sourceSetName": "darwinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.skiko-skiko-0.150.1-nativeMain-WLtCvA.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.skiko-skiko-0.150.1-nativeJsMain-WLtCvA.klib",
+    "sourceSetName": "nativeJsMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.compose.runtime-runtime-1.12.0-nonJvmMain-uGrQsQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.compose.runtime-runtime-1.12.0-nativeMain-uGrQsQ.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime-retain"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime-retain"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.compose.runtime-runtime-retain-1.12.0-nonJvmMain-c_A_bA.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-viewmodel-compose-2.11.0-nonJvmMain-7f7_jw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-viewmodel-compose-2.11.0-commonMain-7f7_jw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-viewmodel-savedstate-2.11.0-nonAndroidMain-W6e6nQ.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-viewmodel-savedstate-2.11.0-nativeMain-W6e6nQ.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-viewmodel-savedstate-2.11.0-commonMain-W6e6nQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.androidx.lifecycle-lifecycle-viewmodel-2.9.6-commonMain-o5UeXw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.androidx.lifecycle",
+        "name": "lifecycle-viewmodel-savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.androidx.lifecycle-lifecycle-viewmodel-savedstate-2.9.6-commonMain-HvVjYQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.navigationevent",
+        "name": "navigationevent-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.navigationevent",
+        "name": "navigationevent-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.navigationevent-navigationevent-compose-1.1.1-nonAndroidMain-VFSq1Q.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.navigationevent",
+        "name": "navigationevent-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.navigationevent",
+        "name": "navigationevent-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.navigationevent-navigationevent-compose-1.1.1-commonMain-VFSq1Q.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-io-bytestring-0.9.1-appleMain-6F6c7g.klib",
+    "sourceSetName": "appleMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-io-bytestring-0.9.1-nativeMain-ypuSdQ.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.jetbrains.kotlinx-kotlinx-io-bytestring-0.9.1-commonMain-ypuSdQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "co.touchlab",
+        "name": "stately-strict"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "co.touchlab",
+        "name": "stately-strict"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/co.touchlab-stately-strict-2.1.0-nativeMain-dKdBGA.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "co.touchlab",
+        "name": "stately-strict"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "co.touchlab",
+        "name": "stately-strict"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/co.touchlab-stately-strict-2.1.0-commonMain-dKdBGA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.kobjects.ktxml",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.kobjects.ktxml",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/org.kobjects.ktxml-core-1.0.0-commonMain-uew3qA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "com.composables",
+        "name": "composeunstyled-build-modifier"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "com.composables",
+        "name": "composeunstyled-build-modifier"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/com.composables-composeunstyled-build-modifier-2.5.0-commonMain-j6vYJg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "com.composables",
+        "name": "composeunstyled-bottom-sheet"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "com.composables",
+        "name": "composeunstyled-bottom-sheet"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/com.composables-composeunstyled-bottom-sheet-2.5.0-commonMain-5RRObA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "com.composables",
+        "name": "composeunstyled-escape-handler"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "com.composables",
+        "name": "composeunstyled-escape-handler"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/com.composables-composeunstyled-escape-handler-2.5.0-nonAndroidMain-QHPbYw.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "com.composables",
+        "name": "composeunstyled-escape-handler"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "com.composables",
+        "name": "composeunstyled-escape-handler"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/com.composables-composeunstyled-escape-handler-2.5.0-iosMain-94NFvQ.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "com.composables",
+        "name": "composeunstyled-escape-handler"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "com.composables",
+        "name": "composeunstyled-escape-handler"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/com.composables-composeunstyled-escape-handler-2.5.0-commonMain-QHPbYw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-core-0.16.0-iosMain-9ZCQOA.klib",
+    "sourceSetName": "iosMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-core-0.16.0-appleMain-9ZCQOA.klib",
+    "sourceSetName": "appleMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-core-0.16.0-jvmAndNativeMain-3_8kWw.klib",
+    "sourceSetName": "jvmAndNativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-core-0.16.0-nonWebMain-3_8kWw.klib",
+    "sourceSetName": "nonWebMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/io.github.vinceglb-filekit-core-0.16.0-commonMain-3_8kWw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-common"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-common"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-common-2.11.0-nonJvmMain-5YDLUQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-viewmodel-2.11.0-nonJvmMain-Qjv5zA.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-viewmodel-2.11.0-nativeMain-Qjv5zA.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-viewmodel"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-viewmodel-2.11.0-commonMain-Qjv5zA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.savedstate-savedstate-1.4.0-darwinMain-PeDSBw.klib",
+    "sourceSetName": "darwinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.savedstate-savedstate-1.4.0-unixMain-JkDvJw.klib",
+    "sourceSetName": "unixMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.savedstate-savedstate-1.4.0-nativeMain-JkDvJw.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.navigationevent",
+        "name": "navigationevent"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.navigationevent",
+        "name": "navigationevent"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.navigationevent-navigationevent-1.1.1-nativeMain-vUBpRg.klib",
+    "sourceSetName": "nativeMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.navigationevent",
+        "name": "navigationevent"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.navigationevent",
+        "name": "navigationevent"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.navigationevent-navigationevent-1.1.1-commonMain-vUBpRg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/iosMain/androidx.lifecycle-lifecycle-runtime-2.11.0-nativeMain-u4l1lg.klib",
+    "sourceSetName": "nativeMain"
+  }
+]

@@ -1,0 +1,254 @@
+{
+  "projectStructure": {
+    "formatVersion": "0.3.3",
+    "isPublishedAsRoot": "true",
+    "variants": [
+      {
+        "name": "androidApiElements",
+        "sourceSet": [
+          "commonMain",
+          "nonWebMain",
+          "mobileMain"
+        ]
+      },
+      {
+        "name": "androidRuntimeElements",
+        "sourceSet": [
+          "commonMain",
+          "nonWebMain",
+          "mobileMain"
+        ]
+      },
+      {
+        "name": "iosArm64ApiElements",
+        "sourceSet": [
+          "iosMain",
+          "appleMain",
+          "nativeMain",
+          "commonMain",
+          "nonWebMain",
+          "mobileMain",
+          "nonAndroidMain",
+          "jvmAndNativeMain"
+        ]
+      },
+      {
+        "name": "iosSimulatorArm64ApiElements",
+        "sourceSet": [
+          "iosMain",
+          "appleMain",
+          "nativeMain",
+          "commonMain",
+          "nonWebMain",
+          "mobileMain",
+          "nonAndroidMain",
+          "jvmAndNativeMain"
+        ]
+      },
+      {
+        "name": "jsApiElements",
+        "sourceSet": [
+          "webMain",
+          "commonMain",
+          "nonAndroidMain"
+        ]
+      },
+      {
+        "name": "jsRuntimeElements",
+        "sourceSet": [
+          "webMain",
+          "commonMain",
+          "nonAndroidMain"
+        ]
+      },
+      {
+        "name": "jvmApiElements",
+        "sourceSet": [
+          "commonMain",
+          "nonWebMain",
+          "nonAndroidMain",
+          "jvmAndNativeMain"
+        ]
+      },
+      {
+        "name": "jvmRuntimeElements",
+        "sourceSet": [
+          "commonMain",
+          "nonWebMain",
+          "nonAndroidMain",
+          "jvmAndNativeMain"
+        ]
+      },
+      {
+        "name": "macosArm64ApiElements",
+        "sourceSet": [
+          "appleMain",
+          "nativeMain",
+          "commonMain",
+          "nonWebMain",
+          "nonAndroidMain",
+          "jvmAndNativeMain"
+        ]
+      },
+      {
+        "name": "wasmJsApiElements",
+        "sourceSet": [
+          "webMain",
+          "commonMain",
+          "nonAndroidMain"
+        ]
+      },
+      {
+        "name": "wasmJsRuntimeElements",
+        "sourceSet": [
+          "webMain",
+          "commonMain",
+          "nonAndroidMain"
+        ]
+      }
+    ],
+    "sourceSets": [
+      {
+        "name": "appleMain",
+        "dependsOn": [
+          "nativeMain"
+        ],
+        "moduleDependency": [
+          "io.github.vinceglb:filekit-dialogs",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "androidx.annotation:annotation"
+        ],
+        "sourceSetCInteropMetadataDirectory": "appleMain-cinterop",
+        "binaryLayout": "klib",
+        "hostSpecific": "true"
+      },
+      {
+        "name": "commonMain",
+        "dependsOn": [],
+        "moduleDependency": [
+          "io.github.vinceglb:filekit-dialogs",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "androidx.annotation:annotation"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "iosMain",
+        "dependsOn": [
+          "appleMain",
+          "mobileMain"
+        ],
+        "moduleDependency": [
+          "io.github.vinceglb:filekit-dialogs",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "androidx.annotation:annotation"
+        ],
+        "sourceSetCInteropMetadataDirectory": "iosMain-cinterop",
+        "binaryLayout": "klib",
+        "hostSpecific": "true"
+      },
+      {
+        "name": "jvmAndNativeMain",
+        "dependsOn": [
+          "nonWebMain"
+        ],
+        "moduleDependency": [
+          "io.github.vinceglb:filekit-dialogs",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "androidx.annotation:annotation"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "mobileMain",
+        "dependsOn": [
+          "nonWebMain"
+        ],
+        "moduleDependency": [
+          "io.github.vinceglb:filekit-dialogs",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "androidx.annotation:annotation"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "nativeMain",
+        "dependsOn": [
+          "commonMain",
+          "nonWebMain",
+          "nonAndroidMain",
+          "jvmAndNativeMain"
+        ],
+        "moduleDependency": [
+          "io.github.vinceglb:filekit-dialogs",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "androidx.annotation:annotation"
+        ],
+        "sourceSetCInteropMetadataDirectory": "nativeMain-cinterop",
+        "binaryLayout": "klib",
+        "hostSpecific": "true"
+      },
+      {
+        "name": "nonAndroidMain",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "io.github.vinceglb:filekit-dialogs",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "androidx.annotation:annotation"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "nonWebMain",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "io.github.vinceglb:filekit-dialogs",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "androidx.annotation:annotation"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "webMain",
+        "dependsOn": [
+          "commonMain",
+          "nonAndroidMain"
+        ],
+        "moduleDependency": [
+          "io.github.vinceglb:filekit-dialogs",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+          "androidx.annotation:annotation"
+        ],
+        "binaryLayout": "klib"
+      }
+    ]
+  }
+}

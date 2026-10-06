@@ -1,0 +1,1 @@
+sourceset_dependencies='{":toolbox:modules:excel/commonMain":[],":toolbox:modules:excel/jvmMain":[":toolbox:modules:excel/commonMain"]}'

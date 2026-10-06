@@ -1,0 +1,8 @@
+{
+  "buildPath": ":",
+  "projectPath": ":toolbox:modules:ui",
+  "moduleId": {
+    "groupId": "io.github.mflisar.toolbox",
+    "moduleId": "ui"
+  }
+}

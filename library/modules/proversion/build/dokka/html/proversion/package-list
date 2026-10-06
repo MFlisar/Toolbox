@@ -1,0 +1,38 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes////PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/FullProduct///PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-full-product/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/FullProduct/FullProduct/#com.michaelflisar.toolbox.proversion.Product#io.github.hyochan.kmpiap.openiap.Product/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-full-product/-full-product.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/FullProduct/displayName/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-full-product/display-name.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/FullProduct/displayPrice/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-full-product/display-price.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/FullProduct/icon/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-full-product/icon.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/FullProduct/id/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-full-product/id.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/FullProduct/iosAmount/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-full-product/ios-amount.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/IAPData///PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-i-a-p-data/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/IAPData/IAPData/#kotlin.collections.List[com.michaelflisar.toolbox.proversion.classes.FullProduct]#kotlin.collections.List[io.github.hyochan.kmpiap.openiap.Purchase]/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-i-a-p-data/-i-a-p-data.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/IAPData/products/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-i-a-p-data/products.html
+$dokka.location:com.michaelflisar.toolbox.proversion.classes/IAPData/purchases/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion.classes/-i-a-p-data/purchases.html
+$dokka.location:com.michaelflisar.toolbox.proversion////PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion/OpenIAPProVersionManager///PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-open-i-a-p-pro-version-manager/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion/OpenIAPProVersionManager/OpenIAPProVersionManager/#kotlinx.coroutines.CoroutineScope#kotlin.collections.List[com.michaelflisar.toolbox.proversion.Product]#com.michaelflisar.kotpreferences.core.interfaces.StorageSetting[kotlin.Boolean]#kotlin.Boolean#org.jetbrains.compose.resources.StringResource#com.michaelflisar.toolbox.features.proversion.ProState#kotlin.Boolean/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-open-i-a-p-pro-version-manager/-open-i-a-p-pro-version-manager.html
+$dokka.location:com.michaelflisar.toolbox.proversion/OpenIAPProVersionManager/PaywallScreen/#com.michaelflisar.composedialogs.core.BaseDialogState/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-open-i-a-p-pro-version-manager/-paywall-screen.html
+$dokka.location:com.michaelflisar.toolbox.proversion/OpenIAPProVersionManager/checkProVersion/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-open-i-a-p-pro-version-manager/check-pro-version.html
+$dokka.location:com.michaelflisar.toolbox.proversion/OpenIAPProVersionManager/configure/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-open-i-a-p-pro-version-manager/configure.html
+$dokka.location:com.michaelflisar.toolbox.proversion/OpenIAPProVersionManager/proState/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-open-i-a-p-pro-version-manager/pro-state.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product.Companion///PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/-companion/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product.Companion/ANDROID_TEST_PRODUCTS/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/-companion/-a-n-d-r-o-i-d_-t-e-s-t_-p-r-o-d-u-c-t-s.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product.Type.InApp///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}proversion/com.michaelflisar.toolbox.proversion/-product/-type/-in-app/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product.Type.Subscription///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}proversion/com.michaelflisar.toolbox.proversion/-product/-type/-subscription/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product.Type///PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/-type/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product.Type/entries/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/-type/entries.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product.Type/valueOf/#kotlin.String/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/-type/value-of.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product.Type/values/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/-type/values.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product///PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/index.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product/Product/#kotlin.String#kotlin.Boolean#com.michaelflisar.toolbox.proversion.Product.Type#kotlin.Int#androidx.compose.ui.graphics.vector.ImageVector/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/-product.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product/icon/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/icon.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product/id/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/id.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product/iosAmount/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/ios-amount.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product/isConsumable/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/is-consumable.html
+$dokka.location:com.michaelflisar.toolbox.proversion/Product/type/#/PointingToDeclaration/proversion/com.michaelflisar.toolbox.proversion/-product/type.html
+com.michaelflisar.toolbox.proversion
+com.michaelflisar.toolbox.proversion.classes

@@ -1,0 +1,8 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.michaelflisar.toolbox.app////PointingToDeclaration/jre/com.michaelflisar.toolbox.app/index.html
+$dokka.location:com.michaelflisar.toolbox.app//DesktopApplication/androidx.compose.ui.window.ApplicationScope#cafe.adriel.voyager.core.screen.Screen#com.michaelflisar.toolbox.MyTheme#kotlin.Function0[kotlin.Unit]?#kotlin.Function1[androidx.compose.ui.input.key.KeyEvent,kotlin.Boolean]#kotlin.Function1[androidx.compose.ui.input.key.KeyEvent,kotlin.Boolean]#androidx.compose.runtime.MutableState[kotlin.Boolean]#kotlin.Function1[cafe.adriel.voyager.navigator.Navigator,kotlin.Unit]/PointingToDeclaration/jre/com.michaelflisar.toolbox.app/-desktop-application.html
+$dokka.location:com.michaelflisar.toolbox.app//DesktopMenuBar/#kotlin.collections.List[com.michaelflisar.toolbox.app.features.menu.MenuItem]/PointingToDeclaration/jre/com.michaelflisar.toolbox.app/-desktop-menu-bar.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopPrefs///PointingToDeclaration/jre/com.michaelflisar.toolbox.app/-desktop-prefs/index.html
+$dokka.location:com.michaelflisar.toolbox.app/DesktopPrefs/DesktopPrefs/#com.michaelflisar.kotpreferences.core.interfaces.Storage/PointingToDeclaration/jre/com.michaelflisar.toolbox.app/-desktop-prefs/-desktop-prefs.html
+com.michaelflisar.toolbox.app

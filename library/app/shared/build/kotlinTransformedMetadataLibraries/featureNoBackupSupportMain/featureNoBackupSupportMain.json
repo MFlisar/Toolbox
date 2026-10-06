@@ -1,0 +1,542 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "cafe.adriel.voyager",
+        "name": "voyager-navigator"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "cafe.adriel.voyager",
+        "name": "voyager-navigator"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/cafe.adriel.voyager-voyager-navigator-2.2.21-1.10.3-nonAndroidMain-4sZV8A.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:ui",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui/build/classes/kotlin/metadata/notJvmMain",
+    "sourceSetName": "notJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "backup"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:backup",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/backup/build/classes/kotlin/metadata/featureNoBackupSupportMain",
+    "sourceSetName": "featureNoBackupSupportMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "backup"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:backup",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/backup/build/classes/kotlin/metadata/notAndroidMain",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composechangelog",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/io.github.mflisar.composechangelog-core-4.0.0-notAndroidMain-G1b4cA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.composethemer",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.composethemer",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/io.github.mflisar.composethemer-core-2.0.0-notAndroidMain-zrZTaA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.kotlin-kotlin-stdlib-2.4.20-commonNonJvmMain-MgaIfA.klib",
+    "sourceSetName": "commonNonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-datetime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.kotlinx-kotlinx-datetime-0.8.0-commonKotlinMain-gspK2g.klib",
+    "sourceSetName": "commonKotlinMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.material3-material3-1.9.0-nonJvmMain-PrP0Cw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.material3-material3-1.9.0-skikoMain-PrP0Cw.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3.adaptive",
+        "name": "adaptive"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3.adaptive",
+        "name": "adaptive"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.material3.adaptive-adaptive-1.2.0-nonAndroidMain-kZFiqw.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-backhandler"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-backhandler"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.ui-ui-backhandler-1.12.0-jbMain-3hHFJQ.klib",
+    "sourceSetName": "jbMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.vinceglb",
+        "name": "filekit-dialogs-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/io.github.vinceglb-filekit-dialogs-compose-0.16.0-nonAndroidMain-v3O-MA.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.animation-animation-1.12.0-nonJvmMain-EH498g.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.components-components-resources-1.12.0-skikoMain-x-IbKw.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/io.github.mflisar.kmpplatformcontext-core-2.0.2-notAndroidMain-3aQvHA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/io.github.mflisar.kmpparcelize-library-2.0.0-notAndroidMain--DAVPA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.ui-ui-1.12.0-nonJvmMain-Sk_5Qg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.kotlinx-atomicfu-0.28.0-commonMain-UmPgNA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.animation",
+        "name": "animation-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.animation-animation-core-1.12.0-nonJvmMain-xP1nQg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.foundation-foundation-1.12.0-nonJvmMain-KKcjrg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.foundation",
+        "name": "foundation-layout"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.foundation-foundation-layout-1.12.0-nonJvmMain-oGCHmw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material",
+        "name": "material-ripple"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material",
+        "name": "material-ripple"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.material-material-ripple-1.9.1-nonAndroidMain-tnX3iQ.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.ui-ui-graphics-1.12.0-nonJvmMain-NJjUFQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-text"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.ui-ui-text-1.12.0-nonJvmMain-RE5row.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-util"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.ui-ui-util-1.12.0-nonJvmMain-AxoCsw.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.annotation",
+        "name": "annotation"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.annotation",
+        "name": "annotation"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/androidx.annotation-annotation-1.10.0-nonJvmMain-a1LVfQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/androidx.compose.runtime-runtime-1.12.0-nonJvmMain-uGrQsQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/androidx.compose.runtime-runtime-1.12.0-nonAndroidMain-uGrQsQ.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime-retain"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime-retain"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/androidx.compose.runtime-runtime-retain-1.12.0-nonJvmMain-c_A_bA.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/androidx.savedstate-savedstate-compose-1.4.0-nonAndroidMain-YfHBdg.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-unit"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.compose.ui-ui-unit-1.12.0-nonJvmMain-TncRGg.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.skiko-skiko-0.150.1-nativeJsMain-WLtCvA.klib",
+    "sourceSetName": "nativeJsMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/org.jetbrains.skiko-skiko-0.150.1-commonMain-WLtCvA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-common"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.lifecycle",
+        "name": "lifecycle-common"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/androidx.lifecycle-lifecycle-common-2.11.0-nonJvmMain-5YDLUQ.klib",
+    "sourceSetName": "nonJvmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/app/shared/build/kotlinTransformedMetadataLibraries/featureNoBackupSupportMain/androidx.savedstate-savedstate-1.4.0-nonAndroidMain-JkDvJw.klib",
+    "sourceSetName": "nonAndroidMain"
+  }
+]

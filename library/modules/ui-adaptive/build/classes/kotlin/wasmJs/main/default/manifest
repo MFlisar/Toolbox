@@ -1,0 +1,11 @@
+abi_version=2.4.0
+builtins_platform=WASM
+compiler_version=2.4.20
+ir_signature_versions=1,2
+jsOutputName=Toolbox-toolbox-modules-ui-adaptive
+language_features=+AllowAnyAsAnActualTypeForExpectInterface +JsAllowImplementingFunctionInterface +MultiPlatformProjects
+metadata_version=2.4.0
+serializedIrFileFingerprints=1iwkwwb76t7en.1ggh6dl5lf7ob 1hsizddzp9qwb.2g679dpm8lqbh rql8owkn43n9.2n10na1xbpeut 1yaf7kk4h286i.1b9of6e66tzdq 27agb7jehywsf.mwxs5brexl4e 3p01tpbfmieea.1fbjjcqskg54t 1ybsf2bo115hl.32v9xq748wkzb 1llpfmhgykvrt.1duqxx8nzof6t
+serializedKlibFingerprint=1vj5aq1zqxarl.dbi144xdflzg
+unique_name=Toolbox.toolbox.modules\:ui-adaptive
+wasm_targets=wasm-js

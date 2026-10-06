@@ -1,0 +1,132 @@
+{
+  "projectStructure": {
+    "formatVersion": "0.3.3",
+    "isPublishedAsRoot": "true",
+    "variants": [
+      {
+        "name": "androidApiElements",
+        "sourceSet": [
+          "styleMaterial3",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "androidRuntimeElements",
+        "sourceSet": [
+          "styleMaterial3",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "iosArm64ApiElements",
+        "sourceSet": [
+          "iosMain",
+          "commonMain",
+          "styleCupertino"
+        ]
+      },
+      {
+        "name": "iosSimulatorArm64ApiElements",
+        "sourceSet": [
+          "iosMain",
+          "commonMain",
+          "styleCupertino"
+        ]
+      },
+      {
+        "name": "jvmApiElements",
+        "sourceSet": [
+          "styleCupertino",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jvmRuntimeElements",
+        "sourceSet": [
+          "styleCupertino",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "wasmJsApiElements",
+        "sourceSet": [
+          "styleMaterial3",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "wasmJsRuntimeElements",
+        "sourceSet": [
+          "styleMaterial3",
+          "commonMain"
+        ]
+      }
+    ],
+    "sourceSets": [
+      {
+        "name": "commonMain",
+        "dependsOn": [],
+        "moduleDependency": [
+          "io.github.mflisar.toolbox:core",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "org.jetbrains.compose.ui:ui-backhandler",
+          "io.github.mflisar.toolbox:ui"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "iosMain",
+        "dependsOn": [
+          "commonMain",
+          "styleCupertino"
+        ],
+        "moduleDependency": [
+          "io.github.mflisar.toolbox:core",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "org.jetbrains.compose.ui:ui-backhandler",
+          "io.github.mflisar.toolbox:ui"
+        ],
+        "sourceSetCInteropMetadataDirectory": "iosMain-cinterop",
+        "binaryLayout": "klib",
+        "hostSpecific": "true"
+      },
+      {
+        "name": "styleCupertino",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "io.github.mflisar.toolbox:core",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "org.jetbrains.compose.ui:ui-backhandler",
+          "io.github.mflisar.toolbox:ui"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "styleMaterial3",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "io.github.mflisar.toolbox:core",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "org.jetbrains.compose.ui:ui-backhandler",
+          "io.github.mflisar.toolbox:ui"
+        ],
+        "binaryLayout": "klib"
+      }
+    ]
+  }
+}

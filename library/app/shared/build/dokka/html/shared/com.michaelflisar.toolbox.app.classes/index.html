@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>com.michaelflisar.toolbox.app.classes</title>
+    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
+        <script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer="defer"></script>
+</head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+            <a class="library-name--link" href="../../index.html" tabindex="1">
+                    shared
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true"
+                        data-filter=":toolbox:app:shared/androidMain">android</button>
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true"
+                        data-filter=":toolbox:app:shared/commonMain">common</button>
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true"
+                        data-filter=":toolbox:app:shared/jvmMain">jvm</button>
+                <button class="platform-tag platform-selector wasm-like" data-active="" aria-pressed="true"
+                        data-filter=":toolbox:app:shared/wasmJsMain">wasmJs</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":toolbox:app:shared/androidMain"
+                                       data-filter=":toolbox:app:shared/androidMain"/>
+                                <span class="checkbox--icon"></span>
+                                android
+                            </label>
+                        </li>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":toolbox:app:shared/commonMain"
+                                       data-filter=":toolbox:app:shared/commonMain"/>
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":toolbox:app:shared/jvmMain"
+                                       data-filter=":toolbox:app:shared/jvmMain"/>
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                        <li role="option" class="dropdown--option platform-selector-option wasm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":toolbox:app:shared/wasmJsMain"
+                                       data-filter=":toolbox:app:shared/wasmJsMain"/>
+                                <span class="checkbox--icon"></span>
+                                wasmJs
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize": 280, "minSize": 200, "maxSize": 400}'>
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    shared
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageIds="shared::com.michaelflisar.toolbox.app.classes////PointingToDeclaration//-1528587249">
+  <div class="breadcrumbs"><a href="../../index.html">shared</a><span class="delimiter">/</span><span class="current">com.michaelflisar.toolbox.app.classes</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="545549130%2FClasslikes%2F-419440182" anchor-label="AndroidAppSetup" id="545549130%2FClasslikes%2F-419440182" data-filterable-set=":toolbox:app:shared/androidMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/androidMain" data-filterable-set=":toolbox:app:shared/androidMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-android-app-setup/index.html"><span>Android</span><wbr></wbr><span>App</span><wbr></wbr><span><span>Setup</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="545549130%2FClasslikes%2F-419440182"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/androidMain" data-filterable-set=":toolbox:app:shared/androidMain" data-active="" data-toggle=":toolbox:app:shared/androidMain">android</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/androidMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-android-app-setup/index.html">AndroidAppSetup</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>buildConfigClass<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-class/index.html">KClass</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1205497389%2FClasslikes%2F-459569648" anchor-label="AppSize" id="-1205497389%2FClasslikes%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-app-size/index.html"><span>App</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1205497389%2FClasslikes%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-app-size/index.html">AppSize</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>width<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>height<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-891045059%2FClasslikes%2F-2133933338" anchor-label="DesktopAppSetup" id="-891045059%2FClasslikes%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-desktop-app-setup/index.html"><span>Desktop</span><wbr></wbr><span>App</span><wbr></wbr><span><span>Setup</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-891045059%2FClasslikes%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-desktop-app-setup/index.html">DesktopAppSetup</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>prefs<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.features.preferences/-base-desktop-prefs/index.html">BaseDesktopPrefs</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>titleBarIcon<span class="token operator">: </span><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a> </span><span class="token punctuation">(</span>light<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/painter/Painter.html">Painter</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>appIcon<span class="token operator">: </span><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a> </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/painter/Painter.html">Painter</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>visible<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>resizable<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>enabled<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>focusable<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>swingCompatMode<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>ensureIsFullyOnScreen<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>rememberWindowState<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>minimumVisibleWidthPercentOnWindowRestore<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>minimumVisibleHeightPercentOnWindowRestore<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span></span></span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="410034024%2FClasslikes%2F-2133933338" anchor-label="DesktopWindowState" id="410034024%2FClasslikes%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-desktop-window-state/index.html"><span>Desktop</span><wbr></wbr><span>Window</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="410034024%2FClasslikes%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="kotlinx.serialization/Serializable///PointingToDeclaration/"><span class="token annotation builtin">Serializable</span></span></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-desktop-window-state/index.html">DesktopWindowState</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>windowWidth<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>DEFAULT_WIDTH<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>windowHeight<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>DEFAULT_HEIGHT<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>windowX<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>windowY<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>windowPlacement<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/window/WindowPlacement.html">WindowPlacement</a><span class="token operator"> = </span>WindowPlacement.Floating</span></span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="322183115%2FClasslikes%2F-459569648" anchor-label="Developer" id="322183115%2FClasslikes%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-developer/index.html"><span><span>Developer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="322183115%2FClasslikes%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Stable.html"><span class="token annotation builtin">Stable</span></a></div></div><span class="token keyword">sealed </span><span class="token keyword">class </span><a href="-developer/index.html">Developer</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="912788657%2FClasslikes%2F-459569648" anchor-label="MutableStateFlowSettingWrapper" id="912788657%2FClasslikes%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mutable-state-flow-setting-wrapper/index.html"><span>Mutable</span><wbr></wbr><span>State</span><wbr></wbr><span>Flow</span><wbr></wbr><span>Setting</span><wbr></wbr><span><span>Wrapper</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="912788657%2FClasslikes%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-mutable-state-flow-setting-wrapper/index.html">MutableStateFlowSettingWrapper</a><span class="token operator">&lt;</span><a href="-mutable-state-flow-setting-wrapper/index.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1958808293%2FClasslikes%2F-459569648" anchor-label="MutableStateFlowWrapper" id="-1958808293%2FClasslikes%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-mutable-state-flow-wrapper/index.html"><span>Mutable</span><wbr></wbr><span>State</span><wbr></wbr><span>Flow</span><wbr></wbr><span><span>Wrapper</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1958808293%2FClasslikes%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-mutable-state-flow-wrapper/index.html">MutableStateFlowWrapper</a><span class="token operator">&lt;</span><a href="-mutable-state-flow-wrapper/index.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-198509075%2FClasslikes%2F2028634551" anchor-label="WasmAppSetup" id="-198509075%2FClasslikes%2F2028634551" data-filterable-set=":toolbox:app:shared/wasmJsMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/wasmJsMain" data-filterable-set=":toolbox:app:shared/wasmJsMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-wasm-app-setup/index.html"><span>Wasm</span><wbr></wbr><span>App</span><wbr></wbr><span><span>Setup</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-198509075%2FClasslikes%2F2028634551"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/wasmJsMain" data-filterable-set=":toolbox:app:shared/wasmJsMain" data-active="" data-toggle=":toolbox:app:shared/wasmJsMain">wasmJs</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/wasmJsMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-wasm-app-setup/index.html">WasmAppSetup</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>canvasElementId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span><span class="token string">&quot;ComposeTarget&quot;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>divLoadingElementId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span><span class="token string">&quot;ComposeLoading&quot;</span></span></span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="120485398%2FFunctions%2F-2133933338" anchor-label="DesktopExitHandler" id="120485398%2FFunctions%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-desktop-exit-handler.html"><span>Desktop</span><wbr></wbr><span>Exit</span><wbr></wbr><span><span>Handler</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="120485398%2FFunctions%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/window/ApplicationScope.html">ApplicationScope</a><span class="token punctuation">.</span><a href="-desktop-exit-handler.html"><span class="token function">DesktopExitHandler</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">appIsClosing<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1469835981%2FFunctions%2F-2133933338" anchor-label="DesktopLocalProvider" id="-1469835981%2FFunctions%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-desktop-local-provider.html"><span>Desktop</span><wbr></wbr><span>Local</span><wbr></wbr><span><span>Provider</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1469835981%2FFunctions%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="-desktop-local-provider.html"><span class="token function">DesktopLocalProvider</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">desktopAppState<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.features.appstate/-desktop-app-state/index.html">DesktopAppState</a><span class="token punctuation">, </span></span><span class="parameter ">content<span class="token operator">: </span><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a> </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1202936974%2FFunctions%2F-2133933338" anchor-label="getDefaultWindowState" id="-1202936974%2FFunctions%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-default-window-state.html"><span>get</span><wbr></wbr><span>Default</span><wbr></wbr><span>Window</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1202936974%2FFunctions%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-default-window-state.html"><span class="token function">getDefaultWindowState</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/window/WindowState.html">WindowState</a></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="746384291%2FFunctions%2F-459569648" anchor-label="mutableStateFlowWrapper" id="746384291%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mutable-state-flow-wrapper.html"><span>mutable</span><wbr></wbr><span>State</span><wbr></wbr><span>Flow</span><wbr></wbr><span><span>Wrapper</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="746384291%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="mutable-state-flow-wrapper.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="cafe.adriel.voyager.core.model/ScreenModel///PointingToDeclaration/">ScreenModel</span><span class="token punctuation">.</span><a href="mutable-state-flow-wrapper.html"><span class="token function">mutableStateFlowWrapper</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">initialValue<span class="token operator">: </span><a href="mutable-state-flow-wrapper.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-mutable-state-flow-wrapper/index.html">MutableStateFlowWrapper</a><span class="token operator">&lt;</span><a href="mutable-state-flow-wrapper.html">T</a><span class="token operator">&gt;</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="mutable-state-flow-wrapper.html">T</a><span class="token operator">&gt; </span><span data-unresolved-link="cafe.adriel.voyager.core.model/ScreenModel///PointingToDeclaration/">ScreenModel</span><span class="token punctuation">.</span><a href="mutable-state-flow-wrapper.html"><span class="token function">mutableStateFlowWrapper</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">storageSetting<span class="token operator">: </span><span data-unresolved-link="com.michaelflisar.kotpreferences.core.interfaces/StorageSetting///PointingToDeclaration/">StorageSetting</span><span class="token operator">&lt;</span><a href="mutable-state-flow-wrapper.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-mutable-state-flow-setting-wrapper/index.html">MutableStateFlowSettingWrapper</a><span class="token operator">&lt;</span><a href="mutable-state-flow-wrapper.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-555162892%2FFunctions%2F-459569648" anchor-label="rememberAppSize" id="-555162892%2FFunctions%2F-459569648" data-filterable-set=":toolbox:app:shared/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/commonMain" data-filterable-set=":toolbox:app:shared/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remember-app-size.html"><span>remember</span><wbr></wbr><span>App</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-555162892%2FFunctions%2F-459569648"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="remember-app-size.html"><span class="token function">rememberAppSize</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">size<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/IntSize.html">IntSize</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-app-size/index.html">AppSize</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1951953167%2FFunctions%2F-2133933338" anchor-label="rememberDesktopWindowState" id="-1951953167%2FFunctions%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remember-desktop-window-state.html"><span>remember</span><wbr></wbr><span>Desktop</span><wbr></wbr><span>Window</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1951953167%2FFunctions%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span class="token annotation builtin">Composable</span></a></div></div><span class="token keyword">fun </span><a href="remember-desktop-window-state.html"><span class="token function">rememberDesktopWindowState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">prefs<span class="token operator">: </span><a href="../com.michaelflisar.toolbox.app.features.preferences/-base-desktop-prefs/index.html">BaseDesktopPrefs</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/window/WindowState.html">WindowState</a></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="772294748%2FFunctions%2F-2133933338" anchor-label="reset" id="772294748%2FFunctions%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reset.html"><span><span>reset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="772294748%2FFunctions%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/window/WindowState.html">WindowState</a><span class="token punctuation">.</span><a href="reset.html"><span class="token function">reset</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">density<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Density.html">Density</a><span class="token punctuation">, </span></span><span class="parameter ">window<span class="token operator">: </span><span data-unresolved-link="androidx.compose.ui.awt/ComposeWindow///PointingToDeclaration/">ComposeWindow</span><span class="token punctuation">, </span></span><span class="parameter ">placement<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">position<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1653080655%2FFunctions%2F-2133933338" anchor-label="resetAll" id="1653080655%2FFunctions%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reset-all.html"><span>reset</span><wbr></wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1653080655%2FFunctions%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/window/WindowState.html">WindowState</a><span class="token punctuation">.</span><a href="reset-all.html"><span class="token function">resetAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">density<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Density.html">Density</a><span class="token punctuation">, </span></span><span class="parameter ">window<span class="token operator">: </span><span data-unresolved-link="androidx.compose.ui.awt/ComposeWindow///PointingToDeclaration/">ComposeWindow</span></span></span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-451058193%2FFunctions%2F-2133933338" anchor-label="resetWindowPosition" id="-451058193%2FFunctions%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reset-window-position.html"><span>reset</span><wbr></wbr><span>Window</span><wbr></wbr><span><span>Position</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-451058193%2FFunctions%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/window/WindowState.html">WindowState</a><span class="token punctuation">.</span><a href="reset-window-position.html"><span class="token function">resetWindowPosition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">density<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Density.html">Density</a><span class="token punctuation">, </span></span><span class="parameter ">window<span class="token operator">: </span><span data-unresolved-link="androidx.compose.ui.awt/ComposeWindow///PointingToDeclaration/">ComposeWindow</span></span></span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1616459644%2FFunctions%2F-2133933338" anchor-label="resetWindowSize" id="-1616459644%2FFunctions%2F-2133933338" data-filterable-set=":toolbox:app:shared/jvmMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reset-window-size.html"><span>reset</span><wbr></wbr><span>Window</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1616459644%2FFunctions%2F-2133933338"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
+                    <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":toolbox:app:shared/jvmMain" data-filterable-set=":toolbox:app:shared/jvmMain" data-active="" data-toggle=":toolbox:app:shared/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:app:shared/jvmMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/window/WindowState.html">WindowState</a><span class="token punctuation">.</span><a href="reset-window-size.html"><span class="token function">resetWindowSize</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div>                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

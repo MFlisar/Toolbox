@@ -1,0 +1,242 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:core",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/core/build/classes/kotlin/metadata/featureFileSupportMain",
+    "sourceSetName": "featureFileSupportMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material3",
+        "name": "material3"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/org.jetbrains.compose.material3-material3-1.9.0-skikoMain-PrP0Cw.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-backhandler"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-backhandler"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/org.jetbrains.compose.ui-ui-backhandler-1.12.0-jbMain-3hHFJQ.klib",
+    "sourceSetName": "jbMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-concurrentMain-BviMwQ.klib",
+    "sourceSetName": "concurrentMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/org.jetbrains.compose.components-components-resources-1.12.0-blockingMain-x-IbKw.klib",
+    "sourceSetName": "blockingMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.components",
+        "name": "components-resources"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/org.jetbrains.compose.components-components-resources-1.12.0-skikoMain-x-IbKw.klib",
+    "sourceSetName": "skikoMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/io.github.mflisar.kmpplatformcontext-core-2.0.2-notWasmMain-3aQvHA.klib",
+    "sourceSetName": "notWasmMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpplatformcontext",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/io.github.mflisar.kmpplatformcontext-core-2.0.2-notAndroidMain-3aQvHA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.lumberjack",
+        "name": "core"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/io.github.mflisar.lumberjack-core-12.0.0-featureIO-z2D0-g.klib",
+    "sourceSetName": "featureIO"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.github.mflisar.kmpparcelize",
+        "name": "library"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/io.github.mflisar.kmpparcelize-library-2.0.0-notAndroidMain--DAVPA.klib",
+    "sourceSetName": "notAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.material",
+        "name": "material-ripple"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.material",
+        "name": "material-ripple"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/org.jetbrains.compose.material-material-ripple-1.9.1-nonAndroidMain-tnX3iQ.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.compose.ui",
+        "name": "ui-graphics"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/org.jetbrains.compose.ui-ui-graphics-1.12.0-skikoExcludingWebMain-NJjUFQ.klib",
+    "sourceSetName": "skikoExcludingWebMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.skiko",
+        "name": "skiko"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/org.jetbrains.skiko-skiko-0.150.1-commonMain-WLtCvA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.compose.runtime",
+        "name": "runtime"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/androidx.compose.runtime-runtime-1.12.0-nonAndroidMain-uGrQsQ.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate-compose"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate-compose"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/androidx.savedstate-savedstate-compose-1.4.0-nonAndroidMain-YfHBdg.klib",
+    "sourceSetName": "nonAndroidMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "androidx.savedstate",
+        "name": "savedstate"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui-adaptive/build/kotlinTransformedMetadataLibraries/styleCupertino/androidx.savedstate-savedstate-1.4.0-nonAndroidMain-JkDvJw.klib",
+    "sourceSetName": "nonAndroidMain"
+  }
+]

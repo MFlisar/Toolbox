@@ -1,0 +1,12 @@
+{
+  "rootPublicationCoordinates": {
+    "group": "io.github.mflisar.toolbox",
+    "artifactId": "zip",
+    "version": "6.0.0"
+  },
+  "targetPublicationCoordinates": {
+    "group": "io.github.mflisar.toolbox",
+    "artifactId": "zip-wasm-js",
+    "version": "6.0.0"
+  }
+}

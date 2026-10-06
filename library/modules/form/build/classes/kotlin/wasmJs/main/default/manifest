@@ -1,0 +1,11 @@
+abi_version=2.4.0
+builtins_platform=WASM
+compiler_version=2.4.20
+ir_signature_versions=1,2
+jsOutputName=Toolbox-toolbox-modules-form
+language_features=+AllowAnyAsAnActualTypeForExpectInterface +JsAllowImplementingFunctionInterface +MultiPlatformProjects
+metadata_version=2.4.0
+serializedIrFileFingerprints=141ugxk08k86e.2lb7rws8qi6al 1cyhhc3ns51r8.2aimk5cpbug0 3lvkuz2cmnfcj.34j47ion8bra0 5kdmzbh08w9q.na3pxpmmy7mq d6jc23wy0k5j.d8ahkcow7svh 3ttst6oa7bqyq.3f47774j8uh3z w80rb3l6qfx7.3avr1vftqf0tx 2yyqs3mtp3f4z.frvch6fn9oh0 3judu19bdbbli.1e1uh1ul49uoh 1fl8w6xrusy3r.10puqq4bw4fgg 15hr1ooc4c4s8.30zewgcdy1jlh e2gpz8bwsjgt.pns40k4eyzrl 1dcz3pmhierjr.2cvq4p5uc738u 2axy01lqrgvg8.1oocm2s0ygrz3 1h757hd5n3xzz.2xzvxy4utr0ig fby8tydzhuaz.ulenywmi0yc3 3962bdksag38f.qwljkefb1lx5 1hz2g0ggakibo.1tu4p93rfna0i
+serializedKlibFingerprint=2i3euk3uzueh7.igoorvpri4zx
+unique_name=Toolbox.toolbox.modules\:form
+wasm_targets=wasm-js

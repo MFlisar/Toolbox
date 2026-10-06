@@ -1,0 +1,162 @@
+{
+  "projectStructure": {
+    "formatVersion": "0.3.3",
+    "isPublishedAsRoot": "true",
+    "variants": [
+      {
+        "name": "androidApiElements",
+        "sourceSet": [
+          "featureBackupSupportMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "androidRuntimeElements",
+        "sourceSet": [
+          "featureBackupSupportMain",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "iosArm64ApiElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain",
+          "featureNoBackupSupportMain"
+        ]
+      },
+      {
+        "name": "iosSimulatorArm64ApiElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain",
+          "featureNoBackupSupportMain"
+        ]
+      },
+      {
+        "name": "jvmApiElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain",
+          "featureBackupSupportMain"
+        ]
+      },
+      {
+        "name": "jvmRuntimeElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain",
+          "featureBackupSupportMain"
+        ]
+      },
+      {
+        "name": "wasmJsApiElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain",
+          "featureNoBackupSupportMain"
+        ]
+      },
+      {
+        "name": "wasmJsRuntimeElements",
+        "sourceSet": [
+          "notAndroidMain",
+          "commonMain",
+          "featureNoBackupSupportMain"
+        ]
+      }
+    ],
+    "sourceSets": [
+      {
+        "name": "commonMain",
+        "dependsOn": [],
+        "moduleDependency": [
+          "io.github.mflisar.kmpparcelize:library",
+          "io.github.mflisar.composedialogs:dialog-frequency",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-serialization-json",
+          "org.jetbrains.kotlinx:kotlinx-datetime",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.compose.material3:material3",
+          "io.github.mflisar.toolbox:core",
+          "io.github.mflisar.toolbox:zip",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.composedialogs:core",
+          "io.github.mflisar.composedialogs:dialog-info",
+          "io.github.vinceglb:filekit-dialogs-compose"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "featureBackupSupportMain",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "io.github.mflisar.kmpparcelize:library",
+          "io.github.mflisar.composedialogs:dialog-frequency",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-serialization-json",
+          "org.jetbrains.kotlinx:kotlinx-datetime",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.compose.material3:material3",
+          "io.github.mflisar.toolbox:core",
+          "io.github.mflisar.toolbox:zip",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.composedialogs:core",
+          "io.github.mflisar.composedialogs:dialog-info",
+          "io.github.vinceglb:filekit-dialogs-compose"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "featureNoBackupSupportMain",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "io.github.mflisar.kmpparcelize:library",
+          "io.github.mflisar.composedialogs:dialog-frequency",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-serialization-json",
+          "org.jetbrains.kotlinx:kotlinx-datetime",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.compose.material3:material3",
+          "io.github.mflisar.toolbox:core",
+          "io.github.mflisar.toolbox:zip",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.composedialogs:core",
+          "io.github.mflisar.composedialogs:dialog-info",
+          "io.github.vinceglb:filekit-dialogs-compose"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "notAndroidMain",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "io.github.mflisar.kmpparcelize:library",
+          "io.github.mflisar.composedialogs:dialog-frequency",
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-serialization-json",
+          "org.jetbrains.kotlinx:kotlinx-datetime",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.ui:ui",
+          "org.jetbrains.compose.material3:material3",
+          "io.github.mflisar.toolbox:core",
+          "io.github.mflisar.toolbox:zip",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.composedialogs:core",
+          "io.github.mflisar.composedialogs:dialog-info",
+          "io.github.vinceglb:filekit-dialogs-compose"
+        ],
+        "binaryLayout": "klib"
+      }
+    ]
+  }
+}

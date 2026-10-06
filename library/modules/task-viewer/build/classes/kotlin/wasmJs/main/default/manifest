@@ -1,0 +1,11 @@
+abi_version=2.4.0
+builtins_platform=WASM
+compiler_version=2.4.20
+ir_signature_versions=1,2
+jsOutputName=Toolbox-toolbox-modules-task-viewer
+language_features=+AllowAnyAsAnActualTypeForExpectInterface +JsAllowImplementingFunctionInterface +MultiPlatformProjects
+metadata_version=2.4.0
+serializedIrFileFingerprints=3btcu3xcxp2tm.he18pfah1i51 miwab8k4lht3.d9dh93rnq2w2 24x2llq1fsfxa.1ks92yr29kr7y 2wsagw3gr2pd2.1r3oyp9w354zc 1fctr09ct2r1n.td6or1t0pkdx 2swil7us20753.3aqne0q20p1sc q1lvtorqp66f.1pqmkujvfpqca
+serializedKlibFingerprint=1brrue0z7zrmw.2pchjpvfp8acn
+unique_name=Toolbox.toolbox.modules\:task-viewer
+wasm_targets=wasm-js

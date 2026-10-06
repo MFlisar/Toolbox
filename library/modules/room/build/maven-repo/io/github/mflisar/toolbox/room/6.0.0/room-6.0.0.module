@@ -1,0 +1,283 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.mflisar.toolbox",
+    "module": "room",
+    "version": "6.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.room",
+          "module": "room-runtime",
+          "version": {
+            "requires": "2.8.4"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "room-metadata.jar",
+          "url": "room-6.0.0.jar",
+          "size": 19588,
+          "sha512": "b857a7afc0412e6ce1d1a373afc2fcec53f42042d65860680401558eb1a9d3fb22d983b5aa66294999a8195c8e5586eac0ffe4799edeea72006e29fece60a7e6",
+          "sha256": "a61bd7ee0ef9a0562bccf668e7031b256079a3ae63d25dad6f1ca49c7b105f2c",
+          "sha1": "7f70c777bcd75d4867df4b3acf035109e6af07c1",
+          "md5": "32f075024cb74372601d8c517405c9c7"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "room-kotlin-sources.jar",
+          "url": "room-6.0.0-sources.jar",
+          "size": 18833,
+          "sha512": "75ee24f23e299ff3ae19608653247655fdc275f4536f8b33e062a462a2fbfc8a6032b25227843d2182ef432f584a52810ee02a551f0fb7df8a5112996570fdcb",
+          "sha256": "246f718771f7ce31e742e4db80439e677248841c78e427ec568201cc3fc49f79",
+          "sha1": "7ec9cb57b2ceee8794711b6992ec983822657388",
+          "md5": "a65a71ae5bd05056a7fffd5ac0e571c6"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../room-android/6.0.0/room-android-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-android",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../room-android/6.0.0/room-android-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-android",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../room-android/6.0.0/room-android-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-android",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../room-iosarm64/6.0.0/room-iosarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-iosarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../room-iosarm64/6.0.0/room-iosarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-iosarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../room-iosarm64/6.0.0/room-iosarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-iosarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../room-iossimulatorarm64/6.0.0/room-iossimulatorarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-iossimulatorarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../room-iossimulatorarm64/6.0.0/room-iossimulatorarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-iossimulatorarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../room-iossimulatorarm64/6.0.0/room-iossimulatorarm64-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-iossimulatorarm64",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../room-jvm/6.0.0/room-jvm-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-jvm",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../room-jvm/6.0.0/room-jvm-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-jvm",
+        "version": "6.0.0"
+      }
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../room-jvm/6.0.0/room-jvm-6.0.0.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "room-jvm",
+        "version": "6.0.0"
+      }
+    }
+  ]
+}

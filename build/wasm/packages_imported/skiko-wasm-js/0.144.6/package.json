@@ -1,0 +1,10 @@
+{
+  "name": "skiko-wasm-js",
+  "version": "0.144.6",
+  "customFields": {},
+  "devDependencies": {},
+  "dependencies": {},
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

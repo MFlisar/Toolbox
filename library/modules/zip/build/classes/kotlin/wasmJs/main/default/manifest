@@ -1,0 +1,11 @@
+abi_version=2.4.0
+builtins_platform=WASM
+compiler_version=2.4.20
+ir_signature_versions=1,2
+jsOutputName=Toolbox-toolbox-modules-zip
+language_features=+AllowAnyAsAnActualTypeForExpectInterface +JsAllowImplementingFunctionInterface +MultiPlatformProjects
+metadata_version=2.4.0
+serializedIrFileFingerprints=hok221wwwz47.fcoqbhw5l2yj 2uy8bx7otpir8.2kzipjzkf9kxc 2d8laubxae4v9.118g3qee1z9 1nxvselwkloao.2n6a39fpnrihv el5ynf8haazo.1gvbw7s2bwpis
+serializedKlibFingerprint=1n7e2r792qo3w.2wiqrxpthw1d3
+unique_name=Toolbox.toolbox.modules\:zip
+wasm_targets=wasm-js

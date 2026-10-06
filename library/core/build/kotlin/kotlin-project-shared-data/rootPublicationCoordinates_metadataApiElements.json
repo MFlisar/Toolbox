@@ -1,0 +1,8 @@
+{
+  "buildPath": ":",
+  "projectPath": ":toolbox:core",
+  "moduleId": {
+    "groupId": "io.github.mflisar.toolbox",
+    "moduleId": "core"
+  }
+}

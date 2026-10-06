@@ -1,0 +1,107 @@
+{
+  "projectStructure": {
+    "formatVersion": "0.3.3",
+    "isPublishedAsRoot": "true",
+    "variants": [
+      {
+        "name": "androidApiElements",
+        "sourceSet": [
+          "featureMobile",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "androidRuntimeElements",
+        "sourceSet": [
+          "featureMobile",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "iosArm64ApiElements",
+        "sourceSet": [
+          "featureMobile",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "iosSimulatorArm64ApiElements",
+        "sourceSet": [
+          "featureMobile",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jvmApiElements",
+        "sourceSet": [
+          "featureNotMobile",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jvmRuntimeElements",
+        "sourceSet": [
+          "featureNotMobile",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "macosArm64ApiElements",
+        "sourceSet": [
+          "featureNotMobile",
+          "commonMain"
+        ]
+      }
+    ],
+    "sourceSets": [
+      {
+        "name": "commonMain",
+        "dependsOn": [],
+        "moduleDependency": [
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.composedebugdrawer:core",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.lumberjack:extension-composeviewer"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "featureMobile",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.composedebugdrawer:core",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.lumberjack:extension-composeviewer",
+          "org.jetbrains.kotlinx:kotlinx-io-core",
+          "io.github.mflisar.lumberjack:extension-feedback"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "featureNotMobile",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.composedebugdrawer:core",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.lumberjack:extension-composeviewer"
+        ],
+        "binaryLayout": "klib"
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.michaelflisar.toolbox.powershell////PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/index.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder.PSCommand///PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/-p-s-command/index.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder.PSCommand/PSCommand/#kotlin.String#kotlin.String/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/-p-s-command/-p-s-command.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder.PSCommand/command/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/-p-s-command/command.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder.PSCommand/name/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/-p-s-command/name.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder.PSCommand/run/#kotlin.Boolean/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/-p-s-command/run.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder///PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/index.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/PSCommandBuilder/#kotlin.String/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/-p-s-command-builder.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/add/#kotlin.String/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/add.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/build/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/build.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/checkIsProcessRunning/#kotlin.String/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/check-is-process-running.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/createWShell/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/create-w-shell.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/name/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/name.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/sendKey/#kotlin.String/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/send-key.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/sleep/#kotlin.Int/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/sleep.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/startProcess/#kotlin.String/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/start-process.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSCommandBuilder/stopProcess/#kotlin.String/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-command-builder/stop-process.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSResult///PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-result/index.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSResult/PSResult/#kotlin.collections.List[kotlin.String]#kotlin.collections.List[kotlin.String]/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-result/-p-s-result.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSResult/errors/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-result/errors.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSResult/hasErrors/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-result/has-errors.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSResult/hasOutputs/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-result/has-outputs.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSResult/info/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-result/info.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSResult/isEmpty/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-result/is-empty.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSResult/outputs/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-result/outputs.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSResult/toString/#/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-result/to-string.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSUtil///PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-util/index.html
+$dokka.location:com.michaelflisar.toolbox.powershell/PSUtil/runCommand/#kotlin.String#kotlin.Boolean/PointingToDeclaration/powershell/com.michaelflisar.toolbox.powershell/-p-s-util/run-command.html
+com.michaelflisar.toolbox.powershell

@@ -1,0 +1,29 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:2:1-19:12
+INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:2:1-19:12
+	package
+		INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:3:5-51
+	xmlns:android
+		ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.FOREGROUND_SERVICE_DATA_SYNC
+ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:7:5-87
+	android:name
+		ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:7:22-84
+application
+ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:9:5-17:19
+service#androidx.work.impl.foreground.SystemForegroundService
+ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:12:9-15:34
+	tools:node
+		ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:15:13-31
+	android:foregroundServiceType
+		ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:14:13-53
+	android:name
+		ADDED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:13:13-81
+uses-sdk
+INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml

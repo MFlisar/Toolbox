@@ -1,0 +1,30 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="com.michaelflisar.toolbox.backup" >
+5
+6    <uses-sdk android:minSdkVersion="24" />
+6-->INJECTED
+6-->INJECTED
+7
+8    <!-- bereits Teil von toolbox::service -->
+9    <!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/> -->
+10    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+10-->/Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:7:5-87
+10-->/Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:7:22-84
+11
+12    <application>
+12-->/Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:9:5-17:19
+13
+14        <!-- dataSync zu worker hinzufügen => wird auch in den BackupWorker und RestoreWorker genutzt -->
+15        <service
+15-->/Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:12:9-15:34
+16            android:name="androidx.work.impl.foreground.SystemForegroundService"
+16-->/Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:13:13-81
+17            android:foregroundServiceType="dataSync"
+17-->/Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:14:13-53
+18            tools:node="merge" />
+18-->/Users/runner/work/Toolbox/Toolbox/library/modules/backup/src/androidMain/AndroidManifest.xml:15:13-31
+19    </application>
+20
+21</manifest>

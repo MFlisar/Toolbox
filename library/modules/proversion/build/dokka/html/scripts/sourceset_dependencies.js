@@ -1,0 +1,1 @@
+sourceset_dependencies='{":toolbox:modules:proversion/androidMain":[":toolbox:modules:proversion/commonMain"],":toolbox:modules:proversion/commonMain":[],":toolbox:modules:proversion/iosArm64Main":[":toolbox:modules:proversion/commonMain"],":toolbox:modules:proversion/iosSimulatorArm64Main":[":toolbox:modules:proversion/commonMain"]}'

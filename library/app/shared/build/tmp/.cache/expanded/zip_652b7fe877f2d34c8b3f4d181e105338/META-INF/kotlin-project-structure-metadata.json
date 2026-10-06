@@ -1,0 +1,178 @@
+{
+  "projectStructure": {
+    "formatVersion": "0.3.3",
+    "isPublishedAsRoot": "true",
+    "variants": [
+      {
+        "name": "androidApiElements",
+        "sourceSet": [
+          "featureFeedbackSupported",
+          "commonMain",
+          "featureFile"
+        ]
+      },
+      {
+        "name": "androidRuntimeElements",
+        "sourceSet": [
+          "featureFeedbackSupported",
+          "commonMain",
+          "featureFile"
+        ]
+      },
+      {
+        "name": "iosArm64ApiElements",
+        "sourceSet": [
+          "featureFeedbackSupported",
+          "commonMain",
+          "featureFile",
+          "iosMain"
+        ]
+      },
+      {
+        "name": "iosSimulatorArm64ApiElements",
+        "sourceSet": [
+          "featureFeedbackSupported",
+          "commonMain",
+          "featureFile",
+          "iosMain"
+        ]
+      },
+      {
+        "name": "jvmApiElements",
+        "sourceSet": [
+          "featureFeedbackNotSupported",
+          "commonMain",
+          "featureFile"
+        ]
+      },
+      {
+        "name": "jvmRuntimeElements",
+        "sourceSet": [
+          "featureFeedbackNotSupported",
+          "commonMain",
+          "featureFile"
+        ]
+      },
+      {
+        "name": "macosArm64ApiElements",
+        "sourceSet": [
+          "featureFeedbackNotSupported",
+          "commonMain",
+          "featureFile"
+        ]
+      },
+      {
+        "name": "wasmJsApiElements",
+        "sourceSet": [
+          "featureFeedbackNotSupported",
+          "commonMain"
+        ]
+      },
+      {
+        "name": "wasmJsRuntimeElements",
+        "sourceSet": [
+          "featureFeedbackNotSupported",
+          "commonMain"
+        ]
+      }
+    ],
+    "sourceSets": [
+      {
+        "name": "commonMain",
+        "dependsOn": [],
+        "moduleDependency": [
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-io-core",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.kmpplatformcontext:core",
+          "tz.co.asoft:klip-api",
+          "tz.co.asoft:klip-system"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "featureFeedbackNotSupported",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-io-core",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.kmpplatformcontext:core",
+          "tz.co.asoft:klip-api",
+          "tz.co.asoft:klip-system"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "featureFeedbackSupported",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-io-core",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.kmpplatformcontext:core",
+          "tz.co.asoft:klip-api",
+          "tz.co.asoft:klip-system",
+          "io.github.mflisar.lumberjack:extension-feedback"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "featureFile",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "org.jetbrains.kotlin:kotlin-stdlib",
+          "org.jetbrains.kotlinx:kotlinx-io-core",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.kmpplatformcontext:core",
+          "tz.co.asoft:klip-api",
+          "tz.co.asoft:klip-system",
+          "io.github.mflisar.lumberjack:logger-file"
+        ],
+        "binaryLayout": "klib"
+      },
+      {
+        "name": "iosMain",
+        "dependsOn": [
+          "commonMain"
+        ],
+        "moduleDependency": [
+          "org.jetbrains.kotlinx:kotlinx-io-core",
+          "org.jetbrains.compose.runtime:runtime",
+          "org.jetbrains.compose.material3:material3",
+          "org.jetbrains.compose.material:material-icons-core",
+          "org.jetbrains.compose.material:material-icons-extended",
+          "io.github.mflisar.lumberjack:core",
+          "io.github.mflisar.kmpplatformcontext:core",
+          "tz.co.asoft:klip-api",
+          "tz.co.asoft:klip-system"
+        ],
+        "sourceSetCInteropMetadataDirectory": "iosMain-cinterop",
+        "binaryLayout": "klib",
+        "hostSpecific": "true"
+      }
+    ]
+  }
+}

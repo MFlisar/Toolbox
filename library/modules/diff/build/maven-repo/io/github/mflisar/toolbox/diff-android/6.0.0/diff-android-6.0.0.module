@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../diff/6.0.0/diff-6.0.0.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "diff",
+    "version": "6.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "diff.aar",
+          "url": "diff-android-6.0.0.aar",
+          "size": 53605,
+          "sha512": "72ecb930b77436a05f6c589e21f507c95e05ec7bc805575628ac95bc7919d84ef2b3d484a6bf5d70527599a096460cb42bae2440b124828d1df196a8cfe45598",
+          "sha256": "9c27b83fda39a25e74cc5e7e7ed2a5907a2cd4fc46f3b88d20e7cd6f9f0b1285",
+          "sha1": "3afcbbb687dfe2723c6f9fb2ff60c6ac9031ea7a",
+          "md5": "38aa54c2cd6a3ad2d566370edd28a523"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "6.0.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "diff.aar",
+          "url": "diff-android-6.0.0.aar",
+          "size": 53605,
+          "sha512": "72ecb930b77436a05f6c589e21f507c95e05ec7bc805575628ac95bc7919d84ef2b3d484a6bf5d70527599a096460cb42bae2440b124828d1df196a8cfe45598",
+          "sha256": "9c27b83fda39a25e74cc5e7e7ed2a5907a2cd4fc46f3b88d20e7cd6f9f0b1285",
+          "sha1": "3afcbbb687dfe2723c6f9fb2ff60c6ac9031ea7a",
+          "md5": "38aa54c2cd6a3ad2d566370edd28a523"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "diff-android-sources.jar",
+          "url": "diff-android-6.0.0-sources.jar",
+          "size": 6424,
+          "sha512": "9334c2c8b3582ef8d42af32e455eb88a8bd2ec56d84d9ded79510ee4dce6ce777cd84f0c495e2cd92e83f0d5485bb81df7cf0ba728f5956ede79cc37ff54bd69",
+          "sha256": "c3d66e9447e86034f104d697331d4773dd61346b604e48e0d2e0c78c961d700d",
+          "sha1": "67119487df6c70b699f893e6812edfcab1480d4c",
+          "md5": "a76b1582a88fa2f390a6553cbbb602af"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+sourceset_dependencies='{":toolbox:modules:csv/androidMain":[":toolbox:modules:csv/commonMain",":toolbox:modules:csv/javaMain"],":toolbox:modules:csv/commonMain":[],":toolbox:modules:csv/javaMain":[":toolbox:modules:csv/commonMain"],":toolbox:modules:csv/jvmMain":[":toolbox:modules:csv/commonMain",":toolbox:modules:csv/javaMain"]}'

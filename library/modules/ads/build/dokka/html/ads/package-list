@@ -1,0 +1,8 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.michaelflisar.toolbox.ads////PointingToDeclaration/ads/com.michaelflisar.toolbox.ads/index.html
+$dokka.location:com.michaelflisar.toolbox.ads//AdsBanner/#com.michaelflisar.toolbox.features.ads.BaseAdManager?#kotlin.String#kotlin.Boolean#androidx.compose.ui.Modifier#org.jetbrains.compose.resources.StringResource/PointingToDeclaration/ads/com.michaelflisar.toolbox.ads/-ads-banner.html
+$dokka.location:com.michaelflisar.toolbox.ads//BANNER_DEFAULT/com.michaelflisar.toolbox.ads.AdManager#/PointingToDeclaration/ads/com.michaelflisar.toolbox.ads/-b-a-n-n-e-r_-d-e-f-a-u-l-t.html
+$dokka.location:com.michaelflisar.toolbox.ads//DEFAULT_IMPL/com.michaelflisar.toolbox.ads.AdManager#/PointingToDeclaration/ads/com.michaelflisar.toolbox.ads/-d-e-f-a-u-l-t_-i-m-p-l.html
+$dokka.location:com.michaelflisar.toolbox.ads/AdManager///PointingToDeclaration/ads/com.michaelflisar.toolbox.ads/-ad-manager/index.html
+com.michaelflisar.toolbox.ads
