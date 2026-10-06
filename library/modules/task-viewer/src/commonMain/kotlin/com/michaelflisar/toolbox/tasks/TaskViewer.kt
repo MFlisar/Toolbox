@@ -6,10 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,6 +32,7 @@ data class TaskViewerConfig(
     val colorSuccess: Color,
     val colorWarning: Color,
     val colorError: Color,
+    val autoScrollToBottom: Boolean
 )
 
 @Composable
@@ -37,12 +40,14 @@ fun rememberTaskViewerConfig(
     colorSuccess: Color = Color(0xFF4CAF50),
     colorWarning: Color = Color(0xFFFFC107),
     colorError: Color = Color(0xFFF44336),
+    autoScrollToBottom: Boolean = true
 ): TaskViewerConfig {
     return remember(colorSuccess, colorWarning, colorError) {
         TaskViewerConfig(
             colorSuccess = colorSuccess,
             colorWarning = colorWarning,
-            colorError = colorError
+            colorError = colorError,
+            autoScrollToBottom = autoScrollToBottom
         )
     }
 }
@@ -55,8 +60,23 @@ fun TaskViewer(
     modifier: Modifier = Modifier,
 ) {
     if (scrollable) {
+        val state = rememberLazyListState()
+
+        if (config.autoScrollToBottom) {
+            val totalEntries = reporter.tasks.sumOf { it.totalEntries }
+            LaunchedEffect(totalEntries) {
+                if (reporter.tasks.isNotEmpty()) {
+                    state.animateScrollToItem(
+                        index = reporter.tasks.lastIndex,
+                        scrollOffset = Int.MAX_VALUE
+                    )
+                }
+            }
+        }
+
         LazyColumn(
             modifier = modifier,
+            state = state,
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
         ) {
             items(

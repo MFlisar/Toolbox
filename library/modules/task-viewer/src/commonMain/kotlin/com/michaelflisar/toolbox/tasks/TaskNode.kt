@@ -20,6 +20,9 @@ data class TaskNode(
 
     val hasMessages: Boolean
         get() = messages.isNotEmpty()
+
+    val totalEntries: Int
+        get() = 1 + messages.size + children.sumOf { it.totalEntries }
 }
 
 sealed interface Status {

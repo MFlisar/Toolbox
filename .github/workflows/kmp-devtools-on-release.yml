@@ -17,5 +17,5 @@ permissions:
 jobs:
 
   kmp-devtools-on-release:
-    uses: MFlisar/kmp-devtools/.github/workflows/kmp-devtools-on-release.yml@8.4.2
+    uses: MFlisar/kmp-devtools/.github/workflows/kmp-devtools-on-release.yml@8.4.3
     secrets: inherit

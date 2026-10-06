@@ -17,7 +17,7 @@ toolbox =                   "4.0.2"
 
 # plugins only
 kmpicon =                   "1.0.0"
-kmpdevtools =               "8.4.2" # use the "devTools" task to change the version
+kmpdevtools =               "8.4.3" # use the "devTools" task to change the version
 
 # demos
 democomposables =           "1.0.5"
