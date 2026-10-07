@@ -24,9 +24,17 @@ sealed interface TaskPlanExecutable : TaskPlanNode {
     ): Boolean
 }
 
+@DslMarker
+annotation class TaskPlanDsl
+
+/** Shared structure for the invisible root group and nested visible groups. */
+interface TaskPlanGroupNode {
+    val children: List<TaskPlanExecutable>
+}
+
 data class TaskPlan(
-    val children: List<TaskPlanExecutable>,
-) {
+    override val children: List<TaskPlanExecutable>,
+) : TaskPlanGroupNode {
     suspend fun execute(
         config: TaskExecutionConfig,
         listener: TaskExecutionListener? = null
@@ -65,8 +73,8 @@ data class TaskPlanSummary(
 internal data class TaskPlanGroup(
     override val id: String,
     override val title: String,
-    val children: List<TaskPlanExecutable>,
-) : TaskPlanExecutable {
+    override val children: List<TaskPlanExecutable>,
+) : TaskPlanExecutable, TaskPlanGroupNode {
 
     override suspend fun execute(
         config: TaskExecutionConfig,
@@ -175,15 +183,22 @@ private fun TaskPlanExecutable.skip(
     }
 }
 
+/**
+ * der Root DSL Builder für einen TaskPlan.
+ *
+ * @param block der Block, in dem Tasks und Gruppen definiert werden
+ * @return der erstellte TaskPlan
+ */
 fun taskPlan(
     block: TaskPlanBuilder.() -> Unit,
 ): TaskPlan {
     return TaskPlanBuilder()
         .apply(block)
-        .build()
+        .buildPlan()
 }
 
-class TaskPlanBuilder {
+@TaskPlanDsl
+class TaskPlanBuilder internal constructor() {
 
     private val children = mutableListOf<TaskPlanExecutable>()
 
@@ -197,43 +212,20 @@ class TaskPlanBuilder {
 
     fun group(
         title: String,
-        block: TaskPlanGroupBuilder.() -> Unit,
+        block: TaskPlanBuilder.() -> Unit,
     ) {
-        children += TaskPlanGroupBuilder(title)
+        children += TaskPlanBuilder()
             .apply(block)
-            .build()
+            .buildGroup(title)
     }
 
-    internal fun build(): TaskPlan {
+    internal fun buildPlan(): TaskPlan {
         return TaskPlan(
             children = children.toList()
         )
     }
-}
 
-class TaskPlanGroupBuilder internal constructor(
-    private val title: String,
-) {
-
-    private val children = mutableListOf<TaskPlanExecutable>()
-
-    fun task(
-        title: String,
-        block: suspend TaskExecutionContext.() -> TaskResult,
-    ) {
-        children += createTask(title, block)
-    }
-
-    fun group(
-        title: String,
-        block: TaskPlanGroupBuilder.() -> Unit,
-    ) {
-        children += TaskPlanGroupBuilder(title)
-            .apply(block)
-            .build()
-    }
-
-    internal fun build(): TaskPlanGroup {
+    internal fun buildGroup(title: String): TaskPlanGroup {
         return TaskPlanGroup(
             id = Uuid.random().toString(),
             title = title,

@@ -13,9 +13,10 @@ import com.michaelflisar.toolbox.tasks.execution.TaskResult
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 import com.michaelflisar.toolbox.tasks.plan.TaskExecutionListener
 import com.michaelflisar.toolbox.tasks.plan.TaskMessage
+import com.michaelflisar.toolbox.tasks.plan.TaskPlan
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanExecutable
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroup
-import com.michaelflisar.toolbox.tasks.plan.TaskPlan
+import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroupNode
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanSummary
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanTask
 import com.michaelflisar.toolbox.tasks.ui.TaskViewStateConfig
@@ -67,45 +68,37 @@ class TaskViewState internal constructor(
     }
 
     internal fun getSummary(
-        group: TaskPlanGroup,
+        group: TaskPlanGroupNode,
     ): TaskPlanSummary {
-
         fun collect(
-            node: TaskPlanExecutable,
+            group: TaskPlanGroupNode,
         ): TaskPlanSummary {
-
-            return when (node) {
-
-                is TaskPlanTask -> {
-
-                    val state = getTaskState(node.id)
-
-                    when (state?.status) {
-                        TaskStatus.Running -> TaskPlanSummary(running = 1)
-                        is TaskStatus.Success -> TaskPlanSummary(success = 1)
-                        is TaskStatus.Warning -> TaskPlanSummary(warnings = 1)
-                        is TaskStatus.Error -> TaskPlanSummary(errors = 1)
-                        TaskStatus.Cancelled -> TaskPlanSummary(skipped = 1)
-                        null -> TaskPlanSummary()
-                    }
-                }
-
-                is TaskPlanGroup -> {
-
-                    node.children
-                        .map(::collect)
-                        .fold(TaskPlanSummary()) { acc, current ->
-
-                            acc.copy(
-                                running = acc.running + current.running,
-                                success = acc.success + current.success,
-                                warnings = acc.warnings + current.warnings,
-                                errors = acc.errors + current.errors,
-                                skipped = acc.skipped + current.skipped,
-                            )
+            return group.children
+                .fold(TaskPlanSummary()) { acc, node ->
+                    val current = when (node) {
+                        is TaskPlanTask -> {
+                            val state = getTaskState(node.id)
+                            when (state?.status) {
+                                TaskStatus.Running -> TaskPlanSummary(running = 1)
+                                is TaskStatus.Success -> TaskPlanSummary(success = 1)
+                                is TaskStatus.Warning -> TaskPlanSummary(warnings = 1)
+                                is TaskStatus.Error -> TaskPlanSummary(errors = 1)
+                                TaskStatus.Cancelled -> TaskPlanSummary(skipped = 1)
+                                null -> TaskPlanSummary()
+                            }
                         }
+
+                        is TaskPlanGroup -> collect(node)
+                    }
+
+                    acc.copy(
+                        running = acc.running + current.running,
+                        success = acc.success + current.success,
+                        warnings = acc.warnings + current.warnings,
+                        errors = acc.errors + current.errors,
+                        skipped = acc.skipped + current.skipped,
+                    )
                 }
-            }
         }
 
         return collect(group)
@@ -244,7 +237,7 @@ class TaskViewState internal constructor(
                 return true
             }
 
-            if (node is TaskPlanGroup) {
+            if (node is TaskPlanGroupNode) {
 
                 node.children.forEach { child ->
 
