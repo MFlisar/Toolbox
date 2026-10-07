@@ -5,15 +5,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 
-object TaskViewStateConfigDefaults {
-    val finishedTaskBehavior: TaskViewStateConfig.FinishedBehavior =
-        TaskViewStateConfig.FinishedBehavior(
-            success = TaskViewStateConfig.FinishedBehavior.Display.Closed,
-            warning = TaskViewStateConfig.FinishedBehavior.Display.Closed,
-            error = TaskViewStateConfig.FinishedBehavior.Display.Open,
-        )
-}
-
 @Stable
 data class TaskViewStateConfig(
     /**
@@ -39,6 +30,20 @@ data class TaskViewStateConfig(
         val error: Display = Display.Open,
         val cancelled: Display = Display.Closed,
     ) {
+        companion object {
+            val CLOSE_ALL = FinishedBehavior(
+                success = Display.Closed,
+                warning = Display.Closed,
+                error = Display.Closed,
+                cancelled = Display.Closed,
+            )
+            val OPEN_ALL = FinishedBehavior(
+                success = Display.Open,
+                warning = Display.Open,
+                error = Display.Open,
+                cancelled = Display.Open,
+            )
+        }
         enum class Display {
             Open,
             Closed
@@ -59,7 +64,7 @@ data class TaskViewStateConfig(
 fun rememberTaskViewStateConfig(
     autoExpandNewTasks: Boolean = true,
     expandRunningTasks: Boolean = true,
-    finishedTaskBehavior: TaskViewStateConfig.FinishedBehavior = TaskViewStateConfigDefaults.finishedTaskBehavior,
+    finishedTaskBehavior: TaskViewStateConfig.FinishedBehavior = TaskViewStateConfig.FinishedBehavior.CLOSE_ALL
 ): TaskViewStateConfig {
     return remember(
         autoExpandNewTasks,

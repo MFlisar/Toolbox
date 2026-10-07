@@ -10,6 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.kmp.platformcontext.PlatformIO
 import com.michaelflisar.parcelize.Parcelize
@@ -18,15 +22,18 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScree
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.tasks.execution.TaskExecutionConfig
-import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
 import com.michaelflisar.toolbox.tasks.execution.TaskResult
 import com.michaelflisar.toolbox.tasks.execution.rememberTaskExecutionConfig
 import com.michaelflisar.toolbox.tasks.plan.TaskPlan
+import com.michaelflisar.toolbox.tasks.plan.rememberTaskMessageColors
 import com.michaelflisar.toolbox.tasks.plan.taskPlan
-import com.michaelflisar.toolbox.tasks.ui.state.rememberTaskViewState
+import com.michaelflisar.toolbox.tasks.ui.TaskViewStateConfig
 import com.michaelflisar.toolbox.tasks.ui.TaskViewerContainer
+import com.michaelflisar.toolbox.tasks.ui.TaskViewerLayout
 import com.michaelflisar.toolbox.tasks.ui.rememberTaskViewStateConfig
 import com.michaelflisar.toolbox.tasks.ui.rememberTaskViewerConfig
+import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
+import com.michaelflisar.toolbox.tasks.ui.state.rememberTaskViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -57,19 +64,26 @@ private fun Page() {
     val plan = remember { createTestPlan() }
     val viewStateConfig = rememberTaskViewStateConfig(
         autoExpandNewTasks = true,
-        expandRunningTasks = true
+        expandRunningTasks = true,
+        finishedTaskBehavior = TaskViewStateConfig.FinishedBehavior.CLOSE_ALL
     )
     val viewState = rememberTaskViewState(
         config = viewStateConfig
     )
+    val taskMessageColors = rememberTaskMessageColors()
     val viewerConfig = rememberTaskViewerConfig(
+        taskMessageColors = taskMessageColors,
         //containerColor = MaterialTheme.colorScheme.primaryContainer, // MaterialTheme.colorScheme.surfaceContainerHighest,
         //contentColor =  MaterialTheme.colorScheme.onPrimaryContainer, // MaterialTheme.colorScheme.onSurface,
         autoScrollToBottom = true,
         showTaskTimes = true,
-        expandSinglePathOnly = true
+        expandSinglePathOnly = true,
+        layout = TaskViewerLayout.Compact,
+        showHeaderNumbers = true,
+        showMessageNumbers = true
     )
     val executionConfig = rememberTaskExecutionConfig(
+        taskMessageColors = taskMessageColors,
         errorBehavior = TaskExecutionConfig.ErrorBehavior.StopRootGroup
     )
 
@@ -99,140 +113,112 @@ private fun createTestPlan(
 
     val plan = taskPlan {
 
+        // Test 1: direkter Task in Root
         task("Initialize") {
-            addInfo("Initializing test plan")
-            pause()
+            addInfo("Direct task in root")
+            addWarning("Some warning")
+            addCustom {
+                buildAnnotatedString {
+                    withStyle(SpanStyle(color = colorSuccess(), fontWeight = FontWeight.Bold)) {
+                        append("✓ ")
+                    }
+                    append("Custom message with ")
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("custom style")
+                    }
+                }
+            }
             TaskResult.Success("Initialization completed")
         }
 
-        group("Deploy Test System") {
-
-            task("Copy Files") {
-
-                repeat(30) {
-                    setStatus("${it + 1}/30 files")
-                    addInfo("Copied file_${it + 1}.dat")
-                    pause()
-                }
-
-                TaskResult.Success("Copied 30 files")
-            }
-
-            task("Longer task") {
-                repeat(10) {
-                    setStatus("Status $it...")
-                    delay(1000.milliseconds)
-                }
-                TaskResult.Success("Longer task completed")
-            }
-
-            task("Move Files") {
-
-                repeat(20) {
-                    addInfo("Moved document_${it + 1}.pdf")
-                    pause()
-                }
-
-                TaskResult.Success("Moved 20 files")
-            }
-
-            task("Check Online Users") {
-
-                listOf(
-                    "SERVER01" to true,
-                    "SERVER02" to true,
-                    "SERVER03" to false,
-                    "SERVER04" to true,
-                    "SERVER05" to false,
-                ).forEach { (server, online) ->
-
-                    addInfo(
-                        if (online) {
-                            "$server is online"
-                        } else {
-                            "$server is offline"
-                        }
-                    )
-
-                    pause()
-                }
-
-                TaskResult.Success("Checked 5 servers")
-            }
-
-            task("Create ZIP") {
-
-                repeat(20) {
-                    setStatus("${it + 1}/20 files")
-                    addInfo("Added file_${it + 1}.dat to deployment.zip")
-                    pause()
-                }
-
-                TaskResult.Success("Created deployment.zip with 20 files")
-            }
-
-            task("Transfer ZIP") {
-
-                addInfo("deployment.zip -> \\\\SERVER01\\Deploy")
-                pause()
-
-                addInfo("Transfer completed")
-                pause()
-
-                TaskResult.Success("Transferred deployment.zip to \\\\SERVER01\\Deploy")
-            }
-
-            group("Extract ZIP") {
-
-                task("Extract Sub ZIP 1") {
-
-                    repeat(20) {
-                        setStatus("${it + 1}/20 files")
-                        addInfo("Extracted file_${it + 1}.dat")
+        // Test 2: Gruppe mit erfolgreichen Sub Tasks
+        group("Copying Files") {
+            repeat(5) { index ->
+                task("Copy Files ${index + 1}") {
+                    repeat(30) { fileIndex ->
+                        setStatus("${fileIndex + 1}/30 files")
+                        addInfo("Copied file_${fileIndex + 1}.dat")
                         pause()
                     }
-
-                    TaskResult.Success("Extracted 20 files from sub ZIP 1")
+                    TaskResult.Success("Copied 30 files")
                 }
-
-                task("Extract Sub ZIP 2") {
-
-                    repeat(20) {
-                        setStatus("${it + 1}/20 files")
-                        addInfo("Extracted file_${it + 1}.dat")
-                        pause()
-                    }
-
-                    TaskResult.Success("Extracted 20 files from sub ZIP 2")
-                }
-            }
-
-            task("Delete ZIP") {
-
-                addInfo("Deleting deployment.zip")
-                pause()
-
-                addInfo("deployment.zip removed")
-                pause()
-
-                TaskResult.Warning("Test warning")
-            }
-
-            task("Error Example") {
-                addInfo("Doing something")
-                pause()
-                TaskResult.Error(Exception("Something went wrong"))
-            }
-
-            task("Final Task") {
-                addInfo("Finalizing deployment")
-                pause()
-                TaskResult.Success("Deployment finalized")
             }
         }
 
-        group("Deploy Test System 2 (EMPTY)") {
+        // Test 3: Leere Gruppe
+        group("Empty Group") {
 
+        }
+
+        // Test 4: Gruppe mit Fehler in einem Sub Task
+        group("Group with Error") {
+            task("Task 1") {
+                addInfo("Doing something")
+                pause()
+                TaskResult.Success("Task 1 completed")
+            }
+            task("Task 2 (Error)") {
+                addInfo("Doing something")
+                pause()
+                TaskResult.Error(Exception("Something went wrong in Task 2"))
+            }
+            task("Task 3") {
+                addInfo("Doing something")
+                pause()
+                TaskResult.Success("Task 3 completed")
+            }
+        }
+
+        // Test 5: Gruppe mit Warnung in einem Sub Task
+        group("Group with Warning") {
+            task("Task 1") {
+                addInfo("Doing something")
+                pause()
+                TaskResult.Success("Task 1 completed")
+            }
+            task("Task 2 (Warning)") {
+                addInfo("Doing something")
+                pause()
+                TaskResult.Warning("Something might be wrong in Task 2")
+            }
+            task("Task 3") {
+                addInfo("Doing something")
+                pause()
+                TaskResult.Success("Task 3 completed")
+            }
+        }
+
+        // Test 6: Komplexe Gruppe mit mehreren Sub Tasks und Untergruppen
+        group("Complex Group") {
+            task("Task 1") {
+                addInfo("Doing something")
+                pause()
+                TaskResult.Success("Task 1 completed")
+            }
+            group("Subgroup 1") {
+                task("Subtask 1.1") {
+                    addInfo("Doing something")
+                    pause()
+                    TaskResult.Success("Subtask 1.1 completed")
+                }
+                task("Subtask 1.2") {
+                    addInfo("Doing something")
+                    pause()
+                    TaskResult.Success("Subtask 1.2 completed")
+                }
+            }
+            group("Subgroup 2") {
+                task("Subtask 2.1") {
+                    addInfo("Doing something")
+                    pause()
+                    TaskResult.Success("Subtask 2.1 completed")
+                }
+                task("Subtask 2.2 (Error)") {
+                    addInfo("Doing something")
+                    pause()
+                    TaskResult.Error(Exception("Something went wrong in Subtask 2.2"))
+                }
+            }
         }
     }
 

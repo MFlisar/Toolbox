@@ -120,6 +120,7 @@ data class TaskPlanTask(
         )
 
         val context = TaskExecutionContext(
+            colors = config.taskMessageColors,
             listener = listener,
             taskId = id,
         )

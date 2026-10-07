@@ -3,9 +3,12 @@ package com.michaelflisar.toolbox.tasks.execution
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import com.michaelflisar.toolbox.tasks.plan.TaskMessageColors
+import com.michaelflisar.toolbox.tasks.plan.rememberTaskMessageColors
 
 @Stable
 data class TaskExecutionConfig(
+    val taskMessageColors: TaskMessageColors,
     val errorBehavior: ErrorBehavior = ErrorBehavior.Continue,
 ) {
     enum class ErrorBehavior {
@@ -22,7 +25,8 @@ data class TaskExecutionConfig(
 
 @Composable
 fun rememberTaskExecutionConfig(
+    taskMessageColors: TaskMessageColors = rememberTaskMessageColors(),
     errorBehavior: TaskExecutionConfig.ErrorBehavior = TaskExecutionConfig.ErrorBehavior.Continue,
 ): TaskExecutionConfig {
-    return remember(errorBehavior) { TaskExecutionConfig(errorBehavior) }
+    return remember(taskMessageColors, errorBehavior) { TaskExecutionConfig(taskMessageColors, errorBehavior) }
 }
