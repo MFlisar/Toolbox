@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.Snapshot
+import com.michaelflisar.toolbox.tasks.TaskConfig
 import com.michaelflisar.toolbox.tasks.execution.TaskResult
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 import com.michaelflisar.toolbox.tasks.plan.TaskExecutionListener
@@ -19,13 +20,11 @@ import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroup
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroupNode
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanSummary
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanTask
-import com.michaelflisar.toolbox.tasks.ui.TaskViewStateConfig
-import com.michaelflisar.toolbox.tasks.ui.rememberTaskViewStateConfig
 import kotlin.time.Clock
 
 @Composable
 fun rememberTaskViewState(
-    config: TaskViewStateConfig = rememberTaskViewStateConfig(),
+    config: TaskConfig.ViewStateConfig = TaskConfig.ViewStateConfig.Default,
 ): TaskViewState {
     return remember(config) {
         TaskViewState(config)
@@ -34,7 +33,7 @@ fun rememberTaskViewState(
 
 @Stable
 class TaskViewState internal constructor(
-    internal val config: TaskViewStateConfig,
+    internal val config: TaskConfig.ViewStateConfig,
 ) : TaskExecutionListener {
 
     private val states = mutableStateMapOf<String, TaskNodeState>()
@@ -114,7 +113,7 @@ class TaskViewState internal constructor(
             states[id] = TaskState(
                 startedAt = timeMs,
                 expanded = config.finishedTaskBehavior.get(TaskStatus.Cancelled) ==
-                        TaskViewStateConfig.FinishedBehavior.Display.Open,
+                        TaskConfig.FinishedTaskDisplay.Open,
             ).apply {
                 status = TaskStatus.Cancelled
                 finishedAt = timeMs
@@ -193,7 +192,7 @@ class TaskViewState internal constructor(
                 task.status = status
                 task.finishedAt = endTimeMs
                 task.expanded = config.finishedTaskBehavior.get(status) ==
-                        TaskViewStateConfig.FinishedBehavior.Display.Open
+                        TaskConfig.FinishedTaskDisplay.Open
                 task.subtitle = result.status
             }
         }

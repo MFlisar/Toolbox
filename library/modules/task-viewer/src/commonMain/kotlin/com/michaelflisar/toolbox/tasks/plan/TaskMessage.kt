@@ -10,7 +10,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import com.michaelflisar.toolbox.extensions.isDark
-import com.michaelflisar.toolbox.tasks.ui.TaskViewerConfig
+import com.michaelflisar.toolbox.tasks.TaskConfig
 
 @Composable
 fun rememberTaskMessageColors(
@@ -70,7 +70,7 @@ sealed interface TaskMessage {
 
         @Composable
         fun annotated(
-            config: TaskViewerConfig,
+            config: TaskConfig.ViewerConfig,
             background: Color
         ): AnnotatedString {
             return buildAnnotatedString {

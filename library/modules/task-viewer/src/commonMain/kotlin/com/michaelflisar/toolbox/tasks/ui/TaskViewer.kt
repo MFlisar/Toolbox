@@ -50,11 +50,9 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.components.MyColumn
-import com.michaelflisar.toolbox.components.MyTextButton
+import com.michaelflisar.toolbox.tasks.TaskConfig
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 import com.michaelflisar.toolbox.tasks.plan.TaskMessage
-import com.michaelflisar.toolbox.tasks.plan.TaskMessageType
 import com.michaelflisar.toolbox.tasks.plan.TaskPlan
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanExecutable
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroup
@@ -67,7 +65,7 @@ import kotlin.time.Duration.Companion.milliseconds
 fun TaskViewer(
     plan: TaskPlan,
     state: TaskViewState,
-    config: TaskViewerConfig = rememberTaskViewerConfig(),
+    config: TaskConfig.ViewerConfig,
     scrollable: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
@@ -143,76 +141,13 @@ fun TaskViewer(
 }
 
 @Composable
-fun TaskViewerContainer(
-    plan: TaskPlan?,
-    state: TaskViewState,
-    config: TaskViewerConfig = rememberTaskViewerConfig(),
-    reset: String = "Neu starten",
-    scrollable: Boolean = true,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    val showTasks = plan != null && (state.hasRunningTasks || state.hasFinishedTasks)
-
-    Column(
-        modifier = modifier
-    ) {
-
-        AnimatedVisibility(
-            !showTasks
-        ) {
-            content()
-        }
-
-        AnimatedVisibility(
-            showTasks
-        ) {
-            if (plan != null) {
-                MyColumn(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-
-                    TaskViewer(
-                        plan = plan,
-                        state = state,
-                        config = config,
-                        modifier =
-                            if (scrollable) {
-                                Modifier.weight(1f)
-                            } else {
-                                Modifier
-                            },
-                        scrollable = scrollable,
-                    )
-
-                    if (
-                        state.hasFinishedTasks &&
-                        !state.hasRunningTasks
-                    ) {
-
-                        MyTextButton(
-                            modifier = Modifier.align(
-                                Alignment.CenterHorizontally
-                            ),
-                            text = reset
-                        ) {
-                            state.reset()
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
 private fun TaskItem(
     node: TaskPlanExecutable,
     state: TaskViewState,
     level: Int,
     number: String,
-    viewerConfig: TaskViewerConfig,
-    config: TaskViewStateConfig,
+    viewerConfig: TaskConfig.ViewerConfig,
+    config: TaskConfig.ViewStateConfig,
     onToggleExpanded: (String) -> Unit,
 ) {
     when (node) {
@@ -249,8 +184,8 @@ private fun TaskItemTask(
     state: TaskViewState,
     level: Int,
     number: String,
-    viewerConfig: TaskViewerConfig,
-    config: TaskViewStateConfig,
+    viewerConfig: TaskConfig.ViewerConfig,
+    config: TaskConfig.ViewStateConfig,
     onToggleExpanded: (String) -> Unit,
 ) {
     val runtime = state.getTaskState(task.id) ?: return
@@ -410,8 +345,8 @@ private fun TaskItemGroup(
     state: TaskViewState,
     level: Int,
     number: String,
-    viewerConfig: TaskViewerConfig,
-    config: TaskViewStateConfig,
+    viewerConfig: TaskConfig.ViewerConfig,
+    config: TaskConfig.ViewStateConfig,
     onToggleExpanded: (String) -> Unit,
 ) {
     val runtime = state.getGroupState(group.id) ?: return
@@ -544,8 +479,8 @@ private fun TaskItemContainer(
     expanded: Boolean,
     expandable: Boolean,
     running: Boolean,
-    config: TaskViewStateConfig,
-    viewerConfig: TaskViewerConfig,
+    config: TaskConfig.ViewStateConfig,
+    viewerConfig: TaskConfig.ViewerConfig,
     onToggleExpanded: () -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -616,7 +551,7 @@ private fun TaskItemContainer(
 @Composable
 private fun StatusIcon(
     status: TaskStatus,
-    viewerConfig: TaskViewerConfig,
+    viewerConfig: TaskConfig.ViewerConfig,
     size: Dp,
 ) {
     when (status) {
@@ -670,7 +605,7 @@ private fun StatusIcon(
 
 @Composable
 private fun MessageItem(
-    viewerConfig: TaskViewerConfig,
+    viewerConfig: TaskConfig.ViewerConfig,
     modifier: Modifier,
     message: TaskMessage,
     bulletWidth: Dp,

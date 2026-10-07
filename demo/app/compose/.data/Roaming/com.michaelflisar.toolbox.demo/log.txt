@@ -1415,3 +1415,32 @@
 [D] 2026-10-07 13:28:40.525 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
 [D] 2026-10-07 13:28:40.557 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
 [I] 2026-10-07 13:28:43.171 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[D] 2026-10-07 14:44:25.714 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-07 14:44:25.743 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-07 14:44:28.508 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[D] 2026-10-07 14:51:50.426 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-07 14:51:50.452 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-07 14:51:53.135 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[D] 2026-10-07 14:57:11.613 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-07 14:57:11.644 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-07 14:57:14.163 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[D] 2026-10-07 15:00:12.785 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-07 15:00:12.820 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-07 15:00:16.068 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[D] 2026-10-07 15:01:06.239 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-07 15:01:06.271 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-07 15:01:08.842 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[D] 2026-10-07 15:03:29.150 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-07 15:03:29.181 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-07 15:03:31.928 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[I] 2026-10-07 15:03:37.080 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Floating}
+[I] 2026-10-07 15:03:38.336 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[I] 2026-10-07 15:03:40.156 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-200, y=79, placement=Floating}
+[I] 2026-10-07 15:03:42.527 [WindowState.kt:116]: Saving window state: {w=1046, h=939, x=490, y=99, placement=Floating}
+[I] 2026-10-07 15:03:47.133 [WindowState.kt:116]: Saving window state: {w=709, h=939, x=490, y=99, placement=Floating}
+[I] 2026-10-07 15:03:48.380 [WindowState.kt:116]: Saving window state: {w=805, h=939, x=490, y=99, placement=Floating}
+[I] 2026-10-07 15:03:48.888 [WindowState.kt:116]: Saving window state: {w=951, h=939, x=490, y=99, placement=Floating}
+[I] 2026-10-07 15:03:49.792 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}
+[D] 2026-10-07 15:05:34.301 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-07 15:05:34.335 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-07 15:05:37.521 [WindowState.kt:116]: Saving window state: {w=1936, h=1048, x=-8, y=-8, placement=Maximized}

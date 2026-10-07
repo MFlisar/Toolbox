@@ -21,17 +21,14 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.tasks.execution.TaskExecutionConfig
+import com.michaelflisar.toolbox.tasks.TaskConfig
+import com.michaelflisar.toolbox.tasks.rememberTaskConfig
 import com.michaelflisar.toolbox.tasks.execution.TaskResult
-import com.michaelflisar.toolbox.tasks.execution.rememberTaskExecutionConfig
 import com.michaelflisar.toolbox.tasks.plan.TaskPlan
 import com.michaelflisar.toolbox.tasks.plan.rememberTaskMessageColors
 import com.michaelflisar.toolbox.tasks.plan.taskPlan
-import com.michaelflisar.toolbox.tasks.ui.TaskViewStateConfig
 import com.michaelflisar.toolbox.tasks.ui.TaskViewerContainer
 import com.michaelflisar.toolbox.tasks.ui.TaskViewerLayout
-import com.michaelflisar.toolbox.tasks.ui.rememberTaskViewStateConfig
-import com.michaelflisar.toolbox.tasks.ui.rememberTaskViewerConfig
 import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
 import com.michaelflisar.toolbox.tasks.ui.state.rememberTaskViewState
 import kotlinx.coroutines.Dispatchers
@@ -62,40 +59,18 @@ private fun Page() {
     val scope = rememberCoroutineScope()
 
     val plan = remember { createTestPlan() }
-    val viewStateConfig = rememberTaskViewStateConfig(
-        autoExpandNewTasks = true,
-        expandRunningTasks = true,
-        finishedTaskBehavior = TaskViewStateConfig.FinishedBehavior.CLOSE_ALL
-    )
-    val viewState = rememberTaskViewState(
-        config = viewStateConfig
-    )
-    val taskMessageColors = rememberTaskMessageColors()
-    val viewerConfig = rememberTaskViewerConfig(
-        taskMessageColors = taskMessageColors,
-        //containerColor = MaterialTheme.colorScheme.primaryContainer, // MaterialTheme.colorScheme.surfaceContainerHighest,
-        //contentColor =  MaterialTheme.colorScheme.onPrimaryContainer, // MaterialTheme.colorScheme.onSurface,
-        autoScrollToBottom = true,
-        showTaskTimes = true,
-        expandSinglePathOnly = true,
-        layout = TaskViewerLayout.Compact,
-        showHeaderNumbers = true,
-        showMessageNumbers = true
-    )
-    val executionConfig = rememberTaskExecutionConfig(
-        taskMessageColors = taskMessageColors,
-        errorBehavior = TaskExecutionConfig.ErrorBehavior.StopRootGroup
-    )
+    val config = rememberTaskConfig()
+    val viewState = rememberTaskViewState(config = config.viewState)
 
     TaskViewerContainer(
         plan = plan,
         state = viewState,
-        config = viewerConfig,
+        config = config.viewer,
         modifier = Modifier.fillMaxSize().padding(all = 8.dp)
     ) {
         MyButton(
             onClick = {
-                scope.launch { runTest(plan, viewState, executionConfig) }
+                scope.launch { runTest(plan, viewState, config.execution) }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -228,7 +203,7 @@ private fun createTestPlan(
 private suspend fun runTest(
     plan: TaskPlan,
     viewState: TaskViewState,
-    executionConfig: TaskExecutionConfig,
+    executionConfig: TaskConfig.ExecutionConfig,
 ) {
     withContext(Dispatchers.PlatformIO) {
         viewState.reset()

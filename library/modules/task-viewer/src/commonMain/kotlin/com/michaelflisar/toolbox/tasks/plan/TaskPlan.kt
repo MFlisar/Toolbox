@@ -1,6 +1,6 @@
 package com.michaelflisar.toolbox.tasks.plan
 
-import com.michaelflisar.toolbox.tasks.execution.TaskExecutionConfig
+import com.michaelflisar.toolbox.tasks.TaskConfig
 import com.michaelflisar.toolbox.tasks.execution.TaskExecutionContext
 import com.michaelflisar.toolbox.tasks.execution.TaskResult
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
@@ -18,7 +18,7 @@ sealed interface TaskPlanNode {
 sealed interface TaskPlanExecutable : TaskPlanNode {
     /** Liefert true, wenn dieser Knoten oder ein Kind einen Fehler hatte. */
     suspend fun execute(
-        config: TaskExecutionConfig,
+        config: TaskConfig.ExecutionConfig,
         listener: TaskExecutionListener?,
         parentId: String?,
     ): Boolean
@@ -36,7 +36,7 @@ data class TaskPlan(
     override val children: List<TaskPlanExecutable>,
 ) : TaskPlanGroupNode {
     suspend fun execute(
-        config: TaskExecutionConfig,
+        config: TaskConfig.ExecutionConfig,
         listener: TaskExecutionListener? = null
     ) {
         children.executeChildren(config, listener, null)
@@ -77,7 +77,7 @@ internal data class TaskPlanGroup(
 ) : TaskPlanExecutable, TaskPlanGroupNode {
 
     override suspend fun execute(
-        config: TaskExecutionConfig,
+        config: TaskConfig.ExecutionConfig,
         listener: TaskExecutionListener?,
         parentId: String?,
     ): Boolean {
@@ -106,7 +106,7 @@ data class TaskPlanTask(
 ) : TaskPlanExecutable {
 
     override suspend fun execute(
-        config: TaskExecutionConfig,
+        config: TaskConfig.ExecutionConfig,
         listener: TaskExecutionListener?,
         parentId: String?,
     ): Boolean {
@@ -145,7 +145,7 @@ data class TaskPlanTask(
 }
 
 private suspend fun List<TaskPlanExecutable>.executeChildren(
-    config: TaskExecutionConfig,
+    config: TaskConfig.ExecutionConfig,
     listener: TaskExecutionListener?,
     parentId: String?,
 ): Boolean {
@@ -159,11 +159,11 @@ private suspend fun List<TaskPlanExecutable>.executeChildren(
             val childFailed = child.execute(config, listener, parentId)
             failed = failed || childFailed
             stopped = childFailed && when (config.errorBehavior) {
-                TaskExecutionConfig.ErrorBehavior.Continue -> false
-                TaskExecutionConfig.ErrorBehavior.StopGroup -> child is TaskPlanTask
-                TaskExecutionConfig.ErrorBehavior.StopRootGroup ->
+                TaskConfig.ErrorBehavior.Continue -> false
+                TaskConfig.ErrorBehavior.StopGroup -> child is TaskPlanTask
+                TaskConfig.ErrorBehavior.StopRootGroup ->
                     parentId != null || child is TaskPlanTask
-                TaskExecutionConfig.ErrorBehavior.StopAll -> true
+                TaskConfig.ErrorBehavior.StopAll -> true
             }
         }
     }
