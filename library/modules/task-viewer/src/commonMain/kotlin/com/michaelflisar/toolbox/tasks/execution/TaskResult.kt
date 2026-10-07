@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.tasks
+package com.michaelflisar.toolbox.tasks.execution
 
 sealed interface TaskResult {
 

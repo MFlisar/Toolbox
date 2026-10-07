@@ -5,13 +5,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Task
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.kmp.platformcontext.PlatformIO
 import com.michaelflisar.parcelize.Parcelize
@@ -19,14 +17,16 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.tasks.TaskPlanRoot
-import com.michaelflisar.toolbox.tasks.TaskReporter
-import com.michaelflisar.toolbox.tasks.TaskResult
-import com.michaelflisar.toolbox.tasks.TaskViewerContainer
-import com.michaelflisar.toolbox.tasks.rememberTaskReporter
-import com.michaelflisar.toolbox.tasks.rememberTaskReporterConfig
-import com.michaelflisar.toolbox.tasks.rememberTaskViewerConfig
-import com.michaelflisar.toolbox.tasks.taskPlan
+import com.michaelflisar.toolbox.tasks.execution.TaskExecutionConfig
+import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
+import com.michaelflisar.toolbox.tasks.execution.TaskResult
+import com.michaelflisar.toolbox.tasks.execution.rememberTaskExecutionConfig
+import com.michaelflisar.toolbox.tasks.plan.TaskPlan
+import com.michaelflisar.toolbox.tasks.plan.taskPlan
+import com.michaelflisar.toolbox.tasks.ui.state.rememberTaskViewState
+import com.michaelflisar.toolbox.tasks.ui.TaskViewerContainer
+import com.michaelflisar.toolbox.tasks.ui.rememberTaskViewStateConfig
+import com.michaelflisar.toolbox.tasks.ui.rememberTaskViewerConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -55,30 +55,33 @@ private fun Page() {
     val scope = rememberCoroutineScope()
 
     val plan = remember { createTestPlan() }
-    val reporterConfig = rememberTaskReporterConfig(
+    val viewStateConfig = rememberTaskViewStateConfig(
         autoExpandNewTasks = true,
-        expandRunningTasks = true,
-        expandSinglePathOnly = true
+        expandRunningTasks = true
     )
-    val reporter = rememberTaskReporter(
-        plan = plan,
-        config = reporterConfig
+    val viewState = rememberTaskViewState(
+        config = viewStateConfig
     )
     val viewerConfig = rememberTaskViewerConfig(
         //containerColor = MaterialTheme.colorScheme.primaryContainer, // MaterialTheme.colorScheme.surfaceContainerHighest,
         //contentColor =  MaterialTheme.colorScheme.onPrimaryContainer, // MaterialTheme.colorScheme.onSurface,
-        autoScrollToBottom = false,
-        showTaskTimes = true
+        autoScrollToBottom = true,
+        showTaskTimes = true,
+        expandSinglePathOnly = true
+    )
+    val executionConfig = rememberTaskExecutionConfig(
+        errorBehavior = TaskExecutionConfig.ErrorBehavior.StopRootGroup
     )
 
     TaskViewerContainer(
-        reporter = reporter,
+        plan = plan,
+        state = viewState,
         config = viewerConfig,
         modifier = Modifier.fillMaxSize().padding(all = 8.dp)
     ) {
         MyButton(
             onClick = {
-                scope.launch { runTest(plan, reporter) }
+                scope.launch { runTest(plan, viewState, executionConfig) }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -88,8 +91,8 @@ private fun Page() {
 }
 
 private fun createTestPlan(
-    taskDurationMs: Long = 50
-) : TaskPlanRoot {
+    taskDurationMs: Long = 50,
+): TaskPlan {
     suspend fun pause() {
         delay(taskDurationMs.milliseconds)
     }
@@ -214,6 +217,12 @@ private fun createTestPlan(
                 pause()
                 TaskResult.Error(Exception("Something went wrong"))
             }
+
+            task("Final Task") {
+                addInfo("Finalizing deployment")
+                pause()
+                TaskResult.Success("Deployment finalized")
+            }
         }
 
         group("Deploy Test System 2") {
@@ -225,11 +234,12 @@ private fun createTestPlan(
 }
 
 private suspend fun runTest(
-    plan: TaskPlanRoot,
-    reporter: TaskReporter
+    plan: TaskPlan,
+    viewState: TaskViewState,
+    executionConfig: TaskExecutionConfig,
 ) {
     withContext(Dispatchers.PlatformIO) {
-        reporter.reset()
-        plan.execute(reporter)
+        viewState.reset()
+        plan.execute(executionConfig, viewState)
     }
 }

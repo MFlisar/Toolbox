@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.tasks
+package com.michaelflisar.toolbox.tasks.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.ExpandMore
@@ -33,7 +34,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -45,7 +46,13 @@ import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyTextButton
 import com.michaelflisar.toolbox.extensions.isDark
 import com.michaelflisar.toolbox.spacing
-import com.michaelflisar.toolbox.utils.TimeUtil
+import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
+import com.michaelflisar.toolbox.tasks.execution.TaskStatus
+import com.michaelflisar.toolbox.tasks.plan.TaskMessage
+import com.michaelflisar.toolbox.tasks.plan.TaskPlanExecutable
+import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroup
+import com.michaelflisar.toolbox.tasks.plan.TaskPlan
+import com.michaelflisar.toolbox.tasks.plan.TaskPlanTask
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -63,122 +70,53 @@ private val MESSAGE_INDENT =
             STATUS_ICON_SIZE +
             ICON_SPACING
 
-@Stable
-data class TaskViewerConfig(
-    val containerColor: Color,
-    val contentColor: Color,
-    val autoScrollToBottom: Boolean,
-    val showTaskTimes: Boolean,
-    val groupSummaryFormatter: (TaskPlanSummary) -> String,
-    val timeFormatter: (isFinished: Boolean, millis: Long) -> String,
-)
-
-@Composable
-fun rememberTaskViewerConfig(
-    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
-    autoScrollToBottom: Boolean = true,
-    showTaskTimes: Boolean = true,
-    groupSummaryFormatter: (TaskPlanSummary) -> String = { summary ->
-        buildString {
-            if (summary.running > 0) {
-                append("Running")
-            }
-            if (summary.success > 0) {
-                if (isNotEmpty()) append(", ")
-                append("${summary.success} successful")
-            }
-            if (summary.warnings > 0) {
-                if (isNotEmpty()) append(", ")
-                append("${summary.warnings} warning")
-            }
-            if (summary.errors > 0) {
-                if (isNotEmpty()) append(", ")
-                append("${summary.errors} error")
-            }
-        }
-    },
-    timeFormatter: (isFinished: Boolean, millis: Long) -> String = { isFinished, millis ->
-        TimeUtil.getTimeString(
-            millis = millis,
-            secondFractionDigits = if (isFinished && millis < 60_000L) {
-                1
-            } else {
-                0
-            },
-        )
-    },
-): TaskViewerConfig {
-    return remember(
-        containerColor,
-        contentColor,
-        autoScrollToBottom,
-        showTaskTimes,
-        groupSummaryFormatter,
-        timeFormatter
-    ) {
-        TaskViewerConfig(
-            containerColor = containerColor,
-            contentColor = contentColor,
-            autoScrollToBottom = autoScrollToBottom,
-            showTaskTimes = showTaskTimes,
-            groupSummaryFormatter = groupSummaryFormatter,
-            timeFormatter = timeFormatter
-        )
-    }
-}
-
 @Composable
 fun TaskViewer(
-    reporter: TaskReporter,
+    plan: TaskPlan,
+    state: TaskViewState,
     config: TaskViewerConfig = rememberTaskViewerConfig(),
     scrollable: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
-    LaunchedEffect(reporter.hasRunningTasks) {
-        while (reporter.hasRunningTasks) {
+    LaunchedEffect(state.hasRunningTasks) {
+        while (state.hasRunningTasks) {
             delay(1000.milliseconds)
-            reporter.tick()
+            state.tick()
         }
     }
 
     if (scrollable) {
 
-        val state = rememberLazyListState()
-
-        if (config.autoScrollToBottom) {
-
-            val totalEntries = reporter.runtime.size
-
-            LaunchedEffect(totalEntries) {
-                if (totalEntries > 0) {
-                    state.animateScrollToItem(
-                        index = reporter.plan.children.lastIndex,
-                        scrollOffset = Int.MAX_VALUE
-                    )
-                }
-            }
-        }
+        val listState = rememberLazyListState()
+        val startedNodes = plan.children.filter { state.getNodeState(it.id) != null }
+        val onManualExpansion = rememberTaskAutoScroll(
+            listState = listState,
+            execution = startedNodes.firstOrNull()?.let { state.getNodeState(it.id) },
+            enabled = config.autoScrollToBottom,
+        )
 
         LazyColumn(
             modifier = modifier,
-            state = state,
+            state = listState,
             verticalArrangement = Arrangement.spacedBy(
                 MaterialTheme.spacing.small
             )
         ) {
             items(
-                items = reporter.plan.children,
+                items = startedNodes,
                 key = { it.id }
             ) { node ->
 
                 TaskItem(
                     node = node,
-                    reporter = reporter,
+                    state = state,
                     level = 0,
                     viewerConfig = config,
-                    config = reporter.config,
-                    onToggleExpanded = reporter::toggleExpanded
+                    config = state.config,
+                    onToggleExpanded = {
+                        onManualExpansion()
+                        state.toggleExpanded(plan, it, config.expandSinglePathOnly)
+                    }
                 )
             }
         }
@@ -191,15 +129,17 @@ fun TaskViewer(
             )
         ) {
 
-            reporter.plan.children.forEach { node ->
+            plan.children.forEach { node ->
 
                 TaskItem(
                     node = node,
-                    reporter = reporter,
+                    state = state,
                     level = 0,
                     viewerConfig = config,
-                    config = reporter.config,
-                    onToggleExpanded = reporter::toggleExpanded
+                    config = state.config,
+                    onToggleExpanded = {
+                        state.toggleExpanded(plan, it, config.expandSinglePathOnly)
+                    }
                 )
             }
         }
@@ -208,7 +148,8 @@ fun TaskViewer(
 
 @Composable
 fun TaskViewerContainer(
-    reporter: TaskReporter,
+    plan: TaskPlan,
+    state: TaskViewState,
     config: TaskViewerConfig = rememberTaskViewerConfig(),
     reset: String = "Neu starten",
     scrollable: Boolean = true,
@@ -220,15 +161,15 @@ fun TaskViewerContainer(
     ) {
 
         AnimatedVisibility(
-            !reporter.hasRunningTasks &&
-                    !reporter.hasFinishedTasks
+            !state.hasRunningTasks &&
+                    !state.hasFinishedTasks
         ) {
             content()
         }
 
         AnimatedVisibility(
-            reporter.hasRunningTasks ||
-                    reporter.hasFinishedTasks
+            state.hasRunningTasks ||
+                    state.hasFinishedTasks
         ) {
 
             MyColumn(
@@ -236,7 +177,8 @@ fun TaskViewerContainer(
             ) {
 
                 TaskViewer(
-                    reporter = reporter,
+                    plan = plan,
+                    state = state,
                     config = config,
                     modifier =
                         if (scrollable) {
@@ -248,8 +190,8 @@ fun TaskViewerContainer(
                 )
 
                 if (
-                    reporter.hasFinishedTasks &&
-                    !reporter.hasRunningTasks
+                    state.hasFinishedTasks &&
+                    !state.hasRunningTasks
                 ) {
 
                     MyTextButton(
@@ -258,7 +200,7 @@ fun TaskViewerContainer(
                         ),
                         text = reset
                     ) {
-                        reporter.reset()
+                        state.reset()
                     }
                 }
             }
@@ -269,10 +211,10 @@ fun TaskViewerContainer(
 @Composable
 private fun TaskItem(
     node: TaskPlanExecutable,
-    reporter: TaskReporter,
+    state: TaskViewState,
     level: Int,
     viewerConfig: TaskViewerConfig,
-    config: TaskReporter.Config,
+    config: TaskViewStateConfig,
     onToggleExpanded: (String) -> Unit,
 ) {
     when (node) {
@@ -280,7 +222,7 @@ private fun TaskItem(
         is TaskPlanTask -> {
             TaskItemTask(
                 task = node,
-                reporter = reporter,
+                state = state,
                 level = level,
                 viewerConfig = viewerConfig,
                 config = config,
@@ -291,7 +233,7 @@ private fun TaskItem(
         is TaskPlanGroup -> {
             TaskItemGroup(
                 group = node,
-                reporter = reporter,
+                state = state,
                 level = level,
                 viewerConfig = viewerConfig,
                 config = config,
@@ -304,13 +246,13 @@ private fun TaskItem(
 @Composable
 private fun TaskItemTask(
     task: TaskPlanTask,
-    reporter: TaskReporter,
+    state: TaskViewState,
     level: Int,
     viewerConfig: TaskViewerConfig,
-    config: TaskReporter.Config,
+    config: TaskViewStateConfig,
     onToggleExpanded: (String) -> Unit,
 ) {
-    val runtime = reporter.runtime[task.id] as? TaskReporter.TaskRuntimeTask ?: return
+    val runtime = state.getTaskState(task.id) ?: return
     val expandable = runtime.messages.isNotEmpty()
     val expanded = runtime.expanded
 
@@ -374,7 +316,12 @@ private fun TaskItemTask(
                         style = MaterialTheme.typography.bodyMedium,
                     )
 
-                    runtime.subtitle?.let {
+                    val subtitle = if (runtime.status == TaskStatus.Cancelled) {
+                        viewerConfig.skippedTaskSubtitle
+                    } else {
+                        runtime.subtitle
+                    }
+                    subtitle?.let {
                         Text(
                             text = it,
                             style = MaterialTheme.typography.bodySmall,
@@ -387,7 +334,7 @@ private fun TaskItemTask(
 
                     Spacer(Modifier.width(ICON_SPACING))
 
-                    val millis = runtime.durationMs(reporter.nowMs)
+                    val millis = runtime.durationMs(state.nowMs)
                     Text(
                         text = viewerConfig.timeFormatter(
                             runtime.isFinished,
@@ -432,13 +379,13 @@ private fun TaskItemTask(
 @Composable
 private fun TaskItemGroup(
     group: TaskPlanGroup,
-    reporter: TaskReporter,
+    state: TaskViewState,
     level: Int,
     viewerConfig: TaskViewerConfig,
-    config: TaskReporter.Config,
+    config: TaskViewStateConfig,
     onToggleExpanded: (String) -> Unit,
 ) {
-    val runtime = reporter.runtime[group.id] ?: return
+    val runtime = state.getGroupState(group.id) ?: return
     val expandable = group.children.isNotEmpty()
     val expanded = runtime.expanded
 
@@ -484,13 +431,10 @@ private fun TaskItemGroup(
                     }
                 }
 
-                val summary = remember(
-                    group,
-                    reporter.runtime,
-                ) {
-                    reporter.getSummary(group)
+                val summary by remember(group, state) {
+                    derivedStateOf { state.getSummary(group) }
                 }
-                val status = summary.toStatus()
+                val status = if (runtime.skipped) TaskStatus.Cancelled else summary.toStatus()
 
                 Spacer(Modifier.width(ICON_SPACING))
 
@@ -524,7 +468,7 @@ private fun TaskItemGroup(
                 Text(
                     text = viewerConfig.timeFormatter(
                         runtime.isFinished,
-                        runtime.durationMs(reporter.nowMs)
+                        runtime.durationMs(state.nowMs)
                     ),
                     style = MaterialTheme.typography.bodySmall,
                     color = LocalContentColor.current.copy(alpha = .6f)
@@ -535,7 +479,7 @@ private fun TaskItemGroup(
         AnimatedVisibility(
             visible = expanded && expandable,
             enter = expandVertically(),
-            exit = shrinkVertically()
+            exit = shrinkVertically(),
         ) {
 
             Column(
@@ -550,7 +494,7 @@ private fun TaskItemGroup(
                 group.children.forEach { child ->
                     TaskItem(
                         node = child,
-                        reporter = reporter,
+                        state = state,
                         level = level + 1,
                         viewerConfig = viewerConfig,
                         config = config,
@@ -567,7 +511,7 @@ private fun TaskItemContainer(
     expanded: Boolean,
     expandable: Boolean,
     running: Boolean,
-    config: TaskReporter.Config,
+    config: TaskViewStateConfig,
     viewerConfig: TaskViewerConfig,
     onToggleExpanded: () -> Unit,
     content: @Composable () -> Unit,
@@ -634,6 +578,15 @@ private fun StatusIcon(
             )
         }
 
+        TaskStatus.Cancelled -> {
+            Icon(
+                modifier = Modifier.size(STATUS_ICON_SIZE),
+                imageVector = Icons.Default.Cancel,
+                contentDescription = null,
+                tint = LocalContentColor.current.copy(alpha = .6f),
+            )
+        }
+
         is TaskStatus.Success -> {
             Icon(
                 modifier = Modifier.size(STATUS_ICON_SIZE),
@@ -695,7 +648,7 @@ private fun MessageItem(
 }
 
 @Composable
-fun colorWarning(
+private fun colorWarning(
     background: Color = MaterialTheme.colorScheme.background,
 ) = if (background.isDark()) {
     Color(0xFFFFB74D) // Orange 300
@@ -704,7 +657,7 @@ fun colorWarning(
 }
 
 @Composable
-fun colorError(
+private fun colorError(
     background: Color = MaterialTheme.colorScheme.background,
 ) = if (background.isDark()) {
     Color(0xFFE57373) // Red 300
@@ -713,7 +666,7 @@ fun colorError(
 }
 
 @Composable
-fun colorSuccess(
+private fun colorSuccess(
     background: Color = MaterialTheme.colorScheme.background,
 ) = if (background.isDark()) {
     Color(0xFF81C784) // Green 300

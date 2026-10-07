@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.tasks
+package com.michaelflisar.toolbox.tasks.execution
 
 sealed interface TaskStatus {
 
@@ -9,6 +9,10 @@ sealed interface TaskStatus {
     }
 
     data object Success : Finished {
+        override val message: String? = null
+    }
+
+    data object Cancelled : Finished {
         override val message: String? = null
     }
 

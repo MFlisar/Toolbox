@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.tasks
+package com.michaelflisar.toolbox.tasks.plan
 
 data class TaskMessage(
     val text: String,
@@ -10,4 +10,3 @@ data class TaskMessage(
         Error
     }
 }
-

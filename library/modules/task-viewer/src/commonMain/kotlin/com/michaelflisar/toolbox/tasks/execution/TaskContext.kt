@@ -1,14 +1,16 @@
-package com.michaelflisar.toolbox.tasks
+package com.michaelflisar.toolbox.tasks.execution
+
+import com.michaelflisar.toolbox.tasks.plan.TaskExecutionListener
+import com.michaelflisar.toolbox.tasks.plan.TaskMessage
 
 class TaskExecutionContext internal constructor(
-    private val listener: TaskExecutionListener,
+    private val listener: TaskExecutionListener?,
     private val taskId: String,
 ) {
-
     fun setStatus(
         text: String?,
     ) {
-        listener.onTaskStatusChanged(
+        listener?.onTaskStatusChanged(
             taskId = taskId,
             status = text,
         )
@@ -18,7 +20,7 @@ class TaskExecutionContext internal constructor(
         text: String,
         type: TaskMessage.Type = TaskMessage.Type.Info,
     ) {
-        listener.onTaskMessage(
+        listener?.onTaskMessage(
             taskId = taskId,
             message = TaskMessage(
                 text = text,

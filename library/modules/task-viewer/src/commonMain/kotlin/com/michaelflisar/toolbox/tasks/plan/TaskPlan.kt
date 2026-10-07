@@ -1,5 +1,12 @@
-package com.michaelflisar.toolbox.tasks
+package com.michaelflisar.toolbox.tasks.plan
 
+import com.michaelflisar.toolbox.tasks.execution.TaskExecutionConfig
+import com.michaelflisar.toolbox.tasks.execution.TaskExecutionContext
+import com.michaelflisar.toolbox.tasks.execution.TaskResult
+import com.michaelflisar.toolbox.tasks.execution.TaskStatus
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlin.time.Clock
 import kotlin.uuid.Uuid
 
@@ -9,24 +16,22 @@ sealed interface TaskPlanNode {
 }
 
 sealed interface TaskPlanExecutable : TaskPlanNode {
+    /** Liefert true, wenn dieser Knoten oder ein Kind einen Fehler hatte. */
     suspend fun execute(
-        listener: TaskExecutionListener = EmptyTaskExecutionListener,
+        config: TaskExecutionConfig,
+        listener: TaskExecutionListener?,
         parentId: String?,
-    )
+    ): Boolean
 }
 
-data class TaskPlanRoot(
+data class TaskPlan(
     val children: List<TaskPlanExecutable>,
 ) {
     suspend fun execute(
-        listener: TaskExecutionListener = EmptyTaskExecutionListener,
+        config: TaskExecutionConfig,
+        listener: TaskExecutionListener? = null
     ) {
-        children.forEach {
-            it.execute(
-                listener = listener,
-                parentId = null,
-            )
-        }
+        children.executeChildren(config, listener, null)
     }
 }
 
@@ -35,6 +40,7 @@ data class TaskPlanSummary(
     val success: Int = 0,
     val warnings: Int = 0,
     val errors: Int = 0,
+    val skipped: Int = 0,
 ) {
     internal fun toStatus(): TaskStatus {
         return when {
@@ -46,6 +52,9 @@ data class TaskPlanSummary(
 
             warnings > 0 ->
                 TaskStatus.Warning("")
+
+            skipped > 0 ->
+                TaskStatus.Cancelled
 
             else ->
                 TaskStatus.Success
@@ -60,27 +69,25 @@ internal data class TaskPlanGroup(
 ) : TaskPlanExecutable {
 
     override suspend fun execute(
-        listener: TaskExecutionListener,
+        config: TaskExecutionConfig,
+        listener: TaskExecutionListener?,
         parentId: String?,
-    ) {
+    ): Boolean {
+        currentCoroutineContext().ensureActive()
         val start = Clock.System.now().toEpochMilliseconds()
-        listener.onGroupStarted(
+        listener?.onGroupStarted(
             id = id,
             title = title,
             parentId = parentId,
             startTimeMs = start
         )
-        children.forEach {
-            it.execute(
-                listener = listener,
-                parentId = id,
-            )
-        }
+        val failed = children.executeChildren(config, listener, id)
         val end = Clock.System.now().toEpochMilliseconds()
-        listener.onGroupFinished(
+        listener?.onGroupFinished(
             id = id,
             endTimeMs = end
         )
+        return failed
     }
 }
 
@@ -91,11 +98,13 @@ data class TaskPlanTask(
 ) : TaskPlanExecutable {
 
     override suspend fun execute(
-        listener: TaskExecutionListener,
+        config: TaskExecutionConfig,
+        listener: TaskExecutionListener?,
         parentId: String?,
-    ) {
+    ): Boolean {
+        currentCoroutineContext().ensureActive()
         val start = Clock.System.now().toEpochMilliseconds()
-        listener.onTaskStarted(
+        listener?.onTaskStarted(
             id = id,
             title = title,
             parentId = parentId,
@@ -109,22 +118,66 @@ data class TaskPlanTask(
 
         val result = try {
             context.block()
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
+        currentCoroutineContext().ensureActive()
 
         val end = Clock.System.now().toEpochMilliseconds()
-        listener.onTaskFinished(
+        listener?.onTaskFinished(
             taskId = id,
             result = result,
             endTimeMs = end
         )
+        return result is TaskResult.Error
+    }
+}
+
+private suspend fun List<TaskPlanExecutable>.executeChildren(
+    config: TaskExecutionConfig,
+    listener: TaskExecutionListener?,
+    parentId: String?,
+): Boolean {
+    var failed = false
+    var stopped = false
+    for (child in this) {
+        currentCoroutineContext().ensureActive()
+        if (stopped) {
+            child.skip(listener, parentId, Clock.System.now().toEpochMilliseconds())
+        } else {
+            val childFailed = child.execute(config, listener, parentId)
+            failed = failed || childFailed
+            stopped = childFailed && when (config.errorBehavior) {
+                TaskExecutionConfig.ErrorBehavior.Continue -> false
+                TaskExecutionConfig.ErrorBehavior.StopGroup -> child is TaskPlanTask
+                TaskExecutionConfig.ErrorBehavior.StopRootGroup ->
+                    parentId != null || child is TaskPlanTask
+                TaskExecutionConfig.ErrorBehavior.StopAll -> true
+            }
+        }
+    }
+    return failed
+}
+
+private fun TaskPlanExecutable.skip(
+    listener: TaskExecutionListener?,
+    parentId: String?,
+    timeMs: Long,
+) {
+    when (this) {
+        is TaskPlanTask -> listener?.onTaskSkipped(id, title, parentId, timeMs)
+        is TaskPlanGroup -> {
+            listener?.onGroupSkipped(id, title, parentId, timeMs)
+            children.forEach { it.skip(listener, id, timeMs) }
+        }
     }
 }
 
 fun taskPlan(
     block: TaskPlanBuilder.() -> Unit,
-): TaskPlanRoot {
+): TaskPlan {
     return TaskPlanBuilder()
         .apply(block)
         .build()
@@ -143,8 +196,8 @@ class TaskPlanBuilder {
             .build()
     }
 
-    internal fun build(): TaskPlanRoot {
-        return TaskPlanRoot(
+    internal fun build(): TaskPlan {
+        return TaskPlan(
             children = children.toList()
         )
     }
