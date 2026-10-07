@@ -1,0 +1,151 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../ui-adaptive/6.0.4/ui-adaptive-6.0.4.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "ui-adaptive",
+    "version": "6.0.4",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.4"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ui-adaptive.aar",
+          "url": "ui-adaptive-android-6.0.4.aar",
+          "size": 33670,
+          "sha512": "dc142cd7505ece864ca8b4fab30c3f36bd64c89b7e2e33c0c9a7dbac4bf5097ee170fe5ca7c803093b2cb0195d84c4a37861c9697664f0b209550c2e20ff8be6",
+          "sha256": "4378bdcaee7371a83dbcb40499e90e7a3da3cc9367aaa8b4929925504b965d5f",
+          "sha1": "ae0a9e3cc82b4419717dcd2a71350e73324a06e2",
+          "md5": "5543381345b5f66909e28879df694422"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.4"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.ui",
+          "module": "ui-backhandler",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "6.0.4"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ui-adaptive.aar",
+          "url": "ui-adaptive-android-6.0.4.aar",
+          "size": 33670,
+          "sha512": "dc142cd7505ece864ca8b4fab30c3f36bd64c89b7e2e33c0c9a7dbac4bf5097ee170fe5ca7c803093b2cb0195d84c4a37861c9697664f0b209550c2e20ff8be6",
+          "sha256": "4378bdcaee7371a83dbcb40499e90e7a3da3cc9367aaa8b4929925504b965d5f",
+          "sha1": "ae0a9e3cc82b4419717dcd2a71350e73324a06e2",
+          "md5": "5543381345b5f66909e28879df694422"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "ui-adaptive-android-sources.jar",
+          "url": "ui-adaptive-android-6.0.4-sources.jar",
+          "size": 6942,
+          "sha512": "69bef775d280085fe26acc61b68a8212ef61f316c8758bccbb3af3d45e3aba4dfd1d450b03a91531505192375f6031193dddef92073026b8b11bf4e80dc05258",
+          "sha256": "08c90cf39de47d6904c2de28a117f284cf1fe1ec74d67a4155739f687e65761c",
+          "sha1": "b69e94299c64fae6c4d49acf9ce5fa1153047ebd",
+          "md5": "5795f91ca1977d923b53a5dd68691b89"
+        }
+      ]
+    }
+  ]
+}
