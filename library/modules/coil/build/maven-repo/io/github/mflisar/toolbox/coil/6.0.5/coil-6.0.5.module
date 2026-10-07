@@ -1,0 +1,394 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.mflisar.toolbox",
+    "module": "coil",
+    "version": "6.0.5",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "io.coil-kt.coil3",
+          "module": "coil-core",
+          "version": {
+            "requires": "3.6.2"
+          }
+        },
+        {
+          "group": "io.coil-kt.coil3",
+          "module": "coil-compose",
+          "version": {
+            "requires": "3.6.2"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.5"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coil-metadata.jar",
+          "url": "coil-6.0.5.jar",
+          "size": 8505,
+          "sha512": "df6a509baae602bafe42832470e0a122d887e4db045494f495b9b138cd6d54100a339043d12e55cf54c66c7db6e92d0216c8b885bd23677889a706c10e74b7f3",
+          "sha256": "0588f165a22d78532a2ef495bedfa42e0ccfcf8402567a7abdf09e2994d29b2d",
+          "sha1": "41124cfa67d4bf4ab562971a05ed3cdac2e73587",
+          "md5": "05127daa267d105c5b7d36dcb79822a8"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "coil-kotlin-sources.jar",
+          "url": "coil-6.0.5-sources.jar",
+          "size": 8323,
+          "sha512": "74a85c17f3e9f99d383965e74777c6ffbbdd9fa8f908ab4d6718a135714a50d573b1e5a6126e5d500b60f8acd1ed11b1986412f91df744eada7fa6473cf90ef8",
+          "sha256": "47cc06a3a9e01fcb1137fdcb0b92968b15e96194f0397c5dc6813636ccbf8d56",
+          "sha1": "a44f1849c78298e56ed43b274c31eae8317c246f",
+          "md5": "6109b893396af6d370531cab1f1bfa0f"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../coil-android/6.0.5/coil-android-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-android",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../coil-android/6.0.5/coil-android-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-android",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../coil-android/6.0.5/coil-android-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-android",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../coil-iosarm64/6.0.5/coil-iosarm64-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-iosarm64",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../coil-iosarm64/6.0.5/coil-iosarm64-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-iosarm64",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "iosArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../coil-iosarm64/6.0.5/coil-iosarm64-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-iosarm64",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../coil-iosarm64/6.0.5/coil-iosarm64-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-iosarm64",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../coil-iossimulatorarm64/6.0.5/coil-iossimulatorarm64-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-iossimulatorarm64",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../coil-iossimulatorarm64/6.0.5/coil-iossimulatorarm64-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-iossimulatorarm64",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../coil-iossimulatorarm64/6.0.5/coil-iossimulatorarm64-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-iossimulatorarm64",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../coil-iossimulatorarm64/6.0.5/coil-iossimulatorarm64-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-iossimulatorarm64",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../coil-jvm/6.0.5/coil-jvm-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-jvm",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../coil-jvm/6.0.5/coil-jvm-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-jvm",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../coil-jvm/6.0.5/coil-jvm-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-jvm",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "wasmJsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../coil-wasm-js/6.0.5/coil-wasm-js-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-wasm-js",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "wasmJsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../coil-wasm-js/6.0.5/coil-wasm-js-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-wasm-js",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "wasmJsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../coil-wasm-js/6.0.5/coil-wasm-js-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-wasm-js",
+        "version": "6.0.5"
+      }
+    },
+    {
+      "name": "wasmJsResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresourcesjs",
+        "org.gradle.usage": "kotlin-multiplatformresourcesjs",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../coil-wasm-js/6.0.5/coil-wasm-js-6.0.5.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "coil-wasm-js",
+        "version": "6.0.5"
+      }
+    }
+  ]
+}

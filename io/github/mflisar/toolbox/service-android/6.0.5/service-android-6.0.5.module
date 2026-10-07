@@ -1,0 +1,158 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../service/6.0.5/service-6.0.5.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "service",
+    "version": "6.0.5",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.lifecycle",
+          "module": "lifecycle-service",
+          "version": {
+            "requires": "2.11.0"
+          }
+        },
+        {
+          "group": "androidx.work",
+          "module": "work-runtime-ktx",
+          "version": {
+            "requires": "2.11.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "service.aar",
+          "url": "service-android-6.0.5.aar",
+          "size": 44251,
+          "sha512": "1a006d903e2d53554cb7f4f99c54dda51e00283c63671e813dde49e310d3507cd463de948fa6e648a71a825be69cdce7b8bb72e83243b98a941bd724b6a0ca76",
+          "sha256": "55f288f3a2548c4e722dce744e7bd85c7fc365ee142fb429a2585fb496d3cc2e",
+          "sha1": "cb20867ab967a330f0608dcb0436b835c166794a",
+          "md5": "882f84b991471527c6e2839e05b90a85"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.lifecycle",
+          "module": "lifecycle-service",
+          "version": {
+            "requires": "2.11.0"
+          }
+        },
+        {
+          "group": "androidx.work",
+          "module": "work-runtime-ktx",
+          "version": {
+            "requires": "2.11.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core-ktx",
+          "version": {
+            "requires": "1.19.0"
+          }
+        },
+        {
+          "group": "com.google.guava",
+          "module": "guava",
+          "version": {
+            "requires": "33.7.1-android"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "service.aar",
+          "url": "service-android-6.0.5.aar",
+          "size": 44251,
+          "sha512": "1a006d903e2d53554cb7f4f99c54dda51e00283c63671e813dde49e310d3507cd463de948fa6e648a71a825be69cdce7b8bb72e83243b98a941bd724b6a0ca76",
+          "sha256": "55f288f3a2548c4e722dce744e7bd85c7fc365ee142fb429a2585fb496d3cc2e",
+          "sha1": "cb20867ab967a330f0608dcb0436b835c166794a",
+          "md5": "882f84b991471527c6e2839e05b90a85"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "service-android-sources.jar",
+          "url": "service-android-6.0.5-sources.jar",
+          "size": 7093,
+          "sha512": "501fe03f4af74b1699d8b20c6ebef67000c07124d03d78f40f7c966bcd0e748632c1866a0efb8577ab96b7dc65b758585e6f090be1548e38131ef65c976c52f5",
+          "sha256": "b9b46c1e1430e8e6bfe0a2223945c22c43d4f02f8b6403ff530a9e8a14a2273b",
+          "sha1": "1fba8ddaec75829d90b69ef4d0b61c900625bdb2",
+          "md5": "8e37977ece8bad04d07a8964f705a4fe"
+        }
+      ]
+    }
+  ]
+}

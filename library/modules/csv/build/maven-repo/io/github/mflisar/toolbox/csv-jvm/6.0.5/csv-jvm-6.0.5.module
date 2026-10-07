@@ -1,0 +1,123 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../csv/6.0.5/csv-6.0.5.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "csv",
+    "version": "6.0.5",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.5"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "csv-jvm.jar",
+          "url": "csv-jvm-6.0.5.jar",
+          "size": 11155,
+          "sha512": "22e3e9661a7ba09921b0d3d8b0a2d620d8b509bc634616e18bc5e31a0e5d32b5abf1946c82fbb8645d97e1a1aaf5b1399c15b4024f0e22409e28ccf1c71fb1d1",
+          "sha256": "63518b7e55103fa225eff7294ba20ecca1c61279fc2b9f74e05cc7c5964fb339",
+          "sha1": "b8ab7ecc4701034441b3c2f17e6c76b29e79a610",
+          "md5": "00527d835fdadb5787bceddbf1b09532"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.5"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.apache.commons",
+          "module": "commons-csv",
+          "version": {
+            "requires": "1.14.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "csv-jvm.jar",
+          "url": "csv-jvm-6.0.5.jar",
+          "size": 11155,
+          "sha512": "22e3e9661a7ba09921b0d3d8b0a2d620d8b509bc634616e18bc5e31a0e5d32b5abf1946c82fbb8645d97e1a1aaf5b1399c15b4024f0e22409e28ccf1c71fb1d1",
+          "sha256": "63518b7e55103fa225eff7294ba20ecca1c61279fc2b9f74e05cc7c5964fb339",
+          "sha1": "b8ab7ecc4701034441b3c2f17e6c76b29e79a610",
+          "md5": "00527d835fdadb5787bceddbf1b09532"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "csv-jvm-sources.jar",
+          "url": "csv-jvm-6.0.5-sources.jar",
+          "size": 2167,
+          "sha512": "23dae2b76a94b0b3df41a60a166f8b8f6a683e393d015a7aa0dff5b5200b075759b0db43ebb0e6b4fe4cea1459153e5cd50f811e7af2cb9992ab4ce9485e3020",
+          "sha256": "e3dbc1692c485aa68061bd47dc7c95d88d5b4a6359fd8611513d7de8d7bb3ade",
+          "sha1": "86e1027e263272ef0b1388303e97de1db53f78c5",
+          "md5": "17a9dbe1e9a673078dda2e1a1e7c3c5b"
+        }
+      ]
+    }
+  ]
+}

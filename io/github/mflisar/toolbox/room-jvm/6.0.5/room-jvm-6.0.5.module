@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../room/6.0.5/room-6.0.5.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "room",
+    "version": "6.0.5",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.room",
+          "module": "room-runtime",
+          "version": {
+            "requires": "2.8.4"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.5"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "room-jvm.jar",
+          "url": "room-jvm-6.0.5.jar",
+          "size": 156319,
+          "sha512": "b9d1a1727f58aec8a7eb59848264c4f06a2bb792c5595ebd11770915bf6479a4d0b485376c6471f2e8fad7354f820a3329308b532271d144198fcd156f5e9826",
+          "sha256": "ee3e8fe50a5aae1d082b2540bd2cf6e95370890f129601164daa91f33de12afe",
+          "sha1": "64681336b0211f50303128a791d194fe6f54740b",
+          "md5": "e0f3d88d75dcd0c4fcebdd34f069b466"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.room",
+          "module": "room-runtime",
+          "version": {
+            "requires": "2.8.4"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.5"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "room-jvm.jar",
+          "url": "room-jvm-6.0.5.jar",
+          "size": 156319,
+          "sha512": "b9d1a1727f58aec8a7eb59848264c4f06a2bb792c5595ebd11770915bf6479a4d0b485376c6471f2e8fad7354f820a3329308b532271d144198fcd156f5e9826",
+          "sha256": "ee3e8fe50a5aae1d082b2540bd2cf6e95370890f129601164daa91f33de12afe",
+          "sha1": "64681336b0211f50303128a791d194fe6f54740b",
+          "md5": "e0f3d88d75dcd0c4fcebdd34f069b466"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "room-jvm-sources.jar",
+          "url": "room-jvm-6.0.5-sources.jar",
+          "size": 18665,
+          "sha512": "947b223c976c69fcd5a26fd359a733e8669ab4414e98e393ff77afcbc0b000c09db9ae63bf612e415e2f64d98476dbd83f1cdb41dc3ff3ef36abf5f2aaafe442",
+          "sha256": "040ba654b64d27bf91059a81593d1296b020ac1c7552c88837bee403474fcd4f",
+          "sha1": "6b58ee580f795ee82925b7bf6cf4575149ff3d00",
+          "md5": "8f6418f729f988e8df7fb4eb396f9ab7"
+        }
+      ]
+    }
+  ]
+}
