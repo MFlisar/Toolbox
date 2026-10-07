@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../room/6.0.2/room-6.0.2.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "room",
+    "version": "6.0.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.room",
+          "module": "room-runtime",
+          "version": {
+            "requires": "2.8.4"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "room-iosArm64Main.klib",
+          "url": "room-iosarm64-6.0.2.klib",
+          "size": 83132,
+          "sha512": "a1ea3b95bd30bba332f2eeed973d926ca1bbccb03c574d711dbfe64615514a52dc766a87190bf050a33d0b1c588f5ae194e49d2f054109e258d2d71483e125db",
+          "sha256": "229b0b757c6fc2da1f31f124f0d84d18e9cb14c7b7a7ef585b24c76f335d416a",
+          "sha1": "941d9916330f3d53f937be741ac465887aec8742",
+          "md5": "c7622524aa29a66b252f28c0bc93c20a"
+        }
+      ]
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "files": [
+        {
+          "name": "room-iosarm64-sources.jar",
+          "url": "room-iosarm64-6.0.2-sources.jar",
+          "size": 17668,
+          "sha512": "9d8663f4e7b02922e4c2b39061a9350c625b40fbb2751a30d2f6726b3ef2e6952131611ee5cdbc42d8a71c2161f87c850081ab3d3aa4bb7d06154ba98d198dcc",
+          "sha256": "70578fe2b923dde4230c60f2325e731fc4098753953bcf42fd7883dfbf06ad73",
+          "sha1": "e54103262758ac634b94aef3cedfe1912f2ca3aa",
+          "md5": "3f4d0a424d39b7db55c84ee1c4d2aa35"
+        }
+      ]
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.room",
+          "module": "room-runtime",
+          "version": {
+            "requires": "2.8.4"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "room-iosarm64-metadata.jar",
+          "url": "room-iosarm64-6.0.2-metadata.jar",
+          "size": 2571,
+          "sha512": "7e8c0fe02e6ed42bca5e6b2d7f8cbb656646ca2351afd7e2841126033acb4d4f2da4d43801fb182aea61fc8ef8fe02325892049136505b8bfeb37efbfe285553",
+          "sha256": "56a939aeaa0841950b1bd522f47d4f0e4528231e8c918709a512d0bba1428d0d",
+          "sha1": "0e885f0d052ad6c01f1253bc05a85d91ce956cd4",
+          "md5": "267cd7206d04cab29f0e22f4f74bbf76"
+        }
+      ]
+    }
+  ]
+}

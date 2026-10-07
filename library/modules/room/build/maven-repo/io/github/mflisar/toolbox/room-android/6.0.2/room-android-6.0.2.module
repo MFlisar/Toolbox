@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../room/6.0.2/room-6.0.2.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "room",
+    "version": "6.0.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.room",
+          "module": "room-runtime",
+          "version": {
+            "requires": "2.8.4"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "room.aar",
+          "url": "room-android-6.0.2.aar",
+          "size": 143896,
+          "sha512": "f73d86d92df298c92ba2f6c5eb2ce27176edcbe1acb8c7bc89a2f34e0ca9f91672c26bd6f5aee308db742962f1650be98dc7c3d04150d5036923cb79f0fe1393",
+          "sha256": "c443f4da3f58b7369215ce941b3a548e2e29183b8106d4309d0ac2ed3ec50278",
+          "sha1": "2da54cbffa844cae70f1192b16801129b8729879",
+          "md5": "3f7275c6c4b3995dd67f2bebae0a8413"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.room",
+          "module": "room-runtime",
+          "version": {
+            "requires": "2.8.4"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "room.aar",
+          "url": "room-android-6.0.2.aar",
+          "size": 143896,
+          "sha512": "f73d86d92df298c92ba2f6c5eb2ce27176edcbe1acb8c7bc89a2f34e0ca9f91672c26bd6f5aee308db742962f1650be98dc7c3d04150d5036923cb79f0fe1393",
+          "sha256": "c443f4da3f58b7369215ce941b3a548e2e29183b8106d4309d0ac2ed3ec50278",
+          "sha1": "2da54cbffa844cae70f1192b16801129b8729879",
+          "md5": "3f7275c6c4b3995dd67f2bebae0a8413"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "room-android-sources.jar",
+          "url": "room-android-6.0.2-sources.jar",
+          "size": 19181,
+          "sha512": "33bc07da0088c6e42506fcf62c864d2bdeff4c5c8af390574cee139cd1d25f0faf21264bae94533cad025b8ebc9100730a60d866d0d071fe051f3590175471c7",
+          "sha256": "6c7ffcbfee1e376c66c5479b0e369343cceedfb864432ec3c842a89ea5fb4c99",
+          "sha1": "2b5a68e3cec6cedb13b1dfee8df5ea4c5461e1cf",
+          "md5": "e0e721b324f0dce2c6b73f802e4f6218"
+        }
+      ]
+    }
+  ]
+}

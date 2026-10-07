@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../powershell/6.0.2/powershell-6.0.2.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "powershell",
+    "version": "6.0.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "powershell-jvm.jar",
+          "url": "powershell-jvm-6.0.2.jar",
+          "size": 9527,
+          "sha512": "2030ae0bd3b9c534d777faa27e448b1b0e3ac6d8d6fe6fc0479a412b330a76ec0f2b04cdc0261a69939c44c2f4edb635f538eec21390aa69f30424ebe21ad114",
+          "sha256": "62861820d5252dc4daa8b484042585d233cece2506525cac123319a970de7558",
+          "sha1": "01ec92acca0a2b33b604a6286d0f19093f1a9f4b",
+          "md5": "874002839cf653e7f092ab7c31aa460f"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.apache.poi",
+          "module": "poi",
+          "version": {
+            "requires": "5.5.1"
+          }
+        },
+        {
+          "group": "org.apache.poi",
+          "module": "poi-ooxml",
+          "version": {
+            "requires": "5.5.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "powershell-jvm.jar",
+          "url": "powershell-jvm-6.0.2.jar",
+          "size": 9527,
+          "sha512": "2030ae0bd3b9c534d777faa27e448b1b0e3ac6d8d6fe6fc0479a412b330a76ec0f2b04cdc0261a69939c44c2f4edb635f538eec21390aa69f30424ebe21ad114",
+          "sha256": "62861820d5252dc4daa8b484042585d233cece2506525cac123319a970de7558",
+          "sha1": "01ec92acca0a2b33b604a6286d0f19093f1a9f4b",
+          "md5": "874002839cf653e7f092ab7c31aa460f"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "powershell-jvm-sources.jar",
+          "url": "powershell-jvm-6.0.2-sources.jar",
+          "size": 2843,
+          "sha512": "1d8b64700290d8096fefb8949b28db29a23450bcd03c75358fc406000297828883dad4731d8719821dd926f52cca084cb4d91aa83aa462d3b8208a6e68596c33",
+          "sha256": "8e180ba528489ac80d0d016dd4bbfe115dff89b3d700d1bc9b4112ccc32918c7",
+          "sha1": "831636801b23b67dda73deacad8b774ae085ace8",
+          "md5": "15ab3465ed2e494715d63038774fc717"
+        }
+      ]
+    }
+  ]
+}
