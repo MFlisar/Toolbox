@@ -148,7 +148,7 @@ fun TaskViewer(
 
 @Composable
 fun TaskViewerContainer(
-    plan: TaskPlan,
+    plan: TaskPlan?,
     state: TaskViewState,
     config: TaskViewerConfig = rememberTaskViewerConfig(),
     reset: String = "Neu starten",
@@ -156,53 +156,54 @@ fun TaskViewerContainer(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
+    val showTasks = plan != null && (state.hasRunningTasks || state.hasFinishedTasks)
+
     Column(
         modifier = modifier
     ) {
 
         AnimatedVisibility(
-            !state.hasRunningTasks &&
-                    !state.hasFinishedTasks
+            !showTasks
         ) {
             content()
         }
 
         AnimatedVisibility(
-            state.hasRunningTasks ||
-                    state.hasFinishedTasks
+            showTasks
         ) {
-
-            MyColumn(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-
-                TaskViewer(
-                    plan = plan,
-                    state = state,
-                    config = config,
-                    modifier =
-                        if (scrollable) {
-                            Modifier.weight(1f)
-                        } else {
-                            Modifier
-                        },
-                    scrollable = scrollable,
-                )
-
-                if (
-                    state.hasFinishedTasks &&
-                    !state.hasRunningTasks
-                ) {
-
-                    MyTextButton(
-                        modifier = Modifier.align(
-                            Alignment.CenterHorizontally
-                        ),
-                        text = reset
+            if (plan != null) {
+                    MyColumn(
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        state.reset()
+
+                        TaskViewer(
+                            plan = plan,
+                            state = state,
+                            config = config,
+                            modifier =
+                                if (scrollable) {
+                                    Modifier.weight(1f)
+                                } else {
+                                    Modifier
+                                },
+                            scrollable = scrollable,
+                        )
+
+                        if (
+                            state.hasFinishedTasks &&
+                            !state.hasRunningTasks
+                        ) {
+
+                            MyTextButton(
+                                modifier = Modifier.align(
+                                    Alignment.CenterHorizontally
+                                ),
+                                text = reset
+                            ) {
+                                state.reset()
+                            }
+                        }
                     }
-                }
             }
         }
     }

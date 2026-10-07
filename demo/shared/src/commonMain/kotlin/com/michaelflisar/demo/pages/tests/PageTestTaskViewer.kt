@@ -99,6 +99,12 @@ private fun createTestPlan(
 
     val plan = taskPlan {
 
+        task("Initialize") {
+            addInfo("Initializing test plan")
+            pause()
+            TaskResult.Success("Initialization completed")
+        }
+
         group("Deploy Test System") {
 
             task("Copy Files") {
@@ -225,7 +231,7 @@ private fun createTestPlan(
             }
         }
 
-        group("Deploy Test System 2") {
+        group("Deploy Test System 2 (EMPTY)") {
 
         }
     }

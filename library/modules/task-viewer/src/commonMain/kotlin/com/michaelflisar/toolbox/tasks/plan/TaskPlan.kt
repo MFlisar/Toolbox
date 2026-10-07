@@ -187,6 +187,14 @@ class TaskPlanBuilder {
 
     private val children = mutableListOf<TaskPlanExecutable>()
 
+    /** Bei Fehlern behandeln StopGroup und StopRootGroup den Plan als Gruppe. */
+    fun task(
+        title: String,
+        block: suspend TaskExecutionContext.() -> TaskResult,
+    ) {
+        children += createTask(title, block)
+    }
+
     fun group(
         title: String,
         block: TaskPlanGroupBuilder.() -> Unit,
@@ -213,11 +221,7 @@ class TaskPlanGroupBuilder internal constructor(
         title: String,
         block: suspend TaskExecutionContext.() -> TaskResult,
     ) {
-        children += TaskPlanTask(
-            id = Uuid.random().toString(),
-            title = title,
-            block = block,
-        )
+        children += createTask(title, block)
     }
 
     fun group(
@@ -237,3 +241,12 @@ class TaskPlanGroupBuilder internal constructor(
         )
     }
 }
+
+private fun createTask(
+    title: String,
+    block: suspend TaskExecutionContext.() -> TaskResult,
+): TaskPlanTask = TaskPlanTask(
+    id = Uuid.random().toString(),
+    title = title,
+    block = block,
+)

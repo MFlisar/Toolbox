@@ -15,6 +15,8 @@ sealed interface TaskResult {
     data class Error(
         val exception: Exception,
     ) : TaskResult {
+
+        constructor(errorMessage: String) : this(Exception(errorMessage))
         override val status: String
             get() = exception.message ?: "Error"
     }
