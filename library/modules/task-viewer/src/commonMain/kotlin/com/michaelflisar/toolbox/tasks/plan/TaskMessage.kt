@@ -75,33 +75,56 @@ sealed interface TaskMessage {
         ): AnnotatedString {
             return buildAnnotatedString {
 
-                when (type) {
-                    TaskMessageType.Warning -> {
-                        withStyle(
-                            SpanStyle(color = config.taskMessageColors.colorWarning(background))
-                        ) {
-                            append(config.prefixWarning)
-                        }
-                    }
-
-                    TaskMessageType.Error -> {
-                        withStyle(
-                            SpanStyle(color = config.taskMessageColors.colorError(background))
-                        ) {
-                            append(config.prefixError)
-                        }
-                    }
-
-                    TaskMessageType.Info -> Unit
+                val prefix = when (type) {
+                    TaskMessageType.Warning -> config.prefixWarning
+                    TaskMessageType.Error -> config.prefixError
+                    TaskMessageType.Info -> ""
                 }
 
-                append(text)
+                if (prefix.isEmpty()) {
+                    append(text)
+                    return@buildAnnotatedString
+                }
+
+                text.lines().forEachIndexed { index, line ->
+
+                    if (index > 0) {
+                        append('\n')
+                    }
+
+                    when (type) {
+                        TaskMessageType.Warning -> {
+                            withStyle(
+                                SpanStyle(color = if (index == 0) config.taskMessageColors.colorWarning(background) else Color.Transparent)
+                            ) {
+                                append(config.prefixWarning)
+                            }
+                        }
+
+                        TaskMessageType.Error -> {
+                            withStyle(
+                                SpanStyle(color = if (index == 0) config.taskMessageColors.colorError(background) else Color.Transparent)
+                            ) {
+                                append(config.prefixError)
+                            }
+                        }
+
+                        TaskMessageType.Info -> Unit
+                    }
+                    append(line)
+                }
             }
         }
     }
 
     data class Rich(
         val text: AnnotatedString,
+    ) : TaskMessage
+
+    data class ItemList(
+        val items: List<String>,
+        val title: String? = null,
+        val type: TaskMessageType = TaskMessageType.Info,
     ) : TaskMessage
 }
 

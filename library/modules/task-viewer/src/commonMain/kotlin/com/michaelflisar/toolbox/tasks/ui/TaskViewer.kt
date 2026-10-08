@@ -23,8 +23,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.FolderOpen
+import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -42,6 +46,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
@@ -53,6 +59,7 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.tasks.TaskConfig
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 import com.michaelflisar.toolbox.tasks.plan.TaskMessage
+import com.michaelflisar.toolbox.tasks.plan.TaskMessageType
 import com.michaelflisar.toolbox.tasks.plan.TaskPlan
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanExecutable
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroup
@@ -204,88 +211,28 @@ private fun TaskItemTask(
     ) {
 
         TaskItemContainer(
-            expanded = expanded,
+            group = false,
             expandable = expandable,
-            running = runtime.status == TaskStatus.Running,
-            config = config,
             viewerConfig = viewerConfig,
             onToggleExpanded = { onToggleExpanded(task.id) }
         )
         {
-            Row(
-                modifier = Modifier
-                    .heightIn(min = layout.minItemHeight)
-                    .padding(
-                        horizontal = layout.horizontalPadding,
-                        vertical = layout.verticalPadding,
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                Box(
-                    modifier = Modifier.size(layout.expandIconSize),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    if (expandable) {
-                        val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
-                        Icon(
-                            modifier = Modifier
-                                .size(layout.expandIconSize)
-                                .graphicsLayer { rotationZ = rotation },
-                            imageVector = Icons.Default.ChevronRight,
-                            contentDescription = null,
-                        )
-                    }
-                }
-
-                Spacer(Modifier.width(layout.iconSpacing))
-
-                StatusIcon(
-                    status = runtime.status,
-                    viewerConfig = viewerConfig,
-                    size = layout.statusIconSize,
-                )
-
-                Spacer(Modifier.width(layout.iconSpacing))
-
-                Column(
-                    modifier = Modifier.weight(1f),
-                ) {
-
-                    Text(
-                        text = if (viewerConfig.showHeaderNumbers) "$number ${task.title}" else task.title,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-
-                    val subtitle = if (runtime.status == TaskStatus.Cancelled) {
-                        viewerConfig.skippedTaskSubtitle
-                    } else {
-                        runtime.subtitle
-                    }
-                    subtitle?.let {
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = LocalContentColor.current.copy(alpha = .8f),
-                        )
-                    }
-                }
-
-                if (viewerConfig.showTaskTimes) {
-
-                    Spacer(Modifier.width(layout.iconSpacing))
-
-                    val millis = runtime.durationMs(state.nowMs)
-                    Text(
-                        text = viewerConfig.timeFormatter(
-                            runtime.isFinished,
-                            millis,
-                        ),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = LocalContentColor.current.copy(alpha = .6f),
-                    )
-                }
-            }
+            TaskItemHeader(
+                group = false,
+                title = task.title,
+                number = number,
+                subtitle = if (runtime.status == TaskStatus.Cancelled) {
+                    viewerConfig.skippedTaskSubtitle
+                } else {
+                    runtime.subtitle
+                },
+                status = runtime.status,
+                expanded = expanded,
+                expandable = expandable,
+                isFinished = runtime.isFinished,
+                durationMs = runtime.durationMs(state.nowMs),
+                viewerConfig = viewerConfig,
+            )
         }
 
         AnimatedVisibility(
@@ -303,7 +250,8 @@ private fun TaskItemTask(
                 ),
             ) {
 
-                val numberStyle = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace)
+                val numberStyle =
+                    MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace)
                 val measureMarkerWidth = true // genau auf Anzahl der Ziffern messen?
                 val markerWidth = if (viewerConfig.showMessageNumbers && measureMarkerWidth) {
                     val textMeasurer = rememberTextMeasurer()
@@ -364,84 +312,26 @@ private fun TaskItemGroup(
         )
     ) {
         TaskItemContainer(
-            expanded = expanded,
+            group = true,
             expandable = expandable,
-            running = false,
-            config = config,
             viewerConfig = viewerConfig,
             onToggleExpanded = { onToggleExpanded(group.id) },
         ) {
-
-            Row(
-                modifier = Modifier
-                    .heightIn(min = layout.minItemHeight)
-                    .padding(
-                        horizontal = layout.horizontalPadding,
-                        vertical = layout.verticalPadding
-                    ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Box(
-                    modifier = Modifier.size(layout.expandIconSize),
-                    contentAlignment = Alignment.Center
-                ) {
-
-                    if (expandable) {
-                        Icon(
-                            modifier = Modifier.size(layout.expandIconSize),
-                            imageVector =
-                                if (expanded) Icons.Default.ExpandMore
-                                else Icons.Default.ChevronRight,
-                            contentDescription = null,
-                        )
-                    }
-                }
-
-                val summary by remember(group, state) {
-                    derivedStateOf { state.getSummary(group) }
-                }
-                val status = if (runtime.skipped) TaskStatus.Cancelled else summary.toStatus()
-
-                Spacer(Modifier.width(layout.iconSpacing))
-
-                StatusIcon(
-                    status = status,
-                    viewerConfig = viewerConfig,
-                    size = layout.statusIconSize,
-                )
-
-                Spacer(Modifier.width(layout.iconSpacing))
-
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(
-                        text = if (viewerConfig.showHeaderNumbers) "$number ${group.title}" else group.title,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    val summary =
-                        viewerConfig.groupSummaryFormatter(summary).takeIf { it.isNotEmpty() }
-                    summary?.let {
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = LocalContentColor.current.copy(alpha = .7f)
-                        )
-                    }
-                }
-
-                Spacer(Modifier.width(layout.iconSpacing))
-
-                Text(
-                    text = viewerConfig.timeFormatter(
-                        runtime.isFinished,
-                        runtime.durationMs(state.nowMs)
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LocalContentColor.current.copy(alpha = .6f)
-                )
+            val summary by remember(group, state) {
+                derivedStateOf { state.getSummary(group) }
             }
+            TaskItemHeader(
+                group = true,
+                title = group.title,
+                number = number,
+                subtitle = viewerConfig.groupSummaryFormatter(summary).takeIf { it.isNotEmpty() },
+                status = if (runtime.skipped) TaskStatus.Cancelled else summary.toStatus(),
+                expanded = expanded,
+                expandable = expandable,
+                isFinished = runtime.isFinished,
+                durationMs = runtime.durationMs(state.nowMs),
+                viewerConfig = viewerConfig,
+            )
         }
 
         AnimatedVisibility(
@@ -475,35 +365,92 @@ private fun TaskItemGroup(
 }
 
 @Composable
-private fun TaskItemContainer(
+private fun TaskItemHeader(
+    group: Boolean,
+    title: String,
+    number: String,
+    subtitle: String?,
+    status: TaskStatus,
     expanded: Boolean,
     expandable: Boolean,
-    running: Boolean,
-    config: TaskConfig.ViewStateConfig,
+    isFinished: Boolean,
+    durationMs: Long,
+    viewerConfig: TaskConfig.ViewerConfig,
+) {
+    val layout = viewerConfig.layout
+
+    Row(
+        modifier = Modifier
+            .heightIn(min = layout.minItemHeight)
+            .padding(
+                horizontal = layout.horizontalPadding,
+                vertical = layout.verticalPadding,
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier.size(layout.expandIconSize),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (expandable) {
+                val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
+                Icon(
+                    modifier = Modifier
+                        .size(layout.expandIconSize)
+                        .graphicsLayer { rotationZ = rotation },
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                )
+            }
+        }
+
+        Spacer(Modifier.width(layout.iconSpacing))
+
+        StatusIcon(
+            group = group,
+            status = status,
+            viewerConfig = viewerConfig,
+            size = layout.statusIconSize,
+        )
+
+        Spacer(Modifier.width(layout.iconSpacing))
+
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
+            Text(
+                text = if (viewerConfig.showHeaderNumbers) "$number $title" else title,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            subtitle?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = LocalContentColor.current.copy(alpha = if (group) .7f else .8f),
+                )
+            }
+        }
+
+        if (group || viewerConfig.showTaskTimes) {
+            Spacer(Modifier.width(layout.iconSpacing))
+
+            Text(
+                text = viewerConfig.timeFormatter(isFinished, durationMs),
+                style = MaterialTheme.typography.bodySmall,
+                color = LocalContentColor.current.copy(alpha = .6f),
+            )
+        }
+    }
+}
+
+@Composable
+private fun TaskItemContainer(
+    group: Boolean,
+    expandable: Boolean,
     viewerConfig: TaskConfig.ViewerConfig,
     onToggleExpanded: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    /*
-    val highlighted = config.expandSinglePathOnly && expanded
-    val borderColor by animateColorAsState(
-        targetValue = when {
-            highlighted -> MaterialTheme.colorScheme.primary
-            running -> MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
-            else -> Color.Transparent
-        }
-    )
-    val borderWidth by animateDpAsState(
-        targetValue = when {
-            highlighted -> 2.dp
-            running -> 1.dp
-            else -> 0.dp
-        }
-    )*/
-
-    val borderColor = Color.Transparent
-    val borderWidth = 0.dp
-
     CompositionLocalProvider(
         LocalMinimumInteractiveComponentSize provides 0.dp
     ) {
@@ -511,17 +458,9 @@ private fun TaskItemContainer(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { onToggleExpanded() },
-                border = if (borderWidth > 0.dp) {
-                    BorderStroke(
-                        width = borderWidth,
-                        color = borderColor
-                    )
-                } else {
-                    null
-                },
                 colors = CardDefaults.cardColors(
-                    containerColor = viewerConfig.containerColor,
-                    contentColor = viewerConfig.contentColor
+                    containerColor = if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor,
+                    contentColor = if (group) viewerConfig.groupContentColor else viewerConfig.taskContentColor
                 )
             ) {
                 content()
@@ -529,17 +468,9 @@ private fun TaskItemContainer(
         } else {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                border = if (borderWidth > 0.dp) {
-                    BorderStroke(
-                        width = borderWidth,
-                        color = borderColor
-                    )
-                } else {
-                    null
-                },
                 colors = CardDefaults.cardColors(
-                    containerColor = viewerConfig.containerColor,
-                    contentColor = viewerConfig.contentColor
+                    containerColor = if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor,
+                    contentColor = if (group) viewerConfig.groupContentColor else viewerConfig.taskContentColor
                 )
             ) {
                 content()
@@ -550,6 +481,7 @@ private fun TaskItemContainer(
 
 @Composable
 private fun StatusIcon(
+    group: Boolean,
     status: TaskStatus,
     viewerConfig: TaskConfig.ViewerConfig,
     size: Dp,
@@ -579,7 +511,7 @@ private fun StatusIcon(
                 modifier = Modifier.size(size),
                 imageVector = Icons.Default.CheckCircle,
                 contentDescription = null,
-                tint = viewerConfig.taskMessageColors.colorSuccess(viewerConfig.containerColor)
+                tint = viewerConfig.taskMessageColors.colorSuccess(if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor)
             )
         }
 
@@ -588,7 +520,7 @@ private fun StatusIcon(
                 modifier = Modifier.size(size),
                 imageVector = Icons.Default.Warning,
                 contentDescription = null,
-                tint = viewerConfig.taskMessageColors.colorWarning(viewerConfig.containerColor)
+                tint = viewerConfig.taskMessageColors.colorWarning(if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor)
             )
         }
 
@@ -597,7 +529,7 @@ private fun StatusIcon(
                 modifier = Modifier.size(size),
                 imageVector = Icons.Default.Error,
                 contentDescription = null,
-                tint = viewerConfig.taskMessageColors.colorError(viewerConfig.containerColor)
+                tint = viewerConfig.taskMessageColors.colorError(if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor)
             )
         }
     }
@@ -632,13 +564,51 @@ private fun MessageItem(
             Spacer(Modifier.width(numberSpacing))
         }
 
-        Text(
-            modifier = Modifier.weight(1f),
-            text = when (message) {
-                is TaskMessage.Text -> message.annotated(viewerConfig, MaterialTheme.colorScheme.background)
-                is TaskMessage.Rich -> message.text
-            },
-            style = MaterialTheme.typography.bodySmall
-        )
+        when (message) {
+            is TaskMessage.Text -> Text(
+                modifier = Modifier.weight(1f),
+                text = message.annotated(
+                    viewerConfig,
+                    MaterialTheme.colorScheme.background,
+                ),
+                style = MaterialTheme.typography.bodySmall,
+            )
+
+            is TaskMessage.Rich -> Text(
+                modifier = Modifier.weight(1f),
+                text = message.text,
+                style = MaterialTheme.typography.bodySmall,
+            )
+
+            is TaskMessage.ItemList -> Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(viewerConfig.layout.expandedContentSpacing),
+            ) {
+                val prefix = when (message.type) {
+                    TaskMessageType.Info -> ""
+                    TaskMessageType.Warning -> viewerConfig.prefixWarning
+                    TaskMessageType.Error -> viewerConfig.prefixError
+                }
+                if (message.title != null || prefix.isNotEmpty()) {
+                    Text(
+                        text = TaskMessage.Text(
+                            text = message.title.orEmpty(),
+                            type = message.type,
+                        ).annotated(viewerConfig, MaterialTheme.colorScheme.background),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+                message.items.forEach { item ->
+                    MessageItem(
+                        viewerConfig = viewerConfig,
+                        modifier = Modifier,
+                        message = TaskMessage.Text(item),
+                        bulletWidth = viewerConfig.layout.messageBulletWidth,
+                        number = null,
+                        numberSpacing = numberSpacing,
+                    )
+                }
+            }
+        }
     }
 }

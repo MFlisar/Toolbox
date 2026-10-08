@@ -37,6 +37,7 @@ class TaskViewState internal constructor(
 ) : TaskExecutionListener {
 
     private val states = mutableStateMapOf<String, TaskNodeState>()
+    private val groupParents = mutableMapOf<String, String?>()
 
     internal fun getNodeState(id: String): TaskNodeState? = states[id]
 
@@ -64,7 +65,13 @@ class TaskViewState internal constructor(
 
     fun reset() {
         states.clear()
+        groupParents.clear()
     }
+
+    suspend fun execute(
+        plan: TaskPlan,
+        config: TaskConfig
+    ) = plan.execute(config.execution, this)
 
     internal fun getSummary(
         group: TaskPlanGroupNode,
@@ -127,10 +134,11 @@ class TaskViewState internal constructor(
         parentId: String?,
         timeMs: Long,
     ) {
+        groupParents[id] = parentId
         Snapshot.withMutableSnapshot {
             states[id] = TaskGroupState(
                 startedAt = timeMs,
-                expanded = config.autoExpandNewTasks,
+                expanded = config.autoExpandGroups,
                 skipped = true,
             ).apply {
                 finishedAt = timeMs
@@ -144,9 +152,10 @@ class TaskViewState internal constructor(
         parentId: String?,
         startTimeMs: Long,
     ) {
+        groupParents[id] = parentId
         states[id] = TaskGroupState(
             startedAt = startTimeMs,
-            expanded = config.autoExpandNewTasks,
+            expanded = config.autoExpandGroups,
         )
     }
 
@@ -156,10 +165,19 @@ class TaskViewState internal constructor(
         parentId: String?,
         startTimeMs: Long,
     ) {
-        states[id] = TaskState(
-            startedAt = startTimeMs,
-            expanded = config.expandRunningTasks,
-        )
+        Snapshot.withMutableSnapshot {
+            states[id] = TaskState(
+                startedAt = startTimeMs,
+                expanded = config.autoExpandRunningTaskPath,
+            )
+            if (config.autoExpandRunningTaskPath) {
+                var ancestorId = parentId
+                while (ancestorId != null) {
+                    getGroupState(ancestorId)?.expanded = true
+                    ancestorId = groupParents[ancestorId]
+                }
+            }
+        }
     }
 
     override fun onTaskStatusChanged(

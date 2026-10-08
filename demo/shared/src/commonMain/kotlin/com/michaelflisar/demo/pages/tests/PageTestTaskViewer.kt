@@ -22,13 +22,11 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScree
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.tasks.TaskConfig
-import com.michaelflisar.toolbox.tasks.rememberTaskConfig
 import com.michaelflisar.toolbox.tasks.execution.TaskResult
 import com.michaelflisar.toolbox.tasks.plan.TaskPlan
-import com.michaelflisar.toolbox.tasks.plan.rememberTaskMessageColors
 import com.michaelflisar.toolbox.tasks.plan.taskPlan
+import com.michaelflisar.toolbox.tasks.rememberTaskConfig
 import com.michaelflisar.toolbox.tasks.ui.TaskViewerContainer
-import com.michaelflisar.toolbox.tasks.ui.TaskViewerLayout
 import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
 import com.michaelflisar.toolbox.tasks.ui.state.rememberTaskViewState
 import kotlinx.coroutines.Dispatchers
@@ -59,7 +57,9 @@ private fun Page() {
     val scope = rememberCoroutineScope()
 
     val plan = remember { createTestPlan() }
-    val config = rememberTaskConfig()
+    val config = rememberTaskConfig(
+        expandSinglePathOnly = false
+    )
     val viewState = rememberTaskViewState(config = config.viewState)
 
     TaskViewerContainer(
@@ -70,7 +70,7 @@ private fun Page() {
     ) {
         MyButton(
             onClick = {
-                scope.launch { runTest(plan, viewState, config.execution) }
+                scope.launch { viewState.execute(plan, config) }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -90,9 +90,9 @@ private fun createTestPlan(
 
         // Test 1: direkter Task in Root
         task("Initialize") {
-            addInfo("Direct task in root")
-            addWarning("Some warning")
-            addCustom {
+            log("Direct task in root")
+            logWarning("Some warning")
+            logRichText {
                 buildAnnotatedString {
                     withStyle(SpanStyle(color = colorSuccess(), fontWeight = FontWeight.Bold)) {
                         append("✓ ")
@@ -103,6 +103,14 @@ private fun createTestPlan(
                     }
                 }
             }
+            logWarning("Some multi-line warning\nwith details")
+
+            val files = List(10) { "file_${it + 1}.dat" }
+            log(items = files, title = "Processed files")
+
+            val exceptionWithStackTrace = Exception("This is a test exception with stack trace")
+            logError("An error occurred: ${exceptionWithStackTrace.message}\n${exceptionWithStackTrace.stackTraceToString()}",)
+
             TaskResult.Success("Initialization completed")
         }
 
@@ -111,8 +119,8 @@ private fun createTestPlan(
             repeat(5) { index ->
                 task("Copy Files ${index + 1}") {
                     repeat(30) { fileIndex ->
-                        setStatus("${fileIndex + 1}/30 files")
-                        addInfo("Copied file_${fileIndex + 1}.dat")
+                        updateStatus("${fileIndex + 1}/30 files")
+                        log("Copied file_${fileIndex + 1}.dat")
                         pause()
                     }
                     TaskResult.Success("Copied 30 files")
@@ -128,17 +136,17 @@ private fun createTestPlan(
         // Test 4: Gruppe mit Fehler in einem Sub Task
         group("Group with Error") {
             task("Task 1") {
-                addInfo("Doing something")
+                log("Doing something")
                 pause()
                 TaskResult.Success("Task 1 completed")
             }
             task("Task 2 (Error)") {
-                addInfo("Doing something")
+                log("Doing something")
                 pause()
                 TaskResult.Error(Exception("Something went wrong in Task 2"))
             }
             task("Task 3") {
-                addInfo("Doing something")
+                log("Doing something")
                 pause()
                 TaskResult.Success("Task 3 completed")
             }
@@ -147,17 +155,17 @@ private fun createTestPlan(
         // Test 5: Gruppe mit Warnung in einem Sub Task
         group("Group with Warning") {
             task("Task 1") {
-                addInfo("Doing something")
+                log("Doing something")
                 pause()
                 TaskResult.Success("Task 1 completed")
             }
             task("Task 2 (Warning)") {
-                addInfo("Doing something")
+                log("Doing something")
                 pause()
                 TaskResult.Warning("Something might be wrong in Task 2")
             }
             task("Task 3") {
-                addInfo("Doing something")
+                log("Doing something")
                 pause()
                 TaskResult.Success("Task 3 completed")
             }
@@ -166,30 +174,30 @@ private fun createTestPlan(
         // Test 6: Komplexe Gruppe mit mehreren Sub Tasks und Untergruppen
         group("Complex Group") {
             task("Task 1") {
-                addInfo("Doing something")
+                log("Doing something")
                 pause()
                 TaskResult.Success("Task 1 completed")
             }
             group("Subgroup 1") {
                 task("Subtask 1.1") {
-                    addInfo("Doing something")
+                    log("Doing something")
                     pause()
                     TaskResult.Success("Subtask 1.1 completed")
                 }
                 task("Subtask 1.2") {
-                    addInfo("Doing something")
+                    log("Doing something")
                     pause()
                     TaskResult.Success("Subtask 1.2 completed")
                 }
             }
             group("Subgroup 2") {
                 task("Subtask 2.1") {
-                    addInfo("Doing something")
+                    log("Doing something")
                     pause()
                     TaskResult.Success("Subtask 2.1 completed")
                 }
                 task("Subtask 2.2 (Error)") {
-                    addInfo("Doing something")
+                    log("Doing something")
                     pause()
                     TaskResult.Error(Exception("Something went wrong in Subtask 2.2"))
                 }
@@ -203,10 +211,10 @@ private fun createTestPlan(
 private suspend fun runTest(
     plan: TaskPlan,
     viewState: TaskViewState,
-    executionConfig: TaskConfig.ExecutionConfig,
+    config: TaskConfig,
 ) {
     withContext(Dispatchers.PlatformIO) {
         viewState.reset()
-        plan.execute(executionConfig, viewState)
+        viewState.execute(plan, config)
     }
 }

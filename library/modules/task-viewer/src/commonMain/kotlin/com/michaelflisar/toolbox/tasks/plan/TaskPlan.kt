@@ -35,12 +35,18 @@ interface TaskPlanGroupNode {
 data class TaskPlan(
     override val children: List<TaskPlanExecutable>,
 ) : TaskPlanGroupNode {
+
+    /**
+     * führt einen TaskPlan aus. Liefert true, wenn ein Fehler aufgetreten ist.
+     *
+     * @param config die Konfiguration für die Ausführung
+     * @param listener optionaler Listener, der über den Fortschritt informiert (z.b. [com.michaelflisar.toolbox.tasks.ui.state.TaskViewState])
+     * @return true, wenn ein Fehler aufgetreten ist
+     */
     suspend fun execute(
         config: TaskConfig.ExecutionConfig,
         listener: TaskExecutionListener? = null
-    ) {
-        children.executeChildren(config, listener, null)
-    }
+    ) = children.executeChildren(config, listener, null)
 }
 
 data class TaskPlanSummary(

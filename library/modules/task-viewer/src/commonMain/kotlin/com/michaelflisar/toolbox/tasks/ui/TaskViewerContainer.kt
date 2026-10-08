@@ -59,7 +59,7 @@ fun TaskViewerContainer(
                             if (scrollable) {
                                 Modifier.weight(1f)
                             } else {
-                                Modifier.Companion
+                                Modifier
                             },
                         scrollable = scrollable,
                     )
@@ -68,7 +68,6 @@ fun TaskViewerContainer(
                         state.hasFinishedTasks &&
                         !state.hasRunningTasks
                     ) {
-
                         MyTextButton(
                             modifier = Modifier.align(
                                 Alignment.CenterHorizontally

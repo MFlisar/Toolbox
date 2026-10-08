@@ -75,8 +75,10 @@ data class TaskConfig(
     @Stable
     data class ViewerConfig(
         val taskMessageColors: TaskMessageColors,
-        val containerColor: Color,
-        val contentColor: Color,
+        val groupContainerColor: Color,
+        val groupContentColor: Color,
+        val taskContainerColor: Color,
+        val taskContentColor: Color,
         val autoScrollToBottom: Boolean,
         val showTaskTimes: Boolean,
         val expandSinglePathOnly: Boolean,
@@ -100,14 +102,17 @@ data class TaskConfig(
     @Stable
     data class ViewStateConfig(
         /**
-         * Neue Tasks automatisch öffnen.
+         * Neue Gruppen bei Erstellung einmalig öffnen, auch übersprungene Gruppen.
+         * Manuelles Zuklappen bleibt danach möglich.
          */
-        val autoExpandNewTasks: Boolean,
+        val autoExpandGroups: Boolean,
 
         /**
-         * Laufende Tasks automatisch öffnen.
+         * Beim Task-Start einmalig den Task und alle Elterngruppen öffnen,
+         * unabhängig von [autoExpandGroups]. Andere Zweige bleiben unverändert.
+         * Manuelles Zuklappen bleibt danach möglich; beim Abschluss gilt [finishedTaskBehavior].
          */
-        val expandRunningTasks: Boolean,
+        val autoExpandRunningTaskPath: Boolean,
 
         /**
          * Verhalten nach Abschluss.
@@ -116,8 +121,8 @@ data class TaskConfig(
     ) {
         companion object {
             val Default = ViewStateConfig(
-                autoExpandNewTasks = true,
-                expandRunningTasks = true,
+                autoExpandGroups = true,
+                autoExpandRunningTaskPath = true,
                 finishedTaskBehavior = FinishedTaskBehavior.CLOSE_ALL,
             )
         }
@@ -129,14 +134,17 @@ data class TaskConfig(
  *
  * @param taskMessageColors Farben für Task-Nachrichten.
  * @param errorBehavior Verhalten bei Task-Fehlern.
- * @param autoExpandNewTasks Öffnet neue Gruppen automatisch.
- * @param expandRunningTasks Öffnet laufende Tasks automatisch.
+ * @param autoExpandGroups Öffnet neue und übersprungene Gruppen bei Erstellung einmalig.
+ * @param autoExpandRunningTaskPath Öffnet beim Task-Start einmalig Task und Elterngruppen,
+ * ohne andere Zweige zu schließen. Manuelles Zuklappen bleibt möglich.
  * @param finishedTaskBehavior Legt fest, welche fertigen Tasks geöffnet bleiben.
- * @param containerColor Hintergrundfarbe des Viewers.
- * @param contentColor Inhaltsfarbe des Viewers.
+ * @param taskContainerColor Hintergrundfarbe der Task-Einträge.
+ * @param taskContentColor Inhaltsfarbe der Task-Einträge.
+ * @param groupContainerColor Hintergrundfarbe der Gruppen-Einträge.
+ * @param groupContentColor Inhaltsfarbe der Gruppen-Einträge.
  * @param autoScrollToBottom Scrollt bei neuen Tasks nach unten.
  * @param showTaskTimes Zeigt Laufzeiten an.
- * @param expandSinglePathOnly Öffnet nur den Pfad zum ausgewählten Eintrag.
+ * @param expandSinglePathOnly Öffnet bei manueller Auswahl nur den Pfad zum ausgewählten Eintrag.
  * @param layout Layout und Abstände der Einträge.
  * @param groupSummaryFormatter Formatiert die Gruppen-Zusammenfassung.
  * @param timeFormatter Formatiert die Laufzeit.
@@ -160,15 +168,17 @@ fun rememberTaskConfig(
     // Ausführung
     errorBehavior: TaskConfig.ErrorBehavior = TaskConfig.ErrorBehavior.Continue,
     // View-State
-    autoExpandNewTasks: Boolean = true,
-    expandRunningTasks: Boolean = true,
+    autoExpandGroups: Boolean = true,
+    autoExpandRunningTaskPath: Boolean = true,
     finishedTaskBehavior: TaskConfig.FinishedTaskBehavior = TaskConfig.FinishedTaskBehavior.CLOSE_ALL,
     // Viewer
-    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    groupContainerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
+    groupContentColor: Color = MaterialTheme.colorScheme.onSurface,
+    taskContainerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
+    taskContentColor: Color = MaterialTheme.colorScheme.onSurface,
     autoScrollToBottom: Boolean = true,
     showTaskTimes: Boolean = true,
-    expandSinglePathOnly: Boolean = true,
+    expandSinglePathOnly: Boolean = false,
     layout: TaskViewerLayout = TaskViewerLayout.Compact,
     groupSummaryFormatter: (TaskPlanSummary) -> String = TaskViewerConfigDefaults::groupSummaryFormatter,
     timeFormatter: (isFinished: Boolean, millis: Long) -> String = TaskViewerConfigDefaults::timeFormatter,
@@ -189,11 +199,13 @@ fun rememberTaskConfig(
     return remember(
         taskMessageColors,
         errorBehavior,
-        autoExpandNewTasks,
-        expandRunningTasks,
+        autoExpandGroups,
+        autoExpandRunningTaskPath,
         finishedTaskBehavior,
-        containerColor,
-        contentColor,
+        groupContainerColor,
+        groupContentColor,
+        taskContainerColor,
+        taskContentColor,
         autoScrollToBottom,
         showTaskTimes,
         expandSinglePathOnly,
@@ -220,8 +232,10 @@ fun rememberTaskConfig(
             ),
             viewer = TaskConfig.ViewerConfig(
                 taskMessageColors = taskMessageColors,
-                containerColor = containerColor,
-                contentColor = contentColor,
+                groupContainerColor = groupContainerColor,
+                groupContentColor = groupContentColor,
+                taskContainerColor = taskContainerColor,
+                taskContentColor = taskContentColor,
                 autoScrollToBottom = autoScrollToBottom,
                 showTaskTimes = showTaskTimes,
                 expandSinglePathOnly = expandSinglePathOnly,
@@ -242,8 +256,8 @@ fun rememberTaskConfig(
                 headerDurationLabel = headerDurationLabel,
             ),
             viewState = TaskConfig.ViewStateConfig(
-                autoExpandNewTasks = autoExpandNewTasks,
-                expandRunningTasks = expandRunningTasks,
+                autoExpandGroups = autoExpandGroups,
+                autoExpandRunningTaskPath = autoExpandRunningTaskPath,
                 finishedTaskBehavior = finishedTaskBehavior,
             ),
         )
