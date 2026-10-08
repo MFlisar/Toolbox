@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../excel/6.0.6/excel-6.0.6.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "excel",
+    "version": "6.0.6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.6"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "excel-jvm.jar",
+          "url": "excel-jvm-6.0.6.jar",
+          "size": 19881,
+          "sha512": "784953567f7277b2653f6059a5ffe292b5e919f90165e8c2f292117f880a1fd49db77cf52c7e1e36ddeddc0b2e6a0e37750d51b854996d751a1aaaf9f1e0f208",
+          "sha256": "42b512ecb3d2329c5e97842088667d6505be90bb30557f1eeed5045a8d22ebb8",
+          "sha1": "170866493e686f5b18a8f0f30eefaa977006ffa4",
+          "md5": "75cb38d2e5a3296d260ec85b253526a5"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.6"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.apache.poi",
+          "module": "poi",
+          "version": {
+            "requires": "5.5.1"
+          }
+        },
+        {
+          "group": "org.apache.poi",
+          "module": "poi-ooxml",
+          "version": {
+            "requires": "5.5.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "excel-jvm.jar",
+          "url": "excel-jvm-6.0.6.jar",
+          "size": 19881,
+          "sha512": "784953567f7277b2653f6059a5ffe292b5e919f90165e8c2f292117f880a1fd49db77cf52c7e1e36ddeddc0b2e6a0e37750d51b854996d751a1aaaf9f1e0f208",
+          "sha256": "42b512ecb3d2329c5e97842088667d6505be90bb30557f1eeed5045a8d22ebb8",
+          "sha1": "170866493e686f5b18a8f0f30eefaa977006ffa4",
+          "md5": "75cb38d2e5a3296d260ec85b253526a5"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "excel-jvm-sources.jar",
+          "url": "excel-jvm-6.0.6-sources.jar",
+          "size": 3723,
+          "sha512": "bf0922590f0d26a8a1722f1a097e4c0fcad714d26dbe51197d496af17ac7f478a8b7233eb963fe5442e646b493c50d13421e1a0ad5ac06a53bba779ce15e5ce3",
+          "sha256": "fab945a5954919d1bff98b7502e78a6c0d80215658ab5aa7299ede031129223e",
+          "sha1": "2e7e8ea063ae79529595576d6e3eccda1cd87620",
+          "md5": "c0a70290ebfcecdb69d6aa792f86fc86"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,333 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.mflisar.toolbox",
+    "module": "zip",
+    "version": "6.0.6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-io-core",
+          "version": {
+            "requires": "0.9.1"
+          }
+        },
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "core",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "zip-metadata.jar",
+          "url": "zip-6.0.6.jar",
+          "size": 4996,
+          "sha512": "841ad0371c2b4eec263ca2ad45ba10e9f558c185ec73625608672a6a5705687e2c5eff975454b5092f2c384a128c6ef0c45d221bbb6d8668a52e8ac900289422",
+          "sha256": "1ad9a6e72ba92b54bb74e674ca4f546da3ef0300e959693784e92c515712df4f",
+          "sha1": "97e57d6da7da9ef228151430476de13049125283",
+          "md5": "4ba2e079425ff39054b4eb7fd5392017"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "zip-kotlin-sources.jar",
+          "url": "zip-6.0.6-sources.jar",
+          "size": 6959,
+          "sha512": "3922ca1b4ed14b1f0f784f436d7a6fd28fed2c44a3697c0bc8f97fd1a23e5af88abed43c2a1b2e88da161ca5d55c1ccf415b3b048f6567bc4b57c87a74d1941a",
+          "sha256": "3023c9c2ad663a18995742beea288b04f4270e3f4b58e733cc92c9caf8f86640",
+          "sha1": "6f9c0343cb768b9c13d3be0f234cc82b6b929e36",
+          "md5": "22aa0b42c2504b875ae9415da2dcaf12"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../zip-android/6.0.6/zip-android-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-android",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../zip-android/6.0.6/zip-android-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-android",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../zip-android/6.0.6/zip-android-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-android",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../zip-iosarm64/6.0.6/zip-iosarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-iosarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../zip-iosarm64/6.0.6/zip-iosarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-iosarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../zip-iosarm64/6.0.6/zip-iosarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-iosarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../zip-iossimulatorarm64/6.0.6/zip-iossimulatorarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-iossimulatorarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../zip-iossimulatorarm64/6.0.6/zip-iossimulatorarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-iossimulatorarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../zip-iossimulatorarm64/6.0.6/zip-iossimulatorarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-iossimulatorarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../zip-jvm/6.0.6/zip-jvm-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-jvm",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../zip-jvm/6.0.6/zip-jvm-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-jvm",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../zip-jvm/6.0.6/zip-jvm-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-jvm",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "wasmJsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../zip-wasm-js/6.0.6/zip-wasm-js-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-wasm-js",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "wasmJsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../zip-wasm-js/6.0.6/zip-wasm-js-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-wasm-js",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "wasmJsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../zip-wasm-js/6.0.6/zip-wasm-js-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "zip-wasm-js",
+        "version": "6.0.6"
+      }
+    }
+  ]
+}

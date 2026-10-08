@@ -1,0 +1,380 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.mflisar.toolbox",
+    "module": "diff",
+    "version": "6.0.6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.6"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "diff-metadata.jar",
+          "url": "diff-6.0.6.jar",
+          "size": 7156,
+          "sha512": "16b6dc4d3582dbdf40215a6ef0ea6eb4a20f5dfefeabb36daeff8f9d7951eed5782eb7e55bf91a03671a59085a6f9f7e180374206f2c5f2cb4029265d1089819",
+          "sha256": "379f04caf198f4156caac874ae2d22df7d859a1954dfd20c24b1c0e280f97e9a",
+          "sha1": "41450cdfa382163077b3f91cfc68dc0df7dbe3fa",
+          "md5": "5bcd11b85cb8120308e069c2dd6e177c"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "diff-kotlin-sources.jar",
+          "url": "diff-6.0.6-sources.jar",
+          "size": 6424,
+          "sha512": "9334c2c8b3582ef8d42af32e455eb88a8bd2ec56d84d9ded79510ee4dce6ce777cd84f0c495e2cd92e83f0d5485bb81df7cf0ba728f5956ede79cc37ff54bd69",
+          "sha256": "c3d66e9447e86034f104d697331d4773dd61346b604e48e0d2e0c78c961d700d",
+          "sha1": "67119487df6c70b699f893e6812edfcab1480d4c",
+          "md5": "a76b1582a88fa2f390a6553cbbb602af"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../diff-android/6.0.6/diff-android-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-android",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../diff-android/6.0.6/diff-android-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-android",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../diff-android/6.0.6/diff-android-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-android",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../diff-iosarm64/6.0.6/diff-iosarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-iosarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../diff-iosarm64/6.0.6/diff-iosarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-iosarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../diff-iosarm64/6.0.6/diff-iosarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-iosarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../diff-iosarm64/6.0.6/diff-iosarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-iosarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../diff-iossimulatorarm64/6.0.6/diff-iossimulatorarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-iossimulatorarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../diff-iossimulatorarm64/6.0.6/diff-iossimulatorarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-iossimulatorarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../diff-iossimulatorarm64/6.0.6/diff-iossimulatorarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-iossimulatorarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../diff-iossimulatorarm64/6.0.6/diff-iossimulatorarm64-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-iossimulatorarm64",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../diff-jvm/6.0.6/diff-jvm-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-jvm",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../diff-jvm/6.0.6/diff-jvm-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-jvm",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../diff-jvm/6.0.6/diff-jvm-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-jvm",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "wasmJsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../diff-wasm-js/6.0.6/diff-wasm-js-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-wasm-js",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "wasmJsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../diff-wasm-js/6.0.6/diff-wasm-js-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-wasm-js",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "wasmJsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../diff-wasm-js/6.0.6/diff-wasm-js-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-wasm-js",
+        "version": "6.0.6"
+      }
+    },
+    {
+      "name": "wasmJsResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresourcesjs",
+        "org.gradle.usage": "kotlin-multiplatformresourcesjs",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../diff-wasm-js/6.0.6/diff-wasm-js-6.0.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "diff-wasm-js",
+        "version": "6.0.6"
+      }
+    }
+  ]
+}

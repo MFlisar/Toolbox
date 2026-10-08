@@ -1,0 +1,197 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../diff/6.0.6/diff-6.0.6.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "diff",
+    "version": "6.0.6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.6"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "6.0.6"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "diff-iosSimulatorArm64Main.klib",
+          "url": "diff-iossimulatorarm64-6.0.6.klib",
+          "size": 50633,
+          "sha512": "f333afce4e24bbc3cfafc5796b27c994dfc5071275b86dbe75b8e0ad3a0b014dc324e87a2fbd9010ab2bd1591090f184724180c0f4d629ac4e44b8fbfd137e7e",
+          "sha256": "1a4a50392181f8fa212bc7644db7b7a12d54ec4cd1936c5c56f506487b25bdba",
+          "sha1": "453c4a8db6a3e67417e8fa7f176c18d2f89247c4",
+          "md5": "09c3af89be91b5ac975b4cb993905141"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "files": [
+        {
+          "name": "diff-iossimulatorarm64-sources.jar",
+          "url": "diff-iossimulatorarm64-6.0.6-sources.jar",
+          "size": 6424,
+          "sha512": "9334c2c8b3582ef8d42af32e455eb88a8bd2ec56d84d9ded79510ee4dce6ce777cd84f0c495e2cd92e83f0d5485bb81df7cf0ba728f5956ede79cc37ff54bd69",
+          "sha256": "c3d66e9447e86034f104d697331d4773dd61346b604e48e0d2e0c78c961d700d",
+          "sha1": "67119487df6c70b699f893e6812edfcab1480d4c",
+          "md5": "a76b1582a88fa2f390a6553cbbb602af"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.6"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "6.0.6"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "diff.kotlin_resources.zip",
+          "url": "diff-iossimulatorarm64-6.0.6-kotlin_resources.kotlin_resources.zip",
+          "size": 344,
+          "sha512": "5aa5263fb3497c80f5c47ce70642d672b96bb564f0c844cfcdbcb9457c5f660f76e19291c1f6a467f1c18c75aa1f423ec4efb9d058135b2357e02d2cd863e9cd",
+          "sha256": "0c4000dec15acb09aa481cf4517019a6d0691fa6b0a5d054c0bb5f2ff341c020",
+          "sha1": "39b53307b3513a2c5d3dc9b99ac2b108f5a788dc",
+          "md5": "2c0838eab6abbf6c51837d9389353a84"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.6"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "6.0.6"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "diff-iossimulatorarm64-metadata.jar",
+          "url": "diff-iossimulatorarm64-6.0.6-metadata.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}
