@@ -3,11 +3,11 @@
   <groupId>io.github.mflisar.toolbox</groupId>
   <artifactId>proversion-iosarm64</artifactId>
   <versioning>
-    <latest>6.0.7</latest>
-    <release>6.0.7</release>
+    <latest>6.0.8</latest>
+    <release>6.0.8</release>
     <versions>
-      <version>6.0.7</version>
+      <version>6.0.8</version>
     </versions>
-    <lastUpdated>20261012084736</lastUpdated>
+    <lastUpdated>20261012100718</lastUpdated>
   </versioning>
 </metadata>

@@ -1,0 +1,179 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../task-viewer/6.0.8/task-viewer-6.0.8.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "task-viewer",
+    "version": "6.0.8",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.8"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "6.0.8"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-info",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "task-viewer-jvm.jar",
+          "url": "task-viewer-jvm-6.0.8.jar",
+          "size": 227939,
+          "sha512": "5981852e5db81ae4eb52e4b15121fa31a9c950739b61b0f919373e3273c84a45d851e5910bb10eb28cd78be5d75c87c71a13228696142822ff995cc610adcc00",
+          "sha256": "c104448da7486657c282afb06408c3e14ee2fe5e0de169db19287198610be2ab",
+          "sha1": "f150e065f8ae24ae88c3401a5cf3697dd9cdffa3",
+          "md5": "e2319bcd45af77234e2d7ba5ad88af5d"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.0.8"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "6.0.8"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-info",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "task-viewer-jvm.jar",
+          "url": "task-viewer-jvm-6.0.8.jar",
+          "size": 227939,
+          "sha512": "5981852e5db81ae4eb52e4b15121fa31a9c950739b61b0f919373e3273c84a45d851e5910bb10eb28cd78be5d75c87c71a13228696142822ff995cc610adcc00",
+          "sha256": "c104448da7486657c282afb06408c3e14ee2fe5e0de169db19287198610be2ab",
+          "sha1": "f150e065f8ae24ae88c3401a5cf3697dd9cdffa3",
+          "md5": "e2319bcd45af77234e2d7ba5ad88af5d"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "task-viewer-jvm-sources.jar",
+          "url": "task-viewer-jvm-6.0.8-sources.jar",
+          "size": 24422,
+          "sha512": "43ae4db75a0b984ebfd37861a33abacb81f6530173b0ec8bc84503956040b04e35f5b7eca6561afa62823f9571a32ff3acf552a4f1cf1cef648dd0e3cb6c3724",
+          "sha256": "eece4389776c9aba336fff0f2aa9e7e124702776428e04d01087828ed46da47b",
+          "sha1": "1091d1d8cc7c28d9a482027b981ffd1a1c276875",
+          "md5": "afc3ee136aa48f50d9a540d0c3f42353"
+        }
+      ]
+    }
+  ]
+}
