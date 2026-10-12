@@ -44,7 +44,7 @@ interface TaskExecutionListener {
 
     fun onTaskFinished(
         taskId: String,
-        result: TaskResult,
+        result: TaskResult<*>,
         endTimeMs: Long,
     )
 

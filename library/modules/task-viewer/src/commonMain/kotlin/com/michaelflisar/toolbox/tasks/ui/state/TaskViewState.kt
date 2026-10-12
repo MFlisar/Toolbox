@@ -196,12 +196,12 @@ class TaskViewState internal constructor(
 
     override fun onTaskFinished(
         taskId: String,
-        result: TaskResult,
+        result: TaskResult<*>,
         endTimeMs: Long,
     ) {
         val status = when (result) {
-            is TaskResult.Success -> TaskStatus.Success
-            is TaskResult.Warning -> TaskStatus.Warning(result.status)
+            is TaskResult.Success<*> -> TaskStatus.Success
+            is TaskResult.Warning<*> -> TaskStatus.Warning(result.status)
             is TaskResult.Error -> TaskStatus.Error(result.exception)
         }
 

@@ -17,7 +17,20 @@ class TaskExecutionContext internal constructor(
     private val colors: TaskMessageColors,
     private val listener: TaskExecutionListener?,
     private val taskId: String,
+    private val taskData: TaskDataStore,
 ) {
+    /** Reads an earlier task's output or fails the current task if no output was stored. */
+    fun <T> TaskHandle<T>.requireData(): T =
+        taskData.require(key)
+
+    /** Returns null if the referenced task has not stored an output. */
+    val <T> TaskHandle<T>.data: T?
+        get() = taskData.getOrNull(key)
+
+    internal fun <T> storeResult(key: TaskKey<T>, value: T) {
+        taskData.provide(key, value)
+    }
+
     fun updateStatus(
         text: String?,
     ) {

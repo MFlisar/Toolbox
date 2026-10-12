@@ -114,6 +114,17 @@ private fun createTestPlan(
             TaskResult.Success("Initialization completed")
         }
 
+        val t = task("Test Task with Result") {
+            log("This task returns a result")
+            TaskResult.Success("This is the result of the task", result = "MEIN ERGEBNIS")
+        }
+
+        task("Task using result from previous task") {
+            val result = t.requireData()
+            log("Result from previous task: $result")
+            TaskResult.Success("Used result from previous task")
+        }
+
         // Test 2: Gruppe mit erfolgreichen Sub Tasks
         group("Copying Files") {
             repeat(5) { index ->

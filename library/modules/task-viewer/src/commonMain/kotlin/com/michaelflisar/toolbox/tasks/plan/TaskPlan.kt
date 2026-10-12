@@ -1,12 +1,16 @@
 package com.michaelflisar.toolbox.tasks.plan
 
 import com.michaelflisar.toolbox.tasks.TaskConfig
+import com.michaelflisar.toolbox.tasks.execution.TaskDataStore
 import com.michaelflisar.toolbox.tasks.execution.TaskExecutionContext
+import com.michaelflisar.toolbox.tasks.execution.TaskHandle
+import com.michaelflisar.toolbox.tasks.execution.TaskKey
 import com.michaelflisar.toolbox.tasks.execution.TaskResult
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withContext
 import kotlin.time.Clock
 import kotlin.uuid.Uuid
 
@@ -46,7 +50,9 @@ data class TaskPlan(
     suspend fun execute(
         config: TaskConfig.ExecutionConfig,
         listener: TaskExecutionListener? = null
-    ) = children.executeChildren(config, listener, null)
+    ) = withContext(TaskDataStore()) {
+        children.executeChildren(config, listener, null)
+    }
 }
 
 data class TaskPlanSummary(
@@ -108,7 +114,7 @@ internal data class TaskPlanGroup(
 data class TaskPlanTask(
     override val id: String,
     override val title: String,
-    val block: suspend TaskExecutionContext.() -> TaskResult,
+    val block: suspend TaskExecutionContext.() -> TaskResult<*>,
 ) : TaskPlanExecutable {
 
     override suspend fun execute(
@@ -129,6 +135,7 @@ data class TaskPlanTask(
             colors = config.taskMessageColors,
             listener = listener,
             taskId = id,
+            taskData = currentCoroutineContext()[TaskDataStore] ?: TaskDataStore(),
         )
 
         val result = try {
@@ -209,12 +216,42 @@ class TaskPlanBuilder internal constructor() {
 
     private val children = mutableListOf<TaskPlanExecutable>()
 
-    /** Bei Fehlern behandeln StopGroup und StopRootGroup den Plan als Gruppe. */
-    fun task(
+    /**
+     * Adds a task with typed output and returns a reference for later tasks.
+     *
+     * ```kotlin
+     * val filesTask = task("Create files") {
+     *     TaskResult.Success("Files created", result = listOf("a.txt", "b.txt"))
+     * }
+     * task("Upload files") {
+     *     val files = filesTask.requireData()
+     *     TaskResult.Success("Uploading ${files.size} files")
+     * }
+     * ```
+     *
+     * Output is local to one plan execution and shared across nested groups.
+     * Success and Warning publish output; Error and cancellation do not.
+     * requireData() fails the consumer on missing output; data returns null instead.
+     * Tasks returning Success or Warning without output have result type Unit.
+     * Bei Fehlern behandeln StopGroup und StopRootGroup den Plan als Gruppe.
+     */
+    fun <T> task(
         title: String,
-        block: suspend TaskExecutionContext.() -> TaskResult,
-    ) {
-        children += createTask(title, block)
+        block: suspend TaskExecutionContext.() -> TaskResult<T>,
+    ): TaskHandle<T> {
+        val key = TaskKey<T>(title)
+        val task = createTask(title) {
+            val result = block()
+            currentCoroutineContext().ensureActive()
+            when (result) {
+                is TaskResult.Success -> storeResult(key, result.result)
+                is TaskResult.Warning -> storeResult(key, result.result)
+                is TaskResult.Error -> Unit
+            }
+            result
+        }
+        children += task
+        return TaskHandle(task.id, task.title, key)
     }
 
     fun group(
@@ -243,7 +280,7 @@ class TaskPlanBuilder internal constructor() {
 
 private fun createTask(
     title: String,
-    block: suspend TaskExecutionContext.() -> TaskResult,
+    block: suspend TaskExecutionContext.() -> TaskResult<*>,
 ): TaskPlanTask = TaskPlanTask(
     id = Uuid.random().toString(),
     title = title,

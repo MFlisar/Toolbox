@@ -1,20 +1,30 @@
 package com.michaelflisar.toolbox.tasks.execution
 
-sealed interface TaskResult {
+sealed interface TaskResult<out T> {
 
     val status: String
 
-    data class Success(
+    data class Success<out T>(
         override val status: String,
-    ) : TaskResult
+        val result: T,
+    ) : TaskResult<T> {
+        companion object {
+            operator fun invoke(status: String): Success<Unit> = Success(status, Unit)
+        }
+    }
 
-    data class Warning(
+    data class Warning<out T>(
         override val status: String,
-    ) : TaskResult
+        val result: T,
+    ) : TaskResult<T> {
+        companion object {
+            operator fun invoke(status: String): Warning<Unit> = Warning(status, Unit)
+        }
+    }
 
     data class Error(
         val exception: Exception,
-    ) : TaskResult {
+    ) : TaskResult<Nothing> {
 
         constructor(errorMessage: String) : this(Exception(errorMessage))
         override val status: String
