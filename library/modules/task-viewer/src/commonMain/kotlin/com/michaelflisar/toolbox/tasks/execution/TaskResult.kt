@@ -6,7 +6,7 @@ sealed interface TaskResult<out T> {
 
     data class Success<out T>(
         override val status: String,
-        val result: T,
+        val data: T,
     ) : TaskResult<T> {
         companion object {
             operator fun invoke(status: String): Success<Unit> = Success(status, Unit)
@@ -15,7 +15,7 @@ sealed interface TaskResult<out T> {
 
     data class Warning<out T>(
         override val status: String,
-        val result: T,
+        val data: T,
     ) : TaskResult<T> {
         companion object {
             operator fun invoke(status: String): Warning<Unit> = Warning(status, Unit)

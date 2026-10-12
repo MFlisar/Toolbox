@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 import com.michaelflisar.toolbox.tasks.plan.TaskMessageColors
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanSummary
@@ -90,13 +91,15 @@ data class TaskConfig(
         val prefixError: String,
         val showHeaderNumbers: Boolean = false,
         val showMessageNumbers: Boolean = false,
-        val headerTasksLabel: String = "tasks",
-        val headerRunningLabel: String = "running",
-        val headerPassedLabel: String = "passed",
-        val headerWarningsLabel: String = "warnings",
-        val headerFailedLabel: String = "failed",
-        val headerSkippedLabel: String = "skipped",
-        val headerDurationLabel: String = "duration",
+        val headerPendingLabel: String = "ausstehend",
+        val headerRunningLabel: String = "laufend",
+        val headerPassedLabel: String = "erfolgreich",
+        val headerWarningsLabel: String = "Warnungen",
+        val headerFailedLabel: String = "fehlgeschlagen",
+        val headerSkippedLabel: String = "übersprungen",
+        val headerDurationLabel: String = "Dauer",
+        val headerSummaryFormatter: (isFinished: Boolean, executedTasks: Int, totalTasks: Int, duration: String) -> AnnotatedString =
+            TaskViewerConfigDefaults::headerSummaryFormatter,
     )
 
     @Stable
@@ -153,13 +156,14 @@ data class TaskConfig(
  * @param prefixError Präfix für Fehlermeldungen.
  * @param showHeaderNumbers Nummeriert Task- und Gruppenüberschriften.
  * @param showMessageNumbers Nummeriert Task-Nachrichten.
- * @param headerTasksLabel Beschriftung der Task-Anzahl.
+ * @param headerPendingLabel Beschriftung für Tasks, die noch auf ihre Ausführung warten.
  * @param headerRunningLabel Beschriftung laufender Tasks.
  * @param headerPassedLabel Beschriftung erfolgreicher Tasks.
  * @param headerWarningsLabel Beschriftung der Warnungen.
  * @param headerFailedLabel Beschriftung fehlgeschlagener Tasks.
  * @param headerSkippedLabel Beschriftung übersprungener Tasks.
  * @param headerDurationLabel Beschriftung der Gesamtdauer.
+ * @param headerSummaryFormatter Formatiert die Task-Anzahl und Laufzeit im Header.
  */
 @Composable
 fun rememberTaskConfig(
@@ -182,19 +186,21 @@ fun rememberTaskConfig(
     layout: TaskViewerLayout = TaskViewerLayout.Compact,
     groupSummaryFormatter: (TaskPlanSummary) -> String = TaskViewerConfigDefaults::groupSummaryFormatter,
     timeFormatter: (isFinished: Boolean, millis: Long) -> String = TaskViewerConfigDefaults::timeFormatter,
-    skippedTaskSubtitle: String = "Task skipped",
-    prefixWarning: String = "Warning: ",
-    prefixError: String = "Error: ",
+    skippedTaskSubtitle: String = "Aufgabe übersprungen",
+    prefixWarning: String = "Warnung: ",
+    prefixError: String = "Fehler: ",
     showHeaderNumbers: Boolean = false,
     showMessageNumbers: Boolean = true,
     // Texte im Viewer-Header
-    headerTasksLabel: String = "tasks",
-    headerRunningLabel: String = "running",
-    headerPassedLabel: String = "passed",
-    headerWarningsLabel: String = "warnings",
-    headerFailedLabel: String = "failed",
-    headerSkippedLabel: String = "skipped",
-    headerDurationLabel: String = "duration",
+    headerPendingLabel: String = "ausstehend",
+    headerRunningLabel: String = "laufend",
+    headerPassedLabel: String = "erfolgreich",
+    headerWarningsLabel: String = "Warnungen",
+    headerFailedLabel: String = "fehlgeschlagen",
+    headerSkippedLabel: String = "übersprungen",
+    headerDurationLabel: String = "Dauer",
+    headerSummaryFormatter: (isFinished: Boolean, executedTasks: Int, totalTasks: Int, duration: String) -> AnnotatedString =
+        TaskViewerConfigDefaults::headerSummaryFormatter,
 ): TaskConfig {
     return remember(
         taskMessageColors,
@@ -217,13 +223,14 @@ fun rememberTaskConfig(
         prefixError,
         showHeaderNumbers,
         showMessageNumbers,
-        headerTasksLabel,
+        headerPendingLabel,
         headerRunningLabel,
         headerPassedLabel,
         headerWarningsLabel,
         headerFailedLabel,
         headerSkippedLabel,
         headerDurationLabel,
+        headerSummaryFormatter,
     ) {
         TaskConfig(
             execution = TaskConfig.ExecutionConfig(
@@ -247,13 +254,14 @@ fun rememberTaskConfig(
                 prefixError = prefixError,
                 showHeaderNumbers = showHeaderNumbers,
                 showMessageNumbers = showMessageNumbers,
-                headerTasksLabel = headerTasksLabel,
+                headerPendingLabel = headerPendingLabel,
                 headerRunningLabel = headerRunningLabel,
                 headerPassedLabel = headerPassedLabel,
                 headerWarningsLabel = headerWarningsLabel,
                 headerFailedLabel = headerFailedLabel,
                 headerSkippedLabel = headerSkippedLabel,
                 headerDurationLabel = headerDurationLabel,
+                headerSummaryFormatter = headerSummaryFormatter,
             ),
             viewState = TaskConfig.ViewStateConfig(
                 autoExpandGroups = autoExpandGroups,

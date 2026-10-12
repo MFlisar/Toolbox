@@ -37,6 +37,7 @@ interface TaskPlanGroupNode {
 }
 
 data class TaskPlan(
+    val name: String,
     override val children: List<TaskPlanExecutable>,
 ) : TaskPlanGroupNode {
 
@@ -200,15 +201,17 @@ private fun TaskPlanExecutable.skip(
 /**
  * der Root DSL Builder für einen TaskPlan.
  *
+ * @param name der Name des Plans, der in der UI angezeigt wird
  * @param block der Block, in dem Tasks und Gruppen definiert werden
  * @return der erstellte TaskPlan
  */
 fun taskPlan(
+    name: String,
     block: TaskPlanBuilder.() -> Unit,
 ): TaskPlan {
     return TaskPlanBuilder()
         .apply(block)
-        .buildPlan()
+        .buildPlan(name)
 }
 
 @TaskPlanDsl
@@ -244,8 +247,8 @@ class TaskPlanBuilder internal constructor() {
             val result = block()
             currentCoroutineContext().ensureActive()
             when (result) {
-                is TaskResult.Success -> storeResult(key, result.result)
-                is TaskResult.Warning -> storeResult(key, result.result)
+                is TaskResult.Success -> storeResult(key, result.data)
+                is TaskResult.Warning -> storeResult(key, result.data)
                 is TaskResult.Error -> Unit
             }
             result
@@ -263,8 +266,9 @@ class TaskPlanBuilder internal constructor() {
             .buildGroup(title)
     }
 
-    internal fun buildPlan(): TaskPlan {
+    internal fun buildPlan(name: String): TaskPlan {
         return TaskPlan(
+            name = name,
             children = children.toList()
         )
     }

@@ -64,6 +64,7 @@ import com.michaelflisar.toolbox.tasks.plan.TaskPlan
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanExecutable
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroup
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanTask
+import com.michaelflisar.toolbox.tasks.ui.parts.ProgressIcon
 import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
@@ -489,12 +490,7 @@ private fun StatusIcon(
     when (status) {
 
         TaskStatus.Running -> {
-            CircularProgressIndicator(
-                modifier = Modifier.size(size),
-                strokeWidth = 2.dp,
-                color = LocalContentColor.current,
-                trackColor = LocalContentColor.current.copy(alpha = 0.2f)
-            )
+            ProgressIcon(size)
         }
 
         TaskStatus.Cancelled -> {

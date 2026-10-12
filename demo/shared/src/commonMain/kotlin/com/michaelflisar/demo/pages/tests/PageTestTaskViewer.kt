@@ -86,7 +86,7 @@ private fun createTestPlan(
         delay(taskDurationMs.milliseconds)
     }
 
-    val plan = taskPlan {
+    val plan = taskPlan(name = "Test Plan") {
 
         // Test 1: direkter Task in Root
         task("Initialize") {
@@ -116,7 +116,7 @@ private fun createTestPlan(
 
         val t = task("Test Task with Result") {
             log("This task returns a result")
-            TaskResult.Success("This is the result of the task", result = "MEIN ERGEBNIS")
+            TaskResult.Success("This is the result of the task", data = "MEIN ERGEBNIS")
         }
 
         task("Task using result from previous task") {

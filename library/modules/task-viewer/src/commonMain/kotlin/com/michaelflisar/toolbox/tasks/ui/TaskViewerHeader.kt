@@ -1,9 +1,14 @@
 package com.michaelflisar.toolbox.tasks.ui
 
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.HourglassEmpty
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,6 +45,7 @@ import com.michaelflisar.toolbox.tasks.plan.TaskPlan
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanExecutable
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroupNode
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanTask
+import com.michaelflisar.toolbox.tasks.ui.parts.ProgressIcon
 import com.michaelflisar.toolbox.tasks.ui.state.TaskNodeState
 import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
 import kotlinx.coroutines.delay
@@ -81,13 +88,13 @@ fun TaskViewerHeader(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    HeaderOverview(summary, config, headerContainerColor)
+                    HeaderOverview(plan.name, summary, config)
                     Spacer(Modifier.weight(1f))
                     HeaderMetrics(summary, config, headerContainerColor)
                 }
             } else {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    HeaderOverview(summary, config, headerContainerColor)
+                    HeaderOverview(plan.name, summary, config)
                     Row(
                         modifier = Modifier.horizontalScroll(rememberScrollState()),
                         horizontalArrangement = Arrangement.spacedBy(20.dp),
@@ -103,14 +110,42 @@ fun TaskViewerHeader(
 
 @Composable
 private fun HeaderOverview(
+    planName: String,
     summary: TaskViewerHeaderSummary,
     config: TaskConfig.ViewerConfig,
-    headerContainerColor: Color,
 ) {
-    HeaderMetric(
-        value = "${summary.completedTasks} / ${summary.totalTasks}",
-        label = config.headerTasksLabel,
-    )
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // Progress
+        AnimatedVisibility(
+            visible = summary.running > 0,
+            enter = fadeIn() + expandHorizontally(),
+            exit = fadeOut() + shrinkHorizontally(),
+        ) {
+            Row {
+                ProgressIcon()
+                Spacer(modifier = Modifier.width(16.dp))
+            }
+
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text(
+                text = planName,
+                style = MaterialTheme.typography.titleSmall,
+            )
+            Text(
+                text = config.headerSummaryFormatter(
+                    summary.isFinished,
+                    summary.executedTasks,
+                    summary.totalTasks,
+                    config.timeFormatter(summary.isFinished, summary.durationMs),
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = LocalContentColor.current.copy(alpha = .7f),
+            )
+        }
+    }
 }
 
 @Composable
@@ -123,40 +158,52 @@ private fun HeaderMetrics(
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (summary.running > 0) {
-            HeaderMetric(summary.running.toString(), config.headerRunningLabel, color = MaterialTheme.colorScheme.primary)
+        if (summary.pending > 0) {
+            HeaderMetric(
+                value = summary.pending.toString(),
+                label = config.headerPendingLabel,
+                icon = Icons.Default.HourglassEmpty
+            )
         }
+        // es läuft immer nur eine Aufgabe pro Gruppe, daher ist es nicht nötig, die Anzahl der laufenden Aufgaben anzuzeigen
+        //if (summary.running > 0) {
+        //    HeaderMetric(
+        //        summary.running.toString(),
+        //        config.headerRunningLabel,
+        //        color = MaterialTheme.colorScheme.primary
+        //    )
+        //}
         if (summary.success > 0) {
             HeaderMetric(
-                summary.success.toString(),
-                config.headerPassedLabel,
-                Icons.Default.CheckCircle,
-                config.taskMessageColors.colorSuccess(headerContainerColor),
+                value = summary.success.toString(),
+                label = config.headerPassedLabel,
+                icon = Icons.Default.CheckCircle,
+                color = config.taskMessageColors.colorSuccess(headerContainerColor),
             )
         }
         if (summary.warnings > 0) {
             HeaderMetric(
-                summary.warnings.toString(),
-                config.headerWarningsLabel,
-                Icons.Default.Warning,
-                config.taskMessageColors.colorWarning(headerContainerColor),
+                value = summary.warnings.toString(),
+                label = config.headerWarningsLabel,
+                icon = Icons.Default.Warning,
+                color = config.taskMessageColors.colorWarning(headerContainerColor),
             )
         }
         if (summary.errors > 0) {
             HeaderMetric(
-                summary.errors.toString(),
-                config.headerFailedLabel,
-                Icons.Default.Error,
-                config.taskMessageColors.colorError(headerContainerColor),
+                value = summary.errors.toString(),
+                label = config.headerFailedLabel,
+                icon = Icons.Default.Error,
+                color = config.taskMessageColors.colorError(headerContainerColor),
             )
         }
         if (summary.skipped > 0) {
-            HeaderMetric(summary.skipped.toString(), config.headerSkippedLabel, Icons.Default.Cancel)
+            HeaderMetric(
+                value = summary.skipped.toString(),
+                label = config.headerSkippedLabel,
+                icon = Icons.Default.Cancel
+            )
         }
-        HeaderMetric(
-            value = config.timeFormatter(summary.isFinished, summary.durationMs),
-            label = config.headerDurationLabel,
-        )
     }
 }
 
@@ -197,6 +244,7 @@ private fun HeaderMetric(
 private data class TaskViewerHeaderSummary(
     val totalTasks: Int,
     val hasStarted: Boolean,
+    val pending: Int,
     val running: Int,
     val success: Int,
     val warnings: Int,
@@ -205,8 +253,8 @@ private data class TaskViewerHeaderSummary(
     val durationMs: Long,
     val isFinished: Boolean,
 ) {
-    val completedTasks: Int
-        get() = success + warnings + errors + skipped
+    val executedTasks: Int
+        get() = success + warnings + errors
 }
 
 private fun calculateHeaderSummary(
@@ -214,6 +262,7 @@ private fun calculateHeaderSummary(
     state: TaskViewState,
 ): TaskViewerHeaderSummary {
     var total = 0
+    var pending = 0
     var running = 0
     var success = 0
     var warnings = 0
@@ -243,7 +292,7 @@ private fun calculateHeaderSummary(
                     is TaskStatus.Warning -> warnings++
                     is TaskStatus.Error -> errors++
                     TaskStatus.Cancelled -> skipped++
-                    null -> Unit
+                    null -> pending++
                 }
             }
 
@@ -262,6 +311,7 @@ private fun calculateHeaderSummary(
     return TaskViewerHeaderSummary(
         totalTasks = total,
         hasStarted = hasStarted,
+        pending = pending,
         running = running,
         success = success,
         warnings = warnings,
