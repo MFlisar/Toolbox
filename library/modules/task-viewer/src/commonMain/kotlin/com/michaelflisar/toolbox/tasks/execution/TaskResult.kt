@@ -22,6 +22,15 @@ sealed interface TaskResult<out T> {
         }
     }
 
+    data class Skipped<out T>(
+        override val status: String,
+        val data: T,
+    ) : TaskResult<T> {
+        companion object {
+            operator fun invoke(status: String): Skipped<Unit> = Skipped(status, Unit)
+        }
+    }
+
     data class Error(
         val exception: Exception,
     ) : TaskResult<Nothing> {

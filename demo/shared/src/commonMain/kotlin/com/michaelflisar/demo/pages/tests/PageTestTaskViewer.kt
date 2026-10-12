@@ -125,6 +125,20 @@ private fun createTestPlan(
             TaskResult.Success("Used result from previous task")
         }
 
+        val skipped = task("Task skipped with existing data") {
+            log("Existing data can be reused")
+            TaskResult.Skipped("No update needed", data = "EXISTING RESULT")
+        }
+
+        task("Task using data from skipped task") {
+            log("Result from skipped task: ${skipped.requireData()}")
+            TaskResult.Success("Used data from skipped task")
+        }
+
+        task("Task skipped without data") {
+            TaskResult.Skipped("Nothing to do")
+        }
+
         // Test 2: Gruppe mit erfolgreichen Sub Tasks
         group("Copying Files") {
             repeat(5) { index ->

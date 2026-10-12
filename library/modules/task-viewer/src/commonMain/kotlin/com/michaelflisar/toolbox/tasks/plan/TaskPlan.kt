@@ -224,7 +224,7 @@ class TaskPlanBuilder internal constructor() {
      *
      * ```kotlin
      * val filesTask = task("Create files") {
-     *     TaskResult.Success("Files created", result = listOf("a.txt", "b.txt"))
+     *     TaskResult.Success("Files created", data = listOf("a.txt", "b.txt"))
      * }
      * task("Upload files") {
      *     val files = filesTask.requireData()
@@ -233,9 +233,10 @@ class TaskPlanBuilder internal constructor() {
      * ```
      *
      * Output is local to one plan execution and shared across nested groups.
-     * Success and Warning publish output; Error and cancellation do not.
+     * Success, Warning and Skipped publish output; Error and cancellation do not.
+     * Skipped does not trigger error behavior and is shown as skipped in the viewer.
      * requireData() fails the consumer on missing output; data returns null instead.
-     * Tasks returning Success or Warning without output have result type Unit.
+     * Tasks returning Success, Warning or Skipped without output have result type Unit.
      * Bei Fehlern behandeln StopGroup und StopRootGroup den Plan als Gruppe.
      */
     fun <T> task(
@@ -249,6 +250,7 @@ class TaskPlanBuilder internal constructor() {
             when (result) {
                 is TaskResult.Success -> storeResult(key, result.data)
                 is TaskResult.Warning -> storeResult(key, result.data)
+                is TaskResult.Skipped -> storeResult(key, result.data)
                 is TaskResult.Error -> Unit
             }
             result

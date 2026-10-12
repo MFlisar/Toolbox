@@ -202,6 +202,7 @@ class TaskViewState internal constructor(
         val status = when (result) {
             is TaskResult.Success<*> -> TaskStatus.Success
             is TaskResult.Warning<*> -> TaskStatus.Warning(result.status)
+            is TaskResult.Skipped<*> -> TaskStatus.Cancelled
             is TaskResult.Error -> TaskStatus.Error(result.exception)
         }
 

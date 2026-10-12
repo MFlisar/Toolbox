@@ -138,6 +138,7 @@ private fun HeaderOverview(
                 text = config.headerSummaryFormatter(
                     summary.isFinished,
                     summary.executedTasks,
+                    summary.skipped,
                     summary.totalTasks,
                     config.timeFormatter(summary.isFinished, summary.durationMs),
                 ),

@@ -22,10 +22,13 @@ data class TaskConfig(
     enum class ErrorBehavior {
         /** Nach Fehlern weiter ausführen. */
         Continue,
+
         /** Rest der unmittelbar betroffenen Gruppe überspringen. */
         StopGroup,
+
         /** Rest der obersten Gruppe überspringen, danach weiter. */
         StopRootGroup,
+
         /** Rest des gesamten Plans überspringen. */
         StopAll,
     }
@@ -89,17 +92,16 @@ data class TaskConfig(
         val skippedTaskSubtitle: String,
         val prefixWarning: String,
         val prefixError: String,
-        val showHeaderNumbers: Boolean = false,
-        val showMessageNumbers: Boolean = false,
-        val headerPendingLabel: String = "ausstehend",
-        val headerRunningLabel: String = "laufend",
-        val headerPassedLabel: String = "erfolgreich",
-        val headerWarningsLabel: String = "Warnungen",
-        val headerFailedLabel: String = "fehlgeschlagen",
-        val headerSkippedLabel: String = "übersprungen",
-        val headerDurationLabel: String = "Dauer",
-        val headerSummaryFormatter: (isFinished: Boolean, executedTasks: Int, totalTasks: Int, duration: String) -> AnnotatedString =
-            TaskViewerConfigDefaults::headerSummaryFormatter,
+        val showHeaderNumbers: Boolean,
+        val showMessageNumbers: Boolean,
+        val headerPendingLabel: String,
+        val headerRunningLabel: String,
+        val headerPassedLabel: String,
+        val headerWarningsLabel: String,
+        val headerFailedLabel: String,
+        val headerSkippedLabel: String,
+        val headerDurationLabel: String,
+        val headerSummaryFormatter: (isFinished: Boolean, executedTasks: Int, skippedTasks: Int, totalTasks: Int, duration: String) -> AnnotatedString,
     )
 
     @Stable
@@ -163,7 +165,7 @@ data class TaskConfig(
  * @param headerFailedLabel Beschriftung fehlgeschlagener Tasks.
  * @param headerSkippedLabel Beschriftung übersprungener Tasks.
  * @param headerDurationLabel Beschriftung der Gesamtdauer.
- * @param headerSummaryFormatter Formatiert die Task-Anzahl und Laufzeit im Header.
+ * @param headerSummaryFormatter Formatiert ausgeführte und übersprungene Tasks sowie Gesamtanzahl und Laufzeit im Header.
  */
 @Composable
 fun rememberTaskConfig(
@@ -195,11 +197,11 @@ fun rememberTaskConfig(
     headerPendingLabel: String = "ausstehend",
     headerRunningLabel: String = "laufend",
     headerPassedLabel: String = "erfolgreich",
-    headerWarningsLabel: String = "Warnungen",
+    headerWarningsLabel: String = "mit Warnung",
     headerFailedLabel: String = "fehlgeschlagen",
     headerSkippedLabel: String = "übersprungen",
     headerDurationLabel: String = "Dauer",
-    headerSummaryFormatter: (isFinished: Boolean, executedTasks: Int, totalTasks: Int, duration: String) -> AnnotatedString =
+    headerSummaryFormatter: (isFinished: Boolean, executedTasks: Int, skippedTasks: Int, totalTasks: Int, duration: String) -> AnnotatedString =
         TaskViewerConfigDefaults::headerSummaryFormatter,
 ): TaskConfig {
     return remember(

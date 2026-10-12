@@ -15,15 +15,17 @@ import com.michaelflisar.toolbox.utils.TimeUtil
 
 object TaskViewerConfigDefaults {
 
+    /** Counts executed and skipped tasks as completed in the displayed summary. */
     fun headerSummaryFormatter(
         isFinished: Boolean,
         executedTasks: Int,
+        skippedTasks: Int,
         totalTasks: Int,
         duration: String,
     ): AnnotatedString {
         return buildAnnotatedString {
             withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
-                append("$executedTasks von $totalTasks")
+                append("${executedTasks + skippedTasks} von $totalTasks")
             }
             if (isFinished) {
                 append(" Aufgaben erledigt · Abgeschlossen in ")

@@ -223,7 +223,7 @@ private fun TaskItemTask(
                 title = task.title,
                 number = number,
                 subtitle = if (runtime.status == TaskStatus.Cancelled) {
-                    viewerConfig.skippedTaskSubtitle
+                    runtime.subtitle ?: viewerConfig.skippedTaskSubtitle
                 } else {
                     runtime.subtitle
                 },
