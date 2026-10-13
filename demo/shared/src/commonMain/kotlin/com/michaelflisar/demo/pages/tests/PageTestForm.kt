@@ -1,0 +1,202 @@
+package com.michaelflisar.demo.pages.tests
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.TextFields
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.michaelflisar.parcelize.Parcelize
+import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
+import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.extensions.toIconComposable
+import com.michaelflisar.toolbox.form3.FormDefaults
+import com.michaelflisar.toolbox.form3.FormItem
+import com.michaelflisar.toolbox.form3.FormLabelStyle
+import com.michaelflisar.toolbox.form3.FormSection
+import com.michaelflisar.toolbox.form3.FormSectionStyle
+import com.michaelflisar.toolbox.form3.MyForm
+import com.michaelflisar.toolbox.form3.rememberFormConfig
+import com.michaelflisar.toolbox.padding
+
+@Parcelize
+object PageTestForm : NavScreen() {
+
+    @Composable
+    override fun provideData() = rememberNavScreenData(
+        name = "Form",
+        icon = Icons.Default.TextFields.toIconComposable()
+    )
+
+    @Composable
+    override fun Screen() {
+        Page()
+    }
+
+}
+
+private enum class Mode {
+    Copy, Change, Info
+}
+
+private enum class TransferMode {
+    Copy, Move
+}
+
+@Composable
+private fun Page() {
+
+    val labelStyle1 = FormDefaults.labelStyleBefore(
+        width = 200.dp,
+        textStyle = MaterialTheme.typography.bodyMedium,
+        subTextStyle = MaterialTheme.typography.bodySmall.copy(fontStyle = FontStyle.Italic),
+        textColor = MaterialTheme.colorScheme.onSurface,
+        subTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+    val labelStyle2 = FormDefaults.labelStyleAbove(
+        textStyle = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+        subTextStyle = MaterialTheme.typography.bodySmall.copy(fontStyle = FontStyle.Italic),
+        textColor = MaterialTheme.colorScheme.onSurface,
+        subTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+
+    val sectionStyle1 = FormDefaults.sectionStyleText()
+    val sectionStyle2 = FormDefaults.sectionStyleRow()
+
+    val config = rememberFormConfig(
+        labelStyle = labelStyle2,
+        sectionStyle = sectionStyle2,
+        spacing = 4.dp,
+        showSingleDropdownsAsText = true
+    )
+
+    val existingFolders = remember { mutableStateOf(listOf<String>()) }
+    val currentJunction = remember { mutableStateOf<String?>(null) }
+    val selectedMode = remember { mutableStateOf(Mode.Copy) }
+    val selectedTerminalServer = remember { mutableStateOf(0) }
+    val selectedVWVersion = remember { mutableStateOf(0) }
+    val selectedExistingFolder = remember { mutableStateOf<String?>(null) }
+    val folderName = remember { mutableStateOf("") }
+    val copyMode = remember { mutableStateOf(TransferMode.Copy) }
+    val copyLocalWorkspace = remember { mutableStateOf(false) }
+    val copyFilesFromVWInstallation = remember { mutableStateOf(false) }
+    val flagsDataContent = remember { mutableStateOf("") }
+    val activate = remember { mutableStateOf(false) }
+
+    val items = listOf(
+        FormSection(
+            title = "Informationen",
+            items = listOf(
+                FormItem.Info(
+                    label = "Neuester Release Ordner",
+                    value = existingFolders.value.lastOrNull() ?: "--",
+                ),
+                FormItem.Info(
+                    label = "Aktuelle Junction",
+                    value = currentJunction.value ?: "--"
+                )
+            )
+        ),
+        FormSection(
+            title = "Aktion",
+            items = listOf(
+                FormItem.Dropdown(
+                    label = "Modus",
+                    items = Mode.entries,
+                    mapper = { it.name },
+                    selected = selectedMode
+                ),
+                FormItem.DropdownIndex(
+                    label = "Terminal Server",
+                    items = listOf(
+                        "TS1",
+                        "TS2",
+                        "TS3"
+                    ),
+                    selectedIndex = selectedTerminalServer
+                ),
+                FormItem.DropdownIndex(
+                    label = "VW Version",
+                    items = listOf(
+                        "VW19",
+                        "VW21",
+                        "VW25"
+                    ),
+                    selectedIndex = selectedVWVersion
+                )
+            )
+        )
+    ) + FormSection(
+        "Konfiguration",
+        items = when (selectedMode.value) {
+            Mode.Copy -> listOf(
+                FormItem.Input(
+                    label = "Ordner Name",
+                    value = folderName
+                ),
+                FormItem.Dropdown(
+                    label = "Kopiermodus",
+                    items = TransferMode.entries,
+                    mapper = { it.name },
+                    selected = copyMode
+                ),
+                FormItem.Checkbox(
+                    label = "Lokalen Workspace kopieren",
+                    checked = copyLocalWorkspace
+                ),
+                FormItem.Checkbox(
+                    label = "Dateien aus VW Installation kopieren",
+                    subLabel = "DLLs, ...",
+                    checked = copyFilesFromVWInstallation
+                ),
+                FormItem.Input(
+                    label = "flags.data Inhalt",
+                    value = flagsDataContent,
+                    minLines = 2,
+                    maxLines = 5
+                )
+            )
+
+            Mode.Change -> listOf(
+                FormItem.Dropdown(
+                    label = "Ordner wählen",
+                    items = existingFolders.value,
+                    mapper = { it ?: "" },
+                    selected = selectedExistingFolder
+                )
+            )
+
+            Mode.Info -> emptyList()
+        },
+        visible = selectedMode.value != Mode.Info
+    ) + FormSection(
+        "Sonstiges",
+        items = when (selectedMode.value) {
+            Mode.Copy -> listOf(
+                FormItem.Checkbox(
+                    label = "Aktivieren",
+                    subLabel = "Junction anpassen + weitere Daten nach VW kopieren",
+                    checked = activate
+                )
+            )
+
+            Mode.Change -> emptyList()
+            Mode.Info -> emptyList()
+        },
+        visible = selectedMode.value == Mode.Copy
+    )
+    MyForm(
+        config = config,
+        items = items,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(MaterialTheme.padding.content)
+        //scrollable = false
+    )
+}

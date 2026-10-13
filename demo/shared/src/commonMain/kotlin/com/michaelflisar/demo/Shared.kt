@@ -21,6 +21,7 @@ import com.michaelflisar.demo.pages.PageSettingsScreen
 import com.michaelflisar.demo.pages.PageStatesScreen
 import com.michaelflisar.demo.pages.PageTestsRootScreenContainer
 import com.michaelflisar.demo.pages.tests.PageTestExpandableHeader
+import com.michaelflisar.demo.pages.tests.PageTestForm
 import com.michaelflisar.demo.pages.tests.PageTestLazyColumn
 import com.michaelflisar.demo.pages.tests.PageTestTaskViewer
 import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
@@ -60,8 +61,9 @@ object Shared {
     val page5 = PageSelectionScreen
     val page6 = PageTestLazyColumn
     val page7 = PageTestTaskViewer
+    val page8 = PageTestForm
 
-    val mainPages = listOf(page1, page2, page3, page4, page5, page6, page7)
+    val mainPages = listOf(page1, page2, page3, page4, page5, page6, page7, page8)
 
     // --------------------
     // Setup

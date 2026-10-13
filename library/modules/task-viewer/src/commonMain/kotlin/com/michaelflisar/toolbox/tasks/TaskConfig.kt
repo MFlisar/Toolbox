@@ -94,12 +94,12 @@ data class TaskConfig(
         val prefixError: String,
         val showHeaderNumbers: Boolean,
         val showMessageNumbers: Boolean,
-        val headerPendingLabel: String,
-        val headerRunningLabel: String,
-        val headerPassedLabel: String,
-        val headerWarningsLabel: String,
-        val headerFailedLabel: String,
-        val headerSkippedLabel: String,
+        val headerPendingLabel: (count: Int) -> String,
+        val headerRunningLabel: (count: Int) -> String,
+        val headerPassedLabel: (count: Int) -> String,
+        val headerWarningsLabel: (count: Int) -> String,
+        val headerFailedLabel: (count: Int) -> String,
+        val headerSkippedLabel: (count: Int) -> String,
         val headerDurationLabel: String,
         val headerSummaryFormatter: (isFinished: Boolean, executedTasks: Int, skippedTasks: Int, totalTasks: Int, duration: String) -> AnnotatedString,
     )
@@ -158,12 +158,12 @@ data class TaskConfig(
  * @param prefixError Präfix für Fehlermeldungen.
  * @param showHeaderNumbers Nummeriert Task- und Gruppenüberschriften.
  * @param showMessageNumbers Nummeriert Task-Nachrichten.
- * @param headerPendingLabel Beschriftung für Tasks, die noch auf ihre Ausführung warten.
- * @param headerRunningLabel Beschriftung laufender Tasks.
- * @param headerPassedLabel Beschriftung erfolgreicher Tasks.
- * @param headerWarningsLabel Beschriftung der Warnungen.
- * @param headerFailedLabel Beschriftung fehlgeschlagener Tasks.
- * @param headerSkippedLabel Beschriftung übersprungener Tasks.
+ * @param headerPendingLabel Formatiert die Beschriftung ausstehender Tasks abhängig von ihrer Anzahl.
+ * @param headerRunningLabel Formatiert die Beschriftung laufender Tasks abhängig von ihrer Anzahl.
+ * @param headerPassedLabel Formatiert die Beschriftung erfolgreicher Tasks abhängig von ihrer Anzahl.
+ * @param headerWarningsLabel Formatiert die Beschriftung der Warnungen abhängig von ihrer Anzahl.
+ * @param headerFailedLabel Formatiert die Beschriftung fehlgeschlagener Tasks abhängig von ihrer Anzahl.
+ * @param headerSkippedLabel Formatiert die Beschriftung übersprungener Tasks abhängig von ihrer Anzahl.
  * @param headerDurationLabel Beschriftung der Gesamtdauer.
  * @param headerSummaryFormatter Formatiert ausgeführte und übersprungene Tasks sowie Gesamtanzahl und Laufzeit im Header.
  */
@@ -194,12 +194,12 @@ fun rememberTaskConfig(
     showHeaderNumbers: Boolean = false,
     showMessageNumbers: Boolean = true,
     // Texte im Viewer-Header
-    headerPendingLabel: String = "ausstehend",
-    headerRunningLabel: String = "laufend",
-    headerPassedLabel: String = "erfolgreich",
-    headerWarningsLabel: String = "mit Warnung",
-    headerFailedLabel: String = "fehlgeschlagen",
-    headerSkippedLabel: String = "übersprungen",
+    headerPendingLabel: (count: Int) -> String = { "ausstehend" },
+    headerRunningLabel: (count: Int) -> String = { "laufend" },
+    headerPassedLabel: (count: Int) -> String = { "erfolgreich" },
+    headerWarningsLabel: (count: Int) -> String = { count -> if (count == 1) "Warnung" else "Warnungen" },
+    headerFailedLabel: (count: Int) -> String = { "fehlgeschlagen" },
+    headerSkippedLabel: (count: Int) -> String = { "übersprungen" },
     headerDurationLabel: String = "Dauer",
     headerSummaryFormatter: (isFinished: Boolean, executedTasks: Int, skippedTasks: Int, totalTasks: Int, duration: String) -> AnnotatedString =
         TaskViewerConfigDefaults::headerSummaryFormatter,

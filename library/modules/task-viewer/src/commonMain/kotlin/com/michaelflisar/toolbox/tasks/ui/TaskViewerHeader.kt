@@ -162,7 +162,7 @@ private fun HeaderMetrics(
         if (summary.pending > 0) {
             HeaderMetric(
                 value = summary.pending.toString(),
-                label = config.headerPendingLabel,
+                label = config.headerPendingLabel(summary.pending),
                 icon = Icons.Default.HourglassEmpty
             )
         }
@@ -177,7 +177,7 @@ private fun HeaderMetrics(
         if (summary.success > 0) {
             HeaderMetric(
                 value = summary.success.toString(),
-                label = config.headerPassedLabel,
+                label = config.headerPassedLabel(summary.success),
                 icon = Icons.Default.CheckCircle,
                 color = config.taskMessageColors.colorSuccess(headerContainerColor),
             )
@@ -185,7 +185,7 @@ private fun HeaderMetrics(
         if (summary.warnings > 0) {
             HeaderMetric(
                 value = summary.warnings.toString(),
-                label = config.headerWarningsLabel,
+                label = config.headerWarningsLabel(summary.warnings),
                 icon = Icons.Default.Warning,
                 color = config.taskMessageColors.colorWarning(headerContainerColor),
             )
@@ -193,7 +193,7 @@ private fun HeaderMetrics(
         if (summary.errors > 0) {
             HeaderMetric(
                 value = summary.errors.toString(),
-                label = config.headerFailedLabel,
+                label = config.headerFailedLabel(summary.errors),
                 icon = Icons.Default.Error,
                 color = config.taskMessageColors.colorError(headerContainerColor),
             )
@@ -201,7 +201,7 @@ private fun HeaderMetrics(
         if (summary.skipped > 0) {
             HeaderMetric(
                 value = summary.skipped.toString(),
-                label = config.headerSkippedLabel,
+                label = config.headerSkippedLabel(summary.skipped),
                 icon = Icons.Default.Cancel
             )
         }

@@ -122,12 +122,13 @@ fun MyLabeledInformationHorizontal(
     backgroundShape: Shape? = null,
     labelStyle: TextStyle = MyLabeledInformationDefaults.defaultLabelStyle(),
     modifier: Modifier = Modifier,
+    verticalAlignment: Alignment.Vertical  = Alignment.CenterVertically,
     info: @Composable (modifier: Modifier) -> Unit
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = verticalAlignment
     ) {
         InfoContent(
             label,
