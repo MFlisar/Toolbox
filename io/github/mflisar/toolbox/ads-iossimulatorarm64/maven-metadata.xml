@@ -3,11 +3,11 @@
   <groupId>io.github.mflisar.toolbox</groupId>
   <artifactId>ads-iossimulatorarm64</artifactId>
   <versioning>
-    <latest>6.1.1</latest>
-    <release>6.1.1</release>
+    <latest>6.1.2</latest>
+    <release>6.1.2</release>
     <versions>
-      <version>6.1.1</version>
+      <version>6.1.2</version>
     </versions>
-    <lastUpdated>20261013141003</lastUpdated>
+    <lastUpdated>20261013145604</lastUpdated>
   </versioning>
 </metadata>
