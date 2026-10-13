@@ -41,7 +41,9 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.michaelflisar.toolbox.extensions.toSentenceCase
@@ -61,8 +63,8 @@ object MyDropdownDefaults {
         color: Color,
         leadingContent: @Composable () -> Unit = {},
     ) {
-        val style1 = MaterialTheme.typography.titleSmall
-        val style2 = LocalTextStyle.current.merge(fontSize = LocalTextStyle.current.fontSize * .8f)
+        val styleTitle = MyDropdownDefaults.styleTitle
+        val styleText = MyDropdownDefaults.styleText
 
         MyRow(modifier = modifier) {
             leadingContent()
@@ -70,7 +72,7 @@ object MyDropdownDefaults {
                 if (title.isNotEmpty()) {
                     Text(
                         text = title,
-                        style = style1,
+                        style = styleTitle,
                         fontWeight = FontWeight.Bold,
                         color = labelColor,
                         maxLines = 1
@@ -78,7 +80,7 @@ object MyDropdownDefaults {
                 }
                 Text(
                     text = text,
-                    style = style2,
+                    style = styleText,
                     color = color,
                     maxLines = 1
                 )
@@ -108,6 +110,12 @@ object MyDropdownDefaults {
 
     @Composable
     fun shape() = OutlinedTextFieldDefaults.shape
+
+    internal val styleTitle: TextStyle
+        @Composable get() = LocalTextStyle.current.copy(fontSize = LocalTextStyle.current.fontSize * .75f)//MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize * .8f)
+
+    internal val styleText: TextStyle
+        @Composable get() = LocalTextStyle.current//MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize)
 }
 
 object MyDropdown {
@@ -589,7 +597,12 @@ private fun <T> MyDropdownDropdown(
         if (filter != null) {
             Column(
                 modifier = Modifier
-                    .offset(y = with(LocalDensity.current) { scrollState.value.toDp() })
+                    .offset{
+                        IntOffset(
+                            x = 0,
+                            y = scrollState.value
+                        )
+                    }
                     .background(MaterialTheme.colorScheme.surfaceContainer)
                     .padding(all = MaterialTheme.padding.default)
                     .zIndex(2f),

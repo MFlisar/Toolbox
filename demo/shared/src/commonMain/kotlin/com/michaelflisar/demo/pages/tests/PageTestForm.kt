@@ -82,7 +82,7 @@ private fun Page() {
     val selectedTerminalServer = remember { mutableStateOf(0) }
     val selectedVWVersion = remember { mutableStateOf(0) }
     val selectedExistingFolder = remember { mutableStateOf<String?>(null) }
-    val folderName = remember { mutableStateOf("") }
+    val folderName = remember { mutableStateOf("Folder") }
     val copyMode = remember { mutableStateOf(TransferMode.Copy) }
     val copyLocalWorkspace = remember { mutableStateOf(false) }
     val copyFilesFromVWInstallation = remember { mutableStateOf(false) }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -216,7 +217,9 @@ private fun MyMultiDropdownImpl(
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = OutlinedTextFieldDefaults.MinHeight)
                     .clip(shape)
                     .border(1.dp, borderColor, shape)
                     .background(backgroundColor)
@@ -232,21 +235,19 @@ private fun MyMultiDropdownImpl(
                 ,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val style1 =
-                    MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize * .8f)
-                val style2 =
-                    MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize)
+                val styleTitle = MyDropdownDefaults.styleTitle
+                val styleText = MyDropdownDefaults.styleText
                 Column(modifier = Modifier.weight(1f)) {
                     if (title.isNotEmpty()) {
                         Text(
                             text = title,
-                            style = style1,
+                            style = styleTitle,
                             fontWeight = FontWeight.Bold,
                             color = labelColor
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                     }
-                    Text(text = formatter(selectedItems), style = style2, color = color)
+                    Text(text = formatter(selectedItems), style = styleText, color = color)
                 }
 
                 Icon(
