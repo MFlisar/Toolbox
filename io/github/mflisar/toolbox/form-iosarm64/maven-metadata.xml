@@ -3,11 +3,11 @@
   <groupId>io.github.mflisar.toolbox</groupId>
   <artifactId>form-iosarm64</artifactId>
   <versioning>
-    <latest>6.0.8</latest>
-    <release>6.0.8</release>
+    <latest>6.0.9</latest>
+    <release>6.0.9</release>
     <versions>
-      <version>6.0.8</version>
+      <version>6.0.9</version>
     </versions>
-    <lastUpdated>20261012100623</lastUpdated>
+    <lastUpdated>20261013082112</lastUpdated>
   </versioning>
 </metadata>
