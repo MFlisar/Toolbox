@@ -39,11 +39,14 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScree
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyCheckbox
 import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyDropdownButton
 import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyInputButton
 import com.michaelflisar.toolbox.components.MyNumberPicker
 import com.michaelflisar.toolbox.components.MyRow
+import com.michaelflisar.toolbox.components.MyText
+import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.translatablecontent.TranslatableContent
 import com.michaelflisar.toolbox.numbers.rememberMyNumberParser
@@ -84,14 +87,18 @@ private fun Page(
             .fillMaxSize()
     ) {
         MyRow(
-            modifier = Modifier
-                .background(Color.Red)
-                .padding(all = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Bottom
         ) {
             MyDropdownIndex(
                 modifier = Modifier.width(200.dp),
-                title = "Dropdown",
+                title = "Dropdown (Button)",
+                items = listOf("One", "Two", "Three"),
+                selectedIndex = remember { mutableStateOf(0) },
+                style = MyDropdown.Style.Button()
+            )
+            MyDropdownIndex(
+                modifier = Modifier.width(200.dp),
+                title = "Dropdown (OutlinedButton)",
                 items = listOf("One", "Two", "Three"),
                 selectedIndex = remember { mutableStateOf(0) },
                 style = MyDropdown.Style.OutlinedButton()
@@ -124,16 +131,19 @@ private fun Page(
                 items = listOf("One", "Two", "Three"),
                 selected = remember { mutableStateOf("One") }
             )
-
-            MyDropdown(
-                modifier = Modifier.width(128.dp),
-                title = "Button Style",
-                items = listOf("One", "Two", "Three"),
-                selected = "One",
-                onSelectionChanged = {
-
-                }
-            )
+        }
+        MyRow {
+            val selected = remember { mutableStateOf("One") }
+            MyDropdownButton(
+                items = listOf("One", "Two", "Three").map {
+                    MyDropdownButton.Entry.Button(
+                        text = it,
+                        onClick = { selected.value = it }
+                    )
+                },
+            ) {
+                Text(selected.value)
+            }
         }
 
         val number = remember { mutableIntStateOf(5) }

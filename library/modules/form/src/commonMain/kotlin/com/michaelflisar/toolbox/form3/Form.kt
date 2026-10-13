@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -29,6 +30,8 @@ import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.components.MyDropdown
 import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.components.MyInput
+import com.michaelflisar.toolbox.components.MyMultiDropdown
+import com.michaelflisar.toolbox.components.MyMultiDropdownIndex
 import com.michaelflisar.toolbox.components.MyPicker
 import com.michaelflisar.toolbox.components.MyText
 import com.michaelflisar.toolbox.components.MyTitle
@@ -139,11 +142,11 @@ object FormDefaults {
 
     @Composable
     fun sectionStyleRow(
-        backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
+        backgroundColor: Color = MaterialTheme.colorScheme.primary,
         shape: Shape = MaterialTheme.shapes.small,
         contentPadding: PaddingValues = PaddingValues(all = MaterialTheme.padding.default),
         textStyle: TextStyle = MaterialTheme.typography.titleMedium,
-        textColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+        textColor: Color = MaterialTheme.colorScheme.onPrimary,
         verticalPadding: Dp = MaterialTheme.padding.default,
     ): FormSectionStyle.Row {
         return FormSectionStyle.Row(
@@ -195,7 +198,6 @@ data class FormSection(
 sealed interface FormItem : IFormItem {
 
     val label: String
-
     val subLabel: String?
 
     val visible: Boolean
@@ -331,6 +333,50 @@ sealed interface FormItem : IFormItem {
             )
         }
     }
+
+    data class MultiDropdown(
+        override val label: String,
+        val items: List<String>,
+        val selected: MutableState<List<String>>,
+        override val subLabel: String? = null,
+        override val visible: Boolean = true,
+        override val enabled: Boolean = true,
+    ) : FormItem {
+        @Composable
+        override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
+            MyMultiDropdown(
+                title = "",
+                modifier = Modifier.fillMaxWidth(),
+                items = items,
+                selected = selected,
+                mapper = { it },
+                enabled = enabled && parentIsEnabled,
+                shape = config.shape
+            )
+        }
+    }
+
+    data class MultiDropdownIndex(
+        override val label: String,
+        val items: List<String>,
+        val selectedIndices: MutableState<List<Int>>,
+        override val subLabel: String? = null,
+        override val visible: Boolean = true,
+        override val enabled: Boolean = true,
+    ) : FormItem {
+        @Composable
+        override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
+            MyMultiDropdownIndex(
+                title = "",
+                modifier = Modifier.fillMaxWidth(),
+                items = items,
+                selectedIndices = selectedIndices,
+                mapper = { it },
+                enabled = enabled && parentIsEnabled,
+                shape = config.shape
+            )
+        }
+    }
 }
 
 @Composable
@@ -402,9 +448,14 @@ private fun FormItem(
 
     val before = config.labelStyle is FormLabelStyle.Before || item is FormItem.Checkbox
 
+    val paddingStart = when (config.sectionStyle) {
+        is FormSectionStyle.Row -> config.sectionStyle.contentPadding.calculateLeftPadding(LocalLayoutDirection.current)
+        is FormSectionStyle.Text -> 0.dp
+    }
+
     if (before) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(start = paddingStart),
             horizontalArrangement = Arrangement.SpaceBetween,//spacedBy(MaterialTheme.spacing.default),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -437,6 +488,7 @@ private fun FormItem(
         }
     } else {
         Column(
+            modifier = Modifier.fillMaxWidth().padding(start = paddingStart),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
         ) {
             Column(

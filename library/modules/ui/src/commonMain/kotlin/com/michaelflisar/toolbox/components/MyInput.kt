@@ -37,20 +37,20 @@ fun MyInput(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     MyInput(
-        modifier,
-        title,
-        value.value,
-        minLines,
-        maxLines,
-        readOnly,
-        enabled,
-        focusable,
-        placeholder,
-        leadingIcon,
-        colors,
-        shape,
-        keyboardOptions,
-        keyboardActions
+        modifier = modifier,
+        title = title,
+        value = value.value,
+        minLines = minLines,
+        maxLines = maxLines,
+        readOnly = readOnly,
+        enabled = enabled,
+        focusable = focusable,
+        placeholder = placeholder,
+        leadingIcon = leadingIcon,
+        colors = colors,
+        shape = shape,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions
     ) {
         value.value = it
     }

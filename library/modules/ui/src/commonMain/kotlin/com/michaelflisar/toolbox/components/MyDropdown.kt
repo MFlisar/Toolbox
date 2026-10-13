@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -106,7 +107,7 @@ object MyDropdownDefaults {
     fun style(): MyDropdown.Style = MyDropdown.Style.Button()
 
     @Composable
-    fun shape() = MaterialTheme.shapes.small
+    fun shape() = OutlinedTextFieldDefaults.shape
 }
 
 object MyDropdown {
@@ -132,11 +133,14 @@ object MyDropdown {
         abstract val padding: PaddingValues
 
         data class Button(
-            override val padding: PaddingValues = PaddingValues(all = 8.dp),
+            override val padding: PaddingValues = PaddingValues(
+                horizontal = 16.dp,
+                vertical = 7.dp
+            ),
         ) : Style()
 
         data class OutlinedButton(
-            override val padding: PaddingValues = PaddingValues(all = 8.dp),
+            override val padding: PaddingValues = OutlinedTextFieldDefaults.contentPadding(), // all 16
         ) : Style()
     }
 
@@ -420,23 +424,23 @@ private fun <T> MyDropdownImpl(
                             }
                         } else Modifier
                     )
-                    .width(IntrinsicSize.Min),
+                    .width(IntrinsicSize.Min)
+                    .heightIn(min = OutlinedTextFieldDefaults.MinHeight),
                 contentAlignment = Alignment.Center
             ) {
                 MyDropdownContent(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(style.padding),
-                    expanded,
-                    rotation,
-                    title,
-                    items,
-                    selected,
-                    color,
-                    filter,
-                    filterText,
-                    filteredItems,
-                    content
+                    modifier = Modifier.fillMaxWidth(),
+                    expanded = expanded,
+                    rotation = rotation,
+                    title = title,
+                    items = items,
+                    selected = selected,
+                    color = color,
+                    filter = filter,
+                    filterText = filterText,
+                    filteredItems = filteredItems,
+                    contentPadding = style.padding,
+                    content = content
                 )
                 MyDropdownDropdown(
                     expanded,
@@ -460,34 +464,34 @@ private fun <T> MyDropdownImpl(
             ) {
                 MyOutlinedDecoratedContainer(
                     title = title,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(style.padding),
+                    modifier = Modifier.fillMaxWidth(),
                     enabled = enabled,
                     placeholder = null,
                     leadingIcon = null,
                     trailingIcon = null,
                     colors = colors,
                     shape = shape,
+                    contentPadding = style.padding,
                     onClick = {
                         expanded.value = !expanded.value
                     }
                 ) {
                     MyDropdownContent(
                         // TODO: find out why extra padding is necessary + fix it
-                        Modifier
+                        modifier = Modifier
                             .fillMaxWidth()
                             .then(MyOutlinedDecoratedContainer.MODIFIER_CORRECTION),
-                        expanded,
-                        rotation,
-                        "",
-                        items,
-                        selected,
-                        color,
-                        filter,
-                        filterText,
-                        filteredItems,
-                        content
+                        expanded = expanded,
+                        rotation = rotation,
+                        title = "",
+                        items = items,
+                        selected = selected,
+                        color = color,
+                        filter = filter,
+                        filterText = filterText,
+                        filteredItems = filteredItems,
+                        contentPadding = PaddingValues(0.dp),//style.padding,
+                        content = content
                     )
                 }
                 MyDropdownDropdown(
@@ -517,6 +521,7 @@ private fun <T> MyDropdownContent(
     filter: MyDropdown.DropdownFilter<T>?,
     filterText: MutableState<String>,
     filteredItems: MutableState<List<MyDropdown.Item<T>>>,
+    contentPadding: PaddingValues,
     content: @Composable (modifier: Modifier, item: MyDropdown.Item<T>?, title: String, titleColor: Color, textColor: Color) -> Unit,
 ) {
     val labelColor =
@@ -538,7 +543,7 @@ private fun <T> MyDropdownContent(
     }
 
     Row(
-        modifier = modifier.width(IntrinsicSize.Min),
+        modifier = modifier.width(IntrinsicSize.Min).padding(contentPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
         val item = items.find { it.index == selected }

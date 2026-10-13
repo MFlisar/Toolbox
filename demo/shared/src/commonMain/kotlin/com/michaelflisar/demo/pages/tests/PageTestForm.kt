@@ -52,26 +52,26 @@ private enum class TransferMode {
 @Composable
 private fun Page() {
 
-    val labelStyle1 = FormDefaults.labelStyleBefore(
+    val labelStyleBefore = FormDefaults.labelStyleBefore(
         width = 200.dp,
         textStyle = MaterialTheme.typography.bodyMedium,
         subTextStyle = MaterialTheme.typography.bodySmall.copy(fontStyle = FontStyle.Italic),
         textColor = MaterialTheme.colorScheme.onSurface,
         subTextColor = MaterialTheme.colorScheme.onSurfaceVariant
     )
-    val labelStyle2 = FormDefaults.labelStyleAbove(
+    val labelStyleAbove = FormDefaults.labelStyleAbove(
         textStyle = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
         subTextStyle = MaterialTheme.typography.bodySmall.copy(fontStyle = FontStyle.Italic),
         textColor = MaterialTheme.colorScheme.onSurface,
         subTextColor = MaterialTheme.colorScheme.onSurfaceVariant
     )
 
-    val sectionStyle1 = FormDefaults.sectionStyleText()
-    val sectionStyle2 = FormDefaults.sectionStyleRow()
+    val sectionStyleText = FormDefaults.sectionStyleText()
+    val sectionStyleRow = FormDefaults.sectionStyleRow()
 
     val config = rememberFormConfig(
-        labelStyle = labelStyle2,
-        sectionStyle = sectionStyle2,
+        labelStyle = labelStyleBefore,
+        sectionStyle = sectionStyleRow,
         spacing = 4.dp,
         showSingleDropdownsAsText = true
     )
@@ -189,6 +189,16 @@ private fun Page() {
             Mode.Change -> emptyList()
             Mode.Info -> emptyList()
         },
+        visible = selectedMode.value == Mode.Copy
+    )+ FormSection(
+        "Test",
+        items = listOf(
+            FormItem.MultiDropdown(
+                label = "Multi Dropdown",
+                items = TransferMode.entries.map { it.name },
+                selected = remember { mutableStateOf(listOf<String>()) }
+            )
+        ),
         visible = selectedMode.value == Mode.Copy
     )
     MyForm(

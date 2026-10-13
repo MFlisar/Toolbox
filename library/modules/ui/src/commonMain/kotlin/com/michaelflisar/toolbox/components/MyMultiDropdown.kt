@@ -23,6 +23,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -35,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -43,6 +45,20 @@ import com.michaelflisar.toolbox.extensions.disabled
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.padding
 import com.michaelflisar.toolbox.spacing
+
+object MyMultiDropdown {
+
+    @Composable
+    fun shape() = OutlinedTextFieldDefaults.shape
+
+    val formatter: @Composable (selected: List<String>) -> String = { selected ->
+        if (selected.isEmpty()) {
+            ""
+        } else {
+            selected.joinToString(";")
+        }
+    }
+}
 
 @Composable
 fun <T> MyMultiDropdown(
@@ -54,7 +70,9 @@ fun <T> MyMultiDropdown(
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
-    onSelectionChange: ((List<T>) -> Unit)? = null
+    shape: Shape = MyMultiDropdown.shape(),
+    formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    onSelectionChange: ((List<T>) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndices = selected.value.map { items.indexOf(it) }
@@ -65,7 +83,9 @@ fun <T> MyMultiDropdown(
         selectedIndices,
         enabled,
         color,
-        backgroundColor
+        backgroundColor,
+        shape,
+        formatter
     ) { selectedIndices, selectedItems ->
         selected.value = selectedIndices.map { items[it] }
         onSelectionChange?.invoke(selected.value)
@@ -82,7 +102,9 @@ fun <T> MyMultiDropdown(
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
-    onSelectionChange: (List<T>) -> Unit
+    shape: Shape = MyMultiDropdown.shape(),
+    formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    onSelectionChange: (List<T>) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndices = selected.map { items.indexOf(it) }
@@ -93,7 +115,9 @@ fun <T> MyMultiDropdown(
         selectedIndices,
         enabled,
         color,
-        backgroundColor
+        backgroundColor,
+        shape,
+        formatter
     ) { selectedIndices, selectedItems ->
         onSelectionChange(selectedIndices.map { items[it] })
     }
@@ -109,7 +133,9 @@ fun <T> MyMultiDropdownIndex(
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
-    onSelectionChange: ((List<Int>) -> Unit)? = null
+    shape: Shape = MyMultiDropdown.shape(),
+    formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    onSelectionChange: ((List<Int>) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     MyMultiDropdownImpl(
@@ -119,7 +145,9 @@ fun <T> MyMultiDropdownIndex(
         selectedIndices.value,
         enabled,
         color,
-        backgroundColor
+        backgroundColor,
+        shape,
+        formatter
     ) { selectedIndices2, selectedItems ->
         selectedIndices.value = selectedIndices2
         onSelectionChange?.invoke(selectedIndices2)
@@ -136,7 +164,9 @@ fun <T> MyMultiDropdownIndex(
     enabled: Boolean = true,
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
-    onSelectionChange: (List<Int>) -> Unit
+    shape: Shape = MyMultiDropdown.shape(),
+    formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    onSelectionChange: (List<Int>) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     MyMultiDropdownImpl(
@@ -146,7 +176,9 @@ fun <T> MyMultiDropdownIndex(
         selectedIndices,
         enabled,
         color,
-        backgroundColor
+        backgroundColor,
+        shape,
+        formatter
     ) { selectedIndices, selectedItems ->
         onSelectionChange(selectedIndices)
     }
@@ -165,7 +197,9 @@ private fun MyMultiDropdownImpl(
     enabled: Boolean,
     color: Color,
     backgroundColor: Color,
-    onSelectionChange: (indices: List<Int>, items: List<String>) -> Unit
+    shape: Shape = MyMultiDropdown.shape(),
+    formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    onSelectionChange: (indices: List<Int>, items: List<String>) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (expanded) -180f else 0f)
@@ -183,8 +217,8 @@ private fun MyMultiDropdownImpl(
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .clip(MaterialTheme.shapes.small)
-                    .border(1.dp, borderColor, MaterialTheme.shapes.small)
+                    .clip(shape)
+                    .border(1.dp, borderColor, shape)
                     .background(backgroundColor)
                     .then(
                         if (enabled) {
@@ -212,7 +246,7 @@ private fun MyMultiDropdownImpl(
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                     }
-                    Text(text = selectedItems.joinToString(";"), style = style2, color = color)
+                    Text(text = formatter(selectedItems), style = style2, color = color)
                 }
 
                 Icon(
@@ -262,7 +296,8 @@ private fun MyMultiDropdownImpl(
                     text = {
                         Row {
                             val selected = selectedItems.contains(item)
-                            val color = if (selected) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                            val color =
+                                if (selected) MaterialTheme.colorScheme.primary else LocalContentColor.current
                             Icon(
                                 modifier = Modifier.align(Alignment.CenterVertically)
                                     .padding(end = MaterialTheme.spacing.default),
