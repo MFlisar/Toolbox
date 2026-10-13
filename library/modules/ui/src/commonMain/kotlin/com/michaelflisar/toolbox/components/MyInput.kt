@@ -16,6 +16,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.graphics.Shape
 import com.michaelflisar.toolbox.Platform.cursor
 
 @Composable
@@ -31,6 +32,7 @@ fun MyInput(
     placeholder: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    shape: Shape = OutlinedTextFieldDefaults.shape,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
@@ -46,6 +48,7 @@ fun MyInput(
         placeholder,
         leadingIcon,
         colors,
+        shape,
         keyboardOptions,
         keyboardActions
     ) {
@@ -66,6 +69,7 @@ fun MyInput(
     placeholder: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    shape: Shape = OutlinedTextFieldDefaults.shape,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChanged: (String) -> Unit = {}
@@ -102,6 +106,7 @@ fun MyInput(
         colors = colors,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
+        shape = shape
     )
 }
 

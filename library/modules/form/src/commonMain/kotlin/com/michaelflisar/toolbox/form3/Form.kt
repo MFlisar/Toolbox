@@ -2,7 +2,6 @@ package com.michaelflisar.toolbox.form3
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -42,6 +41,7 @@ data class FormConfig(
     val labelStyle: FormLabelStyle,
     val sectionStyle: FormSectionStyle,
     val spacing: Dp,
+    val shape: Shape,
     val showSingleDropdownsAsText: Boolean,
 )
 
@@ -162,12 +162,14 @@ fun rememberFormConfig(
     labelStyle: FormLabelStyle = FormDefaults.labelStyleBefore(),
     sectionStyle: FormSectionStyle = FormDefaults.sectionStyleText(),
     spacing: Dp = 8.dp,
+    shape: Shape = MaterialTheme.shapes.small,
     showSingleDropdownsAsText: Boolean = false,
 ): FormConfig {
     return remember(
         labelStyle,
         sectionStyle,
         spacing,
+        shape,
         showSingleDropdownsAsText,
         labelStyle
     ) {
@@ -175,6 +177,7 @@ fun rememberFormConfig(
             labelStyle = labelStyle,
             sectionStyle = sectionStyle,
             spacing = spacing,
+            shape = shape,
             showSingleDropdownsAsText = showSingleDropdownsAsText
         )
     }
@@ -253,7 +256,8 @@ sealed interface FormItem : IFormItem {
                 value = value,
                 enabled = enabled && parentIsEnabled,
                 minLines = minLines,
-                maxLines = maxLines
+                maxLines = maxLines,
+                shape = config.shape
             )
         }
     }
@@ -268,31 +272,11 @@ sealed interface FormItem : IFormItem {
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
-
             androidx.compose.material3.Checkbox(
                 checked = checked.value,
                 onCheckedChange = { checked.value = it },
                 enabled = enabled && parentIsEnabled
             )
-
-            /*
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.extraSmall)
-                    .clickable(enabled = enabled && parentIsEnabled) {
-                        if (enabled && parentIsEnabled)
-                            checked.value = !checked.value
-                    }
-                    .padding(MaterialTheme.padding.default),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                androidx.compose.material3.Checkbox(
-                    checked = checked.value,
-                    onCheckedChange = null
-                )
-            }*/
         }
     }
 
@@ -317,7 +301,8 @@ sealed interface FormItem : IFormItem {
                 items = items,
                 selected = selected,
                 mapper = mapper,
-                enabled = enabled && parentIsEnabled
+                enabled = enabled && parentIsEnabled,
+                shape = config.shape
             )
         }
     }
@@ -341,7 +326,8 @@ sealed interface FormItem : IFormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selectedIndex = selectedIndex,
-                enabled = enabled && parentIsEnabled
+                enabled = enabled && parentIsEnabled,
+                shape = config.shape
             )
         }
     }
@@ -355,7 +341,9 @@ fun MyForm(
     config: FormConfig = rememberFormConfig(),
 ) {
     Column(
-        modifier = (if (scrollable) modifier.verticalScroll(rememberScrollState()) else modifier)
+        modifier = modifier.then(
+            if (scrollable) Modifier.verticalScroll(rememberScrollState()) else Modifier
+        )
             .animateContentSize(),
         verticalArrangement = Arrangement.spacedBy(config.spacing)
     ) {

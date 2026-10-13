@@ -11,12 +11,9 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -41,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -106,6 +104,9 @@ object MyDropdownDefaults {
 
     @Composable
     fun style(): MyDropdown.Style = MyDropdown.Style.Button()
+
+    @Composable
+    fun shape() = MaterialTheme.shapes.small
 }
 
 object MyDropdown {
@@ -129,11 +130,13 @@ object MyDropdown {
 
     sealed class Style {
         abstract val padding: PaddingValues
+
         data class Button(
-            override val padding: PaddingValues = PaddingValues(all = 8.dp)
+            override val padding: PaddingValues = PaddingValues(all = 8.dp),
         ) : Style()
+
         data class OutlinedButton(
-            override val padding: PaddingValues = PaddingValues(all = 8.dp)
+            override val padding: PaddingValues = PaddingValues(all = 8.dp),
         ) : Style()
     }
 
@@ -182,6 +185,7 @@ fun <T> MyDropdown(
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<T>? = null,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
+    shape: Shape = MyDropdownDefaults.shape(),
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
         MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
     },
@@ -203,6 +207,7 @@ fun <T> MyDropdown(
         backgroundColor = backgroundColor,
         filter = filter,
         style = style,
+        shape = shape,
         content = content,
         dropdownContent = dropdownContent,
         onSelectionChanged = { index ->
@@ -226,6 +231,7 @@ fun <T> MyDropdown(
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<T>? = null,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
+    shape: Shape = MyDropdownDefaults.shape(),
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
         MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
     },
@@ -247,6 +253,7 @@ fun <T> MyDropdown(
         backgroundColor = backgroundColor,
         filter = filter,
         style = style,
+        shape = shape,
         content = content,
         dropdownContent = dropdownContent,
         onSelectionChanged = { index ->
@@ -269,6 +276,7 @@ fun <T> MyDropdownIndex(
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<T>? = null,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
+    shape: Shape = MyDropdownDefaults.shape(),
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
         MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
     },
@@ -289,6 +297,7 @@ fun <T> MyDropdownIndex(
         backgroundColor = backgroundColor,
         filter = filter,
         style = style,
+        shape = shape,
         content = content,
         dropdownContent = dropdownContent,
         onSelectionChanged = { index ->
@@ -311,6 +320,7 @@ fun <T> MyDropdownIndex(
     backgroundColor: Color = Color.Unspecified,
     filter: MyDropdown.Filter<T>? = null,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
+    shape: Shape = MyDropdownDefaults.shape(),
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
         MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
     },
@@ -361,6 +371,7 @@ fun <T> MyDropdownIndex(
         backgroundColor,
         dropdownFilter,
         style,
+        shape,
         content,
         dropdownContent
     ) { item ->
@@ -384,6 +395,7 @@ private fun <T> MyDropdownImpl(
     backgroundColor: Color,
     filter: MyDropdown.DropdownFilter<T>?,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
+    shape: Shape = MaterialTheme.shapes.small,
     content: @Composable (modifier: Modifier, item: MyDropdown.Item<T>?, title: String, titleColor: Color, textColor: Color) -> Unit,
     dropdownContent: @Composable (item: MyDropdown.Item<T>, selected: Boolean) -> Unit,
     onSelectionChange: (item: MyDropdown.Item<T>) -> Unit,
@@ -398,8 +410,8 @@ private fun <T> MyDropdownImpl(
     when (style) {
         is MyDropdown.Style.Button -> {
             Box(
-                modifier = modifier.clip(MaterialTheme.shapes.small)
-                    .border(1.dp, borderColor, MaterialTheme.shapes.small)
+                modifier = modifier.clip(shape)
+                    .border(1.dp, borderColor, shape)
                     .background(backgroundColor)
                     .then(
                         if (enabled) {
@@ -456,6 +468,7 @@ private fun <T> MyDropdownImpl(
                     leadingIcon = null,
                     trailingIcon = null,
                     colors = colors,
+                    shape = shape,
                     onClick = {
                         expanded.value = !expanded.value
                     }
@@ -611,20 +624,20 @@ private fun <T> MyDropdownDropdown(
                 }
             }
         } else {*/
-            filteredItems.value.forEach {
-                DropdownMenuItem(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .zIndex(1f),
-                    text = {
-                        dropdownContent(it, it.index == selected)
-                    },
-                    onClick = {
-                        onSelectionChange(it)
-                        expanded.value = false
-                    }
-                )
-            }
+        filteredItems.value.forEach {
+            DropdownMenuItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .zIndex(1f),
+                text = {
+                    dropdownContent(it, it.index == selected)
+                },
+                onClick = {
+                    onSelectionChange(it)
+                    expanded.value = false
+                }
+            )
+        }
         //}
     }
 }

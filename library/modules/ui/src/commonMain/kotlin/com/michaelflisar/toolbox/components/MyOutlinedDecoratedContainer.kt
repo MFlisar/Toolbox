@@ -13,6 +13,7 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,7 @@ fun MyOutlinedDecoratedContainer(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    shape: Shape =  OutlinedTextFieldDefaults.shape,
     onClick: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
@@ -71,7 +73,7 @@ fun MyOutlinedDecoratedContainer(
                     isError = false,
                     interactionSource = interactionSource,
                     colors = colors,
-                    //shape = shape,
+                    shape = shape,
                     modifier = Modifier.then(
                         if (enabled && onClick != null) {
                             Modifier
