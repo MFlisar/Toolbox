@@ -1,5 +1,6 @@
 package com.michaelflisar.toolbox.form3
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -448,32 +449,39 @@ fun MyForm(
                 }
 
                 is FormSection -> {
-                    if (!item.visible)
-                        return@forEach
-                    MyTitle(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = config.sectionStyle.verticalPadding)
-                            .then(
-                                when (config.sectionStyle) {
-                                    is FormSectionStyle.Row -> Modifier
-                                        .clip(config.sectionStyle.shape)
-                                        .background(config.sectionStyle.backgroundColor)
-                                        .padding(config.sectionStyle.contentPadding)
+                    AnimatedVisibility(
+                        modifier = Modifier.fillMaxWidth(),
+                        visible = item.visible
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(config.spacing)
+                        ) {
+                            MyTitle(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = config.sectionStyle.verticalPadding)
+                                    .then(
+                                        when (config.sectionStyle) {
+                                            is FormSectionStyle.Row -> Modifier
+                                                .clip(config.sectionStyle.shape)
+                                                .background(config.sectionStyle.backgroundColor)
+                                                .padding(config.sectionStyle.contentPadding)
 
-                                    is FormSectionStyle.Text -> Modifier
-                                }
-                            ),
-                        text = item.title,
-                        style = config.sectionStyle.textStyle,
-                        color = config.sectionStyle.textColor,
-                    )
-                    item.items.forEach {
-                        FormItem(
-                            item = it,
-                            config = config,
-                            parentIsEnabled = item.enabled
-                        )
+                                            is FormSectionStyle.Text -> Modifier
+                                        }
+                                    ),
+                                text = item.title,
+                                style = config.sectionStyle.textStyle,
+                                color = config.sectionStyle.textColor,
+                            )
+                            item.items.forEach {
+                                FormItem(
+                                    item = it,
+                                    config = config,
+                                    parentIsEnabled = item.enabled
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -487,88 +495,94 @@ private fun FormItem(
     config: FormConfig,
     parentIsEnabled: Boolean,
 ) {
-    if (!item.visible)
-        return
+    AnimatedVisibility(
+        modifier = Modifier.fillMaxWidth(),
+        visible = item.visible
+    ) {
 
-    val before = config.labelStyle is FormLabelStyle.Before || item is FormItem.Checkbox
+        val before = config.labelStyle is FormLabelStyle.Before || item is FormItem.Checkbox
 
-    val paddingStart = when (config.sectionStyle) {
-        is FormSectionStyle.Row -> config.sectionStyle.contentPadding.calculateLeftPadding(LocalLayoutDirection.current)
-        is FormSectionStyle.Text -> 0.dp
-    }
+        val paddingStart = when (config.sectionStyle) {
+            is FormSectionStyle.Row -> config.sectionStyle.contentPadding.calculateLeftPadding(
+                LocalLayoutDirection.current
+            )
 
-    if (before) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(start = paddingStart),
-            horizontalArrangement = Arrangement.SpaceBetween,//spacedBy(MaterialTheme.spacing.default),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+            is FormSectionStyle.Text -> 0.dp
+        }
 
-            val modifierWidth = (config.labelStyle as? FormLabelStyle.Before)?.width?.let {
-                Modifier.width(it)
-            } ?: Modifier.weight(1f)
-
-            Column(
-                modifier = modifierWidth,
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+        if (before) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(start = paddingStart),
+                horizontalArrangement = Arrangement.SpaceBetween,//spacedBy(MaterialTheme.spacing.default),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                val help = item.help
-                if (help != null) {
-                    MyTextWithHelp(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = item.label,
-                        help = help.text,
-                        helpTitle = help.title,
-                        style = config.labelStyle.textStyle,
-                        color = config.labelStyle.textColor,
-                        //iconVerticalAlignment = Alignment.Top,
-                        popupConfig = MyTextWithHelpDefaults.popupConfig(
-                            alignment = Alignment.TopCenter,
-                            yOffset = 12.dp
+
+                val modifierWidth = (config.labelStyle as? FormLabelStyle.Before)?.width?.let {
+                    Modifier.width(it)
+                } ?: Modifier.weight(1f)
+
+                Column(
+                    modifier = modifierWidth,
+                    verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+                ) {
+                    val help = item.help
+                    if (help != null) {
+                        MyTextWithHelp(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = item.label,
+                            help = help.text,
+                            helpTitle = help.title,
+                            style = config.labelStyle.textStyle,
+                            color = config.labelStyle.textColor,
+                            //iconVerticalAlignment = Alignment.Top,
+                            popupConfig = MyTextWithHelpDefaults.popupConfig(
+                                alignment = Alignment.TopCenter,
+                                yOffset = 12.dp
+                            )
                         )
-                    )
-                } else {
+                    } else {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = item.label,
+                            style = config.labelStyle.textStyle,
+                            color = config.labelStyle.textColor
+                        )
+                    }
+                    item.subLabel?.let { subLabel ->
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = subLabel,
+                            style = config.labelStyle.subTextStyle,
+                            color = config.labelStyle.subTextColor
+                        )
+                    }
+                }
+
+                item.Content(config, parentIsEnabled)
+            }
+        } else {
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(start = paddingStart),
+                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+                ) {
                     Text(
-                        modifier = Modifier.fillMaxWidth(),
                         text = item.label,
                         style = config.labelStyle.textStyle,
                         color = config.labelStyle.textColor
                     )
+                    item.subLabel?.let { subLabel ->
+                        Text(
+                            text = subLabel,
+                            style = config.labelStyle.subTextStyle,
+                            color = config.labelStyle.subTextColor
+                        )
+                    }
                 }
-                item.subLabel?.let { subLabel ->
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = subLabel,
-                        style = config.labelStyle.subTextStyle,
-                        color = config.labelStyle.subTextColor
-                    )
-                }
+                item.Content(config, parentIsEnabled)
             }
-
-            item.Content(config, parentIsEnabled)
-        }
-    } else {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(start = paddingStart),
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
-            ) {
-                Text(
-                    text = item.label,
-                    style = config.labelStyle.textStyle,
-                    color = config.labelStyle.textColor
-                )
-                item.subLabel?.let { subLabel ->
-                    Text(
-                        text = subLabel,
-                        style = config.labelStyle.subTextStyle,
-                        color = config.labelStyle.subTextColor
-                    )
-                }
-            }
-            item.Content(config, parentIsEnabled)
         }
     }
 }

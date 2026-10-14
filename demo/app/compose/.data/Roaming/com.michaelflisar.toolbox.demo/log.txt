@@ -2103,3 +2103,12 @@
 [D] 2026-10-14 13:01:29.718 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
 [D] 2026-10-14 13:01:29.746 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
 [I] 2026-10-14 13:01:32.312 [WindowState.kt:116]: Saving window state: {w=1047, h=800, x=713, y=171, placement=Floating}
+[D] 2026-10-14 13:06:37.569 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-14 13:06:37.595 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-14 13:06:40.205 [WindowState.kt:116]: Saving window state: {w=1047, h=800, x=713, y=171, placement=Floating}
+[D] 2026-10-14 13:08:11.715 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-14 13:08:11.745 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-14 13:08:14.296 [WindowState.kt:116]: Saving window state: {w=1047, h=800, x=713, y=171, placement=Floating}
+[D] 2026-10-14 13:08:52.368 [UpdateManager.kt:26]: lastVersion = 10000 => currentVersion = 10000 
+[D] 2026-10-14 13:08:52.396 [UpdateManager.kt:39]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[I] 2026-10-14 13:08:54.907 [WindowState.kt:116]: Saving window state: {w=1047, h=800, x=713, y=171, placement=Floating}

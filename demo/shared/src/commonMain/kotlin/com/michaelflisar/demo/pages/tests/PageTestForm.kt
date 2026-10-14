@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -89,6 +90,7 @@ private fun Page() {
     val copyFilesFromVWInstallation = remember { mutableStateOf(false) }
     val flagsDataContent = remember { mutableStateOf("") }
     val activate = remember { mutableStateOf(false) }
+    val activateDependency = remember { mutableStateOf(false) }
 
     val items = listOf(
         FormSection(
@@ -196,6 +198,12 @@ private fun Page() {
                     label = "Aktivieren",
                     subLabel = "Junction anpassen + weitere Daten nach VW kopieren",
                     checked = activate
+                ),
+                FormItem.Checkbox(
+                    label = "Dependency",
+                    subLabel = "Depends on 'Aktivieren'",
+                    checked = activateDependency,
+                    visible = activate.value
                 )
             )
 
