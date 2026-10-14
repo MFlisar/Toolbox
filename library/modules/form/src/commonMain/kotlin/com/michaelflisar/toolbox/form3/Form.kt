@@ -51,7 +51,7 @@ data class FormConfig(
     val spacing: Dp,
     val shape: Shape,
     val showSingleDropdownsAsText: Boolean,
-    val popupWidthConfig: MyDropdownMenu.WidthConfig
+    val popupWidthConfig: MyDropdownMenu.WidthConfig,
 )
 
 sealed class FormLabelStyle {
@@ -175,7 +175,7 @@ fun rememberFormConfig(
     spacing: Dp = 8.dp,
     shape: Shape = MaterialTheme.shapes.small,
     showSingleDropdownsAsText: Boolean = false,
-    popupWidthConfig: MyDropdownMenu.WidthConfig = FormDefaults.popupWidthConfig
+    popupWidthConfig: MyDropdownMenu.WidthConfig = FormDefaults.popupWidthConfig,
 ): FormConfig {
     return remember(
         labelStyle,
@@ -198,13 +198,13 @@ fun rememberFormConfig(
 }
 
 data class FormHelp(
-    val title: String?,
     val text: AnnotatedString,
+    val title: String? = null,
 ) {
     constructor(
-        title: String? = null,
         text: String,
-    ) : this(title, AnnotatedString(text))
+        title: String? = null,
+    ) : this(AnnotatedString(text), title)
 }
 
 sealed interface IFormItem

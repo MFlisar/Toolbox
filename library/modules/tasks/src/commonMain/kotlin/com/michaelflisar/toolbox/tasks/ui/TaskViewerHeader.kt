@@ -188,7 +188,7 @@ private fun HeaderMetrics(
                 value = summary.info.toString(),
                 label = config.headerInfoLabel(summary.info),
                 icon = Icons.Default.Info,
-                color = MaterialTheme.colorScheme.primary,
+                color = config.taskMessageColors.colorInfo(headerContainerColor),
             )
         }
         if (summary.warnings > 0) {

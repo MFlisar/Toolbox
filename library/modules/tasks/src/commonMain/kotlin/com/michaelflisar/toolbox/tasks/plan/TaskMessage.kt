@@ -20,6 +20,8 @@ fun rememberTaskMessageColors(
     colorWarningOnLight: Color = Color(0xFFF57C00), // Orange 700
     colorErrorOnDark: Color = Color(0xFFE57373), // Red 300
     colorErrorOnLight: Color = Color(0xFFD32F2F), // Red 700
+    colorInfoOnDark: Color = Color(0xFF64B5F6), // Blue 300
+    colorInfoOnLight: Color = Color(0xFF1976D2) // Blue 700
 ): TaskMessageColors {
     val isBackgroundDark = MaterialTheme.colorScheme.background.isDark()
     return remember(
@@ -29,7 +31,9 @@ fun rememberTaskMessageColors(
         colorWarningOnDark,
         colorWarningOnLight,
         colorErrorOnDark,
-        colorErrorOnLight
+        colorErrorOnLight,
+        colorInfoOnDark,
+        colorInfoOnLight
     ) {
         TaskMessageColors(
             isBackgroundDark = isBackgroundDark,
@@ -39,6 +43,8 @@ fun rememberTaskMessageColors(
             colorWarningOnLight = colorWarningOnLight,
             colorErrorOnDark = colorErrorOnDark,
             colorErrorOnLight = colorErrorOnLight,
+            colorInfoOnDark = colorInfoOnDark,
+            colorInfoOnLight = colorInfoOnLight
         )
     }
 }
@@ -52,13 +58,17 @@ data class TaskMessageColors(
     private val colorWarningOnLight: Color,
     private val colorErrorOnDark: Color,
     private val colorErrorOnLight: Color,
+    private val colorInfoOnDark: Color,
+    private val colorInfoOnLight: Color
 ) {
     fun colorSuccess() = if (isBackgroundDark) colorSuccessOnDark else colorSuccessOnLight
     fun colorWarning() = if (isBackgroundDark) colorWarningOnDark else colorWarningOnLight
     fun colorError() = if (isBackgroundDark) colorErrorOnDark else colorErrorOnLight
+    fun colorInfo() = if (isBackgroundDark) colorInfoOnDark else colorInfoOnLight
     fun colorSuccess(background: Color) = if (background.isDark()) colorSuccessOnDark else colorSuccessOnLight
     fun colorWarning(background: Color) = if (background.isDark()) colorWarningOnDark else colorWarningOnLight
     fun colorError(background: Color) = if (background.isDark()) colorErrorOnDark else colorErrorOnLight
+    fun colorInfo(background: Color) = if (background.isDark()) colorInfoOnDark else colorInfoOnLight
 }
 
 sealed interface TaskMessage {

@@ -203,7 +203,7 @@ fun rememberTaskConfig(
     headerPendingLabel: (count: Int) -> String = { "ausstehend" },
     headerRunningLabel: (count: Int) -> String = { "laufend" },
     headerPassedLabel: (count: Int) -> String = { "erfolgreich" },
-    headerInfoLabel: (count: Int) -> String = { "Info" },
+    headerInfoLabel: (count: Int) -> String = { count -> if (count == 1) "Info" else "Infos" },
     headerWarningsLabel: (count: Int) -> String = { count -> if (count == 1) "Warnung" else "Warnungen" },
     headerFailedLabel: (count: Int) -> String = { "fehlgeschlagen" },
     headerSkippedLabel: (count: Int) -> String = { "übersprungen" },

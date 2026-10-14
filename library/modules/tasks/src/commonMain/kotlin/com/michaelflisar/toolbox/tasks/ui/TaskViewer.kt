@@ -483,10 +483,6 @@ private fun TaskItemContainer(
     }
 }
 
-/**
- * icons die nicht gefärbt werden und neutral sind: outlined
- * Rest: filled
- */
 @Composable
 private fun StatusIcon(
     group: Boolean,
@@ -503,7 +499,7 @@ private fun StatusIcon(
         TaskStatus.Cancelled -> {
             Icon(
                 modifier = Modifier.size(size),
-                imageVector = Icons.Outlined.Cancel,
+                imageVector = Icons.Default.Cancel,
                 contentDescription = null,
                 tint = LocalContentColor.current.copy(alpha = .8f),
             )
@@ -521,9 +517,9 @@ private fun StatusIcon(
         is TaskStatus.Info -> {
             Icon(
                 modifier = Modifier.size(size),
-                imageVector = Icons.Outlined.Info,
+                imageVector = Icons.Default.Info,
                 contentDescription = null,
-                tint = LocalContentColor.current.copy(alpha = .8f),
+                tint = viewerConfig.taskMessageColors.colorInfo(if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor)
             )
         }
 
