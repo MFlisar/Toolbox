@@ -1,0 +1,17 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "Toolbox.toolbox.modules",
+        "name": "ui"
+      },
+      "componentId": {
+        "type": "project",
+        "projectPath": ":toolbox:modules:ui",
+        "buildPath": ":"
+      }
+    },
+    "file": "/Users/runner/work/Toolbox/Toolbox/library/modules/ui/build/classes/kotlin/metadata/notJvmMain",
+    "sourceSetName": "notJvmMain"
+  }
+]

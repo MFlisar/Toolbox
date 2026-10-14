@@ -1,0 +1,158 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../ui/6.1.3/ui-6.1.3.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "ui",
+    "version": "6.1.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.1.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ui.aar",
+          "url": "ui-android-6.1.3.aar",
+          "size": 897817,
+          "sha512": "dae0ada3b2569a8d8aa4290fae5e842fa2a6a2f24c43a6f1e0d72bce143959d10e602b8a9cfa465c8b36057e71c15d68ef602f1fe8ceccf121f00b70a5c03d2f",
+          "sha256": "da10227e214ba07c943616fb1e43edf049740b829695a4d9c63c7176da0ddce0",
+          "sha1": "3797c7d99b3e957eef5e2a294ee92d5b61214c43",
+          "md5": "fc78a8f3a172304fbd3f1417700df012"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.1.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core-ktx",
+          "version": {
+            "requires": "1.19.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.ui",
+          "module": "ui-backhandler",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kmpparcelize",
+          "module": "library",
+          "version": {
+            "requires": "2.0.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ui.aar",
+          "url": "ui-android-6.1.3.aar",
+          "size": 897817,
+          "sha512": "dae0ada3b2569a8d8aa4290fae5e842fa2a6a2f24c43a6f1e0d72bce143959d10e602b8a9cfa465c8b36057e71c15d68ef602f1fe8ceccf121f00b70a5c03d2f",
+          "sha256": "da10227e214ba07c943616fb1e43edf049740b829695a4d9c63c7176da0ddce0",
+          "sha1": "3797c7d99b3e957eef5e2a294ee92d5b61214c43",
+          "md5": "fc78a8f3a172304fbd3f1417700df012"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "ui-android-sources.jar",
+          "url": "ui-android-6.1.3-sources.jar",
+          "size": 85281,
+          "sha512": "75ceb8011100153bdc02711fcc4413eb7a134cced1454f9394436aa039722215b56e5d8477c75424fb5d5e015f4d81b791febf4141429c7ecd11eb90ee35f703",
+          "sha256": "9b921b80453e663bd7b2d956962dea708a21ffaf8e8d2bd5d2d9776850d446b8",
+          "sha1": "f870b128025302abf4b978f84f812df7d6e17277",
+          "md5": "8a73babba385247f9647cc07057ae08f"
+        }
+      ]
+    }
+  ]
+}

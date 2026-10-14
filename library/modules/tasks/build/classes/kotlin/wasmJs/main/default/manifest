@@ -1,0 +1,11 @@
+abi_version=2.4.0
+builtins_platform=WASM
+compiler_version=2.4.20
+ir_signature_versions=1,2
+jsOutputName=Toolbox-toolbox-modules-tasks
+language_features=+AllowAnyAsAnActualTypeForExpectInterface +JsAllowImplementingFunctionInterface +MultiPlatformProjects
+metadata_version=2.4.0
+serializedIrFileFingerprints=1wy071vuksw2k.3r0jhiqq38cct 3chdd9vggl7e7.1g05dcy738vrc 3yj6bxi8cbn2.nyworopoifgm 34mh9esikzr9v.2erz8ym38q3jh 2y5dy1z017z0r.nwcdxet0uc8e 1ynra030tukqe.32xxtj285erbf 15jr79c9jkibv.i2lx9ce9l122 20kuuohy3ah9x.1k32e4bkep2bl 33vn2aq1x62ll.2rwipv2i7fuwv 2d6mljtj5e14k.h9zasizykxdr 2o0sy097xr8l6.2ex8qij8vog7c 2qboumqhxtcvl.2zg87dot6wlmt 2s3kd48sxwcsw.1jcls0y2tbc5f 128v5egd5mswb.2rp7rtgap3qbr 3m404sv5ekz7m.3n8rwga2fglds 1m9tatarfl69u.32qrezsw9lcct
+serializedKlibFingerprint=26gv4aurfepgt.8ar24ot6xmdl
+unique_name=Toolbox.toolbox.modules\:tasks
+wasm_targets=wasm-js
