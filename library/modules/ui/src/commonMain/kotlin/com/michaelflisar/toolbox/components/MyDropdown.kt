@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -40,17 +39,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.michaelflisar.toolbox.components.MyDropdownMenu
 import com.michaelflisar.toolbox.extensions.toSentenceCase
 import com.michaelflisar.toolbox.interfaces.ILabel
 import com.michaelflisar.toolbox.interfaces.ILabelAndShortLabel
 import com.michaelflisar.toolbox.padding
 import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.components.MyDropdownMenu as showMyDropdownMenu
 
 object MyDropdownDefaults {
 
@@ -61,6 +61,7 @@ object MyDropdownDefaults {
         text: String,
         labelColor: Color,
         color: Color,
+        maxLines: Int,
         leadingContent: @Composable () -> Unit = {},
     ) {
         val styleTitle = MyDropdownDefaults.styleTitle
@@ -82,7 +83,7 @@ object MyDropdownDefaults {
                     text = text,
                     style = styleText,
                     color = color,
-                    maxLines = 1
+                    maxLines = maxLines
                 )
             }
         }
@@ -116,9 +117,75 @@ object MyDropdownDefaults {
 
     internal val styleText: TextStyle
         @Composable get() = LocalTextStyle.current//MaterialTheme.typography.bodySmall.copy(fontSize = MaterialTheme.typography.bodySmall.fontSize)
+
+    internal val popupWidthConfig: MyDropdownMenu.WidthConfig
+        @Composable get() = MyDropdownMenuDefaults.widthConfig
+
 }
 
 object MyDropdown {
+
+    @Composable
+    internal fun DropdownContainer(
+        modifier: Modifier,
+        title: String,
+        enabled: Boolean,
+        borderColor: Color,
+        backgroundColor: Color,
+        shape: Shape,
+        style: MyDropdown.Style,
+        onToggle: () -> Unit,
+        content: @Composable (Modifier) -> Unit,
+        popupContent: @Composable MyDropdownMenuContainerScope.() -> Unit,
+    ) {
+        MyDropdownMenuContainer {
+            when (style) {
+                is MyDropdown.Style.Button -> {
+                    Box(
+                        modifier = modifier
+                            .clip(shape)
+                            .border(1.dp, borderColor, shape)
+                            .background(backgroundColor)
+                            .then(
+                                if (enabled) Modifier.clickable(onClick = onToggle) else Modifier
+                            )
+                            .width(IntrinsicSize.Max)
+                            .heightIn(min = OutlinedTextFieldDefaults.MinHeight),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        content(Modifier.fillMaxWidth())
+                        popupContent()
+                    }
+                }
+
+                is MyDropdown.Style.OutlinedButton -> {
+                    val colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = borderColor,
+                    )
+                    Box(modifier = modifier.width(IntrinsicSize.Max)) {
+                        MyOutlinedDecoratedContainer(
+                            title = title,
+                            modifier = Modifier.fillMaxWidth(),
+                            enabled = enabled,
+                            placeholder = null,
+                            leadingIcon = null,
+                            trailingIcon = null,
+                            colors = colors,
+                            shape = shape,
+                            contentPadding = style.padding,
+                            onClick = onToggle,
+                        ) {
+                            content(
+                                Modifier.fillMaxWidth()
+                                    .then(MyOutlinedDecoratedContainer.MODIFIER_CORRECTION)
+                            )
+                        }
+                        popupContent()
+                    }
+                }
+            }
+        }
+    }
 
     class Filter<T>(
         val label: String,
@@ -143,7 +210,7 @@ object MyDropdown {
         data class Button(
             override val padding: PaddingValues = PaddingValues(
                 horizontal = 16.dp,
-                vertical = 7.dp
+                vertical = 5.dp
             ),
         ) : Style()
 
@@ -173,6 +240,7 @@ object MyDropdown {
 fun <T : ILabel> MyDropdown(
     data: MyDropdown.SimpleData<T>,
     modifier: Modifier = Modifier,
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
 ) {
     MyDropdown(
         items = data.values,
@@ -180,7 +248,8 @@ fun <T : ILabel> MyDropdown(
         onSelectionChanged = { value -> data.onValueChanged(value) },
         mapper = { it.label().toSentenceCase() },
         mapperDropdown = { (if (it is ILabelAndShortLabel) it.labelShort() else it.label()).toSentenceCase() },
-        modifier = modifier
+        modifier = modifier,
+        popupWidthConfig = popupWidthConfig
     )
 }
 
@@ -198,8 +267,9 @@ fun <T> MyDropdown(
     filter: MyDropdown.Filter<T>? = null,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
     shape: Shape = MyDropdownDefaults.shape(),
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
-        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
+        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor, 1)
     },
     dropdownContent: @Composable (item: T, text: String, selected: Boolean) -> Unit = { item, text, selected ->
         MyDropdownDefaults.DropdownContent(text, selected)
@@ -220,6 +290,7 @@ fun <T> MyDropdown(
         filter = filter,
         style = style,
         shape = shape,
+        popupWidthConfig = popupWidthConfig,
         content = content,
         dropdownContent = dropdownContent,
         onSelectionChanged = { index ->
@@ -244,8 +315,9 @@ fun <T> MyDropdown(
     filter: MyDropdown.Filter<T>? = null,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
     shape: Shape = MyDropdownDefaults.shape(),
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
-        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
+        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor, 1)
     },
     dropdownContent: @Composable (item: T, text: String, selected: Boolean) -> Unit = { item, text, selected ->
         MyDropdownDefaults.DropdownContent(text, selected)
@@ -266,6 +338,7 @@ fun <T> MyDropdown(
         filter = filter,
         style = style,
         shape = shape,
+        popupWidthConfig = popupWidthConfig,
         content = content,
         dropdownContent = dropdownContent,
         onSelectionChanged = { index ->
@@ -289,8 +362,9 @@ fun <T> MyDropdownIndex(
     filter: MyDropdown.Filter<T>? = null,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
     shape: Shape = MyDropdownDefaults.shape(),
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
-        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
+        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor, 1)
     },
     dropdownContent: @Composable (item: T, text: String, selected: Boolean) -> Unit = { item, text, selected ->
         MyDropdownDefaults.DropdownContent(text, selected)
@@ -310,6 +384,7 @@ fun <T> MyDropdownIndex(
         filter = filter,
         style = style,
         shape = shape,
+        popupWidthConfig = popupWidthConfig,
         content = content,
         dropdownContent = dropdownContent,
         onSelectionChanged = { index ->
@@ -333,8 +408,9 @@ fun <T> MyDropdownIndex(
     filter: MyDropdown.Filter<T>? = null,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
     shape: Shape = MyDropdownDefaults.shape(),
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     content: @Composable (modifier: Modifier, item: T?, title: String, text: String, titleColor: Color, textColor: Color) -> Unit = { modifier, item, title, text, titleColor, textColor ->
-        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor)
+        MyDropdownDefaults.Content(modifier, title, text, titleColor, textColor, 1)
     },
     dropdownContent: @Composable (item: T, text: String, selected: Boolean) -> Unit = { item, text, selected ->
         MyDropdownDefaults.DropdownContent(text, selected)
@@ -374,21 +450,21 @@ fun <T> MyDropdownIndex(
             dropdownContent(items[item.index], item.textDropdown, selected)
         }
     MyDropdownImpl(
-        modifier,
-        title,
-        dropdownItems,
-        selectedIndex,
-        enabled,
-        color,
-        backgroundColor,
-        dropdownFilter,
-        style,
-        shape,
-        content,
-        dropdownContent
-    ) { item ->
-        onSelectionChanged.invoke(item.index)
-    }
+        modifier = modifier,
+        title = title,
+        items = dropdownItems,
+        selected = selectedIndex,
+        enabled = enabled,
+        color = color,
+        backgroundColor = backgroundColor,
+        filter = dropdownFilter,
+        style = style,
+        shape = shape,
+        popupWidthConfig = popupWidthConfig,
+        content = content,
+        dropdownContent = dropdownContent,
+        onSelectionChange = { item -> onSelectionChanged.invoke(item.index) }
+    )
 }
 
 // --------------------------------
@@ -408,6 +484,7 @@ private fun <T> MyDropdownImpl(
     filter: MyDropdown.DropdownFilter<T>?,
     style: MyDropdown.Style = MyDropdownDefaults.style(),
     shape: Shape = MaterialTheme.shapes.small,
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     content: @Composable (modifier: Modifier, item: MyDropdown.Item<T>?, title: String, titleColor: Color, textColor: Color) -> Unit,
     dropdownContent: @Composable (item: MyDropdown.Item<T>, selected: Boolean) -> Unit,
     onSelectionChange: (item: MyDropdown.Item<T>) -> Unit,
@@ -419,102 +496,45 @@ private fun <T> MyDropdownImpl(
     val filterText = remember { mutableStateOf("") }
     val filteredItems = remember(items) { mutableStateOf(items) }
 
-    when (style) {
-        is MyDropdown.Style.Button -> {
-            Box(
-                modifier = modifier.clip(shape)
-                    .border(1.dp, borderColor, shape)
-                    .background(backgroundColor)
-                    .then(
-                        if (enabled) {
-                            Modifier.clickable {
-                                expanded.value = !expanded.value
-                            }
-                        } else Modifier
-                    )
-                    .width(IntrinsicSize.Min)
-                    .heightIn(min = OutlinedTextFieldDefaults.MinHeight),
-                contentAlignment = Alignment.Center
-            ) {
-                MyDropdownContent(
-                    modifier = Modifier.fillMaxWidth(),
-                    expanded = expanded,
-                    rotation = rotation,
-                    title = title,
-                    items = items,
-                    selected = selected,
-                    color = color,
-                    filter = filter,
-                    filterText = filterText,
-                    filteredItems = filteredItems,
-                    contentPadding = style.padding,
-                    content = content
-                )
-                MyDropdownDropdown(
-                    expanded,
-                    filter,
-                    title,
-                    filterText,
-                    filteredItems,
-                    dropdownContent,
-                    selected,
-                    onSelectionChange
-                )
-            }
-        }
-
-        is MyDropdown.Style.OutlinedButton -> {
-            val colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = borderColor,
+    MyDropdown.DropdownContainer(
+        modifier = modifier,
+        title = title,
+        enabled = enabled,
+        borderColor = borderColor,
+        backgroundColor = backgroundColor,
+        shape = shape,
+        style = style,
+        onToggle = { expanded.value = !expanded.value },
+        content = { contentModifier ->
+            MyDropdownContent(
+                modifier = contentModifier,
+                expanded = expanded,
+                rotation = rotation,
+                title = if (style is MyDropdown.Style.OutlinedButton) "" else title,
+                items = items,
+                selected = selected,
+                color = color,
+                filter = filter,
+                filterText = filterText,
+                filteredItems = filteredItems,
+                contentPadding = if (style is MyDropdown.Style.OutlinedButton) PaddingValues(0.dp) else style.padding,
+                content = content,
             )
-            Box(
-                modifier = modifier.width(IntrinsicSize.Min)
-            ) {
-                MyOutlinedDecoratedContainer(
-                    title = title,
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = enabled,
-                    placeholder = null,
-                    leadingIcon = null,
-                    trailingIcon = null,
-                    colors = colors,
-                    shape = shape,
-                    contentPadding = style.padding,
-                    onClick = {
-                        expanded.value = !expanded.value
-                    }
-                ) {
-                    MyDropdownContent(
-                        // TODO: find out why extra padding is necessary + fix it
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .then(MyOutlinedDecoratedContainer.MODIFIER_CORRECTION),
-                        expanded = expanded,
-                        rotation = rotation,
-                        title = "",
-                        items = items,
-                        selected = selected,
-                        color = color,
-                        filter = filter,
-                        filterText = filterText,
-                        filteredItems = filteredItems,
-                        contentPadding = PaddingValues(0.dp),//style.padding,
-                        content = content
-                    )
-                }
-                MyDropdownDropdown(
-                    expanded,
-                    filter,
-                    title,
-                    filterText,
-                    filteredItems,
-                    dropdownContent,
-                    selected,
-                    onSelectionChange
-                )
-            }
-        }
-    }
+        },
+        popupContent = {
+            MyDropdownDropdown(
+                expanded = expanded,
+                filter = filter,
+                title = title,
+                filterText = filterText,
+                filteredItems = filteredItems,
+                dropdownContent = dropdownContent,
+                selected = selected,
+                onSelectionChange = onSelectionChange,
+                popupWidthConfig = popupWidthConfig,
+            )
+        },
+    )
 }
 
 @Composable
@@ -551,12 +571,14 @@ private fun <T> MyDropdownContent(
     }
 
     Row(
-        modifier = modifier.width(IntrinsicSize.Min).padding(contentPadding),
+        modifier = modifier
+            .width(IntrinsicSize.Max)
+            .padding(contentPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
         val item = items.find { it.index == selected }
         content(
-            Modifier.weight(1f, fill = true),
+            Modifier.weight(1f),
             item,
             title,
             labelColor,
@@ -573,7 +595,7 @@ private fun <T> MyDropdownContent(
 }
 
 @Composable
-private fun <T> MyDropdownDropdown(
+private fun <T> MyDropdownMenuContainerScope.MyDropdownDropdown(
     expanded: MutableState<Boolean>,
     filter: MyDropdown.DropdownFilter<T>?,
     title: String,
@@ -582,6 +604,7 @@ private fun <T> MyDropdownDropdown(
     dropdownContent: @Composable ((MyDropdown.Item<T>, Boolean) -> Unit),
     selected: Int,
     onSelectionChange: (MyDropdown.Item<T>) -> Unit,
+    popupWidthConfig: MyDropdownMenu.WidthConfig,
 ) {
     val scrollState = rememberScrollState()
     LaunchedEffect(expanded.value) {
@@ -589,15 +612,17 @@ private fun <T> MyDropdownDropdown(
             scrollState.scrollTo(0)
         }
     }
-    DropdownMenu(
+
+    showMyDropdownMenu(
         expanded = expanded.value,
         onDismissRequest = { expanded.value = false },
+        widthConfig = popupWidthConfig,
         scrollState = scrollState
     ) {
         if (filter != null) {
             Column(
                 modifier = Modifier
-                    .offset{
+                    .offset {
                         IntOffset(
                             x = 0,
                             y = scrollState.value
@@ -622,26 +647,6 @@ private fun <T> MyDropdownDropdown(
             }
 
         }
-        /*if (filteredItems.value.size > 50) {
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth().heightIn(max = 300.dp)
-            ) {
-                items(filteredItems.value) {
-                    DropdownMenuItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .zIndex(1f),
-                        text = {
-                            dropdownContent(it, it.index == selected)
-                        },
-                        onClick = {
-                            onSelectionChange(it)
-                            expanded.value = false
-                        }
-                    )
-                }
-            }
-        } else {*/
         filteredItems.value.forEach {
             DropdownMenuItem(
                 modifier = Modifier
@@ -656,6 +661,5 @@ private fun <T> MyDropdownDropdown(
                 }
             )
         }
-        //}
     }
 }

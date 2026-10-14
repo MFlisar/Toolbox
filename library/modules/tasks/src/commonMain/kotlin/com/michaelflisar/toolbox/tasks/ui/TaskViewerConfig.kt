@@ -77,29 +77,41 @@ object TaskViewerConfigDefaults {
 
 @Stable
 data class TaskViewerLayout(
-    val itemSpacing: Dp = 8.dp,
-    val horizontalPadding: Dp = 12.dp,
-    val verticalPadding: Dp = 8.dp,
-    val iconSpacing: Dp = 8.dp,
-    val expandIconSize: Dp = 18.dp,
-    val statusIconSize: Dp = 18.dp,
-    val indentPerLevel: Dp = expandIconSize + iconSpacing,
-    val messageBulletWidth: Dp = 12.dp,
-    val expandedContentSpacing: Dp = 8.dp,
-    val expandedContentVerticalPadding: Dp = 8.dp,
-    val minItemHeight: Dp = 48.dp,
-    val messageNumberSpacing: Dp = 4.dp
+    val itemSpacing: Dp,
+    val horizontalPadding: Dp,
+    val verticalPadding: Dp,
+    val iconSpacing: Dp,
+    val expandIconSize: Dp,
+    val statusIconSize: Dp,
+    val messageBulletWidth: Dp,
+    val expandedContentSpacing: Dp,
+    val expandedContentVerticalPadding: Dp,
+    val minItemHeight: Dp,
+    val messageNumberSpacing: Dp
 ) {
+    val indentPerLevel: Dp = expandIconSize + iconSpacing
+
     companion object {
-        val Default = TaskViewerLayout()
+        val Default = TaskViewerLayout(
+            itemSpacing = 8.dp,
+            horizontalPadding = 12.dp,
+            verticalPadding = 8.dp,
+            iconSpacing = 8.dp,
+            expandIconSize = 18.dp,
+            statusIconSize = 18.dp,
+            messageBulletWidth = 12.dp,
+            expandedContentSpacing = 8.dp,
+            expandedContentVerticalPadding = 8.dp,
+            minItemHeight = 48.dp,
+            messageNumberSpacing = 4.dp
+        )
         val Compact = TaskViewerLayout(
-            itemSpacing = 2.dp,
+            itemSpacing = 4.dp,
             horizontalPadding = 8.dp,
             verticalPadding = 2.dp,
             iconSpacing = 4.dp,
-            expandIconSize = 16.dp,
-            statusIconSize = 16.dp,
-            indentPerLevel = 20.dp,
+            expandIconSize = 18.dp,
+            statusIconSize = 18.dp,
             messageBulletWidth = 10.dp,
             expandedContentSpacing = 2.dp,
             expandedContentVerticalPadding = 4.dp,

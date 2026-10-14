@@ -87,6 +87,7 @@ class TaskViewState internal constructor(
                             when (state?.status) {
                                 TaskStatus.Running -> TaskPlanSummary(running = 1)
                                 is TaskStatus.Success -> TaskPlanSummary(success = 1)
+                                is TaskStatus.Info -> TaskPlanSummary(info = 1)
                                 is TaskStatus.Warning -> TaskPlanSummary(warnings = 1)
                                 is TaskStatus.Error -> TaskPlanSummary(errors = 1)
                                 TaskStatus.Cancelled -> TaskPlanSummary(skipped = 1)
@@ -100,6 +101,7 @@ class TaskViewState internal constructor(
                     acc.copy(
                         running = acc.running + current.running,
                         success = acc.success + current.success,
+                        info = acc.info + current.info,
                         warnings = acc.warnings + current.warnings,
                         errors = acc.errors + current.errors,
                         skipped = acc.skipped + current.skipped,
@@ -201,6 +203,7 @@ class TaskViewState internal constructor(
     ) {
         val status = when (result) {
             is TaskResult.Success<*> -> TaskStatus.Success
+            is TaskResult.Info<*> -> TaskStatus.Info(result.status)
             is TaskResult.Warning<*> -> TaskStatus.Warning(result.status)
             is TaskResult.Skipped<*> -> TaskStatus.Cancelled
             is TaskResult.Error -> TaskStatus.Error(result.exception)

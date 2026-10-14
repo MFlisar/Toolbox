@@ -28,8 +28,11 @@ import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.Cancel
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -480,6 +483,10 @@ private fun TaskItemContainer(
     }
 }
 
+/**
+ * icons die nicht gefärbt werden und neutral sind: outlined
+ * Rest: filled
+ */
 @Composable
 private fun StatusIcon(
     group: Boolean,
@@ -496,9 +503,9 @@ private fun StatusIcon(
         TaskStatus.Cancelled -> {
             Icon(
                 modifier = Modifier.size(size),
-                imageVector = Icons.Default.Cancel,
+                imageVector = Icons.Outlined.Cancel,
                 contentDescription = null,
-                tint = LocalContentColor.current.copy(alpha = .6f),
+                tint = LocalContentColor.current.copy(alpha = .8f),
             )
         }
 
@@ -508,6 +515,15 @@ private fun StatusIcon(
                 imageVector = Icons.Default.CheckCircle,
                 contentDescription = null,
                 tint = viewerConfig.taskMessageColors.colorSuccess(if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor)
+            )
+        }
+
+        is TaskStatus.Info -> {
+            Icon(
+                modifier = Modifier.size(size),
+                imageVector = Icons.Outlined.Info,
+                contentDescription = null,
+                tint = LocalContentColor.current.copy(alpha = .8f),
             )
         }
 

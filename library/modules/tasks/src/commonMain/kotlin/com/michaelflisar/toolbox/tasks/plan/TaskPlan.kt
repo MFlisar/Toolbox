@@ -59,6 +59,7 @@ data class TaskPlan(
 data class TaskPlanSummary(
     val running: Int = 0,
     val success: Int = 0,
+    val info: Int = 0,
     val warnings: Int = 0,
     val errors: Int = 0,
     val skipped: Int = 0,
@@ -73,6 +74,9 @@ data class TaskPlanSummary(
 
             warnings > 0 ->
                 TaskStatus.Warning("")
+
+            info > 0 ->
+                TaskStatus.Info(null)
 
             skipped > 0 ->
                 TaskStatus.Cancelled
@@ -233,10 +237,10 @@ class TaskPlanBuilder internal constructor() {
      * ```
      *
      * Output is local to one plan execution and shared across nested groups.
-     * Success, Warning and Skipped publish output; Error and cancellation do not.
+     * Success, Info, Warning and Skipped publish output; Error and cancellation do not.
      * Skipped does not trigger error behavior and is shown as skipped in the viewer.
      * requireData() fails the consumer on missing output; data returns null instead.
-     * Tasks returning Success, Warning or Skipped without output have result type Unit.
+     * Tasks returning Success, Info, Warning or Skipped without output have result type Unit.
      * Bei Fehlern behandeln StopGroup und StopRootGroup den Plan als Gruppe.
      */
     fun <T> task(
@@ -249,6 +253,7 @@ class TaskPlanBuilder internal constructor() {
             currentCoroutineContext().ensureActive()
             when (result) {
                 is TaskResult.Success -> storeResult(key, result.data)
+                is TaskResult.Info -> storeResult(key, result.data)
                 is TaskResult.Warning -> storeResult(key, result.data)
                 is TaskResult.Skipped -> storeResult(key, result.data)
                 is TaskResult.Error -> Unit

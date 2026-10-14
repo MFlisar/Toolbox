@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -34,9 +35,12 @@ import com.michaelflisar.toolbox.components.MyMultiDropdown
 import com.michaelflisar.toolbox.components.MyMultiDropdownIndex
 import com.michaelflisar.toolbox.components.MyPicker
 import com.michaelflisar.toolbox.components.MyText
+import com.michaelflisar.toolbox.components.MyTextWithHelp
+import com.michaelflisar.toolbox.components.MyTextWithHelpDefaults
 import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.extensions.Icon
 import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.components.MyDropdownMenu
 import com.michaelflisar.toolbox.padding
 import com.michaelflisar.toolbox.spacing
 
@@ -46,6 +50,7 @@ data class FormConfig(
     val spacing: Dp,
     val shape: Shape,
     val showSingleDropdownsAsText: Boolean,
+    val popupWidthConfig: MyDropdownMenu.WidthConfig
 )
 
 sealed class FormLabelStyle {
@@ -158,6 +163,8 @@ object FormDefaults {
             verticalPadding = verticalPadding
         )
     }
+
+    val popupWidthConfig = MyDropdownMenu.WidthConfig.MatchParent()
 }
 
 @Composable
@@ -167,6 +174,7 @@ fun rememberFormConfig(
     spacing: Dp = 8.dp,
     shape: Shape = MaterialTheme.shapes.small,
     showSingleDropdownsAsText: Boolean = false,
+    popupWidthConfig: MyDropdownMenu.WidthConfig = FormDefaults.popupWidthConfig
 ): FormConfig {
     return remember(
         labelStyle,
@@ -174,16 +182,28 @@ fun rememberFormConfig(
         spacing,
         shape,
         showSingleDropdownsAsText,
-        labelStyle
+        labelStyle,
+        popupWidthConfig
     ) {
         FormConfig(
             labelStyle = labelStyle,
             sectionStyle = sectionStyle,
             spacing = spacing,
             shape = shape,
-            showSingleDropdownsAsText = showSingleDropdownsAsText
+            showSingleDropdownsAsText = showSingleDropdownsAsText,
+            popupWidthConfig = popupWidthConfig
         )
     }
+}
+
+data class FormHelp(
+    val title: String?,
+    val text: AnnotatedString,
+) {
+    constructor(
+        title: String? = null,
+        text: String,
+    ) : this(title, AnnotatedString(text))
 }
 
 sealed interface IFormItem
@@ -199,6 +219,7 @@ sealed interface FormItem : IFormItem {
 
     val label: String
     val subLabel: String?
+    val help: FormHelp?
 
     val visible: Boolean
         get() = true
@@ -213,9 +234,11 @@ sealed interface FormItem : IFormItem {
         override val label: String,
         val value: String,
         override val subLabel: String? = null,
+        override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             Info(text = value)
@@ -227,10 +250,12 @@ sealed interface FormItem : IFormItem {
         val value: String,
         val icon: IconComposable,
         override val subLabel: String? = null,
+        override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
         val onClick: () -> Unit,
     ) : FormItem {
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             MyPicker(
@@ -248,9 +273,11 @@ sealed interface FormItem : IFormItem {
         val minLines: Int = 1,
         val maxLines: Int = 1,
         override val subLabel: String? = null,
+        override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             MyInput(
@@ -268,6 +295,7 @@ sealed interface FormItem : IFormItem {
         override val label: String,
         val checked: MutableState<Boolean>,
         override val subLabel: String? = null,
+        override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
@@ -288,9 +316,11 @@ sealed interface FormItem : IFormItem {
         val mapper: @Composable (T) -> String,
         val selected: MutableState<T>,
         override val subLabel: String? = null,
+        override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             if (config.showSingleDropdownsAsText && items.size == 1 && selected.value == items.first()) {
@@ -304,7 +334,8 @@ sealed interface FormItem : IFormItem {
                 selected = selected,
                 mapper = mapper,
                 enabled = enabled && parentIsEnabled,
-                shape = config.shape
+                shape = config.shape,
+                popupWidthConfig = config.popupWidthConfig
             )
         }
     }
@@ -314,9 +345,11 @@ sealed interface FormItem : IFormItem {
         val items: List<String>,
         val selectedIndex: MutableState<Int>,
         override val subLabel: String? = null,
+        override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             if (config.showSingleDropdownsAsText && items.size == 1 && selectedIndex.value == 0) {
@@ -329,7 +362,8 @@ sealed interface FormItem : IFormItem {
                 items = items,
                 selectedIndex = selectedIndex,
                 enabled = enabled && parentIsEnabled,
-                shape = config.shape
+                shape = config.shape,
+                popupWidthConfig = config.popupWidthConfig
             )
         }
     }
@@ -338,10 +372,13 @@ sealed interface FormItem : IFormItem {
         override val label: String,
         val items: List<String>,
         val selected: MutableState<List<String>>,
+        val sortSelectionByItems: Boolean = true,
         override val subLabel: String? = null,
+        override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             MyMultiDropdown(
@@ -351,7 +388,9 @@ sealed interface FormItem : IFormItem {
                 selected = selected,
                 mapper = { it },
                 enabled = enabled && parentIsEnabled,
-                shape = config.shape
+                shape = config.shape,
+                popupWidthConfig = config.popupWidthConfig,
+                sortSelectionByItems = sortSelectionByItems
             )
         }
     }
@@ -360,10 +399,13 @@ sealed interface FormItem : IFormItem {
         override val label: String,
         val items: List<String>,
         val selectedIndices: MutableState<List<Int>>,
+        val sortSelectionByItems: Boolean = true,
         override val subLabel: String? = null,
+        override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             MyMultiDropdownIndex(
@@ -373,7 +415,9 @@ sealed interface FormItem : IFormItem {
                 selectedIndices = selectedIndices,
                 mapper = { it },
                 enabled = enabled && parentIsEnabled,
-                shape = config.shape
+                shape = config.shape,
+                popupWidthConfig = config.popupWidthConfig,
+                sortSelectionByItems = sortSelectionByItems
             )
         }
     }
@@ -468,12 +512,29 @@ private fun FormItem(
                 modifier = modifierWidth,
                 verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
             ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = item.label,
-                    style = config.labelStyle.textStyle,
-                    color = config.labelStyle.textColor
-                )
+                val help = item.help
+                if (help != null) {
+                    MyTextWithHelp(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = item.label,
+                        help = help.text,
+                        helpTitle = help.title,
+                        style = config.labelStyle.textStyle,
+                        color = config.labelStyle.textColor,
+                        //iconVerticalAlignment = Alignment.Top,
+                        popupConfig = MyTextWithHelpDefaults.popupConfig(
+                            alignment = Alignment.TopCenter,
+                            yOffset = 12.dp
+                        )
+                    )
+                } else {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = item.label,
+                        style = config.labelStyle.textStyle,
+                        color = config.labelStyle.textColor
+                    )
+                }
                 item.subLabel?.let { subLabel ->
                     Text(
                         modifier = Modifier.fillMaxWidth(),

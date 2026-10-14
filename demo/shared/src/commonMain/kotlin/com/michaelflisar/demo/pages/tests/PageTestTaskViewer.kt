@@ -139,6 +139,10 @@ private fun createTestPlan(
             TaskResult.Skipped("Nothing to do")
         }
 
+        task("Task Info") {
+            TaskResult.Info("This is an info task")
+        }
+
         // Test 2: Gruppe mit erfolgreichen Sub Tasks
         group("Copying Files") {
             repeat(5) { index ->

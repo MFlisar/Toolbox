@@ -41,6 +41,7 @@ data class TaskConfig(
     @Stable
     data class FinishedTaskBehavior(
         val success: FinishedTaskDisplay = FinishedTaskDisplay.Closed,
+        val info: FinishedTaskDisplay = FinishedTaskDisplay.Closed,
         val warning: FinishedTaskDisplay = FinishedTaskDisplay.Closed,
         val error: FinishedTaskDisplay = FinishedTaskDisplay.Open,
         val cancelled: FinishedTaskDisplay = FinishedTaskDisplay.Closed,
@@ -48,12 +49,14 @@ data class TaskConfig(
         companion object {
             val CLOSE_ALL = FinishedTaskBehavior(
                 success = FinishedTaskDisplay.Closed,
+                info = FinishedTaskDisplay.Closed,
                 warning = FinishedTaskDisplay.Closed,
                 error = FinishedTaskDisplay.Closed,
                 cancelled = FinishedTaskDisplay.Closed,
             )
             val OPEN_ALL = FinishedTaskBehavior(
                 success = FinishedTaskDisplay.Open,
+                info = FinishedTaskDisplay.Open,
                 warning = FinishedTaskDisplay.Open,
                 error = FinishedTaskDisplay.Open,
                 cancelled = FinishedTaskDisplay.Open,
@@ -63,6 +66,7 @@ data class TaskConfig(
         fun get(status: TaskStatus.Finished): FinishedTaskDisplay {
             return when (status) {
                 is TaskStatus.Success -> success
+                is TaskStatus.Info -> info
                 is TaskStatus.Warning -> warning
                 is TaskStatus.Error -> error
                 TaskStatus.Cancelled -> cancelled
@@ -97,6 +101,7 @@ data class TaskConfig(
         val headerPendingLabel: (count: Int) -> String,
         val headerRunningLabel: (count: Int) -> String,
         val headerPassedLabel: (count: Int) -> String,
+        val headerInfoLabel: (count: Int) -> String,
         val headerWarningsLabel: (count: Int) -> String,
         val headerFailedLabel: (count: Int) -> String,
         val headerSkippedLabel: (count: Int) -> String,
@@ -161,6 +166,7 @@ data class TaskConfig(
  * @param headerPendingLabel Formatiert die Beschriftung ausstehender Tasks abhängig von ihrer Anzahl.
  * @param headerRunningLabel Formatiert die Beschriftung laufender Tasks abhängig von ihrer Anzahl.
  * @param headerPassedLabel Formatiert die Beschriftung erfolgreicher Tasks abhängig von ihrer Anzahl.
+ * @param headerInfoLabel Formatiert die Beschriftung informativer Tasks abhängig von ihrer Anzahl.
  * @param headerWarningsLabel Formatiert die Beschriftung der Warnungen abhängig von ihrer Anzahl.
  * @param headerFailedLabel Formatiert die Beschriftung fehlgeschlagener Tasks abhängig von ihrer Anzahl.
  * @param headerSkippedLabel Formatiert die Beschriftung übersprungener Tasks abhängig von ihrer Anzahl.
@@ -197,6 +203,7 @@ fun rememberTaskConfig(
     headerPendingLabel: (count: Int) -> String = { "ausstehend" },
     headerRunningLabel: (count: Int) -> String = { "laufend" },
     headerPassedLabel: (count: Int) -> String = { "erfolgreich" },
+    headerInfoLabel: (count: Int) -> String = { "Info" },
     headerWarningsLabel: (count: Int) -> String = { count -> if (count == 1) "Warnung" else "Warnungen" },
     headerFailedLabel: (count: Int) -> String = { "fehlgeschlagen" },
     headerSkippedLabel: (count: Int) -> String = { "übersprungen" },
@@ -228,6 +235,7 @@ fun rememberTaskConfig(
         headerPendingLabel,
         headerRunningLabel,
         headerPassedLabel,
+        headerInfoLabel,
         headerWarningsLabel,
         headerFailedLabel,
         headerSkippedLabel,
@@ -259,6 +267,7 @@ fun rememberTaskConfig(
                 headerPendingLabel = headerPendingLabel,
                 headerRunningLabel = headerRunningLabel,
                 headerPassedLabel = headerPassedLabel,
+                headerInfoLabel = headerInfoLabel,
                 headerWarningsLabel = headerWarningsLabel,
                 headerFailedLabel = headerFailedLabel,
                 headerSkippedLabel = headerSkippedLabel,

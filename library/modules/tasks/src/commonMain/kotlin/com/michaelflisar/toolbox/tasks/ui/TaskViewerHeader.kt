@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.HourglassEmpty
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -182,6 +183,14 @@ private fun HeaderMetrics(
                 color = config.taskMessageColors.colorSuccess(headerContainerColor),
             )
         }
+        if (summary.info > 0) {
+            HeaderMetric(
+                value = summary.info.toString(),
+                label = config.headerInfoLabel(summary.info),
+                icon = Icons.Default.Info,
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
         if (summary.warnings > 0) {
             HeaderMetric(
                 value = summary.warnings.toString(),
@@ -248,6 +257,7 @@ private data class TaskViewerHeaderSummary(
     val pending: Int,
     val running: Int,
     val success: Int,
+    val info: Int,
     val warnings: Int,
     val errors: Int,
     val skipped: Int,
@@ -255,7 +265,7 @@ private data class TaskViewerHeaderSummary(
     val isFinished: Boolean,
 ) {
     val executedTasks: Int
-        get() = success + warnings + errors
+        get() = success + info + warnings + errors
 }
 
 private fun calculateHeaderSummary(
@@ -266,6 +276,7 @@ private fun calculateHeaderSummary(
     var pending = 0
     var running = 0
     var success = 0
+    var info = 0
     var warnings = 0
     var errors = 0
     var skipped = 0
@@ -290,6 +301,7 @@ private fun calculateHeaderSummary(
                 when (state.getTaskState(node.id)?.status) {
                     TaskStatus.Running -> running++
                     is TaskStatus.Success -> success++
+                    is TaskStatus.Info -> info++
                     is TaskStatus.Warning -> warnings++
                     is TaskStatus.Error -> errors++
                     TaskStatus.Cancelled -> skipped++
@@ -303,7 +315,7 @@ private fun calculateHeaderSummary(
 
     plan.children.forEach(::visit)
 
-    val isFinished = hasStarted && running == 0 && success + warnings + errors + skipped == total
+    val isFinished = hasStarted && running == 0 && success + info + warnings + errors + skipped == total
     val endTime = if (isFinished) lastFinish else state.nowMs.takeIf { hasStarted }
     val duration = firstStart?.let { start ->
         endTime?.let { end -> (end - start).coerceAtLeast(0L) }
@@ -315,6 +327,7 @@ private fun calculateHeaderSummary(
         pending = pending,
         running = running,
         success = success,
+        info = info,
         warnings = warnings,
         errors = errors,
         skipped = skipped,

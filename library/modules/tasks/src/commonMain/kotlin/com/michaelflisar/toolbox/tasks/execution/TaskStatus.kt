@@ -12,6 +12,10 @@ sealed interface TaskStatus {
         override val message: String? = null
     }
 
+    data class Info(
+        override val message: String?,
+    ) : Finished
+
     data object Cancelled : Finished {
         override val message: String? = null
     }

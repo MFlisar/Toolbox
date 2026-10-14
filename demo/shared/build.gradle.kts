@@ -141,7 +141,7 @@ kotlin {
             api(project(":toolbox:app:shared"))
             api(project(":toolbox:modules:table"))
             api(project(":toolbox:modules:form"))
-            api(project(":toolbox:modules:task-viewer"))
+            api(project(":toolbox:modules:tasks"))
 
             // ------------------------
             // tests

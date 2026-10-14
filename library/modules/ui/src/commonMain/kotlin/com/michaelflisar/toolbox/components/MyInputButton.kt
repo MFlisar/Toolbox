@@ -1,6 +1,9 @@
 package com.michaelflisar.toolbox.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -9,15 +12,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyInputButton(
-    modifier: Modifier = Modifier.Companion,
+    modifier: Modifier = Modifier,
     title: String = "",
     value: String,
     minLines: Int = 1,
     maxLines: Int = 1,
+    minWidth: Dp = ButtonDefaults.MinWidth,
     enabled: Boolean = true,
     placeholder: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
@@ -26,15 +32,17 @@ fun MyInputButton(
 ) {
     MyOutlinedDecoratedContainer(
         title = title,
-        modifier = modifier,
+        modifier = modifier.width(IntrinsicSize.Min),
         enabled = enabled,
         placeholder = placeholder,
         leadingIcon = leadingIcon,
         colors = colors,
+        minWidth = minWidth,
         onClick = onClick
     ) {
         Text(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .then(MyOutlinedDecoratedContainer.MODIFIER_CORRECTION),
             text = value,
             style = LocalTextStyle.current,

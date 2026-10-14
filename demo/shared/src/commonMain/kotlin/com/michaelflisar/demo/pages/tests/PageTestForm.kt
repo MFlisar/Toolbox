@@ -17,6 +17,7 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.form3.FormDefaults
+import com.michaelflisar.toolbox.form3.FormHelp
 import com.michaelflisar.toolbox.form3.FormItem
 import com.michaelflisar.toolbox.form3.FormLabelStyle
 import com.michaelflisar.toolbox.form3.FormSection
@@ -99,7 +100,19 @@ private fun Page() {
                 ),
                 FormItem.Info(
                     label = "Aktuelle Junction",
-                    value = currentJunction.value ?: "--"
+                    value = currentJunction.value ?: "--",
+                    help = FormHelp(
+                        title = "Junction",
+                        text = "Die Junction ist ein Verweis auf den Ordner, der aktuell von VW verwendet wird. Wenn du die Junction anpasst, dann wird VW den neuen Ordner verwenden."
+                    )
+                ),
+                FormItem.Info(
+                    label = "Aktuelle Junction - mit langem Titel und Hilfe... und noch mehr Text, damit man sieht, wie das aussieht",
+                    value = currentJunction.value ?: "--",
+                    help = FormHelp(
+                        title = "Junction",
+                        text = "Die Junction ist ein Verweis auf den Ordner, der aktuell von VW verwendet wird. Wenn du die Junction anpasst, dann wird VW den neuen Ordner verwenden."
+                    )
                 )
             )
         ),

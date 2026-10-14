@@ -13,6 +13,15 @@ sealed interface TaskResult<out T> {
         }
     }
 
+    data class Info<out T>(
+        override val status: String,
+        val data: T,
+    ) : TaskResult<T> {
+        companion object {
+            operator fun invoke(status: String): Info<Unit> = Info(status, Unit)
+        }
+    }
+
     data class Warning<out T>(
         override val status: String,
         val data: T,

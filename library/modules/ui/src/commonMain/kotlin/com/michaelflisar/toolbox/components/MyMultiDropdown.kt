@@ -1,17 +1,8 @@
 package com.michaelflisar.toolbox.components
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -19,7 +10,6 @@ import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.SelectAll
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -34,13 +24,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-
 
 import com.michaelflisar.toolbox.extensions.disabled
 import com.michaelflisar.toolbox.extensions.toIconComposable
@@ -61,6 +48,10 @@ object MyMultiDropdown {
     }
 }
 
+object MyMultiDropdownDefaults {
+    const val sortSelectionByItems = true
+}
+
 @Composable
 fun <T> MyMultiDropdown(
     items: List<T>,
@@ -72,21 +63,27 @@ fun <T> MyMultiDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     shape: Shape = MyMultiDropdown.shape(),
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
+    maxLines: Int= 1,
     onSelectionChange: ((List<T>) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndices = selected.value.map { items.indexOf(it) }
     MyMultiDropdownImpl(
-        modifier,
-        title,
-        texts,
-        selectedIndices,
-        enabled,
-        color,
-        backgroundColor,
-        shape,
-        formatter
+        modifier = modifier,
+        title = title,
+        items = texts,
+        selected = selectedIndices,
+        enabled = enabled,
+        maxLines = maxLines,
+        color = color,
+        backgroundColor = backgroundColor,
+        shape = shape,
+        popupWidthConfig = popupWidthConfig,
+        formatter = formatter,
+        sortSelectionByItems = sortSelectionByItems,
     ) { selectedIndices, selectedItems ->
         selected.value = selectedIndices.map { items[it] }
         onSelectionChange?.invoke(selected.value)
@@ -104,21 +101,27 @@ fun <T> MyMultiDropdown(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     shape: Shape = MyMultiDropdown.shape(),
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
+    maxLines: Int= 1,
     onSelectionChange: (List<T>) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndices = selected.map { items.indexOf(it) }
     MyMultiDropdownImpl(
-        modifier,
-        title,
-        texts,
-        selectedIndices,
-        enabled,
-        color,
-        backgroundColor,
-        shape,
-        formatter
+        modifier = modifier,
+        title = title,
+        items = texts,
+        selected = selectedIndices,
+        enabled = enabled,
+        color = color,
+        backgroundColor = backgroundColor,
+        shape = shape,
+        popupWidthConfig = popupWidthConfig,
+        formatter = formatter,
+        sortSelectionByItems = sortSelectionByItems,
+        maxLines = maxLines
     ) { selectedIndices, selectedItems ->
         onSelectionChange(selectedIndices.map { items[it] })
     }
@@ -135,20 +138,26 @@ fun <T> MyMultiDropdownIndex(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     shape: Shape = MyMultiDropdown.shape(),
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
+    maxLines: Int= 1,
     onSelectionChange: ((List<Int>) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     MyMultiDropdownImpl(
-        modifier,
-        title,
-        texts,
-        selectedIndices.value,
-        enabled,
-        color,
-        backgroundColor,
-        shape,
-        formatter
+        modifier = modifier,
+        title = title,
+        items = texts,
+        selected = selectedIndices.value,
+        enabled = enabled,
+        color = color,
+        backgroundColor = backgroundColor,
+        shape = shape,
+        popupWidthConfig = popupWidthConfig,
+        formatter = formatter,
+        sortSelectionByItems = sortSelectionByItems,
+        maxLines = maxLines
     ) { selectedIndices2, selectedItems ->
         selectedIndices.value = selectedIndices2
         onSelectionChange?.invoke(selectedIndices2)
@@ -166,20 +175,26 @@ fun <T> MyMultiDropdownIndex(
     color: Color = Color.Unspecified,
     backgroundColor: Color = Color.Unspecified,
     shape: Shape = MyMultiDropdown.shape(),
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
+    maxLines: Int= 1,
     onSelectionChange: (List<Int>) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     MyMultiDropdownImpl(
-        modifier,
-        title,
-        texts,
-        selectedIndices,
-        enabled,
-        color,
-        backgroundColor,
-        shape,
-        formatter
+        modifier = modifier,
+        title = title,
+        items = texts,
+        selected = selectedIndices,
+        enabled = enabled,
+        color = color,
+        backgroundColor = backgroundColor,
+        shape = shape,
+        popupWidthConfig = popupWidthConfig,
+        formatter = formatter,
+        sortSelectionByItems = sortSelectionByItems,
+        maxLines = maxLines
     ) { selectedIndices, selectedItems ->
         onSelectionChange(selectedIndices)
     }
@@ -199,57 +214,51 @@ private fun MyMultiDropdownImpl(
     color: Color,
     backgroundColor: Color,
     shape: Shape = MyMultiDropdown.shape(),
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MyDropdownDefaults.popupWidthConfig,
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
+    sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
+    maxLines: Int= 1,
     onSelectionChange: (indices: List<Int>, items: List<String>) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (expanded) -180f else 0f)
-    val selectedItems = selected.map { items[it] }
+    val selectedIndices = if (sortSelectionByItems) selected.sorted() else selected
+    val selectedItems = selectedIndices.map { items[it] }
+    val notifySelectionChange: (List<Int>) -> Unit = { indices ->
+        val effectiveIndices = if (sortSelectionByItems) indices.sorted() else indices
+        onSelectionChange(effectiveIndices, effectiveIndices.map { items[it] })
+    }
     //val empty = remember(selectedItems) { derivedStateOf { selectedItems.isEmpty() } }
-    Box(
-        modifier = modifier//.padding(horizontal = 16.dp)
-    ) {
-        val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()
-            ?: MaterialTheme.colorScheme.onSurface.disabled()
-        val labelColor =
-            color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.onSurfaceVariant
-        Column(
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = OutlinedTextFieldDefaults.MinHeight)
-                    .clip(shape)
-                    .border(1.dp, borderColor, shape)
-                    .background(backgroundColor)
-                    .then(
-                        if (enabled) {
-                            Modifier.clickable {
-                                expanded = !expanded
-                            }
-                        } else Modifier
-                    )
-                    .padding(MaterialTheme.padding.default)
-                //.padding(horizontal = 16.dp, vertical = 8.dp)
-                ,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val styleTitle = MyDropdownDefaults.styleTitle
-                val styleText = MyDropdownDefaults.styleText
-                Column(modifier = Modifier.weight(1f)) {
-                    if (title.isNotEmpty()) {
-                        Text(
-                            text = title,
-                            style = styleTitle,
-                            fontWeight = FontWeight.Bold,
-                            color = labelColor
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                    }
-                    Text(text = formatter(selectedItems), style = styleText, color = color)
-                }
+    val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()
+        ?: MaterialTheme.colorScheme.onSurface.disabled()
+    val labelColor =
+        color.takeIf { it != Color.Unspecified }
+            ?: MaterialTheme.colorScheme.onSurfaceVariant
 
+    MyDropdown.DropdownContainer(
+        modifier = modifier,
+        title = "",
+        enabled = enabled,
+        borderColor = borderColor,
+        backgroundColor = backgroundColor,
+        shape = shape,
+        style = MyDropdown.Style.Button(),
+        onToggle = { expanded = !expanded },
+        content = { contentModifier ->
+            Row(
+                modifier = contentModifier
+                    .fillMaxWidth()
+                    .padding(MyDropdown.Style.Button().padding),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                MyDropdownDefaults.Content(
+                    modifier = Modifier.weight(1f),
+                    title = title,
+                    text = formatter(selectedItems),
+                    labelColor = labelColor,
+                    color = color,
+                    maxLines = maxLines,
+                )
                 Icon(
                     modifier = Modifier.rotate(rotation),
                     imageVector = Icons.Default.ArrowDropDown,
@@ -257,77 +266,78 @@ private fun MyMultiDropdownImpl(
                     tint = labelColor
                 )
             }
-        }
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-            }
-        ) {
-            MyRow(
-                modifier = Modifier.align(Alignment.End)
+        },
+        popupContent = {
+            MyDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = {
+                    expanded = false
+                },
+                widthConfig = popupWidthConfig,
             ) {
-                MyTooltipBox(
-                    tooltip = "Select All",
-                    enabled = selectedItems.size != items.size
+                MyRow(
+                    modifier = Modifier.align(Alignment.End)
                 ) {
-                    MyIconButton(
-                        icon = Icons.Default.SelectAll.toIconComposable(),
+                    MyTooltipBox(
+                        tooltip = "Select All",
                         enabled = selectedItems.size != items.size
                     ) {
-                        onSelectionChange(List(items.size) { index -> index }, items)
+                        MyIconButton(
+                            icon = Icons.Default.SelectAll.toIconComposable(),
+                            enabled = selectedItems.size != items.size
+                        ) {
+                            notifySelectionChange(List(items.size) { index -> index })
+                        }
                     }
-                }
-                MyTooltipBox(
-                    tooltip = "Clear Selection",
-                    enabled = selectedItems.isNotEmpty()
-                ) {
-                    MyIconButton(
-                        icon = Icons.Default.Clear.toIconComposable(),
+                    MyTooltipBox(
+                        tooltip = "Clear Selection",
                         enabled = selectedItems.isNotEmpty()
                     ) {
-                        onSelectionChange(emptyList(), emptyList())
+                        MyIconButton(
+                            icon = Icons.Default.Clear.toIconComposable(),
+                            enabled = selectedItems.isNotEmpty()
+                        ) {
+                            notifySelectionChange(emptyList())
+                        }
                     }
                 }
-            }
-            items.forEachIndexed { index, item ->
-                DropdownMenuItem(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    text = {
-                        Row {
-                            val selected = selectedItems.contains(item)
-                            val color =
-                                if (selected) MaterialTheme.colorScheme.primary else LocalContentColor.current
-                            Icon(
-                                modifier = Modifier.align(Alignment.CenterVertically)
-                                    .padding(end = MaterialTheme.spacing.default),
-                                imageVector = if (selected) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
-                                contentDescription = null,
-                                tint = color
-                            )
-                            Text(
-                                text = item,
-                                color = color,
-                                modifier = Modifier.align(Alignment.CenterVertically).fillMaxWidth()
-                            )
+                items.forEachIndexed { index, item ->
+                    DropdownMenuItem(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        text = {
+                            Row {
+                                val selected = selectedIndices.contains(index)
+                                val color =
+                                    if (selected) MaterialTheme.colorScheme.primary else LocalContentColor.current
+                                Icon(
+                                    modifier = Modifier.align(Alignment.CenterVertically)
+                                        .padding(end = MaterialTheme.spacing.default),
+                                    imageVector = if (selected) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
+                                    contentDescription = null,
+                                    tint = color
+                                )
+                                Text(
+                                    text = item,
+                                    color = color,
+                                    modifier = Modifier.align(Alignment.CenterVertically)
+                                        .fillMaxWidth()
+                                )
+                            }
+                        },
+                        onClick = {
+                            val selectedNew = selected.toMutableList()
+                            if (selected.contains(index)) {
+                                selectedNew.remove(index)
+                            } else {
+                                selectedNew.add(index)
+                            }
+                            notifySelectionChange(selectedNew)
+                            //expanded = false
                         }
-                    },
-                    onClick = {
-                        val selectedNew = selected.toMutableList()
-                        val selectedItemsNew = selectedItems.toMutableList()
-                        if (selected.contains(index)) {
-                            selectedNew.remove(index)
-                            selectedItemsNew.remove(item)
-                        } else {
-                            selectedNew.add(index)
-                            selectedItemsNew.add(item)
-                        }
-                        onSelectionChange(selectedNew, selectedItemsNew)
-                        //expanded = false
-                    }
-                )
+                    )
+                }
             }
-        }
-    }
+        },
+    )
 }

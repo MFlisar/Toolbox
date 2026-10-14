@@ -33,7 +33,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
-import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
 import com.michaelflisar.toolbox.components.MyButton
@@ -43,11 +42,11 @@ import com.michaelflisar.toolbox.components.MyDropdownButton
 import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyInputButton
+import com.michaelflisar.toolbox.components.MyMultiDropdown
 import com.michaelflisar.toolbox.components.MyNumberPicker
 import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.components.MyText
-import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.extensions.toIconComposable
+import com.michaelflisar.toolbox.components.MyDropdownMenu
 import com.michaelflisar.toolbox.feature.translatablecontent.TranslatableContent
 import com.michaelflisar.toolbox.numbers.rememberMyNumberParser
 import com.michaelflisar.toolbox.numbers.rememberMyNumberValidator
@@ -89,47 +88,105 @@ private fun Page(
         MyRow(
             verticalAlignment = Alignment.Bottom
         ) {
+            val modifier = Modifier//.width(200.dp)
+            MyInput(
+                modifier = Modifier.width(100.dp),
+                title = "Input",
+                value = remember { mutableStateOf("") },
+            )
             MyDropdownIndex(
-                modifier = Modifier.width(200.dp),
+                modifier = modifier,
                 title = "Dropdown (Button)",
                 items = listOf("One", "Two", "Three"),
                 selectedIndex = remember { mutableStateOf(0) },
-                style = MyDropdown.Style.Button()
+                style = MyDropdown.Style.Button(),
+                popupWidthConfig = MyDropdownMenu.WidthConfig.Auto()
             )
             MyDropdownIndex(
-                modifier = Modifier.width(200.dp),
+                modifier = modifier,
+                title = "Dropdown (Button + MatchParent Dropdown Width Mode)",
+                items = listOf("One", "Two", "Three"),
+                selectedIndex = remember { mutableStateOf(0) },
+                style = MyDropdown.Style.Button(),
+                popupWidthConfig = MyDropdownMenu.WidthConfig.MatchParent()
+            )
+            MyDropdownIndex(
+                modifier = modifier,
                 title = "Dropdown (OutlinedButton)",
                 items = listOf("One", "Two", "Three"),
                 selectedIndex = remember { mutableStateOf(0) },
                 style = MyDropdown.Style.OutlinedButton()
             )
+        }
+        MyRow {
             MyInput(
-                modifier = Modifier.width(128.dp),
+                modifier = Modifier.width(200.dp),
                 title = "Input",
                 value = remember { mutableStateOf("") },
             )
+            val modifier = Modifier//.width(200.dp)
             MyInputButton(
+                modifier = modifier,
                 title = "Button",
-                modifier = Modifier.width(128.dp),
                 value = "Text...",
                 onClick = {
                     appState.showToast("InputButton clicked")
                 }
             )
+            MyDropdownButton(
+                modifier = modifier,
+                onClick = {
+                    appState.showToast("DropdownButton clicked")
+                }
+            ) {
+                Text("DropdownButton")
+            }
         }
-        MyRow {
+        MyRow(
+            verticalAlignment = Alignment.Bottom
+        ) {
+            val modifier = Modifier//.width(400.dp)
+            MyInput(
+                modifier = Modifier.width(100.dp),
+                title = "Input",
+                value = remember { mutableStateOf("") },
+            )
             MyDropdownIndex(
-                modifier = Modifier.width(128.dp),
-                title = "Button Style",
+                modifier = modifier,
+                title = "Button Style - Index basierend",
                 items = listOf("One", "Two", "Three"),
                 selectedIndex = remember { mutableStateOf(0) }
             )
 
             MyDropdown(
-                modifier = Modifier.width(128.dp),
-                title = "Button Style",
+                modifier = modifier,
+                title = "Button Style - Value basierend",
                 items = listOf("One", "Two", "Three"),
                 selected = remember { mutableStateOf("One") }
+            )
+        }
+        MyRow(
+            verticalAlignment = Alignment.Bottom
+        ) {
+            val modifier = Modifier//.width(400.dp)
+            MyInput(
+                modifier = Modifier.width(100.dp),
+                title = "Input",
+                value = remember { mutableStateOf("") },
+            )
+            MyMultiDropdown(
+                modifier = modifier,
+                title = "Dropdown (Button)",
+                items = listOf("One", "Two", "Three"),
+                selected = remember { mutableStateOf(emptyList<String>()) },
+                popupWidthConfig = MyDropdownMenu.WidthConfig.Auto()
+            )
+            MyMultiDropdown(
+                modifier = modifier,
+                title = "Dropdown (Button + MatchParent Dropdown Width Mode)",
+                items = listOf("One", "Two", "Three"),
+                selected = remember { mutableStateOf(emptyList<String>()) },
+                popupWidthConfig = MyDropdownMenu.WidthConfig.MatchParent()
             )
         }
         MyRow {
