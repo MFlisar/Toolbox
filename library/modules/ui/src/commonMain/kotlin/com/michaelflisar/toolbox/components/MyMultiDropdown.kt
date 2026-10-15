@@ -67,7 +67,7 @@ fun <T> MyMultiDropdown(
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
     sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
     maxLines: Int= 1,
-    onSelectionChange: ((List<T>) -> Unit)? = null,
+    onSelectionChanged: ((List<T>) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndices = selected.value.map { items.indexOf(it) }
@@ -86,7 +86,7 @@ fun <T> MyMultiDropdown(
         sortSelectionByItems = sortSelectionByItems,
     ) { selectedIndices, selectedItems ->
         selected.value = selectedIndices.map { items[it] }
-        onSelectionChange?.invoke(selected.value)
+        onSelectionChanged?.invoke(selected.value)
     }
 }
 
@@ -105,7 +105,7 @@ fun <T> MyMultiDropdown(
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
     sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
     maxLines: Int= 1,
-    onSelectionChange: (List<T>) -> Unit,
+    onSelectionChanged: (List<T>) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndices = selected.map { items.indexOf(it) }
@@ -123,7 +123,7 @@ fun <T> MyMultiDropdown(
         sortSelectionByItems = sortSelectionByItems,
         maxLines = maxLines
     ) { selectedIndices, selectedItems ->
-        onSelectionChange(selectedIndices.map { items[it] })
+        onSelectionChanged(selectedIndices.map { items[it] })
     }
 }
 
@@ -142,7 +142,7 @@ fun <T> MyMultiDropdownIndex(
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
     sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
     maxLines: Int= 1,
-    onSelectionChange: ((List<Int>) -> Unit)? = null,
+    onSelectionChanged: ((List<Int>) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     MyMultiDropdownImpl(
@@ -160,7 +160,7 @@ fun <T> MyMultiDropdownIndex(
         maxLines = maxLines
     ) { selectedIndices2, selectedItems ->
         selectedIndices.value = selectedIndices2
-        onSelectionChange?.invoke(selectedIndices2)
+        onSelectionChanged?.invoke(selectedIndices2)
     }
 }
 
@@ -179,7 +179,7 @@ fun <T> MyMultiDropdownIndex(
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
     sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
     maxLines: Int= 1,
-    onSelectionChange: (List<Int>) -> Unit,
+    onSelectionChanged: (List<Int>) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     MyMultiDropdownImpl(
@@ -196,7 +196,7 @@ fun <T> MyMultiDropdownIndex(
         sortSelectionByItems = sortSelectionByItems,
         maxLines = maxLines
     ) { selectedIndices, selectedItems ->
-        onSelectionChange(selectedIndices)
+        onSelectionChanged(selectedIndices)
     }
 }
 
@@ -218,7 +218,7 @@ private fun MyMultiDropdownImpl(
     formatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter,
     sortSelectionByItems: Boolean = MyMultiDropdownDefaults.sortSelectionByItems,
     maxLines: Int= 1,
-    onSelectionChange: (indices: List<Int>, items: List<String>) -> Unit,
+    onSelectionChanged: (indices: List<Int>, items: List<String>) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (expanded) -180f else 0f)
@@ -226,7 +226,7 @@ private fun MyMultiDropdownImpl(
     val selectedItems = selectedIndices.map { items[it] }
     val notifySelectionChange: (List<Int>) -> Unit = { indices ->
         val effectiveIndices = if (sortSelectionByItems) indices.sorted() else indices
-        onSelectionChange(effectiveIndices, effectiveIndices.map { items[it] })
+        onSelectionChanged(effectiveIndices, effectiveIndices.map { items[it] })
     }
     //val empty = remember(selectedItems) { derivedStateOf { selectedItems.isEmpty() } }
     val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()

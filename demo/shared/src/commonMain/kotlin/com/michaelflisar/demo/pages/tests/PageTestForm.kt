@@ -98,11 +98,11 @@ private fun Page() {
             items = listOf(
                 FormItem.Info(
                     label = "Neuester Release Ordner",
-                    value = existingFolders.value.lastOrNull() ?: "--",
+                    info = existingFolders.value.lastOrNull() ?: "--",
                 ),
                 FormItem.Info(
                     label = "Aktuelle Junction",
-                    value = currentJunction.value ?: "--",
+                    info = currentJunction.value ?: "--",
                     help = FormHelp(
                         title = "Junction",
                         text = "Die Junction ist ein Verweis auf den Ordner, der aktuell von VW verwendet wird. Wenn du die Junction anpasst, dann wird VW den neuen Ordner verwenden."
@@ -110,7 +110,7 @@ private fun Page() {
                 ),
                 FormItem.Info(
                     label = "Aktuelle Junction - mit langem Titel und Hilfe... und noch mehr Text, damit man sieht, wie das aussieht",
-                    value = currentJunction.value ?: "--",
+                    info = currentJunction.value ?: "--",
                     help = FormHelp(
                         title = "Junction",
                         text = "Die Junction ist ein Verweis auf den Ordner, der aktuell von VW verwendet wird. Wenn du die Junction anpasst, dann wird VW den neuen Ordner verwenden."
@@ -217,7 +217,14 @@ private fun Page() {
             FormItem.MultiDropdown(
                 label = "Multi Dropdown",
                 items = TransferMode.entries.map { it.name },
-                selected = remember { mutableStateOf(listOf<String>()) }
+                selected = remember { mutableStateOf(listOf<String>()) },
+                formatter = {
+                    if (it.isEmpty()) {
+                        "Nichts ausgewählt"
+                    } else {
+                        "${it.size} ausgewählt (" + it.joinToString(", ") + ")"
+                    }
+                }
             )
         ),
         visible = selectedMode.value == Mode.Copy

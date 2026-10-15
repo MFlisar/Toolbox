@@ -166,6 +166,8 @@ object FormDefaults {
     }
 
     val popupWidthConfig = MyDropdownMenu.WidthConfig.MatchParent()
+
+    val multiDropdownFormatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter
 }
 
 @Composable
@@ -233,7 +235,7 @@ sealed interface FormItem : IFormItem {
 
     data class Info(
         override val label: String,
-        val value: String,
+        val info: String,
         override val subLabel: String? = null,
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
@@ -242,7 +244,7 @@ sealed interface FormItem : IFormItem {
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
-            Info(text = value)
+            Info(text = info)
         }
     }
 
@@ -270,7 +272,8 @@ sealed interface FormItem : IFormItem {
 
     data class Input(
         override val label: String,
-        val value: MutableState<String>,
+        val value: String,
+        val onValueChanged: (value: String) -> Unit,
         val minLines: Int = 1,
         val maxLines: Int = 1,
         override val subLabel: String? = null,
@@ -279,11 +282,33 @@ sealed interface FormItem : IFormItem {
         override val enabled: Boolean = true,
     ) : FormItem {
 
+        constructor(
+            label: String,
+            value: MutableState<String>,
+            minLines: Int = 1,
+            maxLines: Int = 1,
+            subLabel: String? = null,
+            help: FormHelp? = null,
+            visible: Boolean = true,
+            enabled: Boolean = true,
+        ) : this(
+            label = label,
+            value = value.value,
+            onValueChanged = { value.value = it },
+            minLines = minLines,
+            maxLines = maxLines,
+            subLabel = subLabel,
+            help = help,
+            visible = visible,
+            enabled = enabled
+        )
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             MyInput(
                 modifier = Modifier.fillMaxWidth(),
                 value = value,
+                onValueChanged = onValueChanged,
                 enabled = enabled && parentIsEnabled,
                 minLines = minLines,
                 maxLines = maxLines,
@@ -294,18 +319,36 @@ sealed interface FormItem : IFormItem {
 
     data class Checkbox(
         override val label: String,
-        val checked: MutableState<Boolean>,
+        val checked: Boolean,
+        val onCheckedChange: (Boolean) -> Unit,
         override val subLabel: String? = null,
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
 
+        constructor(
+            label: String,
+            checked: MutableState<Boolean>,
+            subLabel: String? = null,
+            help: FormHelp? = null,
+            visible: Boolean = true,
+            enabled: Boolean = true,
+        ) : this(
+            label = label,
+            checked = checked.value,
+            onCheckedChange = { checked.value = it },
+            subLabel = subLabel,
+            help = help,
+            visible = visible,
+            enabled = enabled
+        )
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             androidx.compose.material3.Checkbox(
-                checked = checked.value,
-                onCheckedChange = { checked.value = it },
+                checked = checked,
+                onCheckedChange = onCheckedChange,
                 enabled = enabled && parentIsEnabled
             )
         }
@@ -315,16 +358,38 @@ sealed interface FormItem : IFormItem {
         override val label: String,
         val items: List<T>,
         val mapper: @Composable (T) -> String,
-        val selected: MutableState<T>,
+        val selected: T,
+        val onSelectionChanged: (T) -> Unit,
         override val subLabel: String? = null,
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
 
+        constructor(
+            label: String,
+            items: List<T>,
+            mapper: @Composable (T) -> String,
+            selected: MutableState<T>,
+            subLabel: String? = null,
+            help: FormHelp? = null,
+            visible: Boolean = true,
+            enabled: Boolean = true,
+        ) : this(
+            label = label,
+            items = items,
+            mapper = mapper,
+            selected = selected.value,
+            onSelectionChanged = { selected.value = it },
+            subLabel = subLabel,
+            help = help,
+            visible = visible,
+            enabled = enabled
+        )
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
-            if (config.showSingleDropdownsAsText && items.size == 1 && selected.value == items.first()) {
+            if (config.showSingleDropdownsAsText && items.size == 1 && selected == items.first()) {
                 Info(text = mapper(items.first()))
                 return
             }
@@ -333,6 +398,7 @@ sealed interface FormItem : IFormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selected = selected,
+                onSelectionChanged = onSelectionChanged,
                 mapper = mapper,
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
@@ -344,16 +410,36 @@ sealed interface FormItem : IFormItem {
     data class DropdownIndex(
         override val label: String,
         val items: List<String>,
-        val selectedIndex: MutableState<Int>,
+        val selectedIndex: Int,
+        val onSelectionChanged: (Int) -> Unit,
         override val subLabel: String? = null,
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
 
+        constructor(
+            label: String,
+            items: List<String>,
+            selectedIndex: MutableState<Int>,
+            subLabel: String? = null,
+            help: FormHelp? = null,
+            visible: Boolean = true,
+            enabled: Boolean = true,
+        ) : this(
+            label = label,
+            items = items,
+            selectedIndex = selectedIndex.value,
+            onSelectionChanged = { selectedIndex.value = it },
+            subLabel = subLabel,
+            help = help,
+            visible = visible,
+            enabled = enabled
+        )
+
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
-            if (config.showSingleDropdownsAsText && items.size == 1 && selectedIndex.value == 0) {
+            if (config.showSingleDropdownsAsText && items.size == 1 && selectedIndex == 0) {
                 Info(text = items.first())
                 return
             }
@@ -362,6 +448,7 @@ sealed interface FormItem : IFormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selectedIndex = selectedIndex,
+                onSelectionChanged = onSelectionChanged,
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
                 popupWidthConfig = config.popupWidthConfig
@@ -372,13 +459,38 @@ sealed interface FormItem : IFormItem {
     data class MultiDropdown(
         override val label: String,
         val items: List<String>,
-        val selected: MutableState<List<String>>,
+        val selected: List<String>,
+        val onSelectionChanged: (List<String>) -> Unit,
         val sortSelectionByItems: Boolean = true,
+        val formatter: @Composable (selected: List<String>) -> String = FormDefaults.multiDropdownFormatter,
         override val subLabel: String? = null,
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
+
+        constructor(
+            label: String,
+            items: List<String>,
+            selected: MutableState<List<String>>,
+            sortSelectionByItems: Boolean = true,
+            formatter: @Composable (selected: List<String>) -> String = FormDefaults.multiDropdownFormatter,
+            subLabel: String? = null,
+            help: FormHelp? = null,
+            visible: Boolean = true,
+            enabled: Boolean = true,
+        ) : this(
+            label = label,
+            items = items,
+            selected = selected.value,
+            onSelectionChanged = { selected.value = it },
+            formatter = formatter,
+            sortSelectionByItems = sortSelectionByItems,
+            subLabel = subLabel,
+            help = help,
+            visible = visible,
+            enabled = enabled
+        )
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
@@ -387,6 +499,8 @@ sealed interface FormItem : IFormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selected = selected,
+                onSelectionChanged = onSelectionChanged,
+                formatter = formatter,
                 mapper = { it },
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
@@ -399,13 +513,39 @@ sealed interface FormItem : IFormItem {
     data class MultiDropdownIndex(
         override val label: String,
         val items: List<String>,
-        val selectedIndices: MutableState<List<Int>>,
+        val selectedIndices: List<Int>,
+        val onSelectionChanged: (List<Int>) -> Unit,
         val sortSelectionByItems: Boolean = true,
+        val formatter: @Composable (selected: List<String>) -> String = FormDefaults.multiDropdownFormatter,
         override val subLabel: String? = null,
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
     ) : FormItem {
+
+        constructor(
+            label: String,
+            items: List<String>,
+            selectedIndices: MutableState<List<Int>>,
+            sortSelectionByItems: Boolean = true,
+            formatter: @Composable (selected: List<String>) -> String = FormDefaults.multiDropdownFormatter,
+            subLabel: String? = null,
+            help: FormHelp? = null,
+            visible: Boolean = true,
+            enabled: Boolean = true,
+        ) : this(
+            label = label,
+            items = items,
+            selectedIndices = selectedIndices.value,
+            onSelectionChanged = { selectedIndices.value = it },
+            formatter = formatter,
+            sortSelectionByItems = sortSelectionByItems,
+            subLabel = subLabel,
+            help = help,
+            visible = visible,
+            enabled = enabled
+        )
+
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
@@ -414,6 +554,8 @@ sealed interface FormItem : IFormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selectedIndices = selectedIndices,
+                onSelectionChanged = onSelectionChanged,
+                formatter = formatter,
                 mapper = { it },
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
@@ -601,6 +743,6 @@ private fun Info(
         //.minimumInteractiveComponentSize()
         ,
         //style = LocalTextStyle.current.copy(fontStyle = FontStyle.Italic),
-        color = LocalContentColor.current.disabled()
+        color = LocalContentColor.current//.disabled()
     )
 }
