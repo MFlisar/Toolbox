@@ -1,0 +1,380 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.mflisar.toolbox",
+    "module": "ui",
+    "version": "6.1.6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.1.6"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "ui-metadata.jar",
+          "url": "ui-6.1.6.jar",
+          "size": 67293,
+          "sha512": "45891796679e029e7434987a34194b0df75571130504ce164cf9ebd4f634f7238594c5e2c29b43551be68f82836f982cc93b114df00abe33d0d59a00c18e92fc",
+          "sha256": "95a38484f39e17c498ebf753e41f8e86d374e574609d87f40d050764c5211d53",
+          "sha1": "f059814033f8290e5b854e77f776a0fed07b50d6",
+          "md5": "68e6aed50e6c055643cb17ad0de11d8d"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "ui-kotlin-sources.jar",
+          "url": "ui-6.1.6-sources.jar",
+          "size": 85282,
+          "sha512": "977588b4235a583ba97d8652a603f8b8679539ae65f41b8964d810e96e67cb23f21bf4fc4872197b826448c75d10ee76d23af6dfd80e6d54de79dea8b87fd677",
+          "sha256": "fbb7556f7999f731651e2cd5e6f93a42724ec9c42a794963f487eaa6de515f8d",
+          "sha1": "cf52f43e8d973c400f822bd95525c7887061a5a2",
+          "md5": "59437bd8b917ff2fd07ad9d90fc39914"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../ui-android/6.1.6/ui-android-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-android",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../ui-android/6.1.6/ui-android-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-android",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../ui-android/6.1.6/ui-android-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-android",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ui-iosarm64/6.1.6/ui-iosarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-iosarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ui-iosarm64/6.1.6/ui-iosarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-iosarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ui-iosarm64/6.1.6/ui-iosarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-iosarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ui-iosarm64/6.1.6/ui-iosarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-iosarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ui-iossimulatorarm64/6.1.6/ui-iossimulatorarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-iossimulatorarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ui-iossimulatorarm64/6.1.6/ui-iossimulatorarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-iossimulatorarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ui-iossimulatorarm64/6.1.6/ui-iossimulatorarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-iossimulatorarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../ui-iossimulatorarm64/6.1.6/ui-iossimulatorarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-iossimulatorarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../ui-jvm/6.1.6/ui-jvm-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-jvm",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../ui-jvm/6.1.6/ui-jvm-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-jvm",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../ui-jvm/6.1.6/ui-jvm-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-jvm",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "wasmJsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../ui-wasm-js/6.1.6/ui-wasm-js-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-wasm-js",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "wasmJsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../ui-wasm-js/6.1.6/ui-wasm-js-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-wasm-js",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "wasmJsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../ui-wasm-js/6.1.6/ui-wasm-js-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-wasm-js",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "wasmJsResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresourcesjs",
+        "org.gradle.usage": "kotlin-multiplatformresourcesjs",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../ui-wasm-js/6.1.6/ui-wasm-js-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "ui-wasm-js",
+        "version": "6.1.6"
+      }
+    }
+  ]
+}

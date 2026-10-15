@@ -1,0 +1,401 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.mflisar.toolbox",
+    "module": "form",
+    "version": "6.1.6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "6.1.6"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "6.1.6"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-info",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "form-metadata.jar",
+          "url": "form-6.1.6.jar",
+          "size": 18894,
+          "sha512": "69906fdcad80c92869f8eb1726fb07aa8ae86e1c0b2ad3b9af5d4f979439b437cfa7a2d90e65c4f67a830801392dca38dd0134216b5ee751a66af50d7a11b2d9",
+          "sha256": "e051bc3c210614be060271778b6b7b3eff6402d627373f77012500ae395ccedd",
+          "sha1": "28d8a81c276a8f8a483bbe19335f6798c14ab7f0",
+          "md5": "33c5a1919e539e8dc4e03e7823bb0ff4"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "form-kotlin-sources.jar",
+          "url": "form-6.1.6-sources.jar",
+          "size": 19501,
+          "sha512": "5cab2a2b4c59d59e15e425941e4c670643d4f9c9c7640781d7089f8a7f92cc5e1d2555a13a69e1df92605c6d8b79a91e5bb33fd049a3947958f1a6f0a8ac158e",
+          "sha256": "6e48fbbe1a0802f972861a9d8e3d3029e70102d496e16d1d45f1d0739dd8c75d",
+          "sha1": "5ea9eb5766dadcfe8e41916db67bff0c6a741eeb",
+          "md5": "17c1ad42f4e7f4267417b4abe538a6cd"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../form-android/6.1.6/form-android-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-android",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../form-android/6.1.6/form-android-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-android",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../form-android/6.1.6/form-android-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-android",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../form-iosarm64/6.1.6/form-iosarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-iosarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../form-iosarm64/6.1.6/form-iosarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-iosarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../form-iosarm64/6.1.6/form-iosarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-iosarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../form-iosarm64/6.1.6/form-iosarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-iosarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../form-iossimulatorarm64/6.1.6/form-iossimulatorarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-iossimulatorarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../form-iossimulatorarm64/6.1.6/form-iossimulatorarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-iossimulatorarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresources",
+        "org.gradle.usage": "kotlin-multiplatformresources",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../form-iossimulatorarm64/6.1.6/form-iossimulatorarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-iossimulatorarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../form-iossimulatorarm64/6.1.6/form-iossimulatorarm64-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-iossimulatorarm64",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../form-jvm/6.1.6/form-jvm-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-jvm",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../form-jvm/6.1.6/form-jvm-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-jvm",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "available-at": {
+        "url": "../../form-jvm/6.1.6/form-jvm-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-jvm",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "wasmJsApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../form-wasm-js/6.1.6/form-wasm-js-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-wasm-js",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "wasmJsRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../form-wasm-js/6.1.6/form-wasm-js-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-wasm-js",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "wasmJsSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../form-wasm-js/6.1.6/form-wasm-js-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-wasm-js",
+        "version": "6.1.6"
+      }
+    },
+    {
+      "name": "wasmJsResourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.libraryelements": "kotlin-multiplatformresourcesjs",
+        "org.gradle.usage": "kotlin-multiplatformresourcesjs",
+        "org.jetbrains.kotlin.platform.type": "wasm",
+        "org.jetbrains.kotlin.wasm.target": "js"
+      },
+      "available-at": {
+        "url": "../../form-wasm-js/6.1.6/form-wasm-js-6.1.6.module",
+        "group": "io.github.mflisar.toolbox",
+        "module": "form-wasm-js",
+        "version": "6.1.6"
+      }
+    }
+  ]
+}
