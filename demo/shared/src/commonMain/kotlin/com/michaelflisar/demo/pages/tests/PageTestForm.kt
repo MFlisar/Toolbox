@@ -99,11 +99,12 @@ private fun Page() {
     val flagsDataContent = remember { mutableStateOf("") }
     val activate = remember { mutableStateOf(false) }
     val activateDependency = remember { mutableStateOf(false) }
+    val selectedTransferModes = remember { mutableStateOf(listOf<String>()) }
 
-    val items = listOf(
-        FormItem.Section(
-            title = "Informationen",
-            items = listOf(
+    val items = buildList {
+        add(FormItem.Section("Informationen"))
+        addAll(
+            listOf(
                 FormItem.Info(
                     label = "Neuester Release Ordner",
                     info = existingFolders.value.lastOrNull() ?: "--",
@@ -125,10 +126,11 @@ private fun Page() {
                     )
                 )
             )
-        ),
-        FormItem.Section(
-            title = "Aktion",
-            items = listOf(
+        )
+
+        add(FormItem.Section("Aktion"))
+        addAll(
+            listOf(
                 FormItem.Dropdown(
                     label = "Modus",
                     items = Mode.entries,
@@ -137,141 +139,137 @@ private fun Page() {
                 ),
                 FormItem.DropdownIndex(
                     label = "Terminal Server",
-                    items = listOf(
-                        "TS1",
-                        "TS2",
-                        "TS3"
-                    ),
+                    items = listOf("TS1", "TS2", "TS3"),
                     selectedIndex = selectedTerminalServer
                 ),
                 FormItem.DropdownIndex(
                     label = "VW Version",
-                    items = listOf(
-                        "VW19",
-                        "VW21",
-                        "VW25"
-                    ),
+                    items = listOf("VW19", "VW21", "VW25"),
                     selectedIndex = selectedVWVersion
                 )
             )
         )
-    ) + FormItem.Section(
-        "Konfiguration",
-        items = when (selectedMode.value) {
-            Mode.Copy -> listOf(
-                FormItem.Input(
-                    label = "Ordner Name",
-                    value = folderName
-                ),
-                FormItem.Dropdown(
-                    label = "Kopiermodus",
-                    items = TransferMode.entries,
-                    mapper = { it.name },
-                    selected = copyMode
-                ),
-                FormItem.Checkbox(
-                    label = "Lokalen Workspace kopieren",
-                    checked = copyLocalWorkspace
-                ),
-                FormItem.Checkbox(
-                    label = "Dateien aus VW Installation kopieren",
-                    subLabel = "DLLs, ...",
-                    checked = copyFilesFromVWInstallation
-                ),
-                FormItem.Input(
-                    label = "flags.data Inhalt",
-                    value = flagsDataContent,
-                    minLines = 2,
-                    maxLines = 5
+
+        if (selectedMode.value != Mode.Info) {
+            add(FormItem.Section("Konfiguration"))
+            addAll(
+                when (selectedMode.value) {
+                    Mode.Copy -> listOf(
+                        FormItem.Input(
+                            label = "Ordner Name",
+                            value = folderName
+                        ),
+                        FormItem.Dropdown(
+                            label = "Kopiermodus",
+                            items = TransferMode.entries,
+                            mapper = { it.name },
+                            selected = copyMode
+                        ),
+                        FormItem.Checkbox(
+                            label = "Lokalen Workspace kopieren",
+                            checked = copyLocalWorkspace
+                        ),
+                        FormItem.Checkbox(
+                            label = "Dateien aus VW Installation kopieren",
+                            subLabel = "DLLs, ...",
+                            checked = copyFilesFromVWInstallation
+                        ),
+                        FormItem.Input(
+                            label = "flags.data Inhalt",
+                            value = flagsDataContent,
+                            minLines = 2,
+                            maxLines = 5
+                        )
+                    )
+
+                    Mode.Change -> listOf(
+                        FormItem.Dropdown(
+                            label = "Ordner wählen",
+                            items = existingFolders.value,
+                            mapper = { it ?: "" },
+                            selected = selectedExistingFolder
+                        )
+                    )
+
+                    Mode.Info -> emptyList()
+                }
+            )
+        }
+
+        if (selectedMode.value == Mode.Copy) {
+            add(FormItem.Section("Sonstiges"))
+            addAll(
+                listOf(
+                    FormItem.Checkbox(
+                        label = "Aktivieren",
+                        subLabel = "Junction anpassen + weitere Daten nach VW kopieren",
+                        checked = activate
+                    ),
+                    FormItem.Checkbox(
+                        label = "Dependency",
+                        subLabel = "Depends on 'Aktivieren'",
+                        checked = activateDependency,
+                        visible = activate.value
+                    )
                 )
             )
 
-            Mode.Change -> listOf(
-                FormItem.Dropdown(
-                    label = "Ordner wählen",
-                    items = existingFolders.value,
-                    mapper = { it ?: "" },
-                    selected = selectedExistingFolder
+            add(FormItem.Section("Test"))
+            addAll(
+                listOf(
+                    FormItem.MultiDropdown(
+                        label = "Multi Dropdown",
+                        items = TransferMode.entries.map { it.name },
+                        selected = selectedTransferModes,
+                        formatter = {
+                            if (it.isEmpty()) {
+                                "Nichts ausgewählt"
+                            } else {
+                                "${it.size} ausgewählt (" + it.joinToString(", ") + ")"
+                            }
+                        }
+                    ),
+                    FormItem.Divider(text = "Divider mit Text"),
+                    FormItem.CustomLabeled(
+                        label = "Benutzerdefiniert",
+                        content = { _, _ ->
+                            MyRow {
+                                androidx.compose.material3.Icon(
+                                    imageVector = Icons.Default.Error,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.error
+                                )
+                                Text(
+                                    text = "Benutzerdefinierter Inhalt in Labeled FormItem",
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            }
+                        }
+                    ),
+                    FormItem.Custom(
+                        content = { _, _ ->
+                            MyRow {
+                                androidx.compose.material3.Icon(
+                                    imageVector = Icons.Default.Error,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.error
+                                )
+                                Text(
+                                    text = "Benutzerdefinierter Full-Row-Inhalt",
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            }
+                        }
+                    )
                 )
             )
+        }
+    }
 
-            Mode.Info -> emptyList()
-        },
-        visible = selectedMode.value != Mode.Info
-    ) + FormItem.Section(
-        "Sonstiges",
-        items = when (selectedMode.value) {
-            Mode.Copy -> listOf(
-                FormItem.Checkbox(
-                    label = "Aktivieren",
-                    subLabel = "Junction anpassen + weitere Daten nach VW kopieren",
-                    checked = activate
-                ),
-                FormItem.Checkbox(
-                    label = "Dependency",
-                    subLabel = "Depends on 'Aktivieren'",
-                    checked = activateDependency,
-                    visible = activate.value
-                )
-            )
-
-            Mode.Change -> emptyList()
-            Mode.Info -> emptyList()
-        },
-        visible = selectedMode.value == Mode.Copy
-    ) + FormItem.Section(
-        "Test",
-        items = listOf(
-            FormItem.MultiDropdown(
-                label = "Multi Dropdown",
-                items = TransferMode.entries.map { it.name },
-                selected = remember { mutableStateOf(listOf<String>()) },
-                formatter = {
-                    if (it.isEmpty()) {
-                        "Nichts ausgewählt"
-                    } else {
-                        "${it.size} ausgewählt (" + it.joinToString(", ") + ")"
-                    }
-                }
-            ),
-            FormItem.Divider(text = "Divider mit Text"),
-            FormItem.CustomLabeled(
-                label = "Benutzerdefiniert",
-                content = { _, _ ->
-                    MyRow {
-                        androidx.compose.material3.Icon(
-                            imageVector = Icons.Default.Error,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                        Text(
-                            text = "Benutzerdefinierter Inhalt in Labeled FormItem",
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                }
-            ),
-            FormItem.Custom(
-                content = { _, _ ->
-                    MyRow {
-                        androidx.compose.material3.Icon(
-                            imageVector = Icons.Default.Error,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                        Text(
-                            text = "Benutzerdefinierter Full-Row-Inhalt",
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                }
-            )
-        ),
-        visible = selectedMode.value == Mode.Copy
-    )
     MyForm(
         config = config,
         items = items,
+        itemKey = FormDefaults.simpleKeyProvider(),
         modifier = Modifier
             .fillMaxSize()
             .padding(MaterialTheme.padding.content)

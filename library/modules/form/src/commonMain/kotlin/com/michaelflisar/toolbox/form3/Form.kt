@@ -2,6 +2,11 @@ package com.michaelflisar.toolbox.form3
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,7 +15,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -19,10 +23,16 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -213,6 +223,24 @@ object FormDefaults {
 
     val multiDropdownFormatter: @Composable (selected: List<String>) -> String =
         MyMultiDropdown.formatter
+
+
+    fun simpleKeyProvider(): (FormItem) -> Any = { item ->
+        when (item) {
+            is FormItem.Section -> "section:${item.title}"
+            is FormItem.CustomLabeled -> "customLabeled:${item.label}"
+            is FormItem.Custom -> "custom:${item.hashCode()}"
+            is FormItem.Divider -> "divider:${item.text ?: item.hashCode()}"
+            is FormItem.Info -> "info:${item.label}"
+            is FormItem.Picker -> "picker:${item.label}"
+            is FormItem.Input -> "input:${item.label}"
+            is FormItem.Checkbox -> "checkbox:${item.label}"
+            is FormItem.Dropdown<*> -> "dropdown:${item.label}"
+            is FormItem.DropdownIndex -> "dropdownIndex:${item.label}"
+            is FormItem.MultiDropdown -> "multiDropdown:${item.label}"
+            is FormItem.MultiDropdownIndex -> "multiDropdownIndex:${item.label}"
+        }
+    }
 }
 
 @Composable
@@ -276,45 +304,32 @@ sealed interface FormItem {
 
     data class Section(
         val title: String,
-        val items: List<FormItem>,
-        override val enabled: Boolean = true,
         override val visible: Boolean = true,
     ) : FormItem {
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(config.spacing)
+            FormRow(
+                verticalPadding = config.sectionStyle.verticalPadding,
+                shape = when (config.sectionStyle) {
+                    is FormSectionStyle.Row -> config.sectionStyle.shape
+                    is FormSectionStyle.Text -> RectangleShape
+                },
+                backgroundColor = when (config.sectionStyle) {
+                    is FormSectionStyle.Row -> config.sectionStyle.backgroundColor
+                    is FormSectionStyle.Text -> Color.Unspecified
+                },
+                contentPadding = when (config.sectionStyle) {
+                    is FormSectionStyle.Row -> config.sectionStyle.contentPadding
+                    is FormSectionStyle.Text -> PaddingValues()
+                }
             ) {
-                FormRow(
-                    verticalPadding = config.sectionStyle.verticalPadding,
-                    shape = when (config.sectionStyle) {
-                        is FormSectionStyle.Row -> config.sectionStyle.shape
-                        is FormSectionStyle.Text -> RectangleShape
-                    },
-                    backgroundColor = when (config.sectionStyle) {
-                        is FormSectionStyle.Row -> config.sectionStyle.backgroundColor
-                        is FormSectionStyle.Text -> Color.Unspecified
-                    },
-                    contentPadding = when (config.sectionStyle) {
-                        is FormSectionStyle.Row -> config.sectionStyle.contentPadding
-                        is FormSectionStyle.Text -> PaddingValues()
-                    }
-                ) {
-                    MyTitle(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = title,
-                        style = config.sectionStyle.textStyle,
-                        color = config.sectionStyle.textColor,
-                    )
-                }
-                items.forEach { item ->
-                    RenderFormItem(
-                        item = item,
-                        config = config,
-                        parentIsEnabled = parentIsEnabled && enabled
-                    )
-                }
+                MyTitle(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = title,
+                    style = config.sectionStyle.textStyle,
+                    color = config.sectionStyle.textColor,
+                )
             }
         }
     }
@@ -745,12 +760,18 @@ sealed interface FormItem {
     }
 }
 
+/**
+ * [itemKey] must return a unique, stable ID independent of an item's value or visibility.
+ * When supplied, inserted and removed items animate; removed items remain until their exit completes.
+ * Without [itemKey], items retain the positional rendering behavior.
+ */
 @Composable
 fun MyForm(
     items: List<FormItem>,
     modifier: Modifier = Modifier,
     scrollable: Boolean = true,
     config: FormConfig = rememberFormConfig(),
+    itemKey: ((FormItem) -> Any)? = FormDefaults.simpleKeyProvider(),
 ) {
     Column(
         modifier = modifier.then(
@@ -759,12 +780,66 @@ fun MyForm(
             .animateContentSize(),
         verticalArrangement = Arrangement.spacedBy(config.spacing)
     ) {
-        items.forEach { item ->
-            RenderFormItem(
-                item = item,
-                config = config,
-                parentIsEnabled = true
-            )
+        if (itemKey == null) {
+            items.forEach { item ->
+                RenderFormItem(
+                    item = item,
+                    config = config,
+                    parentIsEnabled = true
+                )
+            }
+        } else {
+            AnimatedFormItems(items, config, itemKey)
+        }
+    }
+}
+
+@Composable
+private fun AnimatedFormItems(
+    items: List<FormItem>,
+    config: FormConfig,
+    itemKey: (FormItem) -> Any,
+) {
+    val keyedItems = items.map { itemKey(it) to it }
+    val currentKeys = keyedItems.map { it.first }.toSet()
+    require(currentKeys.size == keyedItems.size) { "MyForm item keys must be unique." }
+
+    var retained by remember {
+        mutableStateOf(keyedItems.map { (id, item) ->
+            AnimatedFormEntry(id, item, MutableTransitionState(item.visible))
+        })
+    }
+    val entries = reconcileFormEntries(retained, keyedItems)
+    val latestKeys by rememberUpdatedState(currentKeys)
+
+    SideEffect {
+        retained = entries
+        entries.forEach { entry ->
+            entry.visibility.targetState = entry.id in currentKeys && entry.item.visible
+        }
+    }
+
+    entries.forEach { entry ->
+        key(entry.id) {
+            val visibility = entry.visibility
+            AnimatedVisibility(
+                modifier = Modifier.fillMaxWidth(),
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically(),
+                visibleState = visibility
+            ) {
+                RenderFormItemContent(entry.item, config, true)
+            }
+            LaunchedEffect(
+                visibility.isIdle,
+                visibility.currentState,
+                visibility.targetState,
+                entry.id in currentKeys
+            ) {
+                if (visibility.isIdle && !visibility.currentState && entry.id !in latestKeys) {
+                    retained = retained.filterNot { it.visibility === visibility }
+                }
+            }
         }
     }
 }
@@ -779,15 +854,24 @@ private fun RenderFormItem(
         modifier = Modifier.fillMaxWidth(),
         visible = item.visible
     ) {
-        when (item) {
-            is FormItem.Labeled -> FormItem(
-                item = item,
-                config = config,
-                parentIsEnabled = parentIsEnabled && item.enabled
-            )
+        RenderFormItemContent(item, config, parentIsEnabled)
+    }
+}
 
-            else -> item.Content(config, parentIsEnabled && item.enabled)
-        }
+@Composable
+private fun RenderFormItemContent(
+    item: FormItem,
+    config: FormConfig,
+    parentIsEnabled: Boolean,
+) {
+    when (item) {
+        is FormItem.Labeled -> FormItem(
+            item = item,
+            config = config,
+            parentIsEnabled = parentIsEnabled && item.enabled
+        )
+
+        else -> item.Content(config, parentIsEnabled && item.enabled)
     }
 }
 
@@ -819,6 +903,8 @@ private fun FormItem(
 ) {
     AnimatedVisibility(
         modifier = Modifier.fillMaxWidth(),
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut() + shrinkVertically(),
         visible = item.visible
     ) {
 
