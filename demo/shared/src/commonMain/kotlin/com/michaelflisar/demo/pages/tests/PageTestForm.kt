@@ -3,12 +3,14 @@ package com.michaelflisar.demo.pages.tests
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -16,13 +18,11 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.form3.FormDefaults
 import com.michaelflisar.toolbox.form3.FormHelp
 import com.michaelflisar.toolbox.form3.FormItem
-import com.michaelflisar.toolbox.form3.FormLabelStyle
-import com.michaelflisar.toolbox.form3.FormSection
-import com.michaelflisar.toolbox.form3.FormSectionStyle
 import com.michaelflisar.toolbox.form3.MyForm
 import com.michaelflisar.toolbox.form3.rememberFormConfig
 import com.michaelflisar.toolbox.padding
@@ -71,10 +71,18 @@ private fun Page() {
     val sectionStyleText = FormDefaults.sectionStyleText()
     val sectionStyleRow = FormDefaults.sectionStyleRow()
 
+    val dividerStyle = FormDefaults.dividerStyle(
+        color = MaterialTheme.colorScheme.primary,
+        textColor = MaterialTheme.colorScheme.primary,
+        thickness = 0.dp,
+        textAlignment = Alignment.Start
+    )
+
     val config = rememberFormConfig(
         labelStyle = labelStyleBefore,
         sectionStyle = sectionStyleRow,
-        spacing = 4.dp,
+        dividerStyle = dividerStyle,
+        spacing = 8.dp,
         showSingleDropdownsAsText = true
     )
 
@@ -93,7 +101,7 @@ private fun Page() {
     val activateDependency = remember { mutableStateOf(false) }
 
     val items = listOf(
-        FormSection(
+        FormItem.Section(
             title = "Informationen",
             items = listOf(
                 FormItem.Info(
@@ -118,7 +126,7 @@ private fun Page() {
                 )
             )
         ),
-        FormSection(
+        FormItem.Section(
             title = "Aktion",
             items = listOf(
                 FormItem.Dropdown(
@@ -147,7 +155,7 @@ private fun Page() {
                 )
             )
         )
-    ) + FormSection(
+    ) + FormItem.Section(
         "Konfiguration",
         items = when (selectedMode.value) {
             Mode.Copy -> listOf(
@@ -190,7 +198,7 @@ private fun Page() {
             Mode.Info -> emptyList()
         },
         visible = selectedMode.value != Mode.Info
-    ) + FormSection(
+    ) + FormItem.Section(
         "Sonstiges",
         items = when (selectedMode.value) {
             Mode.Copy -> listOf(
@@ -211,7 +219,7 @@ private fun Page() {
             Mode.Info -> emptyList()
         },
         visible = selectedMode.value == Mode.Copy
-    )+ FormSection(
+    ) + FormItem.Section(
         "Test",
         items = listOf(
             FormItem.MultiDropdown(
@@ -223,6 +231,38 @@ private fun Page() {
                         "Nichts ausgewählt"
                     } else {
                         "${it.size} ausgewählt (" + it.joinToString(", ") + ")"
+                    }
+                }
+            ),
+            FormItem.Divider(text = "Divider mit Text"),
+            FormItem.CustomLabeled(
+                label = "Benutzerdefiniert",
+                content = { _, _ ->
+                    MyRow {
+                        androidx.compose.material3.Icon(
+                            imageVector = Icons.Default.Error,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                        Text(
+                            text = "Benutzerdefinierter Inhalt in Labeled FormItem",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
+            ),
+            FormItem.Custom(
+                content = { _, _ ->
+                    MyRow {
+                        androidx.compose.material3.Icon(
+                            imageVector = Icons.Default.Error,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                        Text(
+                            text = "Benutzerdefinierter Full-Row-Inhalt",
+                            color = MaterialTheme.colorScheme.error
+                        )
                     }
                 }
             )

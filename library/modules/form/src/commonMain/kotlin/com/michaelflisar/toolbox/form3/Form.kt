@@ -4,17 +4,22 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
@@ -22,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.AnnotatedString
@@ -31,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
 import com.michaelflisar.toolbox.components.MyDropdown
 import com.michaelflisar.toolbox.components.MyDropdownIndex
+import com.michaelflisar.toolbox.components.MyDropdownMenu
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyMultiDropdown
 import com.michaelflisar.toolbox.components.MyMultiDropdownIndex
@@ -40,18 +47,36 @@ import com.michaelflisar.toolbox.components.MyTextWithHelp
 import com.michaelflisar.toolbox.components.MyTextWithHelpDefaults
 import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.extensions.Icon
-import com.michaelflisar.toolbox.extensions.disabled
-import com.michaelflisar.toolbox.components.MyDropdownMenu
 import com.michaelflisar.toolbox.padding
 import com.michaelflisar.toolbox.spacing
 
 data class FormConfig(
     val labelStyle: FormLabelStyle,
     val sectionStyle: FormSectionStyle,
+    val dividerStyle: FormDividerStyle,
     val spacing: Dp,
     val shape: Shape,
     val showSingleDropdownsAsText: Boolean,
     val popupWidthConfig: MyDropdownMenu.WidthConfig,
+) {
+    val rowPaddingStart: Dp
+        @Composable get() = when (sectionStyle) {
+            is FormSectionStyle.Row -> sectionStyle.contentPadding.calculateLeftPadding(
+                LocalLayoutDirection.current
+            )
+
+            is FormSectionStyle.Text -> 0.dp
+        }
+}
+
+data class FormDividerStyle(
+    val color: Color,
+    val thickness: Dp,
+    val textStyle: TextStyle,
+    val textColor: Color,
+    val textSpacing: Dp,
+    val verticalSpacing: Dp,
+    val textAlignment: Alignment.Horizontal,
 )
 
 sealed class FormLabelStyle {
@@ -165,15 +190,36 @@ object FormDefaults {
         )
     }
 
+    @Composable
+    fun dividerStyle(
+        color: Color = MaterialTheme.colorScheme.outlineVariant,
+        thickness: Dp = 1.dp,
+        textStyle: TextStyle = MaterialTheme.typography.labelSmall,
+        textColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+        textSpacing: Dp = MaterialTheme.spacing.small,
+        verticalSpacing: Dp = MaterialTheme.padding.default,
+        textAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
+    ) = FormDividerStyle(
+        color = color,
+        thickness = thickness,
+        textStyle = textStyle,
+        textColor = textColor,
+        textSpacing = textSpacing,
+        verticalSpacing = verticalSpacing,
+        textAlignment = textAlignment
+    )
+
     val popupWidthConfig = MyDropdownMenu.WidthConfig.MatchParent()
 
-    val multiDropdownFormatter: @Composable (selected: List<String>) -> String = MyMultiDropdown.formatter
+    val multiDropdownFormatter: @Composable (selected: List<String>) -> String =
+        MyMultiDropdown.formatter
 }
 
 @Composable
 fun rememberFormConfig(
     labelStyle: FormLabelStyle = FormDefaults.labelStyleBefore(),
     sectionStyle: FormSectionStyle = FormDefaults.sectionStyleText(),
+    dividerStyle: FormDividerStyle = FormDefaults.dividerStyle(),
     spacing: Dp = 8.dp,
     shape: Shape = MaterialTheme.shapes.small,
     showSingleDropdownsAsText: Boolean = false,
@@ -182,6 +228,7 @@ fun rememberFormConfig(
     return remember(
         labelStyle,
         sectionStyle,
+        dividerStyle,
         spacing,
         shape,
         showSingleDropdownsAsText,
@@ -191,6 +238,7 @@ fun rememberFormConfig(
         FormConfig(
             labelStyle = labelStyle,
             sectionStyle = sectionStyle,
+            dividerStyle = dividerStyle,
             spacing = spacing,
             shape = shape,
             showSingleDropdownsAsText = showSingleDropdownsAsText,
@@ -209,20 +257,7 @@ data class FormHelp(
     ) : this(AnnotatedString(text), title)
 }
 
-sealed interface IFormItem
-
-data class FormSection(
-    val title: String,
-    val items: List<FormItem>,
-    val enabled: Boolean = true,
-    val visible: Boolean = true,
-) : IFormItem
-
-sealed interface FormItem : IFormItem {
-
-    val label: String
-    val subLabel: String?
-    val help: FormHelp?
+sealed interface FormItem {
 
     val visible: Boolean
         get() = true
@@ -233,6 +268,147 @@ sealed interface FormItem : IFormItem {
     @Composable
     fun Content(config: FormConfig, parentIsEnabled: Boolean)
 
+    sealed interface Labeled : FormItem {
+        val label: String
+        val subLabel: String?
+        val help: FormHelp?
+    }
+
+    data class Section(
+        val title: String,
+        val items: List<FormItem>,
+        override val enabled: Boolean = true,
+        override val visible: Boolean = true,
+    ) : FormItem {
+
+        @Composable
+        override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(config.spacing)
+            ) {
+                FormRow(
+                    verticalPadding = config.sectionStyle.verticalPadding,
+                    shape = when (config.sectionStyle) {
+                        is FormSectionStyle.Row -> config.sectionStyle.shape
+                        is FormSectionStyle.Text -> RectangleShape
+                    },
+                    backgroundColor = when (config.sectionStyle) {
+                        is FormSectionStyle.Row -> config.sectionStyle.backgroundColor
+                        is FormSectionStyle.Text -> Color.Unspecified
+                    },
+                    contentPadding = when (config.sectionStyle) {
+                        is FormSectionStyle.Row -> config.sectionStyle.contentPadding
+                        is FormSectionStyle.Text -> PaddingValues()
+                    }
+                ) {
+                    MyTitle(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = title,
+                        style = config.sectionStyle.textStyle,
+                        color = config.sectionStyle.textColor,
+                    )
+                }
+                items.forEach { item ->
+                    RenderFormItem(
+                        item = item,
+                        config = config,
+                        parentIsEnabled = parentIsEnabled && enabled
+                    )
+                }
+            }
+        }
+    }
+
+    data class CustomLabeled(
+        override val label: String,
+        val content: @Composable (FormConfig, Boolean) -> Unit,
+        override val subLabel: String? = null,
+        override val help: FormHelp? = null,
+        override val visible: Boolean = true,
+        override val enabled: Boolean = true,
+    ) : Labeled {
+
+        @Composable
+        override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = config.rowPaddingStart)
+            ) {
+                content(config, parentIsEnabled && enabled)
+            }
+        }
+    }
+
+    data class Custom(
+        val content: @Composable (FormConfig, Boolean) -> Unit,
+        override val visible: Boolean = true,
+        override val enabled: Boolean = true,
+    ) : FormItem {
+
+        @Composable
+        override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = config.rowPaddingStart)
+            ) {
+                content(config, parentIsEnabled && enabled)
+            }
+
+        }
+    }
+
+    data class Divider(
+        val text: String? = null,
+        override val visible: Boolean = true,
+        override val enabled: Boolean = true,
+    ) : FormItem {
+
+        @Composable
+        override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
+            val style = config.dividerStyle
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = config.rowPaddingStart)
+                    .padding(vertical = style.verticalSpacing),
+                horizontalArrangement = Arrangement.spacedBy(style.textSpacing),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (style.textAlignment != Alignment.Start) {
+                    if (style.thickness > 0.dp) {
+                        HorizontalDivider(
+                            modifier = Modifier.weight(1f),
+                            color = style.color,
+                            thickness = style.thickness
+                        )
+                    } else {
+                        Box(modifier = Modifier.weight(1f))
+                    }
+                }
+                if (text?.isNotEmpty() == true) {
+                    Text(
+                        text = text,
+                        style = style.textStyle,
+                        color = style.textColor
+                    )
+                }
+                if (style.textAlignment != Alignment.End) {
+                    if (style.thickness > 0.dp) {
+                        HorizontalDivider(
+                            modifier = Modifier.weight(1f),
+                            color = style.color,
+                            thickness = style.thickness
+                        )
+                    } else {
+                        Box(modifier = Modifier.weight(1f))
+                    }
+                }
+            }
+        }
+    }
+
     data class Info(
         override val label: String,
         val info: String,
@@ -240,11 +416,14 @@ sealed interface FormItem : IFormItem {
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
-    ) : FormItem {
+    ) : Labeled {
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
-            Info(text = info)
+            Info(
+                modifier = Modifier.padding(vertical = MaterialTheme.spacing.small),
+                text = info
+            )
         }
     }
 
@@ -257,7 +436,7 @@ sealed interface FormItem : IFormItem {
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
         val onClick: () -> Unit,
-    ) : FormItem {
+    ) : Labeled {
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
@@ -280,7 +459,7 @@ sealed interface FormItem : IFormItem {
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
-    ) : FormItem {
+    ) : Labeled {
 
         constructor(
             label: String,
@@ -325,7 +504,7 @@ sealed interface FormItem : IFormItem {
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
-    ) : FormItem {
+    ) : Labeled {
 
         constructor(
             label: String,
@@ -364,7 +543,7 @@ sealed interface FormItem : IFormItem {
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
-    ) : FormItem {
+    ) : Labeled {
 
         constructor(
             label: String,
@@ -416,7 +595,7 @@ sealed interface FormItem : IFormItem {
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
-    ) : FormItem {
+    ) : Labeled {
 
         constructor(
             label: String,
@@ -467,7 +646,7 @@ sealed interface FormItem : IFormItem {
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
-    ) : FormItem {
+    ) : Labeled {
 
         constructor(
             label: String,
@@ -521,7 +700,7 @@ sealed interface FormItem : IFormItem {
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
         override val enabled: Boolean = true,
-    ) : FormItem {
+    ) : Labeled {
 
         constructor(
             label: String,
@@ -568,7 +747,7 @@ sealed interface FormItem : IFormItem {
 
 @Composable
 fun MyForm(
-    items: List<IFormItem>,
+    items: List<FormItem>,
     modifier: Modifier = Modifier,
     scrollable: Boolean = true,
     config: FormConfig = rememberFormConfig(),
@@ -581,59 +760,60 @@ fun MyForm(
         verticalArrangement = Arrangement.spacedBy(config.spacing)
     ) {
         items.forEach { item ->
-            when (item) {
-                is FormItem -> {
-                    FormItem(
-                        item = item,
-                        config = config,
-                        parentIsEnabled = true
-                    )
-                }
-
-                is FormSection -> {
-                    AnimatedVisibility(
-                        modifier = Modifier.fillMaxWidth(),
-                        visible = item.visible
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(config.spacing)
-                        ) {
-                            MyTitle(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = config.sectionStyle.verticalPadding)
-                                    .then(
-                                        when (config.sectionStyle) {
-                                            is FormSectionStyle.Row -> Modifier
-                                                .clip(config.sectionStyle.shape)
-                                                .background(config.sectionStyle.backgroundColor)
-                                                .padding(config.sectionStyle.contentPadding)
-
-                                            is FormSectionStyle.Text -> Modifier
-                                        }
-                                    ),
-                                text = item.title,
-                                style = config.sectionStyle.textStyle,
-                                color = config.sectionStyle.textColor,
-                            )
-                            item.items.forEach {
-                                FormItem(
-                                    item = it,
-                                    config = config,
-                                    parentIsEnabled = item.enabled
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+            RenderFormItem(
+                item = item,
+                config = config,
+                parentIsEnabled = true
+            )
         }
     }
 }
 
 @Composable
-private fun FormItem(
+private fun RenderFormItem(
     item: FormItem,
+    config: FormConfig,
+    parentIsEnabled: Boolean,
+) {
+    AnimatedVisibility(
+        modifier = Modifier.fillMaxWidth(),
+        visible = item.visible
+    ) {
+        when (item) {
+            is FormItem.Labeled -> FormItem(
+                item = item,
+                config = config,
+                parentIsEnabled = parentIsEnabled && item.enabled
+            )
+
+            else -> item.Content(config, parentIsEnabled && item.enabled)
+        }
+    }
+}
+
+@Composable
+private fun FormRow(
+    verticalPadding: Dp = 0.dp,
+    shape: Shape = RectangleShape,
+    backgroundColor: Color = Color.Unspecified,
+    contentPadding: PaddingValues = PaddingValues(),
+    content: @Composable () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = verticalPadding)
+            .clip(shape)
+            .background(backgroundColor)
+            .padding(contentPadding)
+    ) {
+        content()
+    }
+}
+
+@Composable
+private fun FormItem(
+    item: FormItem.Labeled,
     config: FormConfig,
     parentIsEnabled: Boolean,
 ) {
@@ -644,13 +824,7 @@ private fun FormItem(
 
         val before = config.labelStyle is FormLabelStyle.Before || item is FormItem.Checkbox
 
-        val paddingStart = when (config.sectionStyle) {
-            is FormSectionStyle.Row -> config.sectionStyle.contentPadding.calculateLeftPadding(
-                LocalLayoutDirection.current
-            )
-
-            is FormSectionStyle.Text -> 0.dp
-        }
+        val paddingStart = config.rowPaddingStart
 
         if (before) {
             Row(
@@ -700,6 +874,8 @@ private fun FormItem(
                     }
                 }
 
+                Spacer(modifier = Modifier.width(MaterialTheme.spacing.default))
+
                 item.Content(config, parentIsEnabled)
             }
         } else {
@@ -732,17 +908,11 @@ private fun FormItem(
 @Composable
 private fun Info(
     text: String,
+    modifier: Modifier = Modifier,
 ) {
     MyText(
         text = text,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(MaterialTheme.shapes.extraSmall)
-            //.border(1.dp, MaterialTheme.colorScheme.outline.disabled(), MaterialTheme.shapes.extraSmall)
-            .padding(all = MaterialTheme.padding.default)
-        //.minimumInteractiveComponentSize()
-        ,
-        //style = LocalTextStyle.current.copy(fontStyle = FontStyle.Italic),
-        color = LocalContentColor.current//.disabled()
+        modifier = Modifier.fillMaxWidth().then(modifier),
+        color = LocalContentColor.current
     )
 }
