@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Components</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+        <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+</head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+            <a class="library-name--link" href="../../../index.html" tabindex="1">
+                    ui
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true"
+                        data-filter=":toolbox:modules:ui/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":toolbox:modules:ui/commonMain"
+                                       data-filter=":toolbox:modules:ui/commonMain"/>
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize": 280, "minSize": 200, "maxSize": 400}'>
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    ui
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="ui::com.michaelflisar.toolbox/Components///PointingToDeclaration//1534506009">
+  <div class="breadcrumbs"><a href="../../../index.html">ui</a><span class="delimiter">/</span><a href="../index.html">com.michaelflisar.toolbox</a><span class="delimiter">/</span><span class="current">Components</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Components</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">Components</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>style<span class="token operator">: </span><a href="-style/index.html">Components.Style</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>icons<span class="token operator">: </span><a href="-icon/index.html">Components.Icon</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>button<span class="token operator">: </span><a href="-button/index.html">Components.Button</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>iconButton<span class="token operator">: </span><a href="-icon-button/index.html">Components.IconButton</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>textField<span class="token operator">: </span><a href="-text-field/index.html">Components.TextField</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>checkbox<span class="token operator">: </span><a href="-checkbox/index.html">Components.Checkbox</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>switch<span class="token operator">: </span><a href="-switch/index.html">Components.Switch</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>segmentedButton<span class="token operator">: </span><a href="-segmented-button/index.html">Components.SegmentedButton</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>numberPicker<span class="token operator">: </span><a href="-number-picker/index.html">Components.NumberPicker</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>menu<span class="token operator">: </span><a href="-menu/index.html">Components.Menu</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>dropdown<span class="token operator">: </span><a href="-dropdown/index.html">Components.Dropdown</a></span></span><span class="token punctuation">)</span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="tableheader">Constructors</h2>
+        <div class="table"><a data-name="-243226339%2FConstructors%2F1534506009" anchor-label="Components" id="-243226339%2FConstructors%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-components.html"><span><span>Components</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-243226339%2FConstructors%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">style<span class="token operator">: </span><a href="-style/index.html">Components.Style</a><span class="token punctuation">, </span></span><span class="parameter ">icons<span class="token operator">: </span><a href="-icon/index.html">Components.Icon</a><span class="token punctuation">, </span></span><span class="parameter ">button<span class="token operator">: </span><a href="-button/index.html">Components.Button</a><span class="token punctuation">, </span></span><span class="parameter ">iconButton<span class="token operator">: </span><a href="-icon-button/index.html">Components.IconButton</a><span class="token punctuation">, </span></span><span class="parameter ">textField<span class="token operator">: </span><a href="-text-field/index.html">Components.TextField</a><span class="token punctuation">, </span></span><span class="parameter ">checkbox<span class="token operator">: </span><a href="-checkbox/index.html">Components.Checkbox</a><span class="token punctuation">, </span></span><span class="parameter ">switch<span class="token operator">: </span><a href="-switch/index.html">Components.Switch</a><span class="token punctuation">, </span></span><span class="parameter ">segmentedButton<span class="token operator">: </span><a href="-segmented-button/index.html">Components.SegmentedButton</a><span class="token punctuation">, </span></span><span class="parameter ">numberPicker<span class="token operator">: </span><a href="-number-picker/index.html">Components.NumberPicker</a><span class="token punctuation">, </span></span><span class="parameter ">menu<span class="token operator">: </span><a href="-menu/index.html">Components.Menu</a><span class="token punctuation">, </span></span><span class="parameter ">dropdown<span class="token operator">: </span><a href="-dropdown/index.html">Components.Dropdown</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="1921108918%2FClasslikes%2F1534506009" anchor-label="Button" id="1921108918%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-button/index.html"><span><span>Button</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1921108918%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-button/index.html">Button</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>shape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>outlinedShape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>textShape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>filledTonalShape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>contentPadding<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>textContentPadding<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>minWidth<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>minHeight<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1044567419%2FClasslikes%2F1534506009" anchor-label="Checkbox" id="-1044567419%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-checkbox/index.html"><span><span>Checkbox</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1044567419%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-checkbox/index.html">Checkbox</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>size<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>toggleOnIconClickOnly<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1783517390%2FClasslikes%2F1534506009" anchor-label="Companion" id="1783517390%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1783517390%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1020089847%2FClasslikes%2F1534506009" anchor-label="Dropdown" id="1020089847%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-dropdown/index.html"><span><span>Dropdown</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1020089847%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-dropdown/index.html">Dropdown</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>widthConfig<span class="token operator">: </span><a href="../../com.michaelflisar.toolbox.components/-my-dropdown-menu/-width-config/index.html">MyDropdownMenu.WidthConfig</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1045555697%2FClasslikes%2F1534506009" anchor-label="Icon" id="-1045555697%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-icon/index.html"><span><span>Icon</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1045555697%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-icon/index.html">Icon</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>size<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2024481917%2FClasslikes%2F1534506009" anchor-label="IconButton" id="2024481917%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-icon-button/index.html"><span>Icon</span><wbr></wbr><span><span>Button</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2024481917%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-icon-button/index.html">IconButton</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>shape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>outlinedShape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>filledShape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>size<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="472902633%2FClasslikes%2F1534506009" anchor-label="Menu" id="472902633%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-menu/index.html"><span><span>Menu</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="472902633%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-menu/index.html">Menu</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>shape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>dropdownMenuItemPaddingValues<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>style<span class="token operator">: </span><a href="-menu/-style/index.html">Components.Menu.Style</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="9594897%2FClasslikes%2F1534506009" anchor-label="NumberPicker" id="9594897%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-number-picker/index.html"><span>Number</span><wbr></wbr><span><span>Picker</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="9594897%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-number-picker/index.html">NumberPicker</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>minWidth<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="343329590%2FClasslikes%2F1534506009" anchor-label="SegmentedButton" id="343329590%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-segmented-button/index.html"><span>Segmented</span><wbr></wbr><span><span>Button</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="343329590%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-segmented-button/index.html">SegmentedButton</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>contentPadding<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="267478601%2FClasslikes%2F1534506009" anchor-label="Style" id="267478601%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-style/index.html"><span><span>Style</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="267478601%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-style/index.html">Style</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-style/index.html">Components.Style</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1442636276%2FClasslikes%2F1534506009" anchor-label="Switch" id="1442636276%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-switch/index.html"><span><span>Switch</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1442636276%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-switch/index.html">Switch</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>toggleOnIconClickOnly<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1513668397%2FClasslikes%2F1534506009" anchor-label="TextField" id="1513668397%2FClasslikes%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-text-field/index.html"><span>Text</span><wbr></wbr><span><span>Field</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1513668397%2FClasslikes%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Immutable.html"><span class="token annotation builtin">Immutable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="-text-field/index.html">TextField</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>outlinedShape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Shape.html">Shape</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>contentPaddingWithLabel<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>contentPaddingWithoutLabel<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>outlinedContentPadding<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>outlinedButtonStyleContentPadding<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/PaddingValues.html">PaddingValues</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>minWidth<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>minHeight<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>outlinedMinWidth<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>outlinedMinHeight<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>trailingIconPadding<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>trailingIconSize<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="-944217791%2FProperties%2F1534506009" anchor-label="button" id="-944217791%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="button.html"><span><span>button</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-944217791%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="button.html">button</a><span class="token operator">: </span><a href="-button/index.html">Components.Button</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-373179312%2FProperties%2F1534506009" anchor-label="checkbox" id="-373179312%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="checkbox.html"><span><span>checkbox</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-373179312%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="checkbox.html">checkbox</a><span class="token operator">: </span><a href="-checkbox/index.html">Components.Checkbox</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1691477954%2FProperties%2F1534506009" anchor-label="dropdown" id="1691477954%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="dropdown.html"><span><span>dropdown</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1691477954%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="dropdown.html">dropdown</a><span class="token operator">: </span><a href="-dropdown/index.html">Components.Dropdown</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-135290232%2FProperties%2F1534506009" anchor-label="iconButton" id="-135290232%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="icon-button.html"><span>icon</span><wbr></wbr><span><span>Button</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-135290232%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="icon-button.html">iconButton</a><span class="token operator">: </span><a href="-icon-button/index.html">Components.IconButton</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-911576403%2FProperties%2F1534506009" anchor-label="icons" id="-911576403%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="icons.html"><span><span>icons</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-911576403%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="icons.html">icons</a><span class="token operator">: </span><a href="-icon/index.html">Components.Icon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1992717620%2FProperties%2F1534506009" anchor-label="menu" id="1992717620%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="menu.html"><span><span>menu</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1992717620%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="menu.html">menu</a><span class="token operator">: </span><a href="-menu/index.html">Components.Menu</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="114082396%2FProperties%2F1534506009" anchor-label="numberPicker" id="114082396%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="number-picker.html"><span>number</span><wbr></wbr><span><span>Picker</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="114082396%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="number-picker.html">numberPicker</a><span class="token operator">: </span><a href="-number-picker/index.html">Components.NumberPicker</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1262329949%2FProperties%2F1534506009" anchor-label="segmentedButton" id="-1262329949%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="segmented-button.html"><span>segmented</span><wbr></wbr><span><span>Button</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1262329949%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="segmented-button.html">segmentedButton</a><span class="token operator">: </span><a href="-segmented-button/index.html">Components.SegmentedButton</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1784475638%2FProperties%2F1534506009" anchor-label="style" id="1784475638%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="style.html"><span><span>style</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1784475638%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="style.html">style</a><span class="token operator">: </span><a href="-style/index.html">Components.Style</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1422690433%2FProperties%2F1534506009" anchor-label="switch" id="-1422690433%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="switch.html"><span><span>switch</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1422690433%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="switch.html">switch</a><span class="token operator">: </span><a href="-switch/index.html">Components.Switch</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1795731366%2FProperties%2F1534506009" anchor-label="textField" id="-1795731366%2FProperties%2F1534506009" data-filterable-set=":toolbox:modules:ui/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":toolbox:modules:ui/commonMain" data-filterable-set=":toolbox:modules:ui/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="text-field.html"><span>text</span><wbr></wbr><span><span>Field</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1795731366%2FProperties%2F1534506009"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":toolbox:modules:ui/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="text-field.html">textField</a><span class="token operator">: </span><a href="-text-field/index.html">Components.TextField</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

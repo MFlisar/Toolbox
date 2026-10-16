@@ -1,0 +1,571 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../app-shared/7.0.0/app-shared-7.0.0.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "app-shared",
+    "version": "7.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "logger-file",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kotpreferences",
+          "module": "storage-datastore",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.androidx.lifecycle",
+          "module": "lifecycle-runtime-compose",
+          "version": {
+            "requires": "2.11.0"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-navigator",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-transitions",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-screenmodel",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui-adaptive",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "zip",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "backup",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "core",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "logger-console",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kotpreferences",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kotpreferences",
+          "module": "extension-compose",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedebugdrawer",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composechangelog",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composepreferences",
+          "module": "core",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composethemer",
+          "module": "core",
+          "version": {
+            "requires": "2.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "shared.aar",
+          "url": "app-shared-android-7.0.0.aar",
+          "size": 792063,
+          "sha512": "4eba73b27395616a75f320db60b3be190790627635d51d65763eed0fe7dda53f5f762751a10b49e87022715c32630516d1e354410290ad38b19818631962cf3b",
+          "sha256": "60708d85205f0e0af20dad7af1cee9b7ace827ef3376453120b7384905d2b61b",
+          "sha1": "11490fc437d00b4f6ea887de3368d8625c119f44",
+          "md5": "2a29a29d00cdba258f4e2b1cf22c3d1c"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "logger-file",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kotpreferences",
+          "module": "storage-datastore",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.androidx.lifecycle",
+          "module": "lifecycle-runtime-compose",
+          "version": {
+            "requires": "2.11.0"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-navigator",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-transitions",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-screenmodel",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui-adaptive",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "zip",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "backup",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "core",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "logger-console",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kotpreferences",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kotpreferences",
+          "module": "extension-compose",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedebugdrawer",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composechangelog",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composepreferences",
+          "module": "core",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composethemer",
+          "module": "core",
+          "version": {
+            "requires": "2.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedebugdrawer",
+          "module": "infos-build",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedebugdrawer",
+          "module": "infos-device",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "extension-composeviewer",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedebugdrawer",
+          "module": "plugin-lumberjack",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.8.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3.adaptive",
+          "module": "adaptive",
+          "version": {
+            "requires": "1.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.ui",
+          "module": "ui-backhandler",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "br.com.devsrsouza.compose.icons",
+          "module": "font-awesome",
+          "version": {
+            "requires": "1.1.1"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedebugdrawer",
+          "module": "plugin-kotpreferences",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composechangelog",
+          "module": "renderer-header",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composechangelog",
+          "module": "statesaver-kotpreferences",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-info",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-time",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-frequency",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composepreferences",
+          "module": "screen-bool",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composepreferences",
+          "module": "screen-list",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composepreferences",
+          "module": "screen-button",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composepreferences",
+          "module": "kotpreferences",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composecolors",
+          "module": "material",
+          "version": {
+            "requires": "2.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composethemer",
+          "module": "modules-picker",
+          "version": {
+            "requires": "2.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composethemer",
+          "module": "modules-defaultpicker",
+          "version": {
+            "requires": "2.0.0"
+          }
+        },
+        {
+          "group": "io.github.vinceglb",
+          "module": "filekit-dialogs-compose",
+          "version": {
+            "requires": "0.16.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "shared.aar",
+          "url": "app-shared-android-7.0.0.aar",
+          "size": 792063,
+          "sha512": "4eba73b27395616a75f320db60b3be190790627635d51d65763eed0fe7dda53f5f762751a10b49e87022715c32630516d1e354410290ad38b19818631962cf3b",
+          "sha256": "60708d85205f0e0af20dad7af1cee9b7ace827ef3376453120b7384905d2b61b",
+          "sha1": "11490fc437d00b4f6ea887de3368d8625c119f44",
+          "md5": "2a29a29d00cdba258f4e2b1cf22c3d1c"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "shared-android-sources.jar",
+          "url": "app-shared-android-7.0.0-sources.jar",
+          "size": 112548,
+          "sha512": "46ebb644ad45821cbc94e7e4f1a1d23691c1ad3aeaca1a77fd355f01c9cf45c8312307420d033b49287c4411ddd613a805c02125c7aa22f21a1f0d79670478a6",
+          "sha256": "ab090b34be2980fea60debfbe0d72d147b7321f92b80d77de07994a548ebff81",
+          "sha1": "3263b6ca5694b745a585cb343edcaaaf159178bc",
+          "md5": "ddc9124ed65bc6e3abbfcdba492598ab"
+        }
+      ]
+    }
+  ]
+}

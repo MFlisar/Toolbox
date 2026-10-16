@@ -1,0 +1,305 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../core/7.0.0/core-7.0.0.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "core",
+    "version": "7.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.activity",
+          "module": "activity-compose",
+          "version": {
+            "requires": "1.13.0"
+          }
+        },
+        {
+          "group": "com.jakewharton",
+          "module": "process-phoenix",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.components",
+          "module": "components-resources",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kmpplatformcontext",
+          "module": "core",
+          "version": {
+            "requires": "2.0.2"
+          }
+        },
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "core",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kmpparcelize",
+          "module": "library",
+          "version": {
+            "requires": "2.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "core.aar",
+          "url": "core-android-7.0.0.aar",
+          "size": 197571,
+          "sha512": "6c58d4b63921383426d2baa02996f6e1a29a62b6c8a929201e30f826cba40c517f18a08fe4543a796732a14acae50f4bead9b0fa6a447aae27c65b45608b670c",
+          "sha256": "a441393e41626eb65c5ec56628762900f5237f2eb6d66f4371901473cd1f706e",
+          "sha1": "8ced5b18ef3d66a6549c8d156f1cbb9acc0f7873",
+          "md5": "04eca56ec5b6619ffe2a6e512505ae0d"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.activity",
+          "module": "activity-compose",
+          "version": {
+            "requires": "1.13.0"
+          }
+        },
+        {
+          "group": "com.jakewharton",
+          "module": "process-phoenix",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.components",
+          "module": "components-resources",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kmpplatformcontext",
+          "module": "core",
+          "version": {
+            "requires": "2.0.2"
+          }
+        },
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "core",
+          "version": {
+            "requires": "12.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kmpparcelize",
+          "module": "library",
+          "version": {
+            "requires": "2.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core-ktx",
+          "version": {
+            "requires": "1.19.0"
+          }
+        },
+        {
+          "group": "androidx.browser",
+          "module": "browser",
+          "version": {
+            "requires": "1.10.0"
+          }
+        },
+        {
+          "group": "ch.acra",
+          "module": "acra-core",
+          "version": {
+            "requires": "5.13.1"
+          }
+        },
+        {
+          "group": "ch.acra",
+          "module": "acra-mail",
+          "version": {
+            "requires": "5.13.1"
+          }
+        },
+        {
+          "group": "ch.acra",
+          "module": "acra-dialog",
+          "version": {
+            "requires": "5.13.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.8.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composechangelog",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.vinceglb",
+          "module": "filekit-dialogs-compose",
+          "version": {
+            "requires": "0.16.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.kmpmail",
+          "module": "library",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.lumberjack",
+          "module": "extension-feedback",
+          "version": {
+            "requires": "12.0.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "core.aar",
+          "url": "core-android-7.0.0.aar",
+          "size": 197571,
+          "sha512": "6c58d4b63921383426d2baa02996f6e1a29a62b6c8a929201e30f826cba40c517f18a08fe4543a796732a14acae50f4bead9b0fa6a447aae27c65b45608b670c",
+          "sha256": "a441393e41626eb65c5ec56628762900f5237f2eb6d66f4371901473cd1f706e",
+          "sha1": "8ced5b18ef3d66a6549c8d156f1cbb9acc0f7873",
+          "md5": "04eca56ec5b6619ffe2a6e512505ae0d"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "core-android-sources.jar",
+          "url": "core-android-7.0.0-sources.jar",
+          "size": 48718,
+          "sha512": "55a1fb240c66737309aba94d4d910dc345b85b013fbc5a7263eb32dc94201b8b3b0d5b9c5fc2bd7d6633c7015e9395cd799be284ee67eb02fb221f71bc8b16db",
+          "sha256": "3b4313d20d087ce64c37a92149d1f9f2e4f868c1f3dcf6527328e6add98a47d9",
+          "sha1": "c462da66701357a7ec55584243d239e95eb7d3b3",
+          "md5": "6840b928d470ea503a25a527ab8ecccc"
+        }
+      ]
+    }
+  ]
+}

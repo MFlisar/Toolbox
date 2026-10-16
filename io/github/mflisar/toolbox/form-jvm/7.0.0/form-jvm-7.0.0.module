@@ -1,0 +1,179 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../form/7.0.0/form-7.0.0.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "form",
+    "version": "7.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-info",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "form-jvm.jar",
+          "url": "form-jvm-7.0.0.jar",
+          "size": 249682,
+          "sha512": "be23b0e54a3b0dca465c8ae3729d46cd36799c3dba33d7cf9e5c96299a2e7ed2809d4370f8996971916a231fb5e2fb48c636bef2e0344eff56ad955c8a6289c1",
+          "sha256": "0fee930e104fcd2ee5c3879717bd1c65e8a89926998a06a69f885f90ec18ac4b",
+          "sha1": "5271dca0b5b5c8963f298691050fc0bdfa808767",
+          "md5": "0ed5e4b30ac114bb69182ffa7f07b61f"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "7.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "core",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.composedialogs",
+          "module": "dialog-info",
+          "version": {
+            "requires": "4.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "form-jvm.jar",
+          "url": "form-jvm-7.0.0.jar",
+          "size": 249682,
+          "sha512": "be23b0e54a3b0dca465c8ae3729d46cd36799c3dba33d7cf9e5c96299a2e7ed2809d4370f8996971916a231fb5e2fb48c636bef2e0344eff56ad955c8a6289c1",
+          "sha256": "0fee930e104fcd2ee5c3879717bd1c65e8a89926998a06a69f885f90ec18ac4b",
+          "sha1": "5271dca0b5b5c8963f298691050fc0bdfa808767",
+          "md5": "0ed5e4b30ac114bb69182ffa7f07b61f"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "form-jvm-sources.jar",
+          "url": "form-jvm-7.0.0-sources.jar",
+          "size": 19504,
+          "sha512": "34a33255c70f6b3bb27c02fb3b06ad5139387afb6968b182545fdb351c3fd407b91857847271feb766787cc9d0b3dd821ddc0ed1635cdb34f2c6625492cac938",
+          "sha256": "cd54d88cf7f86007323d4c9a6e11283942d1c29ab78446c2d5ca64fdfef14d3c",
+          "sha1": "f48b032bc5ebbf986ffedf04a573015549baefe1",
+          "md5": "ec39e5b2ae7952743041ce1073067d66"
+        }
+      ]
+    }
+  ]
+}
