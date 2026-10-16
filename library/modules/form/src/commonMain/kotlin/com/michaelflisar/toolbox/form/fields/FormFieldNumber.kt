@@ -22,7 +22,7 @@ class FormFieldNumber<T : Number> internal constructor(
             title = "",
             value = stateValue.value,
             modifier = Modifier.fillMaxWidth(),
-            onValueChanged = { it?.let { stateValue.value = it } },
+            onValueChange = { it?.let { stateValue.value = it } },
         )
     }
 }

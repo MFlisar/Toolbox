@@ -27,11 +27,11 @@ fun <T : Number> FormNumberInput(
     selectAllOnFocus: Boolean = false,
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
-    onValueChanged: (value: T) -> Unit,
+    onValueChange: (value: T) -> Unit,
 ) {
     val value = remember { mutableStateOf(value) }
     LaunchedEffect(Unit) {
-        snapshotFlow { value.value }.collect { onValueChanged(it) }
+        snapshotFlow { value.value }.collect { onValueChange(it) }
     }
     FormNumberInput(
         title = title,

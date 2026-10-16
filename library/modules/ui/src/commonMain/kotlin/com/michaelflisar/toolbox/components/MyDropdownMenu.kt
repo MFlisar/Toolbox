@@ -4,10 +4,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.IntState
@@ -21,10 +21,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.components
 
 object MyDropdownMenuDefaults {
     val maxWidth: Dp = 280.dp
-    val widthConfig: MyDropdownMenu.WidthConfig = MyDropdownMenu.WidthConfig.Auto()
 }
 
 object MyDropdownMenu {
@@ -59,10 +59,10 @@ fun MyDropdownMenuContainerScope.MyDropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    widthConfig: MyDropdownMenu.WidthConfig = MyDropdownMenuDefaults.widthConfig,
+    widthConfig: MyDropdownMenu.WidthConfig = MaterialTheme.components.dropdown.widthConfig,
     offset: DpOffset = DpOffset(0.dp, 0.dp),
     scrollState: ScrollState = rememberScrollState(),
-    shape: Shape = MenuDefaults.shape,
+    shape: Shape = MaterialTheme.components.menu.shape,
     containerColor: Color = MenuDefaults.containerColor,
     tonalElevation: Dp = MenuDefaults.TonalElevation,
     shadowElevation: Dp = MenuDefaults.ShadowElevation,
@@ -79,6 +79,7 @@ fun MyDropdownMenuContainerScope.MyDropdownMenu(
             val maxWidth = when {
                 widthConfig.maxWidth != null && widthConfig.limitToContainerWidth ->
                     minOf(widthConfig.maxWidth, containerWidthDp)
+
                 widthConfig.maxWidth != null -> widthConfig.maxWidth
                 widthConfig.limitToContainerWidth -> containerWidthDp
                 else -> null

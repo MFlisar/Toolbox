@@ -24,6 +24,7 @@ import com.michaelflisar.demo.pages.tests.PageTestDialogs
 import com.michaelflisar.demo.pages.tests.PageTestPane
 import com.michaelflisar.demo.pages.tests.PageTestPreferences
 import com.michaelflisar.demo.pages.tests.PageTestTable
+import com.michaelflisar.demo.pages.tests.PageTestTranslateableContent
 import com.michaelflisar.demo.pages.tests.PageTestUI
 import com.michaelflisar.demo.pages.tests.PageTestUIAdaptive
 import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
@@ -76,6 +77,7 @@ private fun Page(
             PageTestPane,
             PageTestDialogs,
             PageTestPreferences,
+            PageTestTranslateableContent,
             PageTestUI,
             PageTestUIAdaptive
         )

@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.spacing
 
 
@@ -59,7 +60,7 @@ object MyDropdownButton {
                     items.forEach { item ->
                         when (item) {
                             is Entry.Button -> {
-                                DropdownMenuItem(
+                                MyDropdownMenuItem(
                                     onClick = {
                                         item.onClick()
                                         if (item.dismissOnClick) {
@@ -153,11 +154,11 @@ fun MyDropdownButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    shape: Shape = ButtonDefaults.shape,
+    shape: Shape = MaterialTheme.components.button.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -179,11 +180,11 @@ fun MyDropdownButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    shape: Shape = ButtonDefaults.shape,
+    shape: Shape = MaterialTheme.components.button.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -204,11 +205,11 @@ fun MyDropdownOutlinedButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    shape: Shape = ButtonDefaults.outlinedShape,
+    shape: Shape = MaterialTheme.components.button.outlinedShape,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = enabled),
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -230,11 +231,11 @@ fun MyDropdownOutlinedButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    shape: Shape = ButtonDefaults.outlinedShape,
+    shape: Shape = MaterialTheme.components.button.outlinedShape,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = enabled),
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -266,7 +267,7 @@ private fun MyDropdownButton(
     ButtonWrapper(
         type = type,
         button = {
-            MyButton(
+            MyButtonImpl(
                 onClick = type::onClick,
                 style = style,
                 modifier = modifier,

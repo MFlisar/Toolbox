@@ -18,11 +18,11 @@ fun <T> FormSpinner(
     mapper: @Composable (item: T) -> String,
     mapperDropdown: @Composable (item: T) -> String = mapper,
     modifier: Modifier = Modifier.fillMaxWidth(),
-    onValueChanged: (value: T) -> Unit,
+    onValueChange: (value: T) -> Unit,
 ) {
     val value = remember { mutableStateOf(value) }
     LaunchedEffect(Unit) {
-        snapshotFlow { value.value }.collect { onValueChanged(it) }
+        snapshotFlow { value.value }.collect { onValueChange(it) }
     }
     FormSpinner(title, value, items, mapper, mapperDropdown, modifier)
 }

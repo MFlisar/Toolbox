@@ -5,12 +5,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.Dp
+import com.michaelflisar.toolbox.components
 
 @Composable
 fun MyExpandIcon(
@@ -19,12 +22,14 @@ fun MyExpandIcon(
     sideIsLeft: Boolean = true,
     color: Color? = null,
     icon: ImageVector = Icons.Default.ArrowDropDown,
+    size: Dp? = MaterialTheme.components.icons.size,
 ) {
     val rotation by animateFloatAsState(if (expanded) (if (sideIsLeft) -180f else 180f) else 0f)
-    Icon(
+    MyIcon(
         modifier = modifier.rotate(rotation),
         imageVector = icon,
         tint = color?.takeIf { it != Color.Unspecified } ?: LocalContentColor.current,
-        contentDescription = null
+        contentDescription = null,
+        size = size
     )
 }

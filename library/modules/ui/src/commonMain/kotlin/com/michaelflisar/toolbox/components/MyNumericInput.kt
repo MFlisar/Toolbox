@@ -1,22 +1,12 @@
 package com.michaelflisar.toolbox.components
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.text.input.KeyboardType
-import com.michaelflisar.toolbox.Platform.cursor
 import com.michaelflisar.toolbox.numbers.NumberUtil
 
 @Composable
@@ -26,14 +16,18 @@ fun <T : Number> MyNumericInput(
     valid: MutableState<Boolean> = remember { mutableStateOf(true) },
     defaultValue: T = NumberUtil.zero(value.value),
     title: String = "",
-    readOnly: Boolean = false
+    readOnly: Boolean = false,
+    enabled: Boolean = true,
+    showClearIcon: Boolean = true,
 ) {
     MyNumericInput(
         value = value.value,
         modifier = modifier,
         defaultValue = defaultValue,
         title = title,
-        readOnly = readOnly
+        readOnly = readOnly,
+        enabled = enabled,
+        showClearIcon = showClearIcon
     ) {
         valid.value = it != null
         value.value = it ?: defaultValue
@@ -47,14 +41,18 @@ fun <T : Number> MyNumericInputNullableState(
     modifier: Modifier = Modifier,
     valid: MutableState<Boolean> = remember { mutableStateOf(true) },
     title: String = "",
-    readOnly: Boolean = false
+    readOnly: Boolean = false,
+    enabled: Boolean = true,
+    showClearIcon: Boolean = true,
 ) {
     MyNumericInputNullable(
         value = value.value,
         modifier = modifier,
         instance = instance,
         title = title,
-        readOnly = readOnly
+        readOnly = readOnly,
+        enabled = enabled,
+        showClearIcon = showClearIcon
     ) {
         valid.value = it != null
         value.value = it
@@ -69,43 +67,31 @@ fun <T : Number> MyNumericInput(
     defaultValue: T = NumberUtil.zero(value),
     title: String = "",
     readOnly: Boolean = false,
-    onValueChanged: (value: T?) -> Unit = {},
+    enabled: Boolean = true,
+    showClearIcon: Boolean = true,
+    onValueChange: (value: T?) -> Unit = {},
 ) {
     val text = remember { mutableStateOf(value.toString()) }
     val supportsDecimal = remember { NumberUtil.supportsDecimal(defaultValue) }
 
-    OutlinedTextField(
+    MyInput(
         modifier = modifier,
         value = text.value,
         onValueChange = {
             val filtered = NumberUtil.clearText(it, supportsDecimal)
             text.value = filtered
             val value = NumberUtil.parse(defaultValue, filtered)
-            onValueChanged(value)
+            onValueChange(value)
         },
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = if (supportsDecimal) KeyboardType.Decimal else KeyboardType.Number
         ),
-        label = { Text(title) },
+        title = title,
         readOnly = readOnly,
-        //isError = text.value.toIntOrNull() == null
-        trailingIcon = if (text.value.isNotEmpty()) {
-            {
-                Icon(
-                    Icons.Default.Clear,
-                    contentDescription = "clear",
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .cursor()
-                        .focusProperties { canFocus = false }
-                        .clickable {
-                            text.value = ""
-                            onValueChanged(null)
-                        }
-                )
-            }
-        } else null,
-        singleLine = true
+        enabled = enabled,
+        showClearIcon = showClearIcon,
+        minLines = 1,
+        maxLines = 1
     )
 }
 
@@ -118,42 +104,30 @@ fun <T : Number> MyNumericInputNullable(
     modifier: Modifier = Modifier,
     title: String = "",
     readOnly: Boolean = false,
-    onValueChanged: (value: T?) -> Unit = {},
+    enabled: Boolean = true,
+    showClearIcon: Boolean = true,
+    onValueChange: (value: T?) -> Unit = {},
 ) {
     val text = remember { mutableStateOf(value?.toString() ?: "") }
     val supportsDecimal = remember { NumberUtil.supportsDecimal(instance) }
 
-    OutlinedTextField(
+    MyInput(
         modifier = modifier,
         value = text.value,
         onValueChange = {
             val filtered = NumberUtil.clearText(it, supportsDecimal)
             text.value = filtered
             val value = NumberUtil.parse(instance, filtered)
-            onValueChanged(value)
+            onValueChange(value)
         },
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = if (supportsDecimal) KeyboardType.Decimal else KeyboardType.Number
         ),
-        label = { Text(title) },
+        title = title,
         readOnly = readOnly,
-        //isError = text.value.toIntOrNull() == null
-        trailingIcon = if (text.value.isNotEmpty()) {
-            {
-                Icon(
-                    Icons.Default.Clear,
-                    contentDescription = "clear",
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .cursor()
-                        .focusProperties { canFocus = false }
-                        .clickable {
-                            text.value = ""
-                            onValueChanged(null)
-                        }
-                )
-            }
-        } else null,
-        singleLine = true
+        enabled = enabled,
+        showClearIcon = showClearIcon,
+        minLines = 1,
+        maxLines = 1
     )
 }

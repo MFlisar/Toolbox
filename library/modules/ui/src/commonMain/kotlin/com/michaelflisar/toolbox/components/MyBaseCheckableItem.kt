@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -15,9 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.spacing
-
 
 @Composable
 internal fun MyBaseCheckableItem(
@@ -25,17 +25,47 @@ internal fun MyBaseCheckableItem(
     title: @Composable (() -> Unit)?,
     checked: Boolean,
     style: TextStyle = LocalTextStyle.current,
-    onCheckedChange: ((Boolean) -> Unit)? = null,
-    content: @Composable () -> Unit
+    padding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    enabled: Boolean = true,
+    onCheckedChange: (Boolean) -> Unit,
+    content: @Composable () -> Unit,
 ) {
     Row(
         modifier = modifier
-            .clip(MaterialTheme.shapes.medium)
-            .then(
-                if (onCheckedChange != null) {
-                    Modifier.clickable { onCheckedChange.invoke(!checked) }
-                } else Modifier)
-            .padding(MaterialTheme.padding.default)
+            .clip(MaterialTheme.components.button.shape)
+            .clickable(
+                enabled = enabled,
+            ) { onCheckedChange.invoke(!checked) }
+            .padding(padding)
+            .width(IntrinsicSize.Max),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (title != null) {
+            Column(
+                modifier = Modifier.weight(1f).padding(end = MaterialTheme.spacing.default)
+            ) {
+                CompositionLocalProvider(LocalTextStyle provides style) {
+                    title()
+                }
+            }
+        }
+        content()
+    }
+}
+
+@Composable
+internal fun MyBaseCheckableItemWrapperOnly(
+    modifier: Modifier = Modifier,
+    title: @Composable (() -> Unit)?,
+    style: TextStyle = LocalTextStyle.current,
+    padding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    content: @Composable () -> Unit,
+) {
+    Row(
+        modifier = modifier
+            .clip(MaterialTheme.components.button.shape)
+            .padding(padding)
             .width(IntrinsicSize.Max),
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
         verticalAlignment = Alignment.CenterVertically

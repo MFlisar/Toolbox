@@ -16,11 +16,11 @@ fun FormTextInput(
     value: String,
     modifier: Modifier = Modifier.fillMaxWidth(),
     maxLines: Int? = null,
-    onValueChanged: (value: String) -> Unit,
+    onValueChange: (value: String) -> Unit,
 ) {
     val value = remember { mutableStateOf(value) }
     LaunchedEffect(Unit) {
-        snapshotFlow { value.value }.collect { onValueChanged(it) }
+        snapshotFlow { value.value }.collect { onValueChange(it) }
     }
     FormTextInput(title, value, modifier, maxLines)
 }

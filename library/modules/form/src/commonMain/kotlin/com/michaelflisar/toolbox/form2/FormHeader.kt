@@ -108,7 +108,7 @@ private fun <T> Header(
                 mapper = { spinner.mapper(it) },
                 color = MaterialTheme.colorScheme.surface,
                 backgroundColor = MaterialTheme.colorScheme.onSurface,
-                onSelectionChanged = { item: T ->
+                onSelectionChange = { item: T ->
                     selected.value = item
                     spinner.onItemSelected.invoke(item)
                 }

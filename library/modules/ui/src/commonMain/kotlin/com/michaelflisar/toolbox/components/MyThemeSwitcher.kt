@@ -23,7 +23,7 @@ fun <T> MyThemeSwitcher(
     mapper: @Composable (item: T) -> String = { it.toString() },
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onSelectionChanged: (T) -> Unit
+    onSelectionChange: (T) -> Unit
 ) {
     MySegmentedButtonRow(
         modifier = modifier,
@@ -34,6 +34,6 @@ fun <T> MyThemeSwitcher(
         mapper = mapper,
         color = color,
         onColor = onColor,
-        onSelectionChanged = onSelectionChanged
+        onSelectionChange = onSelectionChange
     )
 }

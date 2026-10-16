@@ -55,9 +55,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ComposeUtil
+import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.extensions.isScrollingUp
 import com.michaelflisar.toolbox.extensions.toSentenceCase
 import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.spacing
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -467,14 +469,16 @@ private fun ColumnScope.FabMenu(
     {
         Column(
             modifier = Modifier
-                .padding(bottom = Menu.itemPadding)
+                // TODO: misused, but ok
+                .padding(bottom = MaterialTheme.components.menu.style.itemPadding)
                 .background(
                     color = MaterialTheme.colorScheme.surfaceContainer,
                     shape = setup.shape
                 )
-                .padding(vertical = Menu.itemPadding)
+                // TODO: misused, but ok
+                .padding(horizontal = MaterialTheme.components.menu.style.itemPadding)
                 .alpha(animationContentAlphaValue),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
         ) {
             val state = rememberMenuState(show = true)
             val setup = rememberMenuSetup()

@@ -42,6 +42,7 @@ import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.table.Table
@@ -58,6 +59,7 @@ import com.michaelflisar.toolbox.table.definitions.Header
 import com.michaelflisar.toolbox.table.definitions.rememberTableDefinition
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 @Parcelize
 object PageTestTable : NavScreen() {
@@ -88,7 +90,7 @@ private fun Page(
         scope.launch(DispatcherIO) {
             // Simulate a delay to mimic data loading
             data = null
-            delay(1000)
+            delay(1000.milliseconds)
             data = TestData.createRandom(1000)
         }
 
@@ -214,7 +216,15 @@ private fun Page(
         ),
         keyProvider = { it.id }
     )
-    val tableState = data?.let { rememberTableState(it, tableDefinition) }
+    val tableState = if (data != null) {
+        println("data = $data")
+        rememberTableState(
+            definition = tableDefinition,
+            items = data!!
+        )
+    } else {
+        null
+    }
 
     Column(
         modifier = Modifier
@@ -231,7 +241,7 @@ private fun Page(
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
-            Button(
+            MyButton(
                 onClick = { loadData() },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {

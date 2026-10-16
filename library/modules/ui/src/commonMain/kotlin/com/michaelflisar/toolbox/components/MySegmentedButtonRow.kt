@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.michaelflisar.toolbox.components
 
 @Suppress("UNCHECKED_CAST")
 @Composable
@@ -21,7 +22,7 @@ fun <T> MySegmentedButtonRow(
     forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onSelectionChanged: ((T) -> Unit)? = null,
+    onSelectionChange: ((T) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected.value)
@@ -36,7 +37,7 @@ fun <T> MySegmentedButtonRow(
     ) { index, item ->
         val s = (if (index >= 0) items[index] else null) as T
         selected.value = s
-        onSelectionChanged?.invoke(s)
+        onSelectionChange?.invoke(s)
     }
 }
 
@@ -50,7 +51,7 @@ fun <T> MySegmentedButtonRow(
     forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onSelectionChanged: (T) -> Unit,
+    onSelectionChange: (T) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected)
@@ -63,7 +64,7 @@ fun <T> MySegmentedButtonRow(
         color = color,
         onColor = onColor
     ) { index, item ->
-        onSelectionChanged.invoke(items[index])
+        onSelectionChange.invoke(items[index])
     }
 }
 
@@ -78,7 +79,7 @@ fun <T> MySegmentedButtonRowIndex(
     forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onSelectionChanged: ((Int) -> Unit)? = null,
+    onSelectionChange: ((Int) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     MySegmentedButtonRowImpl(
@@ -91,7 +92,7 @@ fun <T> MySegmentedButtonRowIndex(
         onColor = onColor
     ) { index, item ->
         selectedIndex.value = index
-        onSelectionChanged?.invoke(index)
+        onSelectionChange?.invoke(index)
     }
 }
 
@@ -106,7 +107,7 @@ fun <T> MySegmentedButtonRowIndex(
     forceSelection: Boolean = true,
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
-    onSelectionChanged: (Int) -> Unit,
+    onSelectionChange: (Int) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     MySegmentedButtonRowImpl(
@@ -118,7 +119,7 @@ fun <T> MySegmentedButtonRowIndex(
         color = color,
         onColor = onColor
     ) { index, item ->
-        onSelectionChanged.invoke(index)
+        onSelectionChange.invoke(index)
     }
 }
 
@@ -174,6 +175,7 @@ private fun MySegmentedButtonRowImpl(
                         }
                     )
                 },
+                contentPadding = MaterialTheme.components.segmentedButton.contentPadding
             ) {
                 Text(item)
             }

@@ -39,6 +39,7 @@ import com.michaelflisar.composedialogs.dialogs.time.rememberDialogTime
 import com.michaelflisar.parcelize.Parcelize
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
+import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.form.FormDialog
 import com.michaelflisar.toolbox.form.fields.rememberFormFieldCheckbox
@@ -200,7 +201,7 @@ private fun Page(
             style = MaterialTheme.typography.titleMedium
         )
         dialogs.forEach {
-            Button(
+            MyButton(
                 onClick = { it.state.show() }
             ) {
                 Text(it.name)

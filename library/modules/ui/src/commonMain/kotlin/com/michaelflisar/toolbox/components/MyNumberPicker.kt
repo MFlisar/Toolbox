@@ -10,6 +10,12 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -38,6 +44,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -52,12 +59,16 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.numbers.MyNumberParser
 import com.michaelflisar.toolbox.numbers.MyNumberValidator
+import com.michaelflisar.toolbox.padding
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 // ------------------
 // Overloads
@@ -81,7 +92,7 @@ fun <T : Number> MyNumberPicker(
     focused: Boolean = false,
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
-    onCurrentValueIsInvalid: (text: String) -> Unit = {}
+    onCurrentValueIsInvalid: (text: String) -> Unit = {},
 ) {
     MyNumberPicker(
         value = value.value,
@@ -129,7 +140,7 @@ fun <T : Number> MyNumberPicker(
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
     onCurrentValueIsInvalid: (text: String) -> Unit = {},
-    onValueChanged: (T) -> Unit = {}
+    onValueChange: (T) -> Unit = {},
 ) {
     val value = parser.correct(value)
 
@@ -156,7 +167,7 @@ fun <T : Number> MyNumberPicker(
                     } else parser.getPrevValue(stateValue.value)
                 stateValue.value = next
                 stateText = stateText.copy(text = parser.formatValue(next))
-                onValueChanged(stateValue.value)
+                onValueChange(stateValue.value)
                 if (clearFocusOnButtonPress) {
                     focusManager.clearFocus()
                 }
@@ -173,7 +184,7 @@ fun <T : Number> MyNumberPicker(
                     } else parser.getNextValue(stateValue.value)
                 stateValue.value = next
                 stateText = stateText.copy(text = parser.formatValue(next))
-                onValueChanged(stateValue.value)
+                onValueChange(stateValue.value)
                 if (clearFocusOnButtonPress) {
                     focusManager.clearFocus()
                 }
@@ -191,8 +202,6 @@ fun <T : Number> MyNumberPicker(
         //L.d { "[$label] isFocused = ${isFocused.value} | focused = $focused" }
 
         val paddingValuesTextField = OutlinedTextFieldDefaults.contentPadding(
-            start = 0.dp,
-            end = 0.dp,
             bottom = 4.dp
         )
 
@@ -203,14 +212,22 @@ fun <T : Number> MyNumberPicker(
         // Input in Box and Card with Custom Label and Error Texts and custom focus handling
         MyLabeledBox(
             modifier = modifier,
-            modifierInner = modifierInnerPicker,
+            modifierInner = modifierInnerPicker.heightIn(
+                min = MaterialTheme.components.textField.minHeight
+            ),
             label = label,
             enabled = enabled,
             error = errorText,
             focused = isFocused.value
         ) {
             Row(
-                modifier = Modifier,
+                modifier = Modifier.widthIn(
+                    min = MaterialTheme.components.numberPicker.minWidth
+                ).then(
+                        if (showButtons) {
+                            Modifier.padding(horizontal = MaterialTheme.padding.default)
+                        } else Modifier
+                        ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 buttonDecrease?.invoke()
@@ -222,8 +239,13 @@ fun <T : Number> MyNumberPicker(
                         mutableInteractionSource.interactions
                             .collect { interaction ->
                                 if (interaction is FocusInteraction.Focus) {
-                                    delay(100)
-                                    stateText = stateText.copy(selection = TextRange(0, stateText.text.length))
+                                    delay(100.milliseconds)
+                                    stateText = stateText.copy(
+                                        selection = TextRange(
+                                            0,
+                                            stateText.text.length
+                                        )
+                                    )
                                     //L.tag("SELECT").d { "interactionSource: text = '${stateText.text}' | selection = ${stateText.selection}" }
                                 } else if (interaction is FocusInteraction.Unfocus) {
                                     stateText = stateText.copy(selection = TextRange.Zero)
@@ -267,17 +289,17 @@ fun <T : Number> MyNumberPicker(
 
                             if (valid) {
                                 stateValue.value = newValue!!
-                                onValueChanged(newValue)
+                                onValueChange(newValue)
                             } else {
                                 // zurückfallen auf initial wert
                                 stateValue.value = initialValue
-                                onValueChanged(initialValue)
+                                onValueChange(initialValue)
                                 // fehler danach melden
                                 onCurrentValueIsInvalid(it.text)
                             }
                         }
                     },
-                    isError= isError,
+                    isError = isError,
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     label = null,
                     //placeholder = { Text(text = label) },
@@ -334,11 +356,11 @@ fun <T : Number> MyNumberPicker(
 
                     if (valid) {
                         stateValue.value = newValue!!
-                        onValueChanged(newValue)
+                        onValueChange(newValue)
                     } else {
                         // zurückfallen auf initial wert
                         stateValue.value = initialValue
-                        onValueChanged(initialValue)
+                        onValueChange(initialValue)
                         // fehler danach melden
                         onCurrentValueIsInvalid(it.text)
                     }
@@ -346,7 +368,7 @@ fun <T : Number> MyNumberPicker(
                 isError = !validator.isValid.value,
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 label = if (label.isNotEmpty()) {
-                    @Composable { Text(text = label) }
+                    { Text(text = label) }
                 } else null,
                 //placeholder = { Text(text = label) },
                 minLines = lines,
@@ -389,17 +411,20 @@ private fun RepeatingIconButton(
     minDelayMillis: Long = 5,
     delayDecayFactor: Float = .20f,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     IconButton(
-        modifier = Modifier.repeatingClickable(
-            interactionSource = interactionSource,
-            enabled = enabled,
-            initialDelayMillis = initialDelayMillis,
-            maxDelayMillis = maxDelayMillis,
-            minDelayMillis = minDelayMillis,
-            delayDecayFactor = delayDecayFactor
-        ) { onClick() },
+        modifier = Modifier
+            .clip(CircleShape)
+            .repeatingClickable(
+                interactionSource = interactionSource,
+                enabled = enabled,
+                initialDelayMillis = initialDelayMillis,
+                maxDelayMillis = maxDelayMillis,
+                minDelayMillis = minDelayMillis,
+                delayDecayFactor = delayDecayFactor
+            ) { onClick() }
+            .size(MaterialTheme.components.textField.trailingIconSize + MaterialTheme.components.textField.trailingIconPadding),
         onClick = {
             onClick()
         },
@@ -407,6 +432,7 @@ private fun RepeatingIconButton(
         interactionSource = interactionSource,
     ) {
         Icon(
+            modifier = Modifier.size(MaterialTheme.components.textField.trailingIconSize),
             imageVector = icon,
             contentDescription = ""
         )
@@ -421,7 +447,7 @@ private fun Modifier.repeatingClickable(
     maxDelayMillis: Long,
     minDelayMillis: Long,
     delayDecayFactor: Float,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ): Modifier {
     val currentClickListener by rememberUpdatedState(onClick)
     return this then Modifier.pointerInput(interactionSource, enabled) {
@@ -474,7 +500,7 @@ private fun OutlinedNumberTextField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     cursorColor: Color? = null,
-    paddingValues: PaddingValues = OutlinedTextFieldDefaults.contentPadding()
+    paddingValues: PaddingValues = OutlinedTextFieldDefaults.contentPadding(),
 ) {
     val textColor = textStyle.color.takeOrElse {
         MaterialTheme.colorScheme.onSurface//colors.textColor(enabled).value

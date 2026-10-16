@@ -11,11 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.spacing
 
 
 @Composable
-fun <T> MyMultiSegmentedButtonRow(
+fun <T> MySegmentedButtonRowMultiSelect(
     items: List<T>,
     selected: MutableState<List<T>>,
     modifier: Modifier = Modifier,
@@ -27,7 +28,7 @@ fun <T> MyMultiSegmentedButtonRow(
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndizes = selected.value.map { items.indexOf(it) }
-    MyMultiSegmentedButtonRowImpl(
+    MySegmentedButtonRowMultiSelectImpl(
         modifier = modifier,
         items = texts,
         selected = selectedIndizes,
@@ -41,7 +42,7 @@ fun <T> MyMultiSegmentedButtonRow(
 }
 
 @Composable
-fun <T> MyMultiSegmentedButtonRow(
+fun <T> MySegmentedButtonRowMultiSelect(
     items: List<T>,
     selected: List<T>,
     modifier: Modifier = Modifier,
@@ -53,7 +54,7 @@ fun <T> MyMultiSegmentedButtonRow(
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndizes = selected.map { items.indexOf(it) }
-    MyMultiSegmentedButtonRowImpl(
+    MySegmentedButtonRowMultiSelectImpl(
         modifier = modifier,
         items = texts,
         selected = selectedIndizes,
@@ -66,7 +67,7 @@ fun <T> MyMultiSegmentedButtonRow(
 }
 
 @Composable
-fun <T> MyMultiSegmentedButtonRowIndex(
+fun <T> MySegmentedButtonRowMultiSelectIndex(
     items: List<T>,
     selectedIndizes: MutableState<List<Int>>,
     modifier: Modifier = Modifier,
@@ -77,7 +78,7 @@ fun <T> MyMultiSegmentedButtonRowIndex(
     onSelectionChange: ((List<Int>) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
-    MyMultiSegmentedButtonRowImpl(
+    MySegmentedButtonRowMultiSelectImpl(
         modifier = modifier,
         items = texts,
         selected = selectedIndizes.value,
@@ -91,7 +92,7 @@ fun <T> MyMultiSegmentedButtonRowIndex(
 }
 
 @Composable
-fun <T> MyMultiSegmentedButtonRowIndex(
+fun <T> MySegmentedButtonRowMultiSelectIndex(
     items: List<T>,
     selectedIndizes: List<Int>,
     modifier: Modifier = Modifier,
@@ -102,7 +103,7 @@ fun <T> MyMultiSegmentedButtonRowIndex(
     onSelectionChange: (List<Int>) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
-    MyMultiSegmentedButtonRowImpl(
+    MySegmentedButtonRowMultiSelectImpl(
         modifier = modifier,
         items = texts,
         selected = selectedIndizes,
@@ -115,7 +116,7 @@ fun <T> MyMultiSegmentedButtonRowIndex(
 }
 
 @Composable
-private fun MyMultiSegmentedButtonRowImpl(
+private fun MySegmentedButtonRowMultiSelectImpl(
     modifier: Modifier = Modifier,
     items: List<String>,
     selected: List<Int>,
@@ -124,11 +125,7 @@ private fun MyMultiSegmentedButtonRowImpl(
     showSelectionInfo: Boolean,
     onSelectionChange: (indices: List<Int>, items: List<String>) -> Unit,
 ) {
-    val colorSelected =
-        color.takeIf { it != Color.Unspecified } ?: MaterialTheme.colorScheme.primary
-
     val selectedItems = selected.map { items[it] }
-
     Column(
         modifier = modifier
     ) {
@@ -172,7 +169,8 @@ private fun MyMultiSegmentedButtonRowImpl(
 
                         onSelectionChange(selectedNew, selectedItemsNew)
                     },
-                    checked = index in selected
+                    checked = index in selected,
+                    contentPadding = MaterialTheme.components.segmentedButton.contentPadding
                 ) {
                     Text(item)
                 }

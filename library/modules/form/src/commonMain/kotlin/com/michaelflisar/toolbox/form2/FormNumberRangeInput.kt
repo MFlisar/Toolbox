@@ -31,15 +31,15 @@ fun FormNumberRangeInput(
     title: String? = null,
     titleFrom: String = stringResource(Res.string.from),
     titleTo: String = stringResource(Res.string.to),
-    onValueChanged: (from: Int, to: Int) -> Unit,
+    onValueChange: (from: Int, to: Int) -> Unit,
 ) {
     val valueFrom = remember { mutableIntStateOf(valueFrom) }
     val valueTo = remember { mutableIntStateOf(valueTo) }
     LaunchedEffect(Unit) {
-        snapshotFlow { valueFrom.intValue }.collect { onValueChanged(it, valueTo.intValue) }
+        snapshotFlow { valueFrom.intValue }.collect { onValueChange(it, valueTo.intValue) }
     }
     LaunchedEffect(Unit) {
-        snapshotFlow { valueTo.intValue }.collect { onValueChanged(valueFrom.intValue, it) }
+        snapshotFlow { valueTo.intValue }.collect { onValueChange(valueFrom.intValue, it) }
     }
     FormNumberRangeInput(valueFrom, valueTo, modifier, min, max, step, title, titleFrom, titleTo)
 }

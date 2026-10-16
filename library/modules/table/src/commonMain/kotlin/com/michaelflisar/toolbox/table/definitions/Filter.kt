@@ -24,9 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.components.MyDropdown
 import com.michaelflisar.toolbox.components.MyDropdownIndex
+import com.michaelflisar.toolbox.components.MyDropdownMultiSelect
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyInput
-import com.michaelflisar.toolbox.components.MyMultiDropdown
 import com.michaelflisar.toolbox.components.MyNumericInputNullable
 import com.michaelflisar.toolbox.components.MyRow
 import com.michaelflisar.toolbox.components.MySegmentedControlIndex
@@ -178,7 +178,7 @@ abstract class Filter<Item, CellValue> {
                 selected = state.value.type,
                 mapper = { it.label },
                 mapperDropdown = { it.longLabel },
-                onSelectionChanged = {
+                onSelectionChange = {
                     state.value = state.value.copy(type = it)
                 }
             )
@@ -195,22 +195,13 @@ abstract class Filter<Item, CellValue> {
         @Composable
         override fun ColumnScope.content() {
             val focusRequester = remember { FocusRequester() }
-            //MyCheckbox(
-            //    modifier = Modifier
-            //        .fillMaxWidth(),
-            //    title = "Case Sensitive",
-            //    checked = !state.value.ignoreCase,
-            //    onCheckedChange = {
-            //        state.value = state.value.copy(ignoreCase = !it)
-            //    }
-            //)
             MyInput(
                 //title = "Filter",
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
                 value = state.value.value,
-                onValueChanged = {
+                onValueChange = {
                     state.value = state.value.copy(value = it)
                 }
             )
@@ -406,7 +397,7 @@ abstract class Filter<Item, CellValue> {
                 selected = state.value.type,
                 mapper = { it.label },
                 mapperDropdown = { it.longLabel },
-                onSelectionChanged = { state.value = state.value.copy(type = it) }
+                onSelectionChange = { state.value = state.value.copy(type = it) }
             )
         }
 
@@ -418,7 +409,7 @@ abstract class Filter<Item, CellValue> {
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 value = state.value.value,
                 instance = instance,
-                onValueChanged = { state.value = state.value.copy(value = it) }
+                onValueChange = { state.value = state.value.copy(value = it) }
             )
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()
@@ -461,7 +452,7 @@ abstract class Filter<Item, CellValue> {
         @Composable
         override fun ColumnScope.content() {
             if (multiSelect) {
-                MyMultiDropdown(
+                MyDropdownMultiSelect(
                     items = items,
                     selected = state,
                     mapper = mapper
@@ -514,7 +505,7 @@ abstract class Filter<Item, CellValue> {
         @Composable
         override fun ColumnScope.content() {
             if (multiSelect) {
-                MyMultiDropdown(
+                MyDropdownMultiSelect(
                     items = items,
                     selected = state,
                     mapper = mapper
@@ -524,7 +515,7 @@ abstract class Filter<Item, CellValue> {
                 MyDropdownIndex(
                     items = listOf(labelAll) + texts,
                     selectedIndex = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0,
-                    onSelectionChanged = {
+                    onSelectionChange = {
                         state.value =
                             it.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()
                     }
@@ -569,7 +560,7 @@ abstract class Filter<Item, CellValue> {
                     false -> 2
                     null -> 0
                 },
-                onSelectionChanged = {
+                onSelectionChange = {
                     when (it) {
                         1 -> state.value = true
                         2 -> state.value = false

@@ -15,6 +15,7 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.semantics
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.michaelflisar.toolbox.Platform.cursor
+import com.michaelflisar.toolbox.components
 
 object MyOutlinedDecoratedContainer {
     // TODO: find out why extra padding is necessary + fix it
@@ -47,10 +49,11 @@ fun MyOutlinedDecoratedContainer(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
-    shape: Shape = OutlinedTextFieldDefaults.shape,
-    contentPadding: PaddingValues = OutlinedTextFieldDefaults.contentPadding(),
-    minHeight: Dp = OutlinedTextFieldDefaults.MinHeight,
-    minWidth: Dp = OutlinedTextFieldDefaults.MinWidth,
+    shape: Shape = MaterialTheme.components.textField.outlinedShape,
+    contentPadding: PaddingValues = MaterialTheme.components.textField.outlinedContentPadding,
+    minHeight: Dp = MaterialTheme.components.textField.outlinedMinHeight,
+    minWidth: Dp = MaterialTheme.components.textField.outlinedMinWidth,
+    canFocus: Boolean = true,
     onClick: (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
@@ -98,17 +101,28 @@ fun MyOutlinedDecoratedContainer(
                     interactionSource = interactionSource,
                     colors = colors,
                     shape = shape,
-                    modifier = Modifier.then(
-                        if (enabled && onClick != null) {
-                            Modifier
-                                .clickable(
-                                    interactionSource = interactionSource,
-                                    indication = LocalIndication.current,
-                                    enabled = enabled
-                                ) { onClick() }
-                                .cursor()
-                        } else Modifier
-                    )
+                    modifier = Modifier
+                        .then(
+                            if (!canFocus) {
+                                Modifier
+                                    .focusProperties {
+                                        this.canFocus = false
+                                    }
+                            } else {
+                                Modifier
+                            }
+                        )
+                        .then(
+                            if (enabled && onClick != null) {
+                                Modifier
+                                    .clickable(
+                                        interactionSource = interactionSource,
+                                        indication = LocalIndication.current,
+                                        enabled = enabled
+                                    ) { onClick() }
+                                    .cursor()
+                            } else Modifier
+                        )
                 )
             }
         )

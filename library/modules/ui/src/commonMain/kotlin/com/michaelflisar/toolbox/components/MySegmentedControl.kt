@@ -92,7 +92,7 @@ fun <T> MySegmentedControl(
     mapper: @Composable (item: T) -> String = { it.toString() },
     forceSelection: Boolean = true,
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
-    onSelectionChanged: ((T) -> Unit)? = null,
+    onSelectionChange: ((T) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected.value)
@@ -105,7 +105,7 @@ fun <T> MySegmentedControl(
     ) { index ->
         val s = (if (index >= 0) items[index] else null) as T
         selected.value = s
-        onSelectionChanged?.invoke(s)
+        onSelectionChange?.invoke(s)
     }
 }
 
@@ -117,7 +117,7 @@ fun <T> MySegmentedControl(
     mapper: @Composable (item: T) -> String = { it.toString() },
     forceSelection: Boolean = true,
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
-    onSelectionChanged: (T) -> Unit,
+    onSelectionChange: (T) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     val selectedIndex = items.indexOf(selected)
@@ -128,7 +128,7 @@ fun <T> MySegmentedControl(
         forceSelection = forceSelection,
         style = style
     ) { index ->
-        onSelectionChanged.invoke(items[index])
+        onSelectionChange.invoke(items[index])
     }
 }
 
@@ -141,7 +141,7 @@ fun <T> MySegmentedControlIndex(
     mapper: @Composable (item: T) -> String = { it.toString() },
     forceSelection: Boolean = true,
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
-    onSelectionChanged: ((Int) -> Unit)? = null,
+    onSelectionChange: ((Int) -> Unit)? = null,
 ) {
     val texts = items.map { mapper(it) }
     MySegmentedControlImpl(
@@ -152,7 +152,7 @@ fun <T> MySegmentedControlIndex(
         style = style
     ) { index ->
         selectedIndex.value = index
-        onSelectionChanged?.invoke(index)
+        onSelectionChange?.invoke(index)
     }
 }
 
@@ -165,7 +165,7 @@ fun <T> MySegmentedControlIndex(
     mapper: @Composable (item: T) -> String = { it.toString() },
     forceSelection: Boolean = true,
     style: MySegmentedControl.Style = rememberMySegmentedControlStyle(),
-    onSelectionChanged: (Int) -> Unit,
+    onSelectionChange: (Int) -> Unit,
 ) {
     val texts = items.map { mapper(it) }
     MySegmentedControlImpl(
@@ -175,7 +175,7 @@ fun <T> MySegmentedControlIndex(
         forceSelection = forceSelection,
         style = style
     ) { index ->
-        onSelectionChanged.invoke(index)
+        onSelectionChange.invoke(index)
     }
 }
 

@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.extensions.alphaDisabled
 
 @Composable
@@ -80,10 +81,10 @@ fun MyLabeledBox(
                 modifier = Modifier
                     .padding(top = topPadding)
                     .drawWithoutRect(borderCutout)
-                    .clip(OutlinedTextFieldDefaults.shape)
+                    .clip(MaterialTheme.components.textField.outlinedShape)
                     .height(IntrinsicSize.Min)
                     .then(modifierInner),
-                shape = OutlinedTextFieldDefaults.shape,
+                shape = MaterialTheme.components.textField.outlinedShape,
                 border = border,
                 colors = CardDefaults.outlinedCardColors(
                     containerColor = fill

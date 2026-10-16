@@ -28,7 +28,7 @@ fun <Item> rememberTableDefinition(
     columns: List<Column<*, Item>>,
     keyProvider: (item: Item) -> Any
 ): TableDefinition<Item> {
-    return remember(columns, keyProvider)  {
+    return remember {//(columns, keyProvider)  {
         TableDefinition(columns, keyProvider)
     }
 

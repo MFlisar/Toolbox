@@ -45,12 +45,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
+import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.components.MyDropdown
 import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.components.MyDropdownMenu
+import com.michaelflisar.toolbox.components.MyDropdownMultiSelect
+import com.michaelflisar.toolbox.components.MyDropdownMultiSelectDefaults
+import com.michaelflisar.toolbox.components.MyDropdownMultiSelectIndex
 import com.michaelflisar.toolbox.components.MyInput
-import com.michaelflisar.toolbox.components.MyMultiDropdown
-import com.michaelflisar.toolbox.components.MyMultiDropdownIndex
 import com.michaelflisar.toolbox.components.MyPicker
 import com.michaelflisar.toolbox.components.MyText
 import com.michaelflisar.toolbox.components.MyTextWithHelp
@@ -219,10 +221,8 @@ object FormDefaults {
         textAlignment = textAlignment
     )
 
-    val popupWidthConfig = MyDropdownMenu.WidthConfig.MatchParent()
-
     val multiDropdownFormatter: @Composable (selected: List<String>) -> String =
-        MyMultiDropdown.formatter
+        MyDropdownMultiSelectDefaults.formatter
 
 
     fun simpleKeyProvider(): (FormItem) -> Any = { item ->
@@ -251,7 +251,7 @@ fun rememberFormConfig(
     spacing: Dp = 8.dp,
     shape: Shape = MaterialTheme.shapes.small,
     showSingleDropdownsAsText: Boolean = false,
-    popupWidthConfig: MyDropdownMenu.WidthConfig = FormDefaults.popupWidthConfig,
+    popupWidthConfig: MyDropdownMenu.WidthConfig = MaterialTheme.components.dropdown.widthConfig,
 ): FormConfig {
     return remember(
         labelStyle,
@@ -444,7 +444,7 @@ sealed interface FormItem {
 
     data class Picker(
         override val label: String,
-        val value: String,
+        val text: String,
         val icon: IconComposable,
         override val subLabel: String? = null,
         override val help: FormHelp? = null,
@@ -456,7 +456,7 @@ sealed interface FormItem {
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             MyPicker(
-                value = value,
+                text = text,
                 icon = { Icon(icon) },
                 onStartPicker = onClick,
                 enabled = enabled && parentIsEnabled
@@ -467,7 +467,7 @@ sealed interface FormItem {
     data class Input(
         override val label: String,
         val value: String,
-        val onValueChanged: (value: String) -> Unit,
+        val onValueChange: (value: String) -> Unit,
         val minLines: Int = 1,
         val maxLines: Int = 1,
         override val subLabel: String? = null,
@@ -488,7 +488,7 @@ sealed interface FormItem {
         ) : this(
             label = label,
             value = value.value,
-            onValueChanged = { value.value = it },
+            onValueChange = { value.value = it },
             minLines = minLines,
             maxLines = maxLines,
             subLabel = subLabel,
@@ -502,7 +502,7 @@ sealed interface FormItem {
             MyInput(
                 modifier = Modifier.fillMaxWidth(),
                 value = value,
-                onValueChanged = onValueChanged,
+                onValueChange = onValueChange,
                 enabled = enabled && parentIsEnabled,
                 minLines = minLines,
                 maxLines = maxLines,
@@ -541,6 +541,7 @@ sealed interface FormItem {
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             androidx.compose.material3.Checkbox(
+                modifier = Modifier.padding(end = MaterialTheme.padding.default),
                 checked = checked,
                 onCheckedChange = onCheckedChange,
                 enabled = enabled && parentIsEnabled
@@ -553,7 +554,7 @@ sealed interface FormItem {
         val items: List<T>,
         val mapper: @Composable (T) -> String,
         val selected: T,
-        val onSelectionChanged: (T) -> Unit,
+        val onSelectionChange: (T) -> Unit,
         override val subLabel: String? = null,
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
@@ -574,7 +575,7 @@ sealed interface FormItem {
             items = items,
             mapper = mapper,
             selected = selected.value,
-            onSelectionChanged = { selected.value = it },
+            onSelectionChange = { selected.value = it },
             subLabel = subLabel,
             help = help,
             visible = visible,
@@ -592,7 +593,7 @@ sealed interface FormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selected = selected,
-                onSelectionChanged = onSelectionChanged,
+                onSelectionChange = onSelectionChange,
                 mapper = mapper,
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
@@ -605,7 +606,7 @@ sealed interface FormItem {
         override val label: String,
         val items: List<String>,
         val selectedIndex: Int,
-        val onSelectionChanged: (Int) -> Unit,
+        val onSelectionChange: (Int) -> Unit,
         override val subLabel: String? = null,
         override val help: FormHelp? = null,
         override val visible: Boolean = true,
@@ -624,7 +625,7 @@ sealed interface FormItem {
             label = label,
             items = items,
             selectedIndex = selectedIndex.value,
-            onSelectionChanged = { selectedIndex.value = it },
+            onSelectionChange = { selectedIndex.value = it },
             subLabel = subLabel,
             help = help,
             visible = visible,
@@ -642,7 +643,7 @@ sealed interface FormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selectedIndex = selectedIndex,
-                onSelectionChanged = onSelectionChanged,
+                onSelectionChange = onSelectionChange,
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
                 popupWidthConfig = config.popupWidthConfig
@@ -654,7 +655,7 @@ sealed interface FormItem {
         override val label: String,
         val items: List<String>,
         val selected: List<String>,
-        val onSelectionChanged: (List<String>) -> Unit,
+        val onSelectionChange: (List<String>) -> Unit,
         val sortSelectionByItems: Boolean = true,
         val formatter: @Composable (selected: List<String>) -> String = FormDefaults.multiDropdownFormatter,
         override val subLabel: String? = null,
@@ -677,7 +678,7 @@ sealed interface FormItem {
             label = label,
             items = items,
             selected = selected.value,
-            onSelectionChanged = { selected.value = it },
+            onSelectionChange = { selected.value = it },
             formatter = formatter,
             sortSelectionByItems = sortSelectionByItems,
             subLabel = subLabel,
@@ -688,12 +689,12 @@ sealed interface FormItem {
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
-            MyMultiDropdown(
+            MyDropdownMultiSelect(
                 title = "",
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selected = selected,
-                onSelectionChanged = onSelectionChanged,
+                onSelectionChange = onSelectionChange,
                 formatter = formatter,
                 mapper = { it },
                 enabled = enabled && parentIsEnabled,
@@ -708,7 +709,7 @@ sealed interface FormItem {
         override val label: String,
         val items: List<String>,
         val selectedIndices: List<Int>,
-        val onSelectionChanged: (List<Int>) -> Unit,
+        val onSelectionChange: (List<Int>) -> Unit,
         val sortSelectionByItems: Boolean = true,
         val formatter: @Composable (selected: List<String>) -> String = FormDefaults.multiDropdownFormatter,
         override val subLabel: String? = null,
@@ -731,7 +732,7 @@ sealed interface FormItem {
             label = label,
             items = items,
             selectedIndices = selectedIndices.value,
-            onSelectionChanged = { selectedIndices.value = it },
+            onSelectionChange = { selectedIndices.value = it },
             formatter = formatter,
             sortSelectionByItems = sortSelectionByItems,
             subLabel = subLabel,
@@ -743,12 +744,12 @@ sealed interface FormItem {
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
-            MyMultiDropdownIndex(
+            MyDropdownMultiSelectIndex(
                 title = "",
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selectedIndices = selectedIndices,
-                onSelectionChanged = onSelectionChanged,
+                onSelectionChange = onSelectionChange,
                 formatter = formatter,
                 mapper = { it },
                 enabled = enabled && parentIsEnabled,

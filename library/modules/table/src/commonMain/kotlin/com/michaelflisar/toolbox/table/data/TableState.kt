@@ -24,6 +24,9 @@ fun <T> rememberTableState(
     selectedRows: SnapshotStateList<Int> = remember { mutableStateListOf() },
 ): TableState<T> {
     val data = key(definition) {
+
+        println("rememberTableState: recomposing table state for ${definition.columns.size} columns and ${items.size} items | definition = $definition")
+
         val textFilter = remember(definition) {
             mutableStateOf("")
         }

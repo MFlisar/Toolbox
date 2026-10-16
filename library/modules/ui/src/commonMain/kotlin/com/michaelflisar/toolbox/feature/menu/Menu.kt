@@ -49,6 +49,8 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
+import com.michaelflisar.toolbox.components
+import com.michaelflisar.toolbox.components.MyDropdownMenuItem
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.Icon
 import kotlin.comparisons.then
@@ -82,20 +84,15 @@ private val LocalMenuLevels =
 
 object Menu {
 
-    val clickShape: Shape
-        @Composable get() = MaterialTheme.shapes.small
-
-    val itemPadding = 8.dp
-
     @Composable
     fun modifier(padding: Boolean = true, clip: Boolean = true) = Modifier
         .then(
             if (padding) {
-                Modifier.padding(horizontal = itemPadding)
+                Modifier.padding(horizontal = MaterialTheme.components.menu.style.itemPadding)
             } else Modifier
         )
         .then(
-            if (clip) Modifier.clip(clickShape) else Modifier
+            if (clip) Modifier.clip(MaterialTheme.components.menu.style.itemShape) else Modifier
         )
 }
 
@@ -254,7 +251,7 @@ fun MenuScope.MenuItem(
         content = {
             val setup = LocalMenuSetup.current
             val state = LocalMenuState.current
-            DropdownMenuItem(
+            MyDropdownMenuItem(
                 modifier = Menu.modifier(),
                 text = if (hideLabels) (@Composable {}) else text,
                 enabled = enabled,
@@ -282,7 +279,7 @@ fun MenuScope.MenuItem(
         content = {
             val setup = LocalMenuSetup.current
             val state = LocalMenuState.current
-            DropdownMenuItem(
+            MyDropdownMenuItem(
                 modifier = Menu.modifier(),
                 text = content,
                 enabled = enabled,
@@ -324,7 +321,7 @@ fun MenuScope.MenuCheckbox(
     enabled: Boolean = true,
 ) {
     WrappedItem(content = {
-        DropdownMenuItem(
+        MyDropdownMenuItem(
             modifier = Menu.modifier(),
             text = {
                 Row(
@@ -429,7 +426,7 @@ fun MenuIconRowScope.MenuIcon(
             .then(with(rowScope) { Modifier.weight(1f) })
             .minimumInteractiveComponentSize()
             .fillMaxHeight()
-            .clip(Menu.clickShape)
+            .clip(MaterialTheme.components.menu.style.itemShape)
             .clickable(
                 onClick = {
                     onClick()
@@ -463,7 +460,7 @@ fun MenuScope.MenuSubMenu(
         content = {
             val state = LocalMenuState.current
             val index = LocalMenuIndex.current
-            DropdownMenuItem(
+            MyDropdownMenuItem(
                 modifier = Menu.modifier(),
                 text = { Text(text, color = textColor ?: Color.Unspecified) },
                 enabled = enabled,

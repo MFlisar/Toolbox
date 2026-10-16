@@ -3,6 +3,7 @@ package com.michaelflisar.toolbox.app.features.theme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -95,19 +96,23 @@ fun AppThemeProvider(
     appThemeProvider: @Composable () -> AppTheme,
     content: @Composable () -> Unit,
 ) {
-    ComposeTheme(
-        state = composeTheme,
-        shapes = theme.shapes,
-        typography = theme.typography
+    CompositionLocalProvider(
+        LocalMinimumInteractiveComponentSize provides theme.minimumInteractiveComponentSize
     ) {
-        AppTheme(
-            composeTheme = composeTheme,
-            appThemeProvider = appThemeProvider
+        ComposeTheme(
+            state = composeTheme,
+            shapes = theme.shapes,
+            typography = theme.typography
         ) {
-            MyTheme(
-                theme = theme
+            AppTheme(
+                composeTheme = composeTheme,
+                appThemeProvider = appThemeProvider
             ) {
-                content()
+                MyTheme(
+                    theme = theme
+                ) {
+                    content()
+                }
             }
         }
     }

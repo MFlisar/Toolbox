@@ -6,207 +6,91 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.Components
 import com.michaelflisar.toolbox.IconComposable
+import com.michaelflisar.toolbox.components
+import com.michaelflisar.toolbox.internal.ProvideContentColorTextStyle
 
 internal object MyButton {
 
-    sealed class Style {
+    @Stable
+    data class Style(
+        val shape: Shape,
+        val colors: ButtonColors,
+        val elevation: ButtonElevation?,
+        val border: BorderStroke?,
+        val contentPadding: PaddingValues,
+    )
 
-        @Composable
-        abstract fun Button(
-            onClick: () -> Unit,
-            modifier: Modifier = Modifier,
-            enabled: Boolean = true,
-            interactionSource: MutableInteractionSource? = null,
-            content: @Composable RowScope.() -> Unit,
-        )
-
-        class Default(
-            val shape: Shape,
-            val colors: ButtonColors,
-            val elevation: ButtonElevation?,
-            val border: BorderStroke?,
-            val contentPadding: PaddingValues,
-        ) : Style() {
-
-            @Composable
-            override fun Button(
-                onClick: () -> Unit,
-                modifier: Modifier,
-                enabled: Boolean,
-                interactionSource: MutableInteractionSource?,
-                content: @Composable RowScope.() -> Unit,
-            ) {
-                Button(
-                    onClick = onClick,
-                    modifier = modifier,
-                    enabled = enabled,
-                    shape = shape,
-                    colors = colors,
-                    elevation = elevation,
-                    border = border,
-                    contentPadding = contentPadding,
-                    interactionSource = interactionSource,
-                    content = content
-                )
-            }
-        }
-
-        class Outlined constructor(
-            val shape: Shape,
-            val colors: ButtonColors,
-            val elevation: ButtonElevation?,
-            val border: BorderStroke?,
-            val contentPadding: PaddingValues,
-        ) : Style() {
-            @Composable
-            override fun Button(
-                onClick: () -> Unit,
-                modifier: Modifier,
-                enabled: Boolean,
-                interactionSource: MutableInteractionSource?,
-                content: @Composable RowScope.() -> Unit,
-            ) {
-                OutlinedButton(
-                    onClick = onClick,
-                    modifier = modifier,
-                    enabled = enabled,
-                    shape = shape,
-                    colors = colors,
-                    elevation = elevation,
-                    border = border,
-                    contentPadding = contentPadding,
-                    interactionSource = interactionSource,
-                    content = content
-                )
-            }
-        }
-
-        class Text constructor(
-            val shape: Shape,
-            val colors: ButtonColors,
-            val elevation: ButtonElevation?,
-            val border: BorderStroke?,
-            val contentPadding: PaddingValues,
-        ) : Style() {
-            @Composable
-            override fun Button(
-                onClick: () -> Unit,
-                modifier: Modifier,
-                enabled: Boolean,
-                interactionSource: MutableInteractionSource?,
-                content: @Composable RowScope.() -> Unit,
-            ) {
-                TextButton(
-                    onClick = onClick,
-                    modifier = modifier,
-                    enabled = enabled,
-                    shape = shape,
-                    colors = colors,
-                    elevation = elevation,
-                    border = border,
-                    contentPadding = contentPadding,
-                    interactionSource = interactionSource,
-                    content = content
-                )
-            }
-        }
-
-        class FilledTonal constructor(
-            val shape: Shape,
-            val colors: ButtonColors,
-            val elevation: ButtonElevation?,
-            val border: BorderStroke?,
-            val contentPadding: PaddingValues,
-        ) : Style() {
-            @Composable
-            override fun Button(
-                onClick: () -> Unit,
-                modifier: Modifier,
-                enabled: Boolean,
-                interactionSource: MutableInteractionSource?,
-                content: @Composable RowScope.() -> Unit,
-            ) {
-                FilledTonalButton(
-                    onClick = onClick,
-                    modifier = modifier,
-                    enabled = enabled,
-                    shape = shape,
-                    colors = colors,
-                    elevation = elevation,
-                    border = border,
-                    contentPadding = contentPadding,
-                    interactionSource = interactionSource,
-                    content = content
-                )
-            }
-        }
-    }
 }
 
 internal object MyButtonDefaults {
 
     @Composable
     fun styleDefault(
-        shape: Shape = ButtonDefaults.shape,
+        shape: Shape = MaterialTheme.components.button.shape,
         colors: ButtonColors = ButtonDefaults.buttonColors(),
         elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
         border: BorderStroke? = null,
-        contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    ): MyButton.Style.Default {
-        return MyButton.Style.Default(shape, colors, elevation, border, contentPadding)
+        contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    ): MyButton.Style {
+        return MyButton.Style(shape, colors, elevation, border, contentPadding)
     }
 
     @Composable
     fun styleOutlined(
-        shape: Shape = ButtonDefaults.outlinedShape,
+        shape: Shape = MaterialTheme.components.button.outlinedShape,
         colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
         elevation: ButtonElevation? = null,
         border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = true),
-        contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    ): MyButton.Style.Outlined {
-        return MyButton.Style.Outlined(shape, colors, elevation, border, contentPadding)
+        contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    ): MyButton.Style {
+        return MyButton.Style(shape, colors, elevation, border, contentPadding)
     }
 
     @Composable
     fun styleText(
-        shape: Shape = ButtonDefaults.textShape,
+        shape: Shape = MaterialTheme.components.button.textShape,
         colors: ButtonColors = ButtonDefaults.textButtonColors(),
         elevation: ButtonElevation? = null,
         border: BorderStroke? = null,
-        contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
-    ): MyButton.Style.Text {
-        return MyButton.Style.Text(shape, colors, elevation, border, contentPadding)
+        contentPadding: PaddingValues = MaterialTheme.components.button.textContentPadding,
+    ): MyButton.Style {
+        return MyButton.Style(shape, colors, elevation, border, contentPadding)
     }
 
     @Composable
     fun styleFilledTonal(
-        shape: Shape = ButtonDefaults.filledTonalShape,
+        shape: Shape = MaterialTheme.components.button.filledTonalShape,
         colors: ButtonColors = ButtonDefaults.filledTonalButtonColors(),
         elevation: ButtonElevation? = ButtonDefaults.filledTonalButtonElevation(),
         border: BorderStroke? = null,
-        contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    ): MyButton.Style.FilledTonal {
-        return MyButton.Style.FilledTonal(shape, colors, elevation, border, contentPadding)
+        contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    ): MyButton.Style {
+        return MyButton.Style(shape, colors, elevation, border, contentPadding)
     }
 }
 
@@ -221,15 +105,15 @@ fun MyButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = ButtonDefaults.shape,
+    shape: Shape = MaterialTheme.components.button.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
-    MyButton(
+    MyButtonImpl(
         onClick = onClick,
         style = MyButtonDefaults.styleDefault(shape, colors, elevation, border, contentPadding),
         modifier = modifier,
@@ -246,15 +130,15 @@ fun MyOutlinedButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = ButtonDefaults.outlinedShape,
+    shape: Shape = MaterialTheme.components.button.outlinedShape,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = true),
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
-    MyButton(
+    MyButtonImpl(
         onClick = onClick,
         style = MyButtonDefaults.styleOutlined(shape, colors, elevation, border, contentPadding),
         modifier = modifier,
@@ -271,15 +155,15 @@ fun MyTextButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = ButtonDefaults.textShape,
+    shape: Shape = MaterialTheme.components.button.textShape,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.textContentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
-    MyButton(
+    MyButtonImpl(
         onClick = onClick,
         style = MyButtonDefaults.styleText(shape, colors, elevation, border, contentPadding),
         modifier = modifier,
@@ -296,15 +180,15 @@ fun MyFilledTonalButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = ButtonDefaults.filledTonalShape,
+    shape: Shape = MaterialTheme.components.button.filledTonalShape,
     colors: ButtonColors = ButtonDefaults.filledTonalButtonColors(),
     elevation: ButtonElevation? = ButtonDefaults.filledTonalButtonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
-    MyButton(
+    MyButtonImpl(
         onClick = onClick,
         style = MyButtonDefaults.styleFilledTonal(shape, colors, elevation, border, contentPadding),
         modifier = modifier,
@@ -326,15 +210,15 @@ fun MyButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = ButtonDefaults.shape,
+    shape: Shape = MaterialTheme.components.button.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // click
     onClick: () -> Unit,
 ) {
-    MyButton(
+    MyButtonImpl(
         onClick = onClick,
         style = MyButtonDefaults.styleDefault(shape, colors, elevation, border, contentPadding),
         modifier = modifier,
@@ -357,15 +241,15 @@ fun MyOutlinedButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = ButtonDefaults.outlinedShape,
+    shape: Shape = MaterialTheme.components.button.outlinedShape,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = true),
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // click
     onClick: () -> Unit,
 ) {
-    MyButton(
+    MyButtonImpl(
         onClick = onClick,
         style = MyButtonDefaults.styleOutlined(shape, colors, elevation, border, contentPadding),
         modifier = modifier,
@@ -388,15 +272,15 @@ fun MyTextButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = ButtonDefaults.textShape,
+    shape: Shape = MaterialTheme.components.button.textShape,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.textContentPadding,
     // click
     onClick: () -> Unit,
 ) {
-    MyButton(
+    MyButtonImpl(
         onClick = onClick,
         style = MyButtonDefaults.styleText(shape, colors, elevation, border, contentPadding),
         modifier = modifier,
@@ -419,15 +303,15 @@ fun MyFilledTonalButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = ButtonDefaults.filledTonalShape,
+    shape: Shape = MaterialTheme.components.button.filledTonalShape,
     colors: ButtonColors = ButtonDefaults.filledTonalButtonColors(),
     elevation: ButtonElevation? = ButtonDefaults.filledTonalButtonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
     // click
     onClick: () -> Unit,
 ) {
-    MyButton(
+    MyButtonImpl(
         onClick = onClick,
         style = MyButtonDefaults.styleFilledTonal(shape, colors, elevation, border, contentPadding),
         modifier = modifier,
@@ -443,7 +327,7 @@ fun MyFilledTonalButton(
 // -------------------------
 
 @Composable
-internal fun MyButton(
+internal fun MyButtonImpl(
     onClick: () -> Unit,
     modifier: Modifier,
     style: MyButton.Style,
@@ -452,13 +336,38 @@ internal fun MyButton(
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
-    style.Button(
-        onClick = onClick,
-        modifier = modifier,
-        enabled = enabled,
-        interactionSource = interactionSource,
-        content = content
-    )
+    val componentStyles = MaterialTheme.components.style
+    when (componentStyles) {
+        Components.Style.Custom -> {
+            CustomButton(
+                onClick = onClick,
+                modifier = modifier,
+                enabled = enabled,
+                shape = style.shape,
+                colors = style.colors,
+                elevation = style.elevation,
+                border = style.border,
+                contentPadding = style.contentPadding,
+                interactionSource = interactionSource,
+                content = content
+            )
+        }
+
+        Components.Style.Material3 -> {
+            Button(
+                onClick = onClick,
+                modifier = modifier,
+                enabled = enabled,
+                shape = style.shape,
+                colors = style.colors,
+                elevation = style.elevation,
+                border = style.border,
+                contentPadding = style.contentPadding,
+                interactionSource = interactionSource,
+                content = content
+            )
+        }
+    }
 }
 
 @Composable
@@ -466,7 +375,7 @@ private fun MyButtonContent(
     text: String,
     icon: IconComposable?,
     iconRotation: Float,
-    iconTint: Color?
+    iconTint: Color?,
 ) {
     if (icon == null) {
         Text(text)
@@ -475,7 +384,9 @@ private fun MyButtonContent(
             com.michaelflisar.toolbox.extensions.Icon(
                 icon = icon,
                 contentDescription = null,
-                modifier = Modifier.size(24.dp).rotate(iconRotation),
+                modifier = Modifier
+                    .size(MaterialTheme.components.icons.size)
+                    .rotate(iconRotation),
                 tint = iconTint ?: LocalContentColor.current
             )
         } else {
@@ -493,5 +404,63 @@ private fun MyButtonContent(
             }
         }
 
+    }
+}
+
+// -------------------------
+// Custom Composables
+// -------------------------
+
+/**
+ * Elevation wird ignoriert!
+ */
+@Composable
+private fun CustomButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    shape: Shape,
+    colors: ButtonColors,
+    elevation: ButtonElevation?,
+    border: BorderStroke?,
+    contentPadding: PaddingValues,
+    interactionSource: MutableInteractionSource? = null,
+    content: @Composable RowScope.() -> Unit,
+) {
+    val style = MaterialTheme.components.button
+
+    val source = interactionSource ?: remember { MutableInteractionSource() }
+
+    val containerColor = if (enabled) colors.containerColor else colors.disabledContainerColor
+    val contentColor = if (enabled) colors.contentColor else colors.disabledContentColor
+    val shadowElevation = 0.dp // elevation?.shadowElevation(enabled, source)?.value ?: 0.dp
+
+    Surface(
+        onClick = onClick,
+        modifier = modifier.semantics { role = Role.Button },
+        enabled = enabled,
+        shape = shape,
+        color = containerColor,
+        contentColor = contentColor,
+        shadowElevation = shadowElevation,
+        border = border,
+        interactionSource = source,
+    ) {
+        ProvideContentColorTextStyle(
+            contentColor = contentColor,
+            textStyle = MaterialTheme.typography.labelLarge,
+        ) {
+            Row(
+                modifier = Modifier
+                    .defaultMinSize(
+                        minWidth = style.minWidth,
+                        minHeight = style.minHeight,
+                    )
+                    .padding(contentPadding),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                content = content,
+            )
+        }
     }
 }
