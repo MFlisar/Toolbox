@@ -1,0 +1,151 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../table/7.0.2/table-7.0.2.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "table",
+    "version": "7.0.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.2"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "7.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "table-jvm.jar",
+          "url": "table-jvm-7.0.2.jar",
+          "size": 278109,
+          "sha512": "08f3f2608050c321cb75ac7d441b209b239dc2f21126c604f82afef594c9b48e1ac67fbf278bd19c68cba5f871a0aaaf95557cd1750204316611cccc4976b01c",
+          "sha256": "801b54860651663a415d2bdd8c9393f5fbaaaf8ed39c9c84cd629b0a02ba4081",
+          "sha1": "080475b64afcf0f24b29548adc995c843be191c3",
+          "md5": "42a3de2a89a17c09ea810c7c92eea9d4"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.2"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "7.0.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "table-jvm.jar",
+          "url": "table-jvm-7.0.2.jar",
+          "size": 278109,
+          "sha512": "08f3f2608050c321cb75ac7d441b209b239dc2f21126c604f82afef594c9b48e1ac67fbf278bd19c68cba5f871a0aaaf95557cd1750204316611cccc4976b01c",
+          "sha256": "801b54860651663a415d2bdd8c9393f5fbaaaf8ed39c9c84cd629b0a02ba4081",
+          "sha1": "080475b64afcf0f24b29548adc995c843be191c3",
+          "md5": "42a3de2a89a17c09ea810c7c92eea9d4"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "table-jvm-sources.jar",
+          "url": "table-jvm-7.0.2-sources.jar",
+          "size": 24382,
+          "sha512": "6b7bafe5e66f6fed9a92c504b39d8a1dddfaa0bbad766dc634af3dbf88f51f64ca12ce828fa7ac1ff5597eac50397209c51621fec043a29d80b7fa0610b50888",
+          "sha256": "5b2d322c6480072f7042aa2ef92fd36c99a45ed94105dd883d12c68ee1eaabf3",
+          "sha1": "d2e5a2cb0cf300e53b7159a9238308fc77a555bb",
+          "md5": "4049301cb1f2399f5e23484a846b5c82"
+        }
+      ]
+    }
+  ]
+}
