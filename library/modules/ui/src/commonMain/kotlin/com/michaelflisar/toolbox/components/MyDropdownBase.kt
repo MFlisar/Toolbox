@@ -176,7 +176,7 @@ internal fun <T : Any, S> MyDropdownBase(
                     if (internalTitle.isNotEmpty()) {
                         Text(
                             text = internalTitle,
-                            style = MaterialTheme.typography.bodySmall,
+                            style = MaterialTheme.typography.labelSmall,
                             fontWeight = FontWeight.Bold,
                             color = labelColor,
                             maxLines = 1

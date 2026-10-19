@@ -6,11 +6,9 @@ import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.selection.triStateToggleable
 import androidx.compose.material3.Checkbox
@@ -61,7 +59,7 @@ fun MyCheckbox(
     toggleOnIconClickOnly: Boolean = LocalComponentOptions.current.checkbox.toggleOnIconClickOnly,
     onCheckedChange: (Boolean) -> Unit = {},
 ) {
-    MyCheckbox(
+    MyCheckboxImpl(
         modifier = modifier,
         title = if (title.isNotEmpty()) {
             { Text(title, maxLines = maxLines) }
@@ -88,7 +86,7 @@ fun MyCheckbox(
     toggleOnIconClickOnly: Boolean = LocalComponentOptions.current.checkbox.toggleOnIconClickOnly,
     onCheckedChange: (Boolean) -> Unit = {},
 ) {
-    MyCheckbox(
+    MyCheckboxImpl(
         modifier = modifier,
         title = title,
         checked = checked.value,
@@ -114,7 +112,7 @@ fun MyCheckbox(
     toggleOnIconClickOnly: Boolean = LocalComponentOptions.current.checkbox.toggleOnIconClickOnly,
     onCheckedChange: (Boolean) -> Unit = {},
 ) {
-    MyCheckbox(
+    MyCheckboxImpl(
         modifier = modifier,
         title = if (title.isNotEmpty()) {
             { Text(title, maxLines = maxLines) }
@@ -139,7 +137,7 @@ fun MyCheckbox(
     toggleOnIconClickOnly: Boolean = LocalComponentOptions.current.checkbox.toggleOnIconClickOnly,
     onCheckedChange: (Boolean) -> Unit = {},
 ) {
-    MyCheckbox(
+    MyCheckboxImpl(
         modifier = modifier,
         title = title,
         checked = checked,
@@ -151,8 +149,12 @@ fun MyCheckbox(
     )
 }
 
+// -------------------------
+// internal API
+// -------------------------
+
 @Composable
-fun MyCheckbox(
+fun MyCheckboxImpl(
     modifier: Modifier = Modifier,
     title: @Composable (() -> Unit)?,
     checked: Boolean,
@@ -168,7 +170,7 @@ fun MyCheckbox(
             title = title,
             style = style
         ) {
-            MyCheckboxImpl(
+            MyCheckboxIcon(
                 enabled = enabled,
                 onCheckedChange = onCheckedChange,
                 checked = checked,
@@ -185,7 +187,7 @@ fun MyCheckbox(
             style = style,
             onCheckedChange = onCheckedChange
         ) {
-            MyCheckboxImpl(
+            MyCheckboxIcon(
                 enabled = enabled,
                 onCheckedChange = null,
                 checked = checked,
@@ -195,12 +197,8 @@ fun MyCheckbox(
     }
 }
 
-// -------------------------
-// internal API
-// -------------------------
-
 @Composable
-private fun MyCheckboxImpl(
+private fun MyCheckboxIcon(
     checked: Boolean,
     onCheckedChange: ((Boolean) -> Unit)?,
     modifier: Modifier = Modifier,
