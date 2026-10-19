@@ -58,6 +58,15 @@ object MyDropdownMultiSelectDefaults {
     )
 
     @Composable
+    fun <T : Any> defaultRenderer(
+        content: @Composable (context: RenderContext.Selection<List<T>>) -> Unit = defaultContent(),
+        dropdownContent: @Composable (context: RenderContext.DropdownItem<T>) -> Unit = defaultDropdownContent(),
+    ) = MyDropdown.RenderContent(
+        content = content,
+        dropdownContent = dropdownContent
+    )
+
+    @Composable
     fun <T> defaultContent(
         mapper: @Composable (item: T) -> String = { it.toString() },
         formatter: @Composable (selected: List<String>) -> String = MyDropdownMultiSelectDefaults.formatter,

@@ -47,6 +47,15 @@ object MyDropdownDefaults {
     )
 
     @Composable
+    fun <T : Any> defaultRenderer(
+        content: @Composable (context: RenderContext.Selection<T?>) -> Unit = defaultContent(),
+        dropdownContent: @Composable (context: RenderContext.DropdownItem<T>) -> Unit = defaultDropdownContent(),
+    ) = MyDropdown.RenderContent(
+        content = content,
+        dropdownContent = dropdownContent
+    )
+
+    @Composable
     fun <T> defaultContent(
         mapper: @Composable (item: T) -> String = { it.toString() },
         color: Color = Color.Unspecified,
