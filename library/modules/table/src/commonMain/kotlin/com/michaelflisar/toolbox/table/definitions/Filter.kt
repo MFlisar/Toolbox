@@ -23,8 +23,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyDropdownDefaults
 import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.components.MyDropdownMultiSelect
+import com.michaelflisar.toolbox.components.MyDropdownMultiSelectDefaults
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyNumericInputNullable
@@ -34,6 +36,7 @@ import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.disabled
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.numbers.NumberUtil
+import com.michaelflisar.toolbox.theme.LocalComponentTexts
 import kotlin.enums.EnumEntries
 
 abstract class Filter<Item, CellValue> {
@@ -176,11 +179,13 @@ abstract class Filter<Item, CellValue> {
                 title = "",
                 items = FilterType.entries.filter { !it.numeric },
                 selected = state.value.type,
-                mapper = { it.label },
-                mapperDropdown = { it.longLabel },
-                onSelectionChange = {
-                    state.value = state.value.copy(type = it)
-                }
+                onSelectionChange = { _, item ->
+                    state.value = state.value.copy(type = item)
+                },
+                content = MyDropdownDefaults.defaultRenderer(
+                    mapper = { it.label },
+                    mapperDropdown = { it.longLabel }
+                )
             )
 
             MyTooltipBox("Case Sensitive") {
@@ -395,9 +400,11 @@ abstract class Filter<Item, CellValue> {
                 title = "",
                 items = FilterType.entries,
                 selected = state.value.type,
-                mapper = { it.label },
-                mapperDropdown = { it.longLabel },
-                onSelectionChange = { state.value = state.value.copy(type = it) }
+                onSelectionChange = { _, item -> state.value = state.value.copy(type = item) },
+                content = MyDropdownDefaults.defaultRenderer(
+                    mapper = { it.label },
+                    mapperDropdown = { it.longLabel }
+                )
             )
         }
 
@@ -417,14 +424,13 @@ abstract class Filter<Item, CellValue> {
         }
     }
 
-    class List<Item, CellValue>(
+    class List<Item, CellValue : Any>(
         val items: kotlin.collections.List<CellValue>,
         val mapper: @Composable (CellValue) -> String = { it.toString() },
         val filter: (value: CellValue, filter: kotlin.collections.List<CellValue>) -> Boolean = { value, filter ->
             filter.isEmpty() || filter.contains(value)
         },
         val multiSelect: Boolean = false,
-        val labelAll: String = "ALL",
         initial: kotlin.collections.List<CellValue> = emptyList(),
     ) : Filter<Item, CellValue>() {
 
@@ -455,16 +461,18 @@ abstract class Filter<Item, CellValue> {
                 MyDropdownMultiSelect(
                     items = items,
                     selected = state,
-                    mapper = mapper
+                    content = MyDropdownMultiSelectDefaults.defaultRenderer(
+                        mapper = { mapper(it) }
+                    )
                 )
             } else {
                 val texts = items.map { mapper(it) }
                 MyDropdownIndex(
-                    items = listOf(labelAll) + texts,
+                    items = listOf(LocalComponentTexts.current.filterAll) + texts,
                     selectedIndex = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0
-                ) {
+                ) { index, _ ->
                     state.value =
-                        it.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()
+                        index.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()
                 }
             }
         }
@@ -477,7 +485,6 @@ abstract class Filter<Item, CellValue> {
             filter.isEmpty() || filter.contains(value)
         },
         val multiSelect: Boolean = false,
-        val labelAll: String = "ALL",
         initial: kotlin.collections.List<CellValue> = emptyList(),
     ) : Filter<Item, CellValue>() {
 
@@ -508,16 +515,18 @@ abstract class Filter<Item, CellValue> {
                 MyDropdownMultiSelect(
                     items = items,
                     selected = state,
-                    mapper = mapper
+                    content = MyDropdownMultiSelectDefaults.defaultRenderer(
+                        mapper = { mapper(it) }
+                    )
                 )
             } else {
                 val texts = items.map { mapper(it) }
                 MyDropdownIndex(
-                    items = listOf(labelAll) + texts,
+                    items = listOf(LocalComponentTexts.current.filterAll) + texts,
                     selectedIndex = state.value.firstOrNull()?.let { items.indexOf(it) + 1 } ?: 0,
-                    onSelectionChange = {
+                    onSelectionChange = { index, _ ->
                         state.value =
-                            it.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()
+                            index.takeIf { it > 0 }?.let { listOf(items[it - 1]) } ?: emptyList()
                     }
                 )
             }

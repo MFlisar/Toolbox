@@ -3,7 +3,7 @@ package com.michaelflisar.toolbox.proversion
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.michaelflisar.toolbox.drawables.Crown
+import com.michaelflisar.toolbox.icons.Crown
 import io.github.hyochan.kmpiap.ProductQueryType
 
 class Product(

@@ -14,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.theme.padding
 import kotlinx.coroutines.launch
 
 object MyPagerDefaults {

@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyDropdownDefaults
 import com.michaelflisar.toolbox.components.MyPopupInfo
 import com.michaelflisar.toolbox.components.MyTitle
 
@@ -46,7 +47,7 @@ fun FormHeader(
 }
 
 @Composable
-fun <T> FormHeader(
+fun <T : Any> FormHeader(
     title: String,
     info: FormHeader.InfoData? = null,
     spinner: FormHeader.SpinnerData<T>,
@@ -66,7 +67,7 @@ fun <T> FormHeader(
 }
 
 @Composable
-private fun <T> Header(
+private fun <T : Any> Header(
     title: String,
     info: FormHeader.InfoData?,
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -101,17 +102,17 @@ private fun <T> Header(
         }
         if (spinner != null) {
             val selected = remember { mutableStateOf(spinner.selectedItem) }
-            MyDropdown(
+            MyDropdown<T>(
                 modifier = Modifier.weight(1f),
                 items = spinner.items,
                 selected = spinner.selectedItem,
-                mapper = { spinner.mapper(it) },
                 color = MaterialTheme.colorScheme.surface,
                 backgroundColor = MaterialTheme.colorScheme.onSurface,
-                onSelectionChange = { item: T ->
+                onSelectionChange = { _, item ->
                     selected.value = item
                     spinner.onItemSelected.invoke(item)
-                }
+                },
+                content = MyDropdownDefaults.defaultRenderer(mapper = { spinner.mapper(it) })
             )
         }
         if (checkbox != null) {

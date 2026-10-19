@@ -18,7 +18,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.scrollbar
+import com.michaelflisar.toolbox.theme.scrollbar
 
 import com.michaelflisar.toolbox.table.data.ColumnWidth
 import com.michaelflisar.toolbox.table.data.TableClickHandler

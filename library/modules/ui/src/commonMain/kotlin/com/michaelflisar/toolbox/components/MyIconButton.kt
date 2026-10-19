@@ -35,9 +35,12 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
-import com.michaelflisar.toolbox.Components
 import com.michaelflisar.toolbox.IconComposable
-import com.michaelflisar.toolbox.components
+import com.michaelflisar.toolbox.theme.ComponentStyles
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
+import com.michaelflisar.toolbox.theme.MyThemeType
+import com.michaelflisar.toolbox.theme.icon
 
 private object MyIconButton {
 
@@ -61,7 +64,7 @@ private object MyIconButtonDefaults {
 
     @Composable
     fun styleDefault(
-        shape: Shape = MaterialTheme.components.iconButton.shape,
+        shape: Shape = LocalComponentOptions.current.iconButton.shape,
         colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     ): MyIconButton.Style {
         return MyIconButton.Style(MyIconButton.BaseType.Default, shape, colors, null)
@@ -69,7 +72,7 @@ private object MyIconButtonDefaults {
 
     @Composable
     fun styleOutlined(
-        shape: Shape = MaterialTheme.components.iconButton.outlinedShape,
+        shape: Shape = LocalComponentOptions.current.iconButton.outlinedShape,
         colors: IconButtonColors = IconButtonDefaults.outlinedIconButtonColors(),
         border: BorderStroke? = IconButtonDefaults.outlinedIconButtonBorder(enabled = true),
     ): MyIconButton.Style {
@@ -78,7 +81,7 @@ private object MyIconButtonDefaults {
 
     @Composable
     fun styleFilled(
-        shape: Shape = MaterialTheme.components.iconButton.filledShape,
+        shape: Shape = LocalComponentOptions.current.iconButton.filledShape,
         colors: IconButtonColors = IconButtonDefaults.filledIconButtonColors(),
     ): MyIconButton.Style {
         return MyIconButton.Style(MyIconButton.BaseType.Surface, shape, colors, null)
@@ -86,7 +89,7 @@ private object MyIconButtonDefaults {
 
     @Composable
     fun styleFilledTonal(
-        shape: Shape = MaterialTheme.components.iconButton.filledShape,
+        shape: Shape = LocalComponentOptions.current.iconButton.filledShape,
         colors: IconButtonColors = IconButtonDefaults.filledTonalIconButtonColors(),
     ): MyIconButton.Style {
         return MyIconButton.Style(MyIconButton.BaseType.Surface, shape, colors, null)
@@ -104,6 +107,7 @@ fun MyIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
+    shape: Shape = LocalComponentOptions.current.iconButton.shape,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     // content
     content: @Composable () -> Unit,
@@ -111,7 +115,7 @@ fun MyIconButton(
     MyIconButtonImpl(
         onClick = onClick,
         modifier = modifier,
-        style = MyIconButtonDefaults.styleDefault(colors = colors),
+        style = MyIconButtonDefaults.styleDefault(shape = shape, colors = colors),
         enabled = enabled,
         interactionSource = interactionSource,
         content = content
@@ -125,7 +129,7 @@ fun MyOutlinedIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.iconButton.outlinedShape,
+    shape: Shape = LocalComponentOptions.current.iconButton.outlinedShape,
     colors: IconButtonColors = IconButtonDefaults.outlinedIconButtonColors(),
     border: BorderStroke? = IconButtonDefaults.outlinedIconButtonBorder(enabled = true),
     // content
@@ -152,7 +156,7 @@ fun MyFilledIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.iconButton.filledShape,
+    shape: Shape = LocalComponentOptions.current.iconButton.filledShape,
     colors: IconButtonColors = IconButtonDefaults.filledIconButtonColors(),
     // content
     content: @Composable () -> Unit,
@@ -177,7 +181,7 @@ fun MyFilledTonalIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.iconButton.filledShape,
+    shape: Shape = LocalComponentOptions.current.iconButton.filledShape,
     colors: IconButtonColors = IconButtonDefaults.filledTonalIconButtonColors(),
     // content
     content: @Composable () -> Unit,
@@ -203,7 +207,7 @@ fun MyIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.iconButton.shape,
+    shape: Shape = LocalComponentOptions.current.iconButton.shape,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     // click
     onClick: () -> Unit,
@@ -227,7 +231,7 @@ fun MyOutlinedIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.iconButton.outlinedShape,
+    shape: Shape = LocalComponentOptions.current.iconButton.outlinedShape,
     colors: IconButtonColors = IconButtonDefaults.outlinedIconButtonColors(),
     border: BorderStroke? = IconButtonDefaults.outlinedIconButtonBorder(enabled = true),
     // click
@@ -235,7 +239,7 @@ fun MyOutlinedIconButton(
 ) {
     MyIconButtonImpl(
         icon = icon,
-        modifier = modifier.then(Modifier.size(MaterialTheme.components.icons.size)),
+        modifier = modifier.then(Modifier.size(MaterialTheme.icon.size)),
         style = MyIconButtonDefaults.styleOutlined(
             shape = shape,
             colors = colors,
@@ -256,14 +260,14 @@ fun MyFilledIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.iconButton.filledShape,
+    shape: Shape = LocalComponentOptions.current.iconButton.filledShape,
     colors: IconButtonColors = IconButtonDefaults.filledIconButtonColors(),
     // click
     onClick: () -> Unit,
 ) {
     MyIconButtonImpl(
         icon = icon,
-        modifier = modifier.then(Modifier.size(MaterialTheme.components.icons.size)),
+        modifier = modifier.then(Modifier.size(MaterialTheme.icon.size)),
         style = MyIconButtonDefaults.styleFilled(
             shape = shape,
             colors = colors
@@ -283,14 +287,14 @@ fun MyFilledTonalIconButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.iconButton.filledShape,
+    shape: Shape = LocalComponentOptions.current.iconButton.filledShape,
     colors: IconButtonColors = IconButtonDefaults.filledTonalIconButtonColors(),
     // click
     onClick: () -> Unit,
 ) {
     MyIconButtonImpl(
         icon = icon,
-        modifier = modifier.then(Modifier.size(MaterialTheme.components.icons.size)),
+        modifier = modifier.then(Modifier.size(MaterialTheme.icon.size)),
         style = MyIconButtonDefaults.styleFilledTonal(
             shape = shape,
             colors = colors
@@ -352,7 +356,7 @@ private fun MyIconButtonImpl(
         com.michaelflisar.toolbox.extensions.Icon(
             icon = icon,
             modifier = Modifier
-                .size(MaterialTheme.components.icons.size)
+                .size(MaterialTheme.icon.size)
                 .padding(iconPaddingValues)
         )
     }
@@ -370,11 +374,11 @@ private fun MyIconButtonImpl(
     interactionSource: MutableInteractionSource?,
     content: @Composable () -> Unit,
 ) {
-    val componentStyles = MaterialTheme.components.style
+    val componentType = LocalComponentStyles.current.type
     when (type) {
         MyIconButton.BaseType.Default -> {
-            when (componentStyles) {
-                Components.Style.Custom -> {
+            when (componentType) {
+                MyThemeType.Custom -> {
                     CustomIconButtonImpl(
                         modifier = modifier,
                         onClick = onClick,
@@ -386,7 +390,7 @@ private fun MyIconButtonImpl(
                     )
                 }
 
-                Components.Style.Material3 -> {
+                MyThemeType.Material3 -> {
                     IconButton(
                         onClick = onClick,
                         modifier = modifier,
@@ -401,8 +405,8 @@ private fun MyIconButtonImpl(
         }
 
         MyIconButton.BaseType.Surface -> {
-            when (componentStyles) {
-                Components.Style.Custom -> {
+            when (componentType) {
+                MyThemeType.Custom -> {
                     CustomSurfaceIconButton(
                         modifier = modifier,
                         onClick = onClick,
@@ -415,7 +419,7 @@ private fun MyIconButtonImpl(
                     )
                 }
 
-                Components.Style.Material3 -> {
+                MyThemeType.Material3 -> {
                     OutlinedIconButton(
                         onClick = onClick,
                         modifier = modifier,
@@ -454,7 +458,7 @@ private fun CustomIconButtonImpl(
         modifier =
             modifier
                 .minimumInteractiveComponentSize()
-                .size(MaterialTheme.components.iconButton.size)
+                .size(LocalComponentStyles.current.iconButton.size)
                 .clip(shape)
                 .background(
                     color = if (enabled) colors.containerColor else colors.disabledContainerColor,
@@ -497,7 +501,7 @@ private fun CustomSurfaceIconButton(
         interactionSource = interactionSource,
     ) {
         Box(
-            modifier = Modifier.size(MaterialTheme.components.icons.size),
+            modifier = Modifier.size(MaterialTheme.icon.size),
             contentAlignment = Alignment.Center,
         ) {
             content()

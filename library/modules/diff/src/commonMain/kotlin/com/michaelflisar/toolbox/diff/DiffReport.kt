@@ -25,12 +25,10 @@ import com.michaelflisar.toolbox.components.MyColumn
 import com.michaelflisar.toolbox.components.MyFilledTitle
 import com.michaelflisar.toolbox.components.MyLabeledInformationHorizontal
 import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.components.MyTitle
 import com.michaelflisar.toolbox.diff.classes.Change
-import com.michaelflisar.toolbox.diff.classes.ChangeCategory
 import com.michaelflisar.toolbox.diff.classes.DiffResult
-import com.michaelflisar.toolbox.padding
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.padding
+import com.michaelflisar.toolbox.theme.spacing
 import kotlinx.coroutines.launch
 
 @Composable

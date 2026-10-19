@@ -18,8 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import com.michaelflisar.toolbox.padding
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.padding
+import com.michaelflisar.toolbox.theme.spacing
 
 object MyTitleDefaults {
 

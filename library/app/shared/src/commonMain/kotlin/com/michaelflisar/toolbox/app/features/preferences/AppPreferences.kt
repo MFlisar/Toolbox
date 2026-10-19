@@ -12,10 +12,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.More
 import androidx.compose.material.icons.automirrored.outlined.TextSnippet
 import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Stop
-import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material.icons.outlined.HideSource
 import androidx.compose.material.icons.outlined.KeyboardDoubleArrowLeft
 import androidx.compose.material.icons.outlined.Mail
@@ -98,7 +96,7 @@ import com.michaelflisar.toolbox.core.resources.settings_open_play_store_details
 import com.michaelflisar.toolbox.core.resources.settings_privacy_policy
 import com.michaelflisar.toolbox.core.resources.settings_privacy_policy_details
 import com.michaelflisar.toolbox.core.resources.yes
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.theme.padding
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid

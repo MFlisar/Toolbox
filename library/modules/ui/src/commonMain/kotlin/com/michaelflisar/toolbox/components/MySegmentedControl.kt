@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
 import androidx.compose.ui.zIndex
 
 object MySegmentedControl {
@@ -72,7 +73,7 @@ fun rememberMySegmentedControlStyle(
     color: Color = MaterialTheme.colorScheme.primary,
     onColor: Color = MaterialTheme.colorScheme.onPrimary,
     borderColor: Color = color,
-    buttonContentPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+    buttonContentPadding: PaddingValues = LocalComponentStyles.current.segmentedButton.contentPadding,
 ) = MySegmentedControl.Style(
     fixedWidth,
     minWidth,

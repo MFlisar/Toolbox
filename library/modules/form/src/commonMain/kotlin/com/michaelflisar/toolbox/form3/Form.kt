@@ -45,8 +45,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
-import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyDropdownDefaults
 import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.components.MyDropdownMenu
 import com.michaelflisar.toolbox.components.MyDropdownMultiSelect
@@ -58,9 +58,9 @@ import com.michaelflisar.toolbox.components.MyText
 import com.michaelflisar.toolbox.components.MyTextWithHelp
 import com.michaelflisar.toolbox.components.MyTextWithHelpDefaults
 import com.michaelflisar.toolbox.components.MyTitle
-import com.michaelflisar.toolbox.extensions.Icon
-import com.michaelflisar.toolbox.padding
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.padding
+import com.michaelflisar.toolbox.theme.spacing
 
 data class FormConfig(
     val labelStyle: FormLabelStyle,
@@ -251,7 +251,7 @@ fun rememberFormConfig(
     spacing: Dp = 8.dp,
     shape: Shape = MaterialTheme.shapes.small,
     showSingleDropdownsAsText: Boolean = false,
-    popupWidthConfig: MyDropdownMenu.WidthConfig = MaterialTheme.components.dropdown.widthConfig,
+    popupWidthConfig: MyDropdownMenu.WidthConfig = LocalComponentOptions.current.dropdown.widthConfig,
 ): FormConfig {
     return remember(
         labelStyle,
@@ -457,7 +457,7 @@ sealed interface FormItem {
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
             MyPicker(
                 text = text,
-                icon = { Icon(icon) },
+                icon = icon,
                 onStartPicker = onClick,
                 enabled = enabled && parentIsEnabled
             )
@@ -549,7 +549,7 @@ sealed interface FormItem {
         }
     }
 
-    data class Dropdown<T>(
+    data class Dropdown<T : Any>(
         override val label: String,
         val items: List<T>,
         val mapper: @Composable (T) -> String,
@@ -593,11 +593,13 @@ sealed interface FormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selected = selected,
-                onSelectionChange = onSelectionChange,
-                mapper = mapper,
+                onSelectionChange = { _, item -> onSelectionChange(item) },
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
-                popupWidthConfig = config.popupWidthConfig
+                popupWidthConfig = config.popupWidthConfig,
+                content = MyDropdownDefaults.defaultRenderer(
+                    mapper = { mapper(it) }
+                )
             )
         }
     }
@@ -643,7 +645,7 @@ sealed interface FormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selectedIndex = selectedIndex,
-                onSelectionChange = onSelectionChange,
+                onSelectionChange = { index, _ -> onSelectionChange(index) },
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
                 popupWidthConfig = config.popupWidthConfig
@@ -689,18 +691,19 @@ sealed interface FormItem {
 
         @Composable
         override fun Content(config: FormConfig, parentIsEnabled: Boolean) {
-            MyDropdownMultiSelect(
+            MyDropdownMultiSelect<String>(
                 title = "",
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selected = selected,
-                onSelectionChange = onSelectionChange,
-                formatter = formatter,
-                mapper = { it },
+                onSelectionChange = { _, items -> onSelectionChange(items) },
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
                 popupWidthConfig = config.popupWidthConfig,
-                sortSelectionByItems = sortSelectionByItems
+                sortSelectionByItems = sortSelectionByItems,
+                content = MyDropdownMultiSelectDefaults.defaultRenderer(
+                    formatter = formatter
+                )
             )
         }
     }
@@ -749,13 +752,14 @@ sealed interface FormItem {
                 modifier = Modifier.fillMaxWidth(),
                 items = items,
                 selectedIndices = selectedIndices,
-                onSelectionChange = onSelectionChange,
-                formatter = formatter,
-                mapper = { it },
+                onSelectionChange = { indizes, _ -> onSelectionChange(indizes) },
                 enabled = enabled && parentIsEnabled,
                 shape = config.shape,
                 popupWidthConfig = config.popupWidthConfig,
-                sortSelectionByItems = sortSelectionByItems
+                sortSelectionByItems = sortSelectionByItems,
+                content = MyDropdownMultiSelectDefaults.defaultRenderer(
+                    formatter = formatter
+                )
             )
         }
     }

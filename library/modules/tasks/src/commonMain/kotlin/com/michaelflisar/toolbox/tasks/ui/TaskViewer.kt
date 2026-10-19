@@ -69,6 +69,7 @@ import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroup
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanTask
 import com.michaelflisar.toolbox.tasks.ui.parts.ProgressIcon
 import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
+import com.michaelflisar.toolbox.theme.padding
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -467,7 +468,13 @@ private fun TaskItemContainer(
                     contentColor = if (group) viewerConfig.groupContentColor else viewerConfig.taskContentColor
                 )
             ) {
-                content()
+                Box(
+                    modifier = Modifier.padding(
+                        vertical = MaterialTheme.padding.small
+                    )
+                ) {
+                    content()
+                }
             }
         } else {
             Card(
@@ -477,7 +484,13 @@ private fun TaskItemContainer(
                     contentColor = if (group) viewerConfig.groupContentColor else viewerConfig.taskContentColor
                 )
             ) {
-                content()
+                Box(
+                    modifier = Modifier.padding(
+                        vertical = MaterialTheme.padding.small
+                    )
+                ) {
+                    content()
+                }
             }
         }
     }

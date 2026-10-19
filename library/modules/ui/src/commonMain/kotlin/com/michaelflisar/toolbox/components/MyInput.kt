@@ -12,6 +12,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckBox
+import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -28,17 +30,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
-import com.michaelflisar.toolbox.Components
 import com.michaelflisar.toolbox.Platform.cursor
-import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.components.MyOutlinedDecoratedContainer.minimizedLabelHalfHeight
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.extensions.disabled
+import com.michaelflisar.toolbox.extensions.toIconComposable
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
+import com.michaelflisar.toolbox.theme.MyThemeType
+import com.michaelflisar.toolbox.theme.padding
 
 @Composable
 fun MyInput(
@@ -53,9 +60,11 @@ fun MyInput(
     placeholder: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
-    shape: Shape = MaterialTheme.components.textField.outlinedShape,
+    shape: Shape = LocalComponentOptions.current.textField.outlinedShape,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    showClearIcon: Boolean = true,
+    clearIcon: ImageVector = Icons.Default.Clear,
     interactionSource: MutableInteractionSource? = null,
 ) {
     MyInput(
@@ -73,6 +82,8 @@ fun MyInput(
         shape = shape,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
+        showClearIcon = showClearIcon,
+        clearIcon = clearIcon,
         interactionSource = interactionSource
     ) {
         value.value = it
@@ -92,15 +103,16 @@ fun MyInput(
     placeholder: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
-    shape: Shape = MaterialTheme.components.textField.outlinedShape,
+    shape: Shape = LocalComponentOptions.current.textField.outlinedShape,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     showClearIcon: Boolean = true,
+    clearIcon: ImageVector = Icons.Default.Clear,
     interactionSource: MutableInteractionSource? = null,
     onValueChange: (String) -> Unit = {},
 ) {
-    when (MaterialTheme.components.style) {
-        Components.Style.Custom -> {
+    when (LocalComponentStyles.current.type) {
+        MyThemeType.Custom -> {
             CustomOutlinedTextField(
                 modifier = modifier
                     .focusProperties { canFocus = focusable },
@@ -118,6 +130,7 @@ fun MyInput(
                 leadingIcon = leadingIcon,
                 trailingIcon = trailingClearIcon(
                     value = value,
+                    icon = clearIcon,
                     showClearIcon = showClearIcon,
                     readOnly = readOnly,
                     enabled = enabled,
@@ -132,7 +145,7 @@ fun MyInput(
 
         }
 
-        Components.Style.Material3 -> {
+        MyThemeType.Material3 -> {
             OutlinedTextField(
                 modifier = modifier.focusProperties { canFocus = focusable },
                 value = value,
@@ -149,6 +162,7 @@ fun MyInput(
                 leadingIcon = leadingIcon,
                 trailingIcon = trailingClearIcon(
                     value = value,
+                    icon = clearIcon,
                     showClearIcon = showClearIcon,
                     readOnly = readOnly,
                     enabled = enabled,
@@ -167,6 +181,7 @@ fun MyInput(
 @Composable
 private fun trailingClearIcon(
     value: String,
+    icon: ImageVector,
     showClearIcon: Boolean,
     readOnly: Boolean,
     enabled: Boolean,
@@ -175,19 +190,17 @@ private fun trailingClearIcon(
     return if (showClearIcon && !readOnly && enabled && !value.isEmpty()) {
         {
             Icon(
-                imageVector = Icons.Default.Clear,
+                imageVector = icon,
                 contentDescription = "clear",
                 modifier = Modifier
                     .padding(end = MaterialTheme.padding.default)
                     .clip(CircleShape)
                     .cursor()
                     .focusProperties { canFocus = false }
-                    .clickable {
-                        onValueChange("")
-                    }
-                    .size(MaterialTheme.components.textField.trailingIconSize + MaterialTheme.components.textField.trailingIconPadding)
+                    .clickable { onValueChange("") }
+                    .size(LocalComponentStyles.current.textField.trailingIconTotalSize)
                     .padding(
-                        MaterialTheme.components.textField.trailingIconPadding
+                        LocalComponentStyles.current.textField.trailingIconPadding
                     )
             )
         }
@@ -225,7 +238,7 @@ private fun CustomOutlinedTextField(
     shape: Shape = OutlinedTextFieldDefaults.shape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
-    val style = MaterialTheme.components.textField
+    val style = LocalComponentStyles.current.textField
 
     @Suppress("NAME_SHADOWING")
     val interactionSource = interactionSource ?: remember { MutableInteractionSource() }

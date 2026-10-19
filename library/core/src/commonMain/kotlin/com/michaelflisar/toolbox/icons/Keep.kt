@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.drawables
+package com.michaelflisar.toolbox.icons
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val Keep: ImageVector
+val MyIcons.Keep: ImageVector
     get() {
         if (_Keep != null) {
             return _Keep!!

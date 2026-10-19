@@ -53,8 +53,8 @@ import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.disabled
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.padding
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.padding
+import com.michaelflisar.toolbox.theme.spacing
 import com.michaelflisar.toolbox.table.data.TableSort
 import com.michaelflisar.toolbox.table.definitions.Column
 import com.michaelflisar.toolbox.table.definitions.Filter

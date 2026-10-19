@@ -11,9 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.michaelflisar.toolbox.components
-import com.michaelflisar.toolbox.spacing
-
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
+import com.michaelflisar.toolbox.theme.spacing
 
 @Composable
 fun <T> MySegmentedButtonRowMultiSelect(
@@ -170,7 +169,7 @@ private fun MySegmentedButtonRowMultiSelectImpl(
                         onSelectionChange(selectedNew, selectedItemsNew)
                     },
                     checked = index in selected,
-                    contentPadding = MaterialTheme.components.segmentedButton.contentPadding
+                    contentPadding = LocalComponentStyles.current.segmentedButton.contentPadding
                 ) {
                     Text(item)
                 }

@@ -18,7 +18,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -41,7 +40,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -49,19 +47,19 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.IconComposable
-import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.components.MyDropdownMenuItem
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.Icon
-import kotlin.comparisons.then
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
 
 @LayoutScopeMarker
 @Immutable
 interface MenuScope {
     val hideLabels: Boolean
 }
+
 internal class MenuScopeInstance(
-    override val hideLabels: Boolean = false
+    override val hideLabels: Boolean = false,
 ) : MenuScope
 
 @LayoutScopeMarker
@@ -88,11 +86,11 @@ object Menu {
     fun modifier(padding: Boolean = true, clip: Boolean = true) = Modifier
         .then(
             if (padding) {
-                Modifier.padding(horizontal = MaterialTheme.components.menu.style.itemPadding)
+                Modifier.padding(horizontal = LocalComponentOptions.current.menu.itemPadding)
             } else Modifier
         )
         .then(
-            if (clip) Modifier.clip(MaterialTheme.components.menu.style.itemShape) else Modifier
+            if (clip) Modifier.clip(LocalComponentOptions.current.menu.itemShape) else Modifier
         )
 }
 
@@ -188,7 +186,7 @@ internal fun ProvideMenuLocals(
 internal fun ProvideUpdatedMenuLocals(
     levels: List<Int>,
     menuIndex: Int,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
         LocalMenuLevels provides levels,
@@ -230,7 +228,7 @@ private fun MenuScope.WrappedSubMenu(
 ) {
     val levels = LocalMenuLevels.current
     val index = LocalMenuIndex.current
-    ProvideUpdatedMenuLocals(levels + index.value,0) {
+    ProvideUpdatedMenuLocals(levels + index.value, 0) {
         content()
     }
 }
@@ -426,7 +424,7 @@ fun MenuIconRowScope.MenuIcon(
             .then(with(rowScope) { Modifier.weight(1f) })
             .minimumInteractiveComponentSize()
             .fillMaxHeight()
-            .clip(MaterialTheme.components.menu.style.itemShape)
+            .clip(LocalComponentOptions.current.menu.itemShape)
             .clickable(
                 onClick = {
                     onClick()

@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.theme.padding
 
 
 @Composable

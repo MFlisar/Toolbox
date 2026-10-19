@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.scrollbar
+import com.michaelflisar.toolbox.theme.scrollbar
 
 import com.michaelflisar.toolbox.table.data.TableClickHandler
 import com.michaelflisar.toolbox.table.data.TableData

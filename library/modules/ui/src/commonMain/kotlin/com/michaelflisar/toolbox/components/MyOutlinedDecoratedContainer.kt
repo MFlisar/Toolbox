@@ -24,7 +24,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.michaelflisar.toolbox.Platform.cursor
-import com.michaelflisar.toolbox.components
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
 
 object MyOutlinedDecoratedContainer {
     // TODO: find out why extra padding is necessary + fix it
@@ -49,10 +50,10 @@ fun MyOutlinedDecoratedContainer(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
-    shape: Shape = MaterialTheme.components.textField.outlinedShape,
-    contentPadding: PaddingValues = MaterialTheme.components.textField.outlinedContentPadding,
-    minHeight: Dp = MaterialTheme.components.textField.outlinedMinHeight,
-    minWidth: Dp = MaterialTheme.components.textField.outlinedMinWidth,
+    shape: Shape = LocalComponentOptions.current.textField.outlinedShape,
+    contentPadding: PaddingValues = LocalComponentStyles.current.textField.outlinedContentPadding,
+    minHeight: Dp = LocalComponentStyles.current.textField.outlinedMinHeight,
+    minWidth: Dp = LocalComponentStyles.current.textField.outlinedMinWidth,
     canFocus: Boolean = true,
     onClick: (() -> Unit)? = null,
     content: @Composable () -> Unit,

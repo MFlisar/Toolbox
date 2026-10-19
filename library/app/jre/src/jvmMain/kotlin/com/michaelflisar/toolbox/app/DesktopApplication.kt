@@ -15,7 +15,8 @@ import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.LocalWindowExceptionHandlerFactory
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
-import com.michaelflisar.toolbox.MyTheme
+import com.michaelflisar.toolbox.theme.MyTheme
+import com.michaelflisar.toolbox.theme.MyComponentOptions
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.DesktopExitHandler
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
@@ -34,7 +35,8 @@ import com.michaelflisar.toolbox.utils.JvmUtil
 fun ApplicationScope.DesktopApplication(
     // Navigator
     screen: Screen,
-    theme: MyTheme = MyTheme.windowsDefault(),
+    theme: MyTheme = MyTheme.desktopCompact(),
+    options: MyComponentOptions = MyComponentOptions.desktopCompact(),
     // JVM specific
     onCloseRequest: (() -> Unit)? = null,
     onPreviewKeyEvent: (KeyEvent) -> Boolean = { false },
@@ -90,6 +92,7 @@ fun ApplicationScope.DesktopApplication(
                             theme = theme,
                             composeTheme = composeTheme,
                             appThemeProvider = { rememberAppTheme() },
+                            options = options,
                         ) {
                             RootLocalProvider(appState, setRootLocals = true) {
                                 JvmBackHandlerUtil.ProvideMouseBackHandler()

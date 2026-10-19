@@ -10,7 +10,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -59,12 +58,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.min
 import com.michaelflisar.lumberjack.core.L
-import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.numbers.MyNumberParser
 import com.michaelflisar.toolbox.numbers.MyNumberValidator
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
+import com.michaelflisar.toolbox.theme.padding
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -213,7 +211,7 @@ fun <T : Number> MyNumberPicker(
         MyLabeledBox(
             modifier = modifier,
             modifierInner = modifierInnerPicker.heightIn(
-                min = MaterialTheme.components.textField.minHeight
+                min = LocalComponentStyles.current.textField.minHeight
             ),
             label = label,
             enabled = enabled,
@@ -222,12 +220,12 @@ fun <T : Number> MyNumberPicker(
         ) {
             Row(
                 modifier = Modifier.widthIn(
-                    min = MaterialTheme.components.numberPicker.minWidth
+                    min = LocalComponentStyles.current.numberPicker.minWidth
                 ).then(
-                        if (showButtons) {
-                            Modifier.padding(horizontal = MaterialTheme.padding.default)
-                        } else Modifier
-                        ),
+                    if (showButtons) {
+                        Modifier.padding(horizontal = MaterialTheme.padding.default)
+                    } else Modifier
+                ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 buttonDecrease?.invoke()
@@ -424,7 +422,7 @@ private fun RepeatingIconButton(
                 minDelayMillis = minDelayMillis,
                 delayDecayFactor = delayDecayFactor
             ) { onClick() }
-            .size(MaterialTheme.components.textField.trailingIconSize + MaterialTheme.components.textField.trailingIconPadding),
+            .size(LocalComponentStyles.current.textField.trailingIconTotalSize),
         onClick = {
             onClick()
         },
@@ -432,7 +430,7 @@ private fun RepeatingIconButton(
         interactionSource = interactionSource,
     ) {
         Icon(
-            modifier = Modifier.size(MaterialTheme.components.textField.trailingIconSize),
+            modifier = Modifier.size(LocalComponentStyles.current.textField.trailingIconSize),
             imageVector = icon,
             contentDescription = ""
         )

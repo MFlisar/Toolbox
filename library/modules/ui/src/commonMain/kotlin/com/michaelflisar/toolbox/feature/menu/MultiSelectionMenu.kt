@@ -32,9 +32,10 @@ import com.michaelflisar.toolbox.core.resources.menu_more
 import com.michaelflisar.toolbox.core.resources.menu_move
 import com.michaelflisar.toolbox.core.resources.menu_region_selection
 import com.michaelflisar.toolbox.core.resources.menu_select_all
-import com.michaelflisar.toolbox.drawables.Move
+import com.michaelflisar.toolbox.icons.Move
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.selection.SelectionState
+import com.michaelflisar.toolbox.icons.MyIcons
 import org.jetbrains.compose.resources.stringResource
 
 object MultiSelectionMenu {
@@ -219,7 +220,7 @@ object MultiSelectionMenu {
             onClick: () -> Unit,
         ) = Action.Item(
             text = stringResource(Res.string.menu_move),
-            icon = Move.toIconComposable(),
+            icon = MyIcons.Move.toIconComposable(),
             enabled = enabled && selection.isSomethingSelected,
             onClick = onClick
         )

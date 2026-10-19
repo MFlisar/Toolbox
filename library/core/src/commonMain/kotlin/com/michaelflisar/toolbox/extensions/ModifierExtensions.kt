@@ -35,7 +35,7 @@ private class GreyscaleModifier(val factor: Float) : DrawModifier {
 }
 
 fun Modifier.vertical(
-    degrees: Float = -90f
+    degrees: Float = -90f,
 ) =
     layout { measurable, constraints ->
         val placeable = measurable.measure(constraints)
@@ -46,5 +46,3 @@ fun Modifier.vertical(
             )
         }
     }.rotate(degrees)
-
-

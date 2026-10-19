@@ -2,7 +2,6 @@ package com.michaelflisar.toolbox.table
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,8 +51,8 @@ import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.feature.menu.MenuItem
 import com.michaelflisar.toolbox.feature.menu.PopupMenu
 import com.michaelflisar.toolbox.feature.menu.rememberMenuState
-import com.michaelflisar.toolbox.padding
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.padding
+import com.michaelflisar.toolbox.theme.spacing
 import com.michaelflisar.toolbox.table.data.TableState
 import com.michaelflisar.toolbox.table.definitions.Column
 import com.michaelflisar.toolbox.table.definitions.Filter

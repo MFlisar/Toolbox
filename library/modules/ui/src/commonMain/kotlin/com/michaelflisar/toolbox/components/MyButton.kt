@@ -29,10 +29,13 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.Components
 import com.michaelflisar.toolbox.IconComposable
-import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.internal.ProvideContentColorTextStyle
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
+import com.michaelflisar.toolbox.theme.MyThemeType
+import com.michaelflisar.toolbox.theme.icon
+import com.michaelflisar.toolbox.theme.spacing
 
 internal object MyButton {
 
@@ -51,44 +54,44 @@ internal object MyButtonDefaults {
 
     @Composable
     fun styleDefault(
-        shape: Shape = MaterialTheme.components.button.shape,
+        shape: Shape = LocalComponentOptions.current.button.shape,
         colors: ButtonColors = ButtonDefaults.buttonColors(),
         elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
         border: BorderStroke? = null,
-        contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+        contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     ): MyButton.Style {
         return MyButton.Style(shape, colors, elevation, border, contentPadding)
     }
 
     @Composable
     fun styleOutlined(
-        shape: Shape = MaterialTheme.components.button.outlinedShape,
+        shape: Shape = LocalComponentOptions.current.button.outlinedShape,
         colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
         elevation: ButtonElevation? = null,
         border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = true),
-        contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+        contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     ): MyButton.Style {
         return MyButton.Style(shape, colors, elevation, border, contentPadding)
     }
 
     @Composable
     fun styleText(
-        shape: Shape = MaterialTheme.components.button.textShape,
+        shape: Shape = LocalComponentOptions.current.button.textShape,
         colors: ButtonColors = ButtonDefaults.textButtonColors(),
         elevation: ButtonElevation? = null,
         border: BorderStroke? = null,
-        contentPadding: PaddingValues = MaterialTheme.components.button.textContentPadding,
+        contentPadding: PaddingValues = LocalComponentStyles.current.button.textContentPadding,
     ): MyButton.Style {
         return MyButton.Style(shape, colors, elevation, border, contentPadding)
     }
 
     @Composable
     fun styleFilledTonal(
-        shape: Shape = MaterialTheme.components.button.filledTonalShape,
+        shape: Shape = LocalComponentOptions.current.button.filledTonalShape,
         colors: ButtonColors = ButtonDefaults.filledTonalButtonColors(),
         elevation: ButtonElevation? = ButtonDefaults.filledTonalButtonElevation(),
         border: BorderStroke? = null,
-        contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+        contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     ): MyButton.Style {
         return MyButton.Style(shape, colors, elevation, border, contentPadding)
     }
@@ -105,11 +108,11 @@ fun MyButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.button.shape,
+    shape: Shape = LocalComponentOptions.current.button.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -130,11 +133,11 @@ fun MyOutlinedButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.button.outlinedShape,
+    shape: Shape = LocalComponentOptions.current.button.outlinedShape,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = true),
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -155,11 +158,11 @@ fun MyTextButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.button.textShape,
+    shape: Shape = LocalComponentOptions.current.button.textShape,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = MaterialTheme.components.button.textContentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.textContentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -180,11 +183,11 @@ fun MyFilledTonalButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.button.filledTonalShape,
+    shape: Shape = LocalComponentOptions.current.button.filledTonalShape,
     colors: ButtonColors = ButtonDefaults.filledTonalButtonColors(),
     elevation: ButtonElevation? = ButtonDefaults.filledTonalButtonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -210,11 +213,11 @@ fun MyButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.button.shape,
+    shape: Shape = LocalComponentOptions.current.button.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // click
     onClick: () -> Unit,
 ) {
@@ -241,11 +244,11 @@ fun MyOutlinedButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.button.outlinedShape,
+    shape: Shape = LocalComponentOptions.current.button.outlinedShape,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = true),
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // click
     onClick: () -> Unit,
 ) {
@@ -272,11 +275,11 @@ fun MyTextButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.button.textShape,
+    shape: Shape = LocalComponentOptions.current.button.textShape,
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = MaterialTheme.components.button.textContentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.textContentPadding,
     // click
     onClick: () -> Unit,
 ) {
@@ -303,11 +306,11 @@ fun MyFilledTonalButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // style
-    shape: Shape = MaterialTheme.components.button.filledTonalShape,
+    shape: Shape = LocalComponentOptions.current.button.filledTonalShape,
     colors: ButtonColors = ButtonDefaults.filledTonalButtonColors(),
     elevation: ButtonElevation? = ButtonDefaults.filledTonalButtonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // click
     onClick: () -> Unit,
 ) {
@@ -336,9 +339,9 @@ internal fun MyButtonImpl(
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
-    val componentStyles = MaterialTheme.components.style
-    when (componentStyles) {
-        Components.Style.Custom -> {
+    val componentType = LocalComponentStyles.current.type
+    when (componentType) {
+        MyThemeType.Custom -> {
             CustomButton(
                 onClick = onClick,
                 modifier = modifier,
@@ -353,7 +356,7 @@ internal fun MyButtonImpl(
             )
         }
 
-        Components.Style.Material3 -> {
+        MyThemeType.Material3 -> {
             Button(
                 onClick = onClick,
                 modifier = modifier,
@@ -385,19 +388,19 @@ private fun MyButtonContent(
                 icon = icon,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(MaterialTheme.components.icons.size)
+                    .size(MaterialTheme.icon.size)
                     .rotate(iconRotation),
                 tint = iconTint ?: LocalContentColor.current
             )
         } else {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 com.michaelflisar.toolbox.extensions.Icon(
                     icon = icon,
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp).rotate(iconRotation),
+                    modifier = Modifier.size(MaterialTheme.icon.size).rotate(iconRotation),
                     tint = iconTint ?: LocalContentColor.current
                 )
                 Text(text)
@@ -427,7 +430,7 @@ private fun CustomButton(
     interactionSource: MutableInteractionSource? = null,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val style = MaterialTheme.components.button
+    val style = LocalComponentStyles.current.button
 
     val source = interactionSource ?: remember { MutableInteractionSource() }
 

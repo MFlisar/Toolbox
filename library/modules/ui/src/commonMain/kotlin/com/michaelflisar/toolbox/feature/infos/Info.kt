@@ -17,12 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import com.michaelflisar.toolbox.components.MyColumn
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.spacing
 import com.michaelflisar.toolbox.ui.MyScrollableLazyColumn
-
-private val INSET_STEP = 4.dp
 
 internal sealed class Info {
 
@@ -49,7 +47,7 @@ internal sealed class Info {
 }
 
 class InfoState internal constructor(
-    internal val infos: SnapshotStateList<Info>
+    internal val infos: SnapshotStateList<Info>,
 ) {
     fun size() = infos.size
 
@@ -94,6 +92,7 @@ fun Infos(
     modifier: Modifier = Modifier,
     autoScroll: MutableState<Boolean> = remember { mutableStateOf(true) },
     infos: InfoState,
+    inset: Dp = MaterialTheme.spacing.small,
 ) {
     val listState = rememberLazyListState()
     LaunchedEffect(infos.size(), autoScroll.value) {
@@ -119,8 +118,8 @@ fun Infos(
                             -> {
                         }
 
-                        is Info.Text -> item(index) { InfoText(info, items.take(index)) }
-                        is Info.Title -> item(index) { TitleLine(info, items.take(index)) }
+                        is Info.Text -> item(index) { InfoText(info, items.take(index), inset) }
+                        is Info.Title -> item(index) { TitleLine(info, items.take(index), inset) }
                     }
                 }
             }
@@ -132,18 +131,20 @@ fun Infos(
 private fun InfoText(
     info: Info.Text,
     infosAbove: List<Info>,
+    inset: Dp,
 ) {
     val style = MaterialTheme.typography.bodyMedium
-    Line(info.text, info.subText, style, info.color, infosAbove)
+    Line(info.text, info.subText, style, info.color, infosAbove, inset)
 }
 
 @Composable
 private fun TitleLine(
     info: Info.Title,
     infosAbove: List<Info>,
+    inset: Dp,
 ) {
     val style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
-    Line(info.text, info.subText, style, info.color, infosAbove)
+    Line(info.text, info.subText, style, info.color, infosAbove, inset)
 }
 
 @Composable
@@ -153,12 +154,13 @@ private fun Line(
     style: TextStyle,
     color: Color,
     infosAbove: List<Info>,
+    inset: Dp,
 ) {
     val countPlus = infosAbove.count { it is Info.InsetPlus }
     val countMinus = infosAbove.count { it is Info.InsetMinus }
-    val inset = countPlus - countMinus
+    val insetFactor = countPlus - countMinus
     MyColumn(
-        modifier = Modifier.padding(start = INSET_STEP * inset)
+        modifier = Modifier.padding(start = inset * insetFactor)
     ) {
         Text(
             text = text,

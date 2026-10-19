@@ -1,4 +1,4 @@
-package com.michaelflisar.toolbox.drawables
+package com.michaelflisar.toolbox.icons
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-val Move: ImageVector
+val MyIcons.Move: ImageVector
     get() {
         if (_Move_item != null) return _Move_item!!
         

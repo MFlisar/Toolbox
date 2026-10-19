@@ -8,13 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.spacing
 
 
 @Composable
 fun MyFlowRow(
     modifier: Modifier = Modifier,
     itemSpacing: Dp = MaterialTheme.spacing.default,
+    rowSpacing: Dp = MaterialTheme.spacing.default,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     verticalItemAlignment: Alignment.Vertical = Alignment.Top,
@@ -25,7 +26,7 @@ fun MyFlowRow(
     FlowRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(itemSpacing, horizontalAlignment),
-        verticalArrangement = Arrangement.spacedBy(itemSpacing, verticalAlignment),
+        verticalArrangement = Arrangement.spacedBy(rowSpacing, verticalAlignment),
         itemVerticalAlignment = verticalItemAlignment,
         maxItemsInEachRow = maxItemsInEachRow,
         maxLines = maxLines,

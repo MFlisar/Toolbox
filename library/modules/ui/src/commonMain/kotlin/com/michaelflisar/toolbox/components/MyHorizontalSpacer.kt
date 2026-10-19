@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.spacing
 
 
 @Composable

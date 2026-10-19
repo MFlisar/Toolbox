@@ -55,11 +55,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.ComposeUtil
-import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.extensions.isScrollingUp
 import com.michaelflisar.toolbox.extensions.toSentenceCase
-import com.michaelflisar.toolbox.padding
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.padding
+import com.michaelflisar.toolbox.theme.spacing
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -188,7 +188,7 @@ fun BoxScope.FloatingActionButtonMenu(
     position: FloatingActionButtonMenu.Position = FloatingActionButtonMenu.Position.BottomEnd,
     setup: FloatingActionButtonMenu.Setup = rememberFloatingActionButtonMenuSetup(),
     visible: Boolean = true,
-    onFabClick: () -> Unit
+    onFabClick: () -> Unit,
 ) {
     FloatingActionButtonMenuImpl(
         icon = icon,
@@ -470,13 +470,13 @@ private fun ColumnScope.FabMenu(
         Column(
             modifier = Modifier
                 // TODO: misused, but ok
-                .padding(bottom = MaterialTheme.components.menu.style.itemPadding)
+                .padding(bottom = LocalComponentOptions.current.menu.itemPadding)
                 .background(
                     color = MaterialTheme.colorScheme.surfaceContainer,
                     shape = setup.shape
                 )
                 // TODO: misused, but ok
-                .padding(horizontal = MaterialTheme.components.menu.style.itemPadding)
+                .padding(horizontal = LocalComponentOptions.current.menu.itemPadding)
                 .alpha(animationContentAlphaValue),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
         ) {

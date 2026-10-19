@@ -6,8 +6,8 @@ import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.menu_go_pro
-import com.michaelflisar.toolbox.drawables.Crown
-import com.michaelflisar.toolbox.extensions.toIconComposable
+import com.michaelflisar.toolbox.icons.Crown
+import com.michaelflisar.toolbox.icons.MyIcons
 import org.jetbrains.compose.resources.stringResource
 
 object ProVersionAppDefaults {
@@ -17,7 +17,7 @@ object ProVersionAppDefaults {
         val appState = LocalAppState.current
         return MenuItem.item(
             text = stringResource(Res.string.menu_go_pro),
-            icon = Crown,
+            icon = MyIcons.Crown,
             onClick = { appState.showProVersionDialog.show() }
         )
     }

@@ -2,19 +2,14 @@ package com.michaelflisar.toolbox.app
 
 import android.app.Application
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kmp.platformcontext.PlatformContextProvider
-import com.michaelflisar.toolbox.MyTheme
+import com.michaelflisar.toolbox.theme.MyTheme
+import com.michaelflisar.toolbox.theme.MyComponentOptions
 import com.michaelflisar.toolbox.acra.AcraManager
 import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
@@ -66,6 +61,7 @@ fun ComponentActivity.AndroidApplication(
     appThemeProvider: @Composable () -> AppTheme = { rememberAppTheme() },
     theme: MyTheme = MyTheme.default(),
     appState: AppState = rememberAppState(),
+    options: MyComponentOptions = MyComponentOptions(),
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
@@ -77,6 +73,7 @@ fun ComponentActivity.AndroidApplication(
                 theme = theme,
                 composeTheme = composeTheme,
                 appThemeProvider = appThemeProvider,
+                options = options,
             ) {
                 RootLocalProvider(appState, setRootLocals = true) {
                     Root(
@@ -105,6 +102,7 @@ fun ComponentActivity.AndroidApplication(
     composeTheme: ComposeTheme.State = rememberComposeTheme(),
     appThemeProvider: @Composable () -> AppTheme = { rememberAppTheme() },
     theme: MyTheme = MyTheme.default(),
+    options: MyComponentOptions = MyComponentOptions(),
     content: @Composable () -> Unit,
 ) {
     ProvideAppLocals(this) {
@@ -113,6 +111,7 @@ fun ComponentActivity.AndroidApplication(
             theme = theme,
             composeTheme = composeTheme,
             appThemeProvider = appThemeProvider,
+            options = options,
         ) {
             RootLocalProvider(appState, setRootLocals = true) {
                 Root(

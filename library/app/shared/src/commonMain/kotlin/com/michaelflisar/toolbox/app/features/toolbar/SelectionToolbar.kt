@@ -18,27 +18,29 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.Dp
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.ToolboxLogging
 import com.michaelflisar.toolbox.app.LocalAppTheme
 import com.michaelflisar.toolbox.app.features.backhandlerregistry.RegisterBackHandler
 import com.michaelflisar.toolbox.app.platform.UpdateComposeThemeStatusBar
+import com.michaelflisar.toolbox.components.MyIconButton
+import com.michaelflisar.toolbox.components.MyTopAppBar
+import com.michaelflisar.toolbox.components.MyTopAppBarDefaults
 import com.michaelflisar.toolbox.feature.selection.SelectionState
 import com.michaelflisar.toolbox.info
+import com.michaelflisar.toolbox.theme.padding
 
 object SelectionToolbarDefaults {
 
@@ -83,17 +85,39 @@ object SelectionToolbarDefaults {
     )
 
     val DefaultStyle: SelectionToolbar.Style = SelectionToolbar.Style.Default
+
+    @Composable
+    fun styleFloating(
+        shape: Shape = MaterialTheme.shapes.medium,
+        padding: PaddingValues = PaddingValues(
+            horizontal = MaterialTheme.padding.default,
+            vertical = MaterialTheme.padding.small
+        ),
+        applyPaddingForStatusbar: Boolean = true,
+        adjustSizeToFitTopAppBar: Boolean = false
+    ) = SelectionToolbar.Style.Floating(
+        padding = padding,
+        shape = shape,
+        applyPaddingForStatusbar = applyPaddingForStatusbar,
+        adjustSizeToFitTopAppBar = adjustSizeToFitTopAppBar
+    )
 }
 
 object SelectionToolbar {
+
     sealed class Style {
+
+        @Stable
         object Default : Style()
-        class Floating(
+
+        @Stable
+        data class Floating(
             val padding: PaddingValues,
             val shape: Shape,
-            val height: Dp = TopAppBarDefaults.TopAppBarExpandedHeight,
-            val applyPaddingForStatusbar: Boolean = true,
+            val applyPaddingForStatusbar: Boolean,
+            val adjustSizeToFitTopAppBar: Boolean
         ) : Style()
+
     }
 }
 
@@ -159,7 +183,7 @@ fun SelectionToolbar(
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
-                TopAppBar(
+                MyTopAppBar(
                     modifier = modifier,
                     title = {
                         Text(
@@ -168,7 +192,7 @@ fun SelectionToolbar(
                         )
                     },
                     navigationIcon = {
-                        IconButton(
+                        MyIconButton(
                             onClick = {
                                 selection.clearAndClose()
                             },
@@ -203,12 +227,15 @@ fun SelectionToolbar(
                                 .fillMaxWidth()
                         )
                     }
-                    TopAppBar(
+                    MyTopAppBar(
                         modifier = Modifier
-                            .height(style.height)
                             .padding(style.padding)
                             .clip(style.shape),
                         windowInsets = WindowInsets(),
+                        expandedHeight = if (style.adjustSizeToFitTopAppBar) {
+                            // damit die floating toolbar immer perfekt über eine normale tolbar passt
+                            MyTopAppBarDefaults.ExpandedHeight - style.padding.calculateTopPadding() - style.padding.calculateBottomPadding()
+                        } else MyTopAppBarDefaults.ExpandedHeight,
                         title = {
                             Text(
                                 text = lastTitle.value,
@@ -216,7 +243,7 @@ fun SelectionToolbar(
                             )
                         },
                         navigationIcon = {
-                            IconButton(
+                            MyIconButton(
                                 onClick = {
                                     selection.clearAndClose()
                                 },

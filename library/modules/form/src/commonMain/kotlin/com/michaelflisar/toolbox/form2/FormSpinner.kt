@@ -9,12 +9,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.components.MyDropdown
+import com.michaelflisar.toolbox.components.MyDropdownDefaults
 
 @Composable
-fun <T> FormSpinner(
+fun <T: Any> FormSpinner(
     title: String,
     value: T,
-    items: List<T & Any>,
+    items: List<T>,
     mapper: @Composable (item: T) -> String,
     mapperDropdown: @Composable (item: T) -> String = mapper,
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -28,10 +29,10 @@ fun <T> FormSpinner(
 }
 
 @Composable
-fun <T> FormSpinner(
+fun <T: Any> FormSpinner(
     title: String,
     value: MutableState<T>,
-    items: List<T & Any>,
+    items: List<T>,
     mapper: @Composable (item: T) -> String,
     mapperDropdown: @Composable (item: T) -> String = mapper,
     modifier: Modifier = Modifier.fillMaxWidth(),
@@ -45,8 +46,10 @@ fun <T> FormSpinner(
             title = "",
             items = items,
             selected = value,
-            mapper = mapper,
-            mapperDropdown = mapperDropdown
+            content = MyDropdownDefaults.defaultRenderer(
+                mapper = { mapper(it) },
+                mapperDropdown = { mapperDropdown(it) }
+            )
         )
     }
 }

@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyTooltipBox
 import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.theme.padding
 import com.michaelflisar.toolbox.table.data.TableState
 import com.michaelflisar.toolbox.table.ui.TableRow
 

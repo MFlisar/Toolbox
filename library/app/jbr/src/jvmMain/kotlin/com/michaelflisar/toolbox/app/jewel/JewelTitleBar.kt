@@ -21,7 +21,7 @@ import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.toolbox.app.DesktopPrefs
 import com.michaelflisar.toolbox.app.DesktopTitleBar
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
-import com.michaelflisar.toolbox.drawables.Keep
+import com.michaelflisar.toolbox.icons.Keep
 import com.michaelflisar.toolbox.extensions.disabled
 import com.michaelflisar.toolbox.extensions.isLight
 import kotlinx.coroutines.Dispatchers

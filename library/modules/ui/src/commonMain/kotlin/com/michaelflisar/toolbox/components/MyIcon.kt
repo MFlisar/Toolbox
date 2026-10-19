@@ -9,14 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
-import com.michaelflisar.toolbox.components
+import com.michaelflisar.toolbox.IconComposable
+import com.michaelflisar.toolbox.theme.icon
 
 @Composable
 fun MyIcon(
     imageVector: ImageVector,
-    contentDescription: String?,
     modifier: Modifier = Modifier,
-    size: Dp? = MaterialTheme.components.icons.size,
+    contentDescription: String? = null,
+    size: Dp? = MaterialTheme.icon.size,
     tint: Color = LocalContentColor.current,
 ) {
     Icon(
@@ -31,4 +32,27 @@ fun MyIcon(
         ),
         tint = tint
     )
+}
+
+@Composable
+fun MyIcon(
+    icon: IconComposable,
+    modifier: Modifier = Modifier,
+    contentDescription: String? = null,
+    size: Dp? = MaterialTheme.icon.size,
+    tint: Color = LocalContentColor.current,
+) {
+    com.michaelflisar.toolbox.extensions.Icon(
+        icon = icon,
+        contentDescription = contentDescription,
+        modifier = modifier.then(
+            if (size != null) {
+                Modifier.size(size)
+            } else {
+                Modifier
+            }
+        ),
+        tint = tint
+    )
+
 }

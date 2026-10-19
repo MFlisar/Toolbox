@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -39,6 +41,7 @@ import com.michaelflisar.toolbox.components.MyDropdownDefaults
 import com.michaelflisar.toolbox.components.MyDropdownIndex
 import com.michaelflisar.toolbox.components.MyDropdownMenu
 import com.michaelflisar.toolbox.components.MyDropdownMultiSelect
+import com.michaelflisar.toolbox.components.MyDropdownMultiSelectDefaults
 import com.michaelflisar.toolbox.components.MyIconButton
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyInputButton
@@ -135,10 +138,14 @@ private fun Page(
             MyDropdownMultiSelect(
                 modifier = modifier,
                 title = "MultiDropdown (Button)",
-                items = listOf("One", "Two", "Three"),
+                items = List(100) { "Item $it" },
                 selected = remember { mutableStateOf(emptyList<String>()) },
                 style = MyDropdownDefaults.styleButton(),
-                popupWidthConfig = MyDropdownMenu.WidthConfig.Auto()
+                popupWidthConfig = MyDropdownMenu.WidthConfig.Auto(),
+                content = MyDropdownMultiSelectDefaults.defaultRenderer(
+                    mapper = { item -> "Item: $item" },
+                    dropdownMapper = { item -> "Item: $item" }
+                )
             )
             //MyMultiDropdown(
             //    modifier = modifier,
@@ -151,10 +158,23 @@ private fun Page(
             MyDropdownIndex(
                 modifier = modifier,
                 title = "Dropdown (Button)",
-                items = listOf("One", "Two", "Three"),
+                items = List(100) { "Item $it" },
                 selectedIndex = remember { mutableStateOf(0) },
                 style = MyDropdownDefaults.styleButton(),
-                popupWidthConfig = MyDropdownMenu.WidthConfig.Auto()
+                popupWidthConfig = MyDropdownMenu.WidthConfig.Auto(),
+                filter = MyDropdown.Filter(
+                    label = "Filter",
+                ) { filter, item -> item.contains(filter, ignoreCase = true) },
+                content = {
+                    when (it) {
+                        is MyDropdown.RenderContext.Selection -> {
+                            Text("Selected: ${it.selection}")
+                        }
+                        is MyDropdown.RenderContext.DropdownItem<*> -> {
+                            Text("Item: ${it.item} - Selected: ${it.selected}", fontWeight = if (it.selected) FontWeight.Bold else FontWeight.Normal)
+                        }
+                    }
+                }
             )
         }
         TestRow(
@@ -328,9 +348,9 @@ private fun Page(
             ReferenceInput()
 
             MyPicker(
-                modifier = modifier,
+                modifier = modifier, //.width(100.dp), // test ob text abgeschnitten wird und icon sichtbar bleibt
                 text = "Mein File.xml",
-                icon = Icons.Default.AttachFile,
+                icon = Icons.Default.AttachFile.toIconComposable(),
                 onStartPicker = {
                     appState.showToast("Picker clicked")
                 }

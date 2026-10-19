@@ -14,7 +14,6 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -30,10 +29,9 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.components
-import com.michaelflisar.toolbox.spacing
-
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
+import com.michaelflisar.toolbox.theme.spacing
 
 object MyDropdownButton {
 
@@ -154,11 +152,11 @@ fun MyDropdownButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    shape: Shape = MaterialTheme.components.button.shape,
+    shape: Shape = LocalComponentOptions.current.button.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -180,11 +178,11 @@ fun MyDropdownButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    shape: Shape = MaterialTheme.components.button.shape,
+    shape: Shape = LocalComponentOptions.current.button.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -205,11 +203,11 @@ fun MyDropdownOutlinedButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    shape: Shape = MaterialTheme.components.button.outlinedShape,
+    shape: Shape = LocalComponentOptions.current.button.outlinedShape,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = enabled),
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -231,11 +229,11 @@ fun MyDropdownOutlinedButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource? = null,
     // button style
-    shape: Shape = MaterialTheme.components.button.outlinedShape,
+    shape: Shape = LocalComponentOptions.current.button.outlinedShape,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled = enabled),
-    contentPadding: PaddingValues = MaterialTheme.components.button.contentPadding,
+    contentPadding: PaddingValues = LocalComponentStyles.current.button.contentPadding,
     // content
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -276,7 +274,7 @@ private fun MyDropdownButton(
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
                 ) {
                     content()
                     EndIcon(type)

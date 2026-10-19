@@ -2,9 +2,26 @@ package com.michaelflisar.toolbox.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,8 +36,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.extensions.alphaDisabled
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
 
 @Composable
 fun MyLabeledBox(
@@ -31,7 +49,7 @@ fun MyLabeledBox(
     error: String? = null,
     focused: Boolean = false,
     onTopPaddingAvailable: ((padding: Dp) -> Unit)? = null,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val primary = MaterialTheme.colorScheme.primary
     val outline = MaterialTheme.colorScheme.outline
@@ -69,7 +87,8 @@ fun MyLabeledBox(
             // we calculate an EXACT border cut out... because it will disable all drawing inside this cutout (e.g. ripple of buttons, ...)
             val left =
                 with(density) { labelHorizontalPadding.toPx() } - extraCutoutPadding
-            val right = with(density) { labelHorizontalPadding.toPx() } + titleSize.width.toFloat() + extraCutoutPadding
+            val right =
+                with(density) { labelHorizontalPadding.toPx() } + titleSize.width.toFloat() + extraCutoutPadding
             val top = 0f
             val bottom =
                 with(density) { border.width.toPx() } //titleSize.height.toFloat()
@@ -81,10 +100,10 @@ fun MyLabeledBox(
                 modifier = Modifier
                     .padding(top = topPadding)
                     .drawWithoutRect(borderCutout)
-                    .clip(MaterialTheme.components.textField.outlinedShape)
+                    .clip(LocalComponentOptions.current.textField.outlinedShape)
                     .height(IntrinsicSize.Min)
                     .then(modifierInner),
-                shape = MaterialTheme.components.textField.outlinedShape,
+                shape = LocalComponentOptions.current.textField.outlinedShape,
                 border = border,
                 colors = CardDefaults.outlinedCardColors(
                     containerColor = fill

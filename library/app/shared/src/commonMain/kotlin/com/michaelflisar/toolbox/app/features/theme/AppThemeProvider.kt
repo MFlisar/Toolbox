@@ -10,13 +10,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
-import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.AppTheme
-import com.michaelflisar.toolbox.app.LocalAppTheme
-import com.michaelflisar.toolbox.app.LocalComposeTheme
 import com.michaelflisar.toolbox.app.features.device.Current
 import com.michaelflisar.toolbox.app.features.device.Device
+import com.michaelflisar.toolbox.theme.MyComponentOptions
+import com.michaelflisar.toolbox.theme.MyTheme
 
 interface IThemeSetup {
 
@@ -94,6 +93,7 @@ fun AppThemeProvider(
     theme: MyTheme,
     composeTheme: ComposeTheme.State,
     appThemeProvider: @Composable () -> AppTheme,
+    options: MyComponentOptions,
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
@@ -109,7 +109,8 @@ fun AppThemeProvider(
                 appThemeProvider = appThemeProvider
             ) {
                 MyTheme(
-                    theme = theme
+                    theme = theme,
+                    options = options,
                 ) {
                     content()
                 }

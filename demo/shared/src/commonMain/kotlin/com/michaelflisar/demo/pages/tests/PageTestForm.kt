@@ -25,7 +25,7 @@ import com.michaelflisar.toolbox.form3.FormHelp
 import com.michaelflisar.toolbox.form3.FormItem
 import com.michaelflisar.toolbox.form3.MyForm
 import com.michaelflisar.toolbox.form3.rememberFormConfig
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.theme.padding
 
 @Parcelize
 object PageTestForm : NavScreen() {
@@ -91,7 +91,7 @@ private fun Page() {
     val selectedMode = remember { mutableStateOf(Mode.Copy) }
     val selectedTerminalServer = remember { mutableStateOf(0) }
     val selectedVWVersion = remember { mutableStateOf(0) }
-    val selectedExistingFolder = remember { mutableStateOf<String?>(null) }
+    val selectedExistingFolder = remember { mutableStateOf<String>("") }
     val folderName = remember { mutableStateOf("Folder") }
     val copyMode = remember { mutableStateOf(TransferMode.Copy) }
     val copyLocalWorkspace = remember { mutableStateOf(false) }

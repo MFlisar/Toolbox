@@ -4,14 +4,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import com.michaelflisar.composethemer.ComposeTheme
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
-import com.michaelflisar.toolbox.MyTheme
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.AppTheme.Companion.getOnToolbarColorFromPrefs
 import com.michaelflisar.toolbox.app.AppTheme.Companion.getToolbarColorFromPrefs

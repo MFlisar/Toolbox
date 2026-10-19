@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.text.font.FontWeight
 
 import com.michaelflisar.toolbox.components.MyTitle
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.theme.padding
 import com.michaelflisar.toolbox.table.data.TableState
 import com.michaelflisar.toolbox.table.ui.TableRow
 

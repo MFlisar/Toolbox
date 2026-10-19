@@ -6,67 +6,45 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.Dp
-import com.michaelflisar.toolbox.components
+import com.michaelflisar.toolbox.IconComposable
+import com.michaelflisar.toolbox.icons.Empty
+import com.michaelflisar.toolbox.icons.MyIcons
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
 
 @Composable
 fun MyPicker(
     text: String,
-    icon: ImageVector,
-    modifier: Modifier = Modifier,
-    maxLines: Int = 1,
-    enabled: Boolean = true,
-    onStartPicker: () -> Unit,
-) {
-    MyPicker(
-        text = text,
-        icon = { size ->
-            MyIcon(
-                imageVector = icon,
-                contentDescription = null,
-                size = size
-            )
-        },
-        modifier = modifier,
-        maxLines = maxLines,
-        enabled = enabled,
-        onStartPicker = onStartPicker
-    )
-}
-
-@Composable
-fun MyPicker(
-    text: String,
-    icon: @Composable (size: Dp) -> Unit,
+    icon: IconComposable,
     modifier: Modifier = Modifier,
     maxLines: Int = 1,
     enabled: Boolean = true,
     onStartPicker: () -> Unit,
 ) {
     Box(
-        modifier = modifier
+        modifier = modifier,
+        contentAlignment = Alignment.CenterStart
     ) {
         MyInput(
             value = text,
             modifier = Modifier,
             maxLines = maxLines,
             enabled = enabled,
-            shape = MaterialTheme.components.textField.outlinedShape,
-            showClearIcon = false
+            shape = LocalComponentOptions.current.textField.outlinedShape,
+            showClearIcon = true,
+            clearIcon = MyIcons.Empty
         )
 
         Box(
             Modifier
                 .matchParentSize()
-                .clip(MaterialTheme.components.textField.outlinedShape)
+                .clip(LocalComponentOptions.current.textField.outlinedShape)
                 .clickable(
                     enabled = false,
                     role = Role.Button,
@@ -78,7 +56,7 @@ fun MyPicker(
             modifier = Modifier
                 .align(Alignment.CenterEnd)
                 .padding(
-                    end = MaterialTheme.components.textField.outlinedContentPadding.calculateEndPadding(
+                    end = LocalComponentStyles.current.textField.outlinedContentPadding.calculateEndPadding(
                         LocalLayoutDirection.current
                     )
                 )
@@ -88,11 +66,15 @@ fun MyPicker(
                     role = Role.Button,
                     onClick = onStartPicker
                 )
-                .size(MaterialTheme.components.textField.trailingIconSize + MaterialTheme.components.textField.trailingIconPadding)
-                .padding(MaterialTheme.components.textField.trailingIconPadding),
+                .size(LocalComponentStyles.current.textField.trailingIconTotalSize)
+                .padding(LocalComponentStyles.current.textField.trailingIconPadding),
             contentAlignment = Alignment.Center
         ) {
-            icon(MaterialTheme.components.textField.trailingIconSize)
+            com.michaelflisar.toolbox.extensions.Icon(
+                icon = icon,
+                modifier = Modifier
+                    .size(LocalComponentStyles.current.textField.trailingIconSize)
+            )
         }
     }
 }

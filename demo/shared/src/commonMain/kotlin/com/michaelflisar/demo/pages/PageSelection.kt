@@ -21,6 +21,7 @@ import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScree
 import com.michaelflisar.toolbox.app.features.toolbar.AnimatedSelectionToolbarWrapper
 import com.michaelflisar.toolbox.app.features.toolbar.PageToolbar
 import com.michaelflisar.toolbox.app.features.toolbar.SelectionToolbar
+import com.michaelflisar.toolbox.app.features.toolbar.SelectionToolbarDefaults
 import com.michaelflisar.toolbox.app.features.toolbar.composables.ToolbarMainMenuItems
 import com.michaelflisar.toolbox.components.MyButton
 import com.michaelflisar.toolbox.components.MyColumn
@@ -77,9 +78,9 @@ object PageSelectionScreen : NavScreen() {
             selectionToolbar = {
                 SelectionToolbar(
                     selection = screenModel.selection,
-                    style = SelectionToolbar.Style.Floating(
-                        shape = MaterialTheme.shapes.medium,
-                        padding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+                    style = SelectionToolbarDefaults.styleFloating(
+                        // damit toolbar bei erscheinen den wrapper nicht resized
+                        adjustSizeToFitTopAppBar = true
                     )
                 ) {
                     MultiSelectionMenu(

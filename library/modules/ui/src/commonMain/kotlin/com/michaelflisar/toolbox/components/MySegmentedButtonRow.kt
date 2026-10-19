@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.michaelflisar.toolbox.components
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
 
 @Suppress("UNCHECKED_CAST")
 @Composable
@@ -175,7 +175,7 @@ private fun MySegmentedButtonRowImpl(
                         }
                     )
                 },
-                contentPadding = MaterialTheme.components.segmentedButton.contentPadding
+                contentPadding = LocalComponentStyles.current.segmentedButton.contentPadding
             ) {
                 Text(item)
             }

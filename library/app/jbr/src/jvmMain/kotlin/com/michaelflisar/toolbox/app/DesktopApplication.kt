@@ -14,7 +14,8 @@ import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.LocalWindowExceptionHandlerFactory
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
-import com.michaelflisar.toolbox.MyTheme
+import com.michaelflisar.toolbox.theme.MyTheme
+import com.michaelflisar.toolbox.theme.MyComponentOptions
 import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.app.classes.DesktopExitHandler
 import com.michaelflisar.toolbox.app.features.appstate.rememberAppState
@@ -36,12 +37,13 @@ import org.jetbrains.jewel.window.defaultTitleBarStyle
 fun ApplicationScope.DesktopApplication(
     // Navigator
     screen: Screen,
-    theme: MyTheme = MyTheme.windowsDefault(),
+    theme: MyTheme = MyTheme.desktopCompact(),
     // JVM specific
     onCloseRequest: (() -> Unit)? = null,
     onPreviewKeyEvent: (KeyEvent) -> Boolean = { false },
     onKeyEvent: (KeyEvent) -> Boolean = { false },
     appIsClosing: MutableState<Boolean> = remember { mutableStateOf(false) },
+    options: MyComponentOptions = MyComponentOptions(),
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
@@ -95,6 +97,7 @@ fun ApplicationScope.DesktopApplication(
                             theme = theme,
                             composeTheme = composeTheme,
                             appThemeProvider = { rememberAppTheme() },
+                            options = options,
                         ) {
                             RootLocalProvider(appState, setRootLocals = true) {
                                 JvmBackHandlerUtil.ProvideMouseBackHandler()

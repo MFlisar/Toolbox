@@ -15,7 +15,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.michaelflisar.toolbox.scrollbar
+import com.michaelflisar.toolbox.theme.scrollbar
 
 import com.michaelflisar.toolbox.table.data.TableData
 import com.michaelflisar.toolbox.table.data.TableSort

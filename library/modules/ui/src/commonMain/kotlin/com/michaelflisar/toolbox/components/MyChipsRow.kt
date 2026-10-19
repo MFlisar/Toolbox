@@ -30,10 +30,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.components
 import com.michaelflisar.toolbox.extensions.disabled
-import com.michaelflisar.toolbox.padding
-import com.michaelflisar.toolbox.spacing
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
+import com.michaelflisar.toolbox.theme.icon
+import com.michaelflisar.toolbox.theme.padding
+import com.michaelflisar.toolbox.theme.spacing
 import com.michaelflisar.toolbox.ui.MyScrollableRow
 
 internal object MyChipsRow {
@@ -197,7 +199,7 @@ internal fun <T> MyChipsFlowRowImpl(
             MyScrollableRow(
                 verticalAlignment = Alignment.CenterVertically,
                 itemSpacing = MaterialTheme.spacing.small,
-            ){
+            ) {
                 RowContent(
                     items,
                     selection,
@@ -242,7 +244,7 @@ private fun <T> RowContent(
     minSegmentWidth: Dp,
     color: Color,
     showClear: Boolean,
-    modifierAlignCenterVertically: Modifier
+    modifierAlignCenterVertically: Modifier,
 ) {
     val borderColor = color.takeIf { it != Color.Unspecified }?.disabled()
         ?: MaterialTheme.colorScheme.onSurface.disabled()
@@ -268,9 +270,8 @@ private fun <T> RowContent(
     val empty = remember(selectedIndices) { derivedStateOf { selectedIndices.isEmpty() } }
 
     if (showClear && selection !is MyChipsRow.Selection.Single) {
-        val iconSize = MaterialTheme.components.icons.size
         OutlinedButton(
-            modifier = Modifier.size(iconSize).then(modifierAlignCenterVertically),
+            modifier = Modifier.size(MaterialTheme.icon.size).then(modifierAlignCenterVertically),
             onClick = {
                 onSelectionChange(emptyList())
             },
@@ -278,12 +279,12 @@ private fun <T> RowContent(
                 containerColor = Color.Transparent,
                 contentColor = if (empty.value) MaterialTheme.colorScheme.primary.disabled() else MaterialTheme.colorScheme.primary
             ),
-            shape = MaterialTheme.components.iconButton.outlinedShape,
+            shape = LocalComponentOptions.current.iconButton.outlinedShape,
             contentPadding = PaddingValues(all = 0.dp),
             enabled = !empty.value
         ) {
             Icon(
-                modifier = Modifier.size(iconSize),
+                modifier = Modifier.size(MaterialTheme.icon.size),
                 imageVector = Icons.Default.Clear,
                 contentDescription = null
             )

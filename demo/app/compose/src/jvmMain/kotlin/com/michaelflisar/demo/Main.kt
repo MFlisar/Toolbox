@@ -3,7 +3,6 @@ package com.michaelflisar.demo
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -13,8 +12,7 @@ import com.michaelflisar.demo.pages.tests.TestPrefs
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
 import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
-import com.michaelflisar.toolbox.Components
-import com.michaelflisar.toolbox.MyTheme
+import com.michaelflisar.toolbox.theme.MyTheme
 import com.michaelflisar.toolbox.app.App
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.DesktopApp
@@ -33,6 +31,7 @@ import com.michaelflisar.toolbox.app.features.menu.MenuItem
 import com.michaelflisar.toolbox.app.features.navigation.AppNavigatorTransitionPlatformStyle
 import com.michaelflisar.toolbox.app.utils.runApp
 import com.michaelflisar.toolbox.demo.BuildKonfig
+import com.michaelflisar.toolbox.theme.MyComponentOptions
 import com.michaelflisar.toolbox.utils.JvmAppMeta
 import com.michaelflisar.toolbox.utils.JvmFolderUtil
 import com.michaelflisar.toolbox.utils.JvmUtil
@@ -99,12 +98,8 @@ private fun app() {
 
         DesktopApplication(
             screen = Shared.page1,
-            theme = MyTheme.windowsDefault(
-                components = Components.windowsCompact(
-                    buttonShape = MaterialTheme.shapes.small,
-                    iconButtonShape = MaterialTheme.shapes.small
-                )
-            )
+            theme = MyTheme.desktopCompact(),
+            options = MyComponentOptions.desktopCompact()
         ) { navigator ->
 
             // theme + root (drawer state, app state) are available now

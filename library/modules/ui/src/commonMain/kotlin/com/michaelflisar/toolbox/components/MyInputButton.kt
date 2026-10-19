@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
@@ -12,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.components
+import com.michaelflisar.toolbox.theme.LocalComponentOptions
+import com.michaelflisar.toolbox.theme.LocalComponentStyles
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +38,7 @@ fun MyInputButton(
             minLines = minLines,
             maxLines = maxLines,
             enabled = true,
-            shape = MaterialTheme.components.textField.outlinedShape,
+            shape = LocalComponentOptions.current.textField.outlinedShape,
             placeholder = placeholder,
             leadingIcon = leadingIcon,
             colors = colors,
@@ -55,7 +55,7 @@ fun MyInputButton(
                         0.dp
                     }
                 )
-                .clip(MaterialTheme.components.textField.outlinedShape)
+                .clip(LocalComponentOptions.current.textField.outlinedShape)
                 .clickable(
                     enabled = enabled,
                     role = Role.Button,

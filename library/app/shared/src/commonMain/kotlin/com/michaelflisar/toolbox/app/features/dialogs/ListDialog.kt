@@ -20,11 +20,10 @@ import com.michaelflisar.composedialogs.core.BaseDialogState
 import com.michaelflisar.composedialogs.core.Dialog
 import com.michaelflisar.composedialogs.core.DialogButtons
 import com.michaelflisar.composedialogs.core.DialogDefaults
-import com.michaelflisar.composedialogs.core.DialogState
 import com.michaelflisar.toolbox.components.MyInput
 import com.michaelflisar.toolbox.components.MyLoading
 import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.padding
+import com.michaelflisar.toolbox.theme.padding
 import com.michaelflisar.toolbox.ui.MyScrollableLazyColumn
 
 @Composable
