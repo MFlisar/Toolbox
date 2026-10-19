@@ -38,12 +38,12 @@ fun ApplicationScope.DesktopApplication(
     // Navigator
     screen: Screen,
     theme: MyTheme = MyTheme.desktopCompact(),
+    options: MyComponentOptions = MyComponentOptions.desktopCompact(),
     // JVM specific
     onCloseRequest: (() -> Unit)? = null,
     onPreviewKeyEvent: (KeyEvent) -> Boolean = { false },
     onKeyEvent: (KeyEvent) -> Boolean = { false },
     appIsClosing: MutableState<Boolean> = remember { mutableStateOf(false) },
-    options: MyComponentOptions = MyComponentOptions(),
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {

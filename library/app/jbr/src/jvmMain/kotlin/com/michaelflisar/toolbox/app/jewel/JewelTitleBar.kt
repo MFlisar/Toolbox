@@ -24,6 +24,7 @@ import com.michaelflisar.toolbox.app.classes.DesktopAppSetup
 import com.michaelflisar.toolbox.icons.Keep
 import com.michaelflisar.toolbox.extensions.disabled
 import com.michaelflisar.toolbox.extensions.isLight
+import com.michaelflisar.toolbox.icons.MyIcons
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.jewel.ui.component.Icon
@@ -78,7 +79,7 @@ internal fun JewelTitleBar(
                 if (setup.showAlwaysOnTop) {
                     val alwaysOnTop = prefs.alwaysOnTop.collectAsStateNotNull()
                     TitleIconButton(
-                        rememberVectorPainter(Keep),
+                        rememberVectorPainter(MyIcons.Keep),
                         "Always On Top",
                         if (alwaysOnTop.value) foreground else foreground.disabled()
                     ) {
