@@ -60,8 +60,8 @@ fun ComponentActivity.AndroidApplication(
     composeTheme: ComposeTheme.State = rememberComposeTheme(),
     appThemeProvider: @Composable () -> AppTheme = { rememberAppTheme() },
     theme: MyTheme = MyTheme.default(),
+    options: MyComponentOptions = MyComponentOptions.default(),
     appState: AppState = rememberAppState(),
-    options: MyComponentOptions = MyComponentOptions(),
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
@@ -102,7 +102,7 @@ fun ComponentActivity.AndroidApplication(
     composeTheme: ComposeTheme.State = rememberComposeTheme(),
     appThemeProvider: @Composable () -> AppTheme = { rememberAppTheme() },
     theme: MyTheme = MyTheme.default(),
-    options: MyComponentOptions = MyComponentOptions(),
+    options: MyComponentOptions = MyComponentOptions.default(),
     content: @Composable () -> Unit,
 ) {
     ProvideAppLocals(this) {
