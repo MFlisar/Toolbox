@@ -1,0 +1,263 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../app-jbr/7.0.3/app-jbr-7.0.3.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "app-jbr",
+    "version": "7.0.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.androidx.lifecycle",
+          "module": "lifecycle-runtime-compose",
+          "version": {
+            "requires": "2.11.0"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-navigator",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-transitions",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-screenmodel",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "app-shared",
+          "version": {
+            "requires": "7.0.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "jbr-jvm.jar",
+          "url": "app-jbr-jvm-7.0.3.jar",
+          "size": 93778,
+          "sha512": "68454bec404d29eaa7d715ba216d7236954b9a56245559e3a679babc0ad06397fcb3c0e791bad8d593c72f7a7f647e447b9e0a17495e675b8d19300f1c1f0dc6",
+          "sha256": "9f73210322499eb4f7840c5739a82aa43552aa4a1cf326a8358f916d756470f9",
+          "sha1": "589e1c624f1fcc03d805abd5777f3a157dddb0f7",
+          "md5": "a3157b29875283ecb0f615d7bb080465"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.androidx.lifecycle",
+          "module": "lifecycle-runtime-compose",
+          "version": {
+            "requires": "2.11.0"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-navigator",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-transitions",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "cafe.adriel.voyager",
+          "module": "voyager-screenmodel",
+          "version": {
+            "requires": "2.2.21-1.10.3"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "app-shared",
+          "version": {
+            "requires": "7.0.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.jewel",
+          "module": "jewel-int-ui-standalone",
+          "version": {
+            "requires": "0.35.0-261.23567.198"
+          }
+        },
+        {
+          "group": "org.jetbrains.jewel",
+          "module": "jewel-int-ui-decorated-window",
+          "version": {
+            "requires": "0.35.0-261.23567.198"
+          }
+        },
+        {
+          "group": "com.jetbrains.intellij.platform",
+          "module": "icons",
+          "version": {
+            "requires": "251.23774.444"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.8.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3.adaptive",
+          "module": "adaptive",
+          "version": {
+            "requires": "1.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.ui",
+          "module": "ui-backhandler",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "br.com.devsrsouza.compose.icons",
+          "module": "font-awesome",
+          "version": {
+            "requires": "1.1.1"
+          }
+        },
+        {
+          "group": "io.github.vinceglb",
+          "module": "filekit-dialogs-compose",
+          "version": {
+            "requires": "0.16.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "jbr-jvm.jar",
+          "url": "app-jbr-jvm-7.0.3.jar",
+          "size": 93778,
+          "sha512": "68454bec404d29eaa7d715ba216d7236954b9a56245559e3a679babc0ad06397fcb3c0e791bad8d593c72f7a7f647e447b9e0a17495e675b8d19300f1c1f0dc6",
+          "sha256": "9f73210322499eb4f7840c5739a82aa43552aa4a1cf326a8358f916d756470f9",
+          "sha1": "589e1c624f1fcc03d805abd5777f3a157dddb0f7",
+          "md5": "a3157b29875283ecb0f615d7bb080465"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "jbr-jvm-sources.jar",
+          "url": "app-jbr-jvm-7.0.3-sources.jar",
+          "size": 11125,
+          "sha512": "1a399810220a20e965ee546dda9715255157e231b6ee447efbab39ebc70f1ee5d1d1d3b41b6e8583a59fd2c49296caa24c043c3d57a98d76be1b94c0246bf7fa",
+          "sha256": "b9c460604c82efd110399810df9a39697be194f0e488fb8b854a261dbe18d250",
+          "sha1": "40f2337caa226f6dd3060a9f529c17b70fd427e3",
+          "md5": "b449a4d43d1a6bc9192452205caeb567"
+        }
+      ]
+    }
+  ]
+}

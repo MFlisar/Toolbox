@@ -1,0 +1,151 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../table/7.0.3/table-7.0.3.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "table",
+    "version": "7.0.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.3"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "7.0.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "table.aar",
+          "url": "table-android-7.0.3.aar",
+          "size": 266601,
+          "sha512": "5e0b7e5e70abfa128c67fe493fa20220f01732df9de8252b5c0b14010bb1556f2a5ce6627c184d66781e62634c50d17c38fa7f423ef49be89f8c06beebcf7849",
+          "sha256": "ceda49dc4b9fbccbf11c172376c80bb39ce411e85a230750f80dbb01372f8bef",
+          "sha1": "c742bd0fba01bde3a54aab31bc136b5f407bdf31",
+          "md5": "2aaab14d8f38e82d8a9dc0288bb179ba"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.3"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "7.0.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-core",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material",
+          "module": "material-icons-extended",
+          "version": {
+            "requires": "1.7.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "table.aar",
+          "url": "table-android-7.0.3.aar",
+          "size": 266601,
+          "sha512": "5e0b7e5e70abfa128c67fe493fa20220f01732df9de8252b5c0b14010bb1556f2a5ce6627c184d66781e62634c50d17c38fa7f423ef49be89f8c06beebcf7849",
+          "sha256": "ceda49dc4b9fbccbf11c172376c80bb39ce411e85a230750f80dbb01372f8bef",
+          "sha1": "c742bd0fba01bde3a54aab31bc136b5f407bdf31",
+          "md5": "2aaab14d8f38e82d8a9dc0288bb179ba"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "table-android-sources.jar",
+          "url": "table-android-7.0.3-sources.jar",
+          "size": 24382,
+          "sha512": "6b7bafe5e66f6fed9a92c504b39d8a1dddfaa0bbad766dc634af3dbf88f51f64ca12ce828fa7ac1ff5597eac50397209c51621fec043a29d80b7fa0610b50888",
+          "sha256": "5b2d322c6480072f7042aa2ef92fd36c99a45ed94105dd883d12c68ee1eaabf3",
+          "sha1": "d2e5a2cb0cf300e53b7159a9238308fc77a555bb",
+          "md5": "4049301cb1f2399f5e23484a846b5c82"
+        }
+      ]
+    }
+  ]
+}

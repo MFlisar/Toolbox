@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../diff/7.0.3/diff-7.0.3.module",
+    "group": "io.github.mflisar.toolbox",
+    "module": "diff",
+    "version": "7.0.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "jvmApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "diff-jvm.jar",
+          "url": "diff-jvm-7.0.3.jar",
+          "size": 56746,
+          "sha512": "288a07c2f840827474d1efefe5d5d3d4f4c541924a93ddf4fda3f46bc7bbd35209f91538bd989b203237200bedb6478fbd9f01ecbc58c9470e5982c77435b097",
+          "sha256": "ec115c075b0f266c42f17c19b105822aeb52dce954ce45f15a7dca2fcbec4c0b",
+          "sha1": "7cb856acaed702e16676eb25768c70d8da58061a",
+          "md5": "a7f5d3fbe95b04545d13c988762fc0f0"
+        }
+      ]
+    },
+    {
+      "name": "jvmRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "core",
+          "version": {
+            "requires": "7.0.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.9.0"
+          }
+        },
+        {
+          "group": "io.github.mflisar.toolbox",
+          "module": "ui",
+          "version": {
+            "requires": "7.0.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "diff-jvm.jar",
+          "url": "diff-jvm-7.0.3.jar",
+          "size": 56746,
+          "sha512": "288a07c2f840827474d1efefe5d5d3d4f4c541924a93ddf4fda3f46bc7bbd35209f91538bd989b203237200bedb6478fbd9f01ecbc58c9470e5982c77435b097",
+          "sha256": "ec115c075b0f266c42f17c19b105822aeb52dce954ce45f15a7dca2fcbec4c0b",
+          "sha1": "7cb856acaed702e16676eb25768c70d8da58061a",
+          "md5": "a7f5d3fbe95b04545d13c988762fc0f0"
+        }
+      ]
+    },
+    {
+      "name": "jvmSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "diff-jvm-sources.jar",
+          "url": "diff-jvm-7.0.3-sources.jar",
+          "size": 6414,
+          "sha512": "f08e970764aef4079cb04cf4056a8e6ccf57a203931f3ef52623c46925d345bace91c051cea845ff480211eb82feff2e187d041c3849175e6c0cc77b48fcfa0d",
+          "sha256": "7d5522694ec7f5d0e2221cb5f80b24ed2226e2db6ec77a4db7026982c843dfa5",
+          "sha1": "afb9c29d126aab8cc50a4eeb02e122b6ad45a118",
+          "md5": "2b75f9f9d230e516a73ebcab76b58e28"
+        }
+      ]
+    }
+  ]
+}
