@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.michaelflisar.toolbox.icons.Crown
+import com.michaelflisar.toolbox.icons.MyIcons
 import io.github.hyochan.kmpiap.ProductQueryType
 
 class Product(
@@ -11,7 +12,7 @@ class Product(
     val isConsumable: Boolean = false,
     val type: Type = Type.InApp,
     val iosAmount: Int = 1,
-    val icon: ImageVector = Crown,
+    val icon: ImageVector = MyIcons.Crown,
 ) {
     enum class Type {
         InApp,
