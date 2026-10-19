@@ -19,7 +19,7 @@ fun WasmApplication(
     screen: Screen,
     wasmSetup: WasmAppSetup,
     theme: MyTheme = MyTheme.default(),
-    options: MyComponentOptions = MyComponentOptions(),
+    options: MyComponentOptions = MyComponentOptions.default(),
     // Content
     content: @Composable (navigator: Navigator) -> Unit,
 ) {
