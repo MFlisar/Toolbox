@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
+import com.michaelflisar.toolbox.components.MyDropdown.RenderContext
 import com.michaelflisar.toolbox.theme.LocalComponentOptions
 
 object MyDropdownDefaults {
@@ -27,33 +28,67 @@ object MyDropdownDefaults {
         fontWeightDropdownSelected: FontWeight? = FontWeight.Bold,
         maxLinesDropdown: Int = 1,
     ) = MyDropdown.RenderContent(
-        content = { context ->
-            MyRow {
-                leadingContent()
-                Text(
-                    text = if (context.selection != null) mapper(context.selection) else "",
-                    modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = color,
-                    fontWeight = fontWeight,
-                    maxLines = maxLines
-                )
-            }
-        },
-        dropdownContent = { context ->
-            MyRow(modifier = Modifier.fillMaxWidth()) {
-                leadingContent()
-                Text(
-                    text = mapperDropdown(context.item),
-                    color = if (context.selected) colorDropdownSelected else colorDropdown,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = if (context.selected) fontWeightDropdownSelected else fontWeightDropdown,
-                    style = MaterialTheme.typography.bodyMedium,
-                    maxLines = maxLinesDropdown
-                )
-            }
-        }
+        content = defaultContent(
+            mapper = mapper,
+            color = color,
+            fontWeight = fontWeight,
+            maxLines = maxLines,
+            leadingContent = leadingContent
+        ),
+        dropdownContent = defaultDropdownContent(
+            mapper = mapperDropdown,
+            color = colorDropdown,
+            colorSelected = colorDropdownSelected,
+            fontWeight = fontWeightDropdown,
+            fontWeightSelected = fontWeightDropdownSelected,
+            maxLines = maxLinesDropdown,
+            leadingContent = leadingContent
+        )
     )
+
+    @Composable
+    fun <T> defaultContent(
+        mapper: @Composable (item: T) -> String = { it.toString() },
+        color: Color = Color.Unspecified,
+        fontWeight: FontWeight? = null,
+        maxLines: Int = 1,
+        leadingContent: @Composable () -> Unit = {},
+    ): @Composable (RenderContext.Selection<T?>) -> Unit = { context ->
+        MyRow {
+            leadingContent()
+            Text(
+                text = if (context.selection != null) mapper(context.selection) else "",
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.bodyMedium,
+                color = color,
+                fontWeight = fontWeight,
+                maxLines = maxLines
+            )
+        }
+    }
+
+    @Composable
+    fun <T : Any> defaultDropdownContent(
+        mapper: @Composable (item: T) -> String = { it.toString() },
+        color: Color = Color.Unspecified,
+        colorSelected: Color = MaterialTheme.colorScheme.primary,
+        fontWeight: FontWeight? = null,
+        fontWeightSelected: FontWeight? = FontWeight.Bold,
+        maxLines: Int = 1,
+        leadingContent: @Composable () -> Unit = {},
+    ): @Composable (RenderContext.DropdownItem<T>) -> Unit = { context ->
+        MyRow(modifier = Modifier.fillMaxWidth()) {
+            leadingContent()
+            Text(
+                text = mapper(context.item),
+                color = if (context.selected) colorSelected else color,
+                modifier = Modifier.weight(1f),
+                fontWeight = if (context.selected) fontWeightSelected else fontWeight,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = maxLines
+            )
+        }
+    }
 
     @Composable
     fun styleButton(): MyDropdown.Style = MyDropdown.Style.Button

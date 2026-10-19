@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
+import com.michaelflisar.toolbox.components.MyDropdown.RenderContext
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.theme.LocalComponentOptions
-import com.michaelflisar.toolbox.theme.LocalComponentStyles
 import com.michaelflisar.toolbox.theme.LocalComponentTexts
 import com.michaelflisar.toolbox.theme.icon
 
@@ -37,39 +37,75 @@ object MyDropdownMultiSelectDefaults {
         fontWeightDropdown: FontWeight? = null,
         fontWeightDropdownSelected: FontWeight? = FontWeight.Bold,
         maxLinesDropdown: Int = 1,
-    ) = MyDropdown.RenderContent<T, List<T>>(
-        content = { context ->
-            MyRow {
-                leadingContent()
-                Text(
-                    text = formatter(context.selection.map { mapper(it) }),
-                    modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = color,
-                    fontWeight = fontWeight,
-                    maxLines = maxLines
-                )
-            }
-        },
-        dropdownContent = { context ->
-            MyRow(modifier = Modifier.fillMaxWidth()) {
-                MyIcon(
-                    imageVector = if (context.selected) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
-                    contentDescription = null,
-                    size = MaterialTheme.icon.size,
-                    tint = if (context.selected) colorDropdownSelected else colorDropdown
-                )
-                leadingContent()
-                Text(
-                    text = dropdownMapper(context.item),
-                    color = if (context.selected) colorDropdownSelected else colorDropdown,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = if (context.selected) fontWeightDropdownSelected else fontWeightDropdown,
-                    maxLines = maxLinesDropdown
-                )
-            }
-        }
+    ) = MyDropdown.RenderContent(
+        content = defaultContent(
+            mapper = mapper,
+            formatter = formatter,
+            color = color,
+            fontWeight = fontWeight,
+            maxLines = maxLines,
+            leadingContent = leadingContent
+        ),
+        dropdownContent = defaultDropdownContent(
+            mapper = dropdownMapper,
+            color = colorDropdown,
+            colorSelected = colorDropdownSelected,
+            fontWeight = fontWeightDropdown,
+            fontWeightSelected = fontWeightDropdownSelected,
+            maxLines = maxLinesDropdown,
+            leadingContent = leadingContent
+        )
     )
+
+    @Composable
+    fun <T> defaultContent(
+        mapper: @Composable (item: T) -> String = { it.toString() },
+        formatter: @Composable (selected: List<String>) -> String = MyDropdownMultiSelectDefaults.formatter,
+        color: Color = Color.Unspecified,
+        fontWeight: FontWeight? = null,
+        maxLines: Int = 1,
+        leadingContent: @Composable () -> Unit = {},
+    ): @Composable (RenderContext.Selection<List<T>>) -> Unit = { context ->
+        MyRow {
+            leadingContent()
+            Text(
+                text = formatter(context.selection.map { mapper(it) }),
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.bodyMedium,
+                color = color,
+                fontWeight = fontWeight,
+                maxLines = maxLines
+            )
+        }
+    }
+
+    @Composable
+    fun <T : Any> defaultDropdownContent(
+        mapper: @Composable (item: T) -> String = { it.toString() },
+        color: Color = Color.Unspecified,
+        colorSelected: Color = MaterialTheme.colorScheme.primary,
+        fontWeight: FontWeight? = null,
+        fontWeightSelected: FontWeight? = FontWeight.Bold,
+        maxLines: Int = 1,
+        leadingContent: @Composable () -> Unit = {},
+    ): @Composable (RenderContext.DropdownItem<T>) -> Unit = { context ->
+        MyRow(modifier = Modifier.fillMaxWidth()) {
+            MyIcon(
+                imageVector = if (context.selected) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
+                contentDescription = null,
+                size = MaterialTheme.icon.size,
+                tint = if (context.selected) colorSelected else color
+            )
+            leadingContent()
+            Text(
+                text = mapper(context.item),
+                color = if (context.selected) colorSelected else color,
+                modifier = Modifier.weight(1f),
+                fontWeight = if (context.selected) fontWeightSelected else fontWeight,
+                maxLines = maxLines
+            )
+        }
+    }
 
     @Composable
     fun shape() = LocalComponentOptions.current.textField.outlinedShape
