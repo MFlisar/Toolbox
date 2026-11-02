@@ -29,20 +29,24 @@ actual fun MyScrollableLazyColumn(
     overlapScrollbar: Boolean,
     content: LazyListScope.() -> Unit
 ) {
+    val data = rememberScrollableData(state, overlapScrollbar)
     Box(modifier = modifier) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = if (overlapScrollbar) 0.dp else MaterialTheme.scrollbar.paddingForScrollbar),
+                .padding(end = data.paddingForScrollbar),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
             horizontalAlignment = horizontalAlignment,
             state = state
         ) {
             content()
         }
-        VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(MaterialTheme.scrollbar.size),
-            adapter = rememberScrollbarAdapter(state)
-        )
+        if (data.showScrollbar) {
+            VerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight()
+                    .width(MaterialTheme.scrollbar.size),
+                adapter = rememberScrollbarAdapter(state)
+            )
+        }
     }
 }

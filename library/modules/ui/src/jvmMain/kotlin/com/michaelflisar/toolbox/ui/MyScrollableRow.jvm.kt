@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.theme.scrollbar
 
 
@@ -27,22 +26,26 @@ actual fun MyScrollableRow(
     verticalAlignment: Alignment.Vertical,
     scrollState: ScrollState,
     overlapScrollbar: Boolean,
-    content: @Composable RowScope.() -> Unit
+    content: @Composable RowScope.() -> Unit,
 ) {
+    val data = rememberScrollableData(scrollState, overlapScrollbar)
     Box(modifier = modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalScroll(scrollState)
-                .padding(bottom = if (overlapScrollbar) 0.dp else MaterialTheme.scrollbar.paddingForScrollbar),
+                .padding(bottom = data.paddingForScrollbar),
             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
             verticalAlignment = verticalAlignment
         ) {
             content()
         }
-        HorizontalScrollbar(
-            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(MaterialTheme.scrollbar.size),
-            adapter = rememberScrollbarAdapter(scrollState)
-        )
+        if (data.showScrollbar) {
+            HorizontalScrollbar(
+                modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()
+                    .height(MaterialTheme.scrollbar.size),
+                adapter = rememberScrollbarAdapter(scrollState)
+            )
+        }
     }
 }

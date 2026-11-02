@@ -4,6 +4,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -11,7 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.Checkbox
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -170,8 +171,12 @@ private fun Page(
                         is MyDropdown.RenderContext.Selection -> {
                             Text("Selected: ${it.selection}")
                         }
+
                         is MyDropdown.RenderContext.DropdownItem<*> -> {
-                            Text("Item: ${it.item} - Selected: ${it.selected}", fontWeight = if (it.selected) FontWeight.Bold else FontWeight.Normal)
+                            Text(
+                                "Item: ${it.item} - Selected: ${it.selected}",
+                                fontWeight = if (it.selected) FontWeight.Bold else FontWeight.Normal
+                            )
                         }
                     }
                 }
@@ -295,19 +300,48 @@ private fun Page(
         }
 
         TestRow(
-            "6) Segmented Row",
+            "6.1) Segmented Row",
             scrollable = false
         )
         {
             val modifier = Modifier//.width(400.dp)
             MySegmentedButtonRow(
                 modifier = modifier,
-                items = listOf("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"),
+                items = listOf(
+                    "List Item One",
+                    "List Item Two",
+                    "List Item Three",
+                    "List Item Four",
+                    "List Item Five",
+                    "List Item Six",
+                    "List Item Seven",
+                    "List Item Eight"
+                ),
                 selected = remember { mutableStateOf(emptyList<String>()) }
             )
             MySegmentedButtonRowMultiSelect(
                 modifier = modifier,
                 items = listOf("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"),
+                selected = remember { mutableStateOf(emptyList<String>()) }
+            )
+        }
+        TestRow(
+            "6.2) Segmented Row",
+            scrollable = false
+        )
+        {
+            MySegmentedButtonRow(
+                modifier = Modifier.fillMaxWidth(),
+                items = listOf(
+                    "List Item One",
+                    "List Item Two",
+                    "List Item Three",
+                    "List Item Four",
+                    "List Item Five",
+                    "List Item Six",
+                    "List Item Seven",
+                    "List Item Eight"
+                ),
                 selected = remember { mutableStateOf(emptyList<String>()) }
             )
         }
@@ -404,6 +438,21 @@ private fun Page(
                     appState.showToast("Checkbox changed to $it")
                 },
                 toggleOnIconClickOnly = false
+            )
+        }
+
+        TestRow(
+            "9) BUGS in Compose Material3",
+            scrollable = true
+        )
+        {
+            // bug bei mouse over!
+            FilterChip(
+                selected = false,
+                onClick = {},
+                label = { Text("Test - Mouse Over Bug") },
+                modifier = Modifier,
+                enabled = true
             )
         }
     }

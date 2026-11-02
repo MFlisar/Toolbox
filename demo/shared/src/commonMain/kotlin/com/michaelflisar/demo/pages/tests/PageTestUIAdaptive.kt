@@ -1,36 +1,42 @@
 package com.michaelflisar.demo.pages.tests
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import com.michaelflisar.parcelize.Parcelize
+import com.michaelflisar.toolbox.app.features.appstate.AppState
 import com.michaelflisar.toolbox.app.features.appstate.LocalAppState
 import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
 import com.michaelflisar.toolbox.components.MyFlowRow
-import com.michaelflisar.toolbox.components.MyText
+import com.michaelflisar.toolbox.components.MySegmentedButtonRow
+import com.michaelflisar.toolbox.components.MySegmentedButtonRowIndex
 import com.michaelflisar.toolbox.extensions.toIconComposable
 import com.michaelflisar.toolbox.ui.MyScrollableColumn
-import com.michaelflisar.toolbox.ui.adaptive.AdaptiveBottomBar
-import com.michaelflisar.toolbox.ui.adaptive.AdaptiveBottomBarItem
-import com.michaelflisar.toolbox.ui.adaptive.AdaptiveButton
-import com.michaelflisar.toolbox.ui.adaptive.AdaptiveNavigationBar
-import com.michaelflisar.toolbox.ui.adaptive.AdaptiveSwitch
+import com.michaelflisar.toolbox.ui.adaptive.StyledTheme
+import com.michaelflisar.toolbox.ui.adaptive.components.StyledButton
+import com.michaelflisar.toolbox.ui.adaptive.implementations.common.StyledColumn
+import com.michaelflisar.toolbox.ui.adaptive.implementations.common.StyledExpandableTitle
+import com.michaelflisar.toolbox.ui.adaptive.implementations.common.StyledRow
+import com.michaelflisar.toolbox.ui.adaptive.implementations.common.StyledText
+import com.michaelflisar.toolbox.ui.adaptive.implementations.common.rememberStyledExpandableTitleStyle
+import com.michaelflisar.toolbox.ui.adaptive.implementations.cupertino.rememberCupertinoTheme
+import com.michaelflisar.toolbox.ui.adaptive.implementations.fluent2.rememberFluent2Theme
+import com.michaelflisar.toolbox.ui.adaptive.implementations.material3.rememberMaterial3Theme
+import com.michaelflisar.toolbox.ui.adaptive.isDark
+import com.michaelflisar.toolbox.ui.adaptive.platform.Platform
+import com.michaelflisar.toolbox.ui.adaptive.tokens.darkStyledColors
+import com.michaelflisar.toolbox.ui.adaptive.tokens.lightStyledColors
 
 @Parcelize
 object PageTestUIAdaptive : NavScreen() {
@@ -49,77 +55,161 @@ object PageTestUIAdaptive : NavScreen() {
 }
 
 @Composable
-private fun Page(
-    paddingValues: PaddingValues = PaddingValues(0.dp),
-) {
-    val navigator = LocalNavigator.currentOrThrow
+private fun Page() {
     val appState = LocalAppState.current
-    val scope = rememberCoroutineScope()
 
-    MyScrollableColumn(
-        modifier = Modifier
-            .padding(paddingValues)
-            .padding(all = 16.dp)
-            .fillMaxSize()
+    val platforms = Platform.ALL
+    val themes = listOf(
+        "Light", "Dark", "System"
+    )
+    val selectedPlatform = remember { mutableStateOf(platforms.first()) }
+    val selectedThemeIndex = remember { mutableStateOf(0) }
+
+    StyledTheme(
+        platform = selectedPlatform.value,
+        theme = when (selectedPlatform.value) {
+            Platform.Android -> rememberMaterial3Theme()
+            is Platform.Desktop -> rememberFluent2Theme()
+            Platform.IOS -> rememberCupertinoTheme()
+            Platform.Web -> rememberFluent2Theme()
+        },
+        colors = when (selectedThemeIndex.value) {
+            0 -> lightStyledColors()
+            1 -> darkStyledColors()
+            2 -> if (isSystemInDarkTheme()) darkStyledColors() else lightStyledColors()
+            else -> throw RuntimeException()
+        }
     ) {
-        MyText(text = "Adaptive Buttons")
+        StyledColumn(
+            modifier = Modifier
+                .background(StyledTheme.colors.background)
+                .padding(StyledTheme.padding.content)
+        ) {
+            StyledRow(
+                modifier = Modifier.fillMaxWidth()
+                    // MySegmentedButtonRow unterstützt nicht vollständige customisation...
+                    .background(MaterialTheme.colorScheme.background)
+            ) {
+                MySegmentedButtonRow(
+                    modifier = Modifier.weight(1f),
+                    items = platforms,
+                    selected = selectedPlatform,
+                    color = StyledTheme.colors.primary,
+                    onColor = StyledTheme.colors.onPrimary
+                )
+                MySegmentedButtonRowIndex(
+                    modifier = Modifier.weight(1f),
+                    items = themes,
+                    selectedIndex = selectedThemeIndex,
+                    color = StyledTheme.colors.primary,
+                    onColor = StyledTheme.colors.onPrimary
+                )
+            }
+
+            StyledText(
+                text = "Aktuelles Theme: ${StyledTheme.themeName}",
+                style = StyledTheme.typography.titleSmall
+            )
+
+            MyScrollableColumn(
+                modifier = Modifier.weight(1f)
+            ) {
+                TestButtons(appState, "Buttons")
+            }
+        }
+    }
+}
+
+@Composable
+private fun TestButtons(
+    appState: AppState,
+    title: String,
+) {
+    RegionContainer(title) {
+
+        SubTitle("Default Buttons")
         MyFlowRow {
-            AdaptiveButton.Variant.entries.forEach {
-                AdaptiveButton(
+            StyledButton.Variant.entries.forEach {
+                StyledButton(
                     variant = it,
                     onClick = { appState.showToast("${it.name} Button clicked") }
                 ) {
-                    Text("${it.name} Button")
+                    StyledText("${it.name} Button")
                 }
             }
         }
-        MyText(text = "Adaptive BottomBar")
-        AdaptiveBottomBar(
-            items = listOf(
-                AdaptiveBottomBarItem(
-                    icon = { Icon(Icons.Default.Home, null) },
-                    label = "Home",
-                    selected = true,
-                    onClick = { appState.showToast("Home clicked") }
-                ),
-                AdaptiveBottomBarItem(
-                    icon = { Icon(Icons.Default.Search, null) },
-                    label = "Search",
-                    selected = false,
-                    onClick = { appState.showToast("Search clicked") }
-                ),
-                AdaptiveBottomBarItem(
-                    icon = { Icon(Icons.Default.Person, null) },
-                    label = "Profile",
-                    selected = false,
-                    onClick = { appState.showToast("Profile clicked") }
-                )
-            )
-        )
-        MyText(text = "Adaptive Navigation")
-        AdaptiveNavigationBar(
-            title = "Navigation Title",
-            onBack = { appState.showToast("Navigation clicked") },
-            actions = {
-                // TODO:
-                AdaptiveButton(
-                    variant = AdaptiveButton.Variant.Default,
-                    onClick = { appState.showToast("Action clicked") }
+
+        SubTitle("Disabled Buttons")
+        MyFlowRow {
+            StyledButton.Variant.entries.forEach {
+                StyledButton(
+                    variant = it,
+                    onClick = {},
+                    enabled = false
                 ) {
-                    Text("Action")
+                    StyledText("${it.name} Button")
                 }
             }
-        )
-        MyText("Adaptive Switch")
+        }
+
+        SubTitle("Buttons with Customization")
         MyFlowRow {
-            AdaptiveSwitch.Variant.entries.forEach {
-                val checked = remember { mutableStateOf(false) }
-                AdaptiveSwitch(
-                    variant = it,
-                    checked = checked.value,
-                    onCheckedChange = { checked.value = it; }
+            val colors = listOf(
+                Color.Red,
+                Color.Green,
+                Color.Magenta,
+                Color.Blue,
+                Color.Cyan
+            )
+            StyledButton.Variant.entries.forEachIndexed { index, variant ->
+                val color = colors[index % colors.size]
+                val onColor = if (color.isDark) Color.White else Color.Black
+                val customization = StyledButton.customize(
+                    tint = color,
+                    onTint = onColor,
+                    border = color
                 )
+                StyledButton(
+                    variant = variant,
+                    onClick = { appState.showToast("${variant.name} Button clicked") },
+                    customization = customization
+                ) {
+                    StyledText("${variant.name} Button")
+                }
             }
+        }
+    }
+}
+
+@Composable
+private fun SubTitle(
+    title: String,
+) {
+    StyledText(
+        text = title,
+        fontWeight = FontWeight.Bold,
+        style = StyledTheme.typography.titleSmall
+    )
+}
+
+@Composable
+private fun RegionContainer(
+    title: String,
+    content: @Composable () -> Unit,
+) {
+    StyledExpandableTitle(
+        title = { StyledText(title) },
+        modifier = Modifier.fillMaxWidth(),
+        style = rememberStyledExpandableTitleStyle(
+            containerColor = StyledTheme.colors.primary,
+            contentColor = StyledTheme.colors.onPrimary,
+            borderColor = StyledTheme.colors.outline
+        )
+    ) {
+        StyledColumn(
+            modifier = Modifier.fillMaxWidth().padding(StyledTheme.padding.cardContent)
+        ) {
+            content()
         }
     }
 }

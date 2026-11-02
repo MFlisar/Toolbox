@@ -91,7 +91,12 @@ kotlin {
             // Library
             api(project(":toolbox:core"))
             api(project(":toolbox:modules:ui"))
+            implementation(libs.jetbrains.kotlinx.coroutines.core)
 
+        }
+        commonTest.dependencies {
+            implementation(libs.jetbrains.kotlin.test)
+            implementation(libs.jetbrains.kotlinx.coroutines.test)
         }
     }
 }

@@ -28,8 +28,6 @@ import com.michaelflisar.toolbox.theme.LocalComponentOptions
 import com.michaelflisar.toolbox.theme.LocalComponentStyles
 
 object MyOutlinedDecoratedContainer {
-    // TODO: find out why extra padding is necessary + fix it
-    val MODIFIER_CORRECTION = Modifier.padding(vertical = 1.dp)
 
     @Composable
     internal fun minimizedLabelHalfHeight(): Dp {

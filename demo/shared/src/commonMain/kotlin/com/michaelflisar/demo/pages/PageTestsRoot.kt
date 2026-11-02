@@ -24,6 +24,7 @@ import com.michaelflisar.demo.pages.tests.PageTestDialogs
 import com.michaelflisar.demo.pages.tests.PageTestPane
 import com.michaelflisar.demo.pages.tests.PageTestPreferences
 import com.michaelflisar.demo.pages.tests.PageTestTable
+import com.michaelflisar.demo.pages.tests.PageTestTable2
 import com.michaelflisar.demo.pages.tests.PageTestTranslateableContent
 import com.michaelflisar.demo.pages.tests.PageTestUI
 import com.michaelflisar.demo.pages.tests.PageTestUIAdaptive
@@ -74,6 +75,7 @@ private fun Page(
     ) {
         val tests = listOf(
             PageTestTable,
+            PageTestTable2,
             PageTestPane,
             PageTestDialogs,
             PageTestPreferences,

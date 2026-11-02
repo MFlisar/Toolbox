@@ -25,11 +25,12 @@ actual fun MyScrollableLazyHorizontalGrid(
     overlapScrollbar: Boolean,
     content: LazyGridScope.() -> Unit
 ) {
+    val data = rememberScrollableData(gridState, overlapScrollbar)
     Box(modifier = modifier) {
         LazyHorizontalGrid(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = if (overlapScrollbar) 0.dp else MaterialTheme.scrollbar.paddingForScrollbar),
+                .padding(bottom = data.paddingForScrollbar),
             rows = gridRows,
             contentPadding = PaddingValues(MaterialTheme.scrollbar.paddingForScrollbar),
             verticalArrangement = verticalArrangement,
@@ -39,9 +40,12 @@ actual fun MyScrollableLazyHorizontalGrid(
             content()
         }
 
-        HorizontalScrollbar(
-            modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(MaterialTheme.scrollbar.size),
-            adapter = rememberScrollbarAdapter(gridState)
-        )
+        if (data.showScrollbar) {
+            HorizontalScrollbar(
+                modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()
+                    .height(MaterialTheme.scrollbar.size),
+                adapter = rememberScrollbarAdapter(gridState)
+            )
+        }
     }
 }

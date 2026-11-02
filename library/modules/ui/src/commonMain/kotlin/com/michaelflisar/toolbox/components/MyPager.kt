@@ -45,7 +45,8 @@ fun <T> MyPager(
             repeat(pages.size) { index ->
                 Tab(
                     selected = pagerState.currentPage == index,
-                    onClick = { scope.launch { pagerState.scrollToPage(index) } }) {
+                    onClick = { scope.launch { pagerState.scrollToPage(index) } }
+                ) {
                     tab(pages[index])
                 }
             }

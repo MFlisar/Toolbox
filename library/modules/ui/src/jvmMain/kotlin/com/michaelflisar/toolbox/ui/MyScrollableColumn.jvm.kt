@@ -14,12 +14,15 @@ import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.toolbox.theme.scrollbar
-
 
 @Composable
 actual fun MyScrollableColumn(
@@ -30,20 +33,27 @@ actual fun MyScrollableColumn(
     overlapScrollbar: Boolean,
     content: @Composable ColumnScope.() -> Unit
 ) {
+    val data = rememberScrollableData(scrollState, overlapScrollbar)
     Box(modifier = modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
-                .padding(end = if (overlapScrollbar) 0.dp else MaterialTheme.scrollbar.paddingForScrollbar),
+                .padding(end = data.paddingForScrollbar),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
             horizontalAlignment = horizontalAlignment
         ) {
             content()
         }
-        VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(MaterialTheme.scrollbar.size),
-            adapter = rememberScrollbarAdapter(scrollState)
-        )
+        if (data.showScrollbar) {
+            VerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight()
+                    .width(MaterialTheme.scrollbar.size),
+                adapter = rememberScrollbarAdapter(scrollState)
+            )
+        }
     }
 }
+
+
+

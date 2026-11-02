@@ -76,22 +76,7 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val iosMain = create("iosMain") { dependsOn(commonMain.get()) }
-
-        val styleMaterial3 = create("styleMaterial3") { dependsOn(commonMain.get()) }
-        val styleCupertino = create("styleCupertino") { dependsOn(commonMain.get()) }
-        // val styleFluent2 by creating { dependsOn(commonMain.get()) }
-
-        setupDependencies(module, buildTargets, sourceSets) {
-
-            Platform.IOS addSourceSet iosMain
-
-            styleMaterial3 supportedBy Platform.ANDROID
-            styleCupertino supportedBy Platform.IOS
-            styleCupertino supportedBy Platform.WINDOWS // TODO: implement styleFluent2 and use it; für tests wird dzt. cupertino hier genutzt
-            styleMaterial3 supportedBy Platform.WASM
-
-        }
+        // --
 
         // ---------------------
         // dependencies
@@ -100,14 +85,14 @@ kotlin {
         commonMain.dependencies {
 
             // Compose + AndroidX
-            implementation(libs.jetbrains.compose.material3)
+            api(libs.jetbrains.compose.components.resources)
+            implementation(libs.jetbrains.compose.foundation)
             implementation(libs.jetbrains.compose.material.icons.core)
             implementation(libs.jetbrains.compose.material.icons.extended)
             implementation(libs.jetbrains.compose.ui.backhandler)
 
-            // Library
-            api(project(":toolbox:core"))
-            implementation(project(":toolbox:modules:ui"))
+            // TODO: nur vorerst wo testweise die Implementierung in diesem Modul liegt
+            implementation(libs.jetbrains.compose.material3)
 
         }
     }

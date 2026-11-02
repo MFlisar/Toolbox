@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.michaelflisar.toolbox.theme.spacing
 
-
 @Composable
 fun MyVerticalSpacer(modifier: Modifier = Modifier) {
     Spacer(modifier = modifier.width(MaterialTheme.spacing.default))
