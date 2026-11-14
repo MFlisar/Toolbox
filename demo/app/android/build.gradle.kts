@@ -20,7 +20,7 @@ plugins {
 // Setup
 // ------------------------
 
-val module = AppModuleConfig.readManual(project)
+val module = AppModuleConfig.read(project)
 
 val androidConfig = AndroidAppConfig(
     compileSdk = app.versions.compileSdk,
@@ -34,6 +34,10 @@ val androidConfig = AndroidAppConfig(
 
 // android configuration
 android {
+
+    androidResources {
+        generateLocaleConfig = true
+    }
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true

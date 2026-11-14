@@ -1,9 +1,11 @@
 package com.michaelflisar.toolbox.room.dao2
 
 import androidx.room.RoomDatabase
+import com.michaelflisar.kmp.platformcontext.PlatformIO
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.room.interfaces.IIDProvider
 import com.michaelflisar.toolbox.room.interfaces.IRoomEntity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
@@ -51,7 +53,7 @@ abstract class BaseDBManager<Database : RoomDatabase, ID : Number> {
     // functions
     // -----------------
 
-    suspend fun clearAllTables() = withContext(Platform.DispatcherIO) {
+    suspend fun clearAllTables() = withContext(Dispatchers.PlatformIO) {
         DAOS.forEach { (it as? IBaseDaoClear)?.clear() }
     }
 
@@ -112,32 +114,32 @@ abstract class BaseDBManager<Database : RoomDatabase, ID : Number> {
     // -----------------
 
     suspend inline fun <reified Entity : IRoomEntity<ID, Entity>> insert(item: Entity) =
-        withContext(Platform.DispatcherIO) {
+        withContext(Dispatchers.PlatformIO) {
             dao<_, Entity>().insert(item)
         }
 
     suspend inline fun <reified Entity : IRoomEntity<ID, Entity>> insert(items: List<Entity>) =
-        withContext(Platform.DispatcherIO) {
+        withContext(Dispatchers.PlatformIO) {
             dao<_, Entity>().insert(items)
         }
 
     suspend inline fun <reified Entity : IRoomEntity<ID, Entity>> update(item: Entity) =
-        withContext(Platform.DispatcherIO) {
+        withContext(Dispatchers.PlatformIO) {
             dao<_, Entity>().update(item)
         }
 
     suspend inline fun <reified Entity : IRoomEntity<ID, Entity>> update(items: List<Entity>) =
-        withContext(Platform.DispatcherIO) {
+        withContext(Dispatchers.PlatformIO) {
             dao<_, Entity>().update(items)
         }
 
     suspend inline fun <reified Entity : IRoomEntity<ID, Entity>> delete(item: Entity) =
-        withContext(Platform.DispatcherIO) {
+        withContext(Dispatchers.PlatformIO) {
             dao<_, Entity>().delete(item)
         }
 
     suspend inline fun <reified Entity : IRoomEntity<ID, Entity>> delete(items: List<Entity>) =
-        withContext(Platform.DispatcherIO) {
+        withContext(Dispatchers.PlatformIO) {
             dao<_, Entity>().delete(items)
         }
 

@@ -1,7 +1,7 @@
 import com.michaelflisar.kmpdevtools.BuildFileUtil
 import com.michaelflisar.kmpdevtools.Targets
 import com.michaelflisar.kmpdevtools.configs.*
-import com.michaelflisar.kmpdevtools.core.Platform
+import com.michaelflisar.kmpdevtools.core.Target
 import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
@@ -31,14 +31,11 @@ plugins {
 val module = LibraryModuleConfig.read(project)
 
 val buildTargets = Targets(
-    // mobile
-    android = true,
-    iOS = true,
-    // desktop
-    windows = true,
-    macOS = false, // because of compose unstyled dialogs
-    // web
-    wasm = true
+    Target.ANDROID,
+    Target.IOS,
+    Target.JVM,
+    Target.WASM,
+    Target.MACOS
 )
 
 val androidConfig = AndroidLibraryConfig.create(
@@ -90,22 +87,17 @@ kotlin {
         val javaMain = create("javaMain") { dependsOn(commonMain.get()) }
         val feedbackSupportedMain = create("feedbackSupportedMain") { dependsOn(commonMain.get()) }
         val iosMain = create("iosMain") { dependsOn(commonMain.get()) }
+        val macosMain = create("macosMain") { dependsOn(commonMain.get()) }
 
         setupDependencies(module, buildTargets, sourceSets) {
 
-            Platform.IOS addSourceSet iosMain
+            Target.IOS addSourceSet iosMain
+            Target.MACOS addSourceSet macosMain
 
-            featureFileSupportMain supportedBy Platform.LIST_FILE_SUPPORT
-            javaMain supportedBy Platform.LIST_JAVA
-            feedbackSupportedMain supportedBy Platform.LIST_MOBILE
+            featureFileSupportMain supportedBy Target.LIST_FILE_SUPPORT
+            javaMain supportedBy Target.LIST_JAVA
+            feedbackSupportedMain supportedBy Target.LIST_MOBILE
 
-        }
-
-        if (buildTargets.macOS) {
-            val macosMain = create("macosMain") { dependsOn(commonMain.get()) }
-            setupDependencies(module, buildTargets, sourceSets) {
-                Platform.MACOS addSourceSet macosMain
-            }
         }
 
         // ---------------------
@@ -114,14 +106,12 @@ kotlin {
 
         commonMain.dependencies {
 
-
             api(libs.jetbrains.kotlinx.coroutines.core)
             implementation(libs.jetbrains.kotlinx.serialization.json)
             implementation(libs.jetbrains.kotlinx.datetime)
 
             // Compose + AndroidX
             api(libs.jetbrains.compose.components.resources)
-            implementation(libs.jetbrains.compose.material3)
             implementation(libs.jetbrains.compose.material.icons.core)
             implementation(libs.jetbrains.compose.material.icons.extended)
 
@@ -131,9 +121,12 @@ kotlin {
             // Lumberjack
             api(mflisar.lumberjack.core)
 
+            // Styled
+            api(mflisar.composestyled.core)
+
             // Compose Changelog
-            implementation(mflisar.composechangelog.core)
-            implementation(mflisar.composedialogs.core)
+            //implementation(mflisar.composechangelog.core)
+            //implementation(mflisar.composedialogs.core)
 
             implementation(deps.filekit.dialogs.compose)
 
@@ -164,11 +157,4 @@ kotlin {
 // Publish
 // -------------------
 
-// maven publish configuration
-// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-//    BuildFileUtil.setupMavenPublish(module)
-
-// local publish configuration
-// task name: publishAllPublicationsToGitHubRepository
-if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupLocalMavenPublish(module)
+BuildFileUtil.setupMavenPublish(module)

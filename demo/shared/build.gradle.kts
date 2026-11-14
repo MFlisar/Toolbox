@@ -1,6 +1,6 @@
 import com.michaelflisar.kmpdevtools.Targets
 import com.michaelflisar.kmpdevtools.BuildFileUtil
-import com.michaelflisar.kmpdevtools.core.Platform
+import com.michaelflisar.kmpdevtools.core.Target
 import com.michaelflisar.kmpdevtools.configs.*
 import com.michaelflisar.kmpdevtools.setupDependencies
 import com.michaelflisar.kmpdevtools.setupBuildKonfig
@@ -14,6 +14,7 @@ plugins {
     // org.jetbrains.kotlin
     alias(libs.plugins.jetbrains.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.parcelize)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
     // org.jetbrains.compose
     alias(libs.plugins.jetbrains.compose)
     // docs, publishing, validation
@@ -30,20 +31,15 @@ plugins {
 // Setup
 // ------------------------
 
-val module = LibraryModuleConfig.readManual(project)
+val module = LibraryModuleConfig.read(project)
 
 val buildTargets = Targets(
-    // mobile
-    android = true,
-    //iOS = true,
-    // desktop
-    windows = true,
-    //macOS = true,
-    // web
-    wasm = true
+    Target.ANDROID,
+    Target.JVM,
+    Target.WASM
 )
 
-val androidConfig = AndroidLibraryConfig.createFromPath(
+val androidConfig = AndroidLibraryConfig.create(
     libraryModuleConfig = module,
     compileSdk = app.versions.compileSdk,
     minSdk = app.versions.minSdk,
@@ -68,7 +64,8 @@ kmpIcon {
 
 buildkonfig {
     setupBuildKonfig(
-        appConfig = module.appConfig,
+        project = project,
+        config = module.config,
         isDebug = isDebug(project),
         isExe = isExe(project),
     )
@@ -116,10 +113,10 @@ kotlin {
 
         setupDependencies(module, buildTargets, sourceSets) {
 
-            featureFileSupportMain supportedBy Platform.LIST_FILE_SUPPORT
-            featureNoFileSupportMain supportedBy !Platform.LIST_FILE_SUPPORT
+            featureFileSupportMain supportedBy Target.LIST_FILE_SUPPORT
+            featureNoFileSupportMain supportedBy !Target.LIST_FILE_SUPPORT
 
-            mobileMain supportedBy Platform.LIST_MOBILE
+            mobileMain supportedBy Target.LIST_MOBILE
 
         }
 
@@ -129,19 +126,23 @@ kotlin {
 
         commonMain.dependencies {
 
+            // kotlinx
+            implementation(libs.jetbrains.kotlinx.serialization.core)
+
             // compose
             api(libs.jetbrains.compose.components.resources)
             api(libs.jetbrains.compose.runtime)
-            api(libs.jetbrains.compose.material3)
             api(libs.jetbrains.compose.material.icons.core)
             api(libs.jetbrains.compose.material.icons.extended)
 
             // modules
             api(project(":toolbox:core"))
-            api(project(":toolbox:app:shared"))
-            api(project(":toolbox:modules:table"))
+            api(project(":toolbox:app"))
             api(project(":toolbox:modules:form"))
             api(project(":toolbox:modules:tasks"))
+
+            // File and folder pickers
+            implementation(deps.filekit.dialogs.compose)
 
             // ------------------------
             // tests
@@ -152,42 +153,34 @@ kotlin {
             api(mflisar.kotpreferences.extension.compose)
 
             // Compose Dialogs
-            api(mflisar.composedialogs.core)
-            api(mflisar.composedialogs.dialog.color)
-            api(mflisar.composedialogs.dialog.date)
-            api(mflisar.composedialogs.dialog.time)
-            api(mflisar.composedialogs.dialog.info)
-            api(mflisar.composedialogs.dialog.progress)
-            api(mflisar.composedialogs.dialog.input)
-            api(mflisar.composedialogs.dialog.number)
-            api(mflisar.composedialogs.dialog.list)
-            api(mflisar.composedialogs.dialog.menu)
-            api(mflisar.composedialogs.dialog.frequency)
+            //api(mflisar.composedialogs.core)
+            //api(mflisar.composedialogs.dialog.color)
+            //api(mflisar.composedialogs.dialog.date)
+            //api(mflisar.composedialogs.dialog.time)
+            //api(mflisar.composedialogs.dialog.info)
+            //api(mflisar.composedialogs.dialog.progress)
+            //api(mflisar.composedialogs.dialog.input)
+            //api(mflisar.composedialogs.dialog.number)
+            //api(mflisar.composedialogs.dialog.list)
+            //api(mflisar.composedialogs.dialog.menu)
+            //api(mflisar.composedialogs.dialog.frequency)
 
             // Compose Preferences
-            api(mflisar.composepreferences.core)
-            api(mflisar.composepreferences.screen.bool)
-            api(mflisar.composepreferences.screen.button)
-            api(mflisar.composepreferences.screen.input)
-            api(mflisar.composepreferences.screen.color)
-            api(mflisar.composepreferences.screen.date)
-            api(mflisar.composepreferences.screen.time)
-            api(mflisar.composepreferences.screen.list)
-            api(mflisar.composepreferences.screen.number)
-            api(mflisar.composepreferences.kotpreferences)
+            //api(mflisar.composepreferences.core)
+            //api(mflisar.composepreferences.screen.bool)
+            //api(mflisar.composepreferences.screen.button)
+            //api(mflisar.composepreferences.screen.input)
+            //api(mflisar.composepreferences.screen.color)
+            //api(mflisar.composepreferences.screen.date)
+            //api(mflisar.composepreferences.screen.time)
+            //api(mflisar.composepreferences.screen.list)
+            //api(mflisar.composepreferences.screen.number)
+            //api(mflisar.composepreferences.kotpreferences)
 
             // Compose Themer
-            api(mflisar.composethemer.themes.flatui)
-            api(mflisar.composethemer.themes.metro)
-            api(mflisar.composethemer.themes.material500)
-
-        }
-
-        jvmMain.dependencies {
-
-            // modules
-            //api(project(":toolbox:app:jbr"))
-            api(project(":toolbox:app:jre"))
+            //api(mflisar.composethemer.themes.flatui)
+            //api(mflisar.composethemer.themes.metro)
+            //api(mflisar.composethemer.themes.material500)
 
         }
 
@@ -206,7 +199,6 @@ kotlin {
         androidMain.dependencies {
 
             api(libs.androidx.activity.compose)
-            api(libs.jetbrains.compose.material3)
 
         }
 

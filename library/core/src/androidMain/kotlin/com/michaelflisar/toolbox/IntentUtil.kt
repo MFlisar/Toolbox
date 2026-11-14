@@ -6,6 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.annotation.ChecksSdkIntAtLeast
+import androidx.annotation.RequiresApi
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import com.michaelflisar.lumberjack.core.L
@@ -36,10 +38,12 @@ object IntentUtil {
         }
     }
 
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.TIRAMISU)
     fun supportsLanguagePicker(): Boolean {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun openLanguagePicker(context: Context) {
         val uri = Uri.fromParts("package", context.packageName, null)
         val intent = Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
@@ -49,7 +53,12 @@ object IntentUtil {
         context.startActivitySafely(intent)
     }
 
-    fun share(context: Context, subject: String?, text: String?, apply: ((intent: Intent) -> Unit)? = null) {
+    fun share(
+        context: Context,
+        subject: String?,
+        text: String?,
+        apply: ((intent: Intent) -> Unit)? = null,
+    ) {
         val intent = Intent().apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
             action = Intent.ACTION_SEND

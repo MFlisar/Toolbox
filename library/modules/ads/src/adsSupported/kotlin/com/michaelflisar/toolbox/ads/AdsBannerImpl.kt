@@ -4,13 +4,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import app.lexilabs.basic.ads.AdSize
 import app.lexilabs.basic.ads.AdState
 import app.lexilabs.basic.ads.DependsOnGoogleMobileAds
@@ -22,6 +22,7 @@ import app.lexilabs.basic.ads.composable.rememberConsent
 import com.michaelflisar.lumberjack.core.L
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import com.michaelflisar.composestyled.ui.primitives.StyledText
 
 @OptIn(DependsOnGoogleUserMessagingPlatform::class, DependsOnGoogleMobileAds::class)
 @Composable
@@ -35,7 +36,7 @@ internal fun AdsBannerImpl(
         val consent by rememberConsent()
         ConsentPopup(consent)
         LaunchedEffect(consent.canRequestAds) {
-            L.d { "canRequestAds = ${consent.canRequestAds}" }
+            L.tag("ADS").d { "canRequestAds = ${consent.canRequestAds}" }
         }
 
         val adSize = AdSize.FULL_BANNER
@@ -49,7 +50,7 @@ internal fun AdsBannerImpl(
                     adSize = adSize
                 )
                 LaunchedEffect(bannerAd.state) {
-                    L.d { "bannerAd.state = ${bannerAd.state}" }
+                    L.tag("ADS").d { "bannerAd.state = ${bannerAd.state}" }
                 }
                 if (bannerAd.state == AdState.READY) {
                     BannerAd(bannerAd)
@@ -69,8 +70,13 @@ private fun ShowAdPlaceholder(
     adSize: AdSize,
     placeholderResource: StringResource,
 ) {
-    val width = with(LocalDensity.current) { adSize.width.toDp() }
-    val height = with(LocalDensity.current) { adSize.height.toDp() }
+    val width = adSize.width.dp
+    val height = adSize.height.dp
+
+    LaunchedEffect(width, height) {
+        L.tag("ADS").d { "placeholder - width = ${width}, height = ${height}" }
+    }
+
     Box(
         modifier = Modifier.fillMaxWidth()
             .height(height)
@@ -82,7 +88,7 @@ private fun ShowAdPlaceholder(
             modifier = Modifier.size(width, height),
             contentAlignment = Alignment.Center
         ) {
-            Text(stringResource(placeholderResource))
+            StyledText(stringResource(placeholderResource))
         }
     }
 }

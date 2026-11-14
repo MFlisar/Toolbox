@@ -1,0 +1,29 @@
+package com.michaelflisar.toolbox.app.features.proversion
+
+import androidx.compose.runtime.Composable
+import com.michaelflisar.composestyled.ui.components.StyledPopupMenuScope
+import com.michaelflisar.toolbox.features.proversion.BaseAppProVersionManager
+import com.michaelflisar.toolbox.features.proversion.ProState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+
+sealed class ProVersionSetup {
+
+    abstract val supported: Boolean
+    abstract val proState: StateFlow<ProState>
+
+    data object NotSupported : ProVersionSetup() {
+        override val supported = false
+        override val proState: StateFlow<ProState>
+            field = MutableStateFlow(ProState.Yes)
+    }
+
+    data class Supported(
+        val manager: BaseAppProVersionManager,
+        val menuItem: @Composable StyledPopupMenuScope.() -> Unit,
+    ) : ProVersionSetup() {
+        override val supported = true
+        override val proState = manager.proState
+    }
+
+}

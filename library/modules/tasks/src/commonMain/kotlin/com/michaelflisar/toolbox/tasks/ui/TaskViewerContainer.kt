@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.michaelflisar.toolbox.components.MyColumn
-import com.michaelflisar.toolbox.components.MyTextButton
+import com.michaelflisar.composestyled.StyledTheme
+import com.michaelflisar.composestyled.ui.components.StyledTextButton
+import com.michaelflisar.composestyled.ui.layout.StyledColumn
+import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.toolbox.tasks.TaskConfig
 import com.michaelflisar.toolbox.tasks.plan.TaskPlan
 import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
@@ -39,7 +41,8 @@ fun TaskViewerContainer(
             showTasks
         ) {
             if (plan != null) {
-                MyColumn(
+                StyledColumn(
+                    itemSpacing = StyledTheme.spacing.medium,
                     modifier = Modifier.fillMaxWidth()
                 ) {
 
@@ -68,13 +71,13 @@ fun TaskViewerContainer(
                         state.hasFinishedTasks &&
                         !state.hasRunningTasks
                     ) {
-                        MyTextButton(
+                        StyledTextButton(
+                            onClick = { state.reset() },
                             modifier = Modifier.align(
                                 Alignment.CenterHorizontally
                             ),
-                            text = reset
                         ) {
-                            state.reset()
+                            StyledText(reset)
                         }
                     }
                 }

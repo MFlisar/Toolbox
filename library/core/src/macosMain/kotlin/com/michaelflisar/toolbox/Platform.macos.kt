@@ -10,13 +10,8 @@ import platform.Foundation.NSURL
 
 actual object Platform {
 
-    actual val DispatcherIO: CoroutineDispatcher = Dispatchers.IO
-
     actual val openLanguagePicker: (() -> Unit)? = null
     actual val openMarket: (() -> Unit)? = null
-    actual fun Modifier.cursor() : Modifier {
-        return this
-    }
 
     actual fun openUrl(url: String) {
         val nsUrl = NSURL.URLWithString(url)

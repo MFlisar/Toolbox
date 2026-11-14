@@ -1,20 +1,19 @@
 package com.michaelflisar.toolbox.tasks.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
@@ -24,28 +23,33 @@ import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.HourglassEmpty
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composestyled.StyledTheme
+import com.michaelflisar.composestyled.classes.CustomColors
+import com.michaelflisar.composestyled.classes.toIconComposable
+import com.michaelflisar.composestyled.tokens.LocalStyledContentColor
+import com.michaelflisar.composestyled.ui.components.StyledCard
+import com.michaelflisar.composestyled.ui.components.StyledCardDefaults
+import com.michaelflisar.composestyled.ui.components.StyledIcon
+import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.toolbox.tasks.TaskConfig
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 import com.michaelflisar.toolbox.tasks.plan.TaskPlan
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanExecutable
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroupNode
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanTask
+import com.michaelflisar.toolbox.tasks.ui.parts.ProgressDone
 import com.michaelflisar.toolbox.tasks.ui.parts.ProgressIcon
 import com.michaelflisar.toolbox.tasks.ui.state.TaskNodeState
 import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
@@ -69,33 +73,53 @@ fun TaskViewerHeader(
     val summary by remember(plan, state) {
         derivedStateOf { calculateHeaderSummary(plan, state) }
     }
-    val headerContainerColor = MaterialTheme.colorScheme.surfaceContainerLow
+    var showDone by remember { mutableStateOf(false) }
+    LaunchedEffect(summary.running, summary.isFinished) {
+        if (summary.running > 0) {
+            showDone = false
+        } else if (summary.isFinished) {
+            showDone = true
+            delay(2000.milliseconds)
+            showDone = false
+        } else {
+            showDone = false
+        }
+    }
 
-    Card(
+    val headerContainerColor = StyledTheme.colorScheme.surfaceVariant
+    val headerContentColor = StyledTheme.colorScheme.onSurfaceVariant
+
+    StyledCard(
         modifier = modifier.fillMaxWidth(),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-        colors = CardDefaults.cardColors(
-            containerColor = headerContainerColor,
-            contentColor = MaterialTheme.colorScheme.onSurface,
+        variant = StyledCard.Variant.Filled,
+        contentPadding = PaddingValues(
+            horizontal = StyledTheme.padding.medium,
+            vertical = StyledTheme.padding.small,
+        ),
+        customization = StyledCardDefaults.customize(
+            colors = CustomColors(
+                filledBackground = headerContainerColor,
+                filledForeground = headerContentColor,
+                textForeground = headerContentColor,
+            ),
+            border = StyledTheme.colorScheme.outlineVariant,
         ),
     ) {
         BoxWithConstraints(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+            modifier = Modifier.fillMaxWidth(),
         ) {
             if (maxWidth >= 720.dp) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    HeaderOverview(plan.name, summary, config)
+                    HeaderOverview(plan.name, summary, config, showDone)
                     Spacer(Modifier.weight(1f))
                     HeaderMetrics(summary, config, headerContainerColor)
                 }
             } else {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    HeaderOverview(plan.name, summary, config)
+                    HeaderOverview(plan.name, summary, config, showDone)
                     Row(
                         modifier = Modifier.horizontalScroll(rememberScrollState()),
                         horizontalArrangement = Arrangement.spacedBy(20.dp),
@@ -114,28 +138,35 @@ private fun HeaderOverview(
     planName: String,
     summary: TaskViewerHeaderSummary,
     config: TaskConfig.ViewerConfig,
+    showDone: Boolean,
 ) {
     Row(
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Progress
         AnimatedVisibility(
-            visible = summary.running > 0,
+            visible = summary.running > 0 || showDone,
             enter = fadeIn() + expandHorizontally(),
             exit = fadeOut() + shrinkHorizontally(),
         ) {
             Row {
-                ProgressIcon()
+                Crossfade(
+                    targetState = summary.running > 0
+                ) {
+                    if (it)
+                        ProgressIcon()
+                    else
+                        ProgressDone()
+                }
                 Spacer(modifier = Modifier.width(16.dp))
             }
-
         }
-        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text(
+        Column(verticalArrangement = Arrangement.spacedBy(StyledTheme.spacing.small)) {
+            StyledText(
                 text = planName,
-                style = MaterialTheme.typography.titleSmall,
+                style = StyledTheme.typography.titleSmall,
             )
-            Text(
+            StyledText(
                 text = config.headerSummaryFormatter(
                     summary.isFinished,
                     summary.executedTasks,
@@ -143,8 +174,8 @@ private fun HeaderOverview(
                     summary.totalTasks,
                     config.timeFormatter(summary.isFinished, summary.durationMs),
                 ),
-                style = MaterialTheme.typography.bodySmall,
-                color = LocalContentColor.current.copy(alpha = .7f),
+                style = StyledTheme.typography.bodySmall,
+                color = LocalStyledContentColor.current.copy(alpha = .7f),
             )
         }
     }
@@ -157,7 +188,7 @@ private fun HeaderMetrics(
     headerContainerColor: Color,
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(20.dp),
+        horizontalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (summary.pending > 0) {
@@ -168,13 +199,6 @@ private fun HeaderMetrics(
             )
         }
         // es läuft immer nur eine Aufgabe pro Gruppe, daher ist es nicht nötig, die Anzahl der laufenden Aufgaben anzuzeigen
-        //if (summary.running > 0) {
-        //    HeaderMetric(
-        //        summary.running.toString(),
-        //        config.headerRunningLabel,
-        //        color = MaterialTheme.colorScheme.primary
-        //    )
-        //}
         if (summary.success > 0) {
             HeaderMetric(
                 value = summary.success.toString(),
@@ -222,30 +246,30 @@ private fun HeaderMetric(
     value: String,
     label: String,
     icon: ImageVector? = null,
-    color: Color = LocalContentColor.current,
+    color: Color = LocalStyledContentColor.current,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalArrangement = Arrangement.spacedBy(StyledTheme.spacing.small),
     ) {
         if (icon != null) {
-            Icon(
-                imageVector = icon,
+            StyledIcon(
+                icon = icon.toIconComposable(),
                 contentDescription = null,
-                modifier = Modifier.size(18.dp),
+                size = StyledTheme.sizes.iconSize,
                 tint = color,
             )
         }
-        Text(
+        StyledText(
             text = value,
-            style = MaterialTheme.typography.labelLarge,
+            style = StyledTheme.typography.labelLarge,
             color = color,
             softWrap = false,
         )
-        Text(
+        StyledText(
             text = label,
-            style = MaterialTheme.typography.bodySmall,
-            color = LocalContentColor.current.copy(alpha = .7f),
+            style = StyledTheme.typography.bodySmall,
+            color = LocalStyledContentColor.current.copy(alpha = .7f),
             softWrap = false,
         )
     }
@@ -315,7 +339,8 @@ private fun calculateHeaderSummary(
 
     plan.children.forEach(::visit)
 
-    val isFinished = hasStarted && running == 0 && success + info + warnings + errors + skipped == total
+    val isFinished =
+        hasStarted && running == 0 && success + info + warnings + errors + skipped == total
     val endTime = if (isFinished) lastFinish else state.nowMs.takeIf { hasStarted }
     val duration = firstStart?.let { start ->
         endTime?.let { end -> (end - start).coerceAtLeast(0L) }

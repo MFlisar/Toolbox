@@ -1,5 +1,7 @@
 package com.michaelflisar.toolbox.backup
 
+import com.michaelflisar.lumberjack.core.L
+
 object BackupManager {
 
     private var _manager: BackupManagerImpl? = null
@@ -8,5 +10,8 @@ object BackupManager {
 
     fun init(manager: BackupManagerImpl) {
         _manager = manager
+        L.logIf { BackupDefaults.LOG }?.d {
+            "BackupManager.init: registered manager, autoBackupEnabled=${manager.autoBackupConfig != null}"
+        }
     }
 }

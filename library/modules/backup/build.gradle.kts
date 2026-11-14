@@ -1,7 +1,7 @@
 import com.michaelflisar.kmpdevtools.BuildFileUtil
 import com.michaelflisar.kmpdevtools.Targets
 import com.michaelflisar.kmpdevtools.configs.*
-import com.michaelflisar.kmpdevtools.core.Platform
+import com.michaelflisar.kmpdevtools.core.Target
 import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
@@ -30,14 +30,11 @@ plugins {
 val module = LibraryModuleConfig.read(project)
 
 val buildTargets = Targets(
-    // mobile
-    android = true,
-    iOS = true,
-    // desktop
-    windows = true,
-    macOS = false, // because of compose unstyled dialogs
-    // web
-    wasm = true
+    Target.ANDROID,
+    Target.IOS,
+    Target.JVM,
+    Target.WASM,
+    Target.MACOS
 )
 
 val androidConfig = AndroidLibraryConfig.create(
@@ -83,7 +80,7 @@ kotlin {
         // custom source sets
         // ---------------------
 
-        val targetsBackupSupport = listOf(Platform.ANDROID, Platform.WINDOWS)
+        val targetsBackupSupport = listOf(Target.ANDROID, Target.JVM)
 
         val notAndroidMain = create("notAndroidMain") { dependsOn(commonMain.get()) }
         val featureBackupSupportMain = create("featureBackupSupportMain") { dependsOn(commonMain.get()) }
@@ -91,7 +88,7 @@ kotlin {
 
         setupDependencies(module, buildTargets, sourceSets) {
 
-            notAndroidMain supportedBy !Platform.ANDROID
+            notAndroidMain supportedBy !Target.ANDROID
             featureBackupSupportMain supportedBy targetsBackupSupport
             featureNoBackupSupportMain supportedBy !targetsBackupSupport
 
@@ -110,7 +107,6 @@ kotlin {
             // compose
             implementation(libs.jetbrains.compose.runtime)
             implementation(libs.jetbrains.compose.ui)
-            implementation(libs.jetbrains.compose.material3)
 
             // Toolbox
             implementation(project(":toolbox:core"))
@@ -119,9 +115,11 @@ kotlin {
             api(mflisar.kmp.parcelize)
 
             implementation(mflisar.lumberjack.core)
-            implementation(mflisar.composedialogs.core)
-            implementation(mflisar.composedialogs.dialog.info)
-            api(mflisar.composedialogs.dialog.frequency)
+            //implementation(mflisar.composedialogs.core)
+            //implementation(mflisar.composedialogs.dialog.info)
+            //api(mflisar.composedialogs.dialog.frequency)
+
+            api(mflisar.composestyled.libraries.dialogs)
 
             // libraries
             implementation(deps.filekit.dialogs.compose)
@@ -148,11 +146,4 @@ kotlin {
 // Publish
 // -------------------
 
-// maven publish configuration
-// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-//    BuildFileUtil.setupMavenPublish(module)
-
-// local publish configuration
-// task name: publishAllPublicationsToGitHubRepository
-if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupLocalMavenPublish(module)
+BuildFileUtil.setupMavenPublish(module)

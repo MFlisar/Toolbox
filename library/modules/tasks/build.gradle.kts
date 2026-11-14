@@ -1,7 +1,7 @@
 import com.michaelflisar.kmpdevtools.BuildFileUtil
 import com.michaelflisar.kmpdevtools.Targets
 import com.michaelflisar.kmpdevtools.configs.*
-import com.michaelflisar.kmpdevtools.core.Platform
+import com.michaelflisar.kmpdevtools.core.Target
 import com.michaelflisar.kmpdevtools.setupDependencies
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
@@ -33,14 +33,11 @@ plugins {
 val module = LibraryModuleConfig.read(project)
 
 val buildTargets = Targets(
-    // mobile
-    android = true,
-    iOS = true,
-    // desktop
-    windows = true,
-    macOS = false, // because of compose unstyled dialogs
-    // web
-    wasm = true
+    Target.ANDROID,
+    Target.IOS,
+    Target.JVM,
+    Target.WASM,
+    Target.MACOS
 )
 
 val androidConfig = AndroidLibraryConfig.create(
@@ -88,17 +85,15 @@ kotlin {
         commonMain.dependencies {
 
             // Compose + AndroidX
-            implementation(libs.jetbrains.compose.material3)
             implementation(libs.jetbrains.compose.material.icons.core)
             implementation(libs.jetbrains.compose.material.icons.extended)
 
             // Library
             api(project(":toolbox:core"))
-            api(project(":toolbox:modules:ui"))
 
             // TODO: dialogs for mac...
-            api(mflisar.composedialogs.core)
-            api(mflisar.composedialogs.dialog.info)
+            //api(mflisar.composedialogs.core)
+            //api(mflisar.composedialogs.dialog.info)
 
         }
     }
@@ -108,11 +103,4 @@ kotlin {
 // Publish
 // -------------------
 
-// maven publish configuration
-// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-//    BuildFileUtil.setupMavenPublish(module)
-
-// local publish configuration
-// task name: publishAllPublicationsToGitHubRepository
-if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupLocalMavenPublish(module)
+BuildFileUtil.setupMavenPublish(module)

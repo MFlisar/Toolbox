@@ -17,7 +17,6 @@ import kotlin.time.Instant
 
 object TimeUtil {
 
-    @OptIn(ExperimentalTime::class)
     fun parseMillis(millis: Long): LocalDateTime =
         Instant.fromEpochMilliseconds(millis).toLocalDateTime(TimeZone.currentSystemDefault())
 

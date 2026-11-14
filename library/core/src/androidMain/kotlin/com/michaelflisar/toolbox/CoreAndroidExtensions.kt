@@ -14,27 +14,6 @@ import com.jakewharton.processphoenix.ProcessPhoenix
 import com.michaelflisar.lumberjack.core.L
 import kotlin.system.exitProcess
 
-val Int.pxToDp: Int
-    get() = (this / Resources.getSystem().displayMetrics.density).toInt()
-val Int.dpToPx: Int
-    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
-
-val Int.pxToSp: Int
-    get() = (this / TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_SP,
-        1.0f,
-        Resources.getSystem().displayMetrics
-    )).toInt()
-
-//get() = (this / Resources.getSystem().displayMetrics.scaledDensity).toInt()
-val Int.spToPx: Int
-    get() = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_SP,
-        this.toFloat(),
-        Resources.getSystem().displayMetrics
-    ).toInt()
-//get() = (this * Resources.getSystem().displayMetrics.scaledDensity).toInt()
-
 @Suppress("DEPRECATION")
 fun Context.isServiceRunning(serviceClass: Class<*>?, checkForeground: Boolean = false): Boolean {
     val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -44,10 +23,6 @@ fun Context.isServiceRunning(serviceClass: Class<*>?, checkForeground: Boolean =
         }
     }
     return false
-}
-
-fun Context.isScreenLandscape(): Boolean {
-    return resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 }
 
 /*

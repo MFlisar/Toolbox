@@ -34,6 +34,14 @@ actual class BackupManagerImpl actual constructor(
         TODO("Not yet implemented")
     }
 
+    actual suspend fun getAutoBackupDirectoryData(directory: PlatformFile): String {
+        TODO("Not yet implemented")
+    }
+
+    actual fun getAutoBackupDirectoryPath(directoryData: String): String {
+        TODO("Not yet implemented")
+    }
+
     actual suspend fun getAutoBackupFileName(): String {
         TODO("Not yet implemented")
     }

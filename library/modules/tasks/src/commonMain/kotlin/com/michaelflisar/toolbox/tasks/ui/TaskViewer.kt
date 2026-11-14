@@ -5,10 +5,10 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,16 +33,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.LocalMinimumInteractiveComponentSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -59,6 +50,14 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.michaelflisar.composestyled.StyledTheme
+import com.michaelflisar.composestyled.classes.CustomColors
+import com.michaelflisar.composestyled.classes.toIconComposable
+import com.michaelflisar.composestyled.tokens.LocalStyledContentColor
+import com.michaelflisar.composestyled.ui.components.StyledCard
+import com.michaelflisar.composestyled.ui.components.StyledCardDefaults
+import com.michaelflisar.composestyled.ui.components.StyledIcon
+import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.toolbox.tasks.TaskConfig
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 import com.michaelflisar.toolbox.tasks.plan.TaskMessage
@@ -69,7 +68,6 @@ import com.michaelflisar.toolbox.tasks.plan.TaskPlanGroup
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanTask
 import com.michaelflisar.toolbox.tasks.ui.parts.ProgressIcon
 import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
-import com.michaelflisar.toolbox.theme.padding
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -256,7 +254,7 @@ private fun TaskItemTask(
             ) {
 
                 val numberStyle =
-                    MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace)
+                    StyledTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace)
                 val measureMarkerWidth = true // genau auf Anzahl der Ziffern messen?
                 val markerWidth = if (viewerConfig.showMessageNumbers && measureMarkerWidth) {
                     val textMeasurer = rememberTextMeasurer()
@@ -399,11 +397,11 @@ private fun TaskItemHeader(
         ) {
             if (expandable) {
                 val rotation by animateFloatAsState(targetValue = if (expanded) 90f else 0f)
-                Icon(
+                StyledIcon(
                     modifier = Modifier
                         .size(layout.expandIconSize)
                         .graphicsLayer { rotationZ = rotation },
-                    imageVector = Icons.Default.ChevronRight,
+                    icon = Icons.Default.ChevronRight.toIconComposable(),
                     contentDescription = null,
                 )
             }
@@ -423,15 +421,15 @@ private fun TaskItemHeader(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            Text(
+            StyledText(
                 text = if (viewerConfig.showHeaderNumbers) "$number $title" else title,
-                style = MaterialTheme.typography.bodyMedium,
+                style = StyledTheme.typography.bodyMedium,
             )
             subtitle?.let {
-                Text(
+                StyledText(
                     text = it,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LocalContentColor.current.copy(alpha = if (group) .7f else .8f),
+                    style = StyledTheme.typography.bodySmall,
+                    color = LocalStyledContentColor.current.copy(alpha = if (group) .7f else .8f),
                 )
             }
         }
@@ -439,10 +437,10 @@ private fun TaskItemHeader(
         if (group || viewerConfig.showTaskTimes) {
             Spacer(Modifier.width(layout.iconSpacing))
 
-            Text(
+            StyledText(
                 text = viewerConfig.timeFormatter(isFinished, durationMs),
-                style = MaterialTheme.typography.bodySmall,
-                color = LocalContentColor.current.copy(alpha = .6f),
+                style = StyledTheme.typography.bodySmall,
+                color = LocalStyledContentColor.current.copy(alpha = .6f),
             )
         }
     }
@@ -456,43 +454,25 @@ private fun TaskItemContainer(
     onToggleExpanded: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    CompositionLocalProvider(
-        LocalMinimumInteractiveComponentSize provides 0.dp
+    val containerColor =
+        if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor
+    val contentColor =
+        if (group) viewerConfig.groupContentColor else viewerConfig.taskContentColor
+
+    StyledCard(
+        modifier = Modifier.fillMaxWidth(),
+        variant = StyledCard.Variant.Filled,
+        onClick = if (expandable) onToggleExpanded else null,
+        contentPadding = PaddingValues(vertical = StyledTheme.padding.small),
+        customization = StyledCardDefaults.customize(
+            colors = CustomColors(
+                filledBackground = containerColor,
+                filledForeground = contentColor,
+                textForeground = contentColor,
+            ),
+        ),
     ) {
-        if (expandable) {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = { onToggleExpanded() },
-                colors = CardDefaults.cardColors(
-                    containerColor = if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor,
-                    contentColor = if (group) viewerConfig.groupContentColor else viewerConfig.taskContentColor
-                )
-            ) {
-                Box(
-                    modifier = Modifier.padding(
-                        vertical = MaterialTheme.padding.small
-                    )
-                ) {
-                    content()
-                }
-            }
-        } else {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor,
-                    contentColor = if (group) viewerConfig.groupContentColor else viewerConfig.taskContentColor
-                )
-            ) {
-                Box(
-                    modifier = Modifier.padding(
-                        vertical = MaterialTheme.padding.small
-                    )
-                ) {
-                    content()
-                }
-            }
-        }
+        content()
     }
 }
 
@@ -510,45 +490,45 @@ private fun StatusIcon(
         }
 
         TaskStatus.Cancelled -> {
-            Icon(
+            StyledIcon(
                 modifier = Modifier.size(size),
-                imageVector = Icons.Default.Cancel,
+                icon = Icons.Default.Cancel.toIconComposable(),
                 contentDescription = null,
-                tint = LocalContentColor.current.copy(alpha = .8f),
+                tint = LocalStyledContentColor.current.copy(alpha = .8f),
             )
         }
 
         is TaskStatus.Success -> {
-            Icon(
+            StyledIcon(
                 modifier = Modifier.size(size),
-                imageVector = Icons.Default.CheckCircle,
+                icon = Icons.Default.CheckCircle.toIconComposable(),
                 contentDescription = null,
                 tint = viewerConfig.taskMessageColors.colorSuccess(if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor)
             )
         }
 
         is TaskStatus.Info -> {
-            Icon(
+            StyledIcon(
                 modifier = Modifier.size(size),
-                imageVector = Icons.Default.Info,
+                icon = Icons.Default.Info.toIconComposable(),
                 contentDescription = null,
                 tint = viewerConfig.taskMessageColors.colorInfo(if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor)
             )
         }
 
         is TaskStatus.Warning -> {
-            Icon(
+            StyledIcon(
                 modifier = Modifier.size(size),
-                imageVector = Icons.Default.Warning,
+                icon = Icons.Default.Warning.toIconComposable(),
                 contentDescription = null,
                 tint = viewerConfig.taskMessageColors.colorWarning(if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor)
             )
         }
 
         is TaskStatus.Error -> {
-            Icon(
+            StyledIcon(
                 modifier = Modifier.size(size),
-                imageVector = Icons.Default.Error,
+                icon = Icons.Default.Error.toIconComposable(),
                 contentDescription = null,
                 tint = viewerConfig.taskMessageColors.colorError(if (group) viewerConfig.groupContainerColor else viewerConfig.taskContainerColor)
             )
@@ -566,17 +546,17 @@ private fun MessageItem(
     numberSpacing: Dp,
 ) {
     val bulletColor = if (number != null) {
-        LocalContentColor.current.copy(alpha = .6f)
-    } else LocalContentColor.current
+        LocalStyledContentColor.current.copy(alpha = .6f)
+    } else LocalStyledContentColor.current
 
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Top
     ) {
-        Text(
+        StyledText(
             text = number?.toString() ?: "•",
             color = bulletColor,
-            style = MaterialTheme.typography.bodySmall,
+            style = StyledTheme.typography.bodySmall,
             textAlign = if (number != null) TextAlign.End else TextAlign.Start,
             modifier = Modifier.width(bulletWidth)
         )
@@ -586,19 +566,19 @@ private fun MessageItem(
         }
 
         when (message) {
-            is TaskMessage.Text -> Text(
+            is TaskMessage.Text -> StyledText(
                 modifier = Modifier.weight(1f),
                 text = message.annotated(
                     viewerConfig,
-                    MaterialTheme.colorScheme.background,
+                    StyledTheme.colorScheme.background,
                 ),
-                style = MaterialTheme.typography.bodySmall,
+                style = StyledTheme.typography.bodySmall,
             )
 
-            is TaskMessage.Rich -> Text(
+            is TaskMessage.Rich -> StyledText(
                 modifier = Modifier.weight(1f),
                 text = message.text,
-                style = MaterialTheme.typography.bodySmall,
+                style = StyledTheme.typography.bodySmall,
             )
 
             is TaskMessage.ItemList -> Column(
@@ -611,12 +591,12 @@ private fun MessageItem(
                     TaskMessageType.Error -> viewerConfig.prefixError
                 }
                 if (message.title != null || prefix.isNotEmpty()) {
-                    Text(
+                    StyledText(
                         text = TaskMessage.Text(
                             text = message.title.orEmpty(),
                             type = message.type,
-                        ).annotated(viewerConfig, MaterialTheme.colorScheme.background),
-                        style = MaterialTheme.typography.bodySmall,
+                        ).annotated(viewerConfig, StyledTheme.colorScheme.background),
+                        style = StyledTheme.typography.bodySmall,
                     )
                 }
                 message.items.forEach { item ->

@@ -4,14 +4,9 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import androidx.compose.ui.Modifier
 import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 
 actual object Platform {
-
-    actual val DispatcherIO: CoroutineDispatcher = Dispatchers.IO
 
     actual val openLanguagePicker: (() -> Unit)?
         @SuppressLint("DiscouragedApi")
@@ -23,10 +18,6 @@ actual object Platform {
 
     actual val openMarket: (() -> Unit)? = {
         IntentUtil.openMarket(PlatformApplicationContext)
-    }
-
-    actual fun Modifier.cursor(): Modifier {
-        return this
     }
 
     actual fun openUrl(url: String) {

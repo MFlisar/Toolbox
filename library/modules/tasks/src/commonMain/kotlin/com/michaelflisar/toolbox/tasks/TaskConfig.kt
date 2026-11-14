@@ -1,11 +1,11 @@
 package com.michaelflisar.toolbox.tasks
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
+import com.michaelflisar.composestyled.StyledTheme
 import com.michaelflisar.toolbox.tasks.execution.TaskStatus
 import com.michaelflisar.toolbox.tasks.plan.TaskMessageColors
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanSummary
@@ -184,10 +184,10 @@ fun rememberTaskConfig(
     autoExpandRunningTaskPath: Boolean = true,
     finishedTaskBehavior: TaskConfig.FinishedTaskBehavior = TaskConfig.FinishedTaskBehavior.CLOSE_ALL,
     // Viewer
-    groupContainerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
-    groupContentColor: Color = MaterialTheme.colorScheme.onSurface,
-    taskContainerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
-    taskContentColor: Color = MaterialTheme.colorScheme.onSurface,
+    groupContainerColor: Color = StyledTheme.colorScheme.surfaceVariant,
+    groupContentColor: Color = StyledTheme.colorScheme.onSurfaceVariant,
+    taskContainerColor: Color = StyledTheme.colorScheme.surfaceVariant,
+    taskContentColor: Color = StyledTheme.colorScheme.onSurfaceVariant,
     autoScrollToBottom: Boolean = true,
     showTaskTimes: Boolean = true,
     expandSinglePathOnly: Boolean = false,

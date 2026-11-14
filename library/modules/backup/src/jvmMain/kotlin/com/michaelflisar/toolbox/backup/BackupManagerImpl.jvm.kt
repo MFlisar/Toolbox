@@ -8,6 +8,9 @@ import com.michaelflisar.toolbox.zip.JavaZipFile
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
 import com.michaelflisar.toolbox.zip.JavaZipManager
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.bookmarkData
+import io.github.vinceglb.filekit.fromBookmarkData
+import io.github.vinceglb.filekit.path
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -64,6 +67,15 @@ actual class BackupManagerImpl actual constructor(
             L.e(e)
             e
         }
+    }
+
+    actual suspend fun getAutoBackupDirectoryData(directory: PlatformFile): String {
+        val bookmarkData = directory.bookmarkData()
+        return bookmarkData.bytes.toString(Charsets.UTF_8)
+    }
+
+    actual fun getAutoBackupDirectoryPath(directoryData: String): String {
+        return PlatformFile.fromBookmarkData(directoryData.toByteArray(Charsets.UTF_8)).path
     }
 
     actual suspend fun getAutoBackupFileName(): String {

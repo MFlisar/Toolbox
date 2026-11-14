@@ -11,10 +11,13 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import com.michaelflisar.kmp.platformcontext.PlatformApplicationContext
+import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.NotificationUtil
+import com.michaelflisar.toolbox.backup.BackupDefaults
 import com.michaelflisar.toolbox.backup.worker.BackupWorker
 import com.michaelflisar.toolbox.service.ServiceSetup
 import kotlinx.serialization.json.Json
+import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
 
@@ -40,25 +43,35 @@ object BackupServiceUtil {
     )
 
     fun createChannels() {
-        if (!NotificationUtil.channelExists(
-                PlatformApplicationContext,
-                NOTIFICATION_CHANNEL_BACKUP_ID
-            )
-        ) {
+        val exists = NotificationUtil.channelExists(
+            PlatformApplicationContext,
+            NOTIFICATION_CHANNEL_BACKUP_ID
+        )
+        L.logIf { BackupDefaults.LOG }?.d {
+            "BackupServiceUtil.createChannels: backup notification channel exists=$exists"
+        }
+        if (!exists) {
             NotificationUtil.createChannel(
                 PlatformApplicationContext,
                 NOTIFICATION_CHANNEL_BACKUP_NAME,
                 NOTIFICATION_CHANNEL_BACKUP_ID,
                 NotificationManagerCompat.IMPORTANCE_MAX
             )
+            L.logIf { BackupDefaults.LOG }?.d {
+                "BackupServiceUtil.createChannels: backup notification channel created"
+            }
         }
     }
 
     fun cancelAll(context: Context) {
+        L.logIf { BackupDefaults.LOG }?.d { "BackupServiceUtil.cancelAll: cancelling all work" }
         WorkManager.getInstance(context).cancelAllWork()
     }
 
     fun cancelAllWorkByTag(context: Context, tag: String) {
+        L.logIf { BackupDefaults.LOG }?.d {
+            "BackupServiceUtil.cancelAllWorkByTag: cancelling work with tag=$tag"
+        }
         WorkManager.getInstance(context).cancelAllWorkByTag(tag)
     }
 
@@ -98,7 +111,29 @@ object BackupServiceUtil {
                 }
             }
             .build()
-        workManager.enqueue(backupRequest)
+        L.logIf { BackupDefaults.LOG }?.d {
+            "BackupServiceUtil.enqueue: requestId=${backupRequest.id}, tag=$tag, delayMs=$initialDelayMilliseconds, expedited=${initialDelayMilliseconds == 0L}, needsInternet=$needsInternet"
+        }
+        val operation = workManager.enqueue(backupRequest)
+        L.logIf { BackupDefaults.LOG }?.d {
+            "BackupServiceUtil.enqueue: enqueue submitted, requestId=${backupRequest.id}"
+        }
+        operation.result.addListener(
+            {
+                try {
+                    operation.result.get()
+                    L.logIf { BackupDefaults.LOG }?.d {
+                        "BackupServiceUtil.enqueue: request persisted, requestId=${backupRequest.id}"
+                    }
+                } catch (e: Exception) {
+                    L.logIf { BackupDefaults.LOG }?.d {
+                        "BackupServiceUtil.enqueue: request persistence failed, requestId=${backupRequest.id}, error=${e.javaClass.simpleName}"
+                    }
+                    L.e(e)
+                }
+            },
+            Executor { command -> command.run() }
+        )
     }
     /*
         fun enqueuePeriodic(

@@ -9,7 +9,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.extensions.isDark
 import com.michaelflisar.toolbox.tasks.plan.TaskPlanSummary
 import com.michaelflisar.toolbox.utils.TimeUtil
 

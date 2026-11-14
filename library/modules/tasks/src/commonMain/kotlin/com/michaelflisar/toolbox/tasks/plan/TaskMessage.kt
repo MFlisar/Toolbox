@@ -1,15 +1,15 @@
 package com.michaelflisar.toolbox.tasks.plan
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import com.michaelflisar.toolbox.extensions.isDark
+import com.michaelflisar.composestyled.StyledTheme
 import com.michaelflisar.toolbox.tasks.TaskConfig
 
 @Composable
@@ -23,7 +23,7 @@ fun rememberTaskMessageColors(
     colorInfoOnDark: Color = Color(0xFF64B5F6), // Blue 300
     colorInfoOnLight: Color = Color(0xFF1976D2) // Blue 700
 ): TaskMessageColors {
-    val isBackgroundDark = MaterialTheme.colorScheme.background.isDark()
+    val isBackgroundDark = StyledTheme.colorScheme.background.isDark()
     return remember(
         isBackgroundDark,
         colorSuccessOnDark,
@@ -144,3 +144,5 @@ enum class TaskMessageType {
     Warning,
     Error
 }
+
+private fun Color.isDark() = luminance() < .5f

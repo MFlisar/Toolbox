@@ -1,249 +1,71 @@
 package com.michaelflisar.demo.pages.tests
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Task
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.kmp.platformcontext.PlatformIO
-import com.michaelflisar.parcelize.Parcelize
-import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
-import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.components.MyButton
-import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.tasks.TaskConfig
+import com.michaelflisar.composestyled.adaptive.StyledAdaptiveInfo
+import com.michaelflisar.composestyled.ui.components.StyledButton
+import com.michaelflisar.composestyled.ui.primitives.StyledText
+import com.michaelflisar.demo.pages.DemoToolbarConfig
+import com.michaelflisar.toolbox.app.features.navigation.NavScreen
 import com.michaelflisar.toolbox.tasks.execution.TaskResult
-import com.michaelflisar.toolbox.tasks.plan.TaskPlan
 import com.michaelflisar.toolbox.tasks.plan.taskPlan
 import com.michaelflisar.toolbox.tasks.rememberTaskConfig
 import com.michaelflisar.toolbox.tasks.ui.TaskViewerContainer
-import com.michaelflisar.toolbox.tasks.ui.state.TaskViewState
 import com.michaelflisar.toolbox.tasks.ui.state.rememberTaskViewState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.time.Duration.Companion.milliseconds
+import kotlinx.serialization.Serializable
 
-@Parcelize
-object PageTestTaskViewer : NavScreen() {
-
-    @Composable
-    override fun provideData() = rememberNavScreenData(
-        name = "Task Viewer",
-        icon = Icons.Default.Task.toIconComposable()
-    )
+@Serializable
+data object PageTestTaskViewer : NavScreen {
 
     @Composable
-    override fun Screen() {
-        Page()
-    }
+    override fun Content(
+        paddingValues: PaddingValues,
+        adaptiveInfo: State<StyledAdaptiveInfo>,
+    ) = PageTestTaskViewerContent(paddingValues)
 
+    @Composable
+    override fun Toolbar() = DemoToolbarConfig("Task Viewer")
 }
 
 @Composable
-private fun Page() {
-
+private fun PageTestTaskViewerContent(paddingValues: PaddingValues) {
     val scope = rememberCoroutineScope()
-
-    val plan = remember { createTestPlan() }
-    val config = rememberTaskConfig(
-        expandSinglePathOnly = false
-    )
-    val viewState = rememberTaskViewState(config = config.viewState)
+    val plan = remember {
+        taskPlan("Demo task plan") {
+            task("Prepare") {
+                TaskResult.Success("Ready")
+            }
+            group("Work") {
+                task("Process data") {
+                    delay(250)
+                    TaskResult.Success("Processed")
+                }
+                task("Finish") {
+                    TaskResult.Success("Done")
+                }
+            }
+        }
+    }
+    val config = rememberTaskConfig(expandSinglePathOnly = false)
+    val viewState = rememberTaskViewState(config.viewState)
 
     TaskViewerContainer(
         plan = plan,
         state = viewState,
         config = config.viewer,
-        modifier = Modifier.fillMaxSize().padding(all = 8.dp)
+        modifier = Modifier.fillMaxSize().padding(paddingValues).padding(8.dp),
     ) {
-        MyButton(
-            onClick = {
-                scope.launch { viewState.execute(plan, config) }
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Run Test")
+        StyledButton(onClick = { scope.launch { viewState.execute(plan, config) } }) {
+            StyledText("Run test plan")
         }
-    }
-}
-
-private fun createTestPlan(
-    taskDurationMs: Long = 50,
-): TaskPlan {
-    suspend fun pause() {
-        delay(taskDurationMs.milliseconds)
-    }
-
-    val plan = taskPlan(name = "Test Plan") {
-
-        // Test 1: direkter Task in Root
-        task("Initialize") {
-            log("Direct task in root")
-            logWarning("Some warning")
-            logRichText {
-                buildAnnotatedString {
-                    withStyle(SpanStyle(color = colorSuccess(), fontWeight = FontWeight.Bold)) {
-                        append("✓ ")
-                    }
-                    append("Custom message with ")
-                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("custom style")
-                    }
-                }
-            }
-            logWarning("Some multi-line warning\nwith details")
-
-            val files = List(10) { "file_${it + 1}.dat" }
-            log(items = files, title = "Processed files")
-
-            val exceptionWithStackTrace = Exception("This is a test exception with stack trace")
-            logError("An error occurred: ${exceptionWithStackTrace.message}\n${exceptionWithStackTrace.stackTraceToString()}",)
-
-            TaskResult.Success("Initialization completed")
-        }
-
-        val t = task("Test Task with Result") {
-            log("This task returns a result")
-            TaskResult.Success("This is the result of the task", data = "MEIN ERGEBNIS")
-        }
-
-        task("Task using result from previous task") {
-            val result = t.requireData()
-            log("Result from previous task: $result")
-            TaskResult.Success("Used result from previous task")
-        }
-
-        val skipped = task("Task skipped with existing data") {
-            log("Existing data can be reused")
-            TaskResult.Skipped("No update needed", data = "EXISTING RESULT")
-        }
-
-        task("Task using data from skipped task") {
-            log("Result from skipped task: ${skipped.requireData()}")
-            TaskResult.Success("Used data from skipped task")
-        }
-
-        task("Task skipped without data") {
-            TaskResult.Skipped("Nothing to do")
-        }
-
-        task("Task Info") {
-            TaskResult.Info("This is an info task")
-        }
-
-        // Test 2: Gruppe mit erfolgreichen Sub Tasks
-        group("Copying Files") {
-            repeat(5) { index ->
-                task("Copy Files ${index + 1}") {
-                    repeat(30) { fileIndex ->
-                        updateStatus("${fileIndex + 1}/30 files")
-                        log("Copied file_${fileIndex + 1}.dat")
-                        pause()
-                    }
-                    TaskResult.Success("Copied 30 files")
-                }
-            }
-        }
-
-        // Test 3: Leere Gruppe
-        group("Empty Group") {
-
-        }
-
-        // Test 4: Gruppe mit Fehler in einem Sub Task
-        group("Group with Error") {
-            task("Task 1") {
-                log("Doing something")
-                pause()
-                TaskResult.Success("Task 1 completed")
-            }
-            task("Task 2 (Error)") {
-                log("Doing something")
-                pause()
-                TaskResult.Error(Exception("Something went wrong in Task 2"))
-            }
-            task("Task 3") {
-                log("Doing something")
-                pause()
-                TaskResult.Success("Task 3 completed")
-            }
-        }
-
-        // Test 5: Gruppe mit Warnung in einem Sub Task
-        group("Group with Warning") {
-            task("Task 1") {
-                log("Doing something")
-                pause()
-                TaskResult.Success("Task 1 completed")
-            }
-            task("Task 2 (Warning)") {
-                log("Doing something")
-                pause()
-                TaskResult.Warning("Something might be wrong in Task 2")
-            }
-            task("Task 3") {
-                log("Doing something")
-                pause()
-                TaskResult.Success("Task 3 completed")
-            }
-        }
-
-        // Test 6: Komplexe Gruppe mit mehreren Sub Tasks und Untergruppen
-        group("Complex Group") {
-            task("Task 1") {
-                log("Doing something")
-                pause()
-                TaskResult.Success("Task 1 completed")
-            }
-            group("Subgroup 1") {
-                task("Subtask 1.1") {
-                    log("Doing something")
-                    pause()
-                    TaskResult.Success("Subtask 1.1 completed")
-                }
-                task("Subtask 1.2") {
-                    log("Doing something")
-                    pause()
-                    TaskResult.Success("Subtask 1.2 completed")
-                }
-            }
-            group("Subgroup 2") {
-                task("Subtask 2.1") {
-                    log("Doing something")
-                    pause()
-                    TaskResult.Success("Subtask 2.1 completed")
-                }
-                task("Subtask 2.2 (Error)") {
-                    log("Doing something")
-                    pause()
-                    TaskResult.Error(Exception("Something went wrong in Subtask 2.2"))
-                }
-            }
-        }
-    }
-
-    return plan
-}
-
-private suspend fun runTest(
-    plan: TaskPlan,
-    viewState: TaskViewState,
-    config: TaskConfig,
-) {
-    withContext(Dispatchers.PlatformIO) {
-        viewState.reset()
-        viewState.execute(plan, config)
     }
 }

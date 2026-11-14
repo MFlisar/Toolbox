@@ -14,6 +14,7 @@ import io.github.hyochan.kmpiap.openiap.IapPlatform
 import io.github.hyochan.kmpiap.openiap.PurchaseError
 import io.github.hyochan.kmpiap.requestPurchase
 import io.github.hyochan.kmpiap.toPurchaseInput
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,8 +31,10 @@ internal class OpenIAPManager(
     val deliverProduct: (productId: String) -> Unit,
 ) {
     private val dataState = MutableStateFlow<Result<IAPData>?>(null)
+    private val purchaseErrorState = MutableStateFlow(false)
 
     val data = dataState.asStateFlow()
+    val purchaseError = purchaseErrorState.asStateFlow()
 
     /**
      * IAP initialisieren und Listener starten
@@ -71,7 +74,8 @@ internal class OpenIAPManager(
     * lädt Produkte + Käufe (ggf. neu)
      */
     suspend fun refreshData() {
-        val products = loadProducts()
+         purchaseErrorState.value = false
+         val products = loadProducts()
         val purchases = loadPurchases()
         val result = if (products.isSuccess && purchases.isSuccess) {
             Result.success(IAPData(products.getOrThrow(), purchases.getOrThrow()))
@@ -88,14 +92,24 @@ internal class OpenIAPManager(
     suspend fun purchaseProduct(
         product: FullProduct,
     ) {
-        kmpIAP.requestPurchase {
-            apple {
-                sku = product.id
-                quantity = product.iosAmount
+        purchaseErrorState.value = false
+        try {
+            kmpIAP.requestPurchase {
+                apple {
+                    sku = product.id
+                    quantity = product.iosAmount
+                }
+                google {
+                    skus = listOf(product.id)
+                }
             }
-            google {
-                skus = listOf(product.id)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            L.logIf { log }?.e(e) {
+                "Error starting purchase for ${product.id}: ${e.message}"
             }
+            purchaseErrorState.value = true
         }
     }
 
@@ -122,6 +136,7 @@ internal class OpenIAPManager(
     * Alle verfügbaren Käufe abrufen und Produkt liefern (z.B. nach Neuinstallation oder Gerätewechsel)
      */
     suspend fun restorePurchases() {
+        purchaseErrorState.value = false
         try {
             // Get available purchases
             val purchases = kmpIAP.getAvailablePurchases()
@@ -131,8 +146,11 @@ internal class OpenIAPManager(
             purchases.forEach { purchase ->
                 deliverProduct(purchase.productId)
             }
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             L.logIf { log }?.e { "Error restoring purchases: $e" }
+            purchaseErrorState.value = true
         }
     }
 
@@ -162,16 +180,19 @@ internal class OpenIAPManager(
     private fun handlePurchaseError(error: PurchaseError) {
         when (error.code) {
             ErrorCode.NetworkError -> {
+                purchaseErrorState.value = true
                 L.logIf { log }
                     ?.d { "Network error during purchase. Suggesting retry after delay." }
             }
 
             ErrorCode.AlreadyOwned -> {
+                purchaseErrorState.value = false
                 L.logIf { log }?.w { "Product already owned. Attempting to restore purchases." }
                 appScope.launch { restorePurchases() }
             }
 
             else -> {
+                purchaseErrorState.value = true
                 L.logIf { log }?.e { "Purchase error: ${error.message} (code: ${error.code})" }
             }
         }

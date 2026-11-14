@@ -1,46 +1,25 @@
 -------------------------------------
-- OFFENE WICHTIGE PUNKTE
+- TODO
 -------------------------------------
 
-    [ ] Backup:
-        Auto Backuo crasht: Uri-based PlatformFile does not have a Path representation
-        => weil man mit uri + filename keinen path machen kann...
-
-    [ ] AppUtil sollte funktionen anbieten wie:
-        * openSettings
-        * ...
-        damit man nicht wissen muss wo was ist (LocalAppState, ...)
-
-    [ ] WASM:
-        Back Handling gibt es noch nicht + Toolbar anders gestalten? (Title zentrieren + Menus ohne Texte + Back Arrow) + Web Back Handling geht auch nicht
-
-    ------------------------------------------
-
-    [ ] DrawerSettings? für in app einstellungen die man sofort sieht (wie in Iron via DebugDrawer)?
-    [ ] IOS Support
-        => wenn er implementiert ist dann target mobile anlegen und dort android/ios geteilte Funktionen ablegen!!!
-
-    ----------------------------------
-
-    [ ] Screens - paddings nutzen?
-    [ ] Pages sollten immer fill size haben => ist jetzt so, sollte man das forcieren?
-    [ ] Preferene Screen
-        [x] Android: Back Arrow in Toolbar
-        [x] Expandable Header wie früher in SwissArmy
-        [ ] Breadcrumbs anzeigen?
-        [x] Option um Custom Pages in Android zu deaktivieren und direkt in Custom Content einzubetten? (Pager sieht dort nicht gut aus)
-    [ ] Auto Backup geht noch nicht
-        [x] Frequenz speichern
-        [ ] Auto Backup Logik implementieren
+    [x] force pro version entfernt Werbung nicht
+    [x] Feedback
+    [ ] Sicherungen
+        [x] Dialoge umbauen auf Styled => ist bereits...
+        [ ] manuell scheint es bereits zu funktionieren
+        [ ] ALTER PUNKT:
+            Auto Backup crasht: Uri-based PlatformFile does not have a Path representation
+            => weil man mit uri + filename keinen path machen kann...
+            => könnte inzwishcen funktionieren, Doku lässt vermuten, dass / in filekit auch bei storage files funktionieren sollte...
+        Einstellungen:
+            [x] "Sicherung wiederherstellen" hat falsch bottem edge form!
+            [x] Header autom. Sicherung sollte von shape gruppe ausgenommen werden...
+    [x] Changelog einlesen und anzeigen
+    [x] TaskViewer - header animieren
 
 -------------------------------------
 - SPÄTER
 -------------------------------------
-
-    [ ] Texte in backup (zip?, service?)
-    [ ] Dialoge ohne composable unstyled
-
-    [ ] Java App Restart testen => kann nur funktionieren wenn man die App als exe erstellt
 
     [ ] Store - Offline/Online Database
         - https://store.mobilenativefoundation.org/docs/intro
@@ -48,31 +27,9 @@
         - https://github.com/Tarek-Bohdima/ConsultMe
         - https://www.reddit.com/r/JetpackComposeDev/comments/1mnzoim/how_to_use_lint_with_jetpack_compose_pro_tips/
 
-
-
-Full screen Dialoge könnten im root sein und in toolbar + content aufgeteilt werden für eine schöne Animation? Oder sie könnten die toolbar der App benutzen? Sinnvoll? Bottomsheet ist eigentlich auch ok
-Anderes menu icon????
-Test Page für alle UI Tests für meine Libraries (Dialoge, Preferences, ...)
-MyScroll* Sachen sollten parameter scrollbar haben und sollten im Demo benutzt werden
-
 -------------------------------------
 
 	zip mit okio? geht das?
 		- https://www.reddit.com/r/Kotlin/comments/ut2n62/kmm_extracting_a_zip_file_struggling_with_ios_side/
 		- https://slack-chats.kotlinlang.org/t/28892584/hey-all-does-anybody-know-if-a-kmp-library-to-do-either-zip-
 		- https://www.reddit.com/r/Kotlin/comments/ut2n62/kmm_extracting_a_zip_file_struggling_with_ios_side/
-
-
-	RESPONSIVE LAYOUTS (SPÄTER)
-		- https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes
-		- navigation sollte auf allen Platformen ggf. Rail oder bottombar nutzen =>
-			AdaptiveNavigation* (...Container?)
-		- adaptive navigation: https://developer.android.com/develop/ui/compose/layouts/adaptive/build-adaptive-navigation
-			=> NavigationSuiteScaffold nutzen?
-		- https://proandroiddev.com/design-smarter-with-android-16s-adaptive-layouts-6efbbba18198
-
--------------------------------------
-
-	kmp-gradle-plugin: screenshots fehlen noch!!!
-
-	man sollte sie im home anzeigen können als auch auf den Seiten (falls zweites geht)

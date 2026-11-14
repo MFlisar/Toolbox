@@ -1,7 +1,7 @@
 import com.michaelflisar.kmpdevtools.BuildFileUtil
 import com.michaelflisar.kmpdevtools.Targets
 import com.michaelflisar.kmpdevtools.configs.*
-import com.michaelflisar.kmpdevtools.core.Platform
+import com.michaelflisar.kmpdevtools.core.Target
 import com.michaelflisar.kmpdevtools.setupDependencies
 
 plugins {
@@ -29,14 +29,8 @@ plugins {
 val module = LibraryModuleConfig.read(project)
 
 val buildTargets = Targets(
-    // mobile
-    android = true,
-    iOS = true,
-    // desktop
-    windows = false,
-    macOS = false,
-    // web
-    wasm = false
+    Target.ANDROID,
+    Target.IOS
 )
 
 val androidConfig = AndroidLibraryConfig.create(
@@ -50,7 +44,7 @@ val androidConfig = AndroidLibraryConfig.create(
 // Kotlin
 // ------------------------
 
-val KMP_IAP_VERSION = "3.5.0"
+val KMP_IAP_VERSION = deps.versions.openiap.get()
 
 kotlin {
 
@@ -89,38 +83,38 @@ kotlin {
 
             // compose
             implementation(libs.jetbrains.compose.runtime)
-            implementation(libs.jetbrains.compose.material3)
             implementation(libs.jetbrains.compose.material.icons.core)
             implementation(libs.jetbrains.compose.material.icons.extended)
 
+            // compose preview
+            implementation(libs.jetbrains.compose.ui.tooling.preview)
+
             implementation(mflisar.kotpreferences.core)
 
-            implementation(mflisar.composedialogs.core)
-            implementation(mflisar.composedialogs.dialog.info)
+            //implementation(mflisar.composedialogs.core)
+            //implementation(mflisar.composedialogs.dialog.info)
 
-            commonMain.dependencies {
-                implementation("io.github.hyochan:kmp-iap:${KMP_IAP_VERSION}") {
-                    attributes {
-                        attribute(
-                            Attribute.of(
-                                "com.android.build.api.attributes.ProductFlavor:platform",
-                                String::class.java
-                            ),
-                            "play"
-                        )
-                    }
+            implementation(mflisar.composestyled.libraries.dialogs)
+
+            implementation("io.github.hyochan:kmp-iap:${KMP_IAP_VERSION}") {
+                attributes {
+                    attribute(
+                        Attribute.of(
+                            "com.android.build.api.attributes.ProductFlavor:platform",
+                            String::class.java
+                        ),
+                        "play"
+                    )
                 }
             }
             //implementation(deps.openiap)
+
 
             // Library
             api(project(":toolbox:core"))
 
         }
 
-        androidMain.dependencies {
-            implementation("io.github.hyochan.openiap:openiap-google:${KMP_IAP_VERSION}")
-        }
 /*
         androidMain.dependencies {
             // we must select an implementation on android only (amazon, google play, ...)
@@ -141,15 +135,14 @@ kotlin {
     }
 }
 
+dependencies {
+    // compose preview
+    androidRuntimeClasspath(libs.jetbrains.compose.ui.tooling)
+
+}
+
 // -------------------
 // Publish
 // -------------------
 
-// maven publish configuration
-// if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-//    BuildFileUtil.setupMavenPublish(module)
-
-// local publish configuration
-// task name: publishAllPublicationsToGitHubRepository
-if (BuildFileUtil.checkGradleProperty(project, "publishToMaven") != false)
-    BuildFileUtil.setupLocalMavenPublish(module)
+BuildFileUtil.setupMavenPublish(module)

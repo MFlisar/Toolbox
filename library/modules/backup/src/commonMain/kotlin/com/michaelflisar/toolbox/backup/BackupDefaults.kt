@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.backup
 
 import com.michaelflisar.composedialogs.dialogs.frequency.classes.Frequency
+import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.backup.classes.BackupFileName
 import com.michaelflisar.toolbox.extensions.now
 import kotlinx.datetime.LocalDateTime
@@ -9,13 +10,13 @@ import kotlinx.datetime.number
 import kotlinx.datetime.toInstant
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.ExperimentalTime
 
 expect fun BackupDefaults.createDefaultBackupContent(): List<ZipFileContent>
 
 object BackupDefaults {
 
-    @OptIn(ExperimentalTime::class)
+    internal const val LOG = true
+
     fun getInitialDay(
         datetime: LocalDateTime,
         frequency: Frequency,
@@ -27,10 +28,13 @@ object BackupDefaults {
             (end.toInstant(timezone).epochSeconds - start.toInstant(timezone).epochSeconds).coerceAtLeast(
                 0L
             )
-        return initialDelayInSeconds.seconds
+        return initialDelayInSeconds.seconds.also { delay ->
+            L.logIf { LOG }?.d {
+                "BackupDefaults.getInitialDay: calculated initial delay=$delay"
+            }
+        }
     }
 
-    @OptIn(ExperimentalTime::class)
     fun getDefaultBackupFileName(
         appName: String,
         extension: String,
@@ -43,6 +47,10 @@ object BackupDefaults {
                 now.hour.toString().padStart(2, '0') + "-" +
                 now.minute.toString().padStart(2, '0') + "-" +
                 now.second.toString().padStart(2, '0')
-        return BackupFileName("${if (auto) "auto " else ""}$appName $date", extension)
+        return BackupFileName("${if (auto) "auto " else ""}$appName $date", extension).also {
+            L.logIf { LOG }?.d {
+                "BackupDefaults.getDefaultBackupFileName: generated filename, auto=$auto, extension=$extension"
+            }
+        }
     }
 }

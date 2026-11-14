@@ -1,278 +1,316 @@
 package com.michaelflisar.demo.pages.tests
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.filled.TextFields
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.michaelflisar.parcelize.Parcelize
-import com.michaelflisar.toolbox.app.features.navigation.screen.NavScreen
-import com.michaelflisar.toolbox.app.features.navigation.screen.rememberNavScreenData
-import com.michaelflisar.toolbox.components.MyRow
-import com.michaelflisar.toolbox.extensions.toIconComposable
-import com.michaelflisar.toolbox.form3.FormDefaults
-import com.michaelflisar.toolbox.form3.FormHelp
-import com.michaelflisar.toolbox.form3.FormItem
-import com.michaelflisar.toolbox.form3.MyForm
-import com.michaelflisar.toolbox.form3.rememberFormConfig
-import com.michaelflisar.toolbox.theme.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AttachFile
+import androidx.compose.material.icons.filled.FolderOpen
+import com.michaelflisar.composestyled.StyledTheme
+import com.michaelflisar.composestyled.adaptive.StyledAdaptiveInfo
+import com.michaelflisar.composestyled.classes.toIconComposable
+import com.michaelflisar.composestyled.ui.components.StyledButton
+import com.michaelflisar.composestyled.ui.layout.StyledColumn
+import com.michaelflisar.composestyled.ui.layout.StyledDialog
+import com.michaelflisar.composestyled.ui.primitives.StyledText
+import com.michaelflisar.composestyled.ui.specials.StyledExpandableSection
+import com.michaelflisar.composestyled.ui.state.rememberDialogState
+import com.michaelflisar.demo.pages.DemoToolbarConfig
+import com.michaelflisar.toolbox.app.features.navigation.NavScreen
+import com.michaelflisar.toolbox.form.FormDefaults
+import com.michaelflisar.toolbox.form.MyForm
+import com.michaelflisar.toolbox.form.rememberFormConfig
+import com.michaelflisar.toolbox.form.items.FormCheckbox
+import com.michaelflisar.toolbox.form.items.FormCustom
+import com.michaelflisar.toolbox.form.items.FormCustomLabeled
+import com.michaelflisar.toolbox.form.items.FormDivider
+import com.michaelflisar.toolbox.form.items.FormDropdown
+import com.michaelflisar.toolbox.form.items.FormDropdownIndex
+import com.michaelflisar.toolbox.form.items.FormHelp
+import com.michaelflisar.toolbox.form.items.FormInfo
+import com.michaelflisar.toolbox.form.items.FormInput
+import com.michaelflisar.toolbox.form.items.FormMultiDropdown
+import com.michaelflisar.toolbox.form.items.FormMultiDropdownIndex
+import com.michaelflisar.toolbox.form.items.FormPicker
+import com.michaelflisar.toolbox.form.items.FormSection
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.path
+import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
+import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.compose.rememberDirectoryPickerLauncher
+import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
+import kotlinx.serialization.Serializable
 
-@Parcelize
-object PageTestForm : NavScreen() {
+@Serializable
+data object PageTestForm : NavScreen {
 
     @Composable
-    override fun provideData() = rememberNavScreenData(
-        name = "Form",
-        icon = Icons.Default.TextFields.toIconComposable()
-    )
+    override fun Content(
+        paddingValues: PaddingValues,
+        adaptiveInfo: State<StyledAdaptiveInfo>,
+    ) = PageTestFormContent(paddingValues)
 
     @Composable
-    override fun Screen() {
-        Page()
-    }
-
+    override fun Toolbar() = DemoToolbarConfig("Form")
 }
 
-private enum class Mode {
-    Copy, Change, Info
-}
-
-private enum class TransferMode {
-    Copy, Move
-}
+private data class PlanOption(val name: String)
 
 @Composable
-private fun Page() {
+private fun PageTestFormContent(
+    paddingValues: PaddingValues
+) {
 
-    val labelStyleBefore = FormDefaults.labelStyleBefore(
-        width = 200.dp,
-        textStyle = MaterialTheme.typography.bodyMedium,
-        subTextStyle = MaterialTheme.typography.bodySmall.copy(fontStyle = FontStyle.Italic),
-        textColor = MaterialTheme.colorScheme.onSurface,
-        subTextColor = MaterialTheme.colorScheme.onSurfaceVariant
-    )
-    val labelStyleAbove = FormDefaults.labelStyleAbove(
-        textStyle = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-        subTextStyle = MaterialTheme.typography.bodySmall.copy(fontStyle = FontStyle.Italic),
-        textColor = MaterialTheme.colorScheme.onSurface,
-        subTextColor = MaterialTheme.colorScheme.onSurfaceVariant
-    )
+    val name = rememberSaveable { mutableStateOf("") }
+    val email = rememberSaveable { mutableStateOf("") }
+    val notes = rememberSaveable { mutableStateOf("") }
+    val showEmail = rememberSaveable { mutableStateOf(false) }
+    val selectedPlan = remember { mutableStateOf(PlanOption("Standard")) }
+    val selectedCountryIndex = rememberSaveable { mutableStateOf(0) }
+    val selectedInterests = remember { mutableStateOf(listOf("Compose")) }
+    val selectedNotificationIndices = remember { mutableStateOf(listOf(0)) }
+    val selectedSingleOptionIndex = rememberSaveable { mutableStateOf(0) }
+    val labelLayoutIndex = rememberSaveable { mutableStateOf(0) }
+    val sectionStyleIndex = rememberSaveable { mutableStateOf(0) }
+    val showSingleDropdownsAsText = rememberSaveable { mutableStateOf(false) }
+    val formSettingsExpanded = rememberSaveable { mutableStateOf(true) }
+    val customActionCount = rememberSaveable { mutableStateOf(0) }
+    val selectedFile = remember { mutableStateOf<PlatformFile?>(null) }
+    val selectedFolder = remember { mutableStateOf<PlatformFile?>(null) }
+    val submitDialogState = rememberDialogState<String>(null)
 
-    val sectionStyleText = FormDefaults.sectionStyleText()
-    val sectionStyleRow = FormDefaults.sectionStyleRow()
-
-    val dividerStyle = FormDefaults.dividerStyle(
-        color = MaterialTheme.colorScheme.primary,
-        textColor = MaterialTheme.colorScheme.primary,
-        thickness = 0.dp,
-        textAlignment = Alignment.Start
-    )
-
-    val config = rememberFormConfig(
-        labelStyle = labelStyleBefore,
-        sectionStyle = sectionStyleRow,
-        dividerStyle = dividerStyle,
-        spacing = 8.dp,
-        showSingleDropdownsAsText = true
-    )
-
-    val existingFolders = remember { mutableStateOf(listOf<String>()) }
-    val currentJunction = remember { mutableStateOf<String?>(null) }
-    val selectedMode = remember { mutableStateOf(Mode.Copy) }
-    val selectedTerminalServer = remember { mutableStateOf(0) }
-    val selectedVWVersion = remember { mutableStateOf(0) }
-    val selectedExistingFolder = remember { mutableStateOf<String>("") }
-    val folderName = remember { mutableStateOf("Folder") }
-    val copyMode = remember { mutableStateOf(TransferMode.Copy) }
-    val copyLocalWorkspace = remember { mutableStateOf(false) }
-    val copyFilesFromVWInstallation = remember { mutableStateOf(false) }
-    val flagsDataContent = remember { mutableStateOf("") }
-    val activate = remember { mutableStateOf(false) }
-    val activateDependency = remember { mutableStateOf(false) }
-    val selectedTransferModes = remember { mutableStateOf(listOf<String>()) }
-
-    val items = buildList {
-        add(FormItem.Section("Informationen"))
-        addAll(
-            listOf(
-                FormItem.Info(
-                    label = "Neuester Release Ordner",
-                    info = existingFolders.value.lastOrNull() ?: "--",
-                ),
-                FormItem.Info(
-                    label = "Aktuelle Junction",
-                    info = currentJunction.value ?: "--",
-                    help = FormHelp(
-                        title = "Junction",
-                        text = "Die Junction ist ein Verweis auf den Ordner, der aktuell von VW verwendet wird. Wenn du die Junction anpasst, dann wird VW den neuen Ordner verwenden."
-                    )
-                ),
-                FormItem.Info(
-                    label = "Aktuelle Junction - mit langem Titel und Hilfe... und noch mehr Text, damit man sieht, wie das aussieht",
-                    info = currentJunction.value ?: "--",
-                    help = FormHelp(
-                        title = "Junction",
-                        text = "Die Junction ist ein Verweis auf den Ordner, der aktuell von VW verwendet wird. Wenn du die Junction anpasst, dann wird VW den neuen Ordner verwenden."
-                    )
-                )
-            )
+    val plans = remember {
+        listOf(
+            PlanOption("Basic"),
+            PlanOption("Standard"),
+            PlanOption("Premium"),
         )
+    }
+    val countries = listOf("Germany", "France", "Japan")
+    val interests = listOf("Compose", "Kotlin", "Multiplatform", "Design")
+    val notificationOptions = listOf("Product updates", "Tips", "Release notes")
+    val labelLayouts = listOf("Beside field", "Above field")
+    val sectionStyles = listOf("Text heading", "Filled row")
+    val fileKitDialogSettings = remember { FileKitDialogSettings.createDefault() }
+    val filePickerLauncher = rememberFilePickerLauncher(
+        type = FileKitType.File(extensions = listOf("pdf", "txt")),
+        dialogSettings = fileKitDialogSettings,
+    ) { selectedFile.value = it }
+    val directoryPickerLauncher = rememberDirectoryPickerLauncher(
+        dialogSettings = fileKitDialogSettings,
+    ) { selectedFolder.value = it }
 
-        add(FormItem.Section("Aktion"))
-        addAll(
-            listOf(
-                FormItem.Dropdown(
-                    label = "Modus",
-                    items = Mode.entries,
-                    mapper = { it.name },
-                    selected = selectedMode
-                ),
-                FormItem.DropdownIndex(
-                    label = "Terminal Server",
-                    items = listOf("TS1", "TS2", "TS3"),
-                    selectedIndex = selectedTerminalServer
-                ),
-                FormItem.DropdownIndex(
-                    label = "VW Version",
-                    items = listOf("VW19", "VW21", "VW25"),
-                    selectedIndex = selectedVWVersion
-                )
-            )
-        )
+    val formConfig = rememberFormConfig(
+        labelStyle = if (labelLayoutIndex.value == 1) {
+            FormDefaults.labelStyleAbove()
+        } else {
+            FormDefaults.labelStyleBefore()
+        },
+        sectionStyle = if (sectionStyleIndex.value == 1) {
+            FormDefaults.sectionStyleRow()
+        } else {
+            FormDefaults.sectionStyleText()
+        },
+        showSingleDropdownsAsText = showSingleDropdownsAsText.value,
+    )
+    val defaultItemKey = remember { FormDefaults.simpleKeyProvider() }
 
-        if (selectedMode.value != Mode.Info) {
-            add(FormItem.Section("Konfiguration"))
-            addAll(
-                when (selectedMode.value) {
-                    Mode.Copy -> listOf(
-                        FormItem.Input(
-                            label = "Ordner Name",
-                            value = folderName
-                        ),
-                        FormItem.Dropdown(
-                            label = "Kopiermodus",
-                            items = TransferMode.entries,
-                            mapper = { it.name },
-                            selected = copyMode
-                        ),
-                        FormItem.Checkbox(
-                            label = "Lokalen Workspace kopieren",
-                            checked = copyLocalWorkspace
-                        ),
-                        FormItem.Checkbox(
-                            label = "Dateien aus VW Installation kopieren",
-                            subLabel = "DLLs, ...",
-                            checked = copyFilesFromVWInstallation
-                        ),
-                        FormItem.Input(
-                            label = "flags.data Inhalt",
-                            value = flagsDataContent,
-                            minLines = 2,
-                            maxLines = 5
-                        )
-                    )
-
-                    Mode.Change -> listOf(
-                        FormItem.Dropdown(
-                            label = "Ordner wählen",
-                            items = existingFolders.value,
-                            mapper = { it ?: "" },
-                            selected = selectedExistingFolder
-                        )
-                    )
-
-                    Mode.Info -> emptyList()
+    val items = listOf(
+        FormSection("Profile"),
+        FormInput(
+            label = "Name",
+            value = name,
+            subLabel = "Required",
+            help = FormHelp("Enter the name that should appear in the submission."),
+        ),
+        FormCheckbox(
+            label = "Include an email address",
+            checked = showEmail,
+        ),
+        FormInput(
+            label = "Email",
+            value = email,
+            visible = showEmail.value,
+            enabled = showEmail.value,
+            help = FormHelp("This field is shown conditionally."),
+        ),
+        FormInput(
+            label = "Notes",
+            value = notes,
+            minLines = 2,
+            maxLines = 4,
+            subLabel = "Optional",
+        ),
+        FormDropdown(
+            label = "Plan",
+            items = plans,
+            mapper = { it.name },
+            selected = selectedPlan,
+            help = FormHelp("Generic dropdown with a custom option type."),
+        ),
+        FormDropdownIndex(
+            label = "Country",
+            items = countries,
+            selectedIndex = selectedCountryIndex,
+        ),
+        FormDropdownIndex(
+            label = "Single option",
+            items = listOf("Only available option"),
+            selectedIndex = selectedSingleOptionIndex,
+        ),
+        FormMultiDropdown(
+            label = "Interests",
+            items = interests,
+            selected = selectedInterests,
+            formatter = { selected -> selected.joinToString(" + ") },
+        ),
+        FormMultiDropdownIndex(
+            label = "Notifications",
+            items = notificationOptions,
+            selectedIndices = selectedNotificationIndices,
+        ),
+        FormDivider("File selection"),
+        FormPicker(
+            label = "File",
+            text = selectedFile.value?.path ?: "Choose a PDF or text file",
+            icon = Icons.Default.AttachFile.toIconComposable(),
+            onClick = { filePickerLauncher.launch() },
+        ),
+        FormPicker(
+            label = "Folder",
+            text = selectedFolder.value?.path ?: "Choose a folder",
+            icon = Icons.Default.FolderOpen.toIconComposable(),
+            onClick = { directoryPickerLauncher.launch() },
+        ),
+        FormSection("Custom form items"),
+        FormCustomLabeled(
+            label = "Custom labeled item",
+            content = { _, enabled ->
+                StyledText(if (enabled) "Content from a custom composable" else "Disabled")
+            },
+        ),
+        FormCustom(
+            content = { _, enabled ->
+                StyledButton(enabled = enabled, onClick = { customActionCount.value++ }) {
+                    StyledText("Custom item (${customActionCount.value})")
                 }
+            },
+        ),
+        FormSection("Live preview"),
+        FormInfo(
+            label = "Name",
+            info = name.value.ifBlank { "No name entered" },
+        ),
+        FormInfo(
+            label = "File",
+            info = selectedFile.value?.path ?: "No file selected",
+        ),
+        FormInfo(
+            label = "Folder",
+            info = selectedFolder.value?.path ?: "No folder selected",
+        ),
+    )
+
+    StyledColumn(
+        modifier = Modifier.fillMaxSize()
+            .padding(paddingValues)
+            .padding(StyledTheme.padding.content),
+        itemSpacing = StyledTheme.spacing.medium,
+    ) {
+        StyledExpandableSection(
+            modifier = Modifier
+                .fillMaxWidth(),
+            title = { StyledText("Form settings") },
+            expanded = formSettingsExpanded,
+        ) {
+            MyForm(
+                items = listOf(
+                    FormDropdownIndex(
+                        label = "Label layout",
+                        items = labelLayouts,
+                        selectedIndex = labelLayoutIndex,
+                    ),
+                    FormDropdownIndex(
+                        label = "Section style",
+                        items = sectionStyles,
+                        selectedIndex = sectionStyleIndex,
+                    ),
+                    FormCheckbox(
+                        label = "Show single-option dropdowns as text",
+                        checked = showSingleDropdownsAsText,
+                    ),
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = StyledTheme.spacing.medium),
+                scrollable = false,
             )
         }
-
-        if (selectedMode.value == Mode.Copy) {
-            add(FormItem.Section("Sonstiges"))
-            addAll(
-                listOf(
-                    FormItem.Checkbox(
-                        label = "Aktivieren",
-                        subLabel = "Junction anpassen + weitere Daten nach VW kopieren",
-                        checked = activate
-                    ),
-                    FormItem.Checkbox(
-                        label = "Dependency",
-                        subLabel = "Depends on 'Aktivieren'",
-                        checked = activateDependency,
-                        visible = activate.value
-                    )
+        MyForm(
+            items = items,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            config = formConfig,
+            itemKey = { item ->
+                if (item is FormCustom) "custom:action" else defaultItemKey(item)
+            },
+        )
+        StyledButton(
+            modifier = Modifier
+                .fillMaxWidth(),
+            onClick = {
+                submitDialogState.show(
+                    listOf(
+                        "Name: ${name.value.ifBlank { "(empty)" }}",
+                        "Email: ${if (showEmail.value) email.value.ifBlank { "(empty)" } else "(not included)"}",
+                        "Plan: ${selectedPlan.value.name}",
+                        "Country: ${countries[selectedCountryIndex.value]}",
+                        "Interests: ${selectedInterests.value.joinToString().ifBlank { "(none)"} }",
+                        "Notifications: ${selectedNotificationIndices.value.map(notificationOptions::get).joinToString().ifBlank { "(none)" }}",
+                        "File: ${selectedFile.value?.path ?: "(none)"}",
+                        "Folder: ${selectedFolder.value?.path ?: "(none)"}",
+                        "Notes: ${notes.value.ifBlank { "(none)" }}",
+                    ).joinToString("\n")
                 )
-            )
-
-            add(FormItem.Section("Test"))
-            addAll(
-                listOf(
-                    FormItem.MultiDropdown(
-                        label = "Multi Dropdown",
-                        items = TransferMode.entries.map { it.name },
-                        selected = selectedTransferModes,
-                        formatter = {
-                            if (it.isEmpty()) {
-                                "Nichts ausgewählt"
-                            } else {
-                                "${it.size} ausgewählt (" + it.joinToString(", ") + ")"
-                            }
-                        }
-                    ),
-                    FormItem.Divider(text = "Divider mit Text"),
-                    FormItem.CustomLabeled(
-                        label = "Benutzerdefiniert",
-                        content = { _, _ ->
-                            MyRow {
-                                androidx.compose.material3.Icon(
-                                    imageVector = Icons.Default.Error,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.error
-                                )
-                                Text(
-                                    text = "Benutzerdefinierter Inhalt in Labeled FormItem",
-                                    color = MaterialTheme.colorScheme.error
-                                )
-                            }
-                        }
-                    ),
-                    FormItem.Custom(
-                        content = { _, _ ->
-                            MyRow {
-                                androidx.compose.material3.Icon(
-                                    imageVector = Icons.Default.Error,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.error
-                                )
-                                Text(
-                                    text = "Benutzerdefinierter Full-Row-Inhalt",
-                                    color = MaterialTheme.colorScheme.error
-                                )
-                            }
-                        }
-                    )
-                )
-            )
+            },
+        ) {
+            StyledText("Submit")
         }
     }
 
-    MyForm(
-        config = config,
-        items = items,
-        itemKey = FormDefaults.simpleKeyProvider(),
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(MaterialTheme.padding.content)
-        //scrollable = false
-    )
+    if (submitDialogState.visible) {
+        val result = submitDialogState.requireData()
+        StyledDialog(
+            state = submitDialogState,
+            title = { StyledText("Submitted form") },
+            buttons = StyledDialog.Buttons(
+                positive = StyledDialog.Button(
+                    label = "Close",
+                    onClick = { submitDialogState.dismiss() },
+                ),
+            ),
+        ) { dialogPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(dialogPadding)
+                    .padding(StyledTheme.spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(StyledTheme.spacing.small),
+            ) {
+                result.lines().forEach { line ->
+                    StyledText(line)
+                }
+            }
+        }
+    }
 }

@@ -10,57 +10,56 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SecondaryScrollableTabRow
-import androidx.compose.material3.Tab
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.michaelflisar.toolbox.components.MyCard
-import com.michaelflisar.toolbox.components.MyColumn
-import com.michaelflisar.toolbox.components.MyFilledTitle
-import com.michaelflisar.toolbox.components.MyLabeledInformationHorizontal
-import com.michaelflisar.toolbox.components.MyRow
+import com.michaelflisar.composestyled.StyledTheme
+import com.michaelflisar.composestyled.ui.components.StyledCard
+import com.michaelflisar.composestyled.ui.components.StyledPrimaryScrollableTabRow
+import com.michaelflisar.composestyled.ui.components.StyledTab
+import com.michaelflisar.composestyled.ui.layout.StyledColumn
+import com.michaelflisar.composestyled.ui.layout.StyledRow
+import com.michaelflisar.composestyled.ui.primitives.StyledText
+import com.michaelflisar.composestyled.ui.specials.StyledInformationRowHorizontal
 import com.michaelflisar.toolbox.diff.classes.Change
 import com.michaelflisar.toolbox.diff.classes.DiffResult
-import com.michaelflisar.toolbox.theme.padding
-import com.michaelflisar.toolbox.theme.spacing
 import kotlinx.coroutines.launch
 
 @Composable
 fun DiffReport(
-    result: DiffResult
+    result: DiffResult,
 ) {
     if (result.changes.isEmpty()) {
-        Text(
+        StyledText(
             text = "Keine Änderungen gefunden.",
-            style = MaterialTheme.typography.bodyMedium,
+            style = StyledTheme.typography.bodyMedium,
             modifier = Modifier.padding(12.dp)
         )
         return
     }
 
-    val resultsNotEmpty = remember(result.tableResults) { result.tableResults.filter { it.changes.isNotEmpty() } }
+    val resultsNotEmpty =
+        remember(result.tableResults) { result.tableResults.filter { it.changes.isNotEmpty() } }
 
     val scope = rememberCoroutineScope()
-    val tableNames = remember(result.tableResults) { result.tableResults.map { it.tableName }.sorted() }
+    val tableNames =
+        remember(result.tableResults) { result.tableResults.map { it.tableName }.sorted() }
     val tabTitles = listOf("Statistiken") + resultsNotEmpty.map { it.tableName }.sorted()
     val pagerState = rememberPagerState { tabTitles.size }
 
     Column {
-        SecondaryScrollableTabRow(
+        StyledPrimaryScrollableTabRow(
             edgePadding = 0.dp,
             selectedTabIndex = pagerState.currentPage
         ) {
             tabTitles.forEachIndexed { index, title ->
-                Tab(
+                StyledTab(
                     selected = pagerState.currentPage == index,
                     onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
-                    text = { Text(title) }
+                    text = { StyledText(title) }
                 )
             }
         }
@@ -71,7 +70,7 @@ fun DiffReport(
         ) { page ->
             when (page) {
                 0 -> {
-                    Box(modifier = Modifier.padding(MaterialTheme.padding.default)) {
+                    Box(modifier = Modifier.padding(StyledTheme.padding.medium)) {
                         DiffStatistics(result, tableNames)
                     }
                 }
@@ -81,14 +80,14 @@ fun DiffReport(
                     val itemsForTable = result.getChangesForTable(table)
                     val changesForTables = itemsForTable.groupBy { it.entityId }.values.toList()
                     LazyColumn(
-                        modifier = Modifier.padding(MaterialTheme.padding.default),
-                        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default)
+                        modifier = Modifier.padding(StyledTheme.padding.medium),
+                        verticalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium)
                     ) {
                         if (changesForTables.isEmpty()) {
                             item {
-                                Text(
+                                StyledText(
                                     text = "Keine Änderungen in dieser Tabelle.",
-                                    style = MaterialTheme.typography.bodyMedium
+                                    style = StyledTheme.typography.bodyMedium
                                 )
                             }
                         }
@@ -105,19 +104,27 @@ fun DiffReport(
 @Composable
 private fun DiffStatistics(
     result: DiffResult,
-    tableNames: List<String>
+    tableNames: List<String>,
 ) {
-    MyColumn {
+    StyledColumn {
         val labelWidth = 200.dp
-        MyFilledTitle(text = "Änderungen", modifier = Modifier.fillMaxWidth())
-        MyLabeledInformationHorizontal(
+        StyledText(
+            text = "Änderungen",
+            modifier = Modifier.fillMaxWidth(),
+            style = StyledTheme.typography.titleMedium
+        )
+        StyledInformationRowHorizontal(
             label = "Gesamt",
             info = "${result.changes.size}",
             labelWidth = labelWidth
         )
-        MyFilledTitle(text = "Tabellen pro Tabelle", modifier = Modifier.fillMaxWidth())
+        StyledText(
+            text = "Tabellen pro Tabelle",
+            modifier = Modifier.fillMaxWidth(),
+            style = StyledTheme.typography.titleMedium
+        )
         tableNames.forEach { table ->
-            MyLabeledInformationHorizontal(
+            StyledInformationRowHorizontal(
                 label = "Tabelle $table",
                 info = "${result.getChangesForTable(table).size}",
                 labelWidth = labelWidth
@@ -127,11 +134,12 @@ private fun DiffStatistics(
             val added = changes.filterIsInstance<Change.Added>()
             val removed = changes.filterIsInstance<Change.Removed>()
             val updated = changes.filterIsInstance<Change.Updated>()
-            val updatedFields = updated.map { it.fields.map { it.field } }.flatten().distinct().sorted()
-            val labelStyle = MaterialTheme.typography.bodyMedium
+            val updatedFields =
+                updated.map { it.fields.map { it.field } }.flatten().distinct().sorted()
+            val labelStyle = StyledTheme.typography.bodyMedium
 
             if (added.isNotEmpty()) {
-                MyLabeledInformationHorizontal(
+                StyledInformationRowHorizontal(
                     label = "• Hinzugefügt",
                     info = "${added.size}",
                     labelWidth = labelWidth,
@@ -139,7 +147,7 @@ private fun DiffStatistics(
                 )
             }
             if (removed.isNotEmpty()) {
-                MyLabeledInformationHorizontal(
+                StyledInformationRowHorizontal(
                     label = "• Entfernt",
                     info = "${removed.size}",
                     labelWidth = labelWidth,
@@ -148,7 +156,7 @@ private fun DiffStatistics(
             }
             for (field in updatedFields) {
                 val count = updated.sumOf { it.fields.count { it.field == field } }
-                MyLabeledInformationHorizontal(
+                StyledInformationRowHorizontal(
                     label = "• $field geändert",
                     info = "$count",
                     labelWidth = labelWidth,
@@ -163,28 +171,28 @@ private fun DiffStatistics(
 private fun DiffEntry(
     index: Int,
     size: Int,
-    changes: List<Change>
+    changes: List<Change>,
 ) {
-    MyCard(
+    StyledCard(
         modifier = Modifier.fillMaxWidth()
     ) {
-        MyColumn {
-            MyRow {
-                Text(
+        StyledColumn {
+            StyledRow {
+                StyledText(
                     text = "${index + 1} / $size",
-                    style = MaterialTheme.typography.titleMedium
+                    style = StyledTheme.typography.titleMedium
                 )
-                Text(
+                StyledText(
                     text = changes.firstOrNull()?.entityLabel ?: ""
                 )
             }
 
             changes.forEach { change ->
                 when (change) {
-                    is Change.Added -> Text(text = "• Hinzugefügt")
-                    is Change.Removed -> Text(text = "• Entfernt")
+                    is Change.Added -> StyledText(text = "• Hinzugefügt")
+                    is Change.Removed -> StyledText(text = "• Entfernt")
                     is Change.Updated -> change.fields.forEach { field ->
-                        Text(text = "• ${field.field}: ${field.before} → ${field.after}")
+                        StyledText(text = "• ${field.field}: ${field.before} → ${field.after}")
                     }
                 }
             }
