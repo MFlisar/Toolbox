@@ -57,7 +57,7 @@
 >   - `ExperimentalWasmJsInterop` (1x)
 >   - `kotlin.js.ExperimentalWasmJsInterop` (1x)
 >   - `kotlin.time.ExperimentalTime` (11x)
->   - `kotlinx.cinterop.ExperimentalForeignApi` (3x)
+>   - `kotlinx.cinterop.ExperimentalForeignApi` (2x)
 >   - `kotlinx.coroutines.FlowPreview` (1x)
 >
 > I try to use as less experimental features as possible, but in this case the ones above are needed!
