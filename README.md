@@ -55,8 +55,9 @@
 >   - `app.lexilabs.basic.ads.DependsOnGoogleMobileAds` (3x)
 >   - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (6x)
 >   - `ExperimentalWasmJsInterop` (1x)
+>   - `kotlin.js.ExperimentalWasmJsInterop` (1x)
 >   - `kotlin.time.ExperimentalTime` (11x)
->   - `kotlinx.cinterop.ExperimentalForeignApi` (2x)
+>   - `kotlinx.cinterop.ExperimentalForeignApi` (3x)
 >   - `kotlinx.coroutines.FlowPreview` (1x)
 >
 > I try to use as less experimental features as possible, but in this case the ones above are needed!
