@@ -1,6 +1,5 @@
 package com.michaelflisar.toolbox.app
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -88,10 +87,12 @@ import com.michaelflisar.composestyled.ui.components.StyledButtonDefaults
 import com.michaelflisar.composestyled.ui.components.StyledInput
 import com.michaelflisar.composestyled.ui.components.StyledSegmentedButtonRow
 import com.michaelflisar.composestyled.ui.components.StyledSegmentedButtonRowDefaults
+import com.michaelflisar.composestyled.ui.icons.StyledIcons
 import com.michaelflisar.composestyled.ui.layout.StyledColumn
-import com.michaelflisar.composestyled.ui.layout.StyledDialog
+import com.michaelflisar.composestyled.ui.layout.StyledDialogDefaults
 import com.michaelflisar.composestyled.ui.layout.StyledRow
 import com.michaelflisar.composestyled.ui.primitives.StyledText
+import com.michaelflisar.composestyled.ui.specials.StyledInformationRowHorizontal
 import com.michaelflisar.composestyled.ui.state.rememberDialogState
 import com.michaelflisar.kmp.platformcontext.PlatformIO
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
@@ -100,6 +101,8 @@ import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.features.ads.AdsDeveloperSettings
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.ads.AdsPrivacySettings
+import com.michaelflisar.toolbox.app.features.debug.DebugOverlayDescription
+import com.michaelflisar.toolbox.app.features.dialogs.buttonOK
 import com.michaelflisar.toolbox.app.features.feedback.DialogFeedback
 import com.michaelflisar.toolbox.app.features.feedback.FeedbackManager
 import com.michaelflisar.toolbox.app.features.preferences.rememberThemeConfig
@@ -113,7 +116,6 @@ import com.michaelflisar.toolbox.backup.BackupDefaults
 import com.michaelflisar.toolbox.backup.BackupDialog
 import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.core.resources.Res
-import com.michaelflisar.toolbox.core.resources.button_ok
 import com.michaelflisar.toolbox.core.resources.contrast_high
 import com.michaelflisar.toolbox.core.resources.contrast_medium
 import com.michaelflisar.toolbox.core.resources.contrast_normal
@@ -215,7 +217,7 @@ object MainAppSettingsDefault {
         val setup = AppSetup.get()
         val appActions = LocalAppActions.current
 
-        val versionCode = setup.appData.versionCode
+        //val versionCode = setup.appData.versionCode
         val versionName = setup.appData.versionName
 
         val headerBackground = StyledTheme.colorScheme.surfaceVariant
@@ -296,7 +298,7 @@ object MainAppSettingsDefault {
                             style = StyledTheme.typography.titleLarge
                         )
                         StyledText(
-                            text = "$versionName ($versionCode)",
+                            text = versionName,
                             style = StyledTheme.typography.bodySmall,
                             color = StyledTheme.supportingContentColor(
                                 headerBackground,
@@ -366,22 +368,38 @@ object MainAppSettingsDefault {
 
         val showLogFile = rememberSaveable { mutableStateOf(false) }
 
+        val versionCode = setup.appData.versionCode
+        val versionName = setup.appData.versionName
+
         PreferenceGroup(
             title = "Developer Settings",
             icon = Icons.Default.Code.toIconComposable()
         ) {
-            PreferenceSection(
-                title = "Developer Settings",
-                isExpandable = false
-            ) {
-                PreferenceBool(
-                    value = setup.debug.prefs.showDebugDrawer.asMutableStateNotNull(),
-                    style = PreferenceBool.Style.Switch,
-                    title = "Debug Drawer",
-                    icon = Icons.Outlined.KeyboardDoubleArrowLeft.toIconComposable(),
-                )
+            PreferenceItem(
+                containerColor = Color.Transparent,
+                contentColor = LocalStyledContentColor.current,
+                icon = StyledIcons.Info,
+                inlineContent = {
+                    StyledColumn {
+                        val labelWidth = 100.dp
+                        StyledInformationRowHorizontal(
+                            label = "Version Name",
+                            info = versionName,
+                            labelWidth = labelWidth
+                        )
+                        StyledInformationRowHorizontal(
+                            label = "Version Code",
+                            info = versionCode.toString(),
+                            labelWidth = labelWidth
+                        )
+                    }
+                }
+            )
 
-                if (ProVersionManager.setup.supported && AdsManager.manager != null) {
+            if (ProVersionManager.setup.supported && AdsManager.manager != null) {
+                PreferenceSection(
+                    title = "Pro Version"
+                ) {
                     PreferenceBool(
                         value = setup.debug.prefs.forceIsProInDebug.asMutableStateNotNull(),
                         style = PreferenceBool.Style.Switch,
@@ -392,6 +410,40 @@ object MainAppSettingsDefault {
                 }
             }
 
+            val showDebugOverlay = setup.debug.prefs.showDebugOverlay.asMutableStateNotNull()
+
+            PreferenceSection(
+                title = "Debug UI"
+            ) {
+                PreferenceBool(
+                    value = setup.debug.prefs.showDebugDrawer.asMutableStateNotNull(),
+                    style = PreferenceBool.Style.Switch,
+                    title = "Debug Drawer",
+                    icon = Icons.Outlined.KeyboardDoubleArrowLeft.toIconComposable(),
+                )
+
+                PreferenceBool(
+                    value = showDebugOverlay,
+                    style = PreferenceBool.Style.Switch,
+                    title = "Debug Overlay",
+                    subtitle = DebugOverlayDescription,
+                    icon = Icons.Outlined.Info.toIconComposable(),
+                )
+            }
+
+            PreferenceSection(
+                title = "Debug Overlay Einstellungen",
+                isVisible = { showDebugOverlay.value }
+            ) {
+                PreferenceBool(
+                    value = setup.debug.prefs.showFps.asMutableStateNotNull(),
+                    style = PreferenceBool.Style.Switch,
+                    title = "Show FPS",
+                    subtitle = "Display frame rate in the debug overlay",
+                    icon = Icons.Outlined.Info.toIconComposable()
+                )
+            }
+
             if (ProVersionManager.setup.supported) {
                 AdsDeveloperSettings()
             }
@@ -400,7 +452,7 @@ object MainAppSettingsDefault {
             if (setup.logging.file != null) {
                 PreferenceSection(
                     title = "Debugging",
-                    isExpandable = false
+                   
                 ) {
                     PreferenceItem(
                         onClick = { showLogFile.value = true },
@@ -413,8 +465,8 @@ object MainAppSettingsDefault {
             if (System.kill != null || System.restart != null) {
                 PreferenceSection(
                     title = "Restart/Kill",
-                    isExpandable = false
-                ) {
+
+                    ) {
                     if (System.restart != null) {
                         PreferenceItem(
                             onClick = {
@@ -437,8 +489,7 @@ object MainAppSettingsDefault {
             }
 
             PreferenceSection(
-                title = "Visibility",
-                isExpandable = false
+                title = "Visibility"
             ) {
                 PreferenceItem(
                     onClick = {
@@ -490,7 +541,6 @@ object MainAppSettingsDefault {
 
         PreferenceSection(
             title = stringResource(Res.string.settings_theme),
-            isExpandable = false,
             isVisible = {
                 themeSupport.supportDarkLight ||
                         (themeSupport.supportThemeSelector && allThemes.size > 1) ||
@@ -652,7 +702,6 @@ object MainAppSettingsDefault {
 
         PreferenceSection(
             title = stringResource(Res.string.settings_section_theme_options),
-            isExpandable = false,
             isVisible = {
                 themeSupport.supportToolbarStyles || themeSupport.supportContrast
             }
@@ -740,8 +789,7 @@ object MainAppSettingsDefault {
         val autoBackupFrequency = setup.prefs.autoBackupFrequency.asMutableStateNotNull()
 
         PreferenceSection(
-            title = stringResource(Res.string.settings_section_manual_backup),
-            isExpandable = false
+            title = stringResource(Res.string.settings_section_manual_backup)
         ) {
             PreferenceItem(
                 title = stringResource(Res.string.settings_create_backup),
@@ -761,7 +809,11 @@ object MainAppSettingsDefault {
                 if (directory != null) {
                     scope.launch(Dispatchers.PlatformIO) {
                         // wir wollen hier instand update des states! daher update statt value
-                        setup.prefs.backupPathData.update(backup.getAutoBackupDirectoryData(directory))
+                        setup.prefs.backupPathData.update(
+                            backup.getAutoBackupDirectoryData(
+                                directory
+                            )
+                        )
                         //backupPathData.value = backup.getAutoBackupDirectoryData(directory)
                         backup.onSettingsChanged()
                     }
@@ -769,8 +821,7 @@ object MainAppSettingsDefault {
             }
 
             PreferenceSection(
-                title = stringResource(Res.string.settings_section_auto_backup),
-                isExpandable = false
+                title = stringResource(Res.string.settings_section_auto_backup)
             ) {
                 if (backupPathData.value.isEmpty()) {
                     PreferenceItem(
@@ -849,19 +900,13 @@ object MainAppSettingsDefault {
                 state = frequencyDialog,
                 frequency = frequency,
                 title = { StyledText(stringResource(Res.string.settings_auto_backup_frequency)) },
-                buttons = StyledDialog.Buttons(
-                    positive = StyledDialog.Button(
-                        label = stringResource(Res.string.button_ok),
-                        onClick = {
-                            scope.launch {
-                                setup.prefs.autoBackupFrequency.update(frequency.value.serialize())
-                                //autoBackupFrequency.value = frequency.value.serialize()
-                                backup.onSettingsChanged()
-                            }
-                            frequencyDialog.dismiss()
-                        }
-                    )
-                )
+                buttons = StyledDialogDefaults.buttonOK {
+                    scope.launch {
+                        setup.prefs.autoBackupFrequency.update(frequency.value.serialize())
+                        //autoBackupFrequency.value = frequency.value.serialize()
+                        backup.onSettingsChanged()
+                    }
+                }
             )
         }
     }
@@ -922,7 +967,6 @@ private fun Settings(
     custom: @Composable () -> Unit,
 ) {
     val setup = AppSetup.get()
-    val themeSupport = setup.themeSupport
     val actions = LocalAppActions.current
 
     val dialogFeedback = rememberDialogState()
@@ -935,8 +979,8 @@ private fun Settings(
     if (setup.themeSupport.supportsTheming()) {
         PreferenceSection(
             title = stringResource(Res.string.settings_group_style),
-            isExpandable = false
-        ) {
+
+            ) {
             PreferenceGroup(
                 title = stringResource(Res.string.settings_theme),
                 icon = Icons.Outlined.Style.toIconComposable()
@@ -965,8 +1009,8 @@ private fun Settings(
     if (showLanguage || showInfo || showBackup || showPrivacy || showDeveloper) {
         PreferenceSection(
             title = stringResource(Res.string.settings_section_more_settings),
-            isExpandable = false
-        ) {
+
+            ) {
             if (showLanguage) {
                 PreferenceItem(
                     title = stringResource(Res.string.settings_change_language),

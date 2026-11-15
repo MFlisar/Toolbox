@@ -29,7 +29,9 @@ suspend fun main() {
     Shared.init()
 
     // 4) Application
-    ComposeViewport {
+    ComposeViewport(
+        viewportContainerId = wasmSetup.contentDivId
+    ) {
         WasmApplication {
             DemoApp(
                 desktopMenuBar = true,

@@ -9,7 +9,7 @@ import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
 import kotlinx.cinterop.toKString
 import kotlinx.cinterop.value
-import macos._NSGetExecutablePath
+import platform.darwin._NSGetExecutablePath
 
 object MacOSUtil {
 

@@ -1,10 +1,7 @@
 package com.michaelflisar.toolbox
 
-import androidx.compose.ui.Modifier
-import com.michaelflisar.lumberjack.core.interfaces.IFileLoggingSetup
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
+import platform.AppKit.NSPasteboard
+import platform.AppKit.NSPasteboardTypeString
 import platform.AppKit.NSWorkspace
 import platform.Foundation.NSURL
 
@@ -18,5 +15,10 @@ actual object Platform {
         if (nsUrl != null) {
             NSWorkspace.sharedWorkspace.openURL(nsUrl)
         }
+    }
+
+    actual fun setClipboardText(text: String, label: String) {
+        NSPasteboard.generalPasteboard.clearContents()
+        NSPasteboard.generalPasteboard.setString(text, forType = NSPasteboardTypeString)
     }
 }

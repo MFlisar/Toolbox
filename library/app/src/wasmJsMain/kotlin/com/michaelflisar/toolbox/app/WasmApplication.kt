@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.app
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.michaelflisar.toolbox.app.classes.WasmAppSetup
 import kotlinx.browser.document
 
@@ -8,9 +9,14 @@ import kotlinx.browser.document
 fun WasmApplication(
     content: @Composable () -> Unit,
 ) {
-    // remove loading element
-    document.getElementById(WasmAppSetup.get().divLoadingElementId)?.remove()
-
+    HideLoading(WasmAppSetup.get().loadingDivId)
     content()
 }
 
+@Composable
+private fun HideLoading(id: String) {
+    LaunchedEffect(id) {
+        document.getElementById(id)
+            ?.setAttribute("style", "display:none")
+    }
+}

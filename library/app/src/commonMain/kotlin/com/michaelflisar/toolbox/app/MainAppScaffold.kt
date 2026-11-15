@@ -127,6 +127,7 @@ import com.michaelflisar.toolbox.app.features.navigation.display.MainNavDisplay
 import com.michaelflisar.toolbox.app.features.navigation.manager.LocalMainBackStackManager
 import com.michaelflisar.toolbox.app.features.navigation.manager.NavigationBackPriority
 import com.michaelflisar.toolbox.app.features.navigation.manager.rememberMainBackStackManager
+import com.michaelflisar.toolbox.app.features.debug.DebugOverlay
 import com.michaelflisar.toolbox.app.features.preferences.rememberThemeConfig
 import com.michaelflisar.toolbox.app.features.theme.themeProvider
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
@@ -679,6 +680,7 @@ fun MainAppScaffold(
                         enabled = mainBackStackManager.hasEnabledOverlayBackHandler,
                         onBack = mainBackStackManager::onBack,
                     )
+                    DebugOverlay()
                 }
             }
         }

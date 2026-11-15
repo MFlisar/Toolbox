@@ -6,7 +6,7 @@
     <title>Demo</title>
     <script type="application/javascript" src="demo.js"></script>
     <style>
-        html, body {
+        html, body, #content {
             width: 100%;
             height: 100%;
             margin: 0;
@@ -38,23 +38,7 @@
             margin-bottom: 15px;
         }
 
-        #footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            z-index: 1000;
-            background-color: white;
-            font-size: initial;
-        }
-
-        #close {
-            position: absolute;
-            top: 0;
-            right: 10px;
-            cursor: pointer;
-        }
-
-        #ComposeLoading {
+        #loading {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -83,11 +67,13 @@
     </style>
 </head>
 <body>
-<div id="ComposeLoading">
+
+<div id="loading">
     <div class="loader"></div>
     <span>Loading...</span>
 </div>
-<canvas id="ComposeTarget"></canvas>
+
+<div id="content"></div>
 
 <div id="warning">
     ⚠️ Please make sure that your runtime environment supports the latest version of Wasm GC and Exception-Handling proposals.
@@ -106,8 +92,8 @@
         </li>
     </ul>
 </div>
-</body>
 
+</body>
 <script type="application/javascript" >
     const unhandledError = (event, error) => {
         if (error instanceof WebAssembly.CompileError) {
@@ -121,5 +107,4 @@
     addEventListener("error", (event) => unhandledError(event, event.error));
     addEventListener("unhandledrejection", (event) => unhandledError(event, event.reason));
 </script>
-
 </html>

@@ -21,11 +21,10 @@ object BackupDefaults {
         datetime: LocalDateTime,
         frequency: Frequency,
     ): Duration {
-        val start = datetime
-        val end = frequency.calcNextOccurrence(start.date)
+        val end = frequency.calcNextOccurrence(datetime)
         val timezone = TimeZone.currentSystemDefault()
         val initialDelayInSeconds =
-            (end.toInstant(timezone).epochSeconds - start.toInstant(timezone).epochSeconds).coerceAtLeast(
+            (end.toInstant(timezone).epochSeconds - datetime.toInstant(timezone).epochSeconds).coerceAtLeast(
                 0L
             )
         return initialDelayInSeconds.seconds.also { delay ->

@@ -1,8 +1,12 @@
 package com.michaelflisar.toolbox.app.classes
 
+/** ATTENTION:
+ * must match the div ids in index.html
+ * e.g. [demo\app\wasm\src\wasmJsMain\resources\index.html]
+ */
 class WasmAppSetup(
-    val canvasElementId: String = "ComposeTarget",
-    val divLoadingElementId: String = "ComposeLoading",
+    val contentDivId: String = "content",
+    val loadingDivId: String = "loading",
 ) {
     companion object {
         private var instance: WasmAppSetup? = null
