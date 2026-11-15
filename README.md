@@ -1,10 +1,15 @@
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.mflisar.toolbox/core?style=for-the-badge&color=blue)](https://central.sonatype.com/artifact/io.github.mflisar.toolbox/core) ![API](https://img.shields.io/badge/api-24%2B-brightgreen.svg?style=for-the-badge) ![Kotlin](https://img.shields.io/github/languages/top/MFlisar/Toolbox.svg?style=for-the-badge&amp;color=blueviolet) ![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin_Multiplatform-blue?style=for-the-badge&amp;label=Kotlin)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.mflisar.toolbox/core?color=blue)](https://central.sonatype.com/artifact/io.github.mflisar.toolbox/core) ![API](https://img.shields.io/badge/api-24%2B-brightgreen.svg) ![Kotlin](https://img.shields.io/github/languages/top/MFlisar/Toolbox.svg?color=blueviolet) ![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin_Multiplatform-blue?label=Kotlin)
 # Toolbox
-![Platforms](https://img.shields.io/badge/PLATFORMS-black?style=for-the-badge) ![Android](https://img.shields.io/badge/android-3DDC84?style=for-the-badge) ![iOS](https://img.shields.io/badge/ios-A2AAAD?style=for-the-badge) ![Windows](https://img.shields.io/badge/windows-5382A1?style=for-the-badge) ![WebAssembly](https://img.shields.io/badge/wasm-624DE7?style=for-the-badge)
+![Platforms](https://img.shields.io/badge/PLATFORMS-black?style=for-the-badge)
 
 > [!NOTE]
 > This library currently is for my personal usage only.
 > I do use it in production, but have not yet documented it properly.
+
+> [!TIP]
+> Try the interactive demo:
+> 
+> [![Open Interactive Demo](https://img.shields.io/badge/Toolbox_Demo-2962FF?style=for-the-badge&logo=googlechrome&logoColor=white)](https://mflisar.github.io/Toolbox/demo/)
 
 # Table of Contents
 
@@ -18,55 +23,41 @@
 
 # :computer: Supported Platforms
 
-| Module | android | iOS | windows | wasm | Notes |
-|---|---|---|---|---|---|
-| core | ✅ | ✅ | ✅ | ✅ | the core module |
-| app-shared | ✅ | ✅ | ✅ | ✅ | the common base app module |
-| app-jre | ❌ | ❌ | ✅ | ❌ | the base app module (for plain jre, no jbr dependencies) |
-| app-jbr | ❌ | ❌ | ✅ | ❌ | the base app module (for jbr) |
-| ui | ✅ | ✅ | ✅ | ✅ | a ui module |
-| ui-adaptive | ✅ | ✅ | ✅ | ✅ | a adaptive ui module |
-| zip | ✅ | ✅ | ✅ | ✅ | a zip module |
-| csv | ✅ | ❌ | ✅ | ❌ | a csv module |
-| backup | ✅ | ✅ | ✅ | ✅ | a backup module |
-| service | ✅ | ❌ | ❌ | ❌ | a service module |
-| form | ✅ | ✅ | ✅ | ✅ | a form module |
-| powershell | ❌ | ❌ | ✅ | ❌ | a powershell module |
-| table | ✅ | ✅ | ✅ | ✅ | a table module |
-| room | ✅ | ✅ | ✅ | ❌ | provides room database classes |
-| ads | ✅ | ✅ | ✅ | ✅ | provides ads composables |
-| proversion | ✅ | ✅ | ❌ | ❌ | provides proversion checker functions (via openiap) |
-| diff | ✅ | ✅ | ✅ | ✅ | diff functions and UI |
-| excel | ❌ | ❌ | ✅ | ❌ | excel functions |
-| coil | ✅ | ✅ | ✅ | ✅ | a coil module |
-| tasks | ✅ | ✅ | ✅ | ✅ | a tasks module including a task viewer |
+| Module | Notes |
+|---|---|
+| core | the core module |
+| app | the styled app module |
+| zip | a zip module |
+| csv | a csv module |
+| backup | a backup module |
+| service | a service module |
+| form | a form module |
+| powershell | a powershell module |
+| room | provides room database classes |
+| ads | provides ads composables |
+| proversion | provides proversion checker functions (via openiap) |
+| diff | diff functions and UI |
+| excel | excel functions |
+| coil | a coil module |
+| tasks | a tasks module including a task viewer |
 
 # :arrow_right: Versions
 
 | Dependency | Version |
 |---|---|
-| Kotlin | `2.4.20` |
-| Jetbrains Compose | `1.12.0` |
+| Kotlin | `2.4.21` |
+| Jetbrains Compose | `1.12.2` |
 | Jetbrains Compose Material3 | `1.9.0` |
 
 > :warning: Following experimental annotations are used:
 > - **OptIn**
->   - `androidx.compose.animation.ExperimentalSharedTransitionApi` (2x)
->   - `androidx.compose.foundation.ExperimentalFoundationApi` (1x)
->   - `androidx.compose.foundation.layout.ExperimentalLayoutApi` (1x)
->   - `androidx.compose.material3.ExperimentalMaterial3Api` (19x)
->   - `androidx.compose.ui.ExperimentalComposeUiApi` (12x)
+>   - `androidx.compose.ui.ExperimentalComposeUiApi` (4x)
 >   - `app.lexilabs.basic.ads.DependsOnGoogleMobileAds` (3x)
 >   - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (6x)
->   - `cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi` (4x)
->   - `com.michaelflisar.toolbox.ui.adaptive.runtime.InternalComposeStyledApi` (6x)
 >   - `ExperimentalWasmJsInterop` (1x)
->   - `kotlin.time.ExperimentalTime` (15x)
->   - `kotlin.uuid.ExperimentalUuidApi` (2x)
+>   - `kotlin.time.ExperimentalTime` (11x)
 >   - `kotlinx.cinterop.ExperimentalForeignApi` (2x)
 >   - `kotlinx.coroutines.FlowPreview` (1x)
-> - **Experimental**
->   - `androidx.compose.material3.ExperimentalMaterial3Api` (1x)
 >
 > I try to use as less experimental features as possible, but in this case the ones above are needed!
 
@@ -88,18 +79,13 @@ toolbox = "<LATEST-VERSION>"
 [libraries]
 
 toolbox-core = { module = "io.github.mflisar.toolbox:core", version.ref = "toolbox" }
-toolbox-app-shared = { module = "io.github.mflisar.toolbox:app-shared", version.ref = "toolbox" }
-toolbox-app-jre = { module = "io.github.mflisar.toolbox:app-jre", version.ref = "toolbox" }
-toolbox-app-jbr = { module = "io.github.mflisar.toolbox:app-jbr", version.ref = "toolbox" }
-toolbox-ui = { module = "io.github.mflisar.toolbox:ui", version.ref = "toolbox" }
-toolbox-ui-adaptive = { module = "io.github.mflisar.toolbox:ui-adaptive", version.ref = "toolbox" }
+toolbox-app = { module = "io.github.mflisar.toolbox:app", version.ref = "toolbox" }
 toolbox-zip = { module = "io.github.mflisar.toolbox:zip", version.ref = "toolbox" }
 toolbox-csv = { module = "io.github.mflisar.toolbox:csv", version.ref = "toolbox" }
 toolbox-backup = { module = "io.github.mflisar.toolbox:backup", version.ref = "toolbox" }
 toolbox-service = { module = "io.github.mflisar.toolbox:service", version.ref = "toolbox" }
 toolbox-form = { module = "io.github.mflisar.toolbox:form", version.ref = "toolbox" }
 toolbox-powershell = { module = "io.github.mflisar.toolbox:powershell", version.ref = "toolbox" }
-toolbox-table = { module = "io.github.mflisar.toolbox:table", version.ref = "toolbox" }
 toolbox-room = { module = "io.github.mflisar.toolbox:room", version.ref = "toolbox" }
 toolbox-ads = { module = "io.github.mflisar.toolbox:ads", version.ref = "toolbox" }
 toolbox-proversion = { module = "io.github.mflisar.toolbox:proversion", version.ref = "toolbox" }
@@ -113,18 +99,13 @@ And then use the definitions in your projects **build.gradle.kts** file like fol
 
 ```java
 implementation(libs.toolbox.core)
-implementation(libs.toolbox.app.shared)
-implementation(libs.toolbox.app.jre)
-implementation(libs.toolbox.app.jbr)
-implementation(libs.toolbox.ui)
-implementation(libs.toolbox.ui.adaptive)
+implementation(libs.toolbox.app)
 implementation(libs.toolbox.zip)
 implementation(libs.toolbox.csv)
 implementation(libs.toolbox.backup)
 implementation(libs.toolbox.service)
 implementation(libs.toolbox.form)
 implementation(libs.toolbox.powershell)
-implementation(libs.toolbox.table)
 implementation(libs.toolbox.room)
 implementation(libs.toolbox.ads)
 implementation(libs.toolbox.proversion)
@@ -148,18 +129,13 @@ Simply add the dependencies inside your **build.gradle.kts** file.
 val toolbox = "<LATEST-VERSION>"
 
 implementation("io.github.mflisar.toolbox:core:${toolbox}")
-implementation("io.github.mflisar.toolbox:app-shared:${toolbox}")
-implementation("io.github.mflisar.toolbox:app-jre:${toolbox}")
-implementation("io.github.mflisar.toolbox:app-jbr:${toolbox}")
-implementation("io.github.mflisar.toolbox:ui:${toolbox}")
-implementation("io.github.mflisar.toolbox:ui-adaptive:${toolbox}")
+implementation("io.github.mflisar.toolbox:app:${toolbox}")
 implementation("io.github.mflisar.toolbox:zip:${toolbox}")
 implementation("io.github.mflisar.toolbox:csv:${toolbox}")
 implementation("io.github.mflisar.toolbox:backup:${toolbox}")
 implementation("io.github.mflisar.toolbox:service:${toolbox}")
 implementation("io.github.mflisar.toolbox:form:${toolbox}")
 implementation("io.github.mflisar.toolbox:powershell:${toolbox}")
-implementation("io.github.mflisar.toolbox:table:${toolbox}")
 implementation("io.github.mflisar.toolbox:room:${toolbox}")
 implementation("io.github.mflisar.toolbox:ads:${toolbox}")
 implementation("io.github.mflisar.toolbox:proversion:${toolbox}")
@@ -178,11 +154,11 @@ implementation("io.github.mflisar.toolbox:tasks:${toolbox}")
 
 # :sparkles: Demo
 
-A full [demo](/demo) is included inside the demo module, it shows nearly every usage with working examples.
+A [demo project](demo) is included.
 
 # :books: API
 
-Check out the [API documentation](https://MFlisar.github.io/Toolbox/).
+Check out the [API documentation](https://MFlisar.github.io/Toolbox/api/).
 
 # :bulb: Other Libraries
 
