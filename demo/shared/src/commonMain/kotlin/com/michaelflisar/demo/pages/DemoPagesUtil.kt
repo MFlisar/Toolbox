@@ -1,5 +1,6 @@
 package com.michaelflisar.demo.pages
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -22,17 +23,18 @@ import com.michaelflisar.toolbox.app.features.navigation.ToolbarConfig
 fun DemoToolbarConfig(
     title: String,
     subtitle: String? = null,
+    actions: @Composable RowScope.() -> Unit  = { DemoSettingsToolbarAction() },
     scrollBehavior: StyledExpandableTopBarScrollBehavior? = null,
 ) =
     ToolbarConfig(
         title = title,
         subtitle = subtitle,
-        actions = { DemoSettingsToolbarAction() },
+        actions = actions,
         scrollBehavior = scrollBehavior,
     )
 
 @Composable
-private fun DemoSettingsToolbarAction() {
+fun DemoSettingsToolbarAction() {
     val appActions = LocalAppActions.current
     StyledIconButton(onClick = { appActions.showSettingsDialog() }) {
         StyledIcon(

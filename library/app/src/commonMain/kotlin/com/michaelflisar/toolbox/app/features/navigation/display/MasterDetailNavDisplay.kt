@@ -5,6 +5,7 @@ import androidx.compose.animation.ContentTransform
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.scene.Scene
@@ -37,6 +38,7 @@ internal fun <RootPage : NavScreen, DetailPage : NavKey> MasterDetailNavDisplay(
         transitionSpec = transitionSpec,
         popTransitionSpec = popTransitionSpec,
         predictivePopTransitionSpec = predictivePopTransitionSpec,
+        entryDecorators = listOf(rememberViewModelStoreNavEntryDecorator()),
         entryProvider = { key ->
             when {
                 key == manager.rootPage -> NavEntry(key = key) {

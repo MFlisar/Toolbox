@@ -110,6 +110,8 @@ kotlin {
             // Compose + AndroidX
             implementation(libs.jetbrains.compose.ui.backhandler)
             api(libs.jetbrains.androidx.lifecycle.runtime.compose)
+            api(libs.jetbrains.androidx.lifecycle.viewmodel.compose)
+            api(libs.jetbrains.androidx.lifecycle.viewmodel.navigation3)
             api(libs.jetbrains.androidx.navigation3.ui)
 
             // Compose Icons - ÜBERLEGEN! eher entfernen!

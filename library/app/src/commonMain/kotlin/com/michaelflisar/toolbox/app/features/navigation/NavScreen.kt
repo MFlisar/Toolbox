@@ -139,8 +139,9 @@ object NavScreenDefaults {
  * A Nav3 destination key that also provides the destination's UI.
  *
  * Each concrete implementation must be serializable to support saving and restoring the back
- * stack. Keep only route data in its constructor; composable content and scaffold slots are
- * provided by methods and are not part of the serialized key.
+ * stack. Navigation displays provide a ViewModelStore per entry, so ViewModels are scoped to this
+ * destination and cleared when its entry is removed. Keep only route data in the constructor;
+ * composable content and scaffold slots are provided by methods and are not part of the key.
  */
 interface NavScreen : NavKey {
 

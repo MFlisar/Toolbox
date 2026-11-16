@@ -5,6 +5,7 @@ import androidx.compose.animation.ContentTransform
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.scene.Scene
@@ -36,6 +37,7 @@ internal fun MainNavDisplay(
         transitionSpec = transitionSpec,
         popTransitionSpec = popTransitionSpec,
         predictivePopTransitionSpec = predictivePopTransitionSpec,
+        entryDecorators = listOf(rememberViewModelStoreNavEntryDecorator()),
         entryProvider = { key ->
             val screen = key as? NavScreen
                 ?: error("Unsupported Nav3 key in MainNavDisplay: $key")

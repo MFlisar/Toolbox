@@ -2,11 +2,12 @@ package com.michaelflisar.demo.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
@@ -14,7 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.michaelflisar.composestyled.StyledTheme
 import com.michaelflisar.composestyled.adaptive.StyledAdaptiveInfo
+import com.michaelflisar.composestyled.classes.toIconComposable
 import com.michaelflisar.composestyled.ui.components.StyledButton
+import com.michaelflisar.composestyled.ui.components.StyledIcon
+import com.michaelflisar.composestyled.ui.components.StyledIconButton
 import com.michaelflisar.composestyled.ui.layout.StyledColumn
 import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.toolbox.app.features.navigation.NavScreen
@@ -31,7 +35,18 @@ data object Demo1 : NavScreen {
     ) = Demo1Content(paddingValues)
 
     @Composable
-    override fun Toolbar() = DemoToolbarConfig("Page 1")
+    override fun Toolbar() = DemoToolbarConfig(
+        title = "Page 1",
+        actions = {
+            DemoSettingsToolbarAction()
+            StyledIconButton(onClick = { /**/ }) {
+                StyledIcon(
+                    icon = Icons.Default.MoreVert.toIconComposable(),
+                    contentDescription = "More",
+                )
+            }
+        }
+    )
 }
 
 @Composable

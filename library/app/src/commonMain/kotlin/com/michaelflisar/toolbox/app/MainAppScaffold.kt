@@ -1,5 +1,6 @@
 package com.michaelflisar.toolbox.app
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ContentTransform
@@ -16,6 +17,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.awaitVerticalTouchSlopOrCancellation
@@ -33,6 +35,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -107,7 +110,7 @@ import com.michaelflisar.composestyled.ui.components.StyledTopBar
 import com.michaelflisar.composestyled.ui.icons.StyledIcons
 import com.michaelflisar.composestyled.ui.layout.StyledColumn
 import com.michaelflisar.composestyled.ui.layout.StyledDialog
-import com.michaelflisar.composestyled.ui.layout.StyledDialog.ExpandToFullScreen
+import com.michaelflisar.composestyled.ui.layout.StyledRow
 import com.michaelflisar.composestyled.ui.layout.StyledScaffoldDefaults
 import com.michaelflisar.composestyled.ui.layout.StyledSheet
 import com.michaelflisar.composestyled.ui.layout.StyledSheet.Value
@@ -118,6 +121,7 @@ import com.michaelflisar.composestyled.ui.state.rememberDialogState
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateWithLifecycleNotNull
+import com.michaelflisar.toolbox.app.features.debug.DebugOverlay
 import com.michaelflisar.toolbox.app.features.navigation.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.NavScreenDefaults
 import com.michaelflisar.toolbox.app.features.navigation.PlatformNavigationBackHandler
@@ -127,10 +131,9 @@ import com.michaelflisar.toolbox.app.features.navigation.display.MainNavDisplay
 import com.michaelflisar.toolbox.app.features.navigation.manager.LocalMainBackStackManager
 import com.michaelflisar.toolbox.app.features.navigation.manager.NavigationBackPriority
 import com.michaelflisar.toolbox.app.features.navigation.manager.rememberMainBackStackManager
-import com.michaelflisar.toolbox.app.features.debug.DebugOverlay
 import com.michaelflisar.toolbox.app.features.preferences.rememberThemeConfig
-import com.michaelflisar.toolbox.app.features.theme.themeProvider
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
+import com.michaelflisar.toolbox.app.features.theme.themeProvider
 import com.michaelflisar.toolbox.app.features.toast.ToastDuration
 import com.michaelflisar.toolbox.app.features.toast.showToast
 import com.michaelflisar.toolbox.app.features.toolbar.ToolbarStyle
@@ -482,7 +485,7 @@ fun MainAppScaffold(
             val changelogState = AppSetup.get().changelogSetup?.let {
                 rememberChangelogState(
                     setup = it,
-                    lastShownVersion = lastShownVersion.value.toInt(),
+                    lastShownVersion = lastShownVersion.value.toInt().takeIf { it != -1 },
                     saveLastShownVersion = { lastShownVersion.value = it.toLong() },
                 )
             }
@@ -667,7 +670,8 @@ fun MainAppScaffold(
 
                             // preferences
                             PreferenceScreen(
-                                modifier = Modifier.weight(1f),
+                                modifier = Modifier.weight(1f)
+                                    .safeContentPadding(),
                                 state = preferenceState,
                                 filter = filter,
                                 style = preferenceStyle
@@ -1114,11 +1118,14 @@ private fun MainAppTitleContent(
 private fun RowScope.MainAppActionsContent(
     actions: @Composable RowScope.() -> Unit,
 ) {
-    val rowScope = this
-    Crossfade(
+    AnimatedContent(
         targetState = actions,
+        transitionSpec = { fadeIn() togetherWith fadeOut() },
+        contentAlignment = Alignment.CenterEnd,
         label = "toolbarActions",
     ) { currentActions ->
-        currentActions(rowScope)
+        StyledRow {
+            currentActions()
+        }
     }
 }
