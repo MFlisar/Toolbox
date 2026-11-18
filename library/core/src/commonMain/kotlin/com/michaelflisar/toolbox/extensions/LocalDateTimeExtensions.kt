@@ -16,10 +16,8 @@ import kotlinx.datetime.number
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
-import kotlin.text.compareTo
 import kotlin.time.Clock
 import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 class LocalDateTimeSetup(
@@ -38,7 +36,6 @@ class LocalDateTimeSetup(
         }
 }
 
-@OptIn(ExperimentalTime::class)
 fun LocalDateTime.Companion.now(timezone: TimeZone = LocalDateTimeSetup.current.timezone) =
     Clock.System.now().toLocalDateTime(timezone)
 
@@ -48,11 +45,9 @@ fun LocalDate.Companion.now(timezone: TimeZone = LocalDateTimeSetup.current.time
 fun LocalTime.Companion.now(timezone: TimeZone = LocalDateTimeSetup.current.timezone) =
     LocalDateTime.now(timezone).time
 
-@OptIn(ExperimentalTime::class)
 fun LocalDateTime.millis(timezone: TimeZone = LocalDateTimeSetup.current.timezone) =
     toInstant(timezone).toEpochMilliseconds()
 
-@OptIn(ExperimentalTime::class)
 fun LocalDateTime.Companion.fromMillis(
     millis: Long,
     timezone: TimeZone = LocalDateTimeSetup.current.timezone,
@@ -60,7 +55,6 @@ fun LocalDateTime.Companion.fromMillis(
     return Instant.fromEpochMilliseconds(millis).toLocalDateTime(timezone)
 }
 
-@OptIn(ExperimentalTime::class)
 fun LocalDateTime.plus(
     duration: Duration,
     timezone: TimeZone = LocalDateTimeSetup.current.timezone,
@@ -71,13 +65,11 @@ fun LocalDateTime.plus(
         .toLocalDateTime(timezone)
 }
 
-@OptIn(ExperimentalTime::class)
 fun LocalDateTime.minus(
     duration: Duration,
     timezone: TimeZone = LocalDateTimeSetup.current.timezone,
 ) = plus(-duration, timezone)
 
-@OptIn(ExperimentalTime::class)
 fun LocalDateTime.plus(
     unit: DateTimeUnit,
     offset: Int,
@@ -88,7 +80,6 @@ fun LocalDateTime.plus(
     return instantNext.toLocalDateTime(timezone)
 }
 
-@OptIn(ExperimentalTime::class)
 fun LocalDateTime.minus(
     unit: DateTimeUnit,
     offset: Int,
@@ -99,15 +90,12 @@ fun LocalDateTime.minus(
     return instantNext.toLocalDateTime(timezone)
 }
 
-@OptIn(ExperimentalTime::class)
 fun LocalDate.plus(duration: Duration, timezone: TimeZone = LocalDateTimeSetup.current.timezone) =
     LocalDateTime(this, LocalTime(0, 0)).plus(duration, timezone).date
 
-@OptIn(ExperimentalTime::class)
 fun LocalDate.minus(duration: Duration, timezone: TimeZone = LocalDateTimeSetup.current.timezone) =
     LocalDateTime(this, LocalTime(0, 0)).minus(duration, timezone).date
 
-@OptIn(ExperimentalTime::class)
 fun LocalDate.plus(
     unit: DateTimeUnit,
     offset: Int,
@@ -115,7 +103,6 @@ fun LocalDate.plus(
 ) =
     LocalDateTime(this, LocalTime(0, 0)).plus(unit, offset, timezone).date
 
-@OptIn(ExperimentalTime::class)
 fun LocalDate.minus(
     unit: DateTimeUnit,
     offset: Int,
@@ -180,7 +167,10 @@ fun LocalDate.calendarWeek(firstDayOfWeek: DayOfWeek = LocalDateTimeSetup.curren
     val week1StartThisYear = TimeUtil.startOfWeek1(this.year, firstDayOfWeek)
     val week1StartNextYear = TimeUtil.startOfWeek1(this.year + 1, firstDayOfWeek)
     return when {
-        this < week1StartThisYear -> TimeUtil.weeksOfYear(this.year - 1, firstDayOfWeek)          // letzte KW des Vorjahres
+        this < week1StartThisYear -> TimeUtil.weeksOfYear(
+            this.year - 1,
+            firstDayOfWeek
+        )          // letzte KW des Vorjahres
         this >= week1StartNextYear -> 1                                                 // gehört schon zu KW 1 des Folgejahres
         else -> {
             val daysSince = week1StartThisYear.daysUntil(this)

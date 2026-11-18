@@ -19,7 +19,6 @@ import com.michaelflisar.composestyled.StyledTheme
 import com.michaelflisar.composestyled.adaptive.StyledAdaptiveInfo
 import com.michaelflisar.composestyled.classes.toIconComposable
 import com.michaelflisar.composestyled.ui.components.StyledButton
-import com.michaelflisar.composestyled.ui.layout.StyledColumn
 import com.michaelflisar.composestyled.ui.layout.StyledDialog
 import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.composestyled.ui.specials.StyledExpandableSection
@@ -220,11 +219,11 @@ private fun PageTestFormContent(
         ),
     )
 
-    StyledColumn(
+    Column(
         modifier = Modifier.fillMaxSize()
             .padding(paddingValues)
             .padding(StyledTheme.padding.content),
-        itemSpacing = StyledTheme.spacing.medium,
+        verticalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium),
     ) {
         StyledExpandableSection(
             modifier = Modifier

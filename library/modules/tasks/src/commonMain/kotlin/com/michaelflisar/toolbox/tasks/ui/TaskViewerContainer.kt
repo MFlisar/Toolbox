@@ -1,6 +1,7 @@
 package com.michaelflisar.toolbox.tasks.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -8,7 +9,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.michaelflisar.composestyled.StyledTheme
 import com.michaelflisar.composestyled.ui.components.StyledTextButton
-import com.michaelflisar.composestyled.ui.layout.StyledColumn
 import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.toolbox.tasks.TaskConfig
 import com.michaelflisar.toolbox.tasks.plan.TaskPlan
@@ -41,9 +41,10 @@ fun TaskViewerContainer(
             showTasks
         ) {
             if (plan != null) {
-                StyledColumn(
-                    itemSpacing = StyledTheme.spacing.medium,
-                    modifier = Modifier.fillMaxWidth()
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
                     if (showHeader) {

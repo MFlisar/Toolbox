@@ -3,6 +3,7 @@ package com.michaelflisar.toolbox.diff
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,8 +21,6 @@ import com.michaelflisar.composestyled.StyledTheme
 import com.michaelflisar.composestyled.ui.components.StyledCard
 import com.michaelflisar.composestyled.ui.components.StyledPrimaryScrollableTabRow
 import com.michaelflisar.composestyled.ui.components.StyledTab
-import com.michaelflisar.composestyled.ui.layout.StyledColumn
-import com.michaelflisar.composestyled.ui.layout.StyledRow
 import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.composestyled.ui.specials.StyledInformationRowHorizontal
 import com.michaelflisar.toolbox.diff.classes.Change
@@ -106,7 +105,7 @@ private fun DiffStatistics(
     result: DiffResult,
     tableNames: List<String>,
 ) {
-    StyledColumn {
+    Column {
         val labelWidth = 200.dp
         StyledText(
             text = "Änderungen",
@@ -176,8 +175,8 @@ private fun DiffEntry(
     StyledCard(
         modifier = Modifier.fillMaxWidth()
     ) {
-        StyledColumn {
-            StyledRow {
+        Column {
+            Row {
                 StyledText(
                     text = "${index + 1} / $size",
                     style = StyledTheme.typography.titleMedium
@@ -199,5 +198,4 @@ private fun DiffEntry(
         }
     }
 }
-
 

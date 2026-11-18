@@ -1,17 +1,19 @@
 package com.michaelflisar.toolbox.backup
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.michaelflisar.composedialogs.styled.DialogInfo
 import com.michaelflisar.composestyled.StyledTheme
 import com.michaelflisar.composestyled.ui.components.StyledButton
 import com.michaelflisar.composestyled.ui.components.StyledLinearProgressIndicator
-import com.michaelflisar.composestyled.ui.layout.StyledColumn
 import com.michaelflisar.composestyled.ui.layout.StyledDialog
 import com.michaelflisar.composestyled.ui.layout.StyledDialogDefaults
 import com.michaelflisar.composestyled.ui.primitives.StyledText
@@ -151,8 +153,9 @@ actual fun BackupDialog(
                 )
             ),
             content = StyledDialogDefaults.content {
-                StyledColumn(
-                    itemSpacing = StyledTheme.spacing.medium
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     when (state.value) {
                         State.Done -> {}

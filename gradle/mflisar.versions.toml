@@ -13,9 +13,8 @@ lumberjack =                "12.0.0"
 #composethemer =   			"2.0.0"
 #composechangelog =   		"4.0.0"
 composecolors =             "2.0.0"
-toolbox =                   "4.0.2"
 
-composestyled =             "0.0.1-alpha33"
+composestyled =             "0.0.1-alpha36"
 
 # plugins only
 kmpicon =                   "1.0.0"
@@ -86,23 +85,6 @@ composecolors-material =						{ module = "io.github.mflisar.composecolors:materi
 composecolors-x11 =								{ module = "io.github.mflisar.composecolors:x11",      								version.ref = "composecolors" }
 composecolors-material-palette =				{ module = "io.github.mflisar.composecolors:material-palette",      				version.ref = "composecolors" }
 composecolors-x11-palette =						{ module = "io.github.mflisar.composecolors:x11-palette",      						version.ref = "composecolors" }
-toolbox-core =                                  { module = "io.github.mflisar.toolbox:core",                                        version.ref = "toolbox" }
-toolbox-app =                                   { module = "io.github.mflisar.toolbox:app",                                         version.ref = "toolbox" }
-toolbox-ads =                                   { module = "io.github.mflisar.toolbox:ads",                                         version.ref = "toolbox" }
-toolbox-backup =                                { module = "io.github.mflisar.toolbox:backup",                                      version.ref = "toolbox" }
-toolbox-coil =                                  { module = "io.github.mflisar.toolbox:coil",                                        version.ref = "toolbox" }
-toolbox-csv =                                   { module = "io.github.mflisar.toolbox:csv",                                         version.ref = "toolbox" }
-toolbox-diff =                                  { module = "io.github.mflisar.toolbox:diff",                                        version.ref = "toolbox" }
-toolbox-excel =                                 { module = "io.github.mflisar.toolbox:excel",                                       version.ref = "toolbox" }
-toolbox-form =                                  { module = "io.github.mflisar.toolbox:form",                                        version.ref = "toolbox" }
-toolbox-powershell =                            { module = "io.github.mflisar.toolbox:powershell",                                  version.ref = "toolbox" }
-toolbox-proversion =                            { module = "io.github.mflisar.toolbox:proversion",                                  version.ref = "toolbox" }
-toolbox-room =                                  { module = "io.github.mflisar.toolbox:room",                                        version.ref = "toolbox" }
-toolbox-service =                               { module = "io.github.mflisar.toolbox:service",                                     version.ref = "toolbox" }
-toolbox-table =                                 { module = "io.github.mflisar.toolbox:table",                                       version.ref = "toolbox" }
-toolbox-ui =                                    { module = "io.github.mflisar.toolbox:ui",                                          version.ref = "toolbox" }
-toolbox-ui-adaptive =                           { module = "io.github.mflisar.toolbox:ui-adaptive",                                 version.ref = "toolbox" }
-toolbox-zip =                                   { module = "io.github.mflisar.toolbox:zip",                                         version.ref = "toolbox" }
 
 # styled
 composestyled-core = { module = "io.github.mflisar.composestyled:core", version.ref = "composestyled" }

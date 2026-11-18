@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.draggable2D
 import androidx.compose.foundation.gestures.rememberDraggable2DState
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,8 +37,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.michaelflisar.composestyled.ui.layout.StyledColumn
-import com.michaelflisar.composestyled.ui.layout.StyledRow
 import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
@@ -135,7 +135,7 @@ fun BoxScope.DebugOverlay(
         DebugInfo("FPS", "$fps").takeIf { showFps }
     )
 
-    StyledColumn(
+    Column(
         modifier = modifier
             .offset {
                 val maxX =
@@ -178,10 +178,10 @@ fun BoxScope.DebugOverlay(
 
 @Composable
 private fun DebugInfoColumn(rows: List<DebugInfo>) {
-    StyledRow(
+    Row(
         modifier = Modifier.fillMaxWidth()
     ) {
-        StyledColumn {
+        Column {
             rows.forEach {
                 StyledText(
                     text = it.label,
@@ -191,7 +191,7 @@ private fun DebugInfoColumn(rows: List<DebugInfo>) {
         }
         Spacer(modifier = Modifier.weight(1f, fill = false))
         Spacer(modifier = Modifier.width(8.dp))
-        StyledColumn(modifier = Modifier.width(IntrinsicSize.Max)) {
+        Column(modifier = Modifier.width(IntrinsicSize.Max)) {
             rows.forEach {
                 StyledText(
                     modifier = Modifier.fillMaxWidth(),

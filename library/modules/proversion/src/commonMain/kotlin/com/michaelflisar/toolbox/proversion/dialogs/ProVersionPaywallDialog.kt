@@ -24,7 +24,6 @@ import com.michaelflisar.composestyled.ui.components.StyledButton
 import com.michaelflisar.composestyled.ui.components.StyledIcon
 import com.michaelflisar.composestyled.ui.components.StyledOutlinedButton
 import com.michaelflisar.composestyled.ui.components.StyledTextButton
-import com.michaelflisar.composestyled.ui.layout.StyledColumn
 import com.michaelflisar.composestyled.ui.layout.StyledDialog
 import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.composestyled.ui.state.VisibilityDialogState
@@ -56,7 +55,7 @@ internal fun ProVersionPaywallDialog(
         state = dialogState,
         title = { StyledText(stringResource(Res.string.settings_pro_version_title)) },
     ) { paddingValues ->
-        StyledColumn(
+        Column(
             modifier = Modifier.fillMaxWidth().padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {

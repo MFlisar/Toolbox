@@ -2,6 +2,7 @@ package com.michaelflisar.demo.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +20,6 @@ import com.michaelflisar.composestyled.classes.toIconComposable
 import com.michaelflisar.composestyled.ui.components.StyledButton
 import com.michaelflisar.composestyled.ui.components.StyledIcon
 import com.michaelflisar.composestyled.ui.components.StyledIconButton
-import com.michaelflisar.composestyled.ui.layout.StyledColumn
 import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.toolbox.app.features.navigation.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.manager.LocalMainBackStackManager
@@ -53,7 +53,7 @@ data object Demo1 : NavScreen {
 private fun Demo1Content(paddingValues: PaddingValues) {
     val backStackManager = LocalMainBackStackManager.current
 
-    StyledColumn(
+    Column(
         modifier = Modifier.fillMaxSize()
             .padding(paddingValues)
             .background(StyledTheme.colorScheme.surface)

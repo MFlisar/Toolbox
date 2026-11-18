@@ -25,6 +25,7 @@ import androidx.compose.foundation.gestures.verticalDrag
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -108,9 +109,7 @@ import com.michaelflisar.composestyled.ui.components.StyledSnackbarHostState
 import com.michaelflisar.composestyled.ui.components.StyledSnackbarResult
 import com.michaelflisar.composestyled.ui.components.StyledTopBar
 import com.michaelflisar.composestyled.ui.icons.StyledIcons
-import com.michaelflisar.composestyled.ui.layout.StyledColumn
 import com.michaelflisar.composestyled.ui.layout.StyledDialog
-import com.michaelflisar.composestyled.ui.layout.StyledRow
 import com.michaelflisar.composestyled.ui.layout.StyledScaffoldDefaults
 import com.michaelflisar.composestyled.ui.layout.StyledSheet
 import com.michaelflisar.composestyled.ui.layout.StyledSheet.Value
@@ -260,7 +259,7 @@ object MainAppScaffoldDefaults {
             NavScreenDefaults.crossfadePredictivePopTransitionSpec(),
     ) {
         val backStackManager = LocalMainBackStackManager.current
-        StyledColumn(modifier = Modifier.padding(paddingValues)) {
+        Column(modifier = Modifier.padding(paddingValues)) {
             MainNavDisplay(
                 manager = backStackManager,
                 modifier = Modifier.weight(1f),
@@ -506,7 +505,7 @@ fun MainAppScaffold(
                 LocalAppActions provides appActions,
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    StyledColumn {
+                    Column {
                         toolbar()
                         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
                             StyledAdaptiveScaffold(
@@ -1124,7 +1123,7 @@ private fun RowScope.MainAppActionsContent(
         contentAlignment = Alignment.CenterEnd,
         label = "toolbarActions",
     ) { currentActions ->
-        StyledRow {
+        Row {
             currentActions()
         }
     }

@@ -3,8 +3,11 @@ package com.michaelflisar.toolbox.app
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -88,9 +91,7 @@ import com.michaelflisar.composestyled.ui.components.StyledInput
 import com.michaelflisar.composestyled.ui.components.StyledSegmentedButtonRow
 import com.michaelflisar.composestyled.ui.components.StyledSegmentedButtonRowDefaults
 import com.michaelflisar.composestyled.ui.icons.StyledIcons
-import com.michaelflisar.composestyled.ui.layout.StyledColumn
 import com.michaelflisar.composestyled.ui.layout.StyledDialogDefaults
-import com.michaelflisar.composestyled.ui.layout.StyledRow
 import com.michaelflisar.composestyled.ui.primitives.StyledText
 import com.michaelflisar.composestyled.ui.specials.StyledInformationRowHorizontal
 import com.michaelflisar.composestyled.ui.state.rememberDialogState
@@ -273,9 +274,9 @@ object MainAppSettingsDefault {
                         vertical = StyledTheme.padding.large
                     )
             ) {
-                StyledRow(
+                Row(
                     modifier = Modifier.fillMaxWidth(),
-                    itemSpacing = StyledTheme.spacing.medium
+                    horizontalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium)
                 ) {
                     Box(
                         modifier = Modifier
@@ -290,7 +291,7 @@ object MainAppSettingsDefault {
                             modifier = Modifier.size(52.dp)
                         )
                     }
-                    StyledColumn(
+                    Column(
                         modifier = Modifier.weight(1f)
                     ) {
                         StyledText(
@@ -380,7 +381,7 @@ object MainAppSettingsDefault {
                 contentColor = LocalStyledContentColor.current,
                 icon = StyledIcons.Info,
                 inlineContent = {
-                    StyledColumn {
+                    Column {
                         val labelWidth = 100.dp
                         StyledInformationRowHorizontal(
                             label = "Version Name",
@@ -918,9 +919,9 @@ fun MainAppSettings(
     setup: MainAppSettings.Setup = MainAppSettings.Setup(),
     custom: @Composable () -> Unit = {},
 ) {
-    StyledColumn(
+    Column(
         modifier = Modifier.fillMaxSize().padding(paddingValues),
-        itemSpacing = StyledTheme.spacing.medium
+        verticalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium)
     ) {
         // setup
         val filter = MainAppSettings.filter
