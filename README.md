@@ -56,7 +56,6 @@
 >   - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (6x)
 >   - `ExperimentalWasmJsInterop` (1x)
 >   - `kotlin.js.ExperimentalWasmJsInterop` (1x)
->   - `kotlin.time.ExperimentalTime` (11x)
 >   - `kotlinx.cinterop.ExperimentalForeignApi` (2x)
 >   - `kotlinx.coroutines.FlowPreview` (1x)
 >
