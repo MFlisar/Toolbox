@@ -97,6 +97,7 @@ import com.michaelflisar.composestyled.platform.WindowMode
 import com.michaelflisar.composestyled.platform.currentPlatform
 import com.michaelflisar.composestyled.platform.rememberWindowEnvironment
 import com.michaelflisar.composestyled.platform.systemBarIconStyleFor
+import com.michaelflisar.composestyled.registry.StyledRegistry
 import com.michaelflisar.composestyled.ui.components.StyledBottomNavigationBar
 import com.michaelflisar.composestyled.ui.components.StyledExpandableTopBar
 import com.michaelflisar.composestyled.ui.components.StyledIcon
@@ -389,6 +390,7 @@ fun MainAppScaffold(
     forwardHistoryEnabled: Boolean = true,
     resetInactiveNavigationStacksOnSelection: Boolean = false,
     showTopAppBarWithoutToolbar: Boolean = false,
+    themeCustomization: (@Composable StyledRegistry.Builder.() -> Unit)? = null,
     topAppBar: @Composable (ToolbarConfig?) -> Unit,
     bottomNav: @Composable (
         items: List<StyledNavigationItem<NavScreen>>,
@@ -420,9 +422,7 @@ fun MainAppScaffold(
         behavior = StyledTheme.Behavior(
             showScrollbars = PlatformDefaults.showScrollbars(hostPlatform),
         ),
-        customization = {
-            // Apply component overrides and additional styled components here.
-        }
+        customization = themeCustomization
     ) {
         val mainBackStackManager = rememberMainBackStackManager(
             navigationKeys = navigationItems.map { it.key },
@@ -806,6 +806,7 @@ fun MainAppScaffoldWithAppSheet(
     resetInactiveNavigationStacksOnSelection: Boolean = false,
     showTopAppBarWithoutToolbar: Boolean = false,
     topAppBar: @Composable (ToolbarConfig?) -> Unit,
+    themeCustomization: (@Composable StyledRegistry.Builder.() -> Unit)? = null,
     bottomNav: @Composable (
         items: List<StyledNavigationItem<NavScreen>>,
         selectedKey: NavScreen,
@@ -884,6 +885,7 @@ fun MainAppScaffoldWithAppSheet(
         forwardHistoryEnabled = forwardHistoryEnabled,
         resetInactiveNavigationStacksOnSelection = resetInactiveNavigationStacksOnSelection,
         showTopAppBarWithoutToolbar = showTopAppBarWithoutToolbar,
+        themeCustomization = themeCustomization,
         topAppBar = { toolbarConfig ->
             StyledTranslatableContent(
                 side = StyledTranslatableContent.Side.Top,

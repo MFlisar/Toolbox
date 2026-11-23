@@ -80,6 +80,7 @@ import com.michaelflisar.composestyled.classes.toIconComposable
 import com.michaelflisar.composestyled.isDynamicColorsSupported
 import com.michaelflisar.composestyled.isSystemContrastSupported
 import com.michaelflisar.composestyled.platform.platformSystemContrastLevel
+import com.michaelflisar.composestyled.supportingVariant
 import com.michaelflisar.composestyled.themes.StyledContrastLevel
 import com.michaelflisar.composestyled.themes.StyledThemeAppearance
 import com.michaelflisar.composestyled.themes.StyledThemeColors
@@ -189,11 +190,17 @@ object MainAppSettings {
         //Pager
     }
 
+    enum class HeaderIconStyle {
+        Decorated,
+        Plain
+    }
+
     @Immutable
     data class Setup(
         val supportFiltering: Boolean = false,
         val breadcrumbs: Boolean = true,
         val displayMode: DisplayMode = DisplayMode.List,
+        val headerIconStyle: HeaderIconStyle = HeaderIconStyle.Decorated,
     )
 
     val filter: PreferenceFilter
@@ -212,7 +219,7 @@ object MainAppSettings {
 object MainAppSettingsDefault {
 
     @Composable
-    fun MainPrefHeader() {
+    fun MainPrefHeader(iconStyle: MainAppSettings.HeaderIconStyle) {
 
         val scope = rememberCoroutineScope()
         val setup = AppSetup.get()
@@ -278,18 +285,30 @@ object MainAppSettingsDefault {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium)
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(64.dp)
-                            .clip(headerShape)
-                            .background(StyledTheme.colorScheme.surface),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = setup.icon(),
-                            contentDescription = null,
-                            modifier = Modifier.size(52.dp)
-                        )
+                    when (iconStyle) {
+                        MainAppSettings.HeaderIconStyle.Decorated -> {
+                            Box(
+                                modifier = Modifier
+                                    .size(64.dp)
+                                    .clip(headerShape)
+                                    .background(StyledTheme.colorScheme.surface),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    painter = setup.icon(),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(52.dp)
+                                )
+                            }
+                        }
+
+                        MainAppSettings.HeaderIconStyle.Plain -> {
+                            Image(
+                                painter = setup.icon(),
+                                contentDescription = null,
+                                modifier = Modifier.size(52.dp)
+                            )
+                        }
                     }
                     Column(
                         modifier = Modifier.weight(1f)
@@ -301,10 +320,8 @@ object MainAppSettingsDefault {
                         StyledText(
                             text = versionName,
                             style = StyledTheme.typography.bodySmall,
-                            color = StyledTheme.supportingContentColor(
-                                headerBackground,
-                                StyledTheme.colorScheme.onSurfaceVariant
-                            )
+                            color =StyledTheme.colorScheme.onSurfaceVariant.supportingVariant(headerBackground)
+
                         )
                         StyledText(
                             text = stringResource(
@@ -313,10 +330,7 @@ object MainAppSettingsDefault {
                             ),
                             style = StyledTheme.typography.bodySmall,
                             fontStyle = FontStyle.Italic,
-                            color = StyledTheme.supportingContentColor(
-                                headerBackground,
-                                StyledTheme.colorScheme.onSurfaceVariant
-                            )
+                            color = StyledTheme.colorScheme.onSurfaceVariant.supportingVariant(headerBackground)
                         )
                     }
                 }
@@ -353,10 +367,7 @@ object MainAppSettingsDefault {
                 ),
                 containerColor = StyledTheme.colorScheme.primary,
                 contentColor = StyledTheme.colorScheme.onPrimary,
-                supportingColor = StyledTheme.supportingContentColor(
-                    StyledTheme.colorScheme.primary,
-                    StyledTheme.colorScheme.onPrimary
-                )
+                supportingColor = StyledTheme.colorScheme.onPrimary.supportingVariant(StyledTheme.colorScheme.primary)
             )
         }
     }
@@ -589,10 +600,7 @@ object MainAppSettingsDefault {
                             shape = MainAppSettings.preferenceStyle.item.shape, // damit excluden wir das item aus section style handling
                             containerColor = StyledTheme.colorScheme.primary,
                             contentColor = StyledTheme.colorScheme.onPrimary,
-                            supportingColor = StyledTheme.supportingContentColor(
-                                StyledTheme.colorScheme.primary,
-                                StyledTheme.colorScheme.onPrimary
-                            )
+                            supportingColor = StyledTheme.colorScheme.onPrimary.supportingVariant(StyledTheme.colorScheme.primary)
                         )
                     }
                 }
@@ -867,10 +875,7 @@ object MainAppSettingsDefault {
                     },
                     containerColor = StyledTheme.colorScheme.onBackground,
                     contentColor = StyledTheme.colorScheme.background,
-                    supportingColor = StyledTheme.supportingContentColor(
-                        StyledTheme.colorScheme.onBackground,
-                        StyledTheme.colorScheme.background
-                    )
+                    supportingColor = StyledTheme.colorScheme.background.supportingVariant(StyledTheme.colorScheme.onBackground)
                 )
             }
         }
@@ -964,7 +969,7 @@ fun MainAppSettings(
 
 @Composable
 private fun Settings(
-    setup: MainAppSettings.Setup,
+    settings: MainAppSettings.Setup,
     custom: @Composable () -> Unit,
 ) {
     val setup = AppSetup.get()
@@ -974,7 +979,7 @@ private fun Settings(
     DialogFeedback(dialogFeedback)
 
     // 1) Header
-    MainAppSettingsDefault.MainPrefHeader()
+    MainAppSettingsDefault.MainPrefHeader(settings.headerIconStyle)
 
     // 2) Style
     if (setup.themeSupport.supportsTheming()) {
