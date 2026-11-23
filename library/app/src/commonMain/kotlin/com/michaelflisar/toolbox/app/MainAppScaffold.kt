@@ -660,7 +660,8 @@ fun MainAppScaffold(
                         )
                         StyledSheet(
                             state = sheetState,
-                            edge = StyledSheet.Edge.End
+                            edge = StyledSheet.Edge.End,
+                            triggerSize = AppSetup.get().debug.sideSheetTriggerWidth
                         ) {
                             // setup
                             val filter = MainAppSettings.filter

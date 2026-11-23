@@ -5,6 +5,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.michaelflisar.composechangelog.ChangelogSetup
 import com.michaelflisar.composestyled.StyledTheme
 import com.michaelflisar.composestyled.isDynamicColorsSupported
@@ -51,6 +53,7 @@ class AppSetup(
     @Stable
     class Debug(
         val prefs: BaseDebugPrefs,
+        val sideSheetTriggerWidth: Dp = 48.dp,
         val sideSheet: @Composable (expanded: MutableState<Boolean>) -> Unit,
     )
 
