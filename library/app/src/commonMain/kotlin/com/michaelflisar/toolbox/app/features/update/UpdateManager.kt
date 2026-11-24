@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class UpdateManager(
-    private val updates: List<BaseUpdate>,
+    private val versions: List<Version>,
     private val isFirstRun: (lastVersion: Long) -> Boolean = { lastVersion -> lastVersion <= 0L },
 ) {
     companion object {
@@ -19,7 +19,7 @@ class UpdateManager(
             versions: List<Version>,
             isFirstRun: (lastVersion: Long) -> Boolean = { lastVersion -> lastVersion <= 0L },
         ) : UpdateManager {
-            return UpdateManager(versions.mapNotNull { it.update }, isFirstRun)
+            return UpdateManager(versions, isFirstRun)
         }
     }
 
@@ -40,14 +40,38 @@ class UpdateManager(
             setup.prefs.lastAppVersion.update(lastVersion)
         } else if (lastVersion < currentVersion) {
             L.debug(ToolboxLogging.Tag.UpdateManager) { "UPDATES gestartet..." }
-            updates
-                .sortedBy { it.version }
-                .forEach { it.execute(lastVersion) }
+            versions
+                .asSequence()
+                .filter { it.versionCode.toLong() > lastVersion && it.versionCode <= currentVersion }
+                .sortedBy { it.versionCode }
+                .forEach { executeUpdate(it) }
             setup.prefs.lastAppVersion.update(currentVersion.toLong())
             L.debug(ToolboxLogging.Tag.UpdateManager) { "UPDATES fertig" }
         } else {
             L.debug(ToolboxLogging.Tag.UpdateManager) { "UPDATE SKIPPED weil lastVersion bereits up-to-date ist!" }
         }
 
+    }
+
+    fun forceUpdate(scope: CoroutineScope, versions: List<Version>) {
+        scope.launch(Dispatchers.PlatformIO) {
+            forceUpdate(versions)
+        }
+    }
+
+    suspend fun forceUpdate(versions: List<Version>) {
+        L.debug(ToolboxLogging.Tag.UpdateManager) { "FORCED UPDATES gestartet..." }
+        versions
+            .sortedBy { it.versionCode }
+            .forEach { executeUpdate(it, forced = true) }
+        L.debug(ToolboxLogging.Tag.UpdateManager) { "FORCED UPDATES fertig" }
+    }
+
+    private suspend fun executeUpdate(version: Version, forced: Boolean = false) {
+        val update = version.update ?: return
+        val action = if (forced) "FORCED Konvertierung" else "Konvertierung"
+        L.debug(ToolboxLogging.Tag.AppUpdate) { "$action ${version.versionCode} - START" }
+        update()
+        L.debug(ToolboxLogging.Tag.AppUpdate) { "$action ${version.versionCode} - END" }
     }
 }
