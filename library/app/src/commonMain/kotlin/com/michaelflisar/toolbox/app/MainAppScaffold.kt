@@ -111,6 +111,7 @@ import com.michaelflisar.composestyled.ui.components.StyledSnackbarResult
 import com.michaelflisar.composestyled.ui.components.StyledTopBar
 import com.michaelflisar.composestyled.ui.icons.StyledIcons
 import com.michaelflisar.composestyled.ui.layout.StyledDialog
+import com.michaelflisar.composestyled.ui.layout.StyledScaffold
 import com.michaelflisar.composestyled.ui.layout.StyledScaffoldDefaults
 import com.michaelflisar.composestyled.ui.layout.StyledSheet
 import com.michaelflisar.composestyled.ui.layout.StyledSheet.Value
@@ -373,7 +374,8 @@ data class AppActions(
  * Use [MainAppScaffoldDefaults] to reuse the standard bar, navigation, and Nav3 content. A custom
  * [content] slot receives the scaffold padding and adaptive layout information. Set
  * [showTopAppBarWithoutToolbar] to display the top-app-bar slot even when the current screen has no
- * toolbar configuration or selection content.
+ * toolbar configuration or selection content. The snackbar host and floating action button can
+ * also be customized.
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -387,6 +389,12 @@ fun MainAppScaffold(
     scaffoldColor: @Composable (() -> Color)? = null,
     bottomNavColor: @Composable (() -> Color)? = null,
     settings: @Composable ((paddingValues: PaddingValues) -> Unit)? = null,
+    snackbarHost: @Composable (StyledSnackbarHostState) -> Unit = {
+        StyledSnackbarHost(hostState = it)
+    },
+    floatingActionButton: @Composable () -> Unit = {},
+    floatingActionButtonPosition: StyledScaffold.FloatingActionButtonPosition =
+        StyledScaffold.FloatingActionButtonPosition.End,
     forwardHistoryEnabled: Boolean = true,
     resetInactiveNavigationStacksOnSelection: Boolean = false,
     showTopAppBarWithoutToolbar: Boolean = false,
@@ -562,9 +570,9 @@ fun MainAppScaffold(
                                         }
                                     }
                                 },
-                                snackbarHost = {
-                                    StyledSnackbarHost(hostState = snackbarHostState)
-                                },
+                                snackbarHost = { snackbarHost(snackbarHostState) },
+                                floatingActionButton = floatingActionButton,
+                                floatingActionButtonPosition = floatingActionButtonPosition,
                                 contentWindowInsets = StyledScaffoldDefaults.contentWindowInsets,
                                 containerColor = actualScaffoldColor,
                                 content = { paddingValues, adaptiveInfo ->
@@ -788,9 +796,9 @@ fun rememberMainAppSheetState(): MainAppSheetState {
 /**
  * Adds a draggable, expandable app sheet and floating header toolbar to [MainAppScaffold].
  * The header and sheet content receive the same [MainAppSheetState] for observing progress and
- * opening or closing the sheet.
+ * opening or closing the sheet. The snackbar host and floating action button slots are forwarded
+ * to [MainAppScaffold].
  */
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MainAppScaffoldWithAppSheet(
     navigationItems: List<StyledNavigationItem<NavScreen>>,
@@ -803,6 +811,12 @@ fun MainAppScaffoldWithAppSheet(
     scaffoldColor: @Composable (() -> Color)? = null,
     bottomNavColor: @Composable (() -> Color)? = null,
     settings: @Composable ((paddingValues: PaddingValues) -> Unit)? = null,
+    snackbarHost: @Composable (StyledSnackbarHostState) -> Unit = {
+        StyledSnackbarHost(hostState = it)
+    },
+    floatingActionButton: @Composable () -> Unit = {},
+    floatingActionButtonPosition: StyledScaffold.FloatingActionButtonPosition =
+        StyledScaffold.FloatingActionButtonPosition.End,
     forwardHistoryEnabled: Boolean = true,
     resetInactiveNavigationStacksOnSelection: Boolean = false,
     showTopAppBarWithoutToolbar: Boolean = false,
@@ -883,6 +897,9 @@ fun MainAppScaffoldWithAppSheet(
         scaffoldColor = scaffoldColor,
         bottomNavColor = bottomNavColor,
         settings = settings,
+        snackbarHost = snackbarHost,
+        floatingActionButton = floatingActionButton,
+        floatingActionButtonPosition = floatingActionButtonPosition,
         forwardHistoryEnabled = forwardHistoryEnabled,
         resetInactiveNavigationStacksOnSelection = resetInactiveNavigationStacksOnSelection,
         showTopAppBarWithoutToolbar = showTopAppBarWithoutToolbar,
