@@ -51,7 +51,7 @@
 
 > :warning: Following experimental annotations are used:
 > - **OptIn**
->   - `androidx.compose.ui.ExperimentalComposeUiApi` (4x)
+>   - `androidx.compose.ui.ExperimentalComposeUiApi` (3x)
 >   - `app.lexilabs.basic.ads.DependsOnGoogleMobileAds` (3x)
 >   - `app.lexilabs.basic.ads.DependsOnGoogleUserMessagingPlatform` (6x)
 >   - `ExperimentalWasmJsInterop` (1x)
