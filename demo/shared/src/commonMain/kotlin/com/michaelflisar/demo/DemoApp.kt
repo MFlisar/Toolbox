@@ -45,6 +45,7 @@ import com.michaelflisar.toolbox.app.MainAppScaffold
 import com.michaelflisar.toolbox.app.MainAppScaffoldDefaults
 import com.michaelflisar.toolbox.app.MainAppScaffoldWithAppSheet
 import com.michaelflisar.toolbox.app.MainAppSettings
+import com.michaelflisar.toolbox.app.MainAppTheme
 import com.michaelflisar.toolbox.app.features.navigation.NavScreen
 import com.michaelflisar.toolbox.app.rememberMainAppSheetState
 
@@ -85,8 +86,11 @@ fun DemoApp(
     forwardHistoryEnabled: Boolean = false,
     banner: @Composable () -> Unit = {},
 ) {
-    //DemoAppSimple(desktopMenuBar, forwardHistoryEnabled, banner)
-    DemoAppAdvanced(desktopMenuBar, forwardHistoryEnabled, banner)
+    Shared.Init()
+    MainAppTheme {
+        //DemoAppSimple(desktopMenuBar, forwardHistoryEnabled, banner)
+        DemoAppAdvanced(desktopMenuBar, forwardHistoryEnabled, banner)
+    }
 }
 
 @Composable
@@ -95,12 +99,10 @@ private fun DemoAppSimple(
     forwardHistoryEnabled: Boolean = false,
     banner: @Composable () -> Unit = {},
 ) {
-    Shared.Init()
-
     val navigationItems = Setup.MainNavigationItems
 
-    val sideNavColor: @Composable () -> Color = { StyledTheme.colorScheme.primarySurface }
-    val bottomNavColor: @Composable () -> Color = { StyledTheme.colorScheme.primarySurface }
+    val sideNavColor = StyledTheme.colorScheme.primarySurface
+    val bottomNavColor = StyledTheme.colorScheme.primarySurface
 
     MainAppScaffold(
         navigationItems = navigationItems,
@@ -115,7 +117,7 @@ private fun DemoAppSimple(
         },
         bottomNav = { items, selectedKey, onItemClick ->
 
-            val containerColor: Color = bottomNavColor()
+            val containerColor = bottomNavColor
             val contentColor: Color = StyledTheme.contentColorFor(containerColor)
             val indicatorTint: Color = StyledTheme.colorScheme.primary
 
@@ -130,7 +132,7 @@ private fun DemoAppSimple(
         },
         sideNav = { items, selectedKey, mode, expanded, onItemClick ->
 
-            val containerColor: Color = sideNavColor()
+            val containerColor = sideNavColor
             val contentColor: Color = StyledTheme.contentColorFor(containerColor)
             val indicatorTint: Color = StyledTheme.colorScheme.primary
 
@@ -162,15 +164,13 @@ private fun DemoAppAdvanced(
     forwardHistoryEnabled: Boolean = false,
     banner: @Composable () -> Unit = {},
 ) {
-    Shared.Init()
-
     val navigationItems = Setup.MainNavigationItems
     val sideNavigationTitle: @Composable () -> Unit = {
         StyledText(AppSetup.get().appData.name)
     }
 
-    val sideNavColor: @Composable () -> Color = { StyledTheme.colorScheme.primarySurface }
-    val bottomNavColor: @Composable () -> Color = { StyledTheme.colorScheme.primarySurface }
+    val sideNavColor = StyledTheme.colorScheme.primarySurface
+    val bottomNavColor = StyledTheme.colorScheme.primarySurface
 
     val sheetState = rememberMainAppSheetState()
 
@@ -191,7 +191,7 @@ private fun DemoAppAdvanced(
                 MainAppScaffoldDefaults.TopAppBar(toolbarConfig)
             },
             bottomNav = { items, selectedKey, onItemClick ->
-                val containerColor: Color = bottomNavColor()
+                val containerColor = bottomNavColor
                 val contentColor: Color = StyledTheme.contentColorFor(containerColor)
                 val indicatorTint: Color = StyledTheme.colorScheme.primary
 
@@ -205,7 +205,7 @@ private fun DemoAppAdvanced(
                 )
             },
             sideNav = { items, selectedKey, mode, expanded, onItemClick ->
-                val containerColor: Color = sideNavColor()
+                val containerColor = sideNavColor
                 val contentColor: Color = StyledTheme.contentColorFor(containerColor)
                 val indicatorTint: Color = StyledTheme.colorScheme.primary
 

@@ -9,12 +9,12 @@ google-guava =					"33.8.0-android"
 compose-icons = 		        "1.1.1"
 
 # Others
-openiap =                       "4.2.3" # ACHTUNG: wird DIREKT im Pro Version Modul build.gradle.kts gelesen
+openiap =                       "4.2.3" # ACHTUNG: wird DIREKT im Pro Version Modul build.gradle.kts gelesen! nicht entfernen!
 stately =                       "2.1.0"
 acra =		        		    "5.14.2"
 processphoenix = 			    "3.0.0"
 htmlconverter =                 "1.1.1"
-filekit =                       "0.17.0"
+filekit =                       "0.17.1"
 accompanist = 			        "0.37.3"
 csv =                           "1.14.1"
 ktor =                          "3.6.1"

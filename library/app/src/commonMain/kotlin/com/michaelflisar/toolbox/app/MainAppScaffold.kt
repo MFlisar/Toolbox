@@ -91,13 +91,10 @@ import com.michaelflisar.composestyled.adaptive.StyledAdaptiveScaffold
 import com.michaelflisar.composestyled.adaptive.StyledAdaptiveScaffoldState
 import com.michaelflisar.composestyled.classes.StyledNavigationMode
 import com.michaelflisar.composestyled.classes.toIconComposable
-import com.michaelflisar.composestyled.platform.PlatformDefaults
 import com.michaelflisar.composestyled.platform.SystemBarStyleEffect
 import com.michaelflisar.composestyled.platform.WindowMode
-import com.michaelflisar.composestyled.platform.currentPlatform
 import com.michaelflisar.composestyled.platform.rememberWindowEnvironment
 import com.michaelflisar.composestyled.platform.systemBarIconStyleFor
-import com.michaelflisar.composestyled.registry.StyledRegistry
 import com.michaelflisar.composestyled.ui.components.StyledBottomNavigationBar
 import com.michaelflisar.composestyled.ui.components.StyledExpandableTopBar
 import com.michaelflisar.composestyled.ui.components.StyledIcon
@@ -132,9 +129,7 @@ import com.michaelflisar.toolbox.app.features.navigation.display.MainNavDisplay
 import com.michaelflisar.toolbox.app.features.navigation.manager.LocalMainBackStackManager
 import com.michaelflisar.toolbox.app.features.navigation.manager.NavigationBackPriority
 import com.michaelflisar.toolbox.app.features.navigation.manager.rememberMainBackStackManager
-import com.michaelflisar.toolbox.app.features.preferences.rememberThemeConfig
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
-import com.michaelflisar.toolbox.app.features.theme.themeProvider
 import com.michaelflisar.toolbox.app.features.toast.ToastDuration
 import com.michaelflisar.toolbox.app.features.toast.showToast
 import com.michaelflisar.toolbox.app.features.toolbar.ToolbarStyle
@@ -160,8 +155,8 @@ object MainAppScaffoldDefaults {
     @Composable
     fun TopAppBar(
         toolbarConfig: ToolbarConfig?,
-        topAppBarColor: @Composable (() -> Color)? = null,
-        topAppBarContentColor: @Composable (() -> Color)? = null,
+        topAppBarColor: Color? = null,
+        topAppBarContentColor: Color? = null,
     ) {
         if (toolbarConfig == null) return
 
@@ -287,16 +282,16 @@ private data class MainAppTopAppBarColors(
 
 @Composable
 private fun resolveTopAppBarColors(
-    topAppBarColor: @Composable (() -> Color)?,
-    topAppBarContentColor: @Composable (() -> Color)?,
+    topAppBarColor: Color?,
+    topAppBarContentColor: Color?,
 ): MainAppTopAppBarColors {
     val toolbarStyle = if (AppSetup.get().themeSupport.supportToolbarStyles) {
         AppSetup.get().prefs.toolbarStyle.collectAsStateNotNull().value
     } else {
         null
     }
-    val requestedTopBarColor = topAppBarColor?.invoke()
-    val requestedTopBarContentColor = topAppBarContentColor?.invoke()
+    val requestedTopBarColor = topAppBarColor
+    val requestedTopBarContentColor = topAppBarContentColor
     val containerColor = requestedTopBarColor ?: when (toolbarStyle) {
         ToolbarStyle.Primary -> StyledTheme.colorScheme.primary
         ToolbarStyle.Background -> StyledTheme.colorScheme.background
@@ -367,15 +362,15 @@ data class AppActions(
 /**
  * Displays one independently saved Nav3 stack per top-level navigation item. The caller supplies
  * the serializer configuration for the app's open set of [NavScreen] key types. Color overrides
- * are composable lambdas so they are evaluated inside [StyledTheme]. Forward history is enabled
- * by default and can be disabled for the whole app. Inactive top-level stacks are preserved unless
- * [resetInactiveNavigationStacksOnSelection] is enabled.
+ * are direct values, and unspecified colors fall back to the current theme. Forward history is
+ * enabled by default and can be disabled for the whole app. Inactive top-level stacks are
+ * preserved unless [resetInactiveNavigationStacksOnSelection] is enabled.
  * The [topAppBar], [bottomNav], [sideNav], and [content] slots provide the scaffold UI explicitly.
  * Use [MainAppScaffoldDefaults] to reuse the standard bar, navigation, and Nav3 content. A custom
  * [content] slot receives the scaffold padding and adaptive layout information. Set
  * [showTopAppBarWithoutToolbar] to display the top-app-bar slot even when the current screen has no
  * toolbar configuration or selection content. The snackbar host and floating action button can
- * also be customized.
+ * also be customized. The caller must provide an enclosing theme, typically with [MainAppTheme].
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -384,10 +379,10 @@ fun MainAppScaffold(
     backStackConfiguration: SavedStateConfiguration,
     startDestination: NavScreen? = null,
     toolbar: @Composable () -> Unit = {},
-    topAppBarColor: @Composable (() -> Color)? = null,
-    topAppBarContentColor: @Composable (() -> Color)? = null,
-    scaffoldColor: @Composable (() -> Color)? = null,
-    bottomNavColor: @Composable (() -> Color)? = null,
+    topAppBarColor: Color? = null,
+    topAppBarContentColor: Color? = null,
+    scaffoldColor: Color? = null,
+    bottomNavColor: Color? = null,
     settings: @Composable ((paddingValues: PaddingValues) -> Unit)? = null,
     snackbarHost: @Composable (StyledSnackbarHostState) -> Unit = {
         StyledSnackbarHost(hostState = it)
@@ -398,7 +393,6 @@ fun MainAppScaffold(
     forwardHistoryEnabled: Boolean = true,
     resetInactiveNavigationStacksOnSelection: Boolean = false,
     showTopAppBarWithoutToolbar: Boolean = false,
-    themeCustomization: (@Composable StyledRegistry.Builder.() -> Unit)? = null,
     topAppBar: @Composable (ToolbarConfig?) -> Unit,
     bottomNav: @Composable (
         items: List<StyledNavigationItem<NavScreen>>,
@@ -417,283 +411,271 @@ fun MainAppScaffold(
         adaptiveInfo: State<StyledAdaptiveInfo>,
     ) -> Unit,
 ) {
-    val hostPlatform = currentPlatform()
-    val provider = themeProvider()
-    val themeConfig = rememberThemeConfig(provider)
+    val hostPlatform = StyledTheme.platform
 
     val scope = rememberCoroutineScope()
 
-    StyledTheme(
-        platform = hostPlatform,
-        provider = provider,
-        config = themeConfig,
-        behavior = StyledTheme.Behavior(
-            showScrollbars = PlatformDefaults.showScrollbars(hostPlatform),
-        ),
-        customization = themeCustomization
+    val mainBackStackManager = rememberMainBackStackManager(
+        navigationKeys = navigationItems.map { it.key },
+        backStackConfiguration = backStackConfiguration,
+        startDestination = startDestination,
+        forwardHistoryEnabled = forwardHistoryEnabled,
+        resetInactiveNavigationStacksOnSelection = resetInactiveNavigationStacksOnSelection,
+    )
+    val activeBackStack = mainBackStackManager.activeBackStack
+
+    CompositionLocalProvider(
+        LocalMainBackStackManager provides mainBackStackManager,
     ) {
-        val mainBackStackManager = rememberMainBackStackManager(
-            navigationKeys = navigationItems.map { it.key },
-            backStackConfiguration = backStackConfiguration,
-            startDestination = startDestination,
-            forwardHistoryEnabled = forwardHistoryEnabled,
-            resetInactiveNavigationStacksOnSelection = resetInactiveNavigationStacksOnSelection,
+        val activeScreen = activeBackStack.lastOrNull() as? NavScreen
+            ?: error("The active Nav3 back stack must end with a NavScreen key.")
+        val toolbarConfig = key(activeScreen) { activeScreen.Toolbar() }
+        val selectionContent = key(activeScreen) { activeScreen.SelectionContent() }
+        val showToolbar =
+            showTopAppBarWithoutToolbar || toolbarConfig != null || selectionContent != null
+        val showNavigation = navigationItems.isNotEmpty()
+        val topBarColor = resolveTopAppBarColors(
+            topAppBarColor,
+            topAppBarContentColor,
+        ).container
+        val actualScaffoldColor = scaffoldColor ?: StyledTheme.colorScheme.surface
+        val actualBottomNavColor = bottomNavColor ?: StyledTheme.colorScheme.surface
+
+        val windowEnvironment = rememberWindowEnvironment()
+        val scaffoldState = remember { StyledAdaptiveScaffoldState() }
+        val adaptiveNavigationMode = scaffoldState.navigationMode
+
+        if (windowEnvironment.mode == WindowMode.Normal && adaptiveNavigationMode != null) {
+            SystemBarStyleEffect(
+                statusBar = systemBarIconStyleFor(
+                    color = if (showToolbar) topBarColor else actualScaffoldColor,
+                    background = actualScaffoldColor,
+                ),
+                navigationBar = if (showNavigation && adaptiveNavigationMode.isBottom) {
+                    systemBarIconStyleFor(actualBottomNavColor, actualScaffoldColor)
+                } else {
+                    systemBarIconStyleFor(actualScaffoldColor, actualScaffoldColor)
+                },
+            )
+        }
+
+        val sideNavigationExpanded = rememberSaveable { mutableStateOf(true) }
+        val snackbarHostState = remember { StyledSnackbarHostState() }
+
+        PlatformNavigationBackHandler(
+            navigationState = mainBackStackManager.navigationState,
+            replaceNavigationState = mainBackStackManager.replaceNavigationState,
+            onMouseForward = mainBackStackManager::onMouseForward,
+            onBrowserHistoryStateChanged = mainBackStackManager::onBrowserHistoryStateChanged,
         )
-        val activeBackStack = mainBackStackManager.activeBackStack
+
+        val scrollBehavior = toolbarConfig?.scrollBehavior
+
+        val lastShownVersion = AppSetup.get().prefs.lastAppVersion.asMutableStateNotNull()
+        val changelogState = AppSetup.get().changelogSetup?.let {
+            rememberChangelogState(
+                setup = it,
+                lastShownVersion = lastShownVersion.value.toInt().takeIf { it != -1 },
+                saveLastShownVersion = { lastShownVersion.value = it.toLong() },
+            )
+        }
+
+        val dialogSettings = rememberDialogState()
+        val dialogProVersion = rememberDialogState()
+        val appActions = remember {
+            AppActions(
+                scope = scope,
+                showChangelog = { changelogState?.show() },
+                showProVersionDialog = { dialogProVersion.show() },
+                showSettingsDialog = { dialogSettings.show() },
+                snackbarHostState = snackbarHostState
+            )
+        }
 
         CompositionLocalProvider(
-            LocalMainBackStackManager provides mainBackStackManager,
+            LocalAppActions provides appActions,
         ) {
-            val activeScreen = activeBackStack.lastOrNull() as? NavScreen
-                ?: error("The active Nav3 back stack must end with a NavScreen key.")
-            val toolbarConfig = key(activeScreen) { activeScreen.Toolbar() }
-            val selectionContent = key(activeScreen) { activeScreen.SelectionContent() }
-            val showToolbar =
-                showTopAppBarWithoutToolbar || toolbarConfig != null || selectionContent != null
-            val showNavigation = navigationItems.isNotEmpty()
-            val topBarColor = resolveTopAppBarColors(
-                topAppBarColor,
-                topAppBarContentColor,
-            ).container
-            val actualScaffoldColor = scaffoldColor?.invoke() ?: StyledTheme.colorScheme.surface
-            val actualBottomNavColor = bottomNavColor?.invoke() ?: StyledTheme.colorScheme.surface
-
-            val windowEnvironment = rememberWindowEnvironment()
-            val scaffoldState = remember { StyledAdaptiveScaffoldState() }
-            val adaptiveNavigationMode = scaffoldState.navigationMode
-
-            if (windowEnvironment.mode == WindowMode.Normal && adaptiveNavigationMode != null) {
-                SystemBarStyleEffect(
-                    statusBar = systemBarIconStyleFor(
-                        color = if (showToolbar) topBarColor else actualScaffoldColor,
-                        background = actualScaffoldColor,
-                    ),
-                    navigationBar = if (showNavigation && adaptiveNavigationMode.isBottom) {
-                        systemBarIconStyleFor(actualBottomNavColor, actualScaffoldColor)
-                    } else {
-                        systemBarIconStyleFor(actualScaffoldColor, actualScaffoldColor)
-                    },
-                )
-            }
-
-            val sideNavigationExpanded = rememberSaveable { mutableStateOf(true) }
-            val snackbarHostState = remember { StyledSnackbarHostState() }
-
-            PlatformNavigationBackHandler(
-                navigationState = mainBackStackManager.navigationState,
-                replaceNavigationState = mainBackStackManager.replaceNavigationState,
-                onMouseForward = mainBackStackManager::onMouseForward,
-                onBrowserHistoryStateChanged = mainBackStackManager::onBrowserHistoryStateChanged,
-            )
-
-            val scrollBehavior = toolbarConfig?.scrollBehavior
-
-            val lastShownVersion = AppSetup.get().prefs.lastAppVersion.asMutableStateNotNull()
-            val changelogState = AppSetup.get().changelogSetup?.let {
-                rememberChangelogState(
-                    setup = it,
-                    lastShownVersion = lastShownVersion.value.toInt().takeIf { it != -1 },
-                    saveLastShownVersion = { lastShownVersion.value = it.toLong() },
-                )
-            }
-
-            val dialogSettings = rememberDialogState()
-            val dialogProVersion = rememberDialogState()
-            val appActions = remember {
-                AppActions(
-                    scope = scope,
-                    showChangelog = { changelogState?.show() },
-                    showProVersionDialog = { dialogProVersion.show() },
-                    showSettingsDialog = { dialogSettings.show() },
-                    snackbarHostState = snackbarHostState
-                )
-            }
-
-            CompositionLocalProvider(
-                LocalAppActions provides appActions,
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Column {
-                        toolbar()
-                        Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
-                            StyledAdaptiveScaffold(
-                                platform = hostPlatform,
-                                state = scaffoldState,
-                                sideNavigationExpanded = sideNavigationExpanded,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .then(
-                                        if (scrollBehavior != null) {
-                                            Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
-                                        } else {
-                                            Modifier
-                                        },
-                                    ),
-                                topBar = {
-                                    if (showToolbar) {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .wrapContentHeight()
-                                                .zIndex(1f)
-                                        ) {
-                                            topAppBar(toolbarConfig)
-                                            selectionContent?.invoke()
-                                        }
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column {
+                    toolbar()
+                    Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+                        StyledAdaptiveScaffold(
+                            platform = hostPlatform,
+                            state = scaffoldState,
+                            sideNavigationExpanded = sideNavigationExpanded,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .then(
+                                    if (scrollBehavior != null) {
+                                        Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+                                    } else {
+                                        Modifier
+                                    },
+                                ),
+                            topBar = {
+                                if (showToolbar) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .wrapContentHeight()
+                                            .zIndex(1f)
+                                    ) {
+                                        topAppBar(toolbarConfig)
+                                        selectionContent?.invoke()
                                     }
-                                },
-                                navigation = { navigationMode ->
-                                    if (showNavigation) {
-                                        val selectedKey =
-                                            navigationItems[mainBackStackManager.selectedNavigationIndex].key
-                                        val onItemClick: (NavScreen) -> Unit = { selected ->
-                                            mainBackStackManager.selectNavigationItem(selected)
-                                        }
-                                        when (navigationMode) {
-                                            StyledNavigationMode.Bottom -> {
-                                                bottomNav(
-                                                    navigationItems,
-                                                    selectedKey,
-                                                    onItemClick,
-                                                )
-                                            }
-
-                                            is StyledNavigationMode.Side -> {
-                                                sideNav(
-                                                    navigationItems,
-                                                    selectedKey,
-                                                    navigationMode,
-                                                    sideNavigationExpanded,
-                                                    onItemClick,
-                                                )
-                                            }
-                                        }
-                                    }
-                                },
-                                snackbarHost = { snackbarHost(snackbarHostState) },
-                                floatingActionButton = floatingActionButton,
-                                floatingActionButtonPosition = floatingActionButtonPosition,
-                                contentWindowInsets = StyledScaffoldDefaults.contentWindowInsets,
-                                containerColor = actualScaffoldColor,
-                                content = { paddingValues, adaptiveInfo ->
-                                    Box(modifier = Modifier.fillMaxSize()) {
-                                        content(paddingValues, adaptiveInfo)
-                                    }
-
-                                    // 2) Settings Dialog
-                                    if (settings != null) {
-                                        val style = StyledDialog.Style.Fullscreen(
-                                            animation = StyledDialog.FullscreenAnimation.Slide(),
-                                            expandableHeader = StyledDialog.Style.Fullscreen.ExpandableHeader()
-                                        )
-                                        //val style2 = StyledDialog.Style.BottomSheet(
-                                        //    options = StyledDialog.SheetOptions(
-                                        //        expandToFullScreen = ExpandToFullScreen.Enabled(
-                                        //            allowExit = false
-                                        //        ),
-                                        //        peekHeightFraction = .8f
-                                        //    )
-                                        //)
-                                        StyledDialog(
-                                            state = dialogSettings,
-                                            style = style,
-                                            title = {
-                                                StyledText(stringResource(Res.string.menu_settings))
-                                            },
-                                            buttons = StyledDialog.Buttons(
-                                                negative = StyledDialog.Button(
-                                                    label = stringResource(Res.string.button_close),
-                                                    icon = StyledIcons.Close
-                                                )
-                                            ),
-                                        ) { paddingValues ->
-                                            settings(paddingValues)
-                                        }
-                                    }
-
-                                    // 3) Changelog Dialog
-                                    if (changelogState != null) {
-                                        ChangelogDialog(
-                                            state = changelogState,
-                                            setup = AppSetup.get().changelogSetup!!,
-                                            style = StyledDialog.Style.Dialog(),
-                                            title = {
-                                                StyledText(stringResource(Res.string.settings_changelog))
-                                            },
-                                            buttons = StyledDialog.Buttons(
-                                                negative = StyledDialog.Button(
-                                                    label = stringResource(Res.string.button_close),
-                                                    icon = StyledIcons.Close
-                                                )
-                                            ),
-                                        )
-                                    }
-
-                                    // 4) Pro Version Dialog
-                                    ProVersionManager.Paywall(dialogProVersion)
                                 }
-                            )
-                        }
-                    }
-                    val showDebugDrawer by AppSetup.get().debug.prefs.showDebugDrawer.collectAsStateWithLifecycleNotNull()
-                    LaunchedEffect(showDebugDrawer) {
-                        if (!showDebugDrawer) {
-                            mainBackStackManager.debugDrawerExpanded.value = false
-                        }
-                    }
-                    if (showDebugDrawer) {
-                        val expanded = mainBackStackManager.debugDrawerExpanded
-                        val sheetState = rememberStyledSheetState(
-                            initialValue = if (expanded.value) Value.Expanded else Value.Collapsed,
-                        )
-                        LaunchedEffect(expanded.value) {
-                            sheetState.set(
-                                if (expanded.value) Value.Expanded else Value.Collapsed,
-                            )
-                        }
-                        LaunchedEffect(sheetState, expanded) {
-                            snapshotFlow { sheetState.currentValue }.collect {
-                                expanded.value = it == Value.Expanded
-                            }
-                        }
-                        RegisterNavigationBackHandler(
-                            enabled = expanded.value,
-                            canNavigateBack = expanded.value,
-                            priority = NavigationBackPriority.Overlay,
-                            owner = null,
-                            onBack = {
-                                expanded.value = false
-                                true
                             },
-                        )
-                        StyledSheet(
-                            state = sheetState,
-                            edge = StyledSheet.Edge.End,
-                            triggerSize = AppSetup.get().debug.sideSheetTriggerWidth
-                        ) {
-                            // setup
-                            val filter = MainAppSettings.filter
-                            val preferenceState = MainAppSettings.preferenceState
-                            val preferenceStyle = MainAppSettings.preferenceStyle
+                            navigation = { navigationMode ->
+                                if (showNavigation) {
+                                    val selectedKey =
+                                        navigationItems[mainBackStackManager.selectedNavigationIndex].key
+                                    val onItemClick: (NavScreen) -> Unit = { selected ->
+                                        mainBackStackManager.selectNavigationItem(selected)
+                                    }
+                                    when (navigationMode) {
+                                        StyledNavigationMode.Bottom -> {
+                                            bottomNav(
+                                                navigationItems,
+                                                selectedKey,
+                                                onItemClick,
+                                            )
+                                        }
 
-                            // preferences
-                            PreferenceScreen(
-                                modifier = Modifier.weight(1f)
-                                    .safeContentPadding(),
-                                state = preferenceState,
-                                filter = filter,
-                                style = preferenceStyle
-                            ) {
-                                AppSetup.get().debug.sideSheet(expanded)
+                                        is StyledNavigationMode.Side -> {
+                                            sideNav(
+                                                navigationItems,
+                                                selectedKey,
+                                                navigationMode,
+                                                sideNavigationExpanded,
+                                                onItemClick,
+                                            )
+                                        }
+                                    }
+                                }
+                            },
+                            snackbarHost = { snackbarHost(snackbarHostState) },
+                            floatingActionButton = floatingActionButton,
+                            floatingActionButtonPosition = floatingActionButtonPosition,
+                            contentWindowInsets = StyledScaffoldDefaults.contentWindowInsets,
+                            containerColor = actualScaffoldColor,
+                            content = { paddingValues, adaptiveInfo ->
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    content(paddingValues, adaptiveInfo)
+                                }
+
+                                // 2) Settings Dialog
+                                if (settings != null) {
+                                    val style = StyledDialog.Style.Fullscreen(
+                                        animation = StyledDialog.FullscreenAnimation.Slide(),
+                                        expandableHeader = StyledDialog.Style.Fullscreen.ExpandableHeader()
+                                    )
+                                    //val style2 = StyledDialog.Style.BottomSheet(
+                                    //    options = StyledDialog.SheetOptions(
+                                    //        expandToFullScreen = ExpandToFullScreen.Enabled(
+                                    //            allowExit = false
+                                    //        ),
+                                    //        peekHeightFraction = .8f
+                                    //    )
+                                    //)
+                                    StyledDialog(
+                                        state = dialogSettings,
+                                        style = style,
+                                        title = {
+                                            StyledText(stringResource(Res.string.menu_settings))
+                                        },
+                                        buttons = StyledDialog.Buttons(
+                                            negative = StyledDialog.Button(
+                                                label = stringResource(Res.string.button_close),
+                                                icon = StyledIcons.Close
+                                            )
+                                        ),
+                                    ) { paddingValues ->
+                                        settings(paddingValues)
+                                    }
+                                }
+
+                                // 3) Changelog Dialog
+                                if (changelogState != null) {
+                                    ChangelogDialog(
+                                        state = changelogState,
+                                        setup = AppSetup.get().changelogSetup!!,
+                                        style = StyledDialog.Style.Dialog(),
+                                        title = {
+                                            StyledText(stringResource(Res.string.settings_changelog))
+                                        },
+                                        buttons = StyledDialog.Buttons(
+                                            negative = StyledDialog.Button(
+                                                label = stringResource(Res.string.button_close),
+                                                icon = StyledIcons.Close
+                                            )
+                                        ),
+                                    )
+                                }
+
+                                // 4) Pro Version Dialog
+                                ProVersionManager.Paywall(dialogProVersion)
                             }
+                        )
+                    }
+                }
+                val showDebugDrawer by AppSetup.get().debug.prefs.showDebugDrawer.collectAsStateWithLifecycleNotNull()
+                LaunchedEffect(showDebugDrawer) {
+                    if (!showDebugDrawer) {
+                        mainBackStackManager.debugDrawerExpanded.value = false
+                    }
+                }
+                if (showDebugDrawer) {
+                    val expanded = mainBackStackManager.debugDrawerExpanded
+                    val sheetState = rememberStyledSheetState(
+                        initialValue = if (expanded.value) Value.Expanded else Value.Collapsed,
+                    )
+                    LaunchedEffect(expanded.value) {
+                        sheetState.set(
+                            if (expanded.value) Value.Expanded else Value.Collapsed,
+                        )
+                    }
+                    LaunchedEffect(sheetState, expanded) {
+                        snapshotFlow { sheetState.currentValue }.collect {
+                            expanded.value = it == Value.Expanded
                         }
                     }
-                    BackHandler(
-                        enabled = mainBackStackManager.hasEnabledOverlayBackHandler,
-                        onBack = mainBackStackManager::onBack,
+                    RegisterNavigationBackHandler(
+                        enabled = expanded.value,
+                        canNavigateBack = expanded.value,
+                        priority = NavigationBackPriority.Overlay,
+                        owner = null,
+                        onBack = {
+                            expanded.value = false
+                            true
+                        },
                     )
-                    DebugOverlay()
+                    StyledSheet(
+                        state = sheetState,
+                        edge = StyledSheet.Edge.End,
+                        triggerSize = AppSetup.get().debug.sideSheetTriggerWidth
+                    ) {
+                        // setup
+                        val filter = MainAppSettings.filter
+                        val preferenceState = MainAppSettings.preferenceState
+                        val preferenceStyle = MainAppSettings.preferenceStyle
+
+                        // preferences
+                        PreferenceScreen(
+                            modifier = Modifier.weight(1f)
+                                .safeContentPadding(),
+                            state = preferenceState,
+                            filter = filter,
+                            style = preferenceStyle
+                        ) {
+                            AppSetup.get().debug.sideSheet(expanded)
+                        }
+                    }
                 }
+                BackHandler(
+                    enabled = mainBackStackManager.hasEnabledOverlayBackHandler,
+                    onBack = mainBackStackManager::onBack,
+                )
+                DebugOverlay()
             }
         }
     }
@@ -797,7 +779,7 @@ fun rememberMainAppSheetState(): MainAppSheetState {
  * Adds a draggable, expandable app sheet and floating header toolbar to [MainAppScaffold].
  * The header and sheet content receive the same [MainAppSheetState] for observing progress and
  * opening or closing the sheet. The snackbar host and floating action button slots are forwarded
- * to [MainAppScaffold].
+ * to [MainAppScaffold]. The caller must provide an enclosing theme, typically with [MainAppTheme].
  */
 @Composable
 fun MainAppScaffoldWithAppSheet(
@@ -806,10 +788,10 @@ fun MainAppScaffoldWithAppSheet(
     sheetState: MainAppSheetState = rememberMainAppSheetState(),
     startDestination: NavScreen? = null,
     toolbar: @Composable () -> Unit = {},
-    topAppBarColor: @Composable (() -> Color)? = null,
-    topAppBarContentColor: @Composable (() -> Color)? = null,
-    scaffoldColor: @Composable (() -> Color)? = null,
-    bottomNavColor: @Composable (() -> Color)? = null,
+    topAppBarColor: Color? = null,
+    topAppBarContentColor: Color? = null,
+    scaffoldColor: Color? = null,
+    bottomNavColor: Color? = null,
     settings: @Composable ((paddingValues: PaddingValues) -> Unit)? = null,
     snackbarHost: @Composable (StyledSnackbarHostState) -> Unit = {
         StyledSnackbarHost(hostState = it)
@@ -821,7 +803,6 @@ fun MainAppScaffoldWithAppSheet(
     resetInactiveNavigationStacksOnSelection: Boolean = false,
     showTopAppBarWithoutToolbar: Boolean = false,
     topAppBar: @Composable (ToolbarConfig?) -> Unit,
-    themeCustomization: (@Composable StyledRegistry.Builder.() -> Unit)? = null,
     bottomNav: @Composable (
         items: List<StyledNavigationItem<NavScreen>>,
         selectedKey: NavScreen,
@@ -903,7 +884,6 @@ fun MainAppScaffoldWithAppSheet(
         forwardHistoryEnabled = forwardHistoryEnabled,
         resetInactiveNavigationStacksOnSelection = resetInactiveNavigationStacksOnSelection,
         showTopAppBarWithoutToolbar = showTopAppBarWithoutToolbar,
-        themeCustomization = themeCustomization,
         topAppBar = { toolbarConfig ->
             StyledTranslatableContent(
                 side = StyledTranslatableContent.Side.Top,

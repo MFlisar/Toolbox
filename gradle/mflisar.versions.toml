@@ -7,14 +7,8 @@ kmp-mail =                  "1.0.0"
 cachefileprovider =         "1.0.0"
 kotpreferences =        	"4.0.1"
 lumberjack =                "12.0.0"
-#composedebugdrawer =		"4.0.0"
-#composedialogs =   		    "4.0.0"
-#composepreferences =   		"3.0.0"
-#composethemer =   			"2.0.0"
-#composechangelog =   		"4.0.0"
 composecolors =             "2.0.0"
-
-composestyled =             "0.0.1-alpha37"
+composestyled =             "0.0.1-alpha39"
 
 # plugins only
 kmpicon =                   "1.0.0"
@@ -23,6 +17,8 @@ kmpdevtools =               "9.4.2" # use the "devTools" task to change the vers
 [plugins]
 
 # general
+# --
+
 # plugins only
 kmpdevtools-buildplugin =           { id = "io.github.mflisar.kmpdevtools.plugins-build-gradle",        version.ref = "kmpdevtools" }
 kmpicon-plugin =                    { id = "io.github.mflisar.kmpicon.plugin",                          version.ref = "kmpicon" }
@@ -45,42 +41,6 @@ lumberjack-logger-console =			        	{ module = "io.github.mflisar.lumberjack:
 lumberjack-logger-file =			        	{ module = "io.github.mflisar.lumberjack:logger-file", 	            				version.ref = "lumberjack" }
 lumberjack-extension-composeviewer =	    	{ module = "io.github.mflisar.lumberjack:extension-composeviewer", 					version.ref = "lumberjack" }
 lumberjack-extension-feedback =	            	{ module = "io.github.mflisar.lumberjack:extension-feedback", 	        			version.ref = "lumberjack" }
-#composedebugdrawer-core =                      	{ module = "io.github.mflisar.composedebugdrawer:core",                    			version.ref = "composedebugdrawer" }
-#composedebugdrawer-infos-build =           		{ module = "io.github.mflisar.composedebugdrawer:infos-build",                 		version.ref = "composedebugdrawer" }
-#composedebugdrawer-infos-device =          		{ module = "io.github.mflisar.composedebugdrawer:infos-device",                		version.ref = "composedebugdrawer" }
-#composedebugdrawer-plugin-lumberjack =     		{ module = "io.github.mflisar.composedebugdrawer:plugin-lumberjack",           		version.ref = "composedebugdrawer" }
-#composedebugdrawer-plugin-kotpreferences = 		{ module = "io.github.mflisar.composedebugdrawer:plugin-kotpreferences",  			version.ref = "composedebugdrawer" }
-#composedialogs-core =                      		{ module = "io.github.mflisar.composedialogs:core",      			                version.ref = "composedialogs" }
-#composedialogs-dialog-info =               		{ module = "io.github.mflisar.composedialogs:dialog-info",      			        version.ref = "composedialogs" }
-#composedialogs-dialog-input =              		{ module = "io.github.mflisar.composedialogs:dialog-input",      			        version.ref = "composedialogs" }
-#composedialogs-dialog-number =             		{ module = "io.github.mflisar.composedialogs:dialog-number",      			        version.ref = "composedialogs" }
-#composedialogs-dialog-list =               		{ module = "io.github.mflisar.composedialogs:dialog-list",      			        version.ref = "composedialogs" }
-#composedialogs-dialog-progress =           		{ module = "io.github.mflisar.composedialogs:dialog-progress",      			    version.ref = "composedialogs" }
-#composedialogs-dialog-time =               		{ module = "io.github.mflisar.composedialogs:dialog-time",      			        version.ref = "composedialogs" }
-#composedialogs-dialog-date =               		{ module = "io.github.mflisar.composedialogs:dialog-date",      			        version.ref = "composedialogs" }
-#composedialogs-dialog-color =              		{ module = "io.github.mflisar.composedialogs:dialog-color",      			        version.ref = "composedialogs" }
-#composedialogs-dialog-menu =              		{ module = "io.github.mflisar.composedialogs:dialog-menu",      			        version.ref = "composedialogs" }
-#composedialogs-dialog-frequency =              	{ module = "io.github.mflisar.composedialogs:dialog-frequency",      			    version.ref = "composedialogs" }
-#composechangelog-core =               			{ module = "io.github.mflisar.composechangelog:core",      			        	    version.ref = "composechangelog" }
-#composechangelog-renderer-header =  		    { module = "io.github.mflisar.composechangelog:renderer-header",      		        version.ref = "composechangelog" }
-#composechangelog-statesaver-preferences =  		{ module = "io.github.mflisar.composechangelog:statesaver-preferences",      		version.ref = "composechangelog" }
-#composechangelog-statesaver-kotpreferences =	{ module = "io.github.mflisar.composechangelog:statesaver-kotpreferences",      	version.ref = "composechangelog" }
-#composepreferences-core =						{ module = "io.github.mflisar.composepreferences:core",      						version.ref = "composepreferences" }
-#composepreferences-screen-bool =				{ module = "io.github.mflisar.composepreferences:screen-bool",      				version.ref = "composepreferences" }
-#composepreferences-screen-button =				{ module = "io.github.mflisar.composepreferences:screen-button",      				version.ref = "composepreferences" }
-#composepreferences-screen-input =				{ module = "io.github.mflisar.composepreferences:screen-input",      				version.ref = "composepreferences" }
-#composepreferences-screen-color =				{ module = "io.github.mflisar.composepreferences:screen-color",      				version.ref = "composepreferences" }
-#composepreferences-screen-date =				{ module = "io.github.mflisar.composepreferences:screen-date",      				version.ref = "composepreferences" }
-#composepreferences-screen-time =				{ module = "io.github.mflisar.composepreferences:screen-time",      				version.ref = "composepreferences" }
-#composepreferences-screen-list =				{ module = "io.github.mflisar.composepreferences:screen-list",      				version.ref = "composepreferences" }
-#composepreferences-screen-number =				{ module = "io.github.mflisar.composepreferences:screen-number",      				version.ref = "composepreferences" }
-#composepreferences-kotpreferences =				{ module = "io.github.mflisar.composepreferences:kotpreferences",      				version.ref = "composepreferences" }
-#composethemer-core =							{ module = "io.github.mflisar.composethemer:core",      							version.ref = "composethemer" }
-#composethemer-modules-picker =					{ module = "io.github.mflisar.composethemer:modules-picker",      					version.ref = "composethemer" }
-#composethemer-modules-defaultpicker =		    { module = "io.github.mflisar.composethemer:modules-defaultpicker",      			version.ref = "composethemer" }
-#composethemer-themes-flatui =					{ module = "io.github.mflisar.composethemer:themes-flatui",      					version.ref = "composethemer" }
-#composethemer-themes-metro =					{ module = "io.github.mflisar.composethemer:themes-metro",      					version.ref = "composethemer" }
-#composethemer-themes-material500 =				{ module = "io.github.mflisar.composethemer:themes-material500",      				version.ref = "composethemer" }
 composecolors-material =						{ module = "io.github.mflisar.composecolors:material",      						version.ref = "composecolors" }
 composecolors-x11 =								{ module = "io.github.mflisar.composecolors:x11",      								version.ref = "composecolors" }
 composecolors-material-palette =				{ module = "io.github.mflisar.composecolors:material-palette",      				version.ref = "composecolors" }
@@ -101,7 +61,6 @@ composestyled-theme-fluent2 = { module = "io.github.mflisar.composestyled:theme-
 composestyled-theme-material3 = { module = "io.github.mflisar.composestyled:theme-material3", version.ref = "composestyled" }
 composestyled-theme-pastel = { module = "io.github.mflisar.composestyled:theme-pastel", version.ref = "composestyled" }
 composestyled-theme-nature = { module = "io.github.mflisar.composestyled:theme-nature", version.ref = "composestyled" }
-
 composestyled-libraries-dialogs = { module = "io.github.mflisar.composestyled:styled-composedialog", version.ref = "composestyled" }
 composestyled-libraries-preferences = { module = "io.github.mflisar.composestyled:styled-composepreferences", version.ref = "composestyled" }
 composestyled-libraries-changelog = { module = "io.github.mflisar.composestyled:styled-composechangelog", version.ref = "composestyled" }

@@ -1,6 +1,6 @@
 [versions]
 
-gradle = 				                "9.5.1"
+gradle = 				                "9.5.2"
 kotlin = 				                "2.4.21"
 ksp = 				                    "2.3.6"
 
@@ -14,7 +14,7 @@ jetbrains-compose =                     "1.12.2"
 jetbrains-compose-material3 =           "1.9.0"
 jetbrains-compose-material3-adaptive =  "1.3.0"
 jetbrains-compose-icons =               "1.7.3"
-jetbrains-compose-hot-reload =          "1.2.0"
+jetbrains-compose-hot-reload =          "1.3.0"
 jetbrains-compose-navigation3-ui =      "1.3.0"
 
 # org.jetbrains.androidx
@@ -30,7 +30,7 @@ androidx-browser =                      "1.10.0"
 androidx-work =          		        "2.12.0"
 androidx-room =      			        "2.8.5"
 androidx-sqlite =      			        "2.7.1"
-androidx-lifecycle = 	                "2.11.0"
+androidx-lifecycle = 	                "2.11.1"
 
 # org.jetbrains.kotlinx
 jetbrains-kotlinx-coroutines =          "1.11.0"
@@ -42,7 +42,7 @@ jetbrains-kotlinx-atomicfu =            "0.33.0"
 
 # others
 desugar =                               "2.1.5"
-buildkonfig =                           "0.24.0"
+buildkonfig =                           "0.24.1"
 easylauncher = 					        "6.4.1"
 launch4j =                              "4.0.0"
 
