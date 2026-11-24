@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandHorizontally
@@ -140,6 +141,7 @@ import com.michaelflisar.toolbox.core.resources.settings_changelog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
@@ -162,9 +164,20 @@ object MainAppScaffoldDefaults {
 
         val colors = resolveTopAppBarColors(topAppBarColor, topAppBarContentColor)
         val backStackManager = LocalMainBackStackManager.current
+        val navigationIconVisibility = remember {
+            MutableTransitionState(backStackManager.canGoBack)
+        }
+        val subtitleVisibility = remember {
+            MutableTransitionState(toolbarConfig.subtitle != null)
+        }
+        LaunchedEffect(backStackManager.canGoBack, toolbarConfig.subtitle != null) {
+            navigationIconVisibility.targetState = backStackManager.canGoBack
+            snapshotFlow { navigationIconVisibility.isIdle }.first { it }
+            subtitleVisibility.targetState = toolbarConfig.subtitle != null
+        }
         val navigationIcon: @Composable () -> Unit = {
             MainAppNavigationIcon(
-                canNavigateBack = backStackManager.canGoBack,
+                visibility = navigationIconVisibility,
                 onBack = backStackManager::onBack,
             )
         }
@@ -172,6 +185,7 @@ object MainAppScaffoldDefaults {
             MainAppTitleContent(
                 title = toolbarConfig.title,
                 subtitle = toolbarConfig.subtitle,
+                subtitleVisibility = subtitleVisibility,
             )
         }
         val actionsContent: @Composable RowScope.() -> Unit = {
@@ -1054,11 +1068,11 @@ fun MainAppScaffoldWithAppSheet(
 
 @Composable
 private fun MainAppNavigationIcon(
-    canNavigateBack: Boolean,
+    visibility: MutableTransitionState<Boolean>,
     onBack: () -> Unit,
 ) {
     AnimatedVisibility(
-        visible = canNavigateBack,
+        visibleState = visibility,
         enter = slideInHorizontally { -it } +
                 expandHorizontally(expandFrom = Alignment.Start),
         exit = shrinkHorizontally(shrinkTowards = Alignment.Start) +
@@ -1077,6 +1091,7 @@ private fun MainAppNavigationIcon(
 private fun MainAppTitleContent(
     title: String,
     subtitle: String?,
+    subtitleVisibility: MutableTransitionState<Boolean>,
 ) {
     Column {
         Crossfade(
@@ -1094,7 +1109,7 @@ private fun MainAppTitleContent(
             }
         }
         AnimatedVisibility(
-            visible = subtitle != null,
+            visibleState = subtitleVisibility,
             enter = slideInVertically { it } +
                     expandVertically(expandFrom = Alignment.Top),
             exit = slideOutVertically { it } +
