@@ -5,6 +5,8 @@ import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
@@ -28,6 +30,20 @@ object NavScreenDefaults {
     ): AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform = {
         fadeIn(animationSpec = tween(durationMillis)) togetherWith
                 fadeOut(animationSpec = tween(durationMillis))
+    }
+
+    fun <T : Any> scaleCrossfadeTransitionSpec(
+        durationMillis: Int = 280,
+        initialScaleIn: Float = 0.97f,
+        targetScaleOut: Float = 1.01f
+    ): AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform = {
+        (
+                fadeIn(animationSpec = tween(durationMillis)) +
+                        scaleIn(initialScale = initialScaleIn, animationSpec = tween(durationMillis))
+                ) togetherWith (
+                fadeOut(animationSpec = tween(durationMillis)) +
+                        scaleOut(targetScale = targetScaleOut, animationSpec = tween(durationMillis))
+                )
     }
 
     fun <T : Any> slideTransitionSpec(
@@ -172,13 +188,20 @@ interface NavScreen : NavKey {
 internal val LocalNav3ActiveScreen = compositionLocalOf<NavScreen?> { null }
 
 /**
- * Values for the shared scaffold toolbar. The page can opt into expandable scrolling by providing
- * a behavior; null keeps the toolbar non-expandable. Navigation and platform presentation remain
- * scaffold-owned.
+ * Content for the shared scaffold toolbar. Use [Standard] for the scaffold's standard toolbar or
+ * [Custom] to provide the complete toolbar content. Navigation and platform presentation remain
+ * scaffold-owned for the standard toolbar.
  */
-data class ToolbarConfig(
-    val title: String,
-    val subtitle: String? = null,
-    val actions: @Composable RowScope.() -> Unit = {},
-    val scrollBehavior: StyledExpandableTopBarScrollBehavior? = null,
-)
+sealed interface ToolbarConfig {
+
+    data class Standard(
+        val title: String,
+        val subtitle: String? = null,
+        val actions: @Composable RowScope.() -> Unit = {},
+        val scrollBehavior: StyledExpandableTopBarScrollBehavior? = null,
+    ) : ToolbarConfig
+
+    data class Custom(
+        val content: @Composable () -> Unit,
+    ) : ToolbarConfig
+}

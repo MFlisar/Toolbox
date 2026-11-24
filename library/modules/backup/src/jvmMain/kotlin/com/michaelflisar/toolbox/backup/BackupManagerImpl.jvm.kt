@@ -3,7 +3,12 @@ package com.michaelflisar.toolbox.backup
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.classes.BackupConfig
+import com.michaelflisar.toolbox.backup.classes.BackupInspection
+import com.michaelflisar.toolbox.backup.classes.BackupMetadata
+import com.michaelflisar.toolbox.backup.classes.BackupValidationException
+import com.michaelflisar.toolbox.backup.classes.inspect
 import com.michaelflisar.toolbox.utils.JvmUtil
+import com.michaelflisar.toolbox.extensions.now
 import com.michaelflisar.toolbox.zip.JavaZipFile
 import com.michaelflisar.toolbox.zip.JavaZipFileContent
 import com.michaelflisar.toolbox.zip.JavaZipManager
@@ -11,8 +16,13 @@ import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.bookmarkData
 import io.github.vinceglb.filekit.fromBookmarkData
 import io.github.vinceglb.filekit.path
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.LocalDateTime
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 actual class BackupManagerImpl actual constructor(
     actual val config: BackupConfig,
@@ -30,9 +40,20 @@ actual class BackupManagerImpl actual constructor(
         backupFile: PlatformFile,
     ): Throwable? {
         return try {
+            check(config.backupMetadata.metadataVersion == BackupMetadata.CURRENT_METADATA_VERSION) {
+                "Unsupported backup metadata version: ${config.backupMetadata.metadataVersion}"
+            }
+            val metadata = config.backupMetadata.copy(createdAt = LocalDateTime.now().toString())
+            val metadataBytes = Json.encodeToString(metadata).encodeToByteArray()
+            check(metadataBytes.size <= BackupMetadata.MAX_ENTRY_SIZE_BYTES) {
+                "Backup metadata exceeds the maximum size of ${BackupMetadata.MAX_ENTRY_SIZE_BYTES} bytes"
+            }
             val result = withContext(Dispatchers.IO) {
-                // Zip direkt an der backup uri erstellen
-                JavaZipManager.zip(files, JavaZipFile(backupFile.file))
+                JavaZipManager.zip(
+                    files,
+                    JavaZipFile(backupFile.file),
+                    additionalEntries = mapOf(BackupMetadata.ZIP_ENTRY to metadataBytes)
+                )
             }
             if (result.isSuccess) {
                 null
@@ -40,8 +61,30 @@ actual class BackupManagerImpl actual constructor(
                 result.exceptionOrNull()!!
             }
         } catch (e: Exception) {
+            if (e is CancellationException) throw e
             L.e(e)
             e
+        }
+    }
+
+    actual suspend fun inspectBackup(
+        backupFile: PlatformFile,
+    ): BackupInspection {
+        return try {
+            val result = JavaZipManager.readEntry(
+                zipFile = JavaZipFile(backupFile.file),
+                entryPath = BackupMetadata.ZIP_ENTRY,
+                maxSizeBytes = BackupMetadata.MAX_ENTRY_SIZE_BYTES
+            )
+            val metadataBytes = result.getOrThrow()
+            val metadata = metadataBytes?.decodeToString()?.let {
+                Json { ignoreUnknownKeys = true }.decodeFromString<BackupMetadata>(it)
+            }
+            config.inspect(metadata)
+        } catch (e: Exception) {
+            if (e is CancellationException) throw e
+            L.e(e)
+            throw e
         }
     }
 
@@ -50,11 +93,13 @@ actual class BackupManagerImpl actual constructor(
         backupFile: PlatformFile,
     ): Throwable? {
         return try {
+            val inspection = inspectBackup(backupFile)
+            if (!inspection.isValid) return BackupValidationException()
             val result = withContext(Dispatchers.IO) {
                 // backup uri direkt im parent folder entpacken
                 JavaZipManager.unzip(
-                    JavaZipFile(backupFile.file),
-                    files,
+                    zipFile = JavaZipFile(backupFile.file),
+                    files = files,
                     replaceExistingFiles = true
                 )
             }
@@ -64,6 +109,7 @@ actual class BackupManagerImpl actual constructor(
                 result.exceptionOrNull()!!
             }
         } catch (e: Exception) {
+            if (e is CancellationException) throw e
             L.e(e)
             e
         }

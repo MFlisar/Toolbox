@@ -22,22 +22,39 @@ import com.michaelflisar.composestyled.ui.state.rememberDialogState
 import com.michaelflisar.kmp.platformcontext.PlatformIO
 import com.michaelflisar.lumberjack.core.L
 import com.michaelflisar.toolbox.backup.classes.BackupFileName
+import com.michaelflisar.toolbox.backup.classes.BackupInspection
+import com.michaelflisar.toolbox.backup.classes.BackupMetadata
 import com.michaelflisar.toolbox.core.resources.Res
+import com.michaelflisar.toolbox.core.resources.backup_done
+import com.michaelflisar.toolbox.core.resources.backup_error
+import com.michaelflisar.toolbox.core.resources.backup_importing
+import com.michaelflisar.toolbox.core.resources.backup_inspection_app
+import com.michaelflisar.toolbox.core.resources.backup_inspection_app_version
+import com.michaelflisar.toolbox.core.resources.backup_inspection_compatible
+import com.michaelflisar.toolbox.core.resources.backup_inspection_created_at
+import com.michaelflisar.toolbox.core.resources.backup_inspection_data_version
+import com.michaelflisar.toolbox.core.resources.backup_inspection_legacy
+import com.michaelflisar.toolbox.core.resources.backup_inspection_metadata_version
+import com.michaelflisar.toolbox.core.resources.backup_inspection_validation_failed
+import com.michaelflisar.toolbox.core.resources.backup_inspection_verifying
+import com.michaelflisar.toolbox.core.resources.backup_restore
+import com.michaelflisar.toolbox.core.resources.backup_select_another_file
+import com.michaelflisar.toolbox.core.resources.backup_select_file
+import com.michaelflisar.toolbox.core.resources.backup_waiting_for_file
 import com.michaelflisar.toolbox.core.resources.backup_dialog_create_document_activity_not_found_info
 import com.michaelflisar.toolbox.core.resources.backup_dialog_create_document_activity_not_found_title
 import com.michaelflisar.toolbox.core.resources.backup_dialog_open_document_activity_not_found_info
 import com.michaelflisar.toolbox.core.resources.backup_dialog_open_document_activity_not_found_title
-import com.michaelflisar.toolbox.core.resources.backup_done
-import com.michaelflisar.toolbox.core.resources.backup_error
-import com.michaelflisar.toolbox.core.resources.backup_select_file
-import com.michaelflisar.toolbox.core.resources.backup_waiting_for_file
+import com.michaelflisar.toolbox.core.resources.backup_exporting
 import com.michaelflisar.toolbox.core.resources.button_ok
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
 import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.dialogs.compose.rememberFileSaverLauncher
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -45,16 +62,24 @@ import org.jetbrains.compose.resources.stringResource
 private sealed class State {
 
     @Composable
-    abstract fun info(): String
+    abstract fun info(): String?
 
     data object Waiting : State() {
         @Composable
         override fun info() = stringResource(Res.string.backup_waiting_for_file)
     }
 
-    class Running(val info: StringResource) : State() {
+    class Running(val message: StringResource) : State() {
         @Composable
-        override fun info() = stringResource(info)
+        override fun info() = stringResource(message)
+    }
+
+    class Inspected(
+        val file: PlatformFile,
+        val inspection: BackupInspection,
+    ) : State() {
+        @Composable
+        override fun info(): String? = null
     }
 
     data object Done : State() {
@@ -67,6 +92,12 @@ private sealed class State {
         override fun info() =
             stringResource(Res.string.backup_error, error.message ?: error.toString())
     }
+}
+
+private sealed class Operation {
+    class Export(val file: PlatformFile) : Operation()
+    class Inspect(val file: PlatformFile) : Operation()
+    class Restore(val file: PlatformFile) : Operation()
 }
 
 private enum class ActivityNotFoundError {
@@ -83,50 +114,79 @@ actual fun BackupDialog(
     extension: String,
 ) {
     if (dialogState.visible) {
-
         val mode = dialogState.requireData()
-
         val state = remember { mutableStateOf<State>(State.Waiting) }
-        val selectedFile = remember { mutableStateOf<PlatformFile?>(null) }
+        val operation = remember { mutableStateOf<Operation?>(null) }
+
+        LaunchedEffect(dialogState.visible, mode) {
+            state.value = State.Waiting
+            operation.value = null
+        }
+
         LaunchedEffect(Unit) {
-            snapshotFlow { selectedFile.value }
-                .collect { file ->
-                    if (file != null) {
-                    L.logIf { BackupDefaults.LOG }?.d {
-                        "BackupDialog: file selected, mode=$mode"
-                    }
-                    state.value = State.Running(mode.running)
-                    withContext(Dispatchers.PlatformIO) {
-                        L.logIf { BackupDefaults.LOG }?.d {
-                            "BackupDialog: starting operation, mode=$mode, managerAvailable=${backupManager != null}"
+            snapshotFlow { operation.value }
+                .filterNotNull()
+                .collect { request ->
+                    operation.value = null
+                    try {
+                        when (request) {
+                            is Operation.Export -> {
+                                state.value = State.Running(Res.string.backup_exporting)
+                                val manager = backupManager
+                                    ?: error("Backup manager is not initialized")
+                                val error = withContext(Dispatchers.PlatformIO) {
+                                    manager.backup(files, request.file)
+                                }
+                                state.value = if (error == null) State.Done else State.Error(error)
+                            }
+
+                            is Operation.Inspect -> {
+                                state.value = State.Running(Res.string.backup_inspection_verifying)
+                                val manager = backupManager
+                                    ?: error("Backup manager is not initialized")
+                                val inspection = withContext(Dispatchers.PlatformIO) {
+                                    manager.inspectBackup(request.file)
+                                }
+                                state.value = State.Inspected(request.file, inspection)
+                            }
+
+                            is Operation.Restore -> {
+                                state.value = State.Running(Res.string.backup_importing)
+                                val manager = backupManager
+                                    ?: error("Backup manager is not initialized")
+                                val error = withContext(Dispatchers.PlatformIO) {
+                                    manager.restore(files, request.file)
+                                }
+                                state.value = if (error == null) State.Done else State.Error(error)
+                            }
                         }
-                        val exception = when (mode) {
-                            BackupDialog.Mode.Export -> backupManager!!.backup(files, file)
-                            BackupDialog.Mode.Import -> backupManager!!.restore(files, file)
-                        }
-                        L.logIf { BackupDefaults.LOG }?.d {
-                            "BackupDialog: operation finished, mode=$mode, succeeded=${exception == null}"
-                        }
-                        state.value = if (exception == null) {
-                                State.Done
-                            } else State.Error(exception)
-                        }
+                    } catch (e: Exception) {
+                        if (e is CancellationException) throw e
+                        L.e(e)
+                        state.value = State.Error(e)
                     }
                 }
         }
 
-        // https://github.com/vinceglb/FileKit/issues/111
-        // https://github.com/vinceglb/FileKit/blob/main/filekit-dialogs-compose/src/webMain/kotlin/io/github/vinceglb/filekit/dialogs/compose/FileKitCompose.web.kt#L16
+        val onFileSelected: (PlatformFile?) -> Unit = { file ->
+            if (file != null) {
+                operation.value = if (mode == BackupDialog.Mode.Export) {
+                    Operation.Export(file)
+                } else {
+                    Operation.Inspect(file)
+                }
+            }
+        }
+
         val createFilePicker = rememberFileSaverLauncher(fileKitDialogSettings) {
-            selectedFile.value = it
+            onFileSelected(it)
         }
         val openFilePicker = rememberFilePickerLauncher(
             type = FileKitType.File(extensions = listOf(extension)),
             dialogSettings = fileKitDialogSettings
         ) {
-            selectedFile.value = it
+            onFileSelected(it)
         }
-
         val dialogActivityNotFound = rememberDialogState<ActivityNotFoundError>(null)
 
         LaunchedEffect(mode) {
@@ -135,6 +195,10 @@ actual fun BackupDialog(
             }
         }
 
+        val currentState = state.value
+        val inspected = currentState as? State.Inspected
+        val canRestore = inspected?.inspection?.isCompatible == true
+
         StyledDialog(
             state = dialogState,
             title = { StyledText(stringResource(mode.title)) },
@@ -142,14 +206,11 @@ actual fun BackupDialog(
                 positive = StyledDialog.Button(
                     label = stringResource(Res.string.button_ok),
                     onClick = {
-                        if (mode == BackupDialog.Mode.Import && state.value is State.Done) {
-                            L.logIf { BackupDefaults.LOG }?.d {
-                                "BackupDialog: restore completed, notifying manager that app data was restored"
-                            }
-                            backupManager!!.onBackupRestored()
+                        if (state.value is State.Done && mode == BackupDialog.Mode.Import) {
+                            backupManager?.onBackupRestored()
                         }
                     },
-                    enabled = state.value is State.Done || state.value is State.Error
+                    enabled = inspected != null || currentState is State.Done || currentState is State.Error
                 )
             ),
             content = StyledDialogDefaults.content {
@@ -157,50 +218,63 @@ actual fun BackupDialog(
                     verticalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    when (state.value) {
-                        State.Done -> {}
-                        is State.Error -> {}
-                        is State.Running -> StyledLinearProgressIndicator()
-                        State.Waiting -> StyledButton(
+                    if (inspected != null) {
+                        BackupInspectionDetails(inspected.inspection)
+                    }
+
+                    if (canRestore) {
+                        StyledButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = {
+                                inspected?.let { operation.value = Operation.Restore(it.file) }
+                            }
+                        ) {
+                            StyledText(stringResource(Res.string.backup_restore))
+                        }
+                    }
+
+                    if (currentState is State.Waiting || inspected != null || currentState is State.Error) {
+                        StyledButton(
                             modifier = Modifier.fillMaxWidth(),
                             onClick = {
                                 when (mode) {
                                     BackupDialog.Mode.Export -> {
                                         try {
-                                            L.logIf { BackupDefaults.LOG }?.d {
-                                                "BackupDialog: launching export file picker"
-                                            }
                                             createFilePicker.launch(
                                                 suggestedName = exportFileName.nameWithoutExtension,
                                                 defaultExtension = exportFileName.extension
                                             )
                                         } catch (e: ActivityNotFoundException) {
-                                            L.logIf { BackupDefaults.LOG }?.d {
-                                                "BackupDialog: export file picker unavailable, error=${e.javaClass.simpleName}"
-                                            }
                                             dialogActivityNotFound.show(ActivityNotFoundError.Create)
                                         }
                                     }
 
                                     BackupDialog.Mode.Import -> {
                                         try {
-                                            L.logIf { BackupDefaults.LOG }?.d {
-                                                "BackupDialog: launching import file picker"
-                                            }
                                             openFilePicker.launch()
                                         } catch (e: ActivityNotFoundException) {
-                                            L.logIf { BackupDefaults.LOG }?.d {
-                                                "BackupDialog: import file picker unavailable, error=${e.javaClass.simpleName}"
-                                            }
                                             dialogActivityNotFound.show(ActivityNotFoundError.Open)
                                         }
                                     }
                                 }
-                            }) {
-                            StyledText(stringResource(Res.string.backup_select_file))
+                            }
+                        ) {
+                            val label = if (inspected != null || currentState is State.Error) {
+                                Res.string.backup_select_another_file
+                            } else {
+                                Res.string.backup_select_file
+                            }
+                            StyledText(stringResource(label))
                         }
                     }
-                    StyledText(state.value.info())
+
+                    if (currentState is State.Running) {
+                        StyledLinearProgressIndicator()
+                    }
+                    val info = currentState.info()
+                    if (info != null) {
+                        StyledText(info)
+                    }
                 }
             }
         )
@@ -208,6 +282,58 @@ actual fun BackupDialog(
         if (dialogActivityNotFound.visible) {
             DialogBackupActivityNotFound(dialogActivityNotFound)
         }
+    }
+}
+
+@Composable
+private fun BackupInspectionDetails(inspection: BackupInspection) {
+    val metadata = inspection.metadata
+    if (metadata == null) {
+        StyledText(stringResource(Res.string.backup_inspection_legacy))
+        if (!inspection.isValid) {
+            StyledText(stringResource(Res.string.backup_inspection_validation_failed))
+        }
+        return
+    }
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(StyledTheme.spacing.medium)
+    ) {
+        StyledText(stringResource(Res.string.backup_inspection_app, metadata.appId))
+        StyledText(
+            stringResource(
+                Res.string.backup_inspection_app_version,
+                metadata.appVersion ?: "-"
+            )
+        )
+        StyledText(
+            stringResource(
+                Res.string.backup_inspection_data_version,
+                metadata.dataVersion
+            )
+        )
+        StyledText(
+            stringResource(
+                Res.string.backup_inspection_created_at,
+                metadata.createdAt ?: "-"
+            )
+        )
+        StyledText(
+            stringResource(
+                Res.string.backup_inspection_metadata_version,
+                metadata.metadataVersion
+            )
+        )
+        metadata.custom.toSortedMap().forEach { (key, value) ->
+            StyledText("$key: $value")
+        }
+    }
+
+    if (!inspection.isValid) {
+        StyledText(stringResource(Res.string.backup_inspection_validation_failed))
+    } else {
+        StyledText(stringResource(Res.string.backup_inspection_compatible))
     }
 }
 

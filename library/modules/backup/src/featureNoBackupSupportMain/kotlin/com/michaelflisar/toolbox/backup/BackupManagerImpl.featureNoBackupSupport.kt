@@ -2,6 +2,7 @@ package com.michaelflisar.toolbox.backup
 
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.classes.BackupConfig
+import com.michaelflisar.toolbox.backup.classes.BackupInspection
 import io.github.vinceglb.filekit.PlatformFile
 
 actual class BackupManagerImpl actual constructor(
@@ -24,6 +25,12 @@ actual class BackupManagerImpl actual constructor(
         files: List<ZipFileContent>,
         backupFile: PlatformFile,
     ): Throwable? {
+        TODO("Not yet implemented")
+    }
+
+    actual suspend fun inspectBackup(
+        backupFile: PlatformFile,
+    ): BackupInspection {
         TODO("Not yet implemented")
     }
 

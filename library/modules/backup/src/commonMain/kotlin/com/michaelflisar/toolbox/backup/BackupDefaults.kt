@@ -15,7 +15,7 @@ expect fun BackupDefaults.createDefaultBackupContent(): List<ZipFileContent>
 
 object BackupDefaults {
 
-    internal const val LOG = true
+    internal const val LOG = false
 
     fun getInitialDay(
         datetime: LocalDateTime,

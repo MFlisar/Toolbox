@@ -162,6 +162,27 @@ object MainAppScaffoldDefaults {
     ) {
         if (toolbarConfig == null) return
 
+        Crossfade(
+            targetState = toolbarConfig,
+            label = "toolbarContent",
+        ) { currentConfig ->
+            when (currentConfig) {
+                is ToolbarConfig.Custom -> currentConfig.content()
+                is ToolbarConfig.Standard -> StandardTopAppBar(
+                    toolbarConfig = currentConfig,
+                    topAppBarColor = topAppBarColor,
+                    topAppBarContentColor = topAppBarContentColor,
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun StandardTopAppBar(
+        toolbarConfig: ToolbarConfig.Standard,
+        topAppBarColor: Color?,
+        topAppBarContentColor: Color?,
+    ) {
         val colors = resolveTopAppBarColors(topAppBarColor, topAppBarContentColor)
         val backStackManager = LocalMainBackStackManager.current
         val navigationIconVisibility = remember {
@@ -217,12 +238,13 @@ object MainAppScaffoldDefaults {
         items: List<StyledNavigationItem<NavScreen>>,
         selectedKey: NavScreen,
         onItemClick: (NavScreen) -> Unit,
+        modifier: Modifier = Modifier,
         containerColor: Color = StyledTheme.colorScheme.surface,
         contentColor: Color = StyledTheme.contentColorFor(containerColor),
         indicatorTint: Color = StyledTheme.colorScheme.primary,
     ) {
         StyledBottomNavigationBar(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             items = items,
             selectedKey = selectedKey,
             containerColor = containerColor,
@@ -239,12 +261,14 @@ object MainAppScaffoldDefaults {
         mode: StyledNavigationMode.Side,
         expanded: MutableState<Boolean>,
         onItemClick: (NavScreen) -> Unit,
+        modifier: Modifier = Modifier,
         title: @Composable () -> Unit = { StyledText(AppSetup.get().appData.name) },
         containerColor: Color = StyledTheme.colorScheme.surface,
         contentColor: Color = StyledTheme.contentColorFor(containerColor),
         indicatorTint: Color = StyledTheme.colorScheme.primary,
     ) {
         StyledSideNavigation(
+            modifier = modifier,
             items = items,
             selectedKey = selectedKey,
             onItemClick = { selected -> onItemClick(selected.key) },
@@ -384,7 +408,10 @@ data class AppActions(
  * [content] slot receives the scaffold padding and adaptive layout information. Set
  * [showTopAppBarWithoutToolbar] to display the top-app-bar slot even when the current screen has no
  * toolbar configuration or selection content. The snackbar host and floating action button can
- * also be customized. The caller must provide an enclosing theme, typically with [MainAppTheme].
+ * also be customized. The optional [toolbar] remains above the adaptive scaffold.
+ * [sideNavigationLayout] independently controls whether side navigation is placed below or beside
+ * the top bar and above or beside the bottom bar. Its defaults keep it between the bars. The
+ * caller must provide an enclosing theme, typically with [MainAppTheme].
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -407,6 +434,8 @@ fun MainAppScaffold(
     forwardHistoryEnabled: Boolean = true,
     resetInactiveNavigationStacksOnSelection: Boolean = false,
     showTopAppBarWithoutToolbar: Boolean = false,
+    sideNavigationLayout: StyledScaffold.SideNavigationLayout =
+        StyledScaffold.SideNavigationLayout(),
     topAppBar: @Composable (ToolbarConfig?) -> Unit,
     bottomNav: @Composable (
         items: List<StyledNavigationItem<NavScreen>>,
@@ -483,7 +512,7 @@ fun MainAppScaffold(
             onBrowserHistoryStateChanged = mainBackStackManager::onBrowserHistoryStateChanged,
         )
 
-        val scrollBehavior = toolbarConfig?.scrollBehavior
+        val scrollBehavior = (toolbarConfig as? ToolbarConfig.Standard)?.scrollBehavior
 
         val lastShownVersion = AppSetup.get().prefs.lastAppVersion.asMutableStateNotNull()
         val changelogState = AppSetup.get().changelogSetup?.let {
@@ -517,6 +546,7 @@ fun MainAppScaffold(
                             platform = hostPlatform,
                             state = scaffoldState,
                             sideNavigationExpanded = sideNavigationExpanded,
+                            sideNavigationLayout = sideNavigationLayout,
                             modifier = Modifier
                                 .fillMaxSize()
                                 .then(
@@ -793,7 +823,9 @@ fun rememberMainAppSheetState(): MainAppSheetState {
  * Adds a draggable, expandable app sheet and floating header toolbar to [MainAppScaffold].
  * The header and sheet content receive the same [MainAppSheetState] for observing progress and
  * opening or closing the sheet. The snackbar host and floating action button slots are forwarded
- * to [MainAppScaffold]. The caller must provide an enclosing theme, typically with [MainAppTheme].
+ * to [MainAppScaffold]. The optional [toolbar] stays above the scaffold, and
+ * [sideNavigationLayout] configures the side navigation relative to the scaffold bars. The caller
+ * must provide an enclosing theme, typically with [MainAppTheme].
  */
 @Composable
 fun MainAppScaffoldWithAppSheet(
@@ -816,6 +848,8 @@ fun MainAppScaffoldWithAppSheet(
     forwardHistoryEnabled: Boolean = true,
     resetInactiveNavigationStacksOnSelection: Boolean = false,
     showTopAppBarWithoutToolbar: Boolean = false,
+    sideNavigationLayout: StyledScaffold.SideNavigationLayout =
+        StyledScaffold.SideNavigationLayout(),
     topAppBar: @Composable (ToolbarConfig?) -> Unit,
     bottomNav: @Composable (
         items: List<StyledNavigationItem<NavScreen>>,
@@ -898,6 +932,7 @@ fun MainAppScaffoldWithAppSheet(
         forwardHistoryEnabled = forwardHistoryEnabled,
         resetInactiveNavigationStacksOnSelection = resetInactiveNavigationStacksOnSelection,
         showTopAppBarWithoutToolbar = showTopAppBarWithoutToolbar,
+        sideNavigationLayout = sideNavigationLayout,
         topAppBar = { toolbarConfig ->
             StyledTranslatableContent(
                 side = StyledTranslatableContent.Side.Top,

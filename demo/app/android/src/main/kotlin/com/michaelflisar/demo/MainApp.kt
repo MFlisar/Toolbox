@@ -23,6 +23,7 @@ import com.michaelflisar.toolbox.backup.BackupManager
 import com.michaelflisar.toolbox.backup.BackupManagerImpl
 import com.michaelflisar.toolbox.backup.classes.AutoBackupConfig
 import com.michaelflisar.toolbox.backup.classes.BackupConfig
+import com.michaelflisar.toolbox.backup.classes.BackupMetadata
 import com.michaelflisar.toolbox.backup.createDefaultBackupContent
 import com.michaelflisar.toolbox.core.resources.Res
 import com.michaelflisar.toolbox.core.resources.dlg_pro_version_info
@@ -89,7 +90,14 @@ class MainApp : AndroidApplication() {
         BackupManager.init(
             manager = BackupManagerImpl(
                 config = BackupConfig(
-                    backupContent = BackupDefaults.createDefaultBackupContent()
+                    backupContent = BackupDefaults.createDefaultBackupContent(),
+                    backupMetadata = BackupMetadata(
+                        appId = AppSetup.get().appData.namespace,
+                        appVersion = AppSetup.get().appData.versionName
+                    ),
+                    backupValidator = { metadata ->
+                        true
+                    }
                 ),
                 autoBackupConfig = AutoBackupConfig(
                     appName = AppSetup.get().appData.name,

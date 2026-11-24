@@ -18,3 +18,7 @@
 [D] 2026-11-24 11:37:00.581 [UpdateManager.kt:49]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
 [D] 2026-11-24 12:27:13.485 [UpdateManager.kt:36]: lastVersion = 3 => currentVersion = 3 
 [D] 2026-11-24 12:27:13.518 [UpdateManager.kt:49]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-11-24 17:07:09.651 [UpdateManager.kt:36]: lastVersion = 3 => currentVersion = 3 
+[D] 2026-11-24 17:07:09.713 [UpdateManager.kt:51]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!
+[D] 2026-11-25 00:26:42.072 [UpdateManager.kt:36]: lastVersion = 3 => currentVersion = 3 
+[D] 2026-11-25 00:26:42.107 [UpdateManager.kt:51]: UPDATE SKIPPED weil lastVersion bereits up-to-date ist!

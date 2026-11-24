@@ -26,7 +26,7 @@ fun DemoToolbarConfig(
     actions: @Composable RowScope.() -> Unit  = { DemoSettingsToolbarAction() },
     scrollBehavior: StyledExpandableTopBarScrollBehavior? = null,
 ) =
-    ToolbarConfig(
+    ToolbarConfig.Standard(
         title = title,
         subtitle = subtitle,
         actions = actions,
