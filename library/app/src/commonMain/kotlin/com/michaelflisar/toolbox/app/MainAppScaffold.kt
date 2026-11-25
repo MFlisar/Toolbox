@@ -310,7 +310,7 @@ object MainAppScaffoldDefaults {
     fun SideNavigation(
         items: List<StyledNavigationItem<NavScreen>>,
         selectedKey: NavScreen,
-        mode: StyledNavigationMode.Side,
+        mode: StyledSideNavigation.Mode,
         expanded: MutableState<Boolean>,
         onItemClick: (NavScreen) -> Unit,
         modifier: Modifier = Modifier,
@@ -337,7 +337,7 @@ object MainAppScaffoldDefaults {
             items = items,
             selectedKey = selectedKey,
             onItemClick = { selected -> onItemClick(selected.key) },
-            mode = mode.mode,
+            mode = mode,
             expanded = expanded,
             compactLabelVisibility = compactLabelVisibility,
             scrollable = scrollable,
@@ -518,7 +518,7 @@ fun MainAppScaffold(
     sideNav: @Composable (
         items: List<StyledNavigationItem<NavScreen>>,
         selectedKey: NavScreen,
-        mode: StyledNavigationMode.Side,
+        mode: StyledSideNavigation.Mode,
         expanded: MutableState<Boolean>,
         onItemClick: (NavScreen) -> Unit,
     ) -> Unit,
@@ -662,7 +662,7 @@ fun MainAppScaffold(
                                             sideNav(
                                                 navigationItems,
                                                 selectedKey,
-                                                navigationMode,
+                                                navigationMode.mode,
                                                 sideNavigationExpanded,
                                                 onItemClick,
                                             )
@@ -932,7 +932,7 @@ fun MainAppScaffoldWithAppSheet(
     sideNav: @Composable (
         items: List<StyledNavigationItem<NavScreen>>,
         selectedKey: NavScreen,
-        mode: StyledNavigationMode.Side,
+        mode: StyledSideNavigation.Mode,
         expanded: MutableState<Boolean>,
         onItemClick: (NavScreen) -> Unit,
     ) -> Unit,
