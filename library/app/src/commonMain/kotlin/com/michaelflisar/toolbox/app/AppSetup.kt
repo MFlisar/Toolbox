@@ -55,6 +55,13 @@ class AppSetup(
         val prefs: BaseDebugPrefs,
         val sideSheetTriggerWidth: Dp = 48.dp,
         val sideSheet: @Composable (expanded: MutableState<Boolean>) -> Unit,
+        val appTesting: AppTesting? = null,
+    )
+
+    @Immutable
+    class AppTesting(
+        val joinLink: String,
+        val downloadLink: String
     )
 
     @Stable

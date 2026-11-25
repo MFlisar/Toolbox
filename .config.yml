@@ -44,8 +44,8 @@ apps:
   - name: Toolbox Demo
     namespace: com.michaelflisar.toolbox.demo
     version:
-      name: 0.0.3
-      code: 3
+      name: 0.0.5
+      code: 5
     module-paths:
       - demo/app/android
       - demo/app/jvm

@@ -137,9 +137,9 @@
     <string name="backup_exporting">Exportiere...</string>
     <string name="backup_importing">Importiere...</string>
     <string name="backup_inspection_verifying">Sicherung wird überprüft...</string>
-    <string name="backup_inspection_legacy">Dies ist eine ältere Sicherung ohne Metadaten. Sie wird wie bisher importiert.</string>
-    <string name="backup_inspection_compatible">Die Sicherung wurde akzeptiert und kann wiederhergestellt werden.</string>
-    <string name="backup_inspection_validation_failed">Der Backup-Validator hat diese Sicherung abgelehnt.</string>
+    <string name="backup_inspection_legacy">Dies ist eine ältere Sicherung ohne Metadaten. Du kannst sie trotzdem wiederherstellen.</string>
+    <string name="backup_inspection_compatible">Diese Sicherung kann wiederhergestellt werden.</string>
+    <string name="backup_inspection_validation_failed">Diese Sicherung kann mit dieser App nicht wiederhergestellt werden.</string>
     <string name="backup_inspection_app">App: %1$s</string>
     <string name="backup_inspection_app_version">App-Version: %1$s</string>
     <string name="backup_inspection_data_version">Datenversion: %1$d</string>

@@ -138,9 +138,9 @@
     <string name="backup_exporting">Exporting...</string>
     <string name="backup_importing">Importing...</string>
     <string name="backup_inspection_verifying">Verifying backup...</string>
-    <string name="backup_inspection_legacy">This is a legacy backup without metadata. It will be imported using the legacy behavior.</string>
-    <string name="backup_inspection_compatible">Backup passed validation. Ready to restore.</string>
-    <string name="backup_inspection_validation_failed">This backup was rejected by the backup validator.</string>
+    <string name="backup_inspection_legacy">This is an older backup without metadata. You can still restore it.</string>
+    <string name="backup_inspection_compatible">This backup can be restored.</string>
+    <string name="backup_inspection_validation_failed">This backup can't be restored with this app.</string>
     <string name="backup_inspection_app">App: %1$s</string>
     <string name="backup_inspection_app_version">App version: %1$s</string>
     <string name="backup_inspection_data_version">Data version: %1$d</string>

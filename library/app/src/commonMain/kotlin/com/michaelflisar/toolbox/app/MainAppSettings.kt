@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.BrightnessMedium
 import androidx.compose.material.icons.filled.Celebration
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Repeat
@@ -30,8 +31,10 @@ import androidx.compose.material.icons.outlined.Backup
 import androidx.compose.material.icons.outlined.CloudDownload
 import androidx.compose.material.icons.outlined.CloudUpload
 import androidx.compose.material.icons.outlined.ColorLens
+import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.FormatPaint
+import androidx.compose.material.icons.outlined.GroupAdd
 import androidx.compose.material.icons.outlined.HideSource
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.KeyboardDoubleArrowLeft
@@ -99,6 +102,7 @@ import com.michaelflisar.composestyled.ui.state.rememberDialogState
 import com.michaelflisar.kmp.platformcontext.PlatformIO
 import com.michaelflisar.kotpreferences.compose.asMutableStateNotNull
 import com.michaelflisar.kotpreferences.compose.collectAsStateNotNull
+import com.michaelflisar.kotpreferences.compose.collectAsStateWithLifecycleNotNull
 import com.michaelflisar.toolbox.Platform
 import com.michaelflisar.toolbox.app.features.ads.AdsDeveloperSettings
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
@@ -225,7 +229,7 @@ object MainAppSettingsDefault {
         val setup = AppSetup.get()
         val appActions = LocalAppActions.current
 
-        //val versionCode = setup.appData.versionCode
+        val versionCode = setup.appData.versionCode
         val versionName = setup.appData.versionName
 
         val headerBackground = StyledTheme.colorScheme.surfaceVariant
@@ -317,8 +321,11 @@ object MainAppSettingsDefault {
                             text = setup.appData.name,
                             style = StyledTheme.typography.titleLarge
                         )
+                        val developerSettingsActive = AppSetup.get().debug.prefs.showDeveloperSettings.collectAsStateWithLifecycleNotNull()
                         StyledText(
-                            text = versionName,
+                            text = if (developerSettingsActive.value) {
+                                "$versionName ($versionCode)"
+                            } else versionName,
                             style = StyledTheme.typography.bodySmall,
                             color =StyledTheme.colorScheme.onSurfaceVariant.supportingVariant(headerBackground)
 
@@ -387,26 +394,27 @@ object MainAppSettingsDefault {
             title = "Developer Settings",
             icon = Icons.Default.Code.toIconComposable()
         ) {
-            PreferenceItem(
-                containerColor = Color.Transparent,
-                contentColor = LocalStyledContentColor.current,
-                icon = StyledIcons.Info,
-                inlineContent = {
-                    Column {
-                        val labelWidth = 100.dp
-                        StyledInformationRowHorizontal(
-                            label = "Version Name",
-                            info = versionName,
-                            labelWidth = labelWidth
-                        )
-                        StyledInformationRowHorizontal(
-                            label = "Version Code",
-                            info = versionCode.toString(),
-                            labelWidth = labelWidth
-                        )
-                    }
+            val appTesting = setup.debug.appTesting
+            if (appTesting != null) {
+                PreferenceSection(
+                    title = "App Testing"
+                ) {
+                    PreferenceItem(
+                        containerColor = StyledTheme.colorScheme.primary,
+                        contentColor = StyledTheme.colorScheme.onPrimary,
+                        icon = Icons.Outlined.GroupAdd.toIconComposable(),
+                        onClick = { Platform.openUrl(appTesting.joinLink) },
+                        title = "Join App Testing"
+                    )
+                    PreferenceItem(
+                        containerColor = StyledTheme.colorScheme.primary,
+                        contentColor = StyledTheme.colorScheme.onPrimary,
+                        icon = Icons.Outlined.Download.toIconComposable(),
+                        onClick = { Platform.openUrl(appTesting.downloadLink) },
+                        title = "Download App"
+                    )
                 }
-            )
+            }
 
             if (ProVersionManager.setup.supported && AdsManager.manager != null) {
                 PreferenceSection(

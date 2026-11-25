@@ -5,6 +5,8 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
@@ -19,6 +21,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.awaitVerticalTouchSlopOrCancellation
@@ -29,18 +32,21 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -102,6 +108,7 @@ import com.michaelflisar.composestyled.ui.components.StyledIcon
 import com.michaelflisar.composestyled.ui.components.StyledIconButton
 import com.michaelflisar.composestyled.ui.components.StyledNavigationItem
 import com.michaelflisar.composestyled.ui.components.StyledSideNavigation
+import com.michaelflisar.composestyled.ui.components.StyledSideNavigationDefaults
 import com.michaelflisar.composestyled.ui.components.StyledSnackbarDuration
 import com.michaelflisar.composestyled.ui.components.StyledSnackbarHost
 import com.michaelflisar.composestyled.ui.components.StyledSnackbarHostState
@@ -154,6 +161,11 @@ val LocalAppActions =
 /** Standard slot contents that callers can reuse inside their own scaffold-slot wrappers. */
 object MainAppScaffoldDefaults {
 
+    private sealed interface ToolbarContentState {
+        data object Standard : ToolbarContentState
+        data class Custom(val config: ToolbarConfig.Custom) : ToolbarContentState
+    }
+
     @Composable
     fun TopAppBar(
         toolbarConfig: ToolbarConfig?,
@@ -162,17 +174,45 @@ object MainAppScaffoldDefaults {
     ) {
         if (toolbarConfig == null) return
 
-        Crossfade(
-            targetState = toolbarConfig,
+        var lastStandardConfig by remember {
+            mutableStateOf(toolbarConfig as? ToolbarConfig.Standard)
+        }
+        SideEffect {
+            (toolbarConfig as? ToolbarConfig.Standard)?.let {
+                lastStandardConfig = it
+            }
+        }
+        val targetState = when (toolbarConfig) {
+            is ToolbarConfig.Custom -> ToolbarContentState.Custom(toolbarConfig)
+            is ToolbarConfig.Standard -> ToolbarContentState.Standard
+        }
+        AnimatedContent(
+            targetState = targetState,
+            transitionSpec = {
+                if (initialState == ToolbarContentState.Standard &&
+                    targetState == ToolbarContentState.Standard
+                ) {
+                    EnterTransition.None togetherWith ExitTransition.None
+                } else {
+                    fadeIn() togetherWith fadeOut()
+                }
+            },
             label = "toolbarContent",
         ) { currentConfig ->
             when (currentConfig) {
-                is ToolbarConfig.Custom -> currentConfig.content()
-                is ToolbarConfig.Standard -> StandardTopAppBar(
-                    toolbarConfig = currentConfig,
-                    topAppBarColor = topAppBarColor,
-                    topAppBarContentColor = topAppBarContentColor,
-                )
+                ToolbarContentState.Standard -> {
+                    val standardConfig =
+                        (toolbarConfig as? ToolbarConfig.Standard) ?: lastStandardConfig
+                    if (standardConfig != null) {
+                        StandardTopAppBar(
+                            toolbarConfig = standardConfig,
+                            topAppBarColor = topAppBarColor,
+                            topAppBarContentColor = topAppBarContentColor,
+                        )
+                    }
+                }
+
+                is ToolbarContentState.Custom -> currentConfig.config.content()
             }
         }
     }
@@ -242,6 +282,13 @@ object MainAppScaffoldDefaults {
         containerColor: Color = StyledTheme.colorScheme.surface,
         contentColor: Color = StyledTheme.contentColorFor(containerColor),
         indicatorTint: Color = StyledTheme.colorScheme.primary,
+        scrollable: Boolean = false,
+        scrollState: ScrollState = rememberScrollState(),
+        showScrollbar: Boolean = StyledTheme.behavior.showScrollbars,
+        windowInsets: WindowInsets = WindowInsets.safeDrawing.only(
+            WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal
+        ),
+        alwaysShowLabel: Boolean = true,
     ) {
         StyledBottomNavigationBar(
             modifier = modifier.fillMaxWidth(),
@@ -250,6 +297,11 @@ object MainAppScaffoldDefaults {
             containerColor = containerColor,
             contentColor = contentColor,
             indicatorTint = indicatorTint,
+            scrollable = scrollable,
+            scrollState = scrollState,
+            showScrollbar = showScrollbar,
+            windowInsets = windowInsets,
+            alwaysShowLabel = alwaysShowLabel,
             onItemClick = { selected -> onItemClick(selected.key) },
         )
     }
@@ -262,10 +314,23 @@ object MainAppScaffoldDefaults {
         expanded: MutableState<Boolean>,
         onItemClick: (NavScreen) -> Unit,
         modifier: Modifier = Modifier,
-        title: @Composable () -> Unit = { StyledText(AppSetup.get().appData.name) },
+        title: @Composable (() -> Unit)? = { StyledText(AppSetup.get().appData.name) },
         containerColor: Color = StyledTheme.colorScheme.surface,
         contentColor: Color = StyledTheme.contentColorFor(containerColor),
         indicatorTint: Color = StyledTheme.colorScheme.primary,
+        compactLabelVisibility: StyledSideNavigation.CompactLabelVisibility =
+            StyledSideNavigation.CompactLabelVisibility.Hidden,
+        scrollable: Boolean = true,
+        scrollState: ScrollState = rememberScrollState(),
+        showScrollbar: Boolean = StyledTheme.behavior.showScrollbars,
+        header: @Composable (() -> Unit)? = null,
+        footer: @Composable (() -> Unit)? = null,
+        windowInsets: WindowInsets = WindowInsets.safeDrawing.only(
+            WindowInsetsSides.Vertical + WindowInsetsSides.Start
+        ),
+        toggleIcon: @Composable (StyledSideNavigation.ToggleState) -> Unit = {
+            StyledSideNavigationDefaults.ToggleIcon(it)
+        },
     ) {
         StyledSideNavigation(
             modifier = modifier,
@@ -274,10 +339,18 @@ object MainAppScaffoldDefaults {
             onItemClick = { selected -> onItemClick(selected.key) },
             mode = mode.mode,
             expanded = expanded,
+            compactLabelVisibility = compactLabelVisibility,
+            scrollable = scrollable,
+            scrollState = scrollState,
+            showScrollbar = showScrollbar,
             containerColor = containerColor,
             contentColor = contentColor,
             indicatorTint = indicatorTint,
             title = title,
+            header = header,
+            footer = footer,
+            windowInsets = windowInsets,
+            toggleIcon = toggleIcon,
         )
     }
 
@@ -514,12 +587,12 @@ fun MainAppScaffold(
 
         val scrollBehavior = (toolbarConfig as? ToolbarConfig.Standard)?.scrollBehavior
 
-        val lastShownVersion = AppSetup.get().prefs.lastAppVersion.asMutableStateNotNull()
+        val lastShownVersionForChangelog = AppSetup.get().prefs.lastShownVersionForChangelog.asMutableStateNotNull()
         val changelogState = AppSetup.get().changelogSetup?.let {
             rememberChangelogState(
                 setup = it,
-                lastShownVersion = lastShownVersion.value.toInt().takeIf { it != -1 },
-                saveLastShownVersion = { lastShownVersion.value = it.toLong() },
+                lastShownVersion = lastShownVersionForChangelog.value.toInt().takeIf { it != -1 },
+                saveLastShownVersion = { lastShownVersionForChangelog.value = it.toLong() },
             )
         }
 

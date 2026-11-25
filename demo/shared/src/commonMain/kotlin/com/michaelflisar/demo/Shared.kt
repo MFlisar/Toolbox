@@ -51,7 +51,11 @@ object Shared {
                 PreferenceSection("Theming", isExpandable = true) {
                     MainAppSettingsDefault.Theming()
                 }
-            }
+            },
+            appTesting = AppSetup.AppTesting(
+                joinLink = "https://play.google.com/apps/internaltest/4699117358820319983",
+                downloadLink = "https://play.google.com/store/apps/details?id=com.michaelflisar.iron&hl=en-US&ah=gXM6YZ-k2FM0dpIUkkr8SOofABo"
+            )
         ),
         disableLanguagePicker = false,
         logging = AppSetup.Logging(

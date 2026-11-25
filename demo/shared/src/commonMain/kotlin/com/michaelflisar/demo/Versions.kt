@@ -54,8 +54,32 @@ private val V3 = Version(
     update = null
 )
 
+private val V4 = Version(
+    versionCode = 4,
+    versionName = "0.0.4",
+    releaseDate = "2026-11-14",
+    changelog = {
+        added {
+            item("Test")
+        }
+    }
+)
+
+private val V5 = Version(
+    versionCode = 5,
+    versionName = "0.0.5",
+    releaseDate = "2026-11-14",
+    changelog = {
+        added {
+            item("Test")
+        }
+    }
+)
+
 val Versions = listOf(
     V1,
     V2,
-    V3
+    V3,
+    V4,
+    V5
 )
