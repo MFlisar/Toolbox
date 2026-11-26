@@ -8,10 +8,10 @@ import com.michaelflisar.toolbox.backup.BackupDefaults
 @Stable
 class AutoBackupConfig(
     val appName: String,
-    val frequencyData: () -> String,
-    val backupPathData: () -> String
+    val frequencyData: suspend () -> String,
+    val backupPathData: suspend () -> String
 ) {
-    fun getFrequency() : Frequency? {
+    suspend fun getFrequency() : Frequency? {
         val frequencyData = frequencyData()
         L.logIf { BackupDefaults.LOG }?.d {
             "AutoBackupConfig.getFrequency: loaded frequency setting, configured=${frequencyData.isNotEmpty()}"
@@ -21,7 +21,7 @@ class AutoBackupConfig(
         }
         return Frequency.deserialize(frequencyData).also { frequency ->
             L.logIf { BackupDefaults.LOG }?.d {
-                "AutoBackupConfig.getFrequency: frequency deserialized=${frequency != null}"
+                "AutoBackupConfig.getFrequency: frequency deserialized=${frequency}"
             }
         }
     }

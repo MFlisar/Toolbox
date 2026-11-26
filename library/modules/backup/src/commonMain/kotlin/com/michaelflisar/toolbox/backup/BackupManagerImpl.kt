@@ -38,7 +38,7 @@ expect class BackupManagerImpl(
     fun getAutoBackupDirectoryPath(directoryData: String): String
 
     suspend fun getAutoBackupFileName(): String
-    fun onSettingsChanged()
-    fun onEnqueueNextAutoBackup()
+    suspend fun onSettingsChanged()
+    suspend fun onEnqueueNextAutoBackup()
 
 }

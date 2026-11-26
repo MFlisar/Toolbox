@@ -101,8 +101,8 @@ class MainApp : AndroidApplication() {
                 ),
                 autoBackupConfig = AutoBackupConfig(
                     appName = AppSetup.get().appData.name,
-                    frequencyData = { AppSetup.get().prefs.autoBackupFrequency.value },
-                    backupPathData = { AppSetup.get().prefs.backupPathData.value },
+                    frequencyData = { AppSetup.get().prefs.autoBackupFrequency.read() },
+                    backupPathData = { AppSetup.get().prefs.backupPathData.read() },
                 )
             )
         )

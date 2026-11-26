@@ -171,7 +171,7 @@ actual class BackupManagerImpl actual constructor(
         return backupFileName.name
     }
 
-    actual fun onSettingsChanged() {
+    actual suspend fun onSettingsChanged() {
         L.logIf { BackupDefaults.LOG }?.d {
             "BackupManagerImpl.onSettingsChanged: recreating automatic backup work"
         }
@@ -180,7 +180,7 @@ actual class BackupManagerImpl actual constructor(
         onEnqueueNextAutoBackup()
     }
 
-    actual fun onEnqueueNextAutoBackup() {
+    actual suspend fun onEnqueueNextAutoBackup() {
         val frequency = autoBackupConfig?.getFrequency() ?: run {
             L.logIf { BackupDefaults.LOG }?.d {
                 "BackupManagerImpl.onEnqueueNextAutoBackup: skipped, no frequency configured"

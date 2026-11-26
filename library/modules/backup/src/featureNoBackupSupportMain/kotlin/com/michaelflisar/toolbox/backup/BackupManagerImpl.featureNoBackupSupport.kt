@@ -53,9 +53,9 @@ actual class BackupManagerImpl actual constructor(
         TODO("Not yet implemented")
     }
 
-    actual fun onSettingsChanged() {
+    actual suspend fun onSettingsChanged() {
     }
 
-    actual fun onEnqueueNextAutoBackup() {
+    actual suspend fun onEnqueueNextAutoBackup() {
     }
 }

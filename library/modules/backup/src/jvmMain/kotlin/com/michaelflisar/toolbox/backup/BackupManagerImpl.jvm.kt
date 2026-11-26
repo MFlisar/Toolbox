@@ -129,11 +129,11 @@ actual class BackupManagerImpl actual constructor(
         return ""
     }
 
-    actual fun onSettingsChanged() {
+    actual suspend fun onSettingsChanged() {
         // not supported on jvm currently
     }
 
-    actual fun onEnqueueNextAutoBackup() {
+    actual suspend fun onEnqueueNextAutoBackup() {
         // not supported on jvm currently
     }
 }
