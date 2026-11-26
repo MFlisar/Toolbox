@@ -8,6 +8,11 @@ import com.michaelflisar.toolbox.utils.AcraUtil
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.init
 
+/**
+ * initialises the setups
+ *
+ * also call [App.initActivity] to initialise FileKit with the activity
+ */
 fun App.init(
     app: Application,
     setup: AppSetup,
@@ -27,6 +32,9 @@ fun App.init(
     )
 }
 
+/**
+ * initialises FileKit with the activity
+ */
 fun App.initActivity(activity: ComponentActivity) {
     FileKit.init(activity)
 }

@@ -8,7 +8,7 @@ cachefileprovider =         "1.0.0"
 kotpreferences =        	"4.0.1"
 lumberjack =                "12.0.0"
 composecolors =             "2.0.0"
-composestyled =             "0.0.1-alpha40"
+composestyled =             "0.0.1-alpha41"
 
 # plugins only
 kmpicon =                   "1.0.0"
