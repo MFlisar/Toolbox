@@ -83,7 +83,6 @@ import com.michaelflisar.composestyled.classes.toIconComposable
 import com.michaelflisar.composestyled.isDynamicColorsSupported
 import com.michaelflisar.composestyled.isSystemContrastSupported
 import com.michaelflisar.composestyled.platform.platformSystemContrastLevel
-import com.michaelflisar.composestyled.supportingVariant
 import com.michaelflisar.composestyled.themes.StyledContrastLevel
 import com.michaelflisar.composestyled.themes.StyledThemeAppearance
 import com.michaelflisar.composestyled.themes.StyledThemeColors
@@ -327,7 +326,7 @@ object MainAppSettingsDefault {
                                 "$versionName ($versionCode)"
                             } else versionName,
                             style = StyledTheme.typography.bodySmall,
-                            color =StyledTheme.colorScheme.onSurfaceVariant.supportingVariant(headerBackground)
+                            color = StyledTheme.colorScheme.onSurfaceVariantSupporting
 
                         )
                         StyledText(
@@ -337,7 +336,7 @@ object MainAppSettingsDefault {
                             ),
                             style = StyledTheme.typography.bodySmall,
                             fontStyle = FontStyle.Italic,
-                            color = StyledTheme.colorScheme.onSurfaceVariant.supportingVariant(headerBackground)
+                            color = StyledTheme.colorScheme.onSurfaceVariantSupporting
                         )
                     }
                 }
@@ -374,7 +373,7 @@ object MainAppSettingsDefault {
                 ),
                 containerColor = StyledTheme.colorScheme.primary,
                 contentColor = StyledTheme.colorScheme.onPrimary,
-                supportingColor = StyledTheme.colorScheme.onPrimary.supportingVariant(StyledTheme.colorScheme.primary)
+                supportingColor = StyledTheme.colorScheme.onPrimarySupporting
             )
         }
     }
@@ -608,7 +607,7 @@ object MainAppSettingsDefault {
                             shape = MainAppSettings.preferenceStyle.item.shape, // damit excluden wir das item aus section style handling
                             containerColor = StyledTheme.colorScheme.primary,
                             contentColor = StyledTheme.colorScheme.onPrimary,
-                            supportingColor = StyledTheme.colorScheme.onPrimary.supportingVariant(StyledTheme.colorScheme.primary)
+                            supportingColor = StyledTheme.colorScheme.onPrimarySupporting
                         )
                     }
                 }
@@ -883,7 +882,10 @@ object MainAppSettingsDefault {
                     },
                     containerColor = StyledTheme.colorScheme.onBackground,
                     contentColor = StyledTheme.colorScheme.background,
-                    supportingColor = StyledTheme.colorScheme.background.supportingVariant(StyledTheme.colorScheme.onBackground)
+                    supportingColor = StyledTheme.supportingContentColor(
+                        contentColor = StyledTheme.colorScheme.background,
+                        containerColor = StyledTheme.colorScheme.onBackground
+                    )
                 )
             }
         }

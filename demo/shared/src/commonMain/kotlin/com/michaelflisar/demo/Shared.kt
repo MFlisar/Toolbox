@@ -33,7 +33,7 @@ object Shared {
         storageDebug: Storage,
         fileLoggingSetup: IFileLoggingSetup?,
         isDebugBuild: Boolean,
-        inAppUpdate: InAppUpdate = InAppUpdate.Disabled,
+        inAppUpdate: InAppUpdate = InAppUpdate.Dialog,
         icon: @Composable () -> Painter = { appIcon(light = true) },
     ) = AppSetup(
         developer = AppSetup.Developer.MFLISAR,
@@ -59,6 +59,7 @@ object Shared {
                 downloadLink = "https://play.google.com/store/apps/details?id=com.michaelflisar.iron&hl=en-US&ah=gXM6YZ-k2FM0dpIUkkr8SOofABo"
             )
         ),
+        inAppUpdate = inAppUpdate,
         disableLanguagePicker = false,
         logging = AppSetup.Logging(
             file = fileLoggingSetup,
@@ -67,8 +68,7 @@ object Shared {
             )
         ),
         changelogSetup = ChangelogUtil.createSetup(Versions),
-        isDebugBuild = isDebugBuild,
-        inAppUpdate = inAppUpdate,
+        isDebugBuild = isDebugBuild
     )
 
     fun init() {
