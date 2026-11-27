@@ -51,6 +51,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -60,6 +61,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -86,6 +88,9 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.scene.Scene
 import androidx.savedstate.serialization.SavedStateConfiguration
@@ -152,6 +157,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
+
+/** Navigation reset policies shared by the app scaffold variants. */
+data class MainAppScaffoldNavigationOptions(
+    val resetInactiveNavigationStacksOnSelection: Boolean = false,
+    val resetSubStacksOnBack: Boolean = true,
+)
 
 val LocalAppActions =
     compositionLocalOf<AppActions> {
@@ -475,7 +486,9 @@ data class AppActions(
  * the serializer configuration for the app's open set of [NavScreen] key types. Color overrides
  * are direct values, and unspecified colors fall back to the current theme. Forward history is
  * enabled by default and can be disabled for the whole app. Inactive top-level stacks are
- * preserved unless [resetInactiveNavigationStacksOnSelection] is enabled.
+ * preserved unless [MainAppScaffoldNavigationOptions.resetInactiveNavigationStacksOnSelection]
+ * is enabled. Popped sub-screens' saveable UI state is reset by default; configure
+ * [MainAppScaffoldNavigationOptions.resetSubStacksOnBack] to preserve it instead.
  * The [topAppBar], [bottomNav], [sideNav], and [content] slots provide the scaffold UI explicitly.
  * Use [MainAppScaffoldDefaults] to reuse the standard bar, navigation, and Nav3 content. A custom
  * [content] slot receives the scaffold padding and adaptive layout information. Set
@@ -505,7 +518,7 @@ fun MainAppScaffold(
     floatingActionButtonPosition: StyledScaffold.FloatingActionButtonPosition =
         StyledScaffold.FloatingActionButtonPosition.End,
     forwardHistoryEnabled: Boolean = true,
-    resetInactiveNavigationStacksOnSelection: Boolean = false,
+    navigationOptions: MainAppScaffoldNavigationOptions = MainAppScaffoldNavigationOptions(),
     showTopAppBarWithoutToolbar: Boolean = false,
     sideNavigationLayout: StyledScaffold.SideNavigationLayout =
         StyledScaffold.SideNavigationLayout(),
@@ -536,7 +549,7 @@ fun MainAppScaffold(
         backStackConfiguration = backStackConfiguration,
         startDestination = startDestination,
         forwardHistoryEnabled = forwardHistoryEnabled,
-        resetInactiveNavigationStacksOnSelection = resetInactiveNavigationStacksOnSelection,
+        navigationOptions = navigationOptions,
     )
     val activeBackStack = mainBackStackManager.activeBackStack
 
@@ -561,18 +574,34 @@ fun MainAppScaffold(
         val scaffoldState = remember { StyledAdaptiveScaffoldState() }
         val adaptiveNavigationMode = scaffoldState.navigationMode
 
-        if (windowEnvironment.mode == WindowMode.Normal && adaptiveNavigationMode != null) {
-            SystemBarStyleEffect(
-                statusBar = systemBarIconStyleFor(
-                    color = if (showToolbar) topBarColor else actualScaffoldColor,
-                    background = actualScaffoldColor,
-                ),
-                navigationBar = if (showNavigation && adaptiveNavigationMode.isBottom) {
-                    systemBarIconStyleFor(actualBottomNavColor, actualScaffoldColor)
-                } else {
-                    systemBarIconStyleFor(actualScaffoldColor, actualScaffoldColor)
-                },
-            )
+        val lifecycleOwner = LocalLifecycleOwner.current
+        var systemBarStyleGeneration by remember { mutableIntStateOf(0) }
+        DisposableEffect(lifecycleOwner) {
+            val observer = LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    systemBarStyleGeneration++
+                }
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
+            }
+        }
+
+        key(systemBarStyleGeneration) {
+            if (windowEnvironment.mode == WindowMode.Normal && adaptiveNavigationMode != null) {
+                SystemBarStyleEffect(
+                    statusBar = systemBarIconStyleFor(
+                        color = if (showToolbar) topBarColor else actualScaffoldColor,
+                        background = actualScaffoldColor,
+                    ),
+                    navigationBar = if (showNavigation && adaptiveNavigationMode.isBottom) {
+                        systemBarIconStyleFor(actualBottomNavColor, actualScaffoldColor)
+                    } else {
+                        systemBarIconStyleFor(actualScaffoldColor, actualScaffoldColor)
+                    },
+                )
+            }
         }
 
         val sideNavigationExpanded = rememberSaveable { mutableStateOf(true) }
@@ -919,7 +948,7 @@ fun MainAppScaffoldWithAppSheet(
     floatingActionButtonPosition: StyledScaffold.FloatingActionButtonPosition =
         StyledScaffold.FloatingActionButtonPosition.End,
     forwardHistoryEnabled: Boolean = true,
-    resetInactiveNavigationStacksOnSelection: Boolean = false,
+    navigationOptions: MainAppScaffoldNavigationOptions = MainAppScaffoldNavigationOptions(),
     showTopAppBarWithoutToolbar: Boolean = false,
     sideNavigationLayout: StyledScaffold.SideNavigationLayout =
         StyledScaffold.SideNavigationLayout(),
@@ -1003,7 +1032,7 @@ fun MainAppScaffoldWithAppSheet(
         floatingActionButton = floatingActionButton,
         floatingActionButtonPosition = floatingActionButtonPosition,
         forwardHistoryEnabled = forwardHistoryEnabled,
-        resetInactiveNavigationStacksOnSelection = resetInactiveNavigationStacksOnSelection,
+        navigationOptions = navigationOptions,
         showTopAppBarWithoutToolbar = showTopAppBarWithoutToolbar,
         sideNavigationLayout = sideNavigationLayout,
         topAppBar = { toolbarConfig ->

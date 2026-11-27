@@ -43,6 +43,7 @@ import com.michaelflisar.demo.pages.NavigationSavedStateConfiguration
 import com.michaelflisar.toolbox.app.AppSetup
 import com.michaelflisar.toolbox.app.MainAppScaffold
 import com.michaelflisar.toolbox.app.MainAppScaffoldDefaults
+import com.michaelflisar.toolbox.app.MainAppScaffoldNavigationOptions
 import com.michaelflisar.toolbox.app.MainAppScaffoldWithAppSheet
 import com.michaelflisar.toolbox.app.MainAppSettings
 import com.michaelflisar.toolbox.app.MainAppTheme
@@ -107,7 +108,9 @@ private fun DemoAppSimple(
     MainAppScaffold(
         navigationItems = navigationItems,
         backStackConfiguration = NavigationSavedStateConfiguration,
-        resetInactiveNavigationStacksOnSelection = true,
+        navigationOptions = MainAppScaffoldNavigationOptions(
+            resetInactiveNavigationStacksOnSelection = true,
+        ),
         forwardHistoryEnabled = forwardHistoryEnabled,
         toolbar = { if (desktopMenuBar) DemoDesktopMenuBar() },
         settings = { paddingValues -> MainAppSettings(paddingValues) },
@@ -179,7 +182,9 @@ private fun DemoAppAdvanced(
             navigationItems = navigationItems,
             backStackConfiguration = NavigationSavedStateConfiguration,
             sheetState = sheetState,
-            resetInactiveNavigationStacksOnSelection = true,
+            navigationOptions = MainAppScaffoldNavigationOptions(
+                resetInactiveNavigationStacksOnSelection = true,
+            ),
             forwardHistoryEnabled = forwardHistoryEnabled,
             toolbar = { if (desktopMenuBar) DemoDesktopMenuBar() },
             settings = { paddingValues ->

@@ -18,6 +18,7 @@ import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggingSetup
 import com.michaelflisar.toolbox.app.features.preferences.BaseDebugPrefs
 import com.michaelflisar.toolbox.app.features.preferences.BasePrefs
 import com.michaelflisar.toolbox.app.features.theme.themeCollection
+import com.michaelflisar.toolbox.app.features.update.InAppUpdate
 
 class AppSetup(
     val developer: Developer = Developer.Author(
@@ -27,13 +28,15 @@ class AppSetup(
     val appData: AppData,
     val icon: @Composable () -> Painter,
     val themeSupport: ThemeSupport,
+    val inAppUpdate: InAppUpdate,
     val prefs: BasePrefs,
     val debug: Debug,
     val disableLanguagePicker: Boolean,
     val privacyPolicyLink: String,
     val logging: Logging,
     val changelogSetup: ChangelogSetup?,
-    val isDebugBuild: Boolean,
+    val isDebugBuild: Boolean
+
 ) {
     companion object {
         private var instance: AppSetup? = null

@@ -11,17 +11,38 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.SaveableStateHolder
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.michaelflisar.toolbox.app.MainAppScaffoldNavigationOptions
 import com.michaelflisar.toolbox.app.features.navigation.NavScreen
 import com.michaelflisar.toolbox.app.features.navigation.PlatformNavigateBack
 import com.michaelflisar.toolbox.app.features.navigation.PlatformNavigateHistory
 import kotlin.random.Random
 import kotlin.math.abs
+
+private val entryStateGenerationsSaver = listSaver<MutableMap<String, Int>, String>(
+    save = { generations ->
+        generations.flatMap { (key, generation) -> listOf(key, generation.toString()) }
+    },
+    restore = { savedGenerations ->
+        mutableMapOf<String, Int>().apply {
+            savedGenerations.chunked(2).forEach { (key, generation) ->
+                this[key] = generation.toInt()
+            }
+        }
+    },
+)
+
+private fun entryStateBaseKey(screen: NavScreen, navigationIndex: Int): String =
+    "$navigationIndex:${screen::class.qualifiedName}:$screen"
+
+private fun entryStateKey(baseStateKey: String, generation: Int): String =
+    if (generation == 0) baseStateKey else "$baseStateKey:$generation"
 
 /** Manager for navigation operations on the currently selected top-level destination. */
 val LocalMainBackStackManager = compositionLocalOf<MainBackStackManager> {
@@ -53,10 +74,11 @@ class MainBackStackManager internal constructor(
     private val selectedIndex: MutableIntState,
     val debugDrawerExpanded: MutableState<Boolean>,
     private val saveableStateHolder: SaveableStateHolder,
+    private val entryStateGenerations: MutableMap<String, Int>,
     internal val browserHistoryController: Nav3BrowserHistoryController,
     internal val browserHistoryDispatcher: Nav3BrowserHistoryDispatcher,
     val forwardHistoryEnabled: Boolean,
-    private val resetInactiveNavigationStacksOnSelection: Boolean,
+    private val navigationOptions: MainAppScaffoldNavigationOptions,
 ) {
     private val backHandlers = mutableStateListOf<RegisteredNavigationHandler>()
 
@@ -138,7 +160,11 @@ class MainBackStackManager internal constructor(
         navigationIndex: Int,
         content: @Composable () -> Unit,
     ) {
-        val stateKey = "$navigationIndex:${screen::class.qualifiedName}:$screen"
+        val baseStateKey = entryStateBaseKey(screen, navigationIndex)
+        val stateGeneration = entryStateGenerations[baseStateKey] ?: 0
+        val stateKey = remember(screen, navigationIndex) {
+            entryStateKey(baseStateKey, stateGeneration)
+        }
         saveableStateHolder.SaveableStateProvider(stateKey, content)
     }
 
@@ -146,7 +172,7 @@ class MainBackStackManager internal constructor(
         val index = navigationKeys.indexOf(key)
         if (index < 0 || index == selectedNavigationIndex) return
 
-        if (resetInactiveNavigationStacksOnSelection) {
+        if (navigationOptions.resetInactiveNavigationStacksOnSelection) {
             activeStackManager.resetToRoot()
         }
         selectedIndex.intValue = index
@@ -156,9 +182,21 @@ class MainBackStackManager internal constructor(
 
     fun replaceTop(page: NavScreen): Boolean = activeStackManager.replaceTop(page)
 
-    fun popBackStack(): Boolean = activeStackManager.popBackStack()
+    fun popBackStack(): Boolean = popBackStack(replaceCurrent = false)
 
-    fun popToRoot(): Boolean = activeStackManager.popToRoot()
+    fun popToRoot(): Boolean {
+        val previousPages = activeBackStack.toList()
+        val popped = activeStackManager.popToRoot()
+        if (popped) resetRemovedEntryStates(previousPages, selectedNavigationIndex)
+        return popped
+    }
+
+    private fun popBackStack(replaceCurrent: Boolean): Boolean {
+        val previousPages = activeBackStack.toList()
+        val popped = activeStackManager.popBackStack(replaceCurrent)
+        if (popped) resetRemovedEntryStates(previousPages, selectedNavigationIndex)
+        return popped
+    }
 
     fun onBack() {
         if (!dispatchBackHandler()) {
@@ -167,7 +205,7 @@ class MainBackStackManager internal constructor(
                 hasBrowserHistory = browserHistoryController.canGoBack,
                 onBackStack = {
                     if (!navigateActiveStackHistory(-1)) {
-                        activeStackManager.popBackStack(replaceCurrent = true)
+                        popBackStack(replaceCurrent = true)
                     }
                 },
             )
@@ -194,6 +232,7 @@ class MainBackStackManager internal constructor(
     fun onBrowserHistoryStateChanged(state: String?) {
         if (state == null) return
 
+        val previousPages = activeBackStack.toList()
         val direction = browserHistoryController.moveTo(state)
         if (direction == 0) return
 
@@ -217,6 +256,7 @@ class MainBackStackManager internal constructor(
                 }
             }
         }
+        if (direction < 0) resetRemovedEntryStates(previousPages, selectedNavigationIndex)
     }
 
     fun navigateActiveStackHistory(offset: Int): Boolean {
@@ -227,10 +267,30 @@ class MainBackStackManager internal constructor(
         ) {
             return true
         }
-        return activeStackManager.moveHistory(
+        val previousPages = if (offset < 0) activeBackStack.toList() else emptyList()
+        val moved = activeStackManager.moveHistory(
             offset,
             synchronizeHistoryState = true,
         )
+        if (moved && offset < 0) {
+            resetRemovedEntryStates(previousPages, selectedNavigationIndex)
+        }
+        return moved
+    }
+
+    private fun resetRemovedEntryStates(previousPages: List<NavKey>, navigationIndex: Int) {
+        if (!navigationOptions.resetSubStacksOnBack) return
+
+        val remainingPages = activeBackStack.toSet()
+        previousPages.filterIsInstance<NavScreen>()
+            .filterNot { it in remainingPages }
+            .distinct()
+            .forEach { screen ->
+                val baseStateKey = entryStateBaseKey(screen, navigationIndex)
+                val generation = entryStateGenerations[baseStateKey] ?: 0
+                saveableStateHolder.removeState(entryStateKey(baseStateKey, generation))
+                entryStateGenerations[baseStateKey] = generation + 1
+            }
     }
 
     private fun activeBackHandlers(): List<RegisteredNavigationHandler> {
@@ -258,7 +318,7 @@ fun rememberMainBackStackManager(
     backStackConfiguration: SavedStateConfiguration,
     startDestination: NavScreen?,
     forwardHistoryEnabled: Boolean = true,
-    resetInactiveNavigationStacksOnSelection: Boolean = false,
+    navigationOptions: MainAppScaffoldNavigationOptions = MainAppScaffoldNavigationOptions(),
 ): MainBackStackManager {
     require(navigationKeys.isNotEmpty() || startDestination != null) {
         "Provide a startDestination when there are no navigation items."
@@ -283,6 +343,9 @@ fun rememberMainBackStackManager(
 
     val selectedIndex = rememberSaveable { mutableIntStateOf(0) }
     val debugDrawerExpanded = rememberSaveable { mutableStateOf(false) }
+    val entryStateGenerations = rememberSaveable(saver = entryStateGenerationsSaver) {
+        mutableMapOf()
+    }
     val selectedNavigationIndex = selectedIndex.intValue
         .coerceIn(0, navigationKeys.lastIndex.coerceAtLeast(0))
     val allBackStacks = if (singleBackStack != null) {
@@ -316,10 +379,11 @@ fun rememberMainBackStackManager(
         selectedIndex,
         debugDrawerExpanded,
         saveableStateHolder,
+        entryStateGenerations,
         browserHistoryController,
         browserHistoryDispatcher,
         forwardHistoryEnabled,
-        resetInactiveNavigationStacksOnSelection,
+        navigationOptions,
     ) {
         MainBackStackManager(
             stackManagers,
@@ -327,10 +391,11 @@ fun rememberMainBackStackManager(
             selectedIndex,
             debugDrawerExpanded,
             saveableStateHolder,
+            entryStateGenerations,
             browserHistoryController,
             browserHistoryDispatcher,
             forwardHistoryEnabled,
-            resetInactiveNavigationStacksOnSelection,
+            navigationOptions,
         )
     }
 }

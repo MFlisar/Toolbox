@@ -165,6 +165,9 @@ kotlin {
 
         androidMain.dependencies {
 
+            // Google Play in-app updates
+            implementation(deps.google.app.update)
+
             // KMPPlatformContext
             // implementation(deps.kmp.platformcontext.initializer)
 

@@ -2,7 +2,6 @@ package com.michaelflisar.demo
 
 import com.michaelflisar.composestyled.isLight
 import com.michaelflisar.composestyled.tokens.LocalStyledContentColor
-import com.michaelflisar.kotpreferences.core.value
 import com.michaelflisar.kotpreferences.storage.datastore.DataStoreStorage
 import com.michaelflisar.kotpreferences.storage.datastore.create
 import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
@@ -16,6 +15,7 @@ import com.michaelflisar.toolbox.app.classes.AndroidAppSetup
 import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionAppDefaults
 import com.michaelflisar.toolbox.app.features.proversion.ProVersionManager
+import com.michaelflisar.toolbox.app.features.update.InAppUpdate
 import com.michaelflisar.toolbox.app.init
 import com.michaelflisar.toolbox.app.utils.AndroidAppIconUtil
 import com.michaelflisar.toolbox.backup.BackupDefaults
@@ -49,6 +49,7 @@ class MainApp : AndroidApplication() {
             storageDebug = storageDebug,
             fileLoggingSetup = FileLoggerSetup.Daily(),
             isDebugBuild = BuildConfig.DEBUG,
+            inAppUpdate = InAppUpdate.Dialog,
             icon = {
                 AndroidAppIconUtil.adaptiveIconPainterResource(appIcon)
                     ?: Shared.appIcon(LocalStyledContentColor.current.isLight)

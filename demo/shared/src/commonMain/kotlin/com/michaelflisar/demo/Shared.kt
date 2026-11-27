@@ -13,6 +13,7 @@ import com.michaelflisar.toolbox.app.features.ads.AdsManager
 import com.michaelflisar.toolbox.app.features.changelog.ChangelogUtil
 import com.michaelflisar.toolbox.app.features.logging.ConsoleLoggingSetup
 import com.michaelflisar.toolbox.app.features.preferences.BaseDebugPrefs
+import com.michaelflisar.toolbox.app.features.update.InAppUpdate
 import com.michaelflisar.toolbox.app.features.update.UpdateManager
 import com.michaelflisar.toolbox.demo.BuildKonfig
 import com.michaelflisar.toolbox.demo.shared.resources.Res
@@ -32,6 +33,7 @@ object Shared {
         storageDebug: Storage,
         fileLoggingSetup: IFileLoggingSetup?,
         isDebugBuild: Boolean,
+        inAppUpdate: InAppUpdate = InAppUpdate.Disabled,
         icon: @Composable () -> Painter = { appIcon(light = true) },
     ) = AppSetup(
         developer = AppSetup.Developer.MFLISAR,
@@ -65,7 +67,8 @@ object Shared {
             )
         ),
         changelogSetup = ChangelogUtil.createSetup(Versions),
-        isDebugBuild = isDebugBuild
+        isDebugBuild = isDebugBuild,
+        inAppUpdate = inAppUpdate,
     )
 
     fun init() {
